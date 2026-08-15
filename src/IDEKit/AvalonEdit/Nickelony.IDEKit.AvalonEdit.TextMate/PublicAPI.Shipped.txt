@@ -1,0 +1,47 @@
+#nullable enable
+Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateColorizingTransformer
+Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateColorizingTransformer.Dispose() -> void
+Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateColorizingTransformer.TextMateColorizingTransformer(ICSharpCode.AvalonEdit.Rendering.TextView! textView, TextMateSharp.Model.TMModel! model, Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateThemeStyleResolver! styleResolver) -> void
+Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateDocumentLineList
+Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateDocumentLineList.TextMateDocumentLineList(ICSharpCode.AvalonEdit.Document.TextDocument! document) -> void
+Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateHighlightingSession
+Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateHighlightingSession.Dispose() -> void
+Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateHighlightingSession.LineList.get -> Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateDocumentLineList!
+Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateHighlightingSession.Model.get -> TextMateSharp.Model.TMModel!
+Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateHighlightingSession.StyleResolver.get -> Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateThemeStyleResolver!
+Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateHighlightingSession.Transformer.get -> Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateColorizingTransformer!
+Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateThemeStyleResolver
+Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateThemeStyleResolver.Resolve(System.Collections.Generic.IReadOnlyList<string!>? scopes) -> Nickelony.IDEKit.AvalonEdit.Rendering.TextRunStyle
+Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateThemeStyleResolver.TextMateThemeStyleResolver(Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateTokenTheme! theme, Microsoft.Extensions.Logging.ILogger? logger = null) -> void
+Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateTokenTheme
+Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateTokenTheme.<Clone>$() -> Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateTokenTheme!
+Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateTokenTheme.Equals(Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateTokenTheme? other) -> bool
+Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateTokenTheme.Rules.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateTokenThemeRule!>!
+Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateTokenTheme.Rules.init -> void
+Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateTokenTheme.TextMateTokenTheme() -> void
+Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateTokenThemeRule
+Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateTokenThemeRule.<Clone>$() -> Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateTokenThemeRule!
+Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateTokenThemeRule.Equals(Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateTokenThemeRule? other) -> bool
+Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateTokenThemeRule.FontStyle.get -> string?
+Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateTokenThemeRule.FontStyle.init -> void
+Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateTokenThemeRule.Foreground.get -> string!
+Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateTokenThemeRule.Foreground.init -> void
+Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateTokenThemeRule.Scope.get -> string!
+Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateTokenThemeRule.Scope.init -> void
+Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateTokenThemeRule.TextMateTokenThemeRule() -> void
+override Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateDocumentLineList.Dispose() -> void
+override Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateDocumentLineList.GetLineLength(int lineIndex) -> int
+override Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateDocumentLineList.GetLineTextIncludingTerminators(int lineIndex) -> TextMateSharp.Grammars.LineText
+override Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateDocumentLineList.GetNumberOfLines() -> int
+override Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateDocumentLineList.UpdateLine(int lineIndex) -> void
+override Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateTokenTheme.Equals(object? obj) -> bool
+override Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateTokenTheme.GetHashCode() -> int
+override Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateTokenTheme.ToString() -> string!
+override Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateTokenThemeRule.Equals(object? obj) -> bool
+override Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateTokenThemeRule.GetHashCode() -> int
+override Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateTokenThemeRule.ToString() -> string!
+static Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateHighlightingSession.Start(ICSharpCode.AvalonEdit.Rendering.TextView! textView, TextMateSharp.Grammars.IGrammar! grammar, Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateTokenTheme! theme, Microsoft.Extensions.Logging.ILogger? logger = null) -> Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateHighlightingSession!
+static Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateTokenTheme.operator !=(Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateTokenTheme? left, Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateTokenTheme? right) -> bool
+static Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateTokenTheme.operator ==(Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateTokenTheme? left, Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateTokenTheme? right) -> bool
+static Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateTokenThemeRule.operator !=(Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateTokenThemeRule? left, Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateTokenThemeRule? right) -> bool
+static Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateTokenThemeRule.operator ==(Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateTokenThemeRule? left, Nickelony.IDEKit.AvalonEdit.TextMate.Highlighting.TextMateTokenThemeRule? right) -> bool

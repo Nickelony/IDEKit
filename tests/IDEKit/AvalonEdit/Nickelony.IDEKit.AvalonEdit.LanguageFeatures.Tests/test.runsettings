@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <RunConfiguration>
+    <!--
+      The suite runs dozens of dispatcher-pump tests that park work on gates and await the controller's
+      reaction, and it has no per-test timeout. The session timeout turns a wedged test into a failed run
+      instead of an indefinitely hanging one; the budget stays deliberately generous so a loaded machine
+      cannot abort a healthy session.
+    -->
+    <TestSessionTimeout>300000</TestSessionTimeout>
+    <!--
+      The performance smoke checks assert allocation and wall-clock budgets, which vary with the machine
+      and its load, so the default run deselects the Performance tier; the deterministic functional
+      coverage of the same scenarios stays selected. Run the tier explicitly with a
+      TestCategory=Performance filter when checking the budgets.
+    -->
+    <TestCaseFilter>TestCategory!=Performance</TestCaseFilter>
+  </RunConfiguration>
+</RunSettings>

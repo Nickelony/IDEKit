@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <RootNamespace>Nickelony.KeyBindings.Wpf</RootNamespace>
+    <AssemblyName>Nickelony.KeyBindings.Wpf</AssemblyName>
+    <PackageId>Nickelony.KeyBindings.Wpf</PackageId>
+    <Description>WPF adapter for Nickelony.KeyBindings: WPF key and modifier mapping, KeyEventArgs conversion, key-down dispatch, and the culture-aware WPF gesture display formatter.</Description>
+    <PackageTags>text-editor;editor;wpf;commands;shortcuts;key-bindings;nickelony</PackageTags>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <WarningsAsErrors>CS1591;RS0016;RS0017</WarningsAsErrors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Public-API surface baseline: an unlisted public member fails the build (RS0016/RS0017). -->
+    <PackageReference Include="Microsoft.CodeAnalysis.PublicApiAnalyzers" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Nickelony.KeyBindings\Nickelony.KeyBindings.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+    <None Include="..\..\..\icons\$(PackageIcon)" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+</Project>

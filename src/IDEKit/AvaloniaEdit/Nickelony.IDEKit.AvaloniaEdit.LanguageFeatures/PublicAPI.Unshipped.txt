@@ -1,0 +1,334 @@
+#nullable enable
+~override Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionPresentationState.Equals(object obj) -> bool
+~override Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionPresentationState.ToString() -> string
+~override Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpPresentationState.Equals(object obj) -> bool
+~override Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpPresentationState.ToString() -> string
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionController
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionController.Actions.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionItem!>!
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionController.CancelInFlightRequest() -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionController.CancelScheduledRequest() -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionController.Changed -> System.EventHandler?
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionController.CloseActions() -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionController.Dispose() -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionController.HasActions.get -> bool
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionController.InvalidateRequests() -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionController.IsActionsOpen.get -> bool
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionController.Margin.get -> Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionMargin!
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionController.RefreshAsync() -> System.Threading.Tasks.Task!
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionController.TextCodeActionController(AvaloniaEdit.Editing.TextArea! textArea, Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionPresentation! presentation, Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionControllerHooks! hooks, Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionControllerOptions? options = null, Microsoft.Extensions.Logging.ILogger? logger = null) -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionController.TryOpenActions() -> bool
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionController.TryOpenActions(int lineNumber, Avalonia.Point anchor) -> bool
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionControllerHooks
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionControllerHooks.BuildRequest.get -> System.Func<Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionContext!, Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionRequest?>!
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionControllerHooks.BuildRequest.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionControllerHooks.ConfigureMenu.get -> System.Action<Avalonia.Controls.ContextMenu!>?
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionControllerHooks.ConfigureMenu.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionControllerHooks.ConfigureMenuItem.get -> System.Action<Avalonia.Controls.MenuItem!, Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionItem!>?
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionControllerHooks.ConfigureMenuItem.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionControllerHooks.ExecuteActionAsync.get -> System.Func<Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionItem!, System.Threading.Tasks.Task!>!
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionControllerHooks.ExecuteActionAsync.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionControllerHooks.RequestCodeActionsAsync.get -> System.Func<Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionRequest!, System.Threading.CancellationToken, System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionItem!>!>!>!
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionControllerHooks.RequestCodeActionsAsync.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionControllerHooks.TextCodeActionControllerHooks() -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionControllerOptions
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionControllerOptions.<Clone>$() -> Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionControllerOptions!
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionControllerOptions.Equals(Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionControllerOptions? other) -> bool
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionControllerOptions.RequestDebounceDelay.get -> System.TimeSpan
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionControllerOptions.RequestDebounceDelay.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionControllerOptions.TextCodeActionControllerOptions() -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionMargin
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionMargin.OpenOnLeftPress.get -> bool
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionMargin.OpenOnLeftPress.set -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionMargin.TextCodeActionMargin(Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionController! controller) -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionMenuOptions
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionMenuOptions.<Clone>$() -> Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionMenuOptions!
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionMenuOptions.AnchorXOffset.get -> double
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionMenuOptions.AnchorXOffset.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionMenuOptions.CaretAnchorYOffset.get -> double
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionMenuOptions.CaretAnchorYOffset.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionMenuOptions.Equals(Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionMenuOptions? other) -> bool
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionMenuOptions.MarginAnchorYOffset.get -> double
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionMenuOptions.MarginAnchorYOffset.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionMenuOptions.MaxHeight.get -> double
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionMenuOptions.MaxHeight.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionMenuOptions.TextCodeActionMenuOptions() -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionMenuSkin
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionMenuSkin.<Clone>$() -> Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionMenuSkin!
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionMenuSkin.Background.get -> Avalonia.Media.IBrush!
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionMenuSkin.Background.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionMenuSkin.BorderBrush.get -> Avalonia.Media.IBrush!
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionMenuSkin.BorderBrush.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionMenuSkin.Equals(Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionMenuSkin? other) -> bool
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionMenuSkin.Foreground.get -> Avalonia.Media.IBrush!
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionMenuSkin.Foreground.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionMenuSkin.TextCodeActionMenuSkin() -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionPresentation
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionPresentation.<Clone>$() -> Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionPresentation!
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionPresentation.Equals(Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionPresentation? other) -> bool
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionPresentation.MenuOptions.get -> Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionMenuOptions!
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionPresentation.MenuOptions.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionPresentation.Skin.get -> Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionMenuSkin!
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionPresentation.Skin.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionPresentation.TextCodeActionPresentation() -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionTooltipSkin
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionTooltipSkin.<Clone>$() -> Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionTooltipSkin!
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionTooltipSkin.Background.get -> Avalonia.Media.IBrush?
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionTooltipSkin.Background.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionTooltipSkin.BorderBrush.get -> Avalonia.Media.IBrush?
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionTooltipSkin.BorderBrush.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionTooltipSkin.BorderThickness.get -> Avalonia.Thickness
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionTooltipSkin.BorderThickness.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionTooltipSkin.CompletionTooltipSkin() -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionTooltipSkin.Equals(Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionTooltipSkin? other) -> bool
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionTooltipSkin.HorizontalOffset.get -> double
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionTooltipSkin.HorizontalOffset.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionTooltipSkin.Padding.get -> Avalonia.Thickness
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionTooltipSkin.Padding.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionTooltipSkin.Placement.get -> Avalonia.Controls.PlacementMode
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionTooltipSkin.Placement.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionWindowCoordinator
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionWindowCoordinator.ActiveWindow.get -> AvaloniaEdit.CodeCompletion.CompletionWindow?
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionWindowCoordinator.Close() -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionWindowCoordinator.CompletionWindowCoordinator(AvaloniaEdit.Editing.TextArea! textArea, Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionWindowSkin! defaultSkin) -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionWindowCoordinator.IsWindowOpen.get -> bool
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionWindowCoordinator.WindowClosed -> System.EventHandler?
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionWindowSkin
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionWindowSkin.<Clone>$() -> Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionWindowSkin!
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionWindowSkin.Background.get -> Avalonia.Media.IBrush!
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionWindowSkin.Background.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionWindowSkin.BorderBrush.get -> Avalonia.Media.IBrush!
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionWindowSkin.BorderBrush.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionWindowSkin.BorderThickness.get -> double
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionWindowSkin.BorderThickness.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionWindowSkin.CompletionWindowSkin() -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionWindowSkin.Equals(Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionWindowSkin? other) -> bool
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionWindowSkin.Foreground.get -> Avalonia.Media.IBrush!
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionWindowSkin.Foreground.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.ICommitCharacterCompletionData
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.ICommitCharacterCompletionData.CommitCharacters.get -> System.Collections.Generic.IReadOnlyList<string!>!
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.IPreselectedCompletionData
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.IPreselectedCompletionData.IsPreselected.get -> bool
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionController
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionController.ApplyDecision(Nickelony.IDEKit.IntelliSense.Completion.TextCompletionSessionDecision decision) -> bool
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionController.CancelScheduledRequest() -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionController.CancelTooltipUpdate() -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionController.CloseWindow() -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionController.CurrentPresentation.get -> Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionPresentationState
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionController.Dispose() -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionController.OpenOrRefresh(System.Collections.Generic.IEnumerable<AvaloniaEdit.CodeCompletion.ICompletionData!>! items, int startOffset, int endOffset) -> bool
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionController.RequestAsync(System.Func<System.Threading.CancellationToken, System.Threading.Tasks.Task<Nickelony.IDEKit.IntelliSense.Completion.TextCompletionSessionDecision>!>! requestAsync) -> System.Threading.Tasks.Task<bool>!
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionController.Requests.get -> Nickelony.IDEKit.IntelliSense.Completion.TextCompletionRequestSession!
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionController.ScheduleCloseIfEmpty() -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionController.ScheduleRequest() -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionController.TextCompletionController(AvaloniaEdit.Editing.TextArea! textArea, Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionWindowSkin! skin, Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionControllerOptions? options = null, Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionControllerHooks? hooks = null, Microsoft.Extensions.Logging.ILogger? logger = null) -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionController.WindowCoordinator.get -> Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionWindowCoordinator!
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionControllerHooks
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionControllerHooks.CompletionItemFactory.get -> System.Func<Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem!, AvaloniaEdit.CodeCompletion.ICompletionData!>?
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionControllerHooks.CompletionItemFactory.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionControllerHooks.ConfigureTooltip.get -> System.Action<Avalonia.Controls.ToolTip!>?
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionControllerHooks.ConfigureTooltip.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionControllerHooks.ConfigureWindow.get -> System.Action<AvaloniaEdit.CodeCompletion.CompletionWindow!>?
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionControllerHooks.ConfigureWindow.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionControllerHooks.GetDisplayInfo.get -> System.Func<AvaloniaEdit.CodeCompletion.ICompletionData!, (string! Text, string? Detail)>?
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionControllerHooks.GetDisplayInfo.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionControllerHooks.MeasureItemWidth.get -> System.Func<AvaloniaEdit.CodeCompletion.ICompletionData!, double>?
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionControllerHooks.MeasureItemWidth.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionControllerHooks.ResolveDescriptionAsync.get -> System.Func<AvaloniaEdit.CodeCompletion.ICompletionData!, System.Threading.CancellationToken, System.Threading.Tasks.Task<object?>!>?
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionControllerHooks.ResolveDescriptionAsync.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionControllerHooks.ScheduledRequestAsync.get -> System.Func<System.Threading.Tasks.Task!>?
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionControllerHooks.ScheduledRequestAsync.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionControllerHooks.TextCompletionControllerHooks() -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionControllerHooks.TooltipSkin.get -> Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionTooltipSkin?
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionControllerHooks.TooltipSkin.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionControllerOptions
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionControllerOptions.<Clone>$() -> Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionControllerOptions!
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionControllerOptions.AcceptOnCommitCharacters.get -> bool
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionControllerOptions.AcceptOnCommitCharacters.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionControllerOptions.CloseWhenEmpty.get -> bool
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionControllerOptions.CloseWhenEmpty.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionControllerOptions.Equals(Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionControllerOptions? other) -> bool
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionControllerOptions.ItemDetailSpacing.get -> double
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionControllerOptions.ItemDetailSpacing.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionControllerOptions.ItemIconWidth.get -> double
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionControllerOptions.ItemIconWidth.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionControllerOptions.NonActivatingWindow.get -> bool
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionControllerOptions.NonActivatingWindow.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionControllerOptions.RequestDebounceDelay.get -> System.TimeSpan
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionControllerOptions.RequestDebounceDelay.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionControllerOptions.TextCompletionControllerOptions() -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionControllerOptions.TooltipResolveDelay.get -> System.TimeSpan
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionControllerOptions.TooltipResolveDelay.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionControllerOptions.WindowHorizontalChrome.get -> double
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionControllerOptions.WindowHorizontalChrome.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionControllerOptions.WindowMaxHeight.get -> double
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionControllerOptions.WindowMaxHeight.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionControllerOptions.WindowMaxWidth.get -> double
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionControllerOptions.WindowMaxWidth.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionControllerOptions.WindowMinContentWidth.get -> double
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionControllerOptions.WindowMinContentWidth.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionItemCompletionData
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionItemCompletionData.CommitCharacters.get -> System.Collections.Generic.IReadOnlyList<string!>!
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionItemCompletionData.Complete(AvaloniaEdit.Editing.TextArea! textArea, AvaloniaEdit.Document.ISegment! completionSegment, System.EventArgs! insertionRequestEventArgs) -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionItemCompletionData.Content.get -> object!
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionItemCompletionData.Description.get -> object?
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionItemCompletionData.Image.get -> Avalonia.Media.IImage?
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionItemCompletionData.IsPreselected.get -> bool
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionItemCompletionData.Item.get -> Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem!
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionItemCompletionData.Priority.get -> double
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionItemCompletionData.Text.get -> string!
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionItemCompletionData.TextCompletionItemCompletionData(Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem! item) -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionPresentationState
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionPresentationState.Deconstruct(out bool IsListVisible, out bool IsRequestScheduled, out bool IsTooltipVisible, out object? TooltipContent) -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionPresentationState.Equals(Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionPresentationState other) -> bool
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionPresentationState.IsListVisible.get -> bool
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionPresentationState.IsListVisible.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionPresentationState.IsPresentationVisibleOrRequestScheduled.get -> bool
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionPresentationState.IsRequestScheduled.get -> bool
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionPresentationState.IsRequestScheduled.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionPresentationState.IsTooltipVisible.get -> bool
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionPresentationState.IsTooltipVisible.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionPresentationState.TextCompletionPresentationState() -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionPresentationState.TextCompletionPresentationState(bool IsListVisible, bool IsRequestScheduled, bool IsTooltipVisible, object? TooltipContent) -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionPresentationState.TooltipContent.get -> object?
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionPresentationState.TooltipContent.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Diagnostics.TextDiagnosticSegmentFactory
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Highlighting.ISemanticTokenStyleResolver
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Highlighting.ISemanticTokenStyleResolver.Resolve(Nickelony.IDEKit.IntelliSense.SemanticTokens.TextSemanticToken! token) -> Nickelony.IDEKit.AvaloniaEdit.Rendering.TextRunStyle
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Highlighting.SemanticTokensColorizer
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Highlighting.SemanticTokensColorizer.ClearTokens() -> bool
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Highlighting.SemanticTokensColorizer.Rebuild() -> bool
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Highlighting.SemanticTokensColorizer.SemanticTokensColorizer(AvaloniaEdit.Rendering.TextView! textView, Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Highlighting.ISemanticTokenStyleResolver! styleResolver) -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Highlighting.SemanticTokensColorizer.SetTokens(System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.SemanticTokens.TextSemanticToken!>! tokens) -> bool
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Hover.TextHoverController
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Hover.TextHoverController.CancelInFlightRequest() -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Hover.TextHoverController.Dispose() -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Hover.TextHoverController.HandleMouseHoverAsync(Avalonia.Input.PointerEventArgs! e) -> System.Threading.Tasks.Task!
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Hover.TextHoverController.InvalidateRequests() -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Hover.TextHoverController.TextHoverController(Avalonia.Controls.Control! owner, Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Hover.TextHoverControllerHooks! hooks, Microsoft.Extensions.Logging.ILogger? logger = null) -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Hover.TextHoverControllerHooks
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Hover.TextHoverControllerHooks.BuildEvaluationState.get -> System.Func<int, Nickelony.IDEKit.IntelliSense.Hover.TextHoverEvaluationState>!
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Hover.TextHoverControllerHooks.BuildEvaluationState.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Hover.TextHoverControllerHooks.ContextVersionProvider.get -> System.Func<int>?
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Hover.TextHoverControllerHooks.ContextVersionProvider.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Hover.TextHoverControllerHooks.GetCurrentPointerPosition.get -> System.Func<Avalonia.Point>?
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Hover.TextHoverControllerHooks.GetCurrentPointerPosition.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Hover.TextHoverControllerHooks.GetOffsetFromPoint.get -> System.Func<Avalonia.Point, int?>!
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Hover.TextHoverControllerHooks.GetOffsetFromPoint.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Hover.TextHoverControllerHooks.RequestHoverAsync.get -> System.Func<int, System.Threading.CancellationToken, System.Threading.Tasks.Task<Nickelony.IDEKit.IntelliSense.Hover.TextHoverInfo?>!>!
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Hover.TextHoverControllerHooks.RequestHoverAsync.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Hover.TextHoverControllerHooks.ResolveRequestOffset.get -> System.Func<int, int?>?
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Hover.TextHoverControllerHooks.ResolveRequestOffset.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Hover.TextHoverControllerHooks.ShowTooltip.get -> System.Action<Nickelony.IDEKit.IntelliSense.Hover.TextHoverInfo?, Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnostic?>!
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Hover.TextHoverControllerHooks.ShowTooltip.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Hover.TextHoverControllerHooks.TextHoverControllerHooks() -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Navigation.TextAreaDefinitionNavigation
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpController
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpController.CancelInFlightRequest() -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpController.CancelScheduledRefresh() -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpController.CurrentPresentation.get -> Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpPresentationState
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpController.Dismiss() -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpController.Dispose() -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpController.InvalidateRequests() -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpController.RequestAsync(int offset, Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelpTriggerKind triggerKind = Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelpTriggerKind.Invoked, string? triggerCharacter = null) -> System.Threading.Tasks.Task!
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpController.ScheduleRefresh(Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelpTriggerKind triggerKind = Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelpTriggerKind.ContentChange, string? triggerCharacter = null) -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpController.SelectNextSignature() -> bool
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpController.SelectPreviousSignature() -> bool
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpController.TextSignatureHelpController(Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpControllerHooks! hooks, Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpControllerOptions? options = null, Microsoft.Extensions.Logging.ILogger? logger = null, Avalonia.Threading.Dispatcher? dispatcher = null) -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpControllerHooks
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpControllerHooks.DismissSignatureHelp.get -> System.Action!
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpControllerHooks.DismissSignatureHelp.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpControllerHooks.GetCurrentCaretOffset.get -> System.Func<int>!
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpControllerHooks.GetCurrentCaretOffset.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpControllerHooks.RequestSignatureHelpAsync.get -> System.Func<int, Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelpContext!, System.Threading.CancellationToken, System.Threading.Tasks.Task<Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelp?>!>!
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpControllerHooks.RequestSignatureHelpAsync.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpControllerHooks.ShowSignatureHelp.get -> System.Action<Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelp!>!
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpControllerHooks.ShowSignatureHelp.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpControllerHooks.TextSignatureHelpControllerHooks() -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpControllerOptions
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpControllerOptions.<Clone>$() -> Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpControllerOptions!
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpControllerOptions.Cycle.get -> bool
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpControllerOptions.Cycle.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpControllerOptions.Equals(Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpControllerOptions? other) -> bool
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpControllerOptions.RefreshDebounceDelay.get -> System.TimeSpan
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpControllerOptions.RefreshDebounceDelay.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpControllerOptions.TextSignatureHelpControllerOptions() -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpPresentationState
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpPresentationState.Deconstruct(out Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelp? SignatureHelp, out bool IsVisible, out bool IsRequestInFlight, out bool IsRefreshPending) -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpPresentationState.Equals(Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpPresentationState other) -> bool
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpPresentationState.IsPresentationVisibleOrRequestPending.get -> bool
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpPresentationState.IsRefreshPending.get -> bool
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpPresentationState.IsRefreshPending.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpPresentationState.IsRequestInFlight.get -> bool
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpPresentationState.IsRequestInFlight.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpPresentationState.IsVisible.get -> bool
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpPresentationState.IsVisible.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpPresentationState.SignatureHelp.get -> Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelp?
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpPresentationState.SignatureHelp.init -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpPresentationState.TextSignatureHelpPresentationState() -> void
+Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpPresentationState.TextSignatureHelpPresentationState(Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelp? SignatureHelp, bool IsVisible, bool IsRequestInFlight, bool IsRefreshPending) -> void
+override Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionControllerOptions.Equals(object? obj) -> bool
+override Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionControllerOptions.GetHashCode() -> int
+override Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionControllerOptions.ToString() -> string!
+override Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionMenuOptions.Equals(object? obj) -> bool
+override Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionMenuOptions.GetHashCode() -> int
+override Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionMenuOptions.ToString() -> string!
+override Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionMenuSkin.Equals(object? obj) -> bool
+override Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionMenuSkin.GetHashCode() -> int
+override Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionMenuSkin.ToString() -> string!
+override Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionPresentation.Equals(object? obj) -> bool
+override Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionPresentation.GetHashCode() -> int
+override Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionPresentation.ToString() -> string!
+override Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionTooltipSkin.Equals(object? obj) -> bool
+override Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionTooltipSkin.GetHashCode() -> int
+override Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionTooltipSkin.ToString() -> string!
+override Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionWindowSkin.Equals(object? obj) -> bool
+override Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionWindowSkin.GetHashCode() -> int
+override Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionWindowSkin.ToString() -> string!
+override Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionControllerOptions.Equals(object? obj) -> bool
+override Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionControllerOptions.GetHashCode() -> int
+override Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionControllerOptions.ToString() -> string!
+override Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionPresentationState.GetHashCode() -> int
+override Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpControllerOptions.Equals(object? obj) -> bool
+override Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpControllerOptions.GetHashCode() -> int
+override Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpControllerOptions.ToString() -> string!
+override Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpPresentationState.GetHashCode() -> int
+static Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionControllerOptions.Default.get -> Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionControllerOptions!
+static Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionControllerOptions.operator !=(Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionControllerOptions? left, Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionControllerOptions? right) -> bool
+static Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionControllerOptions.operator ==(Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionControllerOptions? left, Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionControllerOptions? right) -> bool
+static Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionMenuOptions.Default.get -> Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionMenuOptions!
+static Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionMenuOptions.operator !=(Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionMenuOptions? left, Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionMenuOptions? right) -> bool
+static Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionMenuOptions.operator ==(Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionMenuOptions? left, Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionMenuOptions? right) -> bool
+static Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionMenuSkin.Default.get -> Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionMenuSkin!
+static Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionMenuSkin.operator !=(Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionMenuSkin? left, Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionMenuSkin? right) -> bool
+static Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionMenuSkin.operator ==(Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionMenuSkin? left, Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionMenuSkin? right) -> bool
+static Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionPresentation.operator !=(Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionPresentation? left, Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionPresentation? right) -> bool
+static Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionPresentation.operator ==(Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionPresentation? left, Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionPresentation? right) -> bool
+static Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionTooltipSkin.Default.get -> Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionTooltipSkin!
+static Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionTooltipSkin.operator !=(Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionTooltipSkin? left, Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionTooltipSkin? right) -> bool
+static Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionTooltipSkin.operator ==(Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionTooltipSkin? left, Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionTooltipSkin? right) -> bool
+static Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionWindowSkin.Default.get -> Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionWindowSkin!
+static Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionWindowSkin.operator !=(Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionWindowSkin? left, Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionWindowSkin? right) -> bool
+static Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionWindowSkin.operator ==(Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionWindowSkin? left, Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.CompletionWindowSkin? right) -> bool
+static Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionController.IsTooltipSupported.get -> bool
+static Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionControllerOptions.Default.get -> Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionControllerOptions!
+static Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionControllerOptions.operator !=(Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionControllerOptions? left, Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionControllerOptions? right) -> bool
+static Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionControllerOptions.operator ==(Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionControllerOptions? left, Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionControllerOptions? right) -> bool
+static Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionPresentationState.Empty.get -> Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionPresentationState
+static Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionPresentationState.operator !=(Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionPresentationState left, Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionPresentationState right) -> bool
+static Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionPresentationState.operator ==(Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionPresentationState left, Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion.TextCompletionPresentationState right) -> bool
+static Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Diagnostics.TextDiagnosticSegmentFactory.CreateRenderer(System.Func<System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnostic!>!>! diagnosticsProvider) -> Nickelony.IDEKit.AvaloniaEdit.Diagnostics.DiagnosticsRenderer!
+static Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Diagnostics.TextDiagnosticSegmentFactory.CreateSegmentProvider(System.Func<System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnostic!>!>! diagnosticsProvider) -> System.Func<System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Core.Diagnostics.TextDiagnosticSegment>!>!
+static Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Diagnostics.TextDiagnosticSegmentFactory.CreateSegments(System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnostic!>! diagnostics) -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Core.Diagnostics.TextDiagnosticSegment>!
+static Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Navigation.TextAreaDefinitionNavigation.TryGoToDefinition(this AvaloniaEdit.Editing.TextArea! textArea, Nickelony.IDEKit.IntelliSense.Navigation.ITextDefinitionProvider! definitionProvider, Nickelony.IDEKit.IntelliSense.Hover.ITextHoverProvider! hoverProvider, int offset, System.Func<Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionLocation!, bool>? tryNavigateCrossFileDefinition = null) -> bool
+static Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Navigation.TextAreaDefinitionNavigation.TryGoToDefinitionAsync(this AvaloniaEdit.Editing.TextArea! textArea, System.Func<Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionRequest!, System.Threading.CancellationToken, System.Threading.Tasks.Task<Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionLocation?>!>! definitionResolverAsync, System.Func<Nickelony.IDEKit.IntelliSense.Hover.TextHoverRequest!, System.Threading.CancellationToken, System.Threading.Tasks.Task<Nickelony.IDEKit.IntelliSense.Hover.TextHoverInfo?>!>! hoverResolverAsync, int offset, System.Func<Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionLocation!, System.Threading.CancellationToken, System.Threading.Tasks.Task<bool>!>? tryNavigateCrossFileDefinitionAsync = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<bool>!
+static Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Navigation.TextAreaDefinitionNavigation.TryGoToDefinitionAtOffset(this AvaloniaEdit.Editing.TextArea! textArea, System.Func<Nickelony.IDEKit.Core.Text.ITextSnapshot!, int, Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionLocation?>! definitionResolver, int offset, System.Func<Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionLocation!, bool>? tryNavigateCrossFileDefinition = null) -> bool
+static Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Navigation.TextAreaDefinitionNavigation.TryGoToDefinitionAtOffsetAsync(this AvaloniaEdit.Editing.TextArea! textArea, System.Func<Nickelony.IDEKit.Core.Text.ITextSnapshot!, int, System.Threading.CancellationToken, System.Threading.Tasks.Task<Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionLocation?>!>! definitionResolverAsync, int offset, System.Func<Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionLocation!, System.Threading.CancellationToken, System.Threading.Tasks.Task<bool>!>? tryNavigateCrossFileDefinitionAsync = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<bool>!
+static Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Navigation.TextAreaDefinitionNavigation.TryGoToDefinitionBySymbol(this AvaloniaEdit.Editing.TextArea! textArea, Nickelony.IDEKit.IntelliSense.Navigation.ITextDefinitionProvider! definitionProvider, string? symbolName, Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionDiscriminator? discriminator = null, System.Func<Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionLocation!, bool>? tryNavigateCrossFileDefinition = null) -> bool
+static Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Navigation.TextAreaDefinitionNavigation.TryGoToDefinitionBySymbolAsync(this AvaloniaEdit.Editing.TextArea! textArea, System.Func<Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionRequest!, System.Threading.CancellationToken, System.Threading.Tasks.Task<Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionLocation?>!>! definitionResolverAsync, string? symbolName, Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionDiscriminator? discriminator = null, System.Func<Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionLocation!, System.Threading.CancellationToken, System.Threading.Tasks.Task<bool>!>? tryNavigateCrossFileDefinitionAsync = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<bool>!
+static Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpControllerOptions.Default.get -> Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpControllerOptions!
+static Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpControllerOptions.operator !=(Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpControllerOptions? left, Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpControllerOptions? right) -> bool
+static Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpControllerOptions.operator ==(Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpControllerOptions? left, Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpControllerOptions? right) -> bool
+static Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpPresentationState.Empty.get -> Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpPresentationState
+static Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpPresentationState.operator !=(Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpPresentationState left, Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpPresentationState right) -> bool
+static Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpPresentationState.operator ==(Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpPresentationState left, Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Signatures.TextSignatureHelpPresentationState right) -> bool
+static readonly Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.CodeActions.TextCodeActionMargin.OpenOnLeftPressProperty -> Avalonia.StyledProperty<bool>!

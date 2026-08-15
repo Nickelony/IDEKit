@@ -1,0 +1,52 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>Nickelony.IDEKit.AvaloniaEdit.Markdown</RootNamespace>
+    <AssemblyName>Nickelony.IDEKit.AvaloniaEdit.Markdown</AssemblyName>
+    <PackageId>Nickelony.IDEKit.AvaloniaEdit.Markdown</PackageId>
+    <Description>Markdown rendering for AvaloniaEdit editors: a Markdig-backed renderer that produces native Avalonia content trees and embedded AvaloniaEdit code blocks.</Description>
+    <PackageTags>text-editor;editor;avaloniaedit;avalonia;markdown;tooltip;nickelony</PackageTags>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <WarningsAsErrors>CS1591;RS0016;RS0017</WarningsAsErrors>
+    <!-- Selects the AvaloniaEdit branch of the shared binding source under shared\Editor.Markdown. -->
+    <DefineConstants>$(DefineConstants);AVALONIAEDIT</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Public-API surface baseline: an unlisted public member fails the build (RS0016/RS0017). -->
+    <PackageReference Include="Microsoft.CodeAnalysis.PublicApiAnalyzers" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Avalonia is cross-platform, so this adapter targets net8.0 (not net8.0-windows). The direct
+         reference takes the repo pin (12.1.3); Avalonia.AvaloniaEdit 12.0.0 flows from it, and the
+         content model and embedded code-block editors use Avalonia.Controls / AvaloniaEdit directly. -->
+    <PackageReference Include="Avalonia" />
+    <PackageReference Include="Avalonia.AvaloniaEdit" />
+    <PackageReference Include="Markdig" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Nickelony.IDEKit.Core\Nickelony.IDEKit.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\..\..\shared\Infrastructure\BrushHelpers.Avalonia.cs" Link="Infrastructure\BrushHelpers.Avalonia.cs" />
+    <Compile Include="..\..\..\..\shared\Infrastructure\NumericValidation.cs" Link="Infrastructure\NumericValidation.cs" />
+    <!-- Shared binding source: one file compiled into the AvalonEdit and AvaloniaEdit Markdown
+         packages, with a per-binding namespace and engine using selected by the AVALONIAEDIT define. -->
+    <Compile Include="..\..\..\..\shared\Editor.Markdown\**\*.cs" Link="%(RecursiveDir)%(Filename)%(Extension)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Nickelony.IDEKit.AvaloniaEdit.Markdown.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+    <None Include="..\..\..\..\icons\$(PackageIcon)" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+</Project>

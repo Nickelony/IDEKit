@@ -1,0 +1,146 @@
+#nullable enable
+*REMOVED*Nickelony.LanguageServer.Abstractions.ILanguageServerFormattingProvider.FormatDocumentAsync(Nickelony.LanguageServer.Abstractions.TextFormatRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.LanguageServer.Abstractions.TextWorkspaceEdit?>!
+*REMOVED*Nickelony.LanguageServer.Abstractions.ILanguageServerReferencesProvider.GetReferencesAsync(Nickelony.LanguageServer.Abstractions.TextReferenceRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Abstractions.TextReferenceLocation!>!>!
+*REMOVED*Nickelony.LanguageServer.Abstractions.ILanguageServerRenameProvider.RenameSymbolAsync(Nickelony.LanguageServer.Abstractions.TextRenameRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.LanguageServer.Abstractions.TextWorkspaceEdit?>!
+*REMOVED*Nickelony.LanguageServer.Abstractions.TextFormatRequest
+*REMOVED*Nickelony.LanguageServer.Abstractions.TextFormatRequest.<Clone>$() -> Nickelony.LanguageServer.Abstractions.TextFormatRequest!
+*REMOVED*Nickelony.LanguageServer.Abstractions.TextFormatRequest.DocumentText.get -> string!
+*REMOVED*Nickelony.LanguageServer.Abstractions.TextFormatRequest.Equals(Nickelony.LanguageServer.Abstractions.TextFormatRequest? other) -> bool
+*REMOVED*Nickelony.LanguageServer.Abstractions.TextFormatRequest.FilePath.get -> string!
+*REMOVED*Nickelony.LanguageServer.Abstractions.TextFormatRequest.Options.get -> Nickelony.LanguageServer.Abstractions.TextFormattingOptions!
+*REMOVED*Nickelony.LanguageServer.Abstractions.TextFormatRequest.TextFormatRequest(string! filePath, string! documentText, Nickelony.LanguageServer.Abstractions.TextFormattingOptions! options) -> void
+*REMOVED*Nickelony.LanguageServer.Abstractions.TextReferenceRequest
+*REMOVED*Nickelony.LanguageServer.Abstractions.TextReferenceRequest.<Clone>$() -> Nickelony.LanguageServer.Abstractions.TextReferenceRequest!
+*REMOVED*Nickelony.LanguageServer.Abstractions.TextReferenceRequest.DocumentText.get -> string!
+*REMOVED*Nickelony.LanguageServer.Abstractions.TextReferenceRequest.Equals(Nickelony.LanguageServer.Abstractions.TextReferenceRequest? other) -> bool
+*REMOVED*Nickelony.LanguageServer.Abstractions.TextReferenceRequest.FilePath.get -> string!
+*REMOVED*Nickelony.LanguageServer.Abstractions.TextReferenceRequest.IncludeDeclaration.get -> bool
+*REMOVED*Nickelony.LanguageServer.Abstractions.TextReferenceRequest.Position.get -> Nickelony.IDEKit.Core.Text.TextPosition
+*REMOVED*Nickelony.LanguageServer.Abstractions.TextReferenceRequest.TextReferenceRequest(string! filePath, string! documentText, Nickelony.IDEKit.Core.Text.TextPosition position, bool includeDeclaration = true) -> void
+*REMOVED*Nickelony.LanguageServer.Abstractions.TextRenameRequest
+*REMOVED*Nickelony.LanguageServer.Abstractions.TextRenameRequest.<Clone>$() -> Nickelony.LanguageServer.Abstractions.TextRenameRequest!
+*REMOVED*Nickelony.LanguageServer.Abstractions.TextRenameRequest.DocumentText.get -> string!
+*REMOVED*Nickelony.LanguageServer.Abstractions.TextRenameRequest.Equals(Nickelony.LanguageServer.Abstractions.TextRenameRequest? other) -> bool
+*REMOVED*Nickelony.LanguageServer.Abstractions.TextRenameRequest.FilePath.get -> string!
+*REMOVED*Nickelony.LanguageServer.Abstractions.TextRenameRequest.NewName.get -> string!
+*REMOVED*Nickelony.LanguageServer.Abstractions.TextRenameRequest.Position.get -> Nickelony.IDEKit.Core.Text.TextPosition
+*REMOVED*Nickelony.LanguageServer.Abstractions.TextRenameRequest.TextRenameRequest(string! filePath, string! documentText, Nickelony.IDEKit.Core.Text.TextPosition position, string! newName) -> void
+*REMOVED*override Nickelony.LanguageServer.Abstractions.TextFormatRequest.Equals(object? obj) -> bool
+*REMOVED*override Nickelony.LanguageServer.Abstractions.TextFormatRequest.GetHashCode() -> int
+*REMOVED*override Nickelony.LanguageServer.Abstractions.TextFormatRequest.ToString() -> string!
+*REMOVED*override Nickelony.LanguageServer.Abstractions.TextReferenceRequest.Equals(object? obj) -> bool
+*REMOVED*override Nickelony.LanguageServer.Abstractions.TextReferenceRequest.GetHashCode() -> int
+*REMOVED*override Nickelony.LanguageServer.Abstractions.TextReferenceRequest.ToString() -> string!
+*REMOVED*override Nickelony.LanguageServer.Abstractions.TextRenameRequest.Equals(object? obj) -> bool
+*REMOVED*override Nickelony.LanguageServer.Abstractions.TextRenameRequest.GetHashCode() -> int
+*REMOVED*override Nickelony.LanguageServer.Abstractions.TextRenameRequest.ToString() -> string!
+*REMOVED*static Nickelony.LanguageServer.Abstractions.TextFormatRequest.operator !=(Nickelony.LanguageServer.Abstractions.TextFormatRequest? left, Nickelony.LanguageServer.Abstractions.TextFormatRequest? right) -> bool
+*REMOVED*static Nickelony.LanguageServer.Abstractions.TextFormatRequest.operator ==(Nickelony.LanguageServer.Abstractions.TextFormatRequest? left, Nickelony.LanguageServer.Abstractions.TextFormatRequest? right) -> bool
+*REMOVED*static Nickelony.LanguageServer.Abstractions.TextReferenceRequest.operator !=(Nickelony.LanguageServer.Abstractions.TextReferenceRequest? left, Nickelony.LanguageServer.Abstractions.TextReferenceRequest? right) -> bool
+*REMOVED*static Nickelony.LanguageServer.Abstractions.TextReferenceRequest.operator ==(Nickelony.LanguageServer.Abstractions.TextReferenceRequest? left, Nickelony.LanguageServer.Abstractions.TextReferenceRequest? right) -> bool
+*REMOVED*static Nickelony.LanguageServer.Abstractions.TextRenameRequest.operator !=(Nickelony.LanguageServer.Abstractions.TextRenameRequest? left, Nickelony.LanguageServer.Abstractions.TextRenameRequest? right) -> bool
+*REMOVED*static Nickelony.LanguageServer.Abstractions.TextRenameRequest.operator ==(Nickelony.LanguageServer.Abstractions.TextRenameRequest? left, Nickelony.LanguageServer.Abstractions.TextRenameRequest? right) -> bool
+Nickelony.LanguageServer.Abstractions.LanguageServerRenameRequest
+override Nickelony.LanguageServer.Abstractions.LanguageServerRenameRequest.ToString() -> string!
+static Nickelony.LanguageServer.Abstractions.LanguageServerRenameRequest.operator !=(Nickelony.LanguageServer.Abstractions.LanguageServerRenameRequest? left, Nickelony.LanguageServer.Abstractions.LanguageServerRenameRequest? right) -> bool
+static Nickelony.LanguageServer.Abstractions.LanguageServerRenameRequest.operator ==(Nickelony.LanguageServer.Abstractions.LanguageServerRenameRequest? left, Nickelony.LanguageServer.Abstractions.LanguageServerRenameRequest? right) -> bool
+override Nickelony.LanguageServer.Abstractions.LanguageServerRenameRequest.GetHashCode() -> int
+override Nickelony.LanguageServer.Abstractions.LanguageServerRenameRequest.Equals(object? obj) -> bool
+Nickelony.LanguageServer.Abstractions.LanguageServerRenameRequest.Equals(Nickelony.LanguageServer.Abstractions.LanguageServerRenameRequest? other) -> bool
+Nickelony.LanguageServer.Abstractions.LanguageServerRenameRequest.<Clone>$() -> Nickelony.LanguageServer.Abstractions.LanguageServerRenameRequest!
+*REMOVED*Nickelony.LanguageServer.Abstractions.ILanguageServerDocumentSymbolProvider.GetDocumentSymbolsAsync(string! filePath, string! documentText, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbol!>!>!
+*REMOVED*Nickelony.LanguageServer.Abstractions.ILanguageServerIntelliSenseProvider.GetDefinitionAsync(string! filePath, string! documentText, Nickelony.IDEKit.Core.Text.TextPosition position, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionLocation?>!
+*REMOVED*Nickelony.LanguageServer.Abstractions.ILanguageServerIntelliSenseProvider.GetHoverAsync(string! filePath, string! documentText, Nickelony.IDEKit.Core.Text.TextPosition position, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.IntelliSense.Hover.TextHoverInfo?>!
+Nickelony.LanguageServer.Abstractions.ILanguageServerSemanticTokensProvider
+Nickelony.LanguageServer.Abstractions.ILanguageServerSemanticTokensProvider.GetSemanticTokens(string! filePath) -> System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Abstractions.SemanticToken!>!
+Nickelony.LanguageServer.Abstractions.ILanguageServerSemanticTokensProvider.SemanticTokensUpdated -> System.EventHandler<Nickelony.LanguageServer.Abstractions.SemanticTokensUpdatedEventArgs!>?
+Nickelony.LanguageServer.Abstractions.SemanticToken
+Nickelony.LanguageServer.Abstractions.SemanticToken.<Clone>$() -> Nickelony.LanguageServer.Abstractions.SemanticToken!
+Nickelony.LanguageServer.Abstractions.SemanticToken.Character.get -> int
+Nickelony.LanguageServer.Abstractions.SemanticToken.Equals(Nickelony.LanguageServer.Abstractions.SemanticToken? other) -> bool
+Nickelony.LanguageServer.Abstractions.SemanticToken.HasModifier(string? modifier) -> bool
+Nickelony.LanguageServer.Abstractions.SemanticToken.Length.get -> int
+Nickelony.LanguageServer.Abstractions.SemanticToken.Line.get -> int
+Nickelony.LanguageServer.Abstractions.SemanticToken.Modifiers.get -> System.Collections.Generic.IReadOnlyList<string!>!
+Nickelony.LanguageServer.Abstractions.SemanticToken.SemanticToken(int line, int character, int length, string! type, System.Collections.Generic.IReadOnlyList<string!>! modifiers) -> void
+Nickelony.LanguageServer.Abstractions.SemanticToken.Type.get -> string!
+override Nickelony.LanguageServer.Abstractions.SemanticToken.Equals(object? obj) -> bool
+override Nickelony.LanguageServer.Abstractions.SemanticToken.GetHashCode() -> int
+override Nickelony.LanguageServer.Abstractions.SemanticToken.ToString() -> string!
+static Nickelony.LanguageServer.Abstractions.SemanticToken.operator !=(Nickelony.LanguageServer.Abstractions.SemanticToken? left, Nickelony.LanguageServer.Abstractions.SemanticToken? right) -> bool
+static Nickelony.LanguageServer.Abstractions.SemanticToken.operator ==(Nickelony.LanguageServer.Abstractions.SemanticToken? left, Nickelony.LanguageServer.Abstractions.SemanticToken? right) -> bool
+Nickelony.LanguageServer.Abstractions.SemanticTokensUpdatedEventArgs
+Nickelony.LanguageServer.Abstractions.SemanticTokensUpdatedEventArgs.FilePath.get -> string!
+Nickelony.LanguageServer.Abstractions.SemanticTokensUpdatedEventArgs.SemanticTokens.get -> System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Abstractions.SemanticToken!>!
+Nickelony.LanguageServer.Abstractions.SemanticTokensUpdatedEventArgs.SemanticTokensUpdatedEventArgs(string! filePath, System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Abstractions.SemanticToken!>! semanticTokens) -> void
+Nickelony.LanguageServer.Abstractions.ILanguageServerIntelliSenseProvider.GetHoverAsync(Nickelony.LanguageServer.Abstractions.LanguageServerHoverRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.IntelliSense.Hover.TextHoverInfo?>!
+Nickelony.LanguageServer.Abstractions.ILanguageServerIntelliSenseProvider.GetDefinitionAsync(Nickelony.LanguageServer.Abstractions.LanguageServerDefinitionRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionLocation?>!
+Nickelony.LanguageServer.Abstractions.ILanguageServerDocumentSymbolProvider.GetDocumentSymbolsAsync(Nickelony.LanguageServer.Abstractions.LanguageServerDocumentSymbolRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbol!>!>!
+Nickelony.LanguageServer.Abstractions.LanguageServerHoverRequest
+Nickelony.LanguageServer.Abstractions.LanguageServerHoverRequest.LanguageServerHoverRequest(string! filePath, string! documentText, Nickelony.IDEKit.Core.Text.TextPosition position) -> void
+Nickelony.LanguageServer.Abstractions.LanguageServerHoverRequest.FilePath.get -> string!
+Nickelony.LanguageServer.Abstractions.LanguageServerHoverRequest.DocumentText.get -> string!
+Nickelony.LanguageServer.Abstractions.LanguageServerHoverRequest.Position.get -> Nickelony.IDEKit.Core.Text.TextPosition
+Nickelony.LanguageServer.Abstractions.LanguageServerHoverRequest.<Clone>$() -> Nickelony.LanguageServer.Abstractions.LanguageServerHoverRequest!
+Nickelony.LanguageServer.Abstractions.LanguageServerHoverRequest.Equals(Nickelony.LanguageServer.Abstractions.LanguageServerHoverRequest? other) -> bool
+override Nickelony.LanguageServer.Abstractions.LanguageServerHoverRequest.Equals(object? obj) -> bool
+override Nickelony.LanguageServer.Abstractions.LanguageServerHoverRequest.GetHashCode() -> int
+override Nickelony.LanguageServer.Abstractions.LanguageServerHoverRequest.ToString() -> string!
+static Nickelony.LanguageServer.Abstractions.LanguageServerHoverRequest.operator !=(Nickelony.LanguageServer.Abstractions.LanguageServerHoverRequest? left, Nickelony.LanguageServer.Abstractions.LanguageServerHoverRequest? right) -> bool
+static Nickelony.LanguageServer.Abstractions.LanguageServerHoverRequest.operator ==(Nickelony.LanguageServer.Abstractions.LanguageServerHoverRequest? left, Nickelony.LanguageServer.Abstractions.LanguageServerHoverRequest? right) -> bool
+Nickelony.LanguageServer.Abstractions.LanguageServerDefinitionRequest
+Nickelony.LanguageServer.Abstractions.LanguageServerDefinitionRequest.LanguageServerDefinitionRequest(string! filePath, string! documentText, Nickelony.IDEKit.Core.Text.TextPosition position) -> void
+Nickelony.LanguageServer.Abstractions.LanguageServerDefinitionRequest.FilePath.get -> string!
+Nickelony.LanguageServer.Abstractions.LanguageServerDefinitionRequest.DocumentText.get -> string!
+Nickelony.LanguageServer.Abstractions.LanguageServerDefinitionRequest.Position.get -> Nickelony.IDEKit.Core.Text.TextPosition
+Nickelony.LanguageServer.Abstractions.LanguageServerDefinitionRequest.<Clone>$() -> Nickelony.LanguageServer.Abstractions.LanguageServerDefinitionRequest!
+Nickelony.LanguageServer.Abstractions.LanguageServerDefinitionRequest.Equals(Nickelony.LanguageServer.Abstractions.LanguageServerDefinitionRequest? other) -> bool
+override Nickelony.LanguageServer.Abstractions.LanguageServerDefinitionRequest.Equals(object? obj) -> bool
+override Nickelony.LanguageServer.Abstractions.LanguageServerDefinitionRequest.GetHashCode() -> int
+override Nickelony.LanguageServer.Abstractions.LanguageServerDefinitionRequest.ToString() -> string!
+static Nickelony.LanguageServer.Abstractions.LanguageServerDefinitionRequest.operator !=(Nickelony.LanguageServer.Abstractions.LanguageServerDefinitionRequest? left, Nickelony.LanguageServer.Abstractions.LanguageServerDefinitionRequest? right) -> bool
+static Nickelony.LanguageServer.Abstractions.LanguageServerDefinitionRequest.operator ==(Nickelony.LanguageServer.Abstractions.LanguageServerDefinitionRequest? left, Nickelony.LanguageServer.Abstractions.LanguageServerDefinitionRequest? right) -> bool
+Nickelony.LanguageServer.Abstractions.LanguageServerDocumentSymbolRequest
+Nickelony.LanguageServer.Abstractions.LanguageServerDocumentSymbolRequest.LanguageServerDocumentSymbolRequest(string! filePath, string! documentText) -> void
+Nickelony.LanguageServer.Abstractions.LanguageServerDocumentSymbolRequest.FilePath.get -> string!
+Nickelony.LanguageServer.Abstractions.LanguageServerDocumentSymbolRequest.DocumentText.get -> string!
+Nickelony.LanguageServer.Abstractions.LanguageServerDocumentSymbolRequest.<Clone>$() -> Nickelony.LanguageServer.Abstractions.LanguageServerDocumentSymbolRequest!
+Nickelony.LanguageServer.Abstractions.LanguageServerDocumentSymbolRequest.Equals(Nickelony.LanguageServer.Abstractions.LanguageServerDocumentSymbolRequest? other) -> bool
+override Nickelony.LanguageServer.Abstractions.LanguageServerDocumentSymbolRequest.Equals(object? obj) -> bool
+override Nickelony.LanguageServer.Abstractions.LanguageServerDocumentSymbolRequest.GetHashCode() -> int
+override Nickelony.LanguageServer.Abstractions.LanguageServerDocumentSymbolRequest.ToString() -> string!
+static Nickelony.LanguageServer.Abstractions.LanguageServerDocumentSymbolRequest.operator !=(Nickelony.LanguageServer.Abstractions.LanguageServerDocumentSymbolRequest? left, Nickelony.LanguageServer.Abstractions.LanguageServerDocumentSymbolRequest? right) -> bool
+static Nickelony.LanguageServer.Abstractions.LanguageServerDocumentSymbolRequest.operator ==(Nickelony.LanguageServer.Abstractions.LanguageServerDocumentSymbolRequest? left, Nickelony.LanguageServer.Abstractions.LanguageServerDocumentSymbolRequest? right) -> bool
+Nickelony.LanguageServer.Abstractions.LanguageServerFormattingRequest
+override Nickelony.LanguageServer.Abstractions.LanguageServerFormattingRequest.ToString() -> string!
+static Nickelony.LanguageServer.Abstractions.LanguageServerFormattingRequest.operator !=(Nickelony.LanguageServer.Abstractions.LanguageServerFormattingRequest? left, Nickelony.LanguageServer.Abstractions.LanguageServerFormattingRequest? right) -> bool
+static Nickelony.LanguageServer.Abstractions.LanguageServerFormattingRequest.operator ==(Nickelony.LanguageServer.Abstractions.LanguageServerFormattingRequest? left, Nickelony.LanguageServer.Abstractions.LanguageServerFormattingRequest? right) -> bool
+override Nickelony.LanguageServer.Abstractions.LanguageServerFormattingRequest.GetHashCode() -> int
+override Nickelony.LanguageServer.Abstractions.LanguageServerFormattingRequest.Equals(object? obj) -> bool
+Nickelony.LanguageServer.Abstractions.LanguageServerFormattingRequest.Equals(Nickelony.LanguageServer.Abstractions.LanguageServerFormattingRequest? other) -> bool
+Nickelony.LanguageServer.Abstractions.LanguageServerFormattingRequest.<Clone>$() -> Nickelony.LanguageServer.Abstractions.LanguageServerFormattingRequest!
+Nickelony.LanguageServer.Abstractions.LanguageServerReferenceRequest
+override Nickelony.LanguageServer.Abstractions.LanguageServerReferenceRequest.ToString() -> string!
+static Nickelony.LanguageServer.Abstractions.LanguageServerReferenceRequest.operator !=(Nickelony.LanguageServer.Abstractions.LanguageServerReferenceRequest? left, Nickelony.LanguageServer.Abstractions.LanguageServerReferenceRequest? right) -> bool
+static Nickelony.LanguageServer.Abstractions.LanguageServerReferenceRequest.operator ==(Nickelony.LanguageServer.Abstractions.LanguageServerReferenceRequest? left, Nickelony.LanguageServer.Abstractions.LanguageServerReferenceRequest? right) -> bool
+override Nickelony.LanguageServer.Abstractions.LanguageServerReferenceRequest.GetHashCode() -> int
+override Nickelony.LanguageServer.Abstractions.LanguageServerReferenceRequest.Equals(object? obj) -> bool
+Nickelony.LanguageServer.Abstractions.LanguageServerReferenceRequest.Equals(Nickelony.LanguageServer.Abstractions.LanguageServerReferenceRequest? other) -> bool
+Nickelony.LanguageServer.Abstractions.LanguageServerReferenceRequest.<Clone>$() -> Nickelony.LanguageServer.Abstractions.LanguageServerReferenceRequest!
+Nickelony.LanguageServer.Abstractions.ILanguageServerFormattingProvider.FormatDocumentAsync(Nickelony.LanguageServer.Abstractions.LanguageServerFormattingRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.LanguageServer.Abstractions.TextWorkspaceEdit?>!
+Nickelony.LanguageServer.Abstractions.ILanguageServerRenameProvider.RenameSymbolAsync(Nickelony.LanguageServer.Abstractions.LanguageServerRenameRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.LanguageServer.Abstractions.TextWorkspaceEdit?>!
+Nickelony.LanguageServer.Abstractions.LanguageServerFormattingRequest.LanguageServerFormattingRequest(string! filePath, string! documentText, Nickelony.LanguageServer.Abstractions.TextFormattingOptions! options) -> void
+Nickelony.LanguageServer.Abstractions.LanguageServerFormattingRequest.FilePath.get -> string!
+Nickelony.LanguageServer.Abstractions.LanguageServerRenameRequest.LanguageServerRenameRequest(string! filePath, string! documentText, Nickelony.IDEKit.Core.Text.TextPosition position, string! newName) -> void
+Nickelony.LanguageServer.Abstractions.ILanguageServerReferencesProvider.GetReferencesAsync(Nickelony.LanguageServer.Abstractions.LanguageServerReferenceRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Abstractions.TextReferenceLocation!>!>!
+Nickelony.LanguageServer.Abstractions.LanguageServerFormattingRequest.DocumentText.get -> string!
+Nickelony.LanguageServer.Abstractions.LanguageServerFormattingRequest.Options.get -> Nickelony.LanguageServer.Abstractions.TextFormattingOptions!
+Nickelony.LanguageServer.Abstractions.LanguageServerRenameRequest.FilePath.get -> string!
+Nickelony.LanguageServer.Abstractions.LanguageServerRenameRequest.DocumentText.get -> string!
+Nickelony.LanguageServer.Abstractions.LanguageServerRenameRequest.Position.get -> Nickelony.IDEKit.Core.Text.TextPosition
+Nickelony.LanguageServer.Abstractions.LanguageServerRenameRequest.NewName.get -> string!
+Nickelony.LanguageServer.Abstractions.LanguageServerReferenceRequest.LanguageServerReferenceRequest(string! filePath, string! documentText, Nickelony.IDEKit.Core.Text.TextPosition position, bool includeDeclaration = true) -> void
+Nickelony.LanguageServer.Abstractions.LanguageServerReferenceRequest.FilePath.get -> string!
+Nickelony.LanguageServer.Abstractions.LanguageServerReferenceRequest.DocumentText.get -> string!
+Nickelony.LanguageServer.Abstractions.LanguageServerReferenceRequest.Position.get -> Nickelony.IDEKit.Core.Text.TextPosition
+Nickelony.LanguageServer.Abstractions.LanguageServerReferenceRequest.IncludeDeclaration.get -> bool

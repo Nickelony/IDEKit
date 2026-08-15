@@ -5,4 +5,48 @@
     <AnalysisLevel Condition="'$(AnalysisLevel)' == ''">8.0-recommended</AnalysisLevel>
   </PropertyGroup>
 
+  <!--
+    Package-boundary guard: no Nickelony.IDEKit.* or Nickelony.KeyBindings.* package may reference the
+    workspace document-authority package. The AvalonEdit-to-Workspace bridge is
+    host-owned code, so a package that needs workspace integration must not
+    reintroduce the dependency. Nickelony.IDEKit.Workspace.Views is the one
+    member of the workspace family and references the document-authority
+    package by design. Test projects are exempt because they legitimately
+    reference the packages they test.
+  -->
+  <Target Name="GuardNoWorkspacePackageReferences"
+          AfterTargets="ResolveProjectReferences"
+          Condition="($(MSBuildProjectName.StartsWith('Nickelony.IDEKit.')) or $(MSBuildProjectName.StartsWith('Nickelony.KeyBindings.'))) and !$(MSBuildProjectName.EndsWith('.Tests')) and '$(MSBuildProjectName)' != 'Nickelony.IDEKit.Workspace.Views'">
+    <Error Condition="'%(ProjectReference.Filename)' == 'Nickelony.IDEKit.Workspace'"
+           Text="'$(MSBuildProjectName)' must not reference Nickelony.IDEKit.Workspace. The AvalonEdit-to-Workspace bridge is host-owned code, not a package dependency." />
+    <Error Condition="'%(PackageReference.Identity)' == 'Nickelony.IDEKit.Workspace'"
+           Text="'$(MSBuildProjectName)' must not reference Nickelony.IDEKit.Workspace. The AvalonEdit-to-Workspace bridge is host-owned code, not a package dependency." />
+  </Target>
+
+  <!--
+    Host-agnostic guard: the inverse of the workspace guard above. A package that claims to be
+    host-agnostic must not gain a UI-framework dependency, must not move to a -windows TFM, and must
+    not reference a WPF-typed sibling. The AvalonEdit family and KeyBindings.Wpf are the WPF-by-design
+    packages and are therefore excluded from the neutral list.
+  -->
+  <PropertyGroup>
+    <!-- Each list is wrapped in separators so a Contains(';name;') test matches every entry, including the first. -->
+    <HostAgnosticPackageNames>;Nickelony.IDEKit.Core;Nickelony.IDEKit.IntelliSense;Nickelony.IDEKit.JsonSchema;Nickelony.KeyBindings;Nickelony.IDEKit.Processes;Nickelony.IDEKit.Workspace;Nickelony.IDEKit.Workspace.Views;Nickelony.LanguageServer.Abstractions;Nickelony.LanguageServer.Client;Nickelony.LanguageServer.Provider;Nickelony.LanguageServer.Lua;Nickelony.LanguageServer.Roslyn;Nickelony.LanguageServer.CSharp;Nickelony.LanguageServer.VisualBasic;</HostAgnosticPackageNames>
+    <WpfTypedPackageNames>;Nickelony.IDEKit.AvalonEdit;Nickelony.IDEKit.AvalonEdit.LanguageFeatures;Nickelony.IDEKit.AvalonEdit.Markdown;Nickelony.IDEKit.AvalonEdit.TextMate;Nickelony.KeyBindings.Wpf;</WpfTypedPackageNames>
+    <AvaloniaTypedPackageNames>;Nickelony.IDEKit.AvaloniaEdit;Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures;Nickelony.IDEKit.AvaloniaEdit.Markdown;Nickelony.IDEKit.AvaloniaEdit.TextMate;</AvaloniaTypedPackageNames>
+  </PropertyGroup>
+
+  <Target Name="GuardHostAgnosticPackages"
+          BeforeTargets="CoreCompile"
+          Condition="$(HostAgnosticPackageNames.Contains(';$(MSBuildProjectName);'))">
+    <Error Condition="'$(UseWPF)' == 'true' or '$(UseWindowsForms)' == 'true'"
+           Text="'$(MSBuildProjectName)' is declared host-agnostic and must not enable WPF or Windows Forms." />
+    <Error Condition="$(TargetFramework.Contains('-windows'))"
+           Text="'$(MSBuildProjectName)' is declared host-agnostic and must not target a -windows framework." />
+    <Error Condition="$(WpfTypedPackageNames.Contains(';%(ProjectReference.Filename);'))"
+           Text="'$(MSBuildProjectName)' is declared host-agnostic and must not reference '%(ProjectReference.Filename)', which is a WPF-typed package." />
+    <Error Condition="$(AvaloniaTypedPackageNames.Contains(';%(ProjectReference.Filename);'))"
+           Text="'$(MSBuildProjectName)' is declared host-agnostic and must not reference '%(ProjectReference.Filename)', which is an Avalonia-typed package." />
+  </Target>
+
 </Project>

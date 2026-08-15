@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="LineStatusIconMarginBase.Class">
+      <summary>
+      Provides the shared marker plumbing for line-status margins that draw a replaceable icon on every
+      visible marked line and run a click action for it: the icon brush and geometry properties, the
+      centered and font-scaled drawing, and the left-press handling that resolves the clicked line.
+      </summary>
+    </member>
+    <member name="LineStatusIconMarginBase.Remarks">
+      <para>
+      The margin draws <see cref="IconGeometry"/> with <see cref="IconBrush"/>, scaled with the margin's
+      font size and centered in the reserved width. The geometry is authored for the design font size and
+      repositioned from its own bounds, so any authored origin works.
+      </para>
+      <para>
+      A left press resolves the visual line under the pointer - the click position comes from
+      <see cref="ResolveClickPosition"/>, which a subclass with an injectable click seam overrides - and
+      invokes <see cref="OnIconClicked"/>. A subclass that performed an action returns
+      <see langword="true"/>, which marks the press handled; a press that resolves to no line stays
+      untouched.
+      </para>
+      <para>
+      The properties are registered here so sibling margins share one implementation; a derived margin
+      registers its own icon defaults by overriding the property's default value. The reserved width and
+      the marker scale are inherited from <see cref="LineStatusMarginBase"/> and follow the margin's font
+      size.
+      </para>
+    </member>
+    <member name="IconBrushProperty">
+      <summary>
+      Identifies the <see cref="IconBrush"/> property.
+      </summary>
+      <remarks>
+      The base registration defaults to a neutral system gray; a derived margin overrides the property's
+      default value with its own default icon color.
+      </remarks>
+    </member>
+    <member name="IconGeometryProperty">
+      <summary>
+      Identifies the <see cref="IconGeometry"/> property.
+      </summary>
+      <remarks>
+      The base registration defaults to an empty geometry, which draws nothing; a derived margin overrides
+      the property's default value with its own icon geometry.
+      </remarks>
+    </member>
+    <member name="IconBrush">
+      <summary>
+      Gets or sets the brush used to draw the marker icon.
+      </summary>
+      <remarks>
+      A derived margin overrides the property's default value with its own default and documents that
+      default on its type; hosts should set the brush to their theme's marker color.
+      </remarks>
+      <exception cref="ArgumentNullException">The assigned brush is <see langword="null"/>.</exception>
+    </member>
+    <member name="IconGeometry">
+      <summary>
+      Gets or sets the geometry used to draw the marker icon.
+      </summary>
+      <remarks>
+      A derived margin overrides the property's default value with its own default icon and documents that
+      default on its type. The geometry is authored for the design font size and scaled and repositioned
+      from its own bounds, so any authored origin works.
+      </remarks>
+      <exception cref="ArgumentNullException">The assigned geometry is <see langword="null"/>.</exception>
+    </member>
+    <member name="ResolveClickPosition">
+      <summary>
+      Resolves the click position for a press event, in the margin's coordinate space.
+      </summary>
+      <remarks>
+      A subclass with an injectable click seam (a test seam, because a synthetic event carries no
+      deterministic position) overrides this member to consult it.
+      </remarks>
+      <param name="e">The press event.</param>
+      <returns>The click position in the margin's coordinate space.</returns>
+    </member>
+    <member name="MarkerLayout">
+      <summary>
+      The parts of a marker transform that do not vary from marked line to marked line.
+      </summary>
+      <remarks>
+      <c>HasIcon</c> reports whether the icon geometry has bounds and therefore paints;
+      <c>IconHeight</c> is the scaled icon height, used to center the icon in the line box; and
+      <c>BaseMatrix</c> carries the scale and horizontal placement every marker shares, so a marker adds
+      its icon's vertical offset to the matrix's offset-Y to place itself.
+      </remarks>
+    </member>
+    <member name="OnIconClicked">
+      <summary>
+      Runs the margin's click action for the icon of the clicked visual line.
+      </summary>
+      <remarks>
+      The call runs for a left press that resolved to a visual line; returning <see langword="true"/> marks
+      the press handled. The base implementation does nothing.
+      </remarks>
+      <param name="visualLine">The visual line under the click position.</param>
+      <param name="position">The click position in the margin's coordinate space.</param>
+      <returns><see langword="true"/> when the press was handled; otherwise, <see langword="false"/>.</returns>
+    </member>
+    <member name="TryGetVisualLineAt">
+      <summary>
+      Resolves the visual line at the specified position in the margin's coordinate space.
+      </summary>
+      <param name="position">The position in the margin's coordinate space.</param>
+      <param name="visualLine">The resolved visual line when one was found.</param>
+      <returns><see langword="true"/> when the position resolved to a visual line; otherwise, <see langword="false"/>.</returns>
+    </member>
+    <member name="GetMarkerLayout">
+      <summary>
+      Gets the marker layout for the current marker properties, computing it when the cached one is stale.
+      </summary>
+      <param name="iconGeometry">The icon geometry currently assigned, which the caller already read.</param>
+      <returns>The marker layout for the current marker properties.</returns>
+    </member>
+    <member name="CreateMarkerLayout">
+      <summary>
+      Computes the parts of a marker transform that every marked line shares.
+      </summary>
+      <param name="iconGeometry">The icon geometry to compute the layout for.</param>
+      <returns>The computed marker layout; the default layout when the icon has no bounds.</returns>
+    </member>
+  </members>
+</doc>

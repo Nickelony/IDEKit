@@ -1,0 +1,78 @@
+#nullable enable
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderer
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderOptions
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderOptions.<Clone>$() -> Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderOptions!
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderOptions.AllowCodeBlockSelection.get -> bool
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderOptions.AllowCodeBlockSelection.init -> void
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderOptions.AllowContentInteraction.get -> bool
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderOptions.AllowContentInteraction.init -> void
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderOptions.AllowScrolling.get -> bool
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderOptions.AllowScrolling.init -> void
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderOptions.AllowWheelChaining.get -> bool
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderOptions.AllowWheelChaining.init -> void
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderOptions.CustomHighlightingInstaller.get -> System.Func<AvaloniaEdit.TextEditor!, string?, bool>?
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderOptions.CustomHighlightingInstaller.init -> void
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderOptions.Equals(Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderOptions? other) -> bool
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderOptions.HighlightingAliases.get -> System.Collections.Generic.IReadOnlyDictionary<string!, string!>!
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderOptions.HighlightingAliases.init -> void
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderOptions.Logger.get -> Microsoft.Extensions.Logging.ILogger?
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderOptions.Logger.init -> void
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderOptions.MarkdownRenderOptions() -> void
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderOptions.OpenExternalUri.get -> System.Func<System.Uri!, bool>?
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderOptions.OpenExternalUri.init -> void
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderOptions.OpenHyperlink.get -> System.Func<System.Uri!, bool>?
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderOptions.OpenHyperlink.init -> void
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderOptions.SupportedHyperlinkSchemes.get -> System.Collections.Generic.IReadOnlySet<string!>!
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderOptions.SupportedHyperlinkSchemes.init -> void
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderTheme
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderTheme.<Clone>$() -> Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderTheme!
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderTheme.BlockSpacing.get -> double
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderTheme.BlockSpacing.init -> void
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderTheme.BodyFontFamily.get -> Avalonia.Media.FontFamily!
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderTheme.BodyFontFamily.init -> void
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderTheme.BodyFontSize.get -> double
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderTheme.BodyFontSize.init -> void
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderTheme.BorderBlendRatio.get -> double
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderTheme.BorderBlendRatio.init -> void
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderTheme.CodeBackgroundBlendRatio.get -> double
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderTheme.CodeBackgroundBlendRatio.init -> void
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderTheme.CodeFontFamily.get -> Avalonia.Media.FontFamily!
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderTheme.CodeFontFamily.init -> void
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderTheme.CodeFontSize.get -> double
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderTheme.CodeFontSize.init -> void
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderTheme.CodeMaxWidth.get -> double
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderTheme.CodeMaxWidth.init -> void
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderTheme.Equals(Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderTheme? other) -> bool
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderTheme.FlowDirection.get -> Avalonia.Media.FlowDirection
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderTheme.FlowDirection.init -> void
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderTheme.Foreground.get -> Avalonia.Media.ISolidColorBrush!
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderTheme.Foreground.init -> void
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderTheme.HeadingFontSizeScales.get -> System.Collections.Generic.IReadOnlyList<double>!
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderTheme.HeadingFontSizeScales.init -> void
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderTheme.LinkForeground.get -> Avalonia.Media.ISolidColorBrush!
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderTheme.LinkForeground.init -> void
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderTheme.MarkdownRenderTheme() -> void
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderTheme.MaxHeight.get -> double
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderTheme.MaxHeight.init -> void
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderTheme.MaxVisibleCodeBlockLines.get -> int
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderTheme.MaxVisibleCodeBlockLines.init -> void
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderTheme.MaxWidth.get -> double
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderTheme.MaxWidth.init -> void
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderTheme.SurfaceBackground.get -> Avalonia.Media.ISolidColorBrush!
+Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderTheme.SurfaceBackground.init -> void
+override Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderOptions.Equals(object? obj) -> bool
+override Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderOptions.GetHashCode() -> int
+override Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderOptions.ToString() -> string!
+override Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderTheme.Equals(object? obj) -> bool
+override Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderTheme.GetHashCode() -> int
+override Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderTheme.ToString() -> string!
+static Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderer.CreateCodeBlockEditor(string? language, string! code, Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderTheme? theme = null, Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderOptions? options = null) -> AvaloniaEdit.TextEditor!
+static Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderer.CreateContent(string! content, Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderTheme? theme = null, Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderOptions? options = null) -> Avalonia.Controls.Control!
+static Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderer.CreateContentTree(string! content, Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderTheme? theme = null, Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderOptions? options = null) -> Avalonia.Controls.Control!
+static Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderer.CreatePlainTextContent(string! content, Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderTheme? theme = null, Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderOptions? options = null) -> Avalonia.Controls.Control!
+static Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderOptions.Default.get -> Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderOptions!
+static Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderOptions.operator !=(Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderOptions? left, Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderOptions? right) -> bool
+static Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderOptions.operator ==(Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderOptions? left, Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderOptions? right) -> bool
+static Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderTheme.Default.get -> Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderTheme!
+static Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderTheme.operator !=(Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderTheme? left, Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderTheme? right) -> bool
+static Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderTheme.operator ==(Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderTheme? left, Nickelony.IDEKit.AvaloniaEdit.Markdown.MarkdownRenderTheme? right) -> bool

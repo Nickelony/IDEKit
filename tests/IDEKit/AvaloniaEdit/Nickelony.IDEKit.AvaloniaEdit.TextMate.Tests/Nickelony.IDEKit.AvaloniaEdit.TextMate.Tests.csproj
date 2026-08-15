@@ -1,0 +1,45 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <IsPackable>false</IsPackable>
+    <RunSettingsFilePath>test.runsettings</RunSettingsFilePath>
+    <IsTestProject>true</IsTestProject>
+    <!-- Selects the AvaloniaEdit branch of the shared TextMate test source under
+         shared\Editor.TextMate.Tests. -->
+    <DefineConstants>$(DefineConstants);AVALONIAEDIT</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="coverlet.collector" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="MSTest.TestAdapter" />
+    <PackageReference Include="MSTest.TestFramework" />
+    <PackageReference Include="Avalonia.Headless" />
+    <PackageReference Include="Avalonia.Themes.Fluent" />
+    <PackageReference Include="TextMateSharp.Grammars" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\src\IDEKit\AvaloniaEdit\Nickelony.IDEKit.AvaloniaEdit.TextMate\Nickelony.IDEKit.AvaloniaEdit.TextMate.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\..\..\shared\TestHelpers\AvaloniaTestApp.cs" Link="shared\AvaloniaTestApp.cs" />
+    <Compile Include="..\..\..\..\shared\TestHelpers\AvaloniaTestClassAttribute.cs" Link="shared\AvaloniaTestClassAttribute.cs" />
+    <Compile Include="..\..\..\..\shared\TestHelpers\AvaloniaTestHost.cs" Link="shared\AvaloniaTestHost.cs" />
+    <Compile Include="..\..\..\..\shared\TestHelpers\AvaloniaTestMethodAttribute.cs" Link="shared\AvaloniaTestMethodAttribute.cs" />
+    <Compile Include="..\..\..\..\shared\TestHelpers\CapturingLogger.cs" Link="shared\CapturingLogger.cs" />
+    <!-- Shared binding tests: one body compiled into the AvalonEdit and AvaloniaEdit suites, with a
+         per-binding namespace, engine using, and test-class attribute selected by the AVALONIAEDIT define. -->
+    <Compile Include="..\..\..\..\shared\Editor.TextMate.Tests\**\*.cs" Link="shared\Editor.TextMate.Tests\%(RecursiveDir)%(Filename)%(Extension)" />
+    <Compile Include="..\..\..\TestSupport\TestCategories.cs" Link="TestSupport\TestCategories.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
+    <Using Include="Nickelony.IDEKit.Testing" />
+    <Using Include="Nickelony.Testing" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,11 @@
+#nullable enable
+static Nickelony.KeyBindings.Wpf.KeyBindingDispatcherExtensions.HandleKeyDown<TCommandId>(this Nickelony.KeyBindings.KeyBindingDispatcher<TCommandId>! dispatcher, System.Windows.Input.KeyEventArgs! e, string? context, Nickelony.KeyBindings.Wpf.KeyDownHandlingOptions? options = null) -> Nickelony.KeyBindings.KeyChordDispatchResult
+*REMOVED*static Nickelony.KeyBindings.Wpf.KeyBindingDispatcherExtensions.TryHandleKeyDown<TCommandId>(this Nickelony.KeyBindings.KeyBindingDispatcher<TCommandId>! dispatcher, System.Windows.Input.KeyEventArgs! e, string? context, Nickelony.KeyBindings.Wpf.KeyDownHandlingOptions? options = null) -> Nickelony.KeyBindings.KeyChordDispatchResult
+*REMOVED*static Nickelony.KeyBindings.Wpf.KeyCodeMapper.ToKey(Nickelony.KeyBindings.KeyCode keyCode) -> System.Windows.Input.Key
+*REMOVED*static Nickelony.KeyBindings.Wpf.KeyCodeMapper.ToKeyModifiers(System.Windows.Input.ModifierKeys modifiers) -> Nickelony.KeyBindings.KeyModifiers
+*REMOVED*static Nickelony.KeyBindings.Wpf.KeyCodeMapper.ToModifierKeys(Nickelony.KeyBindings.KeyModifiers modifiers) -> System.Windows.Input.ModifierKeys
+static Nickelony.KeyBindings.Wpf.KeyCodeMapper.ToWpfKey(Nickelony.KeyBindings.KeyCode keyCode) -> System.Windows.Input.Key
+static Nickelony.KeyBindings.Wpf.KeyCodeMapper.ToKeyModifierSet(System.Windows.Input.ModifierKeys modifiers) -> Nickelony.KeyBindings.KeyModifierSet
+static Nickelony.KeyBindings.Wpf.KeyCodeMapper.ToWpfModifierKeys(Nickelony.KeyBindings.KeyModifierSet modifiers) -> System.Windows.Input.ModifierKeys
+*REMOVED*Nickelony.KeyBindings.Wpf.KeyGestureDisplayTextFormatter.GetDisplayText(Nickelony.KeyBindings.KeyChord keyChord) -> string!
+*REMOVED*Nickelony.KeyBindings.Wpf.KeyGestureDisplayTextFormatter.GetDisplayText(Nickelony.KeyBindings.KeyCombo keyCombo) -> string!

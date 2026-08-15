@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="SubscribeInputStages">
+      <summary>
+      Subscribes the two text-input stages that carry the commit-character policy.
+      </summary>
+      <param name="textArea">The text area to subscribe.</param>
+      <param name="previewStage">The handler for the stage that runs before other input subscribers.</param>
+      <param name="enteringStage">The handler for the stage that repeats the check for other input.</param>
+      <returns>A subscription that removes both handlers when it is disposed.</returns>
+    </member>
+    <member name="SubscribeItemClick">
+      <summary>
+      Subscribes the handler that selects the clicked completion-list item.
+      </summary>
+      <param name="listBox">The completion-list list box to subscribe.</param>
+      <param name="handler">The handler that receives the list box and the click event.</param>
+      <returns>A subscription that removes the handler when it is disposed.</returns>
+    </member>
+    <member name="Post">
+      <summary>
+      Posts the callback to the dispatcher at the given priority.
+      </summary>
+      <param name="dispatcher">The dispatcher to post to.</param>
+      <param name="callback">The callback to run.</param>
+      <param name="priority">The priority to post the callback at.</param>
+    </member>
+  </members>
+</doc>

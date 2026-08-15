@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>Nickelony.LanguageServer.Abstractions</RootNamespace>
+    <AssemblyName>Nickelony.LanguageServer.Abstractions</AssemblyName>
+    <PackageId>Nickelony.LanguageServer.Abstractions</PackageId>
+    <Description>Lightweight editor IntelliSense lifecycle contracts with no third-party dependencies; references only Nickelony.IDEKit.Core and Nickelony.IDEKit.IntelliSense and no language-protocol implementation.</Description>
+    <PackageTags>language-server;lsp;editor;intellisense;nickelony</PackageTags>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <WarningsAsErrors>CS1591;RS0016;RS0017</WarningsAsErrors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Public-API surface baseline: an unlisted public member fails the build (RS0016/RS0017). -->
+    <PackageReference Include="Microsoft.CodeAnalysis.PublicApiAnalyzers" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\IDEKit\Nickelony.IDEKit.Core\Nickelony.IDEKit.Core.csproj" />
+    <ProjectReference Include="..\..\IDEKit\Nickelony.IDEKit.IntelliSense\Nickelony.IDEKit.IntelliSense.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\..\shared\Infrastructure\OptionalText.cs" Link="Infrastructure\OptionalText.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+    <None Include="..\..\..\icons\$(PackageIcon)" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+</Project>

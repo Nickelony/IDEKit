@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <IsPackable>false</IsPackable>
+    <RunSettingsFilePath>test.runsettings</RunSettingsFilePath>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="coverlet.collector" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="MSTest.TestAdapter" />
+    <PackageReference Include="MSTest.TestFramework" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\src\IDEKit\AvalonEdit\Nickelony.IDEKit.AvalonEdit\Nickelony.IDEKit.AvalonEdit.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\..\..\shared\TestHelpers\ContractEditTarget.cs" Link="shared\ContractEditTarget.cs" />
+    <Compile Include="..\..\..\..\shared\TestHelpers\RecordingEditTarget.cs" Link="shared\RecordingEditTarget.cs" />
+    <Compile Include="..\..\..\..\shared\TestHelpers\TestBitmapRendering.cs" Link="shared\TestBitmapRendering.cs" />
+    <Compile Include="..\..\..\..\shared\TestHelpers\WPFTestHost.cs" Link="shared\WPFTestHost.cs" />
+    <!-- Shared binding tests: one body compiled into the AvalonEdit and AvaloniaEdit suites, with a
+         per-binding namespace, engine using, and test-class attribute selected by the AVALONIAEDIT define. -->
+    <Compile Include="..\..\..\..\shared\Editor.Tests\**\*.cs" Link="shared\Editor.Tests\%(RecursiveDir)%(Filename)%(Extension)" />
+    <Compile Include="..\..\..\TestSupport\TemporaryDirectory.cs" Link="TestSupport\TemporaryDirectory.cs" />
+    <Compile Include="..\..\..\TestSupport\TestCategories.cs" Link="TestSupport\TestCategories.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
+    <Using Include="Nickelony.IDEKit.Testing" />
+    <Using Include="Nickelony.Testing" />
+  </ItemGroup>
+
+</Project>

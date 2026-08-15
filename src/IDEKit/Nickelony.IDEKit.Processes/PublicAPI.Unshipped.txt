@@ -1,0 +1,17 @@
+#nullable enable
+*REMOVED*Nickelony.IDEKit.Processes.ProcessRunRequest.Arguments.get -> string!
+*REMOVED*Nickelony.IDEKit.Processes.ProcessRunRequest.Arguments.init -> void
+Nickelony.IDEKit.Processes.IProcessHandle.ProcessId.get -> int
+Nickelony.IDEKit.Processes.ProcessRunRequest.RawArguments.get -> string!
+Nickelony.IDEKit.Processes.ProcessRunRequest.RawArguments.init -> void
+Nickelony.IDEKit.Processes.ProcessRunResult.ProcessId.get -> int?
+Nickelony.IDEKit.Processes.ProcessRunResult.ProcessId.init -> void
+Nickelony.IDEKit.Processes.ProcessRunResult.Succeeded.get -> bool
+Nickelony.IDEKit.Processes.IProcessHandle.StandardErrorTruncated.get -> bool
+Nickelony.IDEKit.Processes.IProcessHandle.StandardOutputTruncated.get -> bool
+Nickelony.IDEKit.Processes.ProcessRunResult.StandardErrorTruncated.get -> bool
+Nickelony.IDEKit.Processes.ProcessRunResult.StandardErrorTruncated.init -> void
+Nickelony.IDEKit.Processes.ProcessRunResult.StandardOutputTruncated.get -> bool
+Nickelony.IDEKit.Processes.ProcessRunResult.StandardOutputTruncated.init -> void
+Nickelony.IDEKit.Processes.ProcessRunnerOptions.MaxCapturedCharactersPerStream.get -> int?
+Nickelony.IDEKit.Processes.ProcessRunnerOptions.MaxCapturedCharactersPerStream.init -> void

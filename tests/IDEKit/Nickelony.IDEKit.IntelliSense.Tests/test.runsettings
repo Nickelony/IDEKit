@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <RunConfiguration>
+    <!--
+      The suite drives completion and code-action request pipelines, several of which park on gates while
+      awaiting a resolve callback or a superseding request. The session timeout turns a wedged test into a
+      failed run instead of an indefinitely hanging one; the budget stays deliberately generous so a
+      loaded machine cannot abort a healthy session.
+    -->
+    <TestSessionTimeout>300000</TestSessionTimeout>
+  </RunConfiguration>
+</RunSettings>

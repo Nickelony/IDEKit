@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>Nickelony.KeyBindings.Avalonia</RootNamespace>
+    <AssemblyName>Nickelony.KeyBindings.Avalonia</AssemblyName>
+    <PackageId>Nickelony.KeyBindings.Avalonia</PackageId>
+    <Description>Avalonia adapter for Nickelony.KeyBindings: Avalonia key and modifier mapping, KeyEventArgs conversion, and key-down dispatch for cross-platform Avalonia hosts.</Description>
+    <PackageTags>text-editor;editor;avalonia;commands;shortcuts;key-bindings;nickelony</PackageTags>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <WarningsAsErrors>CS1591;RS0016;RS0017</WarningsAsErrors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Public-API surface baseline: an unlisted public member fails the build (RS0016/RS0017). -->
+    <PackageReference Include="Microsoft.CodeAnalysis.PublicApiAnalyzers" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Avalonia is cross-platform, so this adapter targets net8.0 (not net8.0-windows) like the
+         toolkit-free display-text leaves; only the input model (Avalonia.Input) is used. -->
+    <PackageReference Include="Avalonia" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Nickelony.KeyBindings\Nickelony.KeyBindings.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+    <None Include="..\..\..\icons\$(PackageIcon)" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+</Project>

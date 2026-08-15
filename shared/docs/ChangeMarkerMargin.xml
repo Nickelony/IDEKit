@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="ChangeMarkerMargin.Class">
+      <summary>
+      Displays a marker beside every visible marked line reported by an <see cref="ILineStatusSource"/>.
+      </summary>
+      <remarks>
+      <para>
+      The source is queried during rendering. A source that implements
+      <see cref="IChangeNotificationSource"/> is followed while the margin is connected to a text view;
+      a source without notifications requires the host to invalidate the margin when its marked lines change.
+      </para>
+      <para>
+      The marker and the reserved width scale with the margin's font size.
+      </para>
+      <para>
+      The bar drawing is this margin's non-normative sample: a 4-DIP <see cref="MarkerBrush"/> bar, sized
+      to the familiar diff-view look instead of the 16-DIP reserved width the base class uses for icon
+      margins. A host that wants its own identity assigns <see cref="MarkerBrush"/> and
+      <see cref="LineStatusMarginBase.MarginWidth"/>; a derived margin can override
+      <see cref="LineStatusMarginBase.DrawMarker"/> for a different marker shape, or derive from
+      <see cref="LineStatusMarginBase"/> directly for a different marker model.
+      </para>
+      </remarks>
+    </member>
+    <member name="SampleMarkerBrush">
+      <summary>
+      Gets the sample marker brush the margin installs as its non-normative default: a blue brush
+      suitable for a change bar.
+      </summary>
+      <remarks>
+      The default exists so a change-marker margin is visible without configuration. A host that wants
+      its own identity assigns <see cref="MarkerBrush"/> (or overrides the property's default value in a
+      derived margin).
+      </remarks>
+    </member>
+    <member name="MarkerBrushProperty">
+      <summary>
+      Identifies the <see cref="MarkerBrush"/> property.
+      </summary>
+    </member>
+    <member name="MarkerBrush">
+      <summary>
+      Gets or sets the brush used to draw change markers.
+      </summary>
+      <remarks>
+      The default is a sample value chosen to be visible in common themes; hosts should set it to
+      match their own theme.
+      </remarks>
+      <exception cref="ArgumentNullException">The assigned brush is <see langword="null"/>.</exception>
+    </member>
+    <member name="ChangeMarkerMargin">
+      <summary>
+      Initializes a new instance of the <see cref="ChangeMarkerMargin"/> class.
+      </summary>
+      <param name="markerSource">The source whose marked lines are rendered.</param>
+      <exception cref="ArgumentNullException"><paramref name="markerSource"/> is <see langword="null"/>.</exception>
+    </member>
+  </members>
+</doc>

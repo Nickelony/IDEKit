@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>Nickelony.IDEKit.Processes</RootNamespace>
+    <AssemblyName>Nickelony.IDEKit.Processes</AssemblyName>
+    <PackageId>Nickelony.IDEKit.Processes</PackageId>
+    <Description>Run-to-completion external-process execution for compiler, formatter, linter, and generator integration.</Description>
+    <PackageTags>process;process-runner;batch;text-editor;nickelony</PackageTags>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <WarningsAsErrors>CS1591;RS0016;RS0017</WarningsAsErrors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Public-API surface baseline: an unlisted public member fails the build (RS0016/RS0017). -->
+    <PackageReference Include="Microsoft.CodeAnalysis.PublicApiAnalyzers" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Nickelony.IDEKit.Processes.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+    <None Include="..\..\..\icons\$(PackageIcon)" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+</Project>

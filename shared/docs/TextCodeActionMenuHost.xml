@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="ApplyPlacement">
+      <summary>
+      Places the menu at <paramref name="anchor"/> relative to <paramref name="placementTarget"/>.
+      </summary>
+      <param name="menu">The menu to place.</param>
+      <param name="placementTarget">The element the anchor is relative to.</param>
+      <param name="anchor">The menu's top-left position, relative to <paramref name="placementTarget"/>.</param>
+    </member>
+    <member name="Close">
+      <summary>
+      Closes the menu.
+      </summary>
+      <param name="menu">The menu to close.</param>
+    </member>
+    <member name="TryFocus">
+      <summary>
+      Restores keyboard focus to <paramref name="element"/> when it can receive focus.
+      </summary>
+      <param name="element">The element that held focus before the menu opened, if any.</param>
+      <returns><see langword="true"/> when focus was restored; otherwise, <see langword="false"/>.</returns>
+    </member>
+  </members>
+</doc>

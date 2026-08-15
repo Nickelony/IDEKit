@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <RunConfiguration>
+    <!--
+      The suite contains long-running characterization tests (large documents and diffs) plus
+      concurrency tests that park runs on gates. The session timeout turns a wedged test into a
+      failed run instead of an indefinitely hanging one; the budget stays deliberately generous so
+      a loaded machine cannot abort a healthy session.
+    -->
+    <TestSessionTimeout>300000</TestSessionTimeout>
+  </RunConfiguration>
+</RunSettings>

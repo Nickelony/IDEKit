@@ -1,0 +1,44 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>Nickelony.LanguageServer.Roslyn</RootNamespace>
+    <AssemblyName>Nickelony.LanguageServer.Roslyn</AssemblyName>
+    <PackageId>Nickelony.LanguageServer.Roslyn</PackageId>
+    <Description>Shared Roslyn language-server core for the Nickelony Language Server family, driving Microsoft's Roslyn language server for the C# and Visual Basic family.</Description>
+    <PackageTags>language-server;lsp;roslyn;visual-basic;intellisense;nickelony</PackageTags>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <WarningsAsErrors>CS1591;RS0016;RS0017</WarningsAsErrors>
+    <!-- CA1848 ("use LoggerMessage delegates") is deliberately not enforced for this package, for the same reason as
+         the other provider packages: messages go through the ILogger extension methods for readability and low
+         call-site churn, and they are low-frequency lifecycle and diagnostic messages rather than hot-path work. -->
+    <NoWarn>$(NoWarn);CA1848</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Public-API surface baseline: an unlisted public member fails the build (RS0016/RS0017). -->
+    <PackageReference Include="Microsoft.CodeAnalysis.PublicApiAnalyzers" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Nickelony.LanguageServer.Abstractions\Nickelony.LanguageServer.Abstractions.csproj" />
+    <ProjectReference Include="..\Nickelony.LanguageServer.Client\Nickelony.LanguageServer.Client.csproj" />
+    <ProjectReference Include="..\Nickelony.LanguageServer.Provider\Nickelony.LanguageServer.Provider.csproj" />
+    <ProjectReference Include="..\..\IDEKit\Nickelony.IDEKit.Core\Nickelony.IDEKit.Core.csproj" />
+    <ProjectReference Include="..\..\IDEKit\Nickelony.IDEKit.IntelliSense\Nickelony.IDEKit.IntelliSense.csproj" />
+  </ItemGroup>
+
+  <!-- The package consumes the Provider assembly's internal response mapping (the diagnostics parser and the
+       language-neutral mapping) through its InternalsVisibleTo grant instead of linking shared files: compiling the
+       same internal type twice makes a used name ambiguous (CS0436). Do not link shared/Protocol/LspMethodNames.cs
+       or shared/Infrastructure/OptionalText.cs here. -->
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+    <None Include="..\..\..\icons\$(PackageIcon)" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+</Project>

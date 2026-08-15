@@ -1,0 +1,79 @@
+#nullable enable
+*REMOVED*Nickelony.IDEKit.IntelliSense.DocumentSymbols.DocumentSymbolProjection<TItem>.DataSelector.init -> void
+*REMOVED*Nickelony.IDEKit.IntelliSense.DocumentSymbols.DocumentSymbolProjection<TItem>.Deconstruct(out System.Func<TItem, string!>! NameSelector, out System.Func<TItem, Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind>! KindSelector, out System.Func<TItem, object?>? DataSelector, out System.Func<TItem, Nickelony.IDEKit.Core.Text.TextRange?>? RangeSelector, out System.Func<TItem, Nickelony.IDEKit.Core.Text.TextRange?>? SelectionRangeSelector, out System.Func<TItem, string?>? DetailSelector) -> void
+*REMOVED*Nickelony.IDEKit.IntelliSense.DocumentSymbols.DocumentSymbolProjection<TItem>.DetailSelector.init -> void
+*REMOVED*Nickelony.IDEKit.IntelliSense.DocumentSymbols.DocumentSymbolProjection<TItem>.DocumentSymbolProjection() -> void
+*REMOVED*Nickelony.IDEKit.IntelliSense.DocumentSymbols.DocumentSymbolProjection<TItem>.DocumentSymbolProjection(System.Func<TItem, string!>! NameSelector, System.Func<TItem, Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind>! KindSelector, System.Func<TItem, object?>? DataSelector = null, System.Func<TItem, Nickelony.IDEKit.Core.Text.TextRange?>? RangeSelector = null, System.Func<TItem, Nickelony.IDEKit.Core.Text.TextRange?>? SelectionRangeSelector = null, System.Func<TItem, string?>? DetailSelector = null) -> void
+*REMOVED*Nickelony.IDEKit.IntelliSense.DocumentSymbols.DocumentSymbolProjection<TItem>.KindSelector.init -> void
+*REMOVED*Nickelony.IDEKit.IntelliSense.DocumentSymbols.DocumentSymbolProjection<TItem>.NameSelector.init -> void
+*REMOVED*Nickelony.IDEKit.IntelliSense.DocumentSymbols.DocumentSymbolProjection<TItem>.RangeSelector.init -> void
+*REMOVED*Nickelony.IDEKit.IntelliSense.DocumentSymbols.DocumentSymbolProjection<TItem>.SelectionRangeSelector.init -> void
+*REMOVED*static Nickelony.IDEKit.IntelliSense.DocumentSymbols.DocumentSymbolOutlineBuilder.BuildFlatOutline<TItem>(System.Collections.Generic.IReadOnlyList<TItem>! items, Nickelony.IDEKit.IntelliSense.DocumentSymbols.DocumentSymbolProjection<TItem> projection) -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbol!>!
+*REMOVED*static Nickelony.IDEKit.IntelliSense.DocumentSymbols.DocumentSymbolOutlineBuilder.BuildGroupedOutline<TGroup, TItem>(System.Collections.Generic.IReadOnlyList<TGroup>! groups, Nickelony.IDEKit.IntelliSense.DocumentSymbols.DocumentSymbolProjection<TGroup> groupProjection, System.Func<TGroup, System.Collections.Generic.IReadOnlyList<TItem>!>! groupItemsSelector, Nickelony.IDEKit.IntelliSense.DocumentSymbols.DocumentSymbolProjection<TItem> itemProjection) -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbol!>!
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.DocumentSymbolProjection<TItem>.<Clone>$() -> Nickelony.IDEKit.IntelliSense.DocumentSymbols.DocumentSymbolProjection<TItem>!
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.DocumentSymbolProjection<TItem>.DocumentSymbolProjection(System.Func<TItem, string!>! nameSelector, System.Func<TItem, Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind>! kindSelector, System.Func<TItem, object?>? dataSelector = null, System.Func<TItem, Nickelony.IDEKit.Core.Text.TextRange?>? rangeSelector = null, System.Func<TItem, Nickelony.IDEKit.Core.Text.TextRange?>? selectionRangeSelector = null, System.Func<TItem, string?>? detailSelector = null) -> void
+static Nickelony.IDEKit.IntelliSense.DocumentSymbols.DocumentSymbolOutlineBuilder.BuildFlatOutline<TItem>(System.Collections.Generic.IReadOnlyList<TItem>! items, Nickelony.IDEKit.IntelliSense.DocumentSymbols.DocumentSymbolProjection<TItem>! projection) -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbol!>!
+static Nickelony.IDEKit.IntelliSense.DocumentSymbols.DocumentSymbolOutlineBuilder.BuildGroupedOutline<TGroup, TItem>(System.Collections.Generic.IReadOnlyList<TGroup>! groups, Nickelony.IDEKit.IntelliSense.DocumentSymbols.DocumentSymbolProjection<TGroup>! groupProjection, System.Func<TGroup, System.Collections.Generic.IReadOnlyList<TItem>!>! groupItemsSelector, Nickelony.IDEKit.IntelliSense.DocumentSymbols.DocumentSymbolProjection<TItem>! itemProjection) -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbol!>!
+Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionContext
+Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionContext.CaretOffset.get -> int
+Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionContext.DocumentText.get -> string!
+Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionContext.Equals(Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionContext? other) -> bool
+Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionContext.SelectionEndOffset.get -> int
+Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionContext.SelectionStartOffset.get -> int
+Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionContext.TextCodeActionContext(string! documentText, int caretOffset, int selectionStartOffset, int selectionEndOffset) -> void
+override Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionContext.GetHashCode() -> int
+static Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionContext.operator !=(Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionContext? left, Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionContext? right) -> bool
+static Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionContext.operator ==(Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionContext? left, Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionContext? right) -> bool
+override Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionContext.ToString() -> string!
+override Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionContext.Equals(object? obj) -> bool
+Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionDocumentText
+Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionDocumentText.Text.get -> string!
+Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionDocumentText.TextLength.get -> int
+override Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionDocumentText.ToString() -> string!
+static Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionContext.FromDocument(Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionDocumentText! document, int caretOffset, int selectionStartOffset, int selectionEndOffset) -> Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionContext!
+static Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionDocumentText.FromFactory(int textLength, System.Func<string!>! materialize) -> Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionDocumentText!
+static Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionDocumentText.FromText(string! text) -> Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionDocumentText!
+*REMOVED*~override Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameter.Equals(object obj) -> bool
+*REMOVED*Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameter
+*REMOVED*Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameter.Equals(Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameter other) -> bool
+*REMOVED*Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameter.Index.get -> int?
+*REMOVED*Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameter.IsNone.get -> bool
+*REMOVED*Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameter.IsSpecified.get -> bool
+*REMOVED*Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameter.TextSignatureActiveParameter() -> void
+*REMOVED*Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelp.TextSignatureHelp(System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureInformation!>! signatures, int activeSignatureIndex = 0, Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameter activeParameter = default(Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameter)) -> void
+*REMOVED*Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureInformation.TextSignatureInformation(string! label, string? documentation = null, Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameter activeParameter = default(Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameter), System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureParameterInfo!>? parameters = null) -> void
+*REMOVED*override Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameter.GetHashCode() -> int
+*REMOVED*override Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameter.ToString() -> string!
+*REMOVED*static Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameter.At(int index) -> Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameter
+*REMOVED*static Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameter.None.get -> Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameter
+*REMOVED*static Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameter.NotSpecified.get -> Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameter
+*REMOVED*static Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameter.operator !=(Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameter left, Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameter right) -> bool
+*REMOVED*static Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameter.operator ==(Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameter left, Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameter right) -> bool
+~override Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameterSelection.Equals(object obj) -> bool
+Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameterSelection
+Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameterSelection.Equals(Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameterSelection other) -> bool
+Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameterSelection.Index.get -> int?
+Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameterSelection.IsNone.get -> bool
+Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameterSelection.IsSpecified.get -> bool
+Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameterSelection.TextSignatureActiveParameterSelection() -> void
+Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelp.TextSignatureHelp(System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureInformation!>! signatures, int activeSignatureIndex = 0, Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameterSelection activeParameter = default(Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameterSelection)) -> void
+Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureInformation.TextSignatureInformation(string! label, string? documentation = null, Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameterSelection activeParameter = default(Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameterSelection), System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureParameterInfo!>? parameters = null) -> void
+override Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameterSelection.GetHashCode() -> int
+override Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameterSelection.ToString() -> string!
+static Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameterSelection.At(int index) -> Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameterSelection
+static Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameterSelection.None.get -> Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameterSelection
+static Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameterSelection.NotSpecified.get -> Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameterSelection
+static Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameterSelection.operator !=(Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameterSelection left, Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameterSelection right) -> bool
+static Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameterSelection.operator ==(Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameterSelection left, Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameterSelection right) -> bool
+*REMOVED*Nickelony.IDEKit.IntelliSense.CodeActions.ITextCodeActionProvider.GetCodeActions(Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionRequest request) -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionItem!>!
+*REMOVED*Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionRequest.TextCodeActionRequest() -> void
+Nickelony.IDEKit.IntelliSense.CodeActions.ITextCodeActionProvider.GetCodeActions(Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionRequest! request) -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionItem!>!
+Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionRequest.<Clone>$() -> Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionRequest!
+Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionRequest.Equals(Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionRequest? other) -> bool
+override Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionRequest.Equals(object? obj) -> bool
+override Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionRequest.ToString() -> string!
+static Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionRequest.operator !=(Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionRequest? left, Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionRequest? right) -> bool
+static Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionRequest.operator ==(Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionRequest? left, Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionRequest? right) -> bool
+Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnosticSegmentProjection
+static Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnosticSegmentProjection.Project(System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnostic!>! diagnostics) -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Core.Diagnostics.TextDiagnosticSegment>!
+static Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnosticSegmentProjection.ProjectToleratingNulls(System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnostic!>? diagnostics) -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Core.Diagnostics.TextDiagnosticSegment>!

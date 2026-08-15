@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>Nickelony.IDEKit.Workspace.Views</RootNamespace>
+    <AssemblyName>Nickelony.IDEKit.Workspace.Views</AssemblyName>
+    <PackageId>Nickelony.IDEKit.Workspace.Views</PackageId>
+    <Description>UI-framework-free document-view coordination for the Nickelony workspace document authority: the document-view contract and the manager that synchronizes attached views with tracked documents. Targets net8.0 with no UI-framework dependency and an injectable dispatch delegate, so any toolkit binding can host it; a WPF-only layer would be a separate Views.Wpf package.</Description>
+    <PackageTags>documents;workspace;views;ide;host-agnostic;nickelony</PackageTags>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <WarningsAsErrors>CS1591;RS0016;RS0017</WarningsAsErrors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Public-API surface baseline: an unlisted public member fails the build (RS0016/RS0017). -->
+    <PackageReference Include="Microsoft.CodeAnalysis.PublicApiAnalyzers" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Nickelony.IDEKit.Core\Nickelony.IDEKit.Core.csproj" />
+    <ProjectReference Include="..\Nickelony.IDEKit.Workspace\Nickelony.IDEKit.Workspace.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+    <None Include="..\..\..\icons\$(PackageIcon)" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+</Project>

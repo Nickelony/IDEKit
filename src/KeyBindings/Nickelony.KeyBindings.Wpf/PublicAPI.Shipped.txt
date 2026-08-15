@@ -1,0 +1,29 @@
+#nullable enable
+Nickelony.KeyBindings.Wpf.KeyBindingDispatcherExtensions
+Nickelony.KeyBindings.Wpf.KeyCodeMapper
+Nickelony.KeyBindings.Wpf.KeyDownHandlingOptions
+Nickelony.KeyBindings.Wpf.KeyDownHandlingOptions.<Clone>$() -> Nickelony.KeyBindings.Wpf.KeyDownHandlingOptions!
+Nickelony.KeyBindings.Wpf.KeyDownHandlingOptions.Equals(Nickelony.KeyBindings.Wpf.KeyDownHandlingOptions? other) -> bool
+Nickelony.KeyBindings.Wpf.KeyDownHandlingOptions.IgnoreAltGr.get -> bool
+Nickelony.KeyBindings.Wpf.KeyDownHandlingOptions.IgnoreAltGr.init -> void
+Nickelony.KeyBindings.Wpf.KeyDownHandlingOptions.IgnoreAutoRepeat.get -> bool
+Nickelony.KeyBindings.Wpf.KeyDownHandlingOptions.IgnoreAutoRepeat.init -> void
+Nickelony.KeyBindings.Wpf.KeyDownHandlingOptions.KeyDownHandlingOptions() -> void
+Nickelony.KeyBindings.Wpf.KeyEventArgsExtensions
+Nickelony.KeyBindings.Wpf.KeyGestureDisplayTextFormatter
+Nickelony.KeyBindings.Wpf.KeyGestureDisplayTextFormatter.GetDisplayText(Nickelony.KeyBindings.KeyChord keyChord) -> string!
+Nickelony.KeyBindings.Wpf.KeyGestureDisplayTextFormatter.GetDisplayText(Nickelony.KeyBindings.KeyCombo keyCombo) -> string!
+Nickelony.KeyBindings.Wpf.KeyGestureDisplayTextFormatter.KeyGestureDisplayTextFormatter(System.Globalization.CultureInfo? culture = null) -> void
+override Nickelony.KeyBindings.Wpf.KeyDownHandlingOptions.Equals(object? obj) -> bool
+override Nickelony.KeyBindings.Wpf.KeyDownHandlingOptions.GetHashCode() -> int
+override Nickelony.KeyBindings.Wpf.KeyDownHandlingOptions.ToString() -> string!
+static Nickelony.KeyBindings.Wpf.KeyCodeMapper.ToKey(Nickelony.KeyBindings.KeyCode keyCode) -> System.Windows.Input.Key
+static Nickelony.KeyBindings.Wpf.KeyCodeMapper.ToKeyCode(System.Windows.Input.Key key) -> Nickelony.KeyBindings.KeyCode?
+static Nickelony.KeyBindings.Wpf.KeyCodeMapper.ToKeyModifiers(System.Windows.Input.ModifierKeys modifiers) -> Nickelony.KeyBindings.KeyModifiers
+static Nickelony.KeyBindings.Wpf.KeyCodeMapper.ToModifierKeys(Nickelony.KeyBindings.KeyModifiers modifiers) -> System.Windows.Input.ModifierKeys
+static Nickelony.KeyBindings.Wpf.KeyDownHandlingOptions.Default.get -> Nickelony.KeyBindings.Wpf.KeyDownHandlingOptions!
+static Nickelony.KeyBindings.Wpf.KeyDownHandlingOptions.operator !=(Nickelony.KeyBindings.Wpf.KeyDownHandlingOptions? left, Nickelony.KeyBindings.Wpf.KeyDownHandlingOptions? right) -> bool
+static Nickelony.KeyBindings.Wpf.KeyDownHandlingOptions.operator ==(Nickelony.KeyBindings.Wpf.KeyDownHandlingOptions? left, Nickelony.KeyBindings.Wpf.KeyDownHandlingOptions? right) -> bool
+static Nickelony.KeyBindings.Wpf.KeyEventArgsExtensions.IsAltGr(this System.Windows.Input.KeyEventArgs! e) -> bool
+static Nickelony.KeyBindings.Wpf.KeyEventArgsExtensions.ToKeyCombo(this System.Windows.Input.KeyEventArgs! e) -> Nickelony.KeyBindings.KeyCombo?
+static Nickelony.KeyBindings.Wpf.KeyGestureDisplayTextFormatter.Default.get -> Nickelony.KeyBindings.Wpf.KeyGestureDisplayTextFormatter!

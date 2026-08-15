@@ -1,0 +1,84 @@
+#nullable enable
+Nickelony.IDEKit.Core.Editing.TextEditSkipResult
+Nickelony.IDEKit.Core.Editing.TextEditSkipResult.Edits.get -> Nickelony.IDEKit.Core.Editing.PreparedTextEdits!
+Nickelony.IDEKit.Core.Editing.TextEditSkipResult.HasSkippedEntries.get -> bool
+Nickelony.IDEKit.Core.Editing.TextEditSkipResult.SkippedIssues.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Core.Editing.TextEditPreparationIssue!>!
+Nickelony.IDEKit.Core.Text.TextRange.FitsWithin(int textLength) -> bool
+static Nickelony.IDEKit.Core.Text.TextRange.Normalize(int textLength, int startOffset, int endOffset) -> Nickelony.IDEKit.Core.Text.TextRange?
+static Nickelony.IDEKit.Core.Editing.TextEditKernel.PrepareSkippingInvalidEntries(Nickelony.IDEKit.Core.Text.ITextSnapshot! snapshot, System.Collections.Generic.IEnumerable<Nickelony.IDEKit.Core.Editing.TextEditInput?>! edits) -> Nickelony.IDEKit.Core.Editing.TextEditSkipResult!
+Nickelony.IDEKit.Core.Editing.TextEditRequest
+Nickelony.IDEKit.Core.Editing.TextEditRequest.CaretOffsetAfterEdit.get -> int?
+Nickelony.IDEKit.Core.Editing.TextEditRequest.CaretOffsetAfterEdit.init -> void
+Nickelony.IDEKit.Core.Editing.TextEditRequest.Equals(Nickelony.IDEKit.Core.Editing.TextEditRequest other) -> bool
+Nickelony.IDEKit.Core.Editing.TextEditRequest.Length.get -> int
+Nickelony.IDEKit.Core.Editing.TextEditRequest.NewText.get -> string!
+Nickelony.IDEKit.Core.Editing.TextEditRequest.StartOffset.get -> int
+Nickelony.IDEKit.Core.Editing.TextEditRequest.TextEditRequest() -> void
+Nickelony.IDEKit.Core.Editing.TextEditRequest.TextEditRequest(int startOffset, int length, string! newText) -> void
+override Nickelony.IDEKit.Core.Editing.TextEditRequest.GetHashCode() -> int
+static Nickelony.IDEKit.Core.Editing.TextEditRequest.operator !=(Nickelony.IDEKit.Core.Editing.TextEditRequest left, Nickelony.IDEKit.Core.Editing.TextEditRequest right) -> bool
+static Nickelony.IDEKit.Core.Editing.TextEditRequest.operator ==(Nickelony.IDEKit.Core.Editing.TextEditRequest left, Nickelony.IDEKit.Core.Editing.TextEditRequest right) -> bool
+~override Nickelony.IDEKit.Core.Editing.TextEditRequest.Equals(object obj) -> bool
+~override Nickelony.IDEKit.Core.Editing.TextEditRequest.ToString() -> string
+static Nickelony.IDEKit.Core.Editing.TextEditSkipResult.Create(Nickelony.IDEKit.Core.Editing.PreparedTextEdits! edits, System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Core.Editing.TextEditPreparationIssue!>! skippedIssues) -> Nickelony.IDEKit.Core.Editing.TextEditSkipResult!
+static Nickelony.IDEKit.Core.Editing.TextEditKernel.Prepare(System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Core.Text.TextEditOperation!>! operations) -> Nickelony.IDEKit.Core.Editing.TextEditPreparationResult!
+*REMOVED*Nickelony.IDEKit.Core.Editing.PreparedTextEdits.PreparedTextEdits(System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Core.Text.TextEditOperation!>! operations) -> void
+*REMOVED*Nickelony.IDEKit.Core.Comments.TextLineCommentRequest.CommentSyntax.get -> Nickelony.IDEKit.Core.Comments.CommentSyntax
+*REMOVED*Nickelony.IDEKit.Core.Comments.TextLineCommentRequest.CommentSyntax.init -> void
+*REMOVED*Nickelony.IDEKit.Core.Comments.TextLineCommentRequest.Deconstruct(out Nickelony.IDEKit.Core.Text.ITextSnapshot! Snapshot, out Nickelony.IDEKit.Core.Text.TextRange Selection, out Nickelony.IDEKit.Core.Comments.CommentSyntax CommentSyntax, out Nickelony.IDEKit.Core.Comments.TextLineCommentAction Action, out bool InsertSpaceAfterDelimiter) -> void
+*REMOVED*Nickelony.IDEKit.Core.Comments.TextLineCommentRequest.TextLineCommentRequest(Nickelony.IDEKit.Core.Text.ITextSnapshot! Snapshot, Nickelony.IDEKit.Core.Text.TextRange Selection, Nickelony.IDEKit.Core.Comments.CommentSyntax CommentSyntax, Nickelony.IDEKit.Core.Comments.TextLineCommentAction Action, bool InsertSpaceAfterDelimiter) -> void
+Nickelony.IDEKit.Core.Comments.TextLineCommentRequest.Syntax.get -> Nickelony.IDEKit.Core.Comments.CommentSyntax
+Nickelony.IDEKit.Core.Comments.TextLineCommentRequest.Syntax.init -> void
+Nickelony.IDEKit.Core.Comments.TextLineCommentRequest.Deconstruct(out Nickelony.IDEKit.Core.Text.ITextSnapshot! Snapshot, out Nickelony.IDEKit.Core.Text.TextRange Selection, out Nickelony.IDEKit.Core.Comments.CommentSyntax Syntax, out Nickelony.IDEKit.Core.Comments.TextLineCommentAction Action, out bool InsertSpaceAfterDelimiter) -> void
+Nickelony.IDEKit.Core.Comments.TextLineCommentRequest.TextLineCommentRequest(Nickelony.IDEKit.Core.Text.ITextSnapshot! Snapshot, Nickelony.IDEKit.Core.Text.TextRange Selection, Nickelony.IDEKit.Core.Comments.CommentSyntax Syntax, Nickelony.IDEKit.Core.Comments.TextLineCommentAction Action, bool InsertSpaceAfterDelimiter) -> void
+Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingResult
+Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingResult.Action.get -> Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingAction
+Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingResult.Action.init -> void
+Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingResult.Deconstruct(out Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingAction Action, out bool DidWrapSelection) -> void
+Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingResult.DidWrapSelection.get -> bool
+Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingResult.DidWrapSelection.init -> void
+Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingResult.Equals(Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingResult other) -> bool
+Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingResult.TextAutoClosingResult() -> void
+Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingResult.TextAutoClosingResult(Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingAction Action, bool DidWrapSelection) -> void
+override Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingResult.GetHashCode() -> int
+static Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingResult.None.get -> Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingResult
+static Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingResult.operator !=(Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingResult left, Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingResult right) -> bool
+static Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingResult.operator ==(Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingResult left, Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingResult right) -> bool
+~override Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingResult.Equals(object obj) -> bool
+~override Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingResult.ToString() -> string
+Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle
+Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle.<Clone>$() -> Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle!
+Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle.ColorValue.get -> string?
+Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle.ColorValue.init -> void
+Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle.Deconstruct(out string? ColorValue, out bool IsBold, out bool IsItalic) -> void
+Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle.Equals(Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle? other) -> bool
+Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle.IsBold.get -> bool
+Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle.IsBold.init -> void
+Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle.IsItalic.get -> bool
+Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle.IsItalic.init -> void
+Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle.RegexHighlightingStyle(string? ColorValue = null, bool IsBold = false, bool IsItalic = false) -> void
+override Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle.GetHashCode() -> int
+override Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle.ToString() -> string!
+static Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle.operator !=(Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle? left, Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle? right) -> bool
+static Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle.operator ==(Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle? left, Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle? right) -> bool
+Nickelony.IDEKit.Core.Highlighting.RegexHighlightingRule
+Nickelony.IDEKit.Core.Highlighting.RegexHighlightingRule.Pattern.get -> System.Text.RegularExpressions.Regex!
+Nickelony.IDEKit.Core.Highlighting.RegexHighlightingRule.RegexHighlightingRule(System.Text.RegularExpressions.Regex! pattern, Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle! style) -> void
+Nickelony.IDEKit.Core.Highlighting.RegexHighlightingRule.Style.get -> Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle!
+Nickelony.IDEKit.Core.Highlighting.RegexHighlightingSpan
+Nickelony.IDEKit.Core.Highlighting.RegexHighlightingSpan.Begin.get -> System.Text.RegularExpressions.Regex!
+Nickelony.IDEKit.Core.Highlighting.RegexHighlightingSpan.BeginStyle.get -> Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle?
+Nickelony.IDEKit.Core.Highlighting.RegexHighlightingSpan.BeginStyle.init -> void
+Nickelony.IDEKit.Core.Highlighting.RegexHighlightingSpan.End.get -> System.Text.RegularExpressions.Regex?
+Nickelony.IDEKit.Core.Highlighting.RegexHighlightingSpan.EndStyle.get -> Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle?
+Nickelony.IDEKit.Core.Highlighting.RegexHighlightingSpan.EndStyle.init -> void
+Nickelony.IDEKit.Core.Highlighting.RegexHighlightingSpan.RegexHighlightingSpan(System.Text.RegularExpressions.Regex! begin, System.Text.RegularExpressions.Regex? end, Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle! spanStyle) -> void
+Nickelony.IDEKit.Core.Highlighting.RegexHighlightingSpan.Rules.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Core.Highlighting.RegexHighlightingRule!>?
+Nickelony.IDEKit.Core.Highlighting.RegexHighlightingSpan.Rules.init -> void
+Nickelony.IDEKit.Core.Highlighting.RegexHighlightingSpan.SpanStyle.get -> Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle!
+Nickelony.IDEKit.Core.Highlighting.RegexHighlightingRuleSet
+Nickelony.IDEKit.Core.Highlighting.RegexHighlightingRuleSet.Name.get -> string!
+Nickelony.IDEKit.Core.Highlighting.RegexHighlightingRuleSet.Rules.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Core.Highlighting.RegexHighlightingRule!>!
+Nickelony.IDEKit.Core.Highlighting.RegexHighlightingRuleSet.Spans.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Core.Highlighting.RegexHighlightingSpan!>!
+static Nickelony.IDEKit.Core.Highlighting.RegexHighlightingRuleSet.Create(string! name, System.Collections.Generic.IEnumerable<Nickelony.IDEKit.Core.Highlighting.RegexHighlightingRule!>! rules, System.Collections.Generic.IEnumerable<Nickelony.IDEKit.Core.Highlighting.RegexHighlightingSpan!>! spans) -> Nickelony.IDEKit.Core.Highlighting.RegexHighlightingRuleSet!

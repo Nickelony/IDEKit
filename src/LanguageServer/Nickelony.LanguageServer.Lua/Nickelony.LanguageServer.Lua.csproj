@@ -1,0 +1,45 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>Nickelony.LanguageServer.Lua</RootNamespace>
+    <AssemblyName>Nickelony.LanguageServer.Lua</AssemblyName>
+    <PackageId>Nickelony.LanguageServer.Lua</PackageId>
+    <Description>Lightweight Lua language-server provider for the Nickelony Language Server family, backed by LuaLS.</Description>
+    <PackageTags>language-server;lsp;lua;intellisense;nickelony</PackageTags>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <WarningsAsErrors>CS1591;RS0016;RS0017</WarningsAsErrors>
+    <!-- CA1848 ("use LoggerMessage delegates") is deliberately not enforced for this package: messages go through
+         the ILogger extension methods for readability and low call-site churn, and they are low-frequency lifecycle
+         and diagnostic messages rather than hot-path work. This follows the family logging policy in
+         CODE_STYLE_GUIDELINES.md; hot-path migration to LoggerMessage remains possible when a measurement justifies it. -->
+    <NoWarn>$(NoWarn);CA1848</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Public-API surface baseline: an unlisted public member fails the build (RS0016/RS0017). -->
+    <PackageReference Include="Microsoft.CodeAnalysis.PublicApiAnalyzers" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Nickelony.LanguageServer.Abstractions\Nickelony.LanguageServer.Abstractions.csproj" />
+    <ProjectReference Include="..\Nickelony.LanguageServer.Client\Nickelony.LanguageServer.Client.csproj" />
+    <ProjectReference Include="..\Nickelony.LanguageServer.Provider\Nickelony.LanguageServer.Provider.csproj" />
+    <ProjectReference Include="..\..\IDEKit\Nickelony.IDEKit.Core\Nickelony.IDEKit.Core.csproj" />
+    <ProjectReference Include="..\..\IDEKit\Nickelony.IDEKit.IntelliSense\Nickelony.IDEKit.IntelliSense.csproj" />
+  </ItemGroup>
+
+  <!-- The package consumes the Provider assembly's internal response mapping and shared payload store through its
+       InternalsVisibleTo grant instead of linking shared files: compiling the same internal type twice makes a used
+       name ambiguous (CS0436). Do not link shared/Protocol/LspMethodNames.cs or
+       shared/Infrastructure/OptionalText.cs here. -->
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+    <None Include="..\..\..\icons\$(PackageIcon)" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+</Project>

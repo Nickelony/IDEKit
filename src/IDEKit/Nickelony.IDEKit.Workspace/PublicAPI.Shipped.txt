@@ -1,0 +1,878 @@
+#nullable enable
+Nickelony.IDEKit.Workspace.Documents.FileStamp
+Nickelony.IDEKit.Workspace.Documents.FileStamp.ContentHash.get -> string?
+Nickelony.IDEKit.Workspace.Documents.FileStamp.ContentHash.init -> void
+Nickelony.IDEKit.Workspace.Documents.FileStamp.Deconstruct(out bool Exists, out long? Length, out System.DateTime? LastWriteTimeUtc, out string? ContentHash) -> void
+Nickelony.IDEKit.Workspace.Documents.FileStamp.Equals(Nickelony.IDEKit.Workspace.Documents.FileStamp other) -> bool
+Nickelony.IDEKit.Workspace.Documents.FileStamp.Exists.get -> bool
+Nickelony.IDEKit.Workspace.Documents.FileStamp.Exists.init -> void
+Nickelony.IDEKit.Workspace.Documents.FileStamp.FileStamp() -> void
+Nickelony.IDEKit.Workspace.Documents.FileStamp.FileStamp(bool Exists, long? Length, System.DateTime? LastWriteTimeUtc, string? ContentHash) -> void
+Nickelony.IDEKit.Workspace.Documents.FileStamp.LastWriteTimeUtc.get -> System.DateTime?
+Nickelony.IDEKit.Workspace.Documents.FileStamp.LastWriteTimeUtc.init -> void
+Nickelony.IDEKit.Workspace.Documents.FileStamp.Length.get -> long?
+Nickelony.IDEKit.Workspace.Documents.FileStamp.Length.init -> void
+Nickelony.IDEKit.Workspace.Documents.FileSystem.IWorkspaceFileSystem
+Nickelony.IDEKit.Workspace.Documents.FileSystem.IWorkspaceFileSystem.CaptureStampAsync(string! path, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.Workspace.Documents.FileStamp>!
+Nickelony.IDEKit.Workspace.Documents.FileSystem.IWorkspaceFileSystem.DeleteAsync(string! path, Nickelony.IDEKit.Workspace.Documents.FileStamp expectedStamp, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileDeleteResult!>!
+Nickelony.IDEKit.Workspace.Documents.FileSystem.IWorkspaceFileSystem.DeleteDirectoryAsync(string! path, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileDeleteResult!>!
+Nickelony.IDEKit.Workspace.Documents.FileSystem.IWorkspaceFileSystem.DeleteTemporaryAsync(Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile! temporaryFile) -> System.Threading.Tasks.Task!
+Nickelony.IDEKit.Workspace.Documents.FileSystem.IWorkspaceFileSystem.MoveAsync(string! sourcePath, string! destinationPath, Nickelony.IDEKit.Workspace.Documents.FileStamp expectedSourceStamp, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileMoveResult!>!
+Nickelony.IDEKit.Workspace.Documents.FileSystem.IWorkspaceFileSystem.MoveDirectoryAsync(string! sourcePath, string! destinationPath, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileMoveResult!>!
+Nickelony.IDEKit.Workspace.Documents.FileSystem.IWorkspaceFileSystem.ReadAsync(string! path, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReadResult!>!
+Nickelony.IDEKit.Workspace.Documents.FileSystem.IWorkspaceFileSystem.ReplaceFileAsync(Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile! temporaryFile, string! destinationPath, Nickelony.IDEKit.Workspace.Documents.FileStamp expectedStamp, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReplacementResult!>!
+Nickelony.IDEKit.Workspace.Documents.FileSystem.IWorkspaceFileSystem.WriteTemporaryAsync(string! destinationPath, System.ReadOnlyMemory<byte> content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile!>!
+Nickelony.IDEKit.Workspace.Documents.FileSystem.LocalWorkspaceFileSystem
+Nickelony.IDEKit.Workspace.Documents.FileSystem.LocalWorkspaceFileSystem.CaptureStampAsync(string! path, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.Workspace.Documents.FileStamp>!
+Nickelony.IDEKit.Workspace.Documents.FileSystem.LocalWorkspaceFileSystem.DeleteAsync(string! path, Nickelony.IDEKit.Workspace.Documents.FileStamp expectedStamp, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileDeleteResult!>!
+Nickelony.IDEKit.Workspace.Documents.FileSystem.LocalWorkspaceFileSystem.DeleteDirectoryAsync(string! path, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileDeleteResult!>!
+Nickelony.IDEKit.Workspace.Documents.FileSystem.LocalWorkspaceFileSystem.DeleteTemporaryAsync(Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile! temporaryFile) -> System.Threading.Tasks.Task!
+Nickelony.IDEKit.Workspace.Documents.FileSystem.LocalWorkspaceFileSystem.LocalWorkspaceFileSystem(Nickelony.IDEKit.Core.Pathing.LocalPathComparisonPolicy? pathComparison = null) -> void
+Nickelony.IDEKit.Workspace.Documents.FileSystem.LocalWorkspaceFileSystem.MoveAsync(string! sourcePath, string! destinationPath, Nickelony.IDEKit.Workspace.Documents.FileStamp expectedSourceStamp, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileMoveResult!>!
+Nickelony.IDEKit.Workspace.Documents.FileSystem.LocalWorkspaceFileSystem.MoveDirectoryAsync(string! sourcePath, string! destinationPath, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileMoveResult!>!
+Nickelony.IDEKit.Workspace.Documents.FileSystem.LocalWorkspaceFileSystem.ReadAsync(string! path, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReadResult!>!
+Nickelony.IDEKit.Workspace.Documents.FileSystem.LocalWorkspaceFileSystem.ReplaceFileAsync(Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile! temporaryFile, string! destinationPath, Nickelony.IDEKit.Workspace.Documents.FileStamp expectedStamp, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReplacementResult!>!
+Nickelony.IDEKit.Workspace.Documents.FileSystem.LocalWorkspaceFileSystem.WriteTemporaryAsync(string! destinationPath, System.ReadOnlyMemory<byte> content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile!>!
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileDeleteOutcome
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileDeleteOutcome.Canceled = 4 -> Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileDeleteOutcome
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileDeleteOutcome.DeleteFailed = 3 -> Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileDeleteOutcome
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileDeleteOutcome.Deleted = 1 -> Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileDeleteOutcome
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileDeleteOutcome.ExternalFileConflict = 2 -> Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileDeleteOutcome
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileDeleteOutcome.Unknown = 0 -> Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileDeleteOutcome
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileDeleteResult
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileDeleteResult.<Clone>$() -> Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileDeleteResult!
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileDeleteResult.Deconstruct(out Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileDeleteOutcome Outcome, out Nickelony.IDEKit.Workspace.Documents.FileStamp? ObservedOnDiskStamp, out Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure? Failure) -> void
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileDeleteResult.Equals(Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileDeleteResult? other) -> bool
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileDeleteResult.Failure.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure?
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileDeleteResult.Failure.init -> void
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileDeleteResult.ObservedOnDiskStamp.get -> Nickelony.IDEKit.Workspace.Documents.FileStamp?
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileDeleteResult.ObservedOnDiskStamp.init -> void
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileDeleteResult.Outcome.get -> Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileDeleteOutcome
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileDeleteResult.Outcome.init -> void
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileDeleteResult.WorkspaceFileDeleteResult(Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileDeleteOutcome Outcome, Nickelony.IDEKit.Workspace.Documents.FileStamp? ObservedOnDiskStamp = null, Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure? Failure = null) -> void
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileMoveOutcome
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileMoveOutcome.Canceled = 6 -> Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileMoveOutcome
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileMoveOutcome.DestinationExists = 2 -> Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileMoveOutcome
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileMoveOutcome.ExternalFileConflict = 3 -> Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileMoveOutcome
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileMoveOutcome.MoveFailed = 4 -> Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileMoveOutcome
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileMoveOutcome.MoveStateUnknown = 5 -> Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileMoveOutcome
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileMoveOutcome.Moved = 1 -> Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileMoveOutcome
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileMoveOutcome.Unknown = 0 -> Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileMoveOutcome
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileMoveResult
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileMoveResult.<Clone>$() -> Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileMoveResult!
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileMoveResult.Deconstruct(out Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileMoveOutcome Outcome, out Nickelony.IDEKit.Workspace.Documents.FileStamp? ObservedOnDiskStamp, out Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure? Failure) -> void
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileMoveResult.Equals(Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileMoveResult? other) -> bool
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileMoveResult.Failure.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure?
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileMoveResult.Failure.init -> void
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileMoveResult.ObservedOnDiskStamp.get -> Nickelony.IDEKit.Workspace.Documents.FileStamp?
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileMoveResult.ObservedOnDiskStamp.init -> void
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileMoveResult.Outcome.get -> Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileMoveOutcome
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileMoveResult.Outcome.init -> void
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileMoveResult.WorkspaceFileMoveResult(Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileMoveOutcome Outcome, Nickelony.IDEKit.Workspace.Documents.FileStamp? ObservedOnDiskStamp = null, Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure? Failure = null) -> void
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReadResult
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReadResult.Content.get -> string!
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReadResult.FileFormat.get -> Nickelony.IDEKit.Workspace.Documents.TextFileFormat
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReadResult.IsDirectory.get -> bool
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReadResult.OnDiskStamp.get -> Nickelony.IDEKit.Workspace.Documents.FileStamp
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReadResult.RawBytes.get -> System.ReadOnlyMemory<byte>?
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReadResult.ResolveContent(Nickelony.IDEKit.Workspace.Documents.TextFileFormat fallbackFileFormat, Nickelony.IDEKit.Workspace.Documents.TextEncodingKind noBomEncoding, out Nickelony.IDEKit.Workspace.Documents.TextFileFormat fileFormat) -> string!
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReplacementOutcome
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReplacementOutcome.Canceled = 6 -> Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReplacementOutcome
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReplacementOutcome.DestinationExists = 3 -> Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReplacementOutcome
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReplacementOutcome.ExternalFileConflict = 2 -> Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReplacementOutcome
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReplacementOutcome.Failed = 5 -> Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReplacementOutcome
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReplacementOutcome.Replaced = 1 -> Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReplacementOutcome
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReplacementOutcome.ReplacementStateUnknown = 4 -> Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReplacementOutcome
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReplacementOutcome.Unknown = 0 -> Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReplacementOutcome
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReplacementResult
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReplacementResult.<Clone>$() -> Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReplacementResult!
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReplacementResult.Deconstruct(out Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReplacementOutcome Outcome, out Nickelony.IDEKit.Workspace.Documents.FileStamp? ObservedOnDiskStamp, out Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure? Failure) -> void
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReplacementResult.Equals(Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReplacementResult? other) -> bool
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReplacementResult.Failure.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure?
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReplacementResult.Failure.init -> void
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReplacementResult.ObservedOnDiskStamp.get -> Nickelony.IDEKit.Workspace.Documents.FileStamp?
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReplacementResult.ObservedOnDiskStamp.init -> void
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReplacementResult.Outcome.get -> Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReplacementOutcome
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReplacementResult.Outcome.init -> void
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReplacementResult.WorkspaceFileReplacementResult(Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReplacementOutcome Outcome, Nickelony.IDEKit.Workspace.Documents.FileStamp? ObservedOnDiskStamp = null, Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure? Failure = null) -> void
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileSystemDecorator
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileSystemDecorator.Inner.get -> Nickelony.IDEKit.Workspace.Documents.FileSystem.IWorkspaceFileSystem!
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileSystemDecorator.WorkspaceFileSystemDecorator(Nickelony.IDEKit.Workspace.Documents.FileSystem.IWorkspaceFileSystem! inner) -> void
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile.<Clone>$() -> Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile!
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile.ContentHash.get -> string!
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile.ContentHash.init -> void
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile.Deconstruct(out string! Path, out long Length, out string! ContentHash) -> void
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile.Equals(Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile? other) -> bool
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile.Length.get -> long
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile.Length.init -> void
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile.Path.get -> string!
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile.Path.init -> void
+Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile.WorkspaceTemporaryFile(string! Path, long Length, string! ContentHash) -> void
+Nickelony.IDEKit.Workspace.Documents.IWorkspaceDocumentReader
+Nickelony.IDEKit.Workspace.Documents.IWorkspaceDocumentReader.GetSnapshotsUnderDirectory(string? directoryPath) -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot!>!
+Nickelony.IDEKit.Workspace.Documents.IWorkspaceDocumentReader.OpenAsync(string? filePath, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenResult!>!
+Nickelony.IDEKit.Workspace.Documents.IWorkspaceDocumentReader.PathComparison.get -> Nickelony.IDEKit.Core.Pathing.LocalPathComparisonPolicy
+Nickelony.IDEKit.Workspace.Documents.IWorkspaceDocumentReader.TryGetSnapshot(string? filePath, out Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot? snapshot) -> bool
+Nickelony.IDEKit.Workspace.Documents.IWorkspaceDocumentStore
+Nickelony.IDEKit.Workspace.Documents.IWorkspaceDocumentStore.CommitAsync(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitResult!>!
+Nickelony.IDEKit.Workspace.Documents.IWorkspaceDocumentStore.DeleteAsync(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteResult!>!
+Nickelony.IDEKit.Workspace.Documents.IWorkspaceDocumentStore.DeleteDirectoryAsync(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteResult!>!
+Nickelony.IDEKit.Workspace.Documents.IWorkspaceDocumentStore.Discard(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDiscardRequest! request) -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentMutationResult!
+Nickelony.IDEKit.Workspace.Documents.IWorkspaceDocumentStore.ReloadAsync(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadResult!>!
+Nickelony.IDEKit.Workspace.Documents.IWorkspaceDocumentStore.RenameAsync(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameResult!>!
+Nickelony.IDEKit.Workspace.Documents.IWorkspaceDocumentStore.RenameDirectoryAsync(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameResult!>!
+Nickelony.IDEKit.Workspace.Documents.IWorkspaceDocumentStore.Replace(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReplaceRequest! request) -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentMutationResult!
+Nickelony.IDEKit.Workspace.Documents.IWorkspaceDocumentStore.ResolveExternalConflictAsync(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionResult!>!
+Nickelony.IDEKit.Workspace.Documents.IWorkspaceDocumentStore.SaveAsAsync(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsResult!>!
+Nickelony.IDEKit.Workspace.Documents.Reloading.FileReloadCoordinator<TDecisionResult>
+Nickelony.IDEKit.Workspace.Documents.Reloading.FileReloadCoordinator<TDecisionResult>.FileReloadCoordinator(Nickelony.IDEKit.Core.Pathing.LocalPathComparisonPolicy? pathComparison = null) -> void
+Nickelony.IDEKit.Workspace.Documents.Reloading.FileReloadCoordinator<TDecisionResult>.IsRunning.get -> bool
+Nickelony.IDEKit.Workspace.Documents.Reloading.FileReloadCoordinator<TDecisionResult>.PendingFileCount.get -> int
+Nickelony.IDEKit.Workspace.Documents.Reloading.FileReloadCoordinator<TDecisionResult>.ProcessQueuedFilesAsync(Nickelony.IDEKit.Workspace.Documents.Reloading.FileReloadHooks<TDecisionResult> hooks, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task!
+Nickelony.IDEKit.Workspace.Documents.Reloading.FileReloadCoordinator<TDecisionResult>.QueueFile(string! filePath) -> void
+Nickelony.IDEKit.Workspace.Documents.Reloading.FileReloadHooks<TDecisionResult>
+Nickelony.IDEKit.Workspace.Documents.Reloading.FileReloadHooks<TDecisionResult>.DecideReload.get -> System.Func<Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadResult!, System.Threading.CancellationToken, System.Threading.Tasks.Task<TDecisionResult>!>?
+Nickelony.IDEKit.Workspace.Documents.Reloading.FileReloadHooks<TDecisionResult>.DecideReload.init -> void
+Nickelony.IDEKit.Workspace.Documents.Reloading.FileReloadHooks<TDecisionResult>.Deconstruct(out System.Func<Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadResult!, System.Threading.CancellationToken, System.Threading.Tasks.Task<TDecisionResult>!>? DecideReload, out System.Func<string!, System.Threading.CancellationToken, System.Threading.Tasks.Task<Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadResult!>!>! ReloadDocument, out System.Func<Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadResult!, System.Threading.CancellationToken, System.Threading.Tasks.Task!>? ReportReloadFailure, out System.Func<Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadResult!, TDecisionResult, System.Threading.CancellationToken, System.Threading.Tasks.Task<Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionResult?>!>? ResolveConflict) -> void
+Nickelony.IDEKit.Workspace.Documents.Reloading.FileReloadHooks<TDecisionResult>.Equals(Nickelony.IDEKit.Workspace.Documents.Reloading.FileReloadHooks<TDecisionResult> other) -> bool
+Nickelony.IDEKit.Workspace.Documents.Reloading.FileReloadHooks<TDecisionResult>.FileReloadHooks() -> void
+Nickelony.IDEKit.Workspace.Documents.Reloading.FileReloadHooks<TDecisionResult>.FileReloadHooks(System.Func<Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadResult!, System.Threading.CancellationToken, System.Threading.Tasks.Task<TDecisionResult>!>? DecideReload, System.Func<string!, System.Threading.CancellationToken, System.Threading.Tasks.Task<Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadResult!>!>! ReloadDocument, System.Func<Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadResult!, System.Threading.CancellationToken, System.Threading.Tasks.Task!>? ReportReloadFailure = null, System.Func<Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadResult!, TDecisionResult, System.Threading.CancellationToken, System.Threading.Tasks.Task<Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionResult?>!>? ResolveConflict = null) -> void
+Nickelony.IDEKit.Workspace.Documents.Reloading.FileReloadHooks<TDecisionResult>.ReloadDocument.get -> System.Func<string!, System.Threading.CancellationToken, System.Threading.Tasks.Task<Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadResult!>!>!
+Nickelony.IDEKit.Workspace.Documents.Reloading.FileReloadHooks<TDecisionResult>.ReloadDocument.init -> void
+Nickelony.IDEKit.Workspace.Documents.Reloading.FileReloadHooks<TDecisionResult>.ReportReloadFailure.get -> System.Func<Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadResult!, System.Threading.CancellationToken, System.Threading.Tasks.Task!>?
+Nickelony.IDEKit.Workspace.Documents.Reloading.FileReloadHooks<TDecisionResult>.ReportReloadFailure.init -> void
+Nickelony.IDEKit.Workspace.Documents.Reloading.FileReloadHooks<TDecisionResult>.ResolveConflict.get -> System.Func<Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadResult!, TDecisionResult, System.Threading.CancellationToken, System.Threading.Tasks.Task<Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionResult?>!>?
+Nickelony.IDEKit.Workspace.Documents.Reloading.FileReloadHooks<TDecisionResult>.ResolveConflict.init -> void
+Nickelony.IDEKit.Workspace.Documents.TextEncodingKind
+Nickelony.IDEKit.Workspace.Documents.TextEncodingKind.Utf16BigEndian = 2 -> Nickelony.IDEKit.Workspace.Documents.TextEncodingKind
+Nickelony.IDEKit.Workspace.Documents.TextEncodingKind.Utf16LittleEndian = 1 -> Nickelony.IDEKit.Workspace.Documents.TextEncodingKind
+Nickelony.IDEKit.Workspace.Documents.TextEncodingKind.Utf8 = 0 -> Nickelony.IDEKit.Workspace.Documents.TextEncodingKind
+Nickelony.IDEKit.Workspace.Documents.TextEncodingKind.Windows1252 = 3 -> Nickelony.IDEKit.Workspace.Documents.TextEncodingKind
+Nickelony.IDEKit.Workspace.Documents.TextFileFormat
+Nickelony.IDEKit.Workspace.Documents.TextFileFormat.Deconstruct(out Nickelony.IDEKit.Workspace.Documents.TextEncodingKind Encoding, out bool HasBom, out Nickelony.IDEKit.Workspace.Documents.TextNewlineStyle NewlineStyle) -> void
+Nickelony.IDEKit.Workspace.Documents.TextFileFormat.Encoding.get -> Nickelony.IDEKit.Workspace.Documents.TextEncodingKind
+Nickelony.IDEKit.Workspace.Documents.TextFileFormat.Encoding.init -> void
+Nickelony.IDEKit.Workspace.Documents.TextFileFormat.Equals(Nickelony.IDEKit.Workspace.Documents.TextFileFormat other) -> bool
+Nickelony.IDEKit.Workspace.Documents.TextFileFormat.HasBom.get -> bool
+Nickelony.IDEKit.Workspace.Documents.TextFileFormat.HasBom.init -> void
+Nickelony.IDEKit.Workspace.Documents.TextFileFormat.NewlineStyle.get -> Nickelony.IDEKit.Workspace.Documents.TextNewlineStyle
+Nickelony.IDEKit.Workspace.Documents.TextFileFormat.NewlineStyle.init -> void
+Nickelony.IDEKit.Workspace.Documents.TextFileFormat.TextFileFormat() -> void
+Nickelony.IDEKit.Workspace.Documents.TextFileFormat.TextFileFormat(Nickelony.IDEKit.Workspace.Documents.TextEncodingKind Encoding, bool HasBom, Nickelony.IDEKit.Workspace.Documents.TextNewlineStyle NewlineStyle) -> void
+Nickelony.IDEKit.Workspace.Documents.TextNewlineStyle
+Nickelony.IDEKit.Workspace.Documents.TextNewlineStyle.Cr = 2 -> Nickelony.IDEKit.Workspace.Documents.TextNewlineStyle
+Nickelony.IDEKit.Workspace.Documents.TextNewlineStyle.CrLf = 0 -> Nickelony.IDEKit.Workspace.Documents.TextNewlineStyle
+Nickelony.IDEKit.Workspace.Documents.TextNewlineStyle.Lf = 1 -> Nickelony.IDEKit.Workspace.Documents.TextNewlineStyle
+Nickelony.IDEKit.Workspace.Documents.TextNewlineStyle.Mixed = 3 -> Nickelony.IDEKit.Workspace.Documents.TextNewlineStyle
+Nickelony.IDEKit.Workspace.Documents.TextNewlineStyle.None = 4 -> Nickelony.IDEKit.Workspace.Documents.TextNewlineStyle
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitOutcome.Canceled = 8 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitOutcome.Committed = 0 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitOutcome.DocumentNotFound = 3 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitOutcome.ExternalFileConflict = 5 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitOutcome.OperationInProgress = 4 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitOutcome.ReplacementStateUnknown = 7 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitOutcome.StaleDocument = 1 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitOutcome.StaleDocumentInstance = 2 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitOutcome.WriteFailed = 6 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitRequest
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitRequest.<Clone>$() -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitRequest!
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitRequest.Deconstruct(out Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity Identity, out Nickelony.IDEKit.Workspace.Documents.FileStamp ExpectedOnDiskStamp) -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitRequest.Equals(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitRequest? other) -> bool
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitRequest.ExpectedOnDiskStamp.get -> Nickelony.IDEKit.Workspace.Documents.FileStamp
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitRequest.ExpectedOnDiskStamp.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitRequest.Identity.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitRequest.Identity.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitRequest.WorkspaceDocumentCommitRequest(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity Identity, Nickelony.IDEKit.Workspace.Documents.FileStamp ExpectedOnDiskStamp) -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitResult
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitResult.<Clone>$() -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitResult!
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitResult.Deconstruct(out Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitOutcome Outcome, out Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity RequestedIdentity, out Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot? Snapshot, out Nickelony.IDEKit.Workspace.Documents.FileStamp? ObservedOnDiskStamp, out Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure? Failure) -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitResult.Equals(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitResult? other) -> bool
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitResult.Failure.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure?
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitResult.Failure.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitResult.ObservedOnDiskStamp.get -> Nickelony.IDEKit.Workspace.Documents.FileStamp?
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitResult.ObservedOnDiskStamp.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitResult.Outcome.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitResult.Outcome.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitResult.RequestedIdentity.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitResult.RequestedIdentity.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitResult.Snapshot.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot?
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitResult.Snapshot.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitResult.WorkspaceDocumentCommitResult(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitOutcome Outcome, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity RequestedIdentity, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot? Snapshot, Nickelony.IDEKit.Workspace.Documents.FileStamp? ObservedOnDiskStamp = null, Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure? Failure = null) -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionChoice
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionChoice.UseDisk = 0 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionChoice
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionChoice.UseLogical = 1 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionChoice
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionOutcome.Canceled = 10 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionOutcome.DocumentNotFound = 4 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionOutcome.ExternalFileConflict = 6 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionOutcome.OperationInProgress = 5 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionOutcome.ReadFailed = 7 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionOutcome.ReplacementStateUnknown = 9 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionOutcome.ResolvedWithDisk = 0 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionOutcome.ResolvedWithLogical = 1 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionOutcome.StaleDocument = 2 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionOutcome.StaleDocumentInstance = 3 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionOutcome.WriteFailed = 8 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionRequest
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionRequest.<Clone>$() -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionRequest!
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionRequest.Choice.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionChoice
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionRequest.Choice.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionRequest.Deconstruct(out Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity Identity, out Nickelony.IDEKit.Workspace.Documents.FileStamp ObservedOnDiskStamp, out Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionChoice Choice) -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionRequest.Equals(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionRequest? other) -> bool
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionRequest.Identity.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionRequest.Identity.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionRequest.ObservedOnDiskStamp.get -> Nickelony.IDEKit.Workspace.Documents.FileStamp
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionRequest.ObservedOnDiskStamp.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionRequest.WorkspaceDocumentConflictResolutionRequest(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity Identity, Nickelony.IDEKit.Workspace.Documents.FileStamp ObservedOnDiskStamp, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionChoice Choice) -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionResult
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionResult.<Clone>$() -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionResult!
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionResult.Choice.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionChoice
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionResult.Choice.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionResult.Deconstruct(out Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionOutcome Outcome, out Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionChoice Choice, out Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity RequestedIdentity, out Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot? Snapshot, out Nickelony.IDEKit.Workspace.Documents.FileStamp? ObservedOnDiskStamp, out Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure? Failure) -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionResult.Equals(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionResult? other) -> bool
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionResult.Failure.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure?
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionResult.Failure.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionResult.ObservedOnDiskStamp.get -> Nickelony.IDEKit.Workspace.Documents.FileStamp?
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionResult.ObservedOnDiskStamp.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionResult.Outcome.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionResult.Outcome.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionResult.RequestedIdentity.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionResult.RequestedIdentity.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionResult.Snapshot.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot?
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionResult.Snapshot.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionResult.WorkspaceDocumentConflictResolutionResult(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionOutcome Outcome, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionChoice Choice, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity RequestedIdentity, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot? Snapshot, Nickelony.IDEKit.Workspace.Documents.FileStamp? ObservedOnDiskStamp = null, Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure? Failure = null) -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteOutcome.Canceled = 7 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteOutcome.DeleteFailed = 6 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteOutcome.Deleted = 0 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteOutcome.DocumentNotFound = 3 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteOutcome.ExternalFileConflict = 5 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteOutcome.OperationInProgress = 4 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteOutcome.StaleDocument = 1 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteOutcome.StaleDocumentInstance = 2 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteRequest
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteRequest.<Clone>$() -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteRequest!
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteRequest.Deconstruct(out Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity Identity, out Nickelony.IDEKit.Workspace.Documents.FileStamp ExpectedOnDiskStamp) -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteRequest.Equals(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteRequest? other) -> bool
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteRequest.ExpectedOnDiskStamp.get -> Nickelony.IDEKit.Workspace.Documents.FileStamp
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteRequest.ExpectedOnDiskStamp.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteRequest.Identity.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteRequest.Identity.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteRequest.WorkspaceDocumentDeleteRequest(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity Identity, Nickelony.IDEKit.Workspace.Documents.FileStamp ExpectedOnDiskStamp) -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteResult
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteResult.<Clone>$() -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteResult!
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteResult.Deconstruct(out Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteOutcome Outcome, out Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity RequestedIdentity, out Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot? Snapshot, out Nickelony.IDEKit.Workspace.Documents.FileStamp? ObservedOnDiskStamp, out Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure? Failure) -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteResult.Equals(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteResult? other) -> bool
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteResult.Failure.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure?
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteResult.Failure.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteResult.ObservedOnDiskStamp.get -> Nickelony.IDEKit.Workspace.Documents.FileStamp?
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteResult.ObservedOnDiskStamp.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteResult.Outcome.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteResult.Outcome.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteResult.RequestedIdentity.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteResult.RequestedIdentity.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteResult.Snapshot.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot?
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteResult.Snapshot.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteResult.WorkspaceDocumentDeleteResult(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteOutcome Outcome, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity RequestedIdentity, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot? Snapshot, Nickelony.IDEKit.Workspace.Documents.FileStamp? ObservedOnDiskStamp = null, Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure? Failure = null) -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteOutcome.Canceled = 5 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteOutcome.DeleteFailed = 4 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteOutcome.Deleted = 0 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteOutcome.ExternalFileConflict = 3 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteOutcome.InvalidPath = 1 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteOutcome.OperationInProgress = 2 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteRequest
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteRequest.<Clone>$() -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteRequest!
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteRequest.Deconstruct(out string! DirectoryPath) -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteRequest.DirectoryPath.get -> string!
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteRequest.DirectoryPath.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteRequest.Equals(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteRequest? other) -> bool
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteRequest.WorkspaceDocumentDirectoryDeleteRequest(string! DirectoryPath) -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteResult
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteResult.<Clone>$() -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteResult!
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteResult.Deconstruct(out Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteOutcome Outcome, out string! DirectoryPath, out System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot!>! Snapshots, out Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure? Failure) -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteResult.DirectoryPath.get -> string!
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteResult.DirectoryPath.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteResult.Equals(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteResult? other) -> bool
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteResult.Failure.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure?
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteResult.Failure.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteResult.Outcome.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteResult.Outcome.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteResult.Snapshots.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot!>!
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteResult.Snapshots.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteResult.WorkspaceDocumentDirectoryDeleteResult(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteOutcome Outcome, string! DirectoryPath, System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot!>! Snapshots, Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure? Failure = null) -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameOutcome.Canceled = 10 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameOutcome.DestinationBusy = 7 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameOutcome.DestinationExists = 5 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameOutcome.DestinationInUse = 6 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameOutcome.ExternalFileConflict = 4 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameOutcome.InvalidPath = 2 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameOutcome.MoveFailed = 8 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameOutcome.MoveStateUnknown = 9 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameOutcome.NoChange = 1 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameOutcome.OperationInProgress = 3 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameOutcome.Renamed = 0 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameRequest
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameRequest.<Clone>$() -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameRequest!
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameRequest.Deconstruct(out string! SourceDirectoryPath, out string! DestinationDirectoryPath) -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameRequest.DestinationDirectoryPath.get -> string!
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameRequest.DestinationDirectoryPath.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameRequest.Equals(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameRequest? other) -> bool
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameRequest.SourceDirectoryPath.get -> string!
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameRequest.SourceDirectoryPath.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameRequest.WorkspaceDocumentDirectoryRenameRequest(string! SourceDirectoryPath, string! DestinationDirectoryPath) -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameResult
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameResult.<Clone>$() -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameResult!
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameResult.Deconstruct(out Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameOutcome Outcome, out string! SourceDirectoryPath, out string! DestinationDirectoryPath, out System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot!>! Snapshots, out Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure? Failure) -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameResult.DestinationDirectoryPath.get -> string!
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameResult.DestinationDirectoryPath.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameResult.Equals(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameResult? other) -> bool
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameResult.Failure.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure?
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameResult.Failure.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameResult.Outcome.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameResult.Outcome.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameResult.Snapshots.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot!>!
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameResult.Snapshots.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameResult.SourceDirectoryPath.get -> string!
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameResult.SourceDirectoryPath.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameResult.WorkspaceDocumentDirectoryRenameResult(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameOutcome Outcome, string! SourceDirectoryPath, string! DestinationDirectoryPath, System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot!>! Snapshots, Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure? Failure = null) -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDiscardRequest
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDiscardRequest.<Clone>$() -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDiscardRequest!
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDiscardRequest.Deconstruct(out Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity Identity) -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDiscardRequest.Equals(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDiscardRequest? other) -> bool
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDiscardRequest.Identity.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDiscardRequest.Identity.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDiscardRequest.WorkspaceDocumentDiscardRequest(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity Identity) -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentKey
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentKey.Deconstruct(out System.Guid Value) -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentKey.Equals(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentKey other) -> bool
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentKey.Value.get -> System.Guid
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentKey.Value.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentKey.WorkspaceDocumentKey() -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentKey.WorkspaceDocumentKey(System.Guid Value) -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentMutationOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentMutationOutcome.Changed = 0 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentMutationOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentMutationOutcome.DocumentNotFound = 4 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentMutationOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentMutationOutcome.NoChange = 1 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentMutationOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentMutationOutcome.OperationInProgress = 5 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentMutationOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentMutationOutcome.StaleDocument = 2 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentMutationOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentMutationOutcome.StaleDocumentInstance = 3 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentMutationOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentMutationResult
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentMutationResult.<Clone>$() -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentMutationResult!
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentMutationResult.Deconstruct(out Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentMutationOutcome Outcome, out Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity RequestedIdentity, out Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot? Snapshot) -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentMutationResult.Equals(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentMutationResult? other) -> bool
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentMutationResult.Outcome.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentMutationOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentMutationResult.Outcome.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentMutationResult.RequestedIdentity.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentMutationResult.RequestedIdentity.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentMutationResult.Snapshot.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot?
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentMutationResult.Snapshot.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentMutationResult.WorkspaceDocumentMutationResult(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentMutationOutcome Outcome, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity RequestedIdentity, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot? Snapshot) -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenOptions
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenOptions.CreateIfMissing.get -> bool
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenOptions.CreateIfMissing.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenOptions.Deconstruct(out Nickelony.IDEKit.Workspace.Documents.TextEncodingKind NoBomEncoding, out Nickelony.IDEKit.Workspace.Documents.TextFileFormat NewFileFormat, out bool CreateIfMissing) -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenOptions.Equals(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenOptions other) -> bool
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenOptions.NewFileFormat.get -> Nickelony.IDEKit.Workspace.Documents.TextFileFormat
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenOptions.NewFileFormat.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenOptions.NoBomEncoding.get -> Nickelony.IDEKit.Workspace.Documents.TextEncodingKind
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenOptions.NoBomEncoding.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenOptions.WorkspaceDocumentOpenOptions() -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenOptions.WorkspaceDocumentOpenOptions(Nickelony.IDEKit.Workspace.Documents.TextEncodingKind NoBomEncoding, Nickelony.IDEKit.Workspace.Documents.TextFileFormat NewFileFormat, bool CreateIfMissing = true) -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenOutcome.AlreadyOpen = 1 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenOutcome.Canceled = 6 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenOutcome.InvalidPath = 2 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenOutcome.IsDirectory = 4 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenOutcome.LoadFailed = 5 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenOutcome.NotFound = 3 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenOutcome.Opened = 0 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenResult
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenResult.<Clone>$() -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenResult!
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenResult.Deconstruct(out Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenOutcome Outcome, out Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot? Snapshot, out Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure? Failure) -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenResult.Equals(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenResult? other) -> bool
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenResult.Failure.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure?
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenResult.Failure.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenResult.Outcome.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenResult.Outcome.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenResult.Snapshot.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot?
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenResult.Snapshot.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenResult.WorkspaceDocumentOpenResult(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenOutcome Outcome, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot? Snapshot, Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure? Failure = null) -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadOutcome.Canceled = 8 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadOutcome.DocumentNotFound = 4 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadOutcome.ExternalFileConflict = 6 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadOutcome.OperationInProgress = 5 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadOutcome.ReadFailed = 7 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadOutcome.Reloaded = 0 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadOutcome.StaleDocument = 2 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadOutcome.StaleDocumentInstance = 3 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadOutcome.Unchanged = 1 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadRequest
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadRequest.<Clone>$() -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadRequest!
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadRequest.Deconstruct(out Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity Identity) -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadRequest.Equals(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadRequest? other) -> bool
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadRequest.Identity.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadRequest.Identity.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadRequest.WorkspaceDocumentReloadRequest(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity Identity) -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadResult
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadResult.<Clone>$() -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadResult!
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadResult.Deconstruct(out Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadOutcome Outcome, out Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity RequestedIdentity, out Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot? Snapshot, out Nickelony.IDEKit.Workspace.Documents.FileStamp? ObservedOnDiskStamp, out Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure? Failure) -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadResult.Equals(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadResult? other) -> bool
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadResult.Failure.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure?
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadResult.Failure.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadResult.ObservedOnDiskStamp.get -> Nickelony.IDEKit.Workspace.Documents.FileStamp?
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadResult.ObservedOnDiskStamp.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadResult.Outcome.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadResult.Outcome.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadResult.RequestedIdentity.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadResult.RequestedIdentity.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadResult.Snapshot.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot?
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadResult.Snapshot.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadResult.WorkspaceDocumentReloadResult(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadOutcome Outcome, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity RequestedIdentity, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot? Snapshot, Nickelony.IDEKit.Workspace.Documents.FileStamp? ObservedOnDiskStamp = null, Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure? Failure = null) -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameOutcome.Canceled = 13 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameOutcome.DestinationBusy = 10 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameOutcome.DestinationExists = 8 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameOutcome.DestinationInUse = 9 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameOutcome.DocumentNotFound = 5 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameOutcome.ExternalFileConflict = 7 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameOutcome.InvalidPath = 2 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameOutcome.MoveFailed = 11 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameOutcome.MoveStateUnknown = 12 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameOutcome.NoChange = 1 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameOutcome.OperationInProgress = 6 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameOutcome.Renamed = 0 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameOutcome.StaleDocument = 3 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameOutcome.StaleDocumentInstance = 4 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameRequest
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameRequest.<Clone>$() -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameRequest!
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameRequest.Deconstruct(out Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity Identity, out Nickelony.IDEKit.Workspace.Documents.FileStamp ExpectedOnDiskStamp, out string! DestinationPath) -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameRequest.DestinationPath.get -> string!
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameRequest.DestinationPath.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameRequest.Equals(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameRequest? other) -> bool
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameRequest.ExpectedOnDiskStamp.get -> Nickelony.IDEKit.Workspace.Documents.FileStamp
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameRequest.ExpectedOnDiskStamp.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameRequest.Identity.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameRequest.Identity.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameRequest.WorkspaceDocumentRenameRequest(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity Identity, Nickelony.IDEKit.Workspace.Documents.FileStamp ExpectedOnDiskStamp, string! DestinationPath) -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameResult
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameResult.<Clone>$() -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameResult!
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameResult.Deconstruct(out Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameOutcome Outcome, out Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity RequestedIdentity, out Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot? Snapshot, out Nickelony.IDEKit.Workspace.Documents.FileStamp? ObservedOnDiskStamp, out Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure? Failure) -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameResult.Equals(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameResult? other) -> bool
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameResult.Failure.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure?
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameResult.Failure.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameResult.ObservedOnDiskStamp.get -> Nickelony.IDEKit.Workspace.Documents.FileStamp?
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameResult.ObservedOnDiskStamp.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameResult.Outcome.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameResult.Outcome.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameResult.RequestedIdentity.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameResult.RequestedIdentity.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameResult.Snapshot.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot?
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameResult.Snapshot.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameResult.WorkspaceDocumentRenameResult(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameOutcome Outcome, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity RequestedIdentity, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot? Snapshot, Nickelony.IDEKit.Workspace.Documents.FileStamp? ObservedOnDiskStamp = null, Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure? Failure = null) -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReplaceRequest
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReplaceRequest.<Clone>$() -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReplaceRequest!
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReplaceRequest.Content.get -> string!
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReplaceRequest.Content.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReplaceRequest.Deconstruct(out Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity Identity, out string! Content, out Nickelony.IDEKit.Workspace.Documents.TextFileFormat FileFormat) -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReplaceRequest.Equals(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReplaceRequest? other) -> bool
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReplaceRequest.FileFormat.get -> Nickelony.IDEKit.Workspace.Documents.TextFileFormat
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReplaceRequest.FileFormat.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReplaceRequest.Identity.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReplaceRequest.Identity.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReplaceRequest.WorkspaceDocumentReplaceRequest(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity Identity, string! Content, Nickelony.IDEKit.Workspace.Documents.TextFileFormat FileFormat) -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity.Deconstruct(out Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentKey DocumentKey, out string! DocumentId, out long Version) -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity.DocumentId.get -> string!
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity.DocumentId.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity.DocumentKey.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentKey
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity.DocumentKey.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity.Equals(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity other) -> bool
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity.Version.get -> long
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity.Version.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity.WorkspaceDocumentRequestIdentity() -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity.WorkspaceDocumentRequestIdentity(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentKey DocumentKey, string! DocumentId, long Version) -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsOutcome.Canceled = 12 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsOutcome.DestinationBusy = 8 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsOutcome.DestinationExists = 6 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsOutcome.DestinationInUse = 7 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsOutcome.DocumentNotFound = 4 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsOutcome.ExternalFileConflict = 9 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsOutcome.InvalidPath = 1 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsOutcome.OperationInProgress = 5 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsOutcome.ReplacementStateUnknown = 11 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsOutcome.SavedAs = 0 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsOutcome.StaleDocument = 2 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsOutcome.StaleDocumentInstance = 3 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsOutcome.WriteFailed = 10 -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsRequest
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsRequest.<Clone>$() -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsRequest!
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsRequest.Deconstruct(out Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity Identity, out Nickelony.IDEKit.Workspace.Documents.FileStamp ExpectedOnDiskStamp, out string! DestinationPath) -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsRequest.DestinationPath.get -> string!
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsRequest.DestinationPath.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsRequest.Equals(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsRequest? other) -> bool
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsRequest.ExpectedOnDiskStamp.get -> Nickelony.IDEKit.Workspace.Documents.FileStamp
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsRequest.ExpectedOnDiskStamp.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsRequest.Identity.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsRequest.Identity.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsRequest.WorkspaceDocumentSaveAsRequest(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity Identity, Nickelony.IDEKit.Workspace.Documents.FileStamp ExpectedOnDiskStamp, string! DestinationPath) -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsResult
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsResult.<Clone>$() -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsResult!
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsResult.Deconstruct(out Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsOutcome Outcome, out Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity RequestedIdentity, out Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot? Snapshot, out Nickelony.IDEKit.Workspace.Documents.FileStamp? ObservedOnDiskStamp, out Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure? Failure) -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsResult.Equals(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsResult? other) -> bool
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsResult.Failure.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure?
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsResult.Failure.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsResult.ObservedOnDiskStamp.get -> Nickelony.IDEKit.Workspace.Documents.FileStamp?
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsResult.ObservedOnDiskStamp.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsResult.Outcome.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsOutcome
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsResult.Outcome.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsResult.RequestedIdentity.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsResult.RequestedIdentity.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsResult.Snapshot.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot?
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsResult.Snapshot.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsResult.WorkspaceDocumentSaveAsResult(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsOutcome Outcome, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity RequestedIdentity, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot? Snapshot, Nickelony.IDEKit.Workspace.Documents.FileStamp? ObservedOnDiskStamp = null, Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure? Failure = null) -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot.<Clone>$() -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot!
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot.Content.get -> string!
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot.Deconstruct(out Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentKey DocumentKey, out string! DocumentId, out string! DisplayPath, out long Version, out long PersistedVersion, out bool IsDirty, out Nickelony.IDEKit.Core.Text.ITextSnapshot! Text, out Nickelony.IDEKit.Workspace.Documents.TextFileFormat FileFormat, out Nickelony.IDEKit.Workspace.Documents.FileStamp OnDiskStamp) -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot.DisplayPath.get -> string!
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot.DisplayPath.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot.DocumentId.get -> string!
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot.DocumentId.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot.DocumentKey.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentKey
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot.DocumentKey.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot.Equals(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot? other) -> bool
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot.ExistsOnDisk.get -> bool
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot.FileFormat.get -> Nickelony.IDEKit.Workspace.Documents.TextFileFormat
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot.FileFormat.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot.IsDirty.get -> bool
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot.IsDirty.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot.OnDiskStamp.get -> Nickelony.IDEKit.Workspace.Documents.FileStamp
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot.OnDiskStamp.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot.PersistedVersion.get -> long
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot.PersistedVersion.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot.Text.get -> Nickelony.IDEKit.Core.Text.ITextSnapshot!
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot.Text.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot.Version.get -> long
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot.Version.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot.WorkspaceDocumentSnapshot(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentKey DocumentKey, string! DocumentId, string! DisplayPath, long Version, long PersistedVersion, bool IsDirty, Nickelony.IDEKit.Core.Text.ITextSnapshot! Text, Nickelony.IDEKit.Workspace.Documents.TextFileFormat FileFormat, Nickelony.IDEKit.Workspace.Documents.FileStamp OnDiskStamp) -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentStore
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentStore.CommitAsync(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitResult!>!
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentStore.DeleteAsync(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteResult!>!
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentStore.DeleteDirectoryAsync(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteResult!>!
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentStore.Discard(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDiscardRequest! request) -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentMutationResult!
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentStore.DisposeAsync() -> System.Threading.Tasks.ValueTask
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentStore.GetSnapshotsUnderDirectory(string? directoryPath) -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot!>!
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentStore.OpenAsync(string? filePath, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenResult!>!
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentStore.PathComparison.get -> Nickelony.IDEKit.Core.Pathing.LocalPathComparisonPolicy
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentStore.ReloadAsync(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadResult!>!
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentStore.RenameAsync(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameResult!>!
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentStore.RenameDirectoryAsync(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameResult!>!
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentStore.Replace(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReplaceRequest! request) -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentMutationResult!
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentStore.ResolveExternalConflictAsync(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionResult!>!
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentStore.SaveAsAsync(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsResult!>!
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentStore.TryGetSnapshot(string? filePath, out Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot? snapshot) -> bool
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentStore.WorkspaceDocumentStore(Nickelony.IDEKit.Workspace.Documents.FileSystem.IWorkspaceFileSystem! fileSystem, Nickelony.IDEKit.Core.Pathing.LocalPathComparisonPolicy? pathComparison = null) -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure
+Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure.<Clone>$() -> Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure!
+Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure.Code.get -> string!
+Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure.Code.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure.Deconstruct(out string! Code, out string! Message, out System.Exception? Exception) -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure.Equals(Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure? other) -> bool
+Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure.Exception.get -> System.Exception?
+Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure.Exception.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure.Message.get -> string!
+Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure.Message.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure.WorkspaceOperationFailure(string! Code, string! Message, System.Exception? Exception = null) -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceTextCodec
+Nickelony.IDEKit.Workspace.Editing.WorkspaceDocumentChange
+Nickelony.IDEKit.Workspace.Editing.WorkspaceDocumentChange.<Clone>$() -> Nickelony.IDEKit.Workspace.Editing.WorkspaceDocumentChange!
+Nickelony.IDEKit.Workspace.Editing.WorkspaceDocumentChange.AfterContent.get -> string!
+Nickelony.IDEKit.Workspace.Editing.WorkspaceDocumentChange.AfterContent.init -> void
+Nickelony.IDEKit.Workspace.Editing.WorkspaceDocumentChange.AfterFileFormat.get -> Nickelony.IDEKit.Workspace.Documents.TextFileFormat?
+Nickelony.IDEKit.Workspace.Editing.WorkspaceDocumentChange.AfterFileFormat.init -> void
+Nickelony.IDEKit.Workspace.Editing.WorkspaceDocumentChange.BeforeContent.get -> string!
+Nickelony.IDEKit.Workspace.Editing.WorkspaceDocumentChange.BeforeContent.init -> void
+Nickelony.IDEKit.Workspace.Editing.WorkspaceDocumentChange.BeforeFileFormat.get -> Nickelony.IDEKit.Workspace.Documents.TextFileFormat?
+Nickelony.IDEKit.Workspace.Editing.WorkspaceDocumentChange.BeforeFileFormat.init -> void
+Nickelony.IDEKit.Workspace.Editing.WorkspaceDocumentChange.Equals(Nickelony.IDEKit.Workspace.Editing.WorkspaceDocumentChange? other) -> bool
+Nickelony.IDEKit.Workspace.Editing.WorkspaceDocumentChange.TargetId.get -> string!
+Nickelony.IDEKit.Workspace.Editing.WorkspaceDocumentChange.TargetId.init -> void
+Nickelony.IDEKit.Workspace.Editing.WorkspaceDocumentChange.WorkspaceDocumentChange() -> void
+Nickelony.IDEKit.Workspace.Editing.WorkspaceEditApplicationOutcome
+Nickelony.IDEKit.Workspace.Editing.WorkspaceEditApplicationOutcome.Canceled = 2 -> Nickelony.IDEKit.Workspace.Editing.WorkspaceEditApplicationOutcome
+Nickelony.IDEKit.Workspace.Editing.WorkspaceEditApplicationOutcome.Completed = 1 -> Nickelony.IDEKit.Workspace.Editing.WorkspaceEditApplicationOutcome
+Nickelony.IDEKit.Workspace.Editing.WorkspaceEditApplicationOutcome.PartiallyApplied = 3 -> Nickelony.IDEKit.Workspace.Editing.WorkspaceEditApplicationOutcome
+Nickelony.IDEKit.Workspace.Editing.WorkspaceEditApplicationOutcome.ValidationFailed = 0 -> Nickelony.IDEKit.Workspace.Editing.WorkspaceEditApplicationOutcome
+Nickelony.IDEKit.Workspace.Editing.WorkspaceEditApplicationResult
+Nickelony.IDEKit.Workspace.Editing.WorkspaceEditApplicationResult.ChangeSet.get -> Nickelony.IDEKit.Workspace.Editing.WorkspaceEditChangeSet!
+Nickelony.IDEKit.Workspace.Editing.WorkspaceEditApplicationResult.ChangedTargetIds.get -> System.Collections.Generic.IReadOnlyList<string!>!
+Nickelony.IDEKit.Workspace.Editing.WorkspaceEditApplicationResult.Failure.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure?
+Nickelony.IDEKit.Workspace.Editing.WorkspaceEditApplicationResult.Issues.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Core.Editing.TextEditPreparationIssue!>!
+Nickelony.IDEKit.Workspace.Editing.WorkspaceEditApplicationResult.Outcome.get -> Nickelony.IDEKit.Workspace.Editing.WorkspaceEditApplicationOutcome
+Nickelony.IDEKit.Workspace.Editing.WorkspaceEditApplicationResult.PreparedOperationCount.get -> int
+Nickelony.IDEKit.Workspace.Editing.WorkspaceEditApplicationResult.TargetResults.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetResult!>!
+Nickelony.IDEKit.Workspace.Editing.WorkspaceEditApplicationResult.UnknownTargetIds.get -> System.Collections.Generic.IReadOnlyList<string!>!
+Nickelony.IDEKit.Workspace.Editing.WorkspaceEditApplier
+Nickelony.IDEKit.Workspace.Editing.WorkspaceEditApplier.Apply(System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetPreparation!>! targets, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> Nickelony.IDEKit.Workspace.Editing.WorkspaceEditApplicationResult!
+Nickelony.IDEKit.Workspace.Editing.WorkspaceEditApplier.WorkspaceEditApplier(System.Func<Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReplaceRequest!, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentMutationResult!>! replaceDocument, Nickelony.IDEKit.Core.Pathing.LocalPathComparisonPolicy? pathComparison = null, bool continueOnFailure = false) -> void
+Nickelony.IDEKit.Workspace.Editing.WorkspaceEditChangeSet
+Nickelony.IDEKit.Workspace.Editing.WorkspaceEditChangeSet.DocumentChanges.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Workspace.Editing.WorkspaceDocumentChange!>!
+Nickelony.IDEKit.Workspace.Editing.WorkspaceEditChangeSet.HasChanges.get -> bool
+Nickelony.IDEKit.Workspace.Editing.WorkspaceEditChangeSet.WorkspaceEditChangeSet(System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Workspace.Editing.WorkspaceDocumentChange!>! documentChanges) -> void
+Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetOutcome
+Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetOutcome.Applied = 1 -> Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetOutcome
+Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetOutcome.NotApplied = 0 -> Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetOutcome
+Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetOutcome.Unknown = 2 -> Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetOutcome
+Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetPreparation
+Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetPreparation.<Clone>$() -> Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetPreparation!
+Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetPreparation.AfterContent.get -> string!
+Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetPreparation.AfterContent.init -> void
+Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetPreparation.AfterFileFormat.get -> Nickelony.IDEKit.Workspace.Documents.TextFileFormat
+Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetPreparation.AfterFileFormat.init -> void
+Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetPreparation.BeforeContent.get -> string!
+Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetPreparation.BeforeContent.init -> void
+Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetPreparation.BeforeFileFormat.get -> Nickelony.IDEKit.Workspace.Documents.TextFileFormat
+Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetPreparation.BeforeFileFormat.init -> void
+Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetPreparation.Equals(Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetPreparation? other) -> bool
+Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetPreparation.Identity.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity
+Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetPreparation.Identity.init -> void
+Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetPreparation.TargetId.get -> string!
+Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetPreparation.TargetId.init -> void
+Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetPreparation.WorkspaceEditTargetPreparation() -> void
+Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetResult
+Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetResult.<Clone>$() -> Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetResult!
+Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetResult.ActualVersion.get -> long?
+Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetResult.ActualVersion.init -> void
+Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetResult.Equals(Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetResult? other) -> bool
+Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetResult.ExpectedVersion.get -> long
+Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetResult.ExpectedVersion.init -> void
+Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetResult.Failure.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure?
+Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetResult.Failure.init -> void
+Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetResult.Outcome.get -> Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetOutcome
+Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetResult.Outcome.init -> void
+Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetResult.PreparedOperationCount.get -> int
+Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetResult.PreparedOperationCount.init -> void
+Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetResult.TargetId.get -> string!
+Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetResult.TargetId.init -> void
+Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetResult.WorkspaceEditTargetResult() -> void
+Nickelony.IDEKit.Workspace.WorkspaceOperationFailureCodes
+const Nickelony.IDEKit.Workspace.WorkspaceOperationFailureCodes.AccessDenied = "AccessDenied" -> string!
+const Nickelony.IDEKit.Workspace.WorkspaceOperationFailureCodes.Canceled = "Canceled" -> string!
+const Nickelony.IDEKit.Workspace.WorkspaceOperationFailureCodes.DeleteFailed = "DeleteFailed" -> string!
+const Nickelony.IDEKit.Workspace.WorkspaceOperationFailureCodes.DestinationExists = "DestinationExists" -> string!
+const Nickelony.IDEKit.Workspace.WorkspaceOperationFailureCodes.ExternalFileConflict = "ExternalFileConflict" -> string!
+const Nickelony.IDEKit.Workspace.WorkspaceOperationFailureCodes.InvalidEncoding = "InvalidEncoding" -> string!
+const Nickelony.IDEKit.Workspace.WorkspaceOperationFailureCodes.IsDirectory = "IsDirectory" -> string!
+const Nickelony.IDEKit.Workspace.WorkspaceOperationFailureCodes.LoadFailed = "LoadFailed" -> string!
+const Nickelony.IDEKit.Workspace.WorkspaceOperationFailureCodes.MoveFailed = "MoveFailed" -> string!
+const Nickelony.IDEKit.Workspace.WorkspaceOperationFailureCodes.MoveStateUnknown = "MoveStateUnknown" -> string!
+const Nickelony.IDEKit.Workspace.WorkspaceOperationFailureCodes.NotDirectory = "NotDirectory" -> string!
+const Nickelony.IDEKit.Workspace.WorkspaceOperationFailureCodes.ReadFailed = "ReadFailed" -> string!
+const Nickelony.IDEKit.Workspace.WorkspaceOperationFailureCodes.ReplacementStateUnknown = "ReplacementStateUnknown" -> string!
+const Nickelony.IDEKit.Workspace.WorkspaceOperationFailureCodes.TargetApplicationFailed = "TargetApplicationFailed" -> string!
+const Nickelony.IDEKit.Workspace.WorkspaceOperationFailureCodes.TargetNotChanged = "TargetNotChanged" -> string!
+const Nickelony.IDEKit.Workspace.WorkspaceOperationFailureCodes.TargetOutcomeUnknown = "TargetOutcomeUnknown" -> string!
+const Nickelony.IDEKit.Workspace.WorkspaceOperationFailureCodes.TargetSkipped = "TargetSkipped" -> string!
+const Nickelony.IDEKit.Workspace.WorkspaceOperationFailureCodes.WriteFailed = "WriteFailed" -> string!
+override Nickelony.IDEKit.Workspace.Documents.FileStamp.GetHashCode() -> int
+override Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileDeleteResult.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileDeleteResult.GetHashCode() -> int
+override Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileDeleteResult.ToString() -> string!
+override Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileMoveResult.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileMoveResult.GetHashCode() -> int
+override Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileMoveResult.ToString() -> string!
+override Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReplacementResult.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReplacementResult.GetHashCode() -> int
+override Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReplacementResult.ToString() -> string!
+override Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile.GetHashCode() -> int
+override Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile.ToString() -> string!
+override Nickelony.IDEKit.Workspace.Documents.Reloading.FileReloadHooks<TDecisionResult>.GetHashCode() -> int
+override Nickelony.IDEKit.Workspace.Documents.TextFileFormat.GetHashCode() -> int
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitRequest.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitRequest.GetHashCode() -> int
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitRequest.ToString() -> string!
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitResult.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitResult.GetHashCode() -> int
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitResult.ToString() -> string!
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionRequest.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionRequest.GetHashCode() -> int
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionRequest.ToString() -> string!
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionResult.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionResult.GetHashCode() -> int
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionResult.ToString() -> string!
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteRequest.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteRequest.GetHashCode() -> int
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteRequest.ToString() -> string!
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteResult.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteResult.GetHashCode() -> int
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteResult.ToString() -> string!
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteRequest.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteRequest.GetHashCode() -> int
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteRequest.ToString() -> string!
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteResult.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteResult.GetHashCode() -> int
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteResult.ToString() -> string!
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameRequest.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameRequest.GetHashCode() -> int
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameRequest.ToString() -> string!
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameResult.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameResult.GetHashCode() -> int
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameResult.ToString() -> string!
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDiscardRequest.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDiscardRequest.GetHashCode() -> int
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDiscardRequest.ToString() -> string!
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentKey.GetHashCode() -> int
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentMutationResult.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentMutationResult.GetHashCode() -> int
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentMutationResult.ToString() -> string!
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenOptions.GetHashCode() -> int
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenResult.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenResult.GetHashCode() -> int
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenResult.ToString() -> string!
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadRequest.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadRequest.GetHashCode() -> int
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadRequest.ToString() -> string!
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadResult.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadResult.GetHashCode() -> int
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadResult.ToString() -> string!
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameRequest.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameRequest.GetHashCode() -> int
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameRequest.ToString() -> string!
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameResult.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameResult.GetHashCode() -> int
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameResult.ToString() -> string!
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReplaceRequest.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReplaceRequest.GetHashCode() -> int
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReplaceRequest.ToString() -> string!
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity.GetHashCode() -> int
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsRequest.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsRequest.GetHashCode() -> int
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsRequest.ToString() -> string!
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsResult.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsResult.GetHashCode() -> int
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsResult.ToString() -> string!
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot.GetHashCode() -> int
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot.ToString() -> string!
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure.GetHashCode() -> int
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure.ToString() -> string!
+override Nickelony.IDEKit.Workspace.Editing.WorkspaceDocumentChange.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Workspace.Editing.WorkspaceDocumentChange.GetHashCode() -> int
+override Nickelony.IDEKit.Workspace.Editing.WorkspaceDocumentChange.ToString() -> string!
+override Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetPreparation.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetPreparation.GetHashCode() -> int
+override Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetPreparation.ToString() -> string!
+override Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetResult.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetResult.GetHashCode() -> int
+override Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetResult.ToString() -> string!
+static Nickelony.IDEKit.Workspace.Documents.FileStamp.Missing.get -> Nickelony.IDEKit.Workspace.Documents.FileStamp
+static Nickelony.IDEKit.Workspace.Documents.FileStamp.operator !=(Nickelony.IDEKit.Workspace.Documents.FileStamp left, Nickelony.IDEKit.Workspace.Documents.FileStamp right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.FileStamp.operator ==(Nickelony.IDEKit.Workspace.Documents.FileStamp left, Nickelony.IDEKit.Workspace.Documents.FileStamp right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileDeleteResult.operator !=(Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileDeleteResult? left, Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileDeleteResult? right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileDeleteResult.operator ==(Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileDeleteResult? left, Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileDeleteResult? right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileMoveResult.operator !=(Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileMoveResult? left, Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileMoveResult? right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileMoveResult.operator ==(Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileMoveResult? left, Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileMoveResult? right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReadResult.Directory.get -> Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReadResult!
+static Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReadResult.FromBytes(Nickelony.IDEKit.Workspace.Documents.FileStamp onDiskStamp, System.ReadOnlyMemory<byte> rawBytes) -> Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReadResult!
+static Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReadResult.FromContent(string! content, Nickelony.IDEKit.Workspace.Documents.TextFileFormat fileFormat, Nickelony.IDEKit.Workspace.Documents.FileStamp onDiskStamp) -> Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReadResult!
+static Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReadResult.Missing.get -> Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReadResult!
+static Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReplacementResult.operator !=(Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReplacementResult? left, Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReplacementResult? right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReplacementResult.operator ==(Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReplacementResult? left, Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReplacementResult? right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile.operator !=(Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile? left, Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile? right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile.operator ==(Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile? left, Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile? right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.Reloading.FileReloadHooks<TDecisionResult>.operator !=(Nickelony.IDEKit.Workspace.Documents.Reloading.FileReloadHooks<TDecisionResult> left, Nickelony.IDEKit.Workspace.Documents.Reloading.FileReloadHooks<TDecisionResult> right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.Reloading.FileReloadHooks<TDecisionResult>.operator ==(Nickelony.IDEKit.Workspace.Documents.Reloading.FileReloadHooks<TDecisionResult> left, Nickelony.IDEKit.Workspace.Documents.Reloading.FileReloadHooks<TDecisionResult> right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.TextFileFormat.operator !=(Nickelony.IDEKit.Workspace.Documents.TextFileFormat left, Nickelony.IDEKit.Workspace.Documents.TextFileFormat right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.TextFileFormat.operator ==(Nickelony.IDEKit.Workspace.Documents.TextFileFormat left, Nickelony.IDEKit.Workspace.Documents.TextFileFormat right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitRequest.operator !=(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitRequest? left, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitRequest? right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitRequest.operator ==(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitRequest? left, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitRequest? right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitResult.operator !=(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitResult? left, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitResult? right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitResult.operator ==(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitResult? left, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitResult? right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionRequest.operator !=(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionRequest? left, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionRequest? right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionRequest.operator ==(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionRequest? left, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionRequest? right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionResult.operator !=(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionResult? left, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionResult? right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionResult.operator ==(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionResult? left, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionResult? right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteRequest.operator !=(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteRequest? left, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteRequest? right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteRequest.operator ==(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteRequest? left, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteRequest? right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteResult.operator !=(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteResult? left, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteResult? right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteResult.operator ==(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteResult? left, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteResult? right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteRequest.operator !=(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteRequest? left, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteRequest? right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteRequest.operator ==(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteRequest? left, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteRequest? right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteResult.operator !=(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteResult? left, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteResult? right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteResult.operator ==(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteResult? left, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteResult? right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameRequest.operator !=(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameRequest? left, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameRequest? right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameRequest.operator ==(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameRequest? left, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameRequest? right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameResult.operator !=(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameResult? left, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameResult? right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameResult.operator ==(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameResult? left, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameResult? right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDiscardRequest.operator !=(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDiscardRequest? left, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDiscardRequest? right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDiscardRequest.operator ==(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDiscardRequest? left, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDiscardRequest? right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentKey.operator !=(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentKey left, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentKey right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentKey.operator ==(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentKey left, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentKey right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentMutationResult.operator !=(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentMutationResult? left, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentMutationResult? right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentMutationResult.operator ==(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentMutationResult? left, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentMutationResult? right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenOptions.operator !=(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenOptions left, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenOptions right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenOptions.operator ==(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenOptions left, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenOptions right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenResult.operator !=(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenResult? left, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenResult? right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenResult.operator ==(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenResult? left, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenResult? right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadRequest.operator !=(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadRequest? left, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadRequest? right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadRequest.operator ==(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadRequest? left, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadRequest? right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadResult.operator !=(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadResult? left, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadResult? right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadResult.operator ==(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadResult? left, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadResult? right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameRequest.operator !=(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameRequest? left, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameRequest? right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameRequest.operator ==(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameRequest? left, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameRequest? right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameResult.operator !=(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameResult? left, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameResult? right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameResult.operator ==(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameResult? left, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameResult? right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReplaceRequest.operator !=(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReplaceRequest? left, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReplaceRequest? right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReplaceRequest.operator ==(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReplaceRequest? left, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReplaceRequest? right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity.operator !=(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity left, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity.operator ==(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity left, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsRequest.operator !=(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsRequest? left, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsRequest? right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsRequest.operator ==(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsRequest? left, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsRequest? right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsResult.operator !=(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsResult? left, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsResult? right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsResult.operator ==(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsResult? left, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsResult? right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot.operator !=(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot? left, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot? right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot.operator ==(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot? left, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot? right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure.operator !=(Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure? left, Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure? right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure.operator ==(Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure? left, Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure? right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.WorkspaceTextCodec.Decode(System.ReadOnlySpan<byte> bytes, Nickelony.IDEKit.Workspace.Documents.TextEncodingKind noBomEncoding, out Nickelony.IDEKit.Workspace.Documents.TextFileFormat fileFormat) -> string!
+static Nickelony.IDEKit.Workspace.Documents.WorkspaceTextCodec.DetectNewlineStyle(string! content) -> Nickelony.IDEKit.Workspace.Documents.TextNewlineStyle
+static Nickelony.IDEKit.Workspace.Documents.WorkspaceTextCodec.Encode(string! content, Nickelony.IDEKit.Workspace.Documents.TextFileFormat fileFormat) -> byte[]!
+static Nickelony.IDEKit.Workspace.Editing.WorkspaceDocumentChange.operator !=(Nickelony.IDEKit.Workspace.Editing.WorkspaceDocumentChange? left, Nickelony.IDEKit.Workspace.Editing.WorkspaceDocumentChange? right) -> bool
+static Nickelony.IDEKit.Workspace.Editing.WorkspaceDocumentChange.operator ==(Nickelony.IDEKit.Workspace.Editing.WorkspaceDocumentChange? left, Nickelony.IDEKit.Workspace.Editing.WorkspaceDocumentChange? right) -> bool
+static Nickelony.IDEKit.Workspace.Editing.WorkspaceEditApplicationResult.Canceled(System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetResult!>! targetResults, Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure? failure = null, Nickelony.IDEKit.Core.Pathing.LocalPathComparisonPolicy? pathComparison = null) -> Nickelony.IDEKit.Workspace.Editing.WorkspaceEditApplicationResult!
+static Nickelony.IDEKit.Workspace.Editing.WorkspaceEditApplicationResult.Completed(System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetResult!>! targetResults, Nickelony.IDEKit.Workspace.Editing.WorkspaceEditChangeSet! changeSet, Nickelony.IDEKit.Core.Pathing.LocalPathComparisonPolicy? pathComparison = null) -> Nickelony.IDEKit.Workspace.Editing.WorkspaceEditApplicationResult!
+static Nickelony.IDEKit.Workspace.Editing.WorkspaceEditApplicationResult.PartiallyApplied(System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetResult!>! targetResults, System.Collections.Generic.IReadOnlyList<string!>! unknownTargetIds, Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure! failure, Nickelony.IDEKit.Workspace.Editing.WorkspaceEditChangeSet! changeSet, Nickelony.IDEKit.Core.Pathing.LocalPathComparisonPolicy? pathComparison = null) -> Nickelony.IDEKit.Workspace.Editing.WorkspaceEditApplicationResult!
+static Nickelony.IDEKit.Workspace.Editing.WorkspaceEditApplicationResult.ValidationFailed(System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Core.Editing.TextEditPreparationIssue!>! issues, Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure? failure = null, Nickelony.IDEKit.Core.Pathing.LocalPathComparisonPolicy? pathComparison = null) -> Nickelony.IDEKit.Workspace.Editing.WorkspaceEditApplicationResult!
+static Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetPreparation.operator !=(Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetPreparation? left, Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetPreparation? right) -> bool
+static Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetPreparation.operator ==(Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetPreparation? left, Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetPreparation? right) -> bool
+static Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetResult.operator !=(Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetResult? left, Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetResult? right) -> bool
+static Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetResult.operator ==(Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetResult? left, Nickelony.IDEKit.Workspace.Editing.WorkspaceEditTargetResult? right) -> bool
+virtual Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileSystemDecorator.CaptureStampAsync(string! path, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.Workspace.Documents.FileStamp>!
+virtual Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileSystemDecorator.DeleteAsync(string! path, Nickelony.IDEKit.Workspace.Documents.FileStamp expectedStamp, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileDeleteResult!>!
+virtual Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileSystemDecorator.DeleteDirectoryAsync(string! path, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileDeleteResult!>!
+virtual Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileSystemDecorator.DeleteTemporaryAsync(Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile! temporaryFile) -> System.Threading.Tasks.Task!
+virtual Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileSystemDecorator.MoveAsync(string! sourcePath, string! destinationPath, Nickelony.IDEKit.Workspace.Documents.FileStamp expectedSourceStamp, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileMoveResult!>!
+virtual Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileSystemDecorator.MoveDirectoryAsync(string! sourcePath, string! destinationPath, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileMoveResult!>!
+virtual Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileSystemDecorator.ReadAsync(string! path, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReadResult!>!
+virtual Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileSystemDecorator.ReplaceFileAsync(Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile! temporaryFile, string! destinationPath, Nickelony.IDEKit.Workspace.Documents.FileStamp expectedStamp, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReplacementResult!>!
+virtual Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileSystemDecorator.WriteTemporaryAsync(string! destinationPath, System.ReadOnlyMemory<byte> content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile!>!
+~override Nickelony.IDEKit.Workspace.Documents.FileStamp.Equals(object obj) -> bool
+~override Nickelony.IDEKit.Workspace.Documents.FileStamp.ToString() -> string
+~override Nickelony.IDEKit.Workspace.Documents.Reloading.FileReloadHooks<TDecisionResult>.Equals(object obj) -> bool
+~override Nickelony.IDEKit.Workspace.Documents.Reloading.FileReloadHooks<TDecisionResult>.ToString() -> string
+~override Nickelony.IDEKit.Workspace.Documents.TextFileFormat.Equals(object obj) -> bool
+~override Nickelony.IDEKit.Workspace.Documents.TextFileFormat.ToString() -> string
+~override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentKey.Equals(object obj) -> bool
+~override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentKey.ToString() -> string
+~override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenOptions.Equals(object obj) -> bool
+~override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenOptions.ToString() -> string
+~override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity.Equals(object obj) -> bool
+~override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRequestIdentity.ToString() -> string

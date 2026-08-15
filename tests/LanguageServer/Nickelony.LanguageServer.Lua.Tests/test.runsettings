@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <RunConfiguration>
+    <!--
+      Many protocol tests park a server response on a gate and await the provider's reaction. The
+      session timeout turns a wedged gate into a failed run instead of an indefinitely hanging one;
+      the budget stays deliberately generous so a loaded machine cannot abort a healthy session.
+    -->
+    <TestSessionTimeout>300000</TestSessionTimeout>
+  </RunConfiguration>
+</RunSettings>

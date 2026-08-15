@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="LineStatusMarginBase.Class">
+      <summary>
+      Provides the shared text-view wiring for margins that paint a marker beside every visible
+      marked line.
+      </summary>
+    </member>
+    <member name="LineStatusMarginBase.Remarks">
+      <para>
+      The margin invalidates itself when its text view, visual lines, or scroll offset change.
+      </para>
+      <para>
+      A subclass whose source notifies changes registers the source through
+      <see cref="SetNotifyingSource"/>; the margin then invalidates itself when the source raises
+      <see cref="IChangeNotificationSource.Changed"/> while it is connected to a text view,
+      subscribing and unsubscribing with the connection. Registering the source after the margin is
+      already connected subscribes right away.
+      </para>
+      <para>
+      Subclasses supply the marked line numbers through <see cref="GetMarkedLineNumbers"/> and paint
+      their marker through <see cref="DrawMarker"/>.
+      </para>
+      <para>
+      The reserved width is owned by this class through <see cref="MarginWidth"/> and scales with
+      <see cref="GetFontScale"/>; concrete margins that need a different authored default override the
+      property's default value.
+      </para>
+    </member>
+    <member name="MarginWidthProperty">
+      <summary>
+      Identifies the <see cref="MarginWidth"/> property.
+      </summary>
+    </member>
+    <member name="RejectNullValue">
+      <summary>
+      Rejects <see langword="null"/> for a property whose type the framework already enforces, so a
+      validation callback only has to keep the render pass safe from XAML and <c>SetValue</c> nulls.
+      </summary>
+      <param name="value">The value being assigned.</param>
+      <returns><see langword="true"/> when the value is not <see langword="null"/>.</returns>
+    </member>
+    <member name="QueueVisualInvalidation">
+      <summary>
+      Queues a visual invalidation on the margin's dispatcher while it remains connected to its current text view.
+      </summary>
+    </member>
+    <member name="QueueVisualInvalidation.Remarks">
+      <para>
+      The invalidation runs at <see cref="DispatcherPriority.Render"/>. Multiple notifications that arrive
+      while an invalidation is queued coalesce into one; the queue gate is released when the queued action
+      runs, so a later notification queues again.
+      </para>
+    </member>
+    <member name="GetFontScale">
+      <summary>
+      Gets the scale factor applied to the margin's marker and reserved width, derived from the margin's
+      inherited font size relative to <see cref="DesignFontSize"/>.
+      </summary>
+      <remarks>
+      The framework's font-size validation rejects non-positive and non-finite values, so the <c>1.0</c>
+      fallback is defensive: the guarded configuration is not reachable through the font-size property.
+      </remarks>
+      <returns>
+      The font-size scale factor, or <c>1.0</c> when the margin's font size is not a positive finite number.
+      </returns>
+    </member>
+    <member name="DesignFontSize">
+      <summary>
+      The font size, in device-independent pixels, for which a concrete margin's default marker
+      geometry and reserved width are authored.
+      </summary>
+      <remarks>
+      Margins scale their marker and reserved width by the ratio of their own font size to this value,
+      so the margin width stays proportional to the text when the editor font changes.
+      </remarks>
+    </member>
+    <member name="IsSourceSubscribed">
+      <summary>
+      Gets a value indicating whether the margin is subscribed to the source's changed event while it has a text view.
+      </summary>
+    </member>
+    <member name="IsInvalidationQueued">
+      <summary>
+      Gets a value indicating whether a coalesced visual invalidation is currently queued.
+      </summary>
+    </member>
+    <member name="SetNotifyingSource">
+      <summary>
+      Assigns the notifying source that follows the margin's text-view connection and invalidates the
+      margin when its marked lines may have changed.
+      </summary>
+      <remarks>
+      Call this once from the constructor of a margin whose source notifies changes. The margin subscribes
+      while it is connected to a text view and unsubscribes when it is detached; a notification that arrives
+      while connected is coalesced into one queued invalidation. Calling this method a second time is
+      rejected because the live subscription cannot be transferred to another source. A subclass that needs a
+      different reaction to source notifications can subscribe to the source's
+      <see cref="IChangeNotificationSource.Changed"/> event itself instead of registering it here.
+      </remarks>
+      <param name="source">The source that raises <see cref="IChangeNotificationSource.Changed"/>.</param>
+      <exception cref="ArgumentNullException"><paramref name="source"/> is <see langword="null"/>.</exception>
+      <exception cref="InvalidOperationException">A notifying source is already assigned.</exception>
+    </member>
+    <member name="FollowSourceNotifications">
+      <summary>
+      Follows <paramref name="source"/> when it implements <see cref="IChangeNotificationSource"/>, so a
+      margin constructor wires a notifying source without repeating the type test.
+      </summary>
+      <param name="source">The margin's line-status source.</param>
+      <exception cref="ArgumentNullException"><paramref name="source"/> is <see langword="null"/>.</exception>
+    </member>
+    <member name="MarginWidth">
+      <summary>
+      Gets or sets the width reserved for line-status markers, authored at the design font size.
+      </summary>
+      <remarks>
+      Changing the value invalidates the margin's measure. The effective width scales with the
+      margin's font size (see <see cref="DesignFontSize"/>).
+      </remarks>
+      <exception cref="ArgumentException">
+      The assigned value is negative, <see cref="double.NaN"/>, or infinite, so the property's
+      validation callback rejects it and the setter throws.
+      </exception>
+    </member>
+    <member name="GetEffectiveMarginWidth">
+      <summary>
+      Gets the width available to the marker: the margin's arranged width when it has one, otherwise the
+      scaled reserved width, which is the value used before the first arrange pass.
+      </summary>
+      <returns>The width available to the marker, in device-independent pixels.</returns>
+    </member>
+    <member name="GetMarkedLineNumbers">
+      <summary>
+      Gets the one-based document line numbers that currently have a marker, in ascending order.
+      Line numbers outside the document are ignored by the render pass.
+      </summary>
+      <remarks>
+      The margin queries this member during every render pass while it is visible, so an implementation
+      should serve a cached result instead of recomputing the marked lines per pass.
+      </remarks>
+    </member>
+    <member name="DrawMarker">
+      <summary>
+      Draws the marker for one marked visual line.
+      </summary>
+      <param name="drawingContext">The drawing context of the margin.</param>
+      <param name="visualLine">The visual line to draw the marker for.</param>
+      <param name="visualTop">
+      The y-position of the top of <paramref name="visualLine"/>'s line box, in margin coordinates.
+      The line box spans <see cref="VisualLine.Height"/> from this position; the marker should stay
+      inside those bounds.
+      </param>
+    </member>
+  </members>
+</doc>

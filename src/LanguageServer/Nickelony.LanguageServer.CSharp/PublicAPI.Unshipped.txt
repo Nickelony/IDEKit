@@ -1,0 +1,3 @@
+#nullable enable
+Nickelony.LanguageServer.CSharp.CSharpLanguageServerIntelliSenseProvider
+Nickelony.LanguageServer.CSharp.CSharpLanguageServerIntelliSenseProvider.CSharpLanguageServerIntelliSenseProvider(System.Collections.Generic.IReadOnlyList<string!>! workspaceRootDirectoryPaths, string? serverExecutablePath, Nickelony.LanguageServer.Roslyn.RoslynLanguageServerOptions? options = null, Nickelony.LanguageServer.Provider.LanguageServerProviderOptions? providerOptions = null, Microsoft.Extensions.Logging.ILogger? logger = null) -> void

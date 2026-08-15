@@ -1,0 +1,557 @@
+#nullable enable
+Nickelony.IDEKit.IntelliSense.CodeActions.ITextCodeActionProvider
+Nickelony.IDEKit.IntelliSense.CodeActions.ITextCodeActionProvider.GetCodeActions(Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionRequest request) -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionItem!>!
+Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionItem
+Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionItem.<Clone>$() -> Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionItem!
+Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionItem.Equals(Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionItem? other) -> bool
+Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionItem.IsPreferred.get -> bool
+Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionItem.Kind.get -> string?
+Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionItem.Payload.get -> object?
+Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionItem.TextCodeActionItem(string! title, string? kind = null, bool isPreferred = false, object? payload = null) -> void
+Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionItem.Title.get -> string!
+Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionRequest
+Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionRequest.DocumentText.get -> string!
+Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionRequest.EndOffset.get -> int
+Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionRequest.Equals(Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionRequest other) -> bool
+Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionRequest.StartOffset.get -> int
+Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionRequest.TextCodeActionRequest() -> void
+Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionRequest.TextCodeActionRequest(string! documentText, int startOffset, int endOffset) -> void
+Nickelony.IDEKit.IntelliSense.Completion.ITextCompletionProvider
+Nickelony.IDEKit.IntelliSense.Completion.ITextCompletionProvider.GetCompletionItems(Nickelony.IDEKit.IntelliSense.Completion.TextCompletionRequest! request) -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem!>!
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionFilter
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionInsertTextFormat
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionInsertTextFormat.PlainText = 1 -> Nickelony.IDEKit.IntelliSense.Completion.TextCompletionInsertTextFormat
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionInsertTextFormat.Snippet = 2 -> Nickelony.IDEKit.IntelliSense.Completion.TextCompletionInsertTextFormat
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem.AdditionalTextEdits.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.Completion.TextCompletionTextEdit>!
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem.AdditionalTextEdits.init -> void
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem.CanResolve.get -> bool
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem.CommitCharacters.get -> System.Collections.Generic.IReadOnlyList<string!>!
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem.CommitCharacters.init -> void
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem.Detail.get -> string?
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem.Detail.init -> void
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem.Documentation.get -> string?
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem.Documentation.init -> void
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem.DocumentationKind.get -> Nickelony.IDEKit.IntelliSense.TextMarkupKind
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem.DocumentationKind.init -> void
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem.FilterText.get -> string!
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem.FilterText.init -> void
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem.InsertText.get -> string!
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem.InsertText.init -> void
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem.InsertTextFormat.get -> Nickelony.IDEKit.IntelliSense.Completion.TextCompletionInsertTextFormat
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem.InsertTextFormat.init -> void
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem.IsPreselected.get -> bool
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem.IsPreselected.init -> void
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem.Kind.get -> Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind!
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem.Kind.init -> void
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem.Label.get -> string!
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem.Priority.get -> double
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem.Priority.init -> void
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem.RequestDocumentVersion.get -> int?
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem.RequestDocumentVersion.init -> void
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem.RequestGeneration.get -> int?
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem.RequestGeneration.init -> void
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem.ResolveAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem!>!
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem.ResolveCallback.get -> System.Func<System.Threading.CancellationToken, System.Threading.Tasks.Task<Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem!>!>?
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem.ResolveCallback.init -> void
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem.SortText.get -> string?
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem.SortText.init -> void
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem.Tags.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.Completion.TextCompletionTag>!
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem.Tags.init -> void
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem.TextCompletionItem(string! label) -> void
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem.TextEdit.get -> Nickelony.IDEKit.IntelliSense.Completion.TextCompletionTextEdit?
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem.TextEdit.init -> void
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem.WithRequestContext(int requestDocumentVersion, int requestGeneration) -> Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem!
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem.WithResolveCallback(System.Func<System.Threading.CancellationToken, System.Threading.Tasks.Task<Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem!>!>! resolveAsync) -> Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem!
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem.WithResolvedContent(Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem! resolvedItem) -> Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem!
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem.WithoutTextEdit() -> Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem!
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemFilter
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind.Equals(Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind? other) -> bool
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind.Identifier.get -> string!
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionRequest
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionRequest.<Clone>$() -> Nickelony.IDEKit.IntelliSense.Completion.TextCompletionRequest!
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionRequest.CaretOffset.get -> int
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionRequest.DocumentText.get -> string!
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionRequest.Equals(Nickelony.IDEKit.IntelliSense.Completion.TextCompletionRequest? other) -> bool
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionRequest.TextCompletionRequest(string! documentText, int caretOffset, Nickelony.IDEKit.IntelliSense.Completion.TextCompletionTrigger? trigger = null) -> void
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionRequest.Trigger.get -> Nickelony.IDEKit.IntelliSense.Completion.TextCompletionTrigger!
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionRequestSession
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionRequestSession.BeginRequest() -> Nickelony.IDEKit.Core.Requests.RequestHandle
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionRequestSession.CanPublish(Nickelony.IDEKit.Core.Requests.RequestHandle request) -> bool
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionRequestSession.CancelInFlightRequest() -> void
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionRequestSession.Coordinator.get -> Nickelony.IDEKit.Core.Requests.LatestRequestCoordinator!
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionRequestSession.Dispose() -> void
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionRequestSession.InvalidateRequests() -> void
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionRequestSession.IsCurrent(Nickelony.IDEKit.Core.Requests.RequestHandle request) -> bool
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionRequestSession.TextCompletionRequestSession() -> void
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionSessionDecision
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionSessionDecision.AllItemsFilteredOut.get -> bool
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionSessionDecision.Deconstruct(out bool shouldClose, out System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem!>? items, out Nickelony.IDEKit.Core.Text.TextRange? replacementRange, out bool allItemsFilteredOut) -> void
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionSessionDecision.EndOffset.get -> int?
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionSessionDecision.Equals(Nickelony.IDEKit.IntelliSense.Completion.TextCompletionSessionDecision other) -> bool
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionSessionDecision.Items.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem!>?
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionSessionDecision.ReplacementRange.get -> Nickelony.IDEKit.Core.Text.TextRange?
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionSessionDecision.ShouldClose.get -> bool
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionSessionDecision.ShouldClose.init -> void
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionSessionDecision.StartOffset.get -> int?
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionSessionDecision.TextCompletionSessionDecision() -> void
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionSessionDecision.TextCompletionSessionDecision(bool shouldClose, System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem!>? items, Nickelony.IDEKit.Core.Text.TextRange? replacementRange = null) -> void
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionSessionKernel
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionSessionKernel.GetDecision(Nickelony.IDEKit.Core.Text.ITextSnapshot! snapshot, int caretOffset, Nickelony.IDEKit.IntelliSense.Completion.ITextCompletionProvider! provider, Nickelony.IDEKit.IntelliSense.Completion.TextCompletionTrigger? trigger = null, Nickelony.IDEKit.IntelliSense.Completion.TextCompletionWordSpan? wordSpan = null) -> Nickelony.IDEKit.IntelliSense.Completion.TextCompletionSessionDecision
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionSessionKernel.TextCompletionSessionKernel(Nickelony.IDEKit.IntelliSense.Completion.TextCompletionWordLocator? wordLocator = null, Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemFilter? filter = null) -> void
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionTag
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionTag.Deprecated = 1 -> Nickelony.IDEKit.IntelliSense.Completion.TextCompletionTag
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionTextEdit
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionTextEdit.Deconstruct(out Nickelony.IDEKit.Core.Text.TextRange insertRange, out Nickelony.IDEKit.Core.Text.TextRange? replaceRange, out string? newText) -> void
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionTextEdit.Equals(Nickelony.IDEKit.IntelliSense.Completion.TextCompletionTextEdit other) -> bool
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionTextEdit.InsertRange.get -> Nickelony.IDEKit.Core.Text.TextRange
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionTextEdit.NewText.get -> string?
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionTextEdit.NewText.init -> void
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionTextEdit.ReplaceRange.get -> Nickelony.IDEKit.Core.Text.TextRange?
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionTextEdit.ReplacementRange.get -> Nickelony.IDEKit.Core.Text.TextRange
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionTextEdit.TextCompletionTextEdit() -> void
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionTextEdit.TextCompletionTextEdit(Nickelony.IDEKit.Core.Text.TextRange insertRange, Nickelony.IDEKit.Core.Text.TextRange? replaceRange = null, string? newText = null) -> void
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionTrigger
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionTrigger.Equals(Nickelony.IDEKit.IntelliSense.Completion.TextCompletionTrigger? other) -> bool
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionTrigger.Identifier.get -> string!
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionWordLocator
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionWordSpan
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionWordSpan.Deconstruct(out string! word, out Nickelony.IDEKit.Core.Text.TextRange range) -> void
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionWordSpan.Equals(Nickelony.IDEKit.IntelliSense.Completion.TextCompletionWordSpan other) -> bool
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionWordSpan.Range.get -> Nickelony.IDEKit.Core.Text.TextRange
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionWordSpan.TextCompletionWordSpan() -> void
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionWordSpan.TextCompletionWordSpan(string? word, Nickelony.IDEKit.Core.Text.TextRange range) -> void
+Nickelony.IDEKit.IntelliSense.Completion.TextCompletionWordSpan.Word.get -> string!
+Nickelony.IDEKit.IntelliSense.Completion.TextSnippetExpander
+Nickelony.IDEKit.IntelliSense.Completion.TextSnippetExpansion
+Nickelony.IDEKit.IntelliSense.Completion.TextSnippetExpansion.Deconstruct(out string! text, out System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.Completion.TextSnippetPlaceholder>! placeholders) -> void
+Nickelony.IDEKit.IntelliSense.Completion.TextSnippetExpansion.Equals(Nickelony.IDEKit.IntelliSense.Completion.TextSnippetExpansion other) -> bool
+Nickelony.IDEKit.IntelliSense.Completion.TextSnippetExpansion.Placeholders.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.Completion.TextSnippetPlaceholder>!
+Nickelony.IDEKit.IntelliSense.Completion.TextSnippetExpansion.Text.get -> string!
+Nickelony.IDEKit.IntelliSense.Completion.TextSnippetExpansion.TextSnippetExpansion() -> void
+Nickelony.IDEKit.IntelliSense.Completion.TextSnippetExpansion.TextSnippetExpansion(string! text, System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.Completion.TextSnippetPlaceholder>! placeholders) -> void
+Nickelony.IDEKit.IntelliSense.Completion.TextSnippetPlaceholder
+Nickelony.IDEKit.IntelliSense.Completion.TextSnippetPlaceholder.Choices.get -> System.Collections.Generic.IReadOnlyList<string!>?
+Nickelony.IDEKit.IntelliSense.Completion.TextSnippetPlaceholder.Choices.init -> void
+Nickelony.IDEKit.IntelliSense.Completion.TextSnippetPlaceholder.Deconstruct(out int Index, out Nickelony.IDEKit.Core.Text.TextRange Range, out System.Collections.Generic.IReadOnlyList<string!>? Choices) -> void
+Nickelony.IDEKit.IntelliSense.Completion.TextSnippetPlaceholder.Equals(Nickelony.IDEKit.IntelliSense.Completion.TextSnippetPlaceholder other) -> bool
+Nickelony.IDEKit.IntelliSense.Completion.TextSnippetPlaceholder.Index.get -> int
+Nickelony.IDEKit.IntelliSense.Completion.TextSnippetPlaceholder.Index.init -> void
+Nickelony.IDEKit.IntelliSense.Completion.TextSnippetPlaceholder.Range.get -> Nickelony.IDEKit.Core.Text.TextRange
+Nickelony.IDEKit.IntelliSense.Completion.TextSnippetPlaceholder.Range.init -> void
+Nickelony.IDEKit.IntelliSense.Completion.TextSnippetPlaceholder.TextSnippetPlaceholder() -> void
+Nickelony.IDEKit.IntelliSense.Completion.TextSnippetPlaceholder.TextSnippetPlaceholder(int Index, Nickelony.IDEKit.Core.Text.TextRange Range, System.Collections.Generic.IReadOnlyList<string!>? Choices) -> void
+Nickelony.IDEKit.IntelliSense.Diagnostics.ITextDiagnosticsProvider
+Nickelony.IDEKit.IntelliSense.Diagnostics.ITextDiagnosticsProvider.GetDiagnostics(Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnosticsRequest! request) -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnostic!>!
+Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnostic
+Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnostic.Code.get -> string?
+Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnostic.Code.init -> void
+Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnostic.ContainsOffset(int offset) -> bool
+Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnostic.EndOffset.get -> int
+Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnostic.Equals(Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnostic? other) -> bool
+Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnostic.Intersects(int startOffset, int endOffset) -> bool
+Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnostic.Message.get -> string!
+Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnostic.Range.get -> Nickelony.IDEKit.Core.Text.TextRange
+Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnostic.Severity.get -> Nickelony.IDEKit.Core.Diagnostics.TextDiagnosticSeverity
+Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnostic.Source.get -> string?
+Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnostic.Source.init -> void
+Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnostic.StartOffset.get -> int
+Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnostic.TextDiagnostic(Nickelony.IDEKit.Core.Diagnostics.TextDiagnosticSeverity severity, string! message, Nickelony.IDEKit.Core.Text.TextRange range) -> void
+Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnostic.TextDiagnostic(Nickelony.IDEKit.Core.Diagnostics.TextDiagnosticSeverity severity, string! message, int startOffset, int endOffset) -> void
+Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnosticsRequest
+Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnosticsRequest.<Clone>$() -> Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnosticsRequest!
+Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnosticsRequest.DocumentId.get -> string?
+Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnosticsRequest.DocumentText.get -> string!
+Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnosticsRequest.Equals(Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnosticsRequest? other) -> bool
+Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnosticsRequest.TextDiagnosticsRequest(string! documentText, string? documentId = null) -> void
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.DocumentSymbolOutlineBuilder
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.DocumentSymbolProjection<TItem>
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.DocumentSymbolProjection<TItem>.DataSelector.get -> System.Func<TItem, object?>?
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.DocumentSymbolProjection<TItem>.DataSelector.init -> void
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.DocumentSymbolProjection<TItem>.Deconstruct(out System.Func<TItem, string!>! NameSelector, out System.Func<TItem, Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind>! KindSelector, out System.Func<TItem, object?>? DataSelector, out System.Func<TItem, Nickelony.IDEKit.Core.Text.TextRange?>? RangeSelector, out System.Func<TItem, Nickelony.IDEKit.Core.Text.TextRange?>? SelectionRangeSelector, out System.Func<TItem, string?>? DetailSelector) -> void
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.DocumentSymbolProjection<TItem>.DetailSelector.get -> System.Func<TItem, string?>?
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.DocumentSymbolProjection<TItem>.DetailSelector.init -> void
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.DocumentSymbolProjection<TItem>.DocumentSymbolProjection() -> void
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.DocumentSymbolProjection<TItem>.DocumentSymbolProjection(System.Func<TItem, string!>! NameSelector, System.Func<TItem, Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind>! KindSelector, System.Func<TItem, object?>? DataSelector = null, System.Func<TItem, Nickelony.IDEKit.Core.Text.TextRange?>? RangeSelector = null, System.Func<TItem, Nickelony.IDEKit.Core.Text.TextRange?>? SelectionRangeSelector = null, System.Func<TItem, string?>? DetailSelector = null) -> void
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.DocumentSymbolProjection<TItem>.Equals(Nickelony.IDEKit.IntelliSense.DocumentSymbols.DocumentSymbolProjection<TItem>? other) -> bool
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.DocumentSymbolProjection<TItem>.KindSelector.get -> System.Func<TItem, Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind>!
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.DocumentSymbolProjection<TItem>.KindSelector.init -> void
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.DocumentSymbolProjection<TItem>.NameSelector.get -> System.Func<TItem, string!>!
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.DocumentSymbolProjection<TItem>.NameSelector.init -> void
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.DocumentSymbolProjection<TItem>.RangeSelector.get -> System.Func<TItem, Nickelony.IDEKit.Core.Text.TextRange?>?
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.DocumentSymbolProjection<TItem>.RangeSelector.init -> void
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.DocumentSymbolProjection<TItem>.SelectionRangeSelector.get -> System.Func<TItem, Nickelony.IDEKit.Core.Text.TextRange?>?
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.DocumentSymbolProjection<TItem>.SelectionRangeSelector.init -> void
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.ITextDocumentSymbolProvider
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.ITextDocumentSymbolProvider.GetSymbols(Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolRequest! request) -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbol!>!
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbol
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbol.Children.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbol!>!
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbol.Children.init -> void
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbol.Data.get -> object?
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbol.Data.init -> void
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbol.Detail.get -> string?
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbol.Detail.init -> void
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbol.Kind.get -> Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbol.Name.get -> string!
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbol.Range.get -> Nickelony.IDEKit.Core.Text.TextRange?
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbol.SelectionRange.get -> Nickelony.IDEKit.Core.Text.TextRange?
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbol.TextDocumentSymbol(string! name, Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind kind, Nickelony.IDEKit.Core.Text.TextRange? range = null, Nickelony.IDEKit.Core.Text.TextRange? selectionRange = null) -> void
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind.Array = 18 -> Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind.Boolean = 17 -> Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind.Class = 5 -> Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind.Constant = 14 -> Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind.Constructor = 9 -> Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind.Enum = 10 -> Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind.EnumMember = 22 -> Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind.Event = 24 -> Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind.Field = 8 -> Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind.File = 1 -> Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind.Function = 12 -> Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind.Interface = 11 -> Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind.Key = 20 -> Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind.Method = 6 -> Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind.Module = 2 -> Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind.Namespace = 3 -> Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind.Null = 21 -> Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind.Number = 16 -> Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind.Object = 19 -> Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind.Operator = 25 -> Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind.Package = 4 -> Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind.Property = 7 -> Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind.String = 15 -> Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind.Struct = 23 -> Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind.TypeParameter = 26 -> Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind.Variable = 13 -> Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolRequest
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolRequest.<Clone>$() -> Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolRequest!
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolRequest.DocumentText.get -> string!
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolRequest.Equals(Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolRequest? other) -> bool
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolRequest.FilterText.get -> string!
+Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolRequest.TextDocumentSymbolRequest(string! documentText, string! filterText) -> void
+Nickelony.IDEKit.IntelliSense.Hover.ITextHoverProvider
+Nickelony.IDEKit.IntelliSense.Hover.ITextHoverProvider.GetHoverInfo(Nickelony.IDEKit.IntelliSense.Hover.TextHoverRequest! request) -> Nickelony.IDEKit.IntelliSense.Hover.TextHoverInfo?
+Nickelony.IDEKit.IntelliSense.Hover.TextHoverEvaluationState
+Nickelony.IDEKit.IntelliSense.Hover.TextHoverEvaluationState.CanShowDiagnosticFallback.get -> bool
+Nickelony.IDEKit.IntelliSense.Hover.TextHoverEvaluationState.CanShowDiagnosticFallback.init -> void
+Nickelony.IDEKit.IntelliSense.Hover.TextHoverEvaluationState.CanShowHoverContent.get -> bool
+Nickelony.IDEKit.IntelliSense.Hover.TextHoverEvaluationState.CanShowHoverContent.init -> void
+Nickelony.IDEKit.IntelliSense.Hover.TextHoverEvaluationState.DiagnosticInfo.get -> Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnostic?
+Nickelony.IDEKit.IntelliSense.Hover.TextHoverEvaluationState.DiagnosticInfo.init -> void
+Nickelony.IDEKit.IntelliSense.Hover.TextHoverEvaluationState.Equals(Nickelony.IDEKit.IntelliSense.Hover.TextHoverEvaluationState other) -> bool
+Nickelony.IDEKit.IntelliSense.Hover.TextHoverEvaluationState.RequestOffset.get -> int
+Nickelony.IDEKit.IntelliSense.Hover.TextHoverEvaluationState.RequestOffset.init -> void
+Nickelony.IDEKit.IntelliSense.Hover.TextHoverEvaluationState.ShouldRequestHover.get -> bool
+Nickelony.IDEKit.IntelliSense.Hover.TextHoverEvaluationState.ShouldRequestHover.init -> void
+Nickelony.IDEKit.IntelliSense.Hover.TextHoverEvaluationState.TextHoverEvaluationState() -> void
+Nickelony.IDEKit.IntelliSense.Hover.TextHoverInfo
+Nickelony.IDEKit.IntelliSense.Hover.TextHoverInfo.<Clone>$() -> Nickelony.IDEKit.IntelliSense.Hover.TextHoverInfo!
+Nickelony.IDEKit.IntelliSense.Hover.TextHoverInfo.Content.get -> string!
+Nickelony.IDEKit.IntelliSense.Hover.TextHoverInfo.ContentKind.get -> Nickelony.IDEKit.IntelliSense.TextMarkupKind
+Nickelony.IDEKit.IntelliSense.Hover.TextHoverInfo.DefinitionDiscriminator.get -> Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionDiscriminator?
+Nickelony.IDEKit.IntelliSense.Hover.TextHoverInfo.DefinitionDiscriminator.init -> void
+Nickelony.IDEKit.IntelliSense.Hover.TextHoverInfo.Equals(Nickelony.IDEKit.IntelliSense.Hover.TextHoverInfo? other) -> bool
+Nickelony.IDEKit.IntelliSense.Hover.TextHoverInfo.Range.get -> Nickelony.IDEKit.Core.Text.TextRange?
+Nickelony.IDEKit.IntelliSense.Hover.TextHoverInfo.Range.init -> void
+Nickelony.IDEKit.IntelliSense.Hover.TextHoverInfo.SymbolName.get -> string?
+Nickelony.IDEKit.IntelliSense.Hover.TextHoverInfo.SymbolName.init -> void
+Nickelony.IDEKit.IntelliSense.Hover.TextHoverInfo.TextHoverInfo(string! content, Nickelony.IDEKit.IntelliSense.TextMarkupKind contentKind = Nickelony.IDEKit.IntelliSense.TextMarkupKind.PlainText) -> void
+Nickelony.IDEKit.IntelliSense.Hover.TextHoverRequest
+Nickelony.IDEKit.IntelliSense.Hover.TextHoverRequest.<Clone>$() -> Nickelony.IDEKit.IntelliSense.Hover.TextHoverRequest!
+Nickelony.IDEKit.IntelliSense.Hover.TextHoverRequest.DocumentText.get -> string!
+Nickelony.IDEKit.IntelliSense.Hover.TextHoverRequest.Equals(Nickelony.IDEKit.IntelliSense.Hover.TextHoverRequest? other) -> bool
+Nickelony.IDEKit.IntelliSense.Hover.TextHoverRequest.HoveredOffset.get -> int
+Nickelony.IDEKit.IntelliSense.Hover.TextHoverRequest.TextHoverRequest(string! documentText, int hoveredOffset) -> void
+Nickelony.IDEKit.IntelliSense.Navigation.ITextDefinitionProvider
+Nickelony.IDEKit.IntelliSense.Navigation.ITextDefinitionProvider.GetDefinition(Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionRequest! request) -> Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionLocation?
+Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionDiscriminator
+Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionDiscriminator.TextDefinitionDiscriminator() -> void
+Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionDiscriminator.TextDefinitionDiscriminator(Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionDiscriminator! original) -> void
+Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionLocation
+Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionLocation.<Clone>$() -> Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionLocation!
+Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionLocation.DocumentId.get -> string?
+Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionLocation.Equals(Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionLocation? other) -> bool
+Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionLocation.NavigationStart.get -> Nickelony.IDEKit.Core.Text.TextPosition
+Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionLocation.SelectionRange.get -> Nickelony.IDEKit.Core.Text.TextPositionRange?
+Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionLocation.TargetRange.get -> Nickelony.IDEKit.Core.Text.TextPositionRange
+Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionLocation.TextDefinitionLocation(Nickelony.IDEKit.Core.Text.TextPositionRange targetRange, string? documentId = null, Nickelony.IDEKit.Core.Text.TextPositionRange? selectionRange = null) -> void
+Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionNavigationTarget
+Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionNavigationTarget.<Clone>$() -> Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionNavigationTarget!
+Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionNavigationTarget.DocumentStart.get -> Nickelony.IDEKit.Core.Text.TextPosition?
+Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionNavigationTarget.Equals(Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionNavigationTarget? other) -> bool
+Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionNavigationTarget.Location.get -> Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionLocation!
+Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionNavigationTarget.TextDefinitionNavigationTarget(Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionLocation! location, Nickelony.IDEKit.Core.Text.TextPosition? documentStart = null) -> void
+Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionNavigator
+Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionRequest
+Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionRequest.<Clone>$() -> Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionRequest!
+Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionRequest.Discriminator.get -> Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionDiscriminator?
+Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionRequest.DocumentText.get -> string!
+Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionRequest.Equals(Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionRequest? other) -> bool
+Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionRequest.SymbolName.get -> string!
+Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionRequest.TextDefinitionRequest(string! documentText, string! symbolName, Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionDiscriminator? discriminator = null) -> void
+Nickelony.IDEKit.IntelliSense.SemanticTokens.TextSemanticToken
+Nickelony.IDEKit.IntelliSense.SemanticTokens.TextSemanticToken.Equals(Nickelony.IDEKit.IntelliSense.SemanticTokens.TextSemanticToken? other) -> bool
+Nickelony.IDEKit.IntelliSense.SemanticTokens.TextSemanticToken.HasModifier(string? modifier) -> bool
+Nickelony.IDEKit.IntelliSense.SemanticTokens.TextSemanticToken.Modifiers.get -> System.Collections.Generic.IReadOnlyList<string!>!
+Nickelony.IDEKit.IntelliSense.SemanticTokens.TextSemanticToken.Range.get -> Nickelony.IDEKit.Core.Text.TextRange
+Nickelony.IDEKit.IntelliSense.SemanticTokens.TextSemanticToken.TextSemanticToken(Nickelony.IDEKit.Core.Text.TextRange range, string! type, System.Collections.Generic.IReadOnlyList<string!>? modifiers = null) -> void
+Nickelony.IDEKit.IntelliSense.SemanticTokens.TextSemanticToken.Type.get -> string!
+Nickelony.IDEKit.IntelliSense.SemanticTokens.TextSemanticTokenModifiers
+Nickelony.IDEKit.IntelliSense.SemanticTokens.TextSemanticTokenTypes
+Nickelony.IDEKit.IntelliSense.Signatures.ITextSignatureHelpProvider
+Nickelony.IDEKit.IntelliSense.Signatures.ITextSignatureHelpProvider.GetSignatureHelp(Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelpRequest! request) -> Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelp?
+Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameter
+Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameter.Equals(Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameter other) -> bool
+Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameter.Index.get -> int?
+Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameter.IsNone.get -> bool
+Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameter.IsSpecified.get -> bool
+Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameter.TextSignatureActiveParameter() -> void
+Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelp
+Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelp.ActiveParameterIndex.get -> int?
+Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelp.ActiveSignature.get -> Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureInformation!
+Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelp.ActiveSignatureIndex.get -> int
+Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelp.Signatures.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureInformation!>!
+Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelp.TextSignatureHelp(System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureInformation!>! signatures, int activeSignatureIndex = 0, Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameter activeParameter = default(Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameter)) -> void
+Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelp.WithActiveSignature(int activeSignatureIndex) -> Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelp!
+Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelpContext
+Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelpContext.ActiveSignatureHelp.get -> Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelp?
+Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelpContext.IsRetrigger.get -> bool
+Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelpContext.TextSignatureHelpContext(Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelpTriggerKind triggerKind = Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelpTriggerKind.Invoked, string? triggerCharacter = null, bool isRetrigger = false, Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelp? activeSignatureHelp = null) -> void
+Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelpContext.TriggerCharacter.get -> string?
+Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelpContext.TriggerKind.get -> Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelpTriggerKind
+Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelpRequest
+Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelpRequest.<Clone>$() -> Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelpRequest!
+Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelpRequest.CaretOffset.get -> int
+Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelpRequest.Context.get -> Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelpContext?
+Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelpRequest.DocumentText.get -> string!
+Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelpRequest.Equals(Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelpRequest? other) -> bool
+Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelpRequest.TextSignatureHelpRequest(string! documentText, int caretOffset, Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelpContext? context = null) -> void
+Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelpTriggerKind
+Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelpTriggerKind.ContentChange = 3 -> Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelpTriggerKind
+Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelpTriggerKind.Invoked = 1 -> Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelpTriggerKind
+Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelpTriggerKind.TriggerCharacter = 2 -> Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelpTriggerKind
+Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureInformation
+Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureInformation.ActiveParameterIndex.get -> int?
+Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureInformation.Documentation.get -> string?
+Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureInformation.Label.get -> string!
+Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureInformation.Parameters.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureParameterInfo!>!
+Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureInformation.TextSignatureInformation(string! label, string? documentation = null, Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameter activeParameter = default(Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameter), System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureParameterInfo!>? parameters = null) -> void
+Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureParameterInfo
+Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureParameterInfo.Documentation.get -> string?
+Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureParameterInfo.Label.get -> string!
+Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureParameterInfo.TextSignatureParameterInfo(string! label, string? documentation = null) -> void
+Nickelony.IDEKit.IntelliSense.TextMarkupKind
+Nickelony.IDEKit.IntelliSense.TextMarkupKind.Markdown = 1 -> Nickelony.IDEKit.IntelliSense.TextMarkupKind
+Nickelony.IDEKit.IntelliSense.TextMarkupKind.PlainText = 0 -> Nickelony.IDEKit.IntelliSense.TextMarkupKind
+abstract Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionDiscriminator.<Clone>$() -> Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionDiscriminator!
+const Nickelony.IDEKit.IntelliSense.SemanticTokens.TextSemanticTokenModifiers.Abstract = "abstract" -> string!
+const Nickelony.IDEKit.IntelliSense.SemanticTokens.TextSemanticTokenModifiers.Async = "async" -> string!
+const Nickelony.IDEKit.IntelliSense.SemanticTokens.TextSemanticTokenModifiers.Declaration = "declaration" -> string!
+const Nickelony.IDEKit.IntelliSense.SemanticTokens.TextSemanticTokenModifiers.DefaultLibrary = "defaultLibrary" -> string!
+const Nickelony.IDEKit.IntelliSense.SemanticTokens.TextSemanticTokenModifiers.Definition = "definition" -> string!
+const Nickelony.IDEKit.IntelliSense.SemanticTokens.TextSemanticTokenModifiers.Deprecated = "deprecated" -> string!
+const Nickelony.IDEKit.IntelliSense.SemanticTokens.TextSemanticTokenModifiers.Documentation = "documentation" -> string!
+const Nickelony.IDEKit.IntelliSense.SemanticTokens.TextSemanticTokenModifiers.Modification = "modification" -> string!
+const Nickelony.IDEKit.IntelliSense.SemanticTokens.TextSemanticTokenModifiers.Readonly = "readonly" -> string!
+const Nickelony.IDEKit.IntelliSense.SemanticTokens.TextSemanticTokenModifiers.Static = "static" -> string!
+const Nickelony.IDEKit.IntelliSense.SemanticTokens.TextSemanticTokenTypes.Class = "class" -> string!
+const Nickelony.IDEKit.IntelliSense.SemanticTokens.TextSemanticTokenTypes.Comment = "comment" -> string!
+const Nickelony.IDEKit.IntelliSense.SemanticTokens.TextSemanticTokenTypes.Decorator = "decorator" -> string!
+const Nickelony.IDEKit.IntelliSense.SemanticTokens.TextSemanticTokenTypes.Enum = "enum" -> string!
+const Nickelony.IDEKit.IntelliSense.SemanticTokens.TextSemanticTokenTypes.EnumMember = "enumMember" -> string!
+const Nickelony.IDEKit.IntelliSense.SemanticTokens.TextSemanticTokenTypes.Event = "event" -> string!
+const Nickelony.IDEKit.IntelliSense.SemanticTokens.TextSemanticTokenTypes.Function = "function" -> string!
+const Nickelony.IDEKit.IntelliSense.SemanticTokens.TextSemanticTokenTypes.Interface = "interface" -> string!
+const Nickelony.IDEKit.IntelliSense.SemanticTokens.TextSemanticTokenTypes.Keyword = "keyword" -> string!
+const Nickelony.IDEKit.IntelliSense.SemanticTokens.TextSemanticTokenTypes.Label = "label" -> string!
+const Nickelony.IDEKit.IntelliSense.SemanticTokens.TextSemanticTokenTypes.Macro = "macro" -> string!
+const Nickelony.IDEKit.IntelliSense.SemanticTokens.TextSemanticTokenTypes.Method = "method" -> string!
+const Nickelony.IDEKit.IntelliSense.SemanticTokens.TextSemanticTokenTypes.Modifier = "modifier" -> string!
+const Nickelony.IDEKit.IntelliSense.SemanticTokens.TextSemanticTokenTypes.Namespace = "namespace" -> string!
+const Nickelony.IDEKit.IntelliSense.SemanticTokens.TextSemanticTokenTypes.Number = "number" -> string!
+const Nickelony.IDEKit.IntelliSense.SemanticTokens.TextSemanticTokenTypes.Operator = "operator" -> string!
+const Nickelony.IDEKit.IntelliSense.SemanticTokens.TextSemanticTokenTypes.Parameter = "parameter" -> string!
+const Nickelony.IDEKit.IntelliSense.SemanticTokens.TextSemanticTokenTypes.Property = "property" -> string!
+const Nickelony.IDEKit.IntelliSense.SemanticTokens.TextSemanticTokenTypes.Regexp = "regexp" -> string!
+const Nickelony.IDEKit.IntelliSense.SemanticTokens.TextSemanticTokenTypes.String = "string" -> string!
+const Nickelony.IDEKit.IntelliSense.SemanticTokens.TextSemanticTokenTypes.Struct = "struct" -> string!
+const Nickelony.IDEKit.IntelliSense.SemanticTokens.TextSemanticTokenTypes.Type = "type" -> string!
+const Nickelony.IDEKit.IntelliSense.SemanticTokens.TextSemanticTokenTypes.TypeParameter = "typeParameter" -> string!
+const Nickelony.IDEKit.IntelliSense.SemanticTokens.TextSemanticTokenTypes.Variable = "variable" -> string!
+override Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionItem.Equals(object? obj) -> bool
+override Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionItem.GetHashCode() -> int
+override Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionItem.ToString() -> string!
+override Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionRequest.GetHashCode() -> int
+override Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind.Equals(object? obj) -> bool
+override Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind.GetHashCode() -> int
+override Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind.ToString() -> string!
+override Nickelony.IDEKit.IntelliSense.Completion.TextCompletionRequest.Equals(object? obj) -> bool
+override Nickelony.IDEKit.IntelliSense.Completion.TextCompletionRequest.GetHashCode() -> int
+override Nickelony.IDEKit.IntelliSense.Completion.TextCompletionRequest.ToString() -> string!
+override Nickelony.IDEKit.IntelliSense.Completion.TextCompletionSessionDecision.GetHashCode() -> int
+override Nickelony.IDEKit.IntelliSense.Completion.TextCompletionTextEdit.GetHashCode() -> int
+override Nickelony.IDEKit.IntelliSense.Completion.TextCompletionTrigger.Equals(object? obj) -> bool
+override Nickelony.IDEKit.IntelliSense.Completion.TextCompletionTrigger.GetHashCode() -> int
+override Nickelony.IDEKit.IntelliSense.Completion.TextCompletionTrigger.ToString() -> string!
+override Nickelony.IDEKit.IntelliSense.Completion.TextCompletionWordSpan.GetHashCode() -> int
+override Nickelony.IDEKit.IntelliSense.Completion.TextSnippetExpansion.GetHashCode() -> int
+override Nickelony.IDEKit.IntelliSense.Completion.TextSnippetPlaceholder.GetHashCode() -> int
+override Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnostic.Equals(object? obj) -> bool
+override Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnostic.GetHashCode() -> int
+override Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnosticsRequest.Equals(object? obj) -> bool
+override Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnosticsRequest.GetHashCode() -> int
+override Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnosticsRequest.ToString() -> string!
+override Nickelony.IDEKit.IntelliSense.DocumentSymbols.DocumentSymbolProjection<TItem>.GetHashCode() -> int
+override Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolRequest.Equals(object? obj) -> bool
+override Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolRequest.GetHashCode() -> int
+override Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolRequest.ToString() -> string!
+override Nickelony.IDEKit.IntelliSense.Hover.TextHoverEvaluationState.GetHashCode() -> int
+override Nickelony.IDEKit.IntelliSense.Hover.TextHoverInfo.Equals(object? obj) -> bool
+override Nickelony.IDEKit.IntelliSense.Hover.TextHoverInfo.GetHashCode() -> int
+override Nickelony.IDEKit.IntelliSense.Hover.TextHoverInfo.ToString() -> string!
+override Nickelony.IDEKit.IntelliSense.Hover.TextHoverRequest.Equals(object? obj) -> bool
+override Nickelony.IDEKit.IntelliSense.Hover.TextHoverRequest.GetHashCode() -> int
+override Nickelony.IDEKit.IntelliSense.Hover.TextHoverRequest.ToString() -> string!
+override Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionDiscriminator.Equals(object? obj) -> bool
+override Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionDiscriminator.GetHashCode() -> int
+override Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionDiscriminator.ToString() -> string!
+override Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionLocation.Equals(object? obj) -> bool
+override Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionLocation.GetHashCode() -> int
+override Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionLocation.ToString() -> string!
+override Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionNavigationTarget.Equals(object? obj) -> bool
+override Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionNavigationTarget.GetHashCode() -> int
+override Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionNavigationTarget.ToString() -> string!
+override Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionRequest.Equals(object? obj) -> bool
+override Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionRequest.GetHashCode() -> int
+override Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionRequest.ToString() -> string!
+override Nickelony.IDEKit.IntelliSense.SemanticTokens.TextSemanticToken.Equals(object? obj) -> bool
+override Nickelony.IDEKit.IntelliSense.SemanticTokens.TextSemanticToken.GetHashCode() -> int
+override Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameter.GetHashCode() -> int
+override Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameter.ToString() -> string!
+override Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelpRequest.Equals(object? obj) -> bool
+override Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelpRequest.GetHashCode() -> int
+override Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelpRequest.ToString() -> string!
+static Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionItem.operator !=(Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionItem? left, Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionItem? right) -> bool
+static Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionItem.operator ==(Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionItem? left, Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionItem? right) -> bool
+static Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionRequest.operator !=(Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionRequest left, Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionRequest right) -> bool
+static Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionRequest.operator ==(Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionRequest left, Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionRequest right) -> bool
+static Nickelony.IDEKit.IntelliSense.Completion.TextCompletionFilter.FilterByWord(System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem!>! items, string! word) -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem!>!
+static Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind.Array.get -> Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind!
+static Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind.Class.get -> Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind!
+static Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind.Color.get -> Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind!
+static Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind.Constant.get -> Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind!
+static Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind.Constructor.get -> Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind!
+static Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind.CreateCustom(string! identifier) -> Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind!
+static Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind.Directive.get -> Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind!
+static Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind.Enum.get -> Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind!
+static Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind.EnumMember.get -> Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind!
+static Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind.Event.get -> Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind!
+static Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind.Field.get -> Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind!
+static Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind.File.get -> Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind!
+static Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind.Folder.get -> Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind!
+static Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind.FromIdentifier(string! identifier) -> Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind!
+static Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind.Function.get -> Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind!
+static Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind.Generic.get -> Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind!
+static Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind.Interface.get -> Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind!
+static Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind.Keyword.get -> Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind!
+static Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind.Method.get -> Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind!
+static Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind.Module.get -> Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind!
+static Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind.Namespace.get -> Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind!
+static Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind.Operator.get -> Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind!
+static Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind.Parameter.get -> Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind!
+static Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind.Property.get -> Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind!
+static Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind.Reference.get -> Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind!
+static Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind.Section.get -> Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind!
+static Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind.Snippet.get -> Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind!
+static Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind.Struct.get -> Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind!
+static Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind.Text.get -> Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind!
+static Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind.TypeParameter.get -> Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind!
+static Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind.Unit.get -> Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind!
+static Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind.Value.get -> Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind!
+static Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind.Variable.get -> Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind!
+static Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind.operator !=(Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind? left, Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind? right) -> bool
+static Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind.operator ==(Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind? left, Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind? right) -> bool
+static Nickelony.IDEKit.IntelliSense.Completion.TextCompletionRequest.operator !=(Nickelony.IDEKit.IntelliSense.Completion.TextCompletionRequest? left, Nickelony.IDEKit.IntelliSense.Completion.TextCompletionRequest? right) -> bool
+static Nickelony.IDEKit.IntelliSense.Completion.TextCompletionRequest.operator ==(Nickelony.IDEKit.IntelliSense.Completion.TextCompletionRequest? left, Nickelony.IDEKit.IntelliSense.Completion.TextCompletionRequest? right) -> bool
+static Nickelony.IDEKit.IntelliSense.Completion.TextCompletionSessionDecision.Close.get -> Nickelony.IDEKit.IntelliSense.Completion.TextCompletionSessionDecision
+static Nickelony.IDEKit.IntelliSense.Completion.TextCompletionSessionDecision.NoMatches.get -> Nickelony.IDEKit.IntelliSense.Completion.TextCompletionSessionDecision
+static Nickelony.IDEKit.IntelliSense.Completion.TextCompletionSessionDecision.None.get -> Nickelony.IDEKit.IntelliSense.Completion.TextCompletionSessionDecision
+static Nickelony.IDEKit.IntelliSense.Completion.TextCompletionSessionDecision.Open(System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem!>! items, int startOffset, int endOffset) -> Nickelony.IDEKit.IntelliSense.Completion.TextCompletionSessionDecision
+static Nickelony.IDEKit.IntelliSense.Completion.TextCompletionSessionDecision.operator !=(Nickelony.IDEKit.IntelliSense.Completion.TextCompletionSessionDecision left, Nickelony.IDEKit.IntelliSense.Completion.TextCompletionSessionDecision right) -> bool
+static Nickelony.IDEKit.IntelliSense.Completion.TextCompletionSessionDecision.operator ==(Nickelony.IDEKit.IntelliSense.Completion.TextCompletionSessionDecision left, Nickelony.IDEKit.IntelliSense.Completion.TextCompletionSessionDecision right) -> bool
+static Nickelony.IDEKit.IntelliSense.Completion.TextCompletionTextEdit.TryCreate(Nickelony.IDEKit.Core.Text.TextRange insertRange, Nickelony.IDEKit.Core.Text.TextRange? replaceRange, string? newText, out Nickelony.IDEKit.IntelliSense.Completion.TextCompletionTextEdit edit) -> bool
+static Nickelony.IDEKit.IntelliSense.Completion.TextCompletionTextEdit.operator !=(Nickelony.IDEKit.IntelliSense.Completion.TextCompletionTextEdit left, Nickelony.IDEKit.IntelliSense.Completion.TextCompletionTextEdit right) -> bool
+static Nickelony.IDEKit.IntelliSense.Completion.TextCompletionTextEdit.operator ==(Nickelony.IDEKit.IntelliSense.Completion.TextCompletionTextEdit left, Nickelony.IDEKit.IntelliSense.Completion.TextCompletionTextEdit right) -> bool
+static Nickelony.IDEKit.IntelliSense.Completion.TextCompletionTrigger.CreateCustom(string! identifier) -> Nickelony.IDEKit.IntelliSense.Completion.TextCompletionTrigger!
+static Nickelony.IDEKit.IntelliSense.Completion.TextCompletionTrigger.Invoked.get -> Nickelony.IDEKit.IntelliSense.Completion.TextCompletionTrigger!
+static Nickelony.IDEKit.IntelliSense.Completion.TextCompletionTrigger.operator !=(Nickelony.IDEKit.IntelliSense.Completion.TextCompletionTrigger? left, Nickelony.IDEKit.IntelliSense.Completion.TextCompletionTrigger? right) -> bool
+static Nickelony.IDEKit.IntelliSense.Completion.TextCompletionTrigger.operator ==(Nickelony.IDEKit.IntelliSense.Completion.TextCompletionTrigger? left, Nickelony.IDEKit.IntelliSense.Completion.TextCompletionTrigger? right) -> bool
+static Nickelony.IDEKit.IntelliSense.Completion.TextCompletionWordSpan.operator !=(Nickelony.IDEKit.IntelliSense.Completion.TextCompletionWordSpan left, Nickelony.IDEKit.IntelliSense.Completion.TextCompletionWordSpan right) -> bool
+static Nickelony.IDEKit.IntelliSense.Completion.TextCompletionWordSpan.operator ==(Nickelony.IDEKit.IntelliSense.Completion.TextCompletionWordSpan left, Nickelony.IDEKit.IntelliSense.Completion.TextCompletionWordSpan right) -> bool
+static Nickelony.IDEKit.IntelliSense.Completion.TextSnippetExpander.Expand(string! snippet) -> Nickelony.IDEKit.IntelliSense.Completion.TextSnippetExpansion
+static Nickelony.IDEKit.IntelliSense.Completion.TextSnippetExpansion.operator !=(Nickelony.IDEKit.IntelliSense.Completion.TextSnippetExpansion left, Nickelony.IDEKit.IntelliSense.Completion.TextSnippetExpansion right) -> bool
+static Nickelony.IDEKit.IntelliSense.Completion.TextSnippetExpansion.operator ==(Nickelony.IDEKit.IntelliSense.Completion.TextSnippetExpansion left, Nickelony.IDEKit.IntelliSense.Completion.TextSnippetExpansion right) -> bool
+static Nickelony.IDEKit.IntelliSense.Completion.TextSnippetPlaceholder.operator !=(Nickelony.IDEKit.IntelliSense.Completion.TextSnippetPlaceholder left, Nickelony.IDEKit.IntelliSense.Completion.TextSnippetPlaceholder right) -> bool
+static Nickelony.IDEKit.IntelliSense.Completion.TextSnippetPlaceholder.operator ==(Nickelony.IDEKit.IntelliSense.Completion.TextSnippetPlaceholder left, Nickelony.IDEKit.IntelliSense.Completion.TextSnippetPlaceholder right) -> bool
+static Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnostic.operator !=(Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnostic? left, Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnostic? right) -> bool
+static Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnostic.operator ==(Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnostic? left, Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnostic? right) -> bool
+static Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnosticsRequest.operator !=(Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnosticsRequest? left, Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnosticsRequest? right) -> bool
+static Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnosticsRequest.operator ==(Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnosticsRequest? left, Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnosticsRequest? right) -> bool
+static Nickelony.IDEKit.IntelliSense.DocumentSymbols.DocumentSymbolOutlineBuilder.BuildFlatOutline<TItem>(System.Collections.Generic.IReadOnlyList<TItem>! items, Nickelony.IDEKit.IntelliSense.DocumentSymbols.DocumentSymbolProjection<TItem> projection) -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbol!>!
+static Nickelony.IDEKit.IntelliSense.DocumentSymbols.DocumentSymbolOutlineBuilder.BuildGroupedOutline<TGroup, TItem>(System.Collections.Generic.IReadOnlyList<TGroup>! groups, Nickelony.IDEKit.IntelliSense.DocumentSymbols.DocumentSymbolProjection<TGroup> groupProjection, System.Func<TGroup, System.Collections.Generic.IReadOnlyList<TItem>!>! groupItemsSelector, Nickelony.IDEKit.IntelliSense.DocumentSymbols.DocumentSymbolProjection<TItem> itemProjection) -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbol!>!
+static Nickelony.IDEKit.IntelliSense.DocumentSymbols.DocumentSymbolProjection<TItem>.operator !=(Nickelony.IDEKit.IntelliSense.DocumentSymbols.DocumentSymbolProjection<TItem>? left, Nickelony.IDEKit.IntelliSense.DocumentSymbols.DocumentSymbolProjection<TItem>? right) -> bool
+static Nickelony.IDEKit.IntelliSense.DocumentSymbols.DocumentSymbolProjection<TItem>.operator ==(Nickelony.IDEKit.IntelliSense.DocumentSymbols.DocumentSymbolProjection<TItem>? left, Nickelony.IDEKit.IntelliSense.DocumentSymbols.DocumentSymbolProjection<TItem>? right) -> bool
+static Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolRequest.operator !=(Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolRequest? left, Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolRequest? right) -> bool
+static Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolRequest.operator ==(Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolRequest? left, Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolRequest? right) -> bool
+static Nickelony.IDEKit.IntelliSense.Hover.TextHoverEvaluationState.operator !=(Nickelony.IDEKit.IntelliSense.Hover.TextHoverEvaluationState left, Nickelony.IDEKit.IntelliSense.Hover.TextHoverEvaluationState right) -> bool
+static Nickelony.IDEKit.IntelliSense.Hover.TextHoverEvaluationState.operator ==(Nickelony.IDEKit.IntelliSense.Hover.TextHoverEvaluationState left, Nickelony.IDEKit.IntelliSense.Hover.TextHoverEvaluationState right) -> bool
+static Nickelony.IDEKit.IntelliSense.Hover.TextHoverInfo.operator !=(Nickelony.IDEKit.IntelliSense.Hover.TextHoverInfo? left, Nickelony.IDEKit.IntelliSense.Hover.TextHoverInfo? right) -> bool
+static Nickelony.IDEKit.IntelliSense.Hover.TextHoverInfo.operator ==(Nickelony.IDEKit.IntelliSense.Hover.TextHoverInfo? left, Nickelony.IDEKit.IntelliSense.Hover.TextHoverInfo? right) -> bool
+static Nickelony.IDEKit.IntelliSense.Hover.TextHoverRequest.operator !=(Nickelony.IDEKit.IntelliSense.Hover.TextHoverRequest? left, Nickelony.IDEKit.IntelliSense.Hover.TextHoverRequest? right) -> bool
+static Nickelony.IDEKit.IntelliSense.Hover.TextHoverRequest.operator ==(Nickelony.IDEKit.IntelliSense.Hover.TextHoverRequest? left, Nickelony.IDEKit.IntelliSense.Hover.TextHoverRequest? right) -> bool
+static Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionDiscriminator.operator !=(Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionDiscriminator? left, Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionDiscriminator? right) -> bool
+static Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionDiscriminator.operator ==(Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionDiscriminator? left, Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionDiscriminator? right) -> bool
+static Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionLocation.operator !=(Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionLocation? left, Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionLocation? right) -> bool
+static Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionLocation.operator ==(Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionLocation? left, Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionLocation? right) -> bool
+static Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionNavigationTarget.operator !=(Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionNavigationTarget? left, Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionNavigationTarget? right) -> bool
+static Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionNavigationTarget.operator ==(Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionNavigationTarget? left, Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionNavigationTarget? right) -> bool
+static Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionNavigator.ResolveFromHover(Nickelony.IDEKit.IntelliSense.Navigation.ITextDefinitionProvider! definitionProvider, Nickelony.IDEKit.IntelliSense.Hover.ITextHoverProvider! hoverProvider, Nickelony.IDEKit.Core.Text.ITextSnapshot! snapshot, int offset) -> Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionNavigationTarget?
+static Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionNavigator.ResolveFromHoverAsync(System.Func<Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionRequest!, System.Threading.CancellationToken, System.Threading.Tasks.Task<Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionLocation?>!>! definitionResolverAsync, System.Func<Nickelony.IDEKit.IntelliSense.Hover.TextHoverRequest!, System.Threading.CancellationToken, System.Threading.Tasks.Task<Nickelony.IDEKit.IntelliSense.Hover.TextHoverInfo?>!>! hoverResolverAsync, Nickelony.IDEKit.Core.Text.ITextSnapshot! snapshot, int offset, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionNavigationTarget?>!
+static Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionNavigator.ResolveFromOffset(System.Func<Nickelony.IDEKit.Core.Text.ITextSnapshot!, int, Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionLocation?>! positionResolver, Nickelony.IDEKit.Core.Text.ITextSnapshot! snapshot, int offset) -> Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionNavigationTarget?
+static Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionNavigator.ResolveFromOffsetAsync(System.Func<Nickelony.IDEKit.Core.Text.ITextSnapshot!, int, System.Threading.CancellationToken, System.Threading.Tasks.Task<Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionLocation?>!>! positionResolverAsync, Nickelony.IDEKit.Core.Text.ITextSnapshot! snapshot, int offset, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionNavigationTarget?>!
+static Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionNavigator.ResolveFromSymbol(Nickelony.IDEKit.IntelliSense.Navigation.ITextDefinitionProvider! definitionProvider, Nickelony.IDEKit.Core.Text.ITextSnapshot! snapshot, string? symbolName, Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionDiscriminator? discriminator = null) -> Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionNavigationTarget?
+static Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionNavigator.ResolveFromSymbolAsync(System.Func<Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionRequest!, System.Threading.CancellationToken, System.Threading.Tasks.Task<Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionLocation?>!>! definitionResolverAsync, Nickelony.IDEKit.Core.Text.ITextSnapshot! snapshot, string? symbolName, Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionDiscriminator? discriminator = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionNavigationTarget?>!
+static Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionRequest.operator !=(Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionRequest? left, Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionRequest? right) -> bool
+static Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionRequest.operator ==(Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionRequest? left, Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionRequest? right) -> bool
+static Nickelony.IDEKit.IntelliSense.SemanticTokens.TextSemanticToken.operator !=(Nickelony.IDEKit.IntelliSense.SemanticTokens.TextSemanticToken? left, Nickelony.IDEKit.IntelliSense.SemanticTokens.TextSemanticToken? right) -> bool
+static Nickelony.IDEKit.IntelliSense.SemanticTokens.TextSemanticToken.operator ==(Nickelony.IDEKit.IntelliSense.SemanticTokens.TextSemanticToken? left, Nickelony.IDEKit.IntelliSense.SemanticTokens.TextSemanticToken? right) -> bool
+static Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameter.At(int index) -> Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameter
+static Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameter.None.get -> Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameter
+static Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameter.NotSpecified.get -> Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameter
+static Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameter.operator !=(Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameter left, Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameter right) -> bool
+static Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameter.operator ==(Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameter left, Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameter right) -> bool
+static Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelpRequest.operator !=(Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelpRequest? left, Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelpRequest? right) -> bool
+static Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelpRequest.operator ==(Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelpRequest? left, Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelpRequest? right) -> bool
+virtual Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemFilter.Invoke(System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem!>! items, string! word) -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem!>!
+virtual Nickelony.IDEKit.IntelliSense.Completion.TextCompletionWordLocator.Invoke(Nickelony.IDEKit.Core.Text.ITextSnapshot! snapshot, int caretOffset) -> Nickelony.IDEKit.IntelliSense.Completion.TextCompletionWordSpan
+virtual Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionDiscriminator.EqualityContract.get -> System.Type!
+virtual Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionDiscriminator.Equals(Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionDiscriminator? other) -> bool
+virtual Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionDiscriminator.PrintMembers(System.Text.StringBuilder! builder) -> bool
+~override Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionRequest.Equals(object obj) -> bool
+~override Nickelony.IDEKit.IntelliSense.CodeActions.TextCodeActionRequest.ToString() -> string
+~override Nickelony.IDEKit.IntelliSense.Completion.TextCompletionSessionDecision.Equals(object obj) -> bool
+~override Nickelony.IDEKit.IntelliSense.Completion.TextCompletionSessionDecision.ToString() -> string
+~override Nickelony.IDEKit.IntelliSense.Completion.TextCompletionTextEdit.Equals(object obj) -> bool
+~override Nickelony.IDEKit.IntelliSense.Completion.TextCompletionTextEdit.ToString() -> string
+~override Nickelony.IDEKit.IntelliSense.Completion.TextCompletionWordSpan.Equals(object obj) -> bool
+~override Nickelony.IDEKit.IntelliSense.Completion.TextCompletionWordSpan.ToString() -> string
+~override Nickelony.IDEKit.IntelliSense.Completion.TextSnippetExpansion.Equals(object obj) -> bool
+~override Nickelony.IDEKit.IntelliSense.Completion.TextSnippetExpansion.ToString() -> string
+~override Nickelony.IDEKit.IntelliSense.Completion.TextSnippetPlaceholder.Equals(object obj) -> bool
+~override Nickelony.IDEKit.IntelliSense.Completion.TextSnippetPlaceholder.ToString() -> string
+override Nickelony.IDEKit.IntelliSense.DocumentSymbols.DocumentSymbolProjection<TItem>.Equals(object? obj) -> bool
+override Nickelony.IDEKit.IntelliSense.DocumentSymbols.DocumentSymbolProjection<TItem>.ToString() -> string!
+~override Nickelony.IDEKit.IntelliSense.Hover.TextHoverEvaluationState.Equals(object obj) -> bool
+~override Nickelony.IDEKit.IntelliSense.Hover.TextHoverEvaluationState.ToString() -> string
+~override Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureActiveParameter.Equals(object obj) -> bool

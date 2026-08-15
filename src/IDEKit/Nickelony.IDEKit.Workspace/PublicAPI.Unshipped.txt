@@ -1,0 +1,51 @@
+#nullable enable
+*REMOVED*Nickelony.IDEKit.Workspace.Documents.FileSystem.LocalWorkspaceFileSystem.LocalWorkspaceFileSystem(Nickelony.IDEKit.Core.Pathing.LocalPathComparisonPolicy? pathComparison = null) -> void
+*REMOVED*Nickelony.IDEKit.Workspace.Documents.Reloading.FileReloadCoordinator<TDecisionResult>.FileReloadCoordinator(Nickelony.IDEKit.Core.Pathing.LocalPathComparisonPolicy? pathComparison = null) -> void
+*REMOVED*Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentStore.WorkspaceDocumentStore(Nickelony.IDEKit.Workspace.Documents.FileSystem.IWorkspaceFileSystem! fileSystem, Nickelony.IDEKit.Core.Pathing.LocalPathComparisonPolicy? pathComparison = null) -> void
+*REMOVED*Nickelony.IDEKit.Workspace.Documents.FileSystem.IWorkspaceFileSystem.DeleteTemporaryAsync(Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile! temporaryFile) -> System.Threading.Tasks.Task!
+*REMOVED*Nickelony.IDEKit.Workspace.Documents.FileSystem.IWorkspaceFileSystem.ReplaceFileAsync(Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile! temporaryFile, string! destinationPath, Nickelony.IDEKit.Workspace.Documents.FileStamp expectedStamp, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReplacementResult!>!
+*REMOVED*Nickelony.IDEKit.Workspace.Documents.FileSystem.IWorkspaceFileSystem.WriteTemporaryAsync(string! destinationPath, System.ReadOnlyMemory<byte> content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile!>!
+*REMOVED*Nickelony.IDEKit.Workspace.Documents.FileSystem.LocalWorkspaceFileSystem.DeleteTemporaryAsync(Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile! temporaryFile) -> System.Threading.Tasks.Task!
+*REMOVED*Nickelony.IDEKit.Workspace.Documents.FileSystem.LocalWorkspaceFileSystem.ReplaceFileAsync(Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile! temporaryFile, string! destinationPath, Nickelony.IDEKit.Workspace.Documents.FileStamp expectedStamp, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReplacementResult!>!
+*REMOVED*Nickelony.IDEKit.Workspace.Documents.FileSystem.LocalWorkspaceFileSystem.WriteTemporaryAsync(string! destinationPath, System.ReadOnlyMemory<byte> content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile!>!
+*REMOVED*virtual Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileSystemDecorator.DeleteTemporaryAsync(Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile! temporaryFile) -> System.Threading.Tasks.Task!
+*REMOVED*virtual Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileSystemDecorator.ReplaceFileAsync(Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile! temporaryFile, string! destinationPath, Nickelony.IDEKit.Workspace.Documents.FileStamp expectedStamp, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReplacementResult!>!
+*REMOVED*virtual Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileSystemDecorator.WriteTemporaryAsync(string! destinationPath, System.ReadOnlyMemory<byte> content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile!>!
+*REMOVED*Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile
+*REMOVED*Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile.<Clone>$() -> Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile!
+*REMOVED*Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile.ContentHash.get -> string!
+*REMOVED*Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile.ContentHash.init -> void
+*REMOVED*Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile.Deconstruct(out string! Path, out long Length, out string! ContentHash) -> void
+*REMOVED*Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile.Equals(Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile? other) -> bool
+*REMOVED*Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile.Length.get -> long
+*REMOVED*Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile.Length.init -> void
+*REMOVED*Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile.Path.get -> string!
+*REMOVED*Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile.Path.init -> void
+*REMOVED*Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile.WorkspaceTemporaryFile(string! Path, long Length, string! ContentHash) -> void
+*REMOVED*override Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile.Equals(object? obj) -> bool
+*REMOVED*override Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile.GetHashCode() -> int
+*REMOVED*override Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile.ToString() -> string!
+*REMOVED*static Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile.operator !=(Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile? left, Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile? right) -> bool
+*REMOVED*static Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile.operator ==(Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile? left, Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceTemporaryFile? right) -> bool
+Nickelony.IDEKit.Workspace.Documents.FileSystem.LocalWorkspaceFileSystem.LocalWorkspaceFileSystem(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOptions? options = null) -> void
+Nickelony.IDEKit.Workspace.Documents.Reloading.FileReloadCoordinator<TDecisionResult>.FileReloadCoordinator(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOptions? options = null) -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOptions
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOptions.<Clone>$() -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOptions!
+static Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOptions.Default.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOptions!
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOptions.Equals(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOptions? other) -> bool
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOptions.PathComparison.get -> Nickelony.IDEKit.Core.Pathing.LocalPathComparisonPolicy
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOptions.PathComparison.init -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOptions.WorkspaceDocumentOptions() -> void
+Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentStore.WorkspaceDocumentStore(Nickelony.IDEKit.Workspace.Documents.FileSystem.IWorkspaceFileSystem! fileSystem, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOptions? options = null) -> void
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOptions.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOptions.GetHashCode() -> int
+override Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOptions.ToString() -> string!
+static Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOptions.operator !=(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOptions? left, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOptions? right) -> bool
+static Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOptions.operator ==(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOptions? left, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOptions? right) -> bool
+Nickelony.IDEKit.Workspace.Documents.FileSystem.IWorkspaceFileSystem.WriteFileAsync(string! destinationPath, System.ReadOnlyMemory<byte> content, Nickelony.IDEKit.Workspace.Documents.FileStamp expectedStamp, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReplacementResult!>!
+Nickelony.IDEKit.Workspace.Documents.FileSystem.LocalWorkspaceFileSystem.WriteFileAsync(string! destinationPath, System.ReadOnlyMemory<byte> content, Nickelony.IDEKit.Workspace.Documents.FileStamp expectedStamp, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReplacementResult!>!
+virtual Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileSystemDecorator.WriteFileAsync(string! destinationPath, System.ReadOnlyMemory<byte> content, Nickelony.IDEKit.Workspace.Documents.FileStamp expectedStamp, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.Workspace.Documents.FileSystem.WorkspaceFileReplacementResult!>!
+static Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenOptions.Default.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentOpenOptions
+static Nickelony.IDEKit.Workspace.Documents.FileStamp.Directory.get -> Nickelony.IDEKit.Workspace.Documents.FileStamp
+Nickelony.IDEKit.Workspace.Documents.FileStamp.IsDirectory.get -> bool
+Nickelony.IDEKit.Workspace.Documents.FileStamp.IsDirectory.init -> void

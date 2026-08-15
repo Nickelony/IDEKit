@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <IsPackable>false</IsPackable>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>Nickelony.LanguageServer.Client.FakeServer</AssemblyName>
+    <RootNamespace>Nickelony.LanguageServer.Client.FakeServer</RootNamespace>
+  </PropertyGroup>
+
+</Project>

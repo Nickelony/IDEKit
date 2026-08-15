@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+    <RunSettingsFilePath>test.runsettings</RunSettingsFilePath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="coverlet.collector" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="MSTest.TestAdapter" />
+    <PackageReference Include="MSTest.TestFramework" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\src\IDEKit\Nickelony.IDEKit.Core\Nickelony.IDEKit.Core.csproj" />
+    <ProjectReference Include="..\..\..\src\IDEKit\Nickelony.IDEKit.Workspace\Nickelony.IDEKit.Workspace.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\TestSupport\TemporaryDirectory.cs" Link="TestSupport\TemporaryDirectory.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
+    <Using Include="Nickelony.Testing" />
+  </ItemGroup>
+
+</Project>

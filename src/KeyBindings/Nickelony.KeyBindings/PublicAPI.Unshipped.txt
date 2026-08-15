@@ -1,0 +1,243 @@
+#nullable enable
+*REMOVED*virtual Nickelony.KeyBindings.KeyDisplayTextFormatter.GetModifierName(Nickelony.KeyBindings.KeyModifiers modifier) -> string!
+Nickelony.KeyBindings.KeyCode.A = 42 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.AbntC1 = 135 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.AbntC2 = 136 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.Add = 81 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.Apostrophe = 140 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.Apps = 68 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.B = 43 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.Backslash = 138 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.Backspace = 2 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.BrowserBack = 110 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.BrowserFavorites = 115 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.BrowserForward = 111 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.BrowserHome = 116 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.BrowserRefresh = 112 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.BrowserSearch = 114 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.BrowserStop = 113 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.C = 44 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.Cancel = 1 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.Clear = 4 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.Comma = 130 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.D = 45 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.D0 = 32 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.D1 = 33 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.D2 = 34 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.D3 = 35 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.D4 = 36 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.D5 = 37 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.D6 = 38 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.D7 = 39 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.D8 = 40 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.D9 = 41 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.Decimal = 84 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.Delete = 30 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.Divide = 85 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.Down = 24 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.E = 46 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.End = 19 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.Enter = 5 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.Equals = 129 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.Escape = 11 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.Execute = 27 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.F = 47 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.F1 = 86 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.F10 = 95 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.F11 = 96 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.F12 = 97 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.F13 = 98 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.F14 = 99 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.F15 = 100 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.F16 = 101 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.F17 = 102 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.F18 = 103 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.F19 = 104 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.F2 = 87 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.F20 = 105 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.F21 = 106 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.F22 = 107 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.F23 = 108 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.F24 = 109 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.F3 = 88 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.F4 = 89 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.F5 = 90 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.F6 = 91 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.F7 = 92 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.F8 = 93 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.F9 = 94 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.FinalMode = 9 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.G = 48 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.Grave = 134 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.H = 49 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.HanjaMode = 10 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.Help = 31 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.Home = 20 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.I = 50 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.ImeAccept = 14 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.ImeConvert = 12 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.ImeModeChange = 15 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.ImeNonConvert = 13 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.Insert = 29 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.IntlBackslash = 142 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.J = 51 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.JunjaMode = 8 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.K = 52 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.KanaMode = 7 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.L = 53 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.LaunchApplication1 = 126 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.LaunchApplication2 = 127 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.LaunchMail = 124 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.Left = 21 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.LeftBracket = 137 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.M = 54 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.MediaNextTrack = 120 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.MediaPlayPause = 123 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.MediaPreviousTrack = 121 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.MediaStop = 122 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.Minus = 131 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.Multiply = 80 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.N = 55 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.NumPad0 = 70 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.NumPad1 = 71 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.NumPad2 = 72 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.NumPad3 = 73 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.NumPad4 = 74 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.NumPad5 = 75 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.NumPad6 = 76 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.NumPad7 = 77 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.NumPad8 = 78 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.NumPad9 = 79 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.O = 56 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.Oem8 = 141 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.P = 57 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.PageDown = 18 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.PageUp = 17 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.Pause = 6 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.Period = 132 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.Print = 26 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.PrintScreen = 28 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.Q = 58 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.R = 59 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.Right = 23 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.RightBracket = 139 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.S = 60 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.Select = 25 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.SelectMedia = 125 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.Semicolon = 128 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.Separator = 82 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.Slash = 133 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.Sleep = 69 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.Space = 16 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.Subtract = 83 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.T = 61 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.Tab = 3 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.U = 62 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.Up = 22 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.V = 63 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.VolumeDown = 118 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.VolumeMute = 117 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.VolumeUp = 119 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.W = 64 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.X = 65 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.Y = 66 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCode.Z = 67 -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyBindingDispatcher<TCommandId>.KeyBindingDispatcher(Nickelony.KeyBindings.IKeyBindingService<TCommandId>! keyBindings, Nickelony.KeyBindings.KeyBindingDispatcherHooks<TCommandId>! hooks) -> void
+Nickelony.KeyBindings.KeyBindingDispatcherHooks<TCommandId>
+Nickelony.KeyBindings.KeyBindingDispatcherHooks<TCommandId>.CanExecuteCommand.get -> System.Func<TCommandId, bool>!
+Nickelony.KeyBindings.KeyBindingDispatcherHooks<TCommandId>.ExecuteCommand.get -> System.Action<TCommandId>!
+Nickelony.KeyBindings.KeyBindingDispatcherHooks<TCommandId>.KeyBindingDispatcherHooks(System.Func<TCommandId, bool>! canExecuteCommand, System.Action<TCommandId>! executeCommand) -> void
+Nickelony.KeyBindings.KeyModifierMasks
+const Nickelony.KeyBindings.KeyModifierMasks.Defined = Nickelony.KeyBindings.KeyModifierSet.Alt | Nickelony.KeyBindings.KeyModifierSet.Control | Nickelony.KeyBindings.KeyModifierSet.Shift | Nickelony.KeyBindings.KeyModifierSet.Meta -> Nickelony.KeyBindings.KeyModifierSet
+virtual Nickelony.KeyBindings.KeyDisplayTextFormatter.GetModifierOrder() -> System.Collections.Generic.IReadOnlyList<Nickelony.KeyBindings.KeyModifierSet>!
+virtual Nickelony.KeyBindings.KeyDisplayTextFormatter.GetModifierSeparator() -> string!
+virtual Nickelony.KeyBindings.KeyDisplayTextFormatter.GetModifierText(Nickelony.KeyBindings.KeyModifierSet modifier) -> string!
+virtual Nickelony.KeyBindings.KeyDisplayTextFormatter.GetStrokeSeparator() -> string!
+Nickelony.KeyBindings.KeyBindingPlatformProfile
+Nickelony.KeyBindings.KeyBindingPlatformProfile.<Clone>$() -> Nickelony.KeyBindings.KeyBindingPlatformProfile!
+Nickelony.KeyBindings.KeyBindingPlatformProfile.Equals(Nickelony.KeyBindings.KeyBindingPlatformProfile? other) -> bool
+Nickelony.KeyBindings.KeyBindingPlatformProfile.KeyBindingPlatformProfile() -> void
+Nickelony.KeyBindings.KeyBindingPlatformProfile.PrimaryModifier.get -> Nickelony.KeyBindings.KeyModifierSet
+Nickelony.KeyBindings.KeyBindingPlatformProfile.PrimaryModifier.init -> void
+Nickelony.KeyBindings.KeyBindingPlatformProfile.PrimaryStroke(Nickelony.KeyBindings.KeyCode key, Nickelony.KeyBindings.KeyModifierSet additionalModifiers = Nickelony.KeyBindings.KeyModifierSet.None) -> Nickelony.KeyBindings.KeyCombo
+override Nickelony.KeyBindings.KeyBindingPlatformProfile.Equals(object? obj) -> bool
+override Nickelony.KeyBindings.KeyBindingPlatformProfile.GetHashCode() -> int
+override Nickelony.KeyBindings.KeyBindingPlatformProfile.ToString() -> string!
+static Nickelony.KeyBindings.KeyBindingPlatformProfile.Default.get -> Nickelony.KeyBindings.KeyBindingPlatformProfile!
+static Nickelony.KeyBindings.KeyBindingPlatformProfile.operator !=(Nickelony.KeyBindings.KeyBindingPlatformProfile? left, Nickelony.KeyBindings.KeyBindingPlatformProfile? right) -> bool
+static Nickelony.KeyBindings.KeyBindingPlatformProfile.operator ==(Nickelony.KeyBindings.KeyBindingPlatformProfile? left, Nickelony.KeyBindings.KeyBindingPlatformProfile? right) -> bool
+Nickelony.KeyBindings.DesktopKeyDisplayConventions
+Nickelony.KeyBindings.DesktopKeyDisplayConventions.<Clone>$() -> Nickelony.KeyBindings.DesktopKeyDisplayConventions!
+Nickelony.KeyBindings.DesktopKeyDisplayConventions.AltLabel.get -> string!
+Nickelony.KeyBindings.DesktopKeyDisplayConventions.AltLabel.init -> void
+Nickelony.KeyBindings.DesktopKeyDisplayConventions.ControlLabel.get -> string!
+Nickelony.KeyBindings.DesktopKeyDisplayConventions.ControlLabel.init -> void
+Nickelony.KeyBindings.DesktopKeyDisplayConventions.DesktopKeyDisplayConventions() -> void
+Nickelony.KeyBindings.DesktopKeyDisplayConventions.Equals(Nickelony.KeyBindings.DesktopKeyDisplayConventions? other) -> bool
+Nickelony.KeyBindings.DesktopKeyDisplayConventions.KeyTextOverrides.get -> System.Collections.Generic.IReadOnlyDictionary<Nickelony.KeyBindings.KeyCode, string!>!
+Nickelony.KeyBindings.DesktopKeyDisplayConventions.KeyTextOverrides.init -> void
+Nickelony.KeyBindings.DesktopKeyDisplayConventions.MetaLabel.get -> string!
+Nickelony.KeyBindings.DesktopKeyDisplayConventions.MetaLabel.init -> void
+Nickelony.KeyBindings.DesktopKeyDisplayConventions.ModifierOrder.get -> System.Collections.Generic.IReadOnlyList<Nickelony.KeyBindings.KeyModifierSet>!
+Nickelony.KeyBindings.DesktopKeyDisplayConventions.ModifierOrder.init -> void
+Nickelony.KeyBindings.DesktopKeyDisplayConventions.ModifierSeparator.get -> string!
+Nickelony.KeyBindings.DesktopKeyDisplayConventions.ModifierSeparator.init -> void
+Nickelony.KeyBindings.DesktopKeyDisplayConventions.NumpadPrefix.get -> string!
+Nickelony.KeyBindings.DesktopKeyDisplayConventions.NumpadPrefix.init -> void
+Nickelony.KeyBindings.DesktopKeyDisplayConventions.ShiftLabel.get -> string!
+Nickelony.KeyBindings.DesktopKeyDisplayConventions.ShiftLabel.init -> void
+Nickelony.KeyBindings.DesktopKeyDisplayConventions.StrokeSeparator.get -> string!
+Nickelony.KeyBindings.DesktopKeyDisplayConventions.StrokeSeparator.init -> void
+override Nickelony.KeyBindings.DesktopKeyDisplayConventions.Equals(object? obj) -> bool
+override Nickelony.KeyBindings.DesktopKeyDisplayConventions.GetHashCode() -> int
+override Nickelony.KeyBindings.DesktopKeyDisplayConventions.ToString() -> string!
+static Nickelony.KeyBindings.DesktopKeyDisplayConventions.Linux.get -> Nickelony.KeyBindings.DesktopKeyDisplayConventions!
+static Nickelony.KeyBindings.DesktopKeyDisplayConventions.MacOS.get -> Nickelony.KeyBindings.DesktopKeyDisplayConventions!
+static Nickelony.KeyBindings.DesktopKeyDisplayConventions.Windows.get -> Nickelony.KeyBindings.DesktopKeyDisplayConventions!
+static Nickelony.KeyBindings.DesktopKeyDisplayConventions.operator !=(Nickelony.KeyBindings.DesktopKeyDisplayConventions? left, Nickelony.KeyBindings.DesktopKeyDisplayConventions? right) -> bool
+static Nickelony.KeyBindings.DesktopKeyDisplayConventions.operator ==(Nickelony.KeyBindings.DesktopKeyDisplayConventions? left, Nickelony.KeyBindings.DesktopKeyDisplayConventions? right) -> bool
+Nickelony.KeyBindings.DesktopKeyDisplayTextFormatter
+Nickelony.KeyBindings.DesktopKeyDisplayTextFormatter.Conventions.get -> Nickelony.KeyBindings.DesktopKeyDisplayConventions!
+Nickelony.KeyBindings.DesktopKeyDisplayTextFormatter.DesktopKeyDisplayTextFormatter(Nickelony.KeyBindings.DesktopKeyDisplayConventions! conventions) -> void
+static Nickelony.KeyBindings.DesktopKeyDisplayTextFormatter.Linux.get -> Nickelony.KeyBindings.DesktopKeyDisplayTextFormatter!
+static Nickelony.KeyBindings.DesktopKeyDisplayTextFormatter.MacOS.get -> Nickelony.KeyBindings.DesktopKeyDisplayTextFormatter!
+static Nickelony.KeyBindings.DesktopKeyDisplayTextFormatter.Windows.get -> Nickelony.KeyBindings.DesktopKeyDisplayTextFormatter!
+Nickelony.KeyBindings.IKeyBindingService<TCommandId>.Validate(TCommandId command, System.Collections.Generic.IReadOnlyList<Nickelony.KeyBindings.KeyChord>! bindings, Nickelony.KeyBindings.KeyBindingConflictPolicy conflictPolicy = Nickelony.KeyBindings.KeyBindingConflictPolicy.Reject) -> Nickelony.KeyBindings.KeyBindingOutcome
+Nickelony.KeyBindings.KeyBindingDispatcher<TCommandId>.Dispatch(Nickelony.KeyBindings.KeyCombo keyCombo, string? context) -> Nickelony.KeyBindings.KeyChordDispatchResult
+Nickelony.KeyBindings.KeyBindingService<TCommandId>.Validate(TCommandId command, System.Collections.Generic.IReadOnlyList<Nickelony.KeyBindings.KeyChord>! bindings, Nickelony.KeyBindings.KeyBindingConflictPolicy conflictPolicy = Nickelony.KeyBindings.KeyBindingConflictPolicy.Reject) -> Nickelony.KeyBindings.KeyBindingOutcome
+static Nickelony.KeyBindings.KeyBindingDispatcherChain.DispatchInPriorityOrder<TCommandId>(this System.Collections.Generic.IReadOnlyList<Nickelony.KeyBindings.KeyBindingDispatcher<TCommandId>!>! dispatchers, Nickelony.KeyBindings.KeyCombo keyCombo, string? context) -> Nickelony.KeyBindings.KeyChordDispatchResult
+*REMOVED*Nickelony.KeyBindings.IKeyBindingService<TCommandId>.Validate(TCommandId command, System.Collections.Generic.IReadOnlyList<Nickelony.KeyBindings.KeyChord>! bindings) -> Nickelony.KeyBindings.KeyBindingOutcome
+*REMOVED*Nickelony.KeyBindings.IKeyBindingService<TCommandId>.Validate(TCommandId command, System.Collections.Generic.IReadOnlyList<Nickelony.KeyBindings.KeyChord>! bindings, Nickelony.KeyBindings.KeyBindingConflictPolicy conflictPolicy) -> Nickelony.KeyBindings.KeyBindingOutcome
+*REMOVED*Nickelony.KeyBindings.KeyBindingDispatcher<TCommandId>.TryDispatch(Nickelony.KeyBindings.KeyCombo keyCombo, string? context) -> Nickelony.KeyBindings.KeyChordDispatchResult
+*REMOVED*Nickelony.KeyBindings.KeyBindingService<TCommandId>.Validate(TCommandId command, System.Collections.Generic.IReadOnlyList<Nickelony.KeyBindings.KeyChord>! bindings) -> Nickelony.KeyBindings.KeyBindingOutcome
+*REMOVED*Nickelony.KeyBindings.KeyBindingService<TCommandId>.Validate(TCommandId command, System.Collections.Generic.IReadOnlyList<Nickelony.KeyBindings.KeyChord>! bindings, Nickelony.KeyBindings.KeyBindingConflictPolicy conflictPolicy) -> Nickelony.KeyBindings.KeyBindingOutcome
+*REMOVED*static Nickelony.KeyBindings.KeyBindingDispatcherChain.TryDispatchInPriorityOrder<TCommandId>(this System.Collections.Generic.IReadOnlyList<Nickelony.KeyBindings.KeyBindingDispatcher<TCommandId>!>! dispatchers, Nickelony.KeyBindings.KeyCombo keyCombo, string? context) -> Nickelony.KeyBindings.KeyChordDispatchResult
+*REMOVED*Nickelony.KeyBindings.KeyCombo.KeyCombo(Nickelony.KeyBindings.KeyCode key, Nickelony.KeyBindings.KeyModifiers modifiers) -> void
+*REMOVED*Nickelony.KeyBindings.KeyCombo.Modifiers.get -> Nickelony.KeyBindings.KeyModifiers
+*REMOVED*Nickelony.KeyBindings.KeyModifiers
+*REMOVED*Nickelony.KeyBindings.KeyModifiers.Alt = 1 -> Nickelony.KeyBindings.KeyModifiers
+*REMOVED*Nickelony.KeyBindings.KeyModifiers.Control = 2 -> Nickelony.KeyBindings.KeyModifiers
+*REMOVED*Nickelony.KeyBindings.KeyModifiers.Meta = 8 -> Nickelony.KeyBindings.KeyModifiers
+*REMOVED*Nickelony.KeyBindings.KeyModifiers.None = 0 -> Nickelony.KeyBindings.KeyModifiers
+*REMOVED*Nickelony.KeyBindings.KeyModifiers.Shift = 4 -> Nickelony.KeyBindings.KeyModifiers
+Nickelony.KeyBindings.KeyCombo.KeyCombo(Nickelony.KeyBindings.KeyCode key, Nickelony.KeyBindings.KeyModifierSet modifiers) -> void
+Nickelony.KeyBindings.KeyCombo.Modifiers.get -> Nickelony.KeyBindings.KeyModifierSet
+Nickelony.KeyBindings.KeyModifierSet
+Nickelony.KeyBindings.KeyModifierSet.Alt = 1 -> Nickelony.KeyBindings.KeyModifierSet
+Nickelony.KeyBindings.KeyModifierSet.Control = 2 -> Nickelony.KeyBindings.KeyModifierSet
+Nickelony.KeyBindings.KeyModifierSet.Meta = 8 -> Nickelony.KeyBindings.KeyModifierSet
+Nickelony.KeyBindings.KeyModifierSet.None = 0 -> Nickelony.KeyBindings.KeyModifierSet
+Nickelony.KeyBindings.KeyModifierSet.Shift = 4 -> Nickelony.KeyBindings.KeyModifierSet
+virtual Nickelony.KeyBindings.KeyDisplayTextFormatter.GetComboText(Nickelony.KeyBindings.KeyCombo keyCombo) -> string!
+*REMOVED*Nickelony.KeyBindings.IKeyBindingService<TCommandId>.BindingsChanged -> System.EventHandler?
+*REMOVED*Nickelony.KeyBindings.IKeyBindingService<TCommandId>.Contexts.get -> System.Collections.Generic.IReadOnlyCollection<string!>!
+*REMOVED*Nickelony.KeyBindings.KeyBindingService<TCommandId>.BindingsChanged -> System.EventHandler?
+*REMOVED*Nickelony.KeyBindings.KeyBindingService<TCommandId>.Contexts.get -> System.Collections.Generic.IReadOnlyCollection<string!>!
+Nickelony.KeyBindings.IKeyBindingService<TCommandId>.BindingsChanged -> System.EventHandler<Nickelony.KeyBindings.KeyBindingsChangedEventArgs<TCommandId>!>?
+Nickelony.KeyBindings.IKeyBindingService<TCommandId>.Contexts.get -> System.Collections.Generic.IReadOnlySet<string!>!
+Nickelony.KeyBindings.KeyBindingService<TCommandId>.BindingsChanged -> System.EventHandler<Nickelony.KeyBindings.KeyBindingsChangedEventArgs<TCommandId>!>?
+Nickelony.KeyBindings.KeyBindingService<TCommandId>.Contexts.get -> System.Collections.Generic.IReadOnlySet<string!>!
+Nickelony.KeyBindings.KeyBindingsChangedEventArgs<TCommandId>
+Nickelony.KeyBindings.KeyBindingsChangedEventArgs<TCommandId>.AllCommands.get -> bool
+Nickelony.KeyBindings.KeyBindingsChangedEventArgs<TCommandId>.Command.get -> TCommandId?
+Nickelony.KeyBindings.KeyBindingsChangedEventArgs<TCommandId>.KeyBindingsChangedEventArgs(TCommandId? command, bool allCommands = false) -> void

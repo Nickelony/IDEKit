@@ -1,0 +1,92 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures</RootNamespace>
+    <AssemblyName>Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures</AssemblyName>
+    <PackageId>Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures</PackageId>
+    <Description>AvaloniaEdit IntelliSense UI controllers: completion windows, hover tooltips, signature help, definition navigation, code actions, and semantic-token colorizing, built on Nickelony.IDEKit.Core, Nickelony.IDEKit.IntelliSense, and Nickelony.IDEKit.AvaloniaEdit.</Description>
+    <PackageTags>text-editor;editor;avaloniaedit;avalonia;intellisense;completion;hover;signature-help;definition-navigation;code-actions;quick-fix;semantic-tokens;tooltip;nickelony</PackageTags>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <WarningsAsErrors>CS1591;RS0016;RS0017</WarningsAsErrors>
+    <!-- Selects the AvaloniaEdit branch of the shared binding source under shared\Editor and
+         shared\Editor.LanguageFeatures. -->
+    <DefineConstants>$(DefineConstants);AVALONIAEDIT</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Public-API surface baseline: an unlisted public member fails the build (RS0016/RS0017). -->
+    <PackageReference Include="Microsoft.CodeAnalysis.PublicApiAnalyzers" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Avalonia is cross-platform, so this adapter targets net8.0 (not net8.0-windows). The direct
+         reference takes the repo pin (12.1.3); Avalonia.AvaloniaEdit 12.0.0 flows from it, and the
+         controllers use Avalonia.Media / Avalonia.Controls directly. -->
+    <PackageReference Include="Avalonia" />
+    <PackageReference Include="Avalonia.AvaloniaEdit" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Nickelony.IDEKit.Core\Nickelony.IDEKit.Core.csproj" />
+    <ProjectReference Include="..\..\Nickelony.IDEKit.IntelliSense\Nickelony.IDEKit.IntelliSense.csproj" />
+    <ProjectReference Include="..\Nickelony.IDEKit.AvaloniaEdit\Nickelony.IDEKit.AvaloniaEdit.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\..\..\shared\Infrastructure\BrushHelpers.Avalonia.cs" Link="Infrastructure\BrushHelpers.Avalonia.cs" />
+    <Compile Include="..\..\..\..\shared\Infrastructure\DispatcherDebouncer.Avalonia.cs" Link="Infrastructure\DispatcherDebouncer.Avalonia.cs" />
+    <Compile Include="..\..\..\..\shared\Infrastructure\DispatcherInvocation.Avalonia.cs" Link="Infrastructure\DispatcherInvocation.Avalonia.cs" />
+    <Compile Include="..\..\..\..\shared\Infrastructure\NumericValidation.cs" Link="Infrastructure\NumericValidation.cs" />
+    <!-- Shared binding source: one file compiled into the AvalonEdit and AvaloniaEdit bindings, with a
+         per-binding namespace and engine using selected by the AVALONIAEDIT define. -->
+    <Compile Include="..\..\..\..\shared\Editor.LanguageFeatures\HostCallback.cs" Link="HostCallback.cs" />
+    <Compile Include="..\..\..\..\shared\Editor.LanguageFeatures\CodeActions\TextCodeActionControllerOptions.cs" Link="CodeActions\TextCodeActionControllerOptions.cs" />
+    <Compile Include="..\..\..\..\shared\Editor.LanguageFeatures\CodeActions\TextCodeActionPresentation.cs" Link="CodeActions\TextCodeActionPresentation.cs" />
+    <Compile Include="..\..\..\..\shared\Editor.LanguageFeatures\Completion\ICommitCharacterCompletionData.cs" Link="Completion\ICommitCharacterCompletionData.cs" />
+    <Compile Include="..\..\..\..\shared\Editor.LanguageFeatures\Completion\TextCompletionControllerTestHooks.cs" Link="Completion\TextCompletionControllerTestHooks.cs" />
+    <Compile Include="..\..\..\..\shared\Editor.LanguageFeatures\Completion\TextCompletionPresentationState.cs" Link="Completion\TextCompletionPresentationState.cs" />
+    <Compile Include="..\..\..\..\shared\Editor.LanguageFeatures\Requests\RequestLifetime.cs" Link="Requests\RequestLifetime.cs" />
+    <Compile Include="..\..\..\..\shared\Editor.LanguageFeatures\Signatures\TextSignatureHelpControllerHooks.cs" Link="Signatures\TextSignatureHelpControllerHooks.cs" />
+    <Compile Include="..\..\..\..\shared\Editor.LanguageFeatures\Signatures\TextSignatureHelpControllerOptions.cs" Link="Signatures\TextSignatureHelpControllerOptions.cs" />
+    <Compile Include="..\..\..\..\shared\Editor.LanguageFeatures\Signatures\TextSignatureHelpPresentationState.cs" Link="Signatures\TextSignatureHelpPresentationState.cs" />
+    <Compile Include="..\..\..\..\shared\Editor.LanguageFeatures\Completion\CompletionCommitEditApplier.cs" Link="Completion\CompletionCommitEditApplier.cs" />
+    <Compile Include="..\..\..\..\shared\Editor.LanguageFeatures\Highlighting\ISemanticTokenStyleResolver.cs" Link="Highlighting\ISemanticTokenStyleResolver.cs" />
+    <Compile Include="..\..\..\..\shared\Editor.LanguageFeatures\CodeActions\TextCodeActionMenuOptions.cs" Link="CodeActions\TextCodeActionMenuOptions.cs" />
+    <Compile Include="..\..\..\..\shared\Editor.LanguageFeatures\Completion\IPreselectedCompletionData.cs" Link="Completion\IPreselectedCompletionData.cs" />
+    <Compile Include="..\..\..\..\shared\Editor.LanguageFeatures\Highlighting\SemanticTokensColorizer.cs" Link="Highlighting\SemanticTokensColorizer.cs" />
+    <Compile Include="..\..\..\..\shared\Editor.LanguageFeatures\Navigation\TextAreaDefinitionNavigation.cs" Link="Navigation\TextAreaDefinitionNavigation.cs" />
+    <Compile Include="..\..\..\..\shared\Editor.LanguageFeatures\CodeActions\TextCodeActionControllerHooks.cs" Link="CodeActions\TextCodeActionControllerHooks.cs" />
+    <Compile Include="..\..\..\..\shared\Editor.LanguageFeatures\Completion\CompletionRequestScheduler.cs" Link="Completion\CompletionRequestScheduler.cs" />
+    <Compile Include="..\..\..\..\shared\Editor.LanguageFeatures\Completion\CompletionTooltipPresenterContext.cs" Link="Completion\CompletionTooltipPresenterContext.cs" />
+    <Compile Include="..\..\..\..\shared\Editor.LanguageFeatures\Signatures\TextSignatureHelpController.cs" Link="Signatures\TextSignatureHelpController.cs" />
+    <Compile Include="..\..\..\..\shared\Editor.LanguageFeatures\Completion\CompletionWindowDefaults.cs" Link="Completion\CompletionWindowDefaults.cs" />
+    <Compile Include="..\..\..\..\shared\Editor.LanguageFeatures\Completion\TextCompletionControllerHooks.cs" Link="Completion\TextCompletionControllerHooks.cs" />
+    <Compile Include="..\..\..\..\shared\Editor.LanguageFeatures\Completion\TextCompletionControllerOptions.cs" Link="Completion\TextCompletionControllerOptions.cs" />
+    <Compile Include="..\..\..\..\shared\Editor.LanguageFeatures\Diagnostics\TextDiagnosticSegmentFactory.cs" Link="Diagnostics\TextDiagnosticSegmentFactory.cs" />
+    <Compile Include="..\..\..\..\shared\Editor.LanguageFeatures\CodeActions\TextCodeActionController.cs" Link="CodeActions\TextCodeActionController.cs" />
+    <Compile Include="..\..\..\..\shared\Editor.LanguageFeatures\CodeActions\TextCodeActionMarginTestHooks.cs" Link="CodeActions\TextCodeActionMarginTestHooks.cs" />
+    <Compile Include="..\..\..\..\shared\Editor.LanguageFeatures\Completion\TextCompletionItemCompletionData.cs" Link="Completion\TextCompletionItemCompletionData.cs" />
+    <Compile Include="..\..\..\..\shared\Editor.LanguageFeatures\Completion\CompletionTooltipSkin.cs" Link="Completion\CompletionTooltipSkin.cs" />
+    <Compile Include="..\..\..\..\shared\Editor.LanguageFeatures\Completion\CompletionWindowSizing.cs" Link="Completion\CompletionWindowSizing.cs" />
+    <Compile Include="..\..\..\..\shared\Editor.LanguageFeatures\Hover\TextHoverControllerHooks.cs" Link="Hover\TextHoverControllerHooks.cs" />
+    <Compile Include="..\..\..\..\shared\Editor.LanguageFeatures\Hover\TextHoverController.cs" Link="Hover\TextHoverController.cs" />
+    <Compile Include="..\..\..\..\shared\Editor.LanguageFeatures\Completion\CompletionWindowSkin.cs" Link="Completion\CompletionWindowSkin.cs" />
+    <Compile Include="..\..\..\..\shared\Editor.LanguageFeatures\Completion\CompletionWindowCoordinator.cs" Link="Completion\CompletionWindowCoordinator.cs" />
+    <Compile Include="..\..\..\..\shared\Editor.LanguageFeatures\Completion\CompletionTooltipPresenter.cs" Link="Completion\CompletionTooltipPresenter.cs" />
+    <Compile Include="..\..\..\..\shared\Editor.LanguageFeatures\CodeActions\TextCodeActionMenuSkin.cs" Link="CodeActions\TextCodeActionMenuSkin.cs" />
+    <Compile Include="..\..\..\..\shared\Editor.LanguageFeatures\CodeActions\TextCodeActionMenuPresenter.cs" Link="CodeActions\TextCodeActionMenuPresenter.cs" />
+    <Compile Include="..\..\..\..\shared\Editor.LanguageFeatures\Completion\TextCompletionController.cs" Link="Completion\TextCompletionController.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+    <None Include="..\..\..\..\icons\$(PackageIcon)" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="MarkdownRenderer.Remarks.EntryPoints">
+      <para>
+      All entry points create and touch the toolkit's elements and must run on the UI thread that owns
+      (or will own) the created elements. The theme's foreground and link brushes are applied directly,
+      while the code and border brushes are derived from the surface background on first use; make a
+      theme's brushes immutable so the theme can be built on a thread other than the one that creates
+      and owns the elements.
+      </para>
+    </member>
+    <member name="MarkdownRenderer.Remarks.Failures">
+      <para>
+      Rendering failures are reported as warnings through <see cref="MarkdownRenderOptions.Logger"/> when
+      one is configured, and rendering then falls back to plain text; without a logger they are not
+      reported. Hyperlink-open failures are reported as warnings as well and end the activation chain,
+      but they do not affect the rendered content. A code-block language that is left to built-in
+      resolution and finds no highlighting is reported through the logger at debug level when a logger is
+      configured.
+      </para>
+    </member>
+    <member name="MarkdownRenderer.CreateContent.Remarks.Pipeline">
+      <para>
+      The rendering pipeline is deliberately narrow: CommonMark plus pipe tables with GFM column
+      alignment, strikethrough, and autolinks; HTML entity references such as <c>&amp;amp;</c> (the
+      escaped source that displays as <c>&amp;</c>) are decoded to their characters. Markdown
+      constructs outside that set, including most other Markdig extensions, are not enabled and render
+      as literal text; the package README lists the enabled and the unsupported constructs explicitly.
+      </para>
+    </member>
+    <member name="MarkdownRenderer.CreateContent.Remarks.HtmlAndImages">
+      <para>
+      Raw HTML blocks and inline HTML are shown as literal text, and an image renders its alt text
+      (or a muted placeholder when the alt text is empty) without loading the image. Whitespace-only
+      content yields an empty plain-text element; an exception while parsing or rendering yields one
+      that shows the content instead, and the exception is reported through the configured logger
+      when one is set.
+      </para>
+    </member>
+    <member name="MarkdownRenderer.CreateContent.Remarks.Sizing">
+      <para>
+      The returned viewer is left-aligned and clamped to <see cref="MarkdownRenderTheme.MaxWidth"/> and
+      <see cref="MarkdownRenderTheme.MaxHeight"/>, so it sizes to its content instead of stretching to fill
+      a host panel; center or stretch it from the host if a different placement is wanted.
+      </para>
+    </member>
+    <member name="MarkdownRenderer.CreateCodeBlockEditor.Remarks.CustomHighlighting">
+      <para>
+      When configured, the custom highlighting callback is invoked before built-in resolution; see
+      <see cref="MarkdownRenderOptions.CustomHighlightingInstaller"/> for the callback contract,
+      including the ownership and cleanup of installed state. An exception thrown by the callback
+      propagates to the caller.
+      </para>
+    </member>
+    <member name="MarkdownRenderer.CreateCodeBlockEditor.Remarks.Resolution">
+      <para>
+      Built-in resolution tries the language as a highlighting definition name with the supplied
+      casing, then case-insensitively against the registered definition names, then as a file
+      extension, and finally through the aliases configured in
+      <see cref="MarkdownRenderOptions.HighlightingAliases"/>, which default to an empty map.
+      Definitions the editor engine does not ship (for example Lua or TypeScript) must be registered
+      by the host or supplied through <see cref="MarkdownRenderOptions.CustomHighlightingInstaller"/>.
+      The displayed text has its line endings normalized to line feeds and its conventional final
+      terminator removed; authored trailing blank lines are preserved. The editor is read-only and
+      does not accept keyboard focus; mouse selection and
+      drag-and-drop follow <see cref="MarkdownRenderOptions.AllowCodeBlockSelection"/> and are disabled
+      by default. The returned editor is host-owned, so a host can change it afterwards; it is the
+      extension point for hosts that render code outside tooltip content.
+      </para>
+    </member>
+    <member name="MarkdownRenderer.CreateCodeBlockEditor.Remarks.HeightClamp">
+      <para>
+      The returned editor is not height-clamped. When the renderer embeds a code block in tooltip
+      content, the block is limited to <see cref="MarkdownRenderTheme.MaxVisibleCodeBlockLines"/> visual
+      lines and content beyond that scrolls, or is clipped when
+      <see cref="MarkdownRenderOptions.AllowScrolling"/> is <see langword="false"/>.
+      </para>
+    </member>
+    <member name="MarkdownRenderer.CreateCodeBlockEditor.Remarks.WheelRouting">
+      <para>
+      Wheel routing is attached when <see cref="MarkdownRenderOptions.AllowWheelChaining"/> and
+      <see cref="MarkdownRenderOptions.AllowScrolling"/> are enabled, so the host-owned editor scrolls itself
+      and forwards an unconsumable wheel to its parent, exactly like a code block the renderer embeds. The
+      scroll-bar visibility and the height clamp stay host-owned for a standalone editor.
+      </para>
+    </member>
+  </members>
+</doc>

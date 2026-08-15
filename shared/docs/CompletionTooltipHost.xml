@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="ApplyPlacement">
+      <summary>
+      Anchors the tooltip to the item list and applies the skin's placement and horizontal offset.
+      </summary>
+      <param name="tooltip">The tooltip to place.</param>
+      <param name="placementTarget">The item list the tooltip is anchored to.</param>
+      <param name="skin">The skin that supplies the placement and the horizontal offset.</param>
+    </member>
+    <member name="IsOpen">
+      <summary>
+      Gets a value indicating whether the tooltip is open.
+      </summary>
+      <param name="tooltip">The tooltip to inspect.</param>
+      <returns><see langword="true"/> when the tooltip is open; otherwise, <see langword="false"/>.</returns>
+    </member>
+    <member name="SetIsOpen">
+      <summary>
+      Opens or closes the tooltip.
+      </summary>
+      <param name="tooltip">The tooltip to update.</param>
+      <param name="isOpen">The visibility to apply.</param>
+    </member>
+  </members>
+</doc>

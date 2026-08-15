@@ -1,0 +1,1431 @@
+#nullable enable
+Nickelony.LanguageServer.Client.CodeActionCommandPayload
+Nickelony.LanguageServer.Client.CodeActionCommandPayload.Arguments.get -> System.Collections.Generic.IReadOnlyList<System.Text.Json.JsonElement>?
+Nickelony.LanguageServer.Client.CodeActionCommandPayload.Arguments.init -> void
+Nickelony.LanguageServer.Client.CodeActionCommandPayload.CodeActionCommandPayload() -> void
+Nickelony.LanguageServer.Client.CodeActionCommandPayload.CodeActionCommandPayload(string? Title, string? Command, System.Collections.Generic.IReadOnlyList<System.Text.Json.JsonElement>? Arguments) -> void
+Nickelony.LanguageServer.Client.CodeActionCommandPayload.Command.get -> string?
+Nickelony.LanguageServer.Client.CodeActionCommandPayload.Command.init -> void
+Nickelony.LanguageServer.Client.CodeActionCommandPayload.Deconstruct(out string? Title, out string? Command, out System.Collections.Generic.IReadOnlyList<System.Text.Json.JsonElement>? Arguments) -> void
+Nickelony.LanguageServer.Client.CodeActionCommandPayload.Equals(Nickelony.LanguageServer.Client.CodeActionCommandPayload other) -> bool
+Nickelony.LanguageServer.Client.CodeActionCommandPayload.Title.get -> string?
+Nickelony.LanguageServer.Client.CodeActionCommandPayload.Title.init -> void
+Nickelony.LanguageServer.Client.CodeActionContextPayload
+Nickelony.LanguageServer.Client.CodeActionContextPayload.CodeActionContextPayload() -> void
+Nickelony.LanguageServer.Client.CodeActionContextPayload.CodeActionContextPayload(System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.DiagnosticPayload!>! Diagnostics) -> void
+Nickelony.LanguageServer.Client.CodeActionContextPayload.Deconstruct(out System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.DiagnosticPayload!>! Diagnostics) -> void
+Nickelony.LanguageServer.Client.CodeActionContextPayload.Diagnostics.get -> System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.DiagnosticPayload!>!
+Nickelony.LanguageServer.Client.CodeActionContextPayload.Diagnostics.init -> void
+Nickelony.LanguageServer.Client.CodeActionContextPayload.Equals(Nickelony.LanguageServer.Client.CodeActionContextPayload other) -> bool
+Nickelony.LanguageServer.Client.CodeActionDisabledPayload
+Nickelony.LanguageServer.Client.CodeActionDisabledPayload.CodeActionDisabledPayload() -> void
+Nickelony.LanguageServer.Client.CodeActionDisabledPayload.CodeActionDisabledPayload(string? Reason) -> void
+Nickelony.LanguageServer.Client.CodeActionDisabledPayload.Deconstruct(out string? Reason) -> void
+Nickelony.LanguageServer.Client.CodeActionDisabledPayload.Equals(Nickelony.LanguageServer.Client.CodeActionDisabledPayload other) -> bool
+Nickelony.LanguageServer.Client.CodeActionDisabledPayload.Reason.get -> string?
+Nickelony.LanguageServer.Client.CodeActionDisabledPayload.Reason.init -> void
+Nickelony.LanguageServer.Client.CodeActionParams
+Nickelony.LanguageServer.Client.CodeActionParams.CodeActionParams() -> void
+Nickelony.LanguageServer.Client.CodeActionParams.CodeActionParams(Nickelony.LanguageServer.Client.TextDocumentIdentifier TextDocument, Nickelony.LanguageServer.Client.ProtocolRangePayload Range, Nickelony.LanguageServer.Client.CodeActionContextPayload Context) -> void
+Nickelony.LanguageServer.Client.CodeActionParams.Context.get -> Nickelony.LanguageServer.Client.CodeActionContextPayload
+Nickelony.LanguageServer.Client.CodeActionParams.Context.init -> void
+Nickelony.LanguageServer.Client.CodeActionParams.Deconstruct(out Nickelony.LanguageServer.Client.TextDocumentIdentifier TextDocument, out Nickelony.LanguageServer.Client.ProtocolRangePayload Range, out Nickelony.LanguageServer.Client.CodeActionContextPayload Context) -> void
+Nickelony.LanguageServer.Client.CodeActionParams.Equals(Nickelony.LanguageServer.Client.CodeActionParams other) -> bool
+Nickelony.LanguageServer.Client.CodeActionParams.Range.get -> Nickelony.LanguageServer.Client.ProtocolRangePayload
+Nickelony.LanguageServer.Client.CodeActionParams.Range.init -> void
+Nickelony.LanguageServer.Client.CodeActionParams.TextDocument.get -> Nickelony.LanguageServer.Client.TextDocumentIdentifier
+Nickelony.LanguageServer.Client.CodeActionParams.TextDocument.init -> void
+Nickelony.LanguageServer.Client.CodeActionPayload
+Nickelony.LanguageServer.Client.CodeActionPayload.CodeActionPayload() -> void
+Nickelony.LanguageServer.Client.CodeActionPayload.Command.get -> Nickelony.LanguageServer.Client.CodeActionCommandPayload?
+Nickelony.LanguageServer.Client.CodeActionPayload.Command.init -> void
+Nickelony.LanguageServer.Client.CodeActionPayload.Data.get -> System.Text.Json.JsonElement?
+Nickelony.LanguageServer.Client.CodeActionPayload.Data.init -> void
+Nickelony.LanguageServer.Client.CodeActionPayload.Diagnostics.get -> System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.DiagnosticPayload!>?
+Nickelony.LanguageServer.Client.CodeActionPayload.Diagnostics.init -> void
+Nickelony.LanguageServer.Client.CodeActionPayload.Disabled.get -> Nickelony.LanguageServer.Client.CodeActionDisabledPayload?
+Nickelony.LanguageServer.Client.CodeActionPayload.Disabled.init -> void
+Nickelony.LanguageServer.Client.CodeActionPayload.Edit.get -> Nickelony.LanguageServer.Client.WorkspaceEditResponse?
+Nickelony.LanguageServer.Client.CodeActionPayload.Edit.init -> void
+Nickelony.LanguageServer.Client.CodeActionPayload.IsPreferred.get -> bool?
+Nickelony.LanguageServer.Client.CodeActionPayload.IsPreferred.init -> void
+Nickelony.LanguageServer.Client.CodeActionPayload.Kind.get -> string?
+Nickelony.LanguageServer.Client.CodeActionPayload.Kind.init -> void
+Nickelony.LanguageServer.Client.CodeActionPayload.Title.get -> string?
+Nickelony.LanguageServer.Client.CodeActionPayload.Title.init -> void
+Nickelony.LanguageServer.Client.CodeActionsResponse
+Nickelony.LanguageServer.Client.CodeActionsResponse.CodeActions.get -> System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.CodeActionPayload!>!
+Nickelony.LanguageServer.Client.CodeActionsResponse.CodeActionsResponse() -> void
+Nickelony.LanguageServer.Client.CodeActionsResponse.CodeActionsResponse(System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.CodeActionPayload!>? codeActions) -> void
+Nickelony.LanguageServer.Client.CodeActionsResponseJsonConverter
+Nickelony.LanguageServer.Client.CodeActionsResponseJsonConverter.CodeActionsResponseJsonConverter() -> void
+Nickelony.LanguageServer.Client.CodeActionsResponseJsonConverter.CodeActionsResponseJsonConverter(Microsoft.Extensions.Logging.ILogger? logger) -> void
+Nickelony.LanguageServer.Client.CompletionContextPayload
+Nickelony.LanguageServer.Client.CompletionContextPayload.CompletionContextPayload() -> void
+Nickelony.LanguageServer.Client.CompletionContextPayload.CompletionContextPayload(Nickelony.LanguageServer.Client.CompletionTriggerKind TriggerKind, string? TriggerCharacter = null) -> void
+Nickelony.LanguageServer.Client.CompletionContextPayload.Deconstruct(out Nickelony.LanguageServer.Client.CompletionTriggerKind TriggerKind, out string? TriggerCharacter) -> void
+Nickelony.LanguageServer.Client.CompletionContextPayload.Equals(Nickelony.LanguageServer.Client.CompletionContextPayload other) -> bool
+Nickelony.LanguageServer.Client.CompletionContextPayload.TriggerCharacter.get -> string?
+Nickelony.LanguageServer.Client.CompletionContextPayload.TriggerCharacter.init -> void
+Nickelony.LanguageServer.Client.CompletionContextPayload.TriggerKind.get -> Nickelony.LanguageServer.Client.CompletionTriggerKind
+Nickelony.LanguageServer.Client.CompletionContextPayload.TriggerKind.init -> void
+Nickelony.LanguageServer.Client.CompletionInsertReplaceTextEditPayload
+Nickelony.LanguageServer.Client.CompletionInsertReplaceTextEditPayload.CompletionInsertReplaceTextEditPayload() -> void
+Nickelony.LanguageServer.Client.CompletionInsertReplaceTextEditPayload.Equals(Nickelony.LanguageServer.Client.CompletionInsertReplaceTextEditPayload? other) -> bool
+Nickelony.LanguageServer.Client.CompletionInsertReplaceTextEditPayload.Insert.get -> Nickelony.LanguageServer.Client.ProtocolRangePayload
+Nickelony.LanguageServer.Client.CompletionInsertReplaceTextEditPayload.Insert.init -> void
+Nickelony.LanguageServer.Client.CompletionInsertReplaceTextEditPayload.Replace.get -> Nickelony.LanguageServer.Client.ProtocolRangePayload
+Nickelony.LanguageServer.Client.CompletionInsertReplaceTextEditPayload.Replace.init -> void
+Nickelony.LanguageServer.Client.CompletionItemKind
+Nickelony.LanguageServer.Client.CompletionItemKind.Class = 7 -> Nickelony.LanguageServer.Client.CompletionItemKind
+Nickelony.LanguageServer.Client.CompletionItemKind.Color = 16 -> Nickelony.LanguageServer.Client.CompletionItemKind
+Nickelony.LanguageServer.Client.CompletionItemKind.Constant = 21 -> Nickelony.LanguageServer.Client.CompletionItemKind
+Nickelony.LanguageServer.Client.CompletionItemKind.Constructor = 4 -> Nickelony.LanguageServer.Client.CompletionItemKind
+Nickelony.LanguageServer.Client.CompletionItemKind.Enum = 13 -> Nickelony.LanguageServer.Client.CompletionItemKind
+Nickelony.LanguageServer.Client.CompletionItemKind.EnumMember = 20 -> Nickelony.LanguageServer.Client.CompletionItemKind
+Nickelony.LanguageServer.Client.CompletionItemKind.Event = 23 -> Nickelony.LanguageServer.Client.CompletionItemKind
+Nickelony.LanguageServer.Client.CompletionItemKind.Field = 5 -> Nickelony.LanguageServer.Client.CompletionItemKind
+Nickelony.LanguageServer.Client.CompletionItemKind.File = 17 -> Nickelony.LanguageServer.Client.CompletionItemKind
+Nickelony.LanguageServer.Client.CompletionItemKind.Folder = 19 -> Nickelony.LanguageServer.Client.CompletionItemKind
+Nickelony.LanguageServer.Client.CompletionItemKind.Function = 3 -> Nickelony.LanguageServer.Client.CompletionItemKind
+Nickelony.LanguageServer.Client.CompletionItemKind.Interface = 8 -> Nickelony.LanguageServer.Client.CompletionItemKind
+Nickelony.LanguageServer.Client.CompletionItemKind.Keyword = 14 -> Nickelony.LanguageServer.Client.CompletionItemKind
+Nickelony.LanguageServer.Client.CompletionItemKind.Method = 2 -> Nickelony.LanguageServer.Client.CompletionItemKind
+Nickelony.LanguageServer.Client.CompletionItemKind.Module = 9 -> Nickelony.LanguageServer.Client.CompletionItemKind
+Nickelony.LanguageServer.Client.CompletionItemKind.Operator = 24 -> Nickelony.LanguageServer.Client.CompletionItemKind
+Nickelony.LanguageServer.Client.CompletionItemKind.Property = 10 -> Nickelony.LanguageServer.Client.CompletionItemKind
+Nickelony.LanguageServer.Client.CompletionItemKind.Reference = 18 -> Nickelony.LanguageServer.Client.CompletionItemKind
+Nickelony.LanguageServer.Client.CompletionItemKind.Snippet = 15 -> Nickelony.LanguageServer.Client.CompletionItemKind
+Nickelony.LanguageServer.Client.CompletionItemKind.Struct = 22 -> Nickelony.LanguageServer.Client.CompletionItemKind
+Nickelony.LanguageServer.Client.CompletionItemKind.Text = 1 -> Nickelony.LanguageServer.Client.CompletionItemKind
+Nickelony.LanguageServer.Client.CompletionItemKind.TypeParameter = 25 -> Nickelony.LanguageServer.Client.CompletionItemKind
+Nickelony.LanguageServer.Client.CompletionItemKind.Unit = 11 -> Nickelony.LanguageServer.Client.CompletionItemKind
+Nickelony.LanguageServer.Client.CompletionItemKind.Value = 12 -> Nickelony.LanguageServer.Client.CompletionItemKind
+Nickelony.LanguageServer.Client.CompletionItemKind.Variable = 6 -> Nickelony.LanguageServer.Client.CompletionItemKind
+Nickelony.LanguageServer.Client.CompletionItemPayload
+Nickelony.LanguageServer.Client.CompletionItemPayload.<Clone>$() -> Nickelony.LanguageServer.Client.CompletionItemPayload!
+Nickelony.LanguageServer.Client.CompletionItemPayload.AdditionalTextEdits.get -> System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.TextEditPayload>?
+Nickelony.LanguageServer.Client.CompletionItemPayload.AdditionalTextEdits.init -> void
+Nickelony.LanguageServer.Client.CompletionItemPayload.CommitCharacters.get -> System.Collections.Generic.IReadOnlyList<string!>?
+Nickelony.LanguageServer.Client.CompletionItemPayload.CommitCharacters.init -> void
+Nickelony.LanguageServer.Client.CompletionItemPayload.CompletionItemPayload() -> void
+Nickelony.LanguageServer.Client.CompletionItemPayload.Detail.get -> string?
+Nickelony.LanguageServer.Client.CompletionItemPayload.Detail.init -> void
+Nickelony.LanguageServer.Client.CompletionItemPayload.Documentation.get -> System.Text.Json.JsonElement?
+Nickelony.LanguageServer.Client.CompletionItemPayload.Documentation.init -> void
+Nickelony.LanguageServer.Client.CompletionItemPayload.Equals(Nickelony.LanguageServer.Client.CompletionItemPayload? other) -> bool
+Nickelony.LanguageServer.Client.CompletionItemPayload.ExtensionData.get -> System.Collections.Generic.IDictionary<string!, System.Text.Json.JsonElement>?
+Nickelony.LanguageServer.Client.CompletionItemPayload.ExtensionData.init -> void
+Nickelony.LanguageServer.Client.CompletionItemPayload.FilterText.get -> string?
+Nickelony.LanguageServer.Client.CompletionItemPayload.FilterText.init -> void
+Nickelony.LanguageServer.Client.CompletionItemPayload.InsertText.get -> string?
+Nickelony.LanguageServer.Client.CompletionItemPayload.InsertText.init -> void
+Nickelony.LanguageServer.Client.CompletionItemPayload.InsertTextFormat.get -> Nickelony.LanguageServer.Client.InsertTextFormat?
+Nickelony.LanguageServer.Client.CompletionItemPayload.InsertTextFormat.init -> void
+Nickelony.LanguageServer.Client.CompletionItemPayload.Kind.get -> Nickelony.LanguageServer.Client.CompletionItemKind?
+Nickelony.LanguageServer.Client.CompletionItemPayload.Kind.init -> void
+Nickelony.LanguageServer.Client.CompletionItemPayload.Label.get -> string?
+Nickelony.LanguageServer.Client.CompletionItemPayload.Label.init -> void
+Nickelony.LanguageServer.Client.CompletionItemPayload.Preselect.get -> bool?
+Nickelony.LanguageServer.Client.CompletionItemPayload.Preselect.init -> void
+Nickelony.LanguageServer.Client.CompletionItemPayload.SortText.get -> string?
+Nickelony.LanguageServer.Client.CompletionItemPayload.SortText.init -> void
+Nickelony.LanguageServer.Client.CompletionItemPayload.Tags.get -> System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.CompletionItemTag>?
+Nickelony.LanguageServer.Client.CompletionItemPayload.Tags.init -> void
+Nickelony.LanguageServer.Client.CompletionItemPayload.TextEdit.get -> Nickelony.LanguageServer.Client.CompletionTextEditPayload?
+Nickelony.LanguageServer.Client.CompletionItemPayload.TextEdit.init -> void
+Nickelony.LanguageServer.Client.CompletionItemTag
+Nickelony.LanguageServer.Client.CompletionItemTag.Deprecated = 1 -> Nickelony.LanguageServer.Client.CompletionItemTag
+Nickelony.LanguageServer.Client.CompletionParams
+Nickelony.LanguageServer.Client.CompletionParams.CompletionParams() -> void
+Nickelony.LanguageServer.Client.CompletionParams.CompletionParams(Nickelony.LanguageServer.Client.TextDocumentIdentifier TextDocument, Nickelony.LanguageServer.Client.ProtocolPosition Position, Nickelony.LanguageServer.Client.CompletionContextPayload? Context = null) -> void
+Nickelony.LanguageServer.Client.CompletionParams.Context.get -> Nickelony.LanguageServer.Client.CompletionContextPayload?
+Nickelony.LanguageServer.Client.CompletionParams.Context.init -> void
+Nickelony.LanguageServer.Client.CompletionParams.Deconstruct(out Nickelony.LanguageServer.Client.TextDocumentIdentifier TextDocument, out Nickelony.LanguageServer.Client.ProtocolPosition Position, out Nickelony.LanguageServer.Client.CompletionContextPayload? Context) -> void
+Nickelony.LanguageServer.Client.CompletionParams.Equals(Nickelony.LanguageServer.Client.CompletionParams other) -> bool
+Nickelony.LanguageServer.Client.CompletionParams.Position.get -> Nickelony.LanguageServer.Client.ProtocolPosition
+Nickelony.LanguageServer.Client.CompletionParams.Position.init -> void
+Nickelony.LanguageServer.Client.CompletionParams.TextDocument.get -> Nickelony.LanguageServer.Client.TextDocumentIdentifier
+Nickelony.LanguageServer.Client.CompletionParams.TextDocument.init -> void
+Nickelony.LanguageServer.Client.CompletionRangeTextEditPayload
+Nickelony.LanguageServer.Client.CompletionRangeTextEditPayload.CompletionRangeTextEditPayload() -> void
+Nickelony.LanguageServer.Client.CompletionRangeTextEditPayload.Equals(Nickelony.LanguageServer.Client.CompletionRangeTextEditPayload? other) -> bool
+Nickelony.LanguageServer.Client.CompletionRangeTextEditPayload.Range.get -> Nickelony.LanguageServer.Client.ProtocolRangePayload
+Nickelony.LanguageServer.Client.CompletionRangeTextEditPayload.Range.init -> void
+Nickelony.LanguageServer.Client.CompletionResponse
+Nickelony.LanguageServer.Client.CompletionResponse.CompletionResponse(System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.CompletionItemPayload!>? items, bool isIncomplete = false) -> void
+Nickelony.LanguageServer.Client.CompletionResponse.IsIncomplete.get -> bool
+Nickelony.LanguageServer.Client.CompletionResponse.Items.get -> System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.CompletionItemPayload!>?
+Nickelony.LanguageServer.Client.CompletionResponseJsonConverter
+Nickelony.LanguageServer.Client.CompletionResponseJsonConverter.CompletionResponseJsonConverter() -> void
+Nickelony.LanguageServer.Client.CompletionResponseJsonConverter.CompletionResponseJsonConverter(Microsoft.Extensions.Logging.ILogger? logger) -> void
+Nickelony.LanguageServer.Client.CompletionTextEditPayload
+Nickelony.LanguageServer.Client.CompletionTextEditPayload.CompletionTextEditPayload() -> void
+Nickelony.LanguageServer.Client.CompletionTextEditPayload.CompletionTextEditPayload(Nickelony.LanguageServer.Client.CompletionTextEditPayload! original) -> void
+Nickelony.LanguageServer.Client.CompletionTextEditPayload.NewText.get -> string?
+Nickelony.LanguageServer.Client.CompletionTextEditPayload.NewText.init -> void
+Nickelony.LanguageServer.Client.CompletionTextEditPayloadJsonConverter
+Nickelony.LanguageServer.Client.CompletionTextEditPayloadJsonConverter.CompletionTextEditPayloadJsonConverter() -> void
+Nickelony.LanguageServer.Client.CompletionTriggerKind
+Nickelony.LanguageServer.Client.CompletionTriggerKind.Invoked = 1 -> Nickelony.LanguageServer.Client.CompletionTriggerKind
+Nickelony.LanguageServer.Client.CompletionTriggerKind.TriggerCharacter = 2 -> Nickelony.LanguageServer.Client.CompletionTriggerKind
+Nickelony.LanguageServer.Client.CompletionTriggerKind.TriggerForIncompleteCompletions = 3 -> Nickelony.LanguageServer.Client.CompletionTriggerKind
+Nickelony.LanguageServer.Client.DefinitionResponse
+Nickelony.LanguageServer.Client.DefinitionResponse.DefinitionResponse(System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.DefinitionTargetPayload!>? targets) -> void
+Nickelony.LanguageServer.Client.DefinitionResponse.FirstTarget.get -> Nickelony.LanguageServer.Client.DefinitionTargetPayload?
+Nickelony.LanguageServer.Client.DefinitionResponse.Targets.get -> System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.DefinitionTargetPayload!>!
+Nickelony.LanguageServer.Client.DefinitionResponseJsonConverter
+Nickelony.LanguageServer.Client.DefinitionResponseJsonConverter.DefinitionResponseJsonConverter() -> void
+Nickelony.LanguageServer.Client.DefinitionResponseJsonConverter.DefinitionResponseJsonConverter(Microsoft.Extensions.Logging.ILogger? logger) -> void
+Nickelony.LanguageServer.Client.DefinitionTargetPayload
+Nickelony.LanguageServer.Client.DefinitionTargetPayload.Deconstruct(out string! Uri, out Nickelony.LanguageServer.Client.ProtocolRangePayload TargetRange, out Nickelony.LanguageServer.Client.ProtocolRangePayload? SelectionRange, out Nickelony.LanguageServer.Client.ProtocolRangePayload? OriginSelectionRange) -> void
+Nickelony.LanguageServer.Client.DefinitionTargetPayload.DefinitionTargetPayload() -> void
+Nickelony.LanguageServer.Client.DefinitionTargetPayload.DefinitionTargetPayload(string! Uri, Nickelony.LanguageServer.Client.ProtocolRangePayload TargetRange, Nickelony.LanguageServer.Client.ProtocolRangePayload? SelectionRange = null, Nickelony.LanguageServer.Client.ProtocolRangePayload? OriginSelectionRange = null) -> void
+Nickelony.LanguageServer.Client.DefinitionTargetPayload.Equals(Nickelony.LanguageServer.Client.DefinitionTargetPayload? other) -> bool
+Nickelony.LanguageServer.Client.DefinitionTargetPayload.OriginSelectionRange.get -> Nickelony.LanguageServer.Client.ProtocolRangePayload?
+Nickelony.LanguageServer.Client.DefinitionTargetPayload.OriginSelectionRange.init -> void
+Nickelony.LanguageServer.Client.DefinitionTargetPayload.SelectionRange.get -> Nickelony.LanguageServer.Client.ProtocolRangePayload?
+Nickelony.LanguageServer.Client.DefinitionTargetPayload.SelectionRange.init -> void
+Nickelony.LanguageServer.Client.DefinitionTargetPayload.TargetRange.get -> Nickelony.LanguageServer.Client.ProtocolRangePayload
+Nickelony.LanguageServer.Client.DefinitionTargetPayload.TargetRange.init -> void
+Nickelony.LanguageServer.Client.DefinitionTargetPayload.Uri.get -> string!
+Nickelony.LanguageServer.Client.DefinitionTargetPayload.Uri.init -> void
+Nickelony.LanguageServer.Client.DiagnosticCodeDescriptionPayload
+Nickelony.LanguageServer.Client.DiagnosticCodeDescriptionPayload.Deconstruct(out string? Href) -> void
+Nickelony.LanguageServer.Client.DiagnosticCodeDescriptionPayload.DiagnosticCodeDescriptionPayload() -> void
+Nickelony.LanguageServer.Client.DiagnosticCodeDescriptionPayload.DiagnosticCodeDescriptionPayload(string? Href) -> void
+Nickelony.LanguageServer.Client.DiagnosticCodeDescriptionPayload.Equals(Nickelony.LanguageServer.Client.DiagnosticCodeDescriptionPayload other) -> bool
+Nickelony.LanguageServer.Client.DiagnosticCodeDescriptionPayload.Href.get -> string?
+Nickelony.LanguageServer.Client.DiagnosticCodeDescriptionPayload.Href.init -> void
+Nickelony.LanguageServer.Client.DiagnosticPayload
+Nickelony.LanguageServer.Client.DiagnosticPayload.Code.get -> System.Text.Json.JsonElement?
+Nickelony.LanguageServer.Client.DiagnosticPayload.Code.init -> void
+Nickelony.LanguageServer.Client.DiagnosticPayload.CodeDescription.get -> Nickelony.LanguageServer.Client.DiagnosticCodeDescriptionPayload?
+Nickelony.LanguageServer.Client.DiagnosticPayload.CodeDescription.init -> void
+Nickelony.LanguageServer.Client.DiagnosticPayload.Data.get -> System.Text.Json.JsonElement?
+Nickelony.LanguageServer.Client.DiagnosticPayload.Data.init -> void
+Nickelony.LanguageServer.Client.DiagnosticPayload.Deconstruct(out Nickelony.LanguageServer.Client.ProtocolRangePayload? Range, out Nickelony.LanguageServer.Client.DiagnosticSeverity? Severity, out string? Message, out string? Source, out System.Text.Json.JsonElement? Code, out System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.DiagnosticTag>? Tags, out Nickelony.LanguageServer.Client.DiagnosticCodeDescriptionPayload? CodeDescription, out System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.DiagnosticRelatedInformationPayload>? RelatedInformation, out System.Text.Json.JsonElement? Data) -> void
+Nickelony.LanguageServer.Client.DiagnosticPayload.DiagnosticPayload() -> void
+Nickelony.LanguageServer.Client.DiagnosticPayload.DiagnosticPayload(Nickelony.LanguageServer.Client.ProtocolRangePayload? Range, Nickelony.LanguageServer.Client.DiagnosticSeverity? Severity, string? Message, string? Source, System.Text.Json.JsonElement? Code, System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.DiagnosticTag>? Tags = null, Nickelony.LanguageServer.Client.DiagnosticCodeDescriptionPayload? CodeDescription = null, System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.DiagnosticRelatedInformationPayload>? RelatedInformation = null, System.Text.Json.JsonElement? Data = null) -> void
+Nickelony.LanguageServer.Client.DiagnosticPayload.Equals(Nickelony.LanguageServer.Client.DiagnosticPayload? other) -> bool
+Nickelony.LanguageServer.Client.DiagnosticPayload.Message.get -> string?
+Nickelony.LanguageServer.Client.DiagnosticPayload.Message.init -> void
+Nickelony.LanguageServer.Client.DiagnosticPayload.Range.get -> Nickelony.LanguageServer.Client.ProtocolRangePayload?
+Nickelony.LanguageServer.Client.DiagnosticPayload.Range.init -> void
+Nickelony.LanguageServer.Client.DiagnosticPayload.RelatedInformation.get -> System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.DiagnosticRelatedInformationPayload>?
+Nickelony.LanguageServer.Client.DiagnosticPayload.RelatedInformation.init -> void
+Nickelony.LanguageServer.Client.DiagnosticPayload.Severity.get -> Nickelony.LanguageServer.Client.DiagnosticSeverity?
+Nickelony.LanguageServer.Client.DiagnosticPayload.Severity.init -> void
+Nickelony.LanguageServer.Client.DiagnosticPayload.Source.get -> string?
+Nickelony.LanguageServer.Client.DiagnosticPayload.Source.init -> void
+Nickelony.LanguageServer.Client.DiagnosticPayload.Tags.get -> System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.DiagnosticTag>?
+Nickelony.LanguageServer.Client.DiagnosticPayload.Tags.init -> void
+Nickelony.LanguageServer.Client.DiagnosticRelatedInformationPayload
+Nickelony.LanguageServer.Client.DiagnosticRelatedInformationPayload.Deconstruct(out Nickelony.LanguageServer.Client.ProtocolLocationPayload? Location, out string? Message) -> void
+Nickelony.LanguageServer.Client.DiagnosticRelatedInformationPayload.DiagnosticRelatedInformationPayload() -> void
+Nickelony.LanguageServer.Client.DiagnosticRelatedInformationPayload.DiagnosticRelatedInformationPayload(Nickelony.LanguageServer.Client.ProtocolLocationPayload? Location, string? Message) -> void
+Nickelony.LanguageServer.Client.DiagnosticRelatedInformationPayload.Equals(Nickelony.LanguageServer.Client.DiagnosticRelatedInformationPayload other) -> bool
+Nickelony.LanguageServer.Client.DiagnosticRelatedInformationPayload.Location.get -> Nickelony.LanguageServer.Client.ProtocolLocationPayload?
+Nickelony.LanguageServer.Client.DiagnosticRelatedInformationPayload.Location.init -> void
+Nickelony.LanguageServer.Client.DiagnosticRelatedInformationPayload.Message.get -> string?
+Nickelony.LanguageServer.Client.DiagnosticRelatedInformationPayload.Message.init -> void
+Nickelony.LanguageServer.Client.DiagnosticSeverity
+Nickelony.LanguageServer.Client.DiagnosticSeverity.Error = 1 -> Nickelony.LanguageServer.Client.DiagnosticSeverity
+Nickelony.LanguageServer.Client.DiagnosticSeverity.Hint = 4 -> Nickelony.LanguageServer.Client.DiagnosticSeverity
+Nickelony.LanguageServer.Client.DiagnosticSeverity.Information = 3 -> Nickelony.LanguageServer.Client.DiagnosticSeverity
+Nickelony.LanguageServer.Client.DiagnosticSeverity.Warning = 2 -> Nickelony.LanguageServer.Client.DiagnosticSeverity
+Nickelony.LanguageServer.Client.DiagnosticTag
+Nickelony.LanguageServer.Client.DiagnosticTag.Deprecated = 2 -> Nickelony.LanguageServer.Client.DiagnosticTag
+Nickelony.LanguageServer.Client.DiagnosticTag.Unnecessary = 1 -> Nickelony.LanguageServer.Client.DiagnosticTag
+Nickelony.LanguageServer.Client.DiagnosticsPublishedEventArgs
+Nickelony.LanguageServer.Client.DiagnosticsPublishedEventArgs.DiagnosticsPublishedEventArgs(Nickelony.LanguageServer.Client.PublishDiagnosticsParams! parameters) -> void
+Nickelony.LanguageServer.Client.DiagnosticsPublishedEventArgs.Parameters.get -> Nickelony.LanguageServer.Client.PublishDiagnosticsParams!
+Nickelony.LanguageServer.Client.DidChangeConfigurationParams
+Nickelony.LanguageServer.Client.DidChangeConfigurationParams.Deconstruct(out object! Settings) -> void
+Nickelony.LanguageServer.Client.DidChangeConfigurationParams.DidChangeConfigurationParams() -> void
+Nickelony.LanguageServer.Client.DidChangeConfigurationParams.DidChangeConfigurationParams(object! Settings) -> void
+Nickelony.LanguageServer.Client.DidChangeConfigurationParams.Equals(Nickelony.LanguageServer.Client.DidChangeConfigurationParams other) -> bool
+Nickelony.LanguageServer.Client.DidChangeConfigurationParams.Settings.get -> object!
+Nickelony.LanguageServer.Client.DidChangeConfigurationParams.Settings.init -> void
+Nickelony.LanguageServer.Client.DidChangeTextDocumentParams
+Nickelony.LanguageServer.Client.DidChangeTextDocumentParams.ContentChanges.get -> System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.TextDocumentContentChangePayload>!
+Nickelony.LanguageServer.Client.DidChangeTextDocumentParams.ContentChanges.init -> void
+Nickelony.LanguageServer.Client.DidChangeTextDocumentParams.Deconstruct(out Nickelony.LanguageServer.Client.VersionedTextDocumentIdentifier TextDocument, out System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.TextDocumentContentChangePayload>! ContentChanges) -> void
+Nickelony.LanguageServer.Client.DidChangeTextDocumentParams.DidChangeTextDocumentParams() -> void
+Nickelony.LanguageServer.Client.DidChangeTextDocumentParams.DidChangeTextDocumentParams(Nickelony.LanguageServer.Client.VersionedTextDocumentIdentifier TextDocument, System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.TextDocumentContentChangePayload>! ContentChanges) -> void
+Nickelony.LanguageServer.Client.DidChangeTextDocumentParams.Equals(Nickelony.LanguageServer.Client.DidChangeTextDocumentParams other) -> bool
+Nickelony.LanguageServer.Client.DidChangeTextDocumentParams.TextDocument.get -> Nickelony.LanguageServer.Client.VersionedTextDocumentIdentifier
+Nickelony.LanguageServer.Client.DidChangeTextDocumentParams.TextDocument.init -> void
+Nickelony.LanguageServer.Client.DidChangeWatchedFilesParams
+Nickelony.LanguageServer.Client.DidChangeWatchedFilesParams.Changes.get -> System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.FileEventPayload>!
+Nickelony.LanguageServer.Client.DidChangeWatchedFilesParams.Changes.init -> void
+Nickelony.LanguageServer.Client.DidChangeWatchedFilesParams.Deconstruct(out System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.FileEventPayload>! Changes) -> void
+Nickelony.LanguageServer.Client.DidChangeWatchedFilesParams.DidChangeWatchedFilesParams() -> void
+Nickelony.LanguageServer.Client.DidChangeWatchedFilesParams.DidChangeWatchedFilesParams(System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.FileEventPayload>! Changes) -> void
+Nickelony.LanguageServer.Client.DidChangeWatchedFilesParams.Equals(Nickelony.LanguageServer.Client.DidChangeWatchedFilesParams other) -> bool
+Nickelony.LanguageServer.Client.DidCloseTextDocumentParams
+Nickelony.LanguageServer.Client.DidCloseTextDocumentParams.Deconstruct(out Nickelony.LanguageServer.Client.TextDocumentIdentifier TextDocument) -> void
+Nickelony.LanguageServer.Client.DidCloseTextDocumentParams.DidCloseTextDocumentParams() -> void
+Nickelony.LanguageServer.Client.DidCloseTextDocumentParams.DidCloseTextDocumentParams(Nickelony.LanguageServer.Client.TextDocumentIdentifier TextDocument) -> void
+Nickelony.LanguageServer.Client.DidCloseTextDocumentParams.Equals(Nickelony.LanguageServer.Client.DidCloseTextDocumentParams other) -> bool
+Nickelony.LanguageServer.Client.DidCloseTextDocumentParams.TextDocument.get -> Nickelony.LanguageServer.Client.TextDocumentIdentifier
+Nickelony.LanguageServer.Client.DidCloseTextDocumentParams.TextDocument.init -> void
+Nickelony.LanguageServer.Client.DidOpenTextDocumentParams
+Nickelony.LanguageServer.Client.DidOpenTextDocumentParams.Deconstruct(out Nickelony.LanguageServer.Client.DidOpenTextDocumentPayload TextDocument) -> void
+Nickelony.LanguageServer.Client.DidOpenTextDocumentParams.DidOpenTextDocumentParams() -> void
+Nickelony.LanguageServer.Client.DidOpenTextDocumentParams.DidOpenTextDocumentParams(Nickelony.LanguageServer.Client.DidOpenTextDocumentPayload TextDocument) -> void
+Nickelony.LanguageServer.Client.DidOpenTextDocumentParams.Equals(Nickelony.LanguageServer.Client.DidOpenTextDocumentParams other) -> bool
+Nickelony.LanguageServer.Client.DidOpenTextDocumentParams.TextDocument.get -> Nickelony.LanguageServer.Client.DidOpenTextDocumentPayload
+Nickelony.LanguageServer.Client.DidOpenTextDocumentParams.TextDocument.init -> void
+Nickelony.LanguageServer.Client.DidOpenTextDocumentPayload
+Nickelony.LanguageServer.Client.DidOpenTextDocumentPayload.Deconstruct(out string! Uri, out string! LanguageId, out int Version, out string! Text) -> void
+Nickelony.LanguageServer.Client.DidOpenTextDocumentPayload.DidOpenTextDocumentPayload() -> void
+Nickelony.LanguageServer.Client.DidOpenTextDocumentPayload.DidOpenTextDocumentPayload(string! Uri, string! LanguageId, int Version, string! Text) -> void
+Nickelony.LanguageServer.Client.DidOpenTextDocumentPayload.Equals(Nickelony.LanguageServer.Client.DidOpenTextDocumentPayload other) -> bool
+Nickelony.LanguageServer.Client.DidOpenTextDocumentPayload.LanguageId.get -> string!
+Nickelony.LanguageServer.Client.DidOpenTextDocumentPayload.LanguageId.init -> void
+Nickelony.LanguageServer.Client.DidOpenTextDocumentPayload.Text.get -> string!
+Nickelony.LanguageServer.Client.DidOpenTextDocumentPayload.Text.init -> void
+Nickelony.LanguageServer.Client.DidOpenTextDocumentPayload.Uri.get -> string!
+Nickelony.LanguageServer.Client.DidOpenTextDocumentPayload.Uri.init -> void
+Nickelony.LanguageServer.Client.DidOpenTextDocumentPayload.Version.get -> int
+Nickelony.LanguageServer.Client.DidOpenTextDocumentPayload.Version.init -> void
+Nickelony.LanguageServer.Client.DocumentChangeRange
+Nickelony.LanguageServer.Client.DocumentChangeRange.Deconstruct(out int StartLine, out int StartCharacter, out int EndLine, out int EndCharacter, out string! Text) -> void
+Nickelony.LanguageServer.Client.DocumentChangeRange.DocumentChangeRange() -> void
+Nickelony.LanguageServer.Client.DocumentChangeRange.DocumentChangeRange(int StartLine, int StartCharacter, int EndLine, int EndCharacter, string! Text) -> void
+Nickelony.LanguageServer.Client.DocumentChangeRange.EndCharacter.get -> int
+Nickelony.LanguageServer.Client.DocumentChangeRange.EndCharacter.init -> void
+Nickelony.LanguageServer.Client.DocumentChangeRange.EndLine.get -> int
+Nickelony.LanguageServer.Client.DocumentChangeRange.EndLine.init -> void
+Nickelony.LanguageServer.Client.DocumentChangeRange.Equals(Nickelony.LanguageServer.Client.DocumentChangeRange other) -> bool
+Nickelony.LanguageServer.Client.DocumentChangeRange.StartCharacter.get -> int
+Nickelony.LanguageServer.Client.DocumentChangeRange.StartCharacter.init -> void
+Nickelony.LanguageServer.Client.DocumentChangeRange.StartLine.get -> int
+Nickelony.LanguageServer.Client.DocumentChangeRange.StartLine.init -> void
+Nickelony.LanguageServer.Client.DocumentChangeRange.Text.get -> string!
+Nickelony.LanguageServer.Client.DocumentChangeRange.Text.init -> void
+Nickelony.LanguageServer.Client.DocumentCloseOutcome
+Nickelony.LanguageServer.Client.DocumentCloseOutcome.BusyWithRequests = 3 -> Nickelony.LanguageServer.Client.DocumentCloseOutcome
+Nickelony.LanguageServer.Client.DocumentCloseOutcome.Closed = 1 -> Nickelony.LanguageServer.Client.DocumentCloseOutcome
+Nickelony.LanguageServer.Client.DocumentCloseOutcome.StillOpen = 2 -> Nickelony.LanguageServer.Client.DocumentCloseOutcome
+Nickelony.LanguageServer.Client.DocumentCloseOutcome.Untracked = 0 -> Nickelony.LanguageServer.Client.DocumentCloseOutcome
+Nickelony.LanguageServer.Client.DocumentFormattingParams
+Nickelony.LanguageServer.Client.DocumentFormattingParams.Deconstruct(out Nickelony.LanguageServer.Client.TextDocumentIdentifier TextDocument, out Nickelony.LanguageServer.Client.FormattingOptionsPayload Options) -> void
+Nickelony.LanguageServer.Client.DocumentFormattingParams.DocumentFormattingParams() -> void
+Nickelony.LanguageServer.Client.DocumentFormattingParams.DocumentFormattingParams(Nickelony.LanguageServer.Client.TextDocumentIdentifier TextDocument, Nickelony.LanguageServer.Client.FormattingOptionsPayload Options) -> void
+Nickelony.LanguageServer.Client.DocumentFormattingParams.Equals(Nickelony.LanguageServer.Client.DocumentFormattingParams other) -> bool
+Nickelony.LanguageServer.Client.DocumentFormattingParams.Options.get -> Nickelony.LanguageServer.Client.FormattingOptionsPayload
+Nickelony.LanguageServer.Client.DocumentFormattingParams.Options.init -> void
+Nickelony.LanguageServer.Client.DocumentFormattingParams.TextDocument.get -> Nickelony.LanguageServer.Client.TextDocumentIdentifier
+Nickelony.LanguageServer.Client.DocumentFormattingParams.TextDocument.init -> void
+Nickelony.LanguageServer.Client.DocumentOperationScheduler
+Nickelony.LanguageServer.Client.DocumentOperationScheduler.CancelAllQueuedUpdates() -> void
+Nickelony.LanguageServer.Client.DocumentOperationScheduler.CancelQueuedUpdate(string! filePath) -> void
+Nickelony.LanguageServer.Client.DocumentOperationScheduler.DocumentOperationScheduler() -> void
+Nickelony.LanguageServer.Client.DocumentOperationScheduler.EnqueueExclusivePerDocumentAsync<TResult>(string! firstFilePath, string! secondFilePath, System.Func<System.Threading.CancellationToken, System.Threading.Tasks.Task<TResult>!>! operation, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task<TResult>!
+Nickelony.LanguageServer.Client.DocumentOperationScheduler.EnqueueGlobalAsync<TResult>(System.Func<System.Threading.CancellationToken, System.Threading.Tasks.Task<TResult>!>! operation, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task<TResult>!
+Nickelony.LanguageServer.Client.DocumentOperationScheduler.EnqueueLatestUpdateAsync(string! filePath, System.Func<System.Threading.CancellationToken, System.Threading.Tasks.Task!>! operation) -> System.Threading.Tasks.Task!
+Nickelony.LanguageServer.Client.DocumentOperationScheduler.EnqueuePerDocumentAsync<TResult>(string! filePath, System.Func<System.Threading.CancellationToken, System.Threading.Tasks.Task<TResult>!>! operation, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task<TResult>!
+Nickelony.LanguageServer.Client.DocumentOperationScheduler.WaitForPerDocumentOperationsAsync(string! firstFilePath, string! secondFilePath) -> System.Threading.Tasks.Task!
+Nickelony.LanguageServer.Client.DocumentReferenceAcquisition
+Nickelony.LanguageServer.Client.DocumentReferenceAcquisition.None = 0 -> Nickelony.LanguageServer.Client.DocumentReferenceAcquisition
+Nickelony.LanguageServer.Client.DocumentReferenceAcquisition.Open = 1 -> Nickelony.LanguageServer.Client.DocumentReferenceAcquisition
+Nickelony.LanguageServer.Client.DocumentReferenceAcquisition.Request = 2 -> Nickelony.LanguageServer.Client.DocumentReferenceAcquisition
+Nickelony.LanguageServer.Client.DocumentReferenceTracker
+Nickelony.LanguageServer.Client.DocumentReferenceTracker.DocumentReferenceTracker(int openReferenceCount = 0, int requestReferenceCount = 0) -> void
+Nickelony.LanguageServer.Client.DocumentReferenceTracker.HasOpenReferences.get -> bool
+Nickelony.LanguageServer.Client.DocumentReferenceTracker.IsIdle.get -> bool
+Nickelony.LanguageServer.Client.DocumentReferenceTracker.OpenReferenceCount.get -> int
+Nickelony.LanguageServer.Client.DocumentReferenceTracker.RequestReferenceCount.get -> int
+Nickelony.LanguageServer.Client.DocumentRenameOutcome
+Nickelony.LanguageServer.Client.DocumentRenameOutcome.DestinationTracked = 2 -> Nickelony.LanguageServer.Client.DocumentRenameOutcome
+Nickelony.LanguageServer.Client.DocumentRenameOutcome.PathsEquivalent = 0 -> Nickelony.LanguageServer.Client.DocumentRenameOutcome
+Nickelony.LanguageServer.Client.DocumentRenameOutcome.Renamed = 3 -> Nickelony.LanguageServer.Client.DocumentRenameOutcome
+Nickelony.LanguageServer.Client.DocumentRenameOutcome.SourceUntracked = 1 -> Nickelony.LanguageServer.Client.DocumentRenameOutcome
+Nickelony.LanguageServer.Client.DocumentRenameRequest
+Nickelony.LanguageServer.Client.DocumentRenameRequest.Deconstruct(out Nickelony.LanguageServer.Client.DocumentSnapshot? PreviousDocument, out Nickelony.LanguageServer.Client.DocumentSnapshot! RenamedDocument, out bool ReopenServerDocument) -> void
+Nickelony.LanguageServer.Client.DocumentRenameRequest.DocumentRenameRequest() -> void
+Nickelony.LanguageServer.Client.DocumentRenameRequest.DocumentRenameRequest(Nickelony.LanguageServer.Client.DocumentSnapshot? PreviousDocument, Nickelony.LanguageServer.Client.DocumentSnapshot! RenamedDocument, bool ReopenServerDocument) -> void
+Nickelony.LanguageServer.Client.DocumentRenameRequest.Equals(Nickelony.LanguageServer.Client.DocumentRenameRequest other) -> bool
+Nickelony.LanguageServer.Client.DocumentRenameRequest.PreviousDocument.get -> Nickelony.LanguageServer.Client.DocumentSnapshot?
+Nickelony.LanguageServer.Client.DocumentRenameRequest.PreviousDocument.init -> void
+Nickelony.LanguageServer.Client.DocumentRenameRequest.RenamedDocument.get -> Nickelony.LanguageServer.Client.DocumentSnapshot!
+Nickelony.LanguageServer.Client.DocumentRenameRequest.RenamedDocument.init -> void
+Nickelony.LanguageServer.Client.DocumentRenameRequest.ReopenServerDocument.get -> bool
+Nickelony.LanguageServer.Client.DocumentRenameRequest.ReopenServerDocument.init -> void
+Nickelony.LanguageServer.Client.DocumentRenameResult
+Nickelony.LanguageServer.Client.DocumentRenameResult.Deconstruct(out Nickelony.LanguageServer.Client.DocumentRenameOutcome Outcome, out Nickelony.LanguageServer.Client.DocumentRenameRequest? Request) -> void
+Nickelony.LanguageServer.Client.DocumentRenameResult.DocumentRenameResult() -> void
+Nickelony.LanguageServer.Client.DocumentRenameResult.DocumentRenameResult(Nickelony.LanguageServer.Client.DocumentRenameOutcome Outcome, Nickelony.LanguageServer.Client.DocumentRenameRequest? Request) -> void
+Nickelony.LanguageServer.Client.DocumentRenameResult.Equals(Nickelony.LanguageServer.Client.DocumentRenameResult other) -> bool
+Nickelony.LanguageServer.Client.DocumentRenameResult.Outcome.get -> Nickelony.LanguageServer.Client.DocumentRenameOutcome
+Nickelony.LanguageServer.Client.DocumentRenameResult.Outcome.init -> void
+Nickelony.LanguageServer.Client.DocumentRenameResult.Request.get -> Nickelony.LanguageServer.Client.DocumentRenameRequest?
+Nickelony.LanguageServer.Client.DocumentRenameResult.Request.init -> void
+Nickelony.LanguageServer.Client.DocumentRequestReference
+Nickelony.LanguageServer.Client.DocumentRequestReference.CurrentFilePath.get -> string?
+Nickelony.LanguageServer.Client.DocumentRequestReference.DocumentRequestReference() -> void
+Nickelony.LanguageServer.Client.DocumentRequestReference.IsAcquired.get -> bool
+Nickelony.LanguageServer.Client.DocumentSnapshot
+Nickelony.LanguageServer.Client.DocumentSnapshot.Content.get -> string!
+Nickelony.LanguageServer.Client.DocumentSnapshot.DocumentSnapshot(string! filePath, string! uri, string! content, int version) -> void
+Nickelony.LanguageServer.Client.DocumentSnapshot.FilePath.get -> string!
+Nickelony.LanguageServer.Client.DocumentSnapshot.Uri.get -> string!
+Nickelony.LanguageServer.Client.DocumentSnapshot.Version.get -> int
+Nickelony.LanguageServer.Client.DocumentSymbolParams
+Nickelony.LanguageServer.Client.DocumentSymbolParams.Deconstruct(out Nickelony.LanguageServer.Client.TextDocumentIdentifier TextDocument) -> void
+Nickelony.LanguageServer.Client.DocumentSymbolParams.DocumentSymbolParams() -> void
+Nickelony.LanguageServer.Client.DocumentSymbolParams.DocumentSymbolParams(Nickelony.LanguageServer.Client.TextDocumentIdentifier TextDocument) -> void
+Nickelony.LanguageServer.Client.DocumentSymbolParams.Equals(Nickelony.LanguageServer.Client.DocumentSymbolParams other) -> bool
+Nickelony.LanguageServer.Client.DocumentSymbolParams.TextDocument.get -> Nickelony.LanguageServer.Client.TextDocumentIdentifier
+Nickelony.LanguageServer.Client.DocumentSymbolParams.TextDocument.init -> void
+Nickelony.LanguageServer.Client.DocumentSymbolPayload
+Nickelony.LanguageServer.Client.DocumentSymbolPayload.Children.get -> System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.DocumentSymbolPayload!>?
+Nickelony.LanguageServer.Client.DocumentSymbolPayload.Children.init -> void
+Nickelony.LanguageServer.Client.DocumentSymbolPayload.ContainerName.get -> string?
+Nickelony.LanguageServer.Client.DocumentSymbolPayload.ContainerName.init -> void
+Nickelony.LanguageServer.Client.DocumentSymbolPayload.Deprecated.get -> bool?
+Nickelony.LanguageServer.Client.DocumentSymbolPayload.Deprecated.init -> void
+Nickelony.LanguageServer.Client.DocumentSymbolPayload.Detail.get -> string?
+Nickelony.LanguageServer.Client.DocumentSymbolPayload.Detail.init -> void
+Nickelony.LanguageServer.Client.DocumentSymbolPayload.DocumentSymbolPayload() -> void
+Nickelony.LanguageServer.Client.DocumentSymbolPayload.Kind.get -> Nickelony.LanguageServer.Client.SymbolKind
+Nickelony.LanguageServer.Client.DocumentSymbolPayload.Kind.init -> void
+Nickelony.LanguageServer.Client.DocumentSymbolPayload.Location.get -> Nickelony.LanguageServer.Client.SymbolLocationPayload?
+Nickelony.LanguageServer.Client.DocumentSymbolPayload.Location.init -> void
+Nickelony.LanguageServer.Client.DocumentSymbolPayload.Name.get -> string?
+Nickelony.LanguageServer.Client.DocumentSymbolPayload.Name.init -> void
+Nickelony.LanguageServer.Client.DocumentSymbolPayload.Range.get -> Nickelony.LanguageServer.Client.ProtocolRangePayload?
+Nickelony.LanguageServer.Client.DocumentSymbolPayload.Range.init -> void
+Nickelony.LanguageServer.Client.DocumentSymbolPayload.SelectionRange.get -> Nickelony.LanguageServer.Client.ProtocolRangePayload?
+Nickelony.LanguageServer.Client.DocumentSymbolPayload.SelectionRange.init -> void
+Nickelony.LanguageServer.Client.DocumentSymbolPayload.Tags.get -> System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.SymbolTag>?
+Nickelony.LanguageServer.Client.DocumentSymbolPayload.Tags.init -> void
+Nickelony.LanguageServer.Client.DocumentSymbolsResponse
+Nickelony.LanguageServer.Client.DocumentSymbolsResponse.DocumentSymbolsResponse() -> void
+Nickelony.LanguageServer.Client.DocumentSymbolsResponse.DocumentSymbolsResponse(System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.DocumentSymbolPayload!>? symbols) -> void
+Nickelony.LanguageServer.Client.DocumentSymbolsResponse.Symbols.get -> System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.DocumentSymbolPayload!>!
+Nickelony.LanguageServer.Client.DocumentSymbolsResponseJsonConverter
+Nickelony.LanguageServer.Client.DocumentSymbolsResponseJsonConverter.DocumentSymbolsResponseJsonConverter() -> void
+Nickelony.LanguageServer.Client.DocumentSymbolsResponseJsonConverter.DocumentSymbolsResponseJsonConverter(Microsoft.Extensions.Logging.ILogger? logger) -> void
+Nickelony.LanguageServer.Client.DocumentSynchronizationKind
+Nickelony.LanguageServer.Client.DocumentSynchronizationKind.Change = 1 -> Nickelony.LanguageServer.Client.DocumentSynchronizationKind
+Nickelony.LanguageServer.Client.DocumentSynchronizationKind.Close = 2 -> Nickelony.LanguageServer.Client.DocumentSynchronizationKind
+Nickelony.LanguageServer.Client.DocumentSynchronizationKind.Open = 0 -> Nickelony.LanguageServer.Client.DocumentSynchronizationKind
+Nickelony.LanguageServer.Client.DocumentSynchronizationRequest
+Nickelony.LanguageServer.Client.DocumentSynchronizationRequest.ChangeRange.get -> Nickelony.LanguageServer.Client.DocumentChangeRange?
+Nickelony.LanguageServer.Client.DocumentSynchronizationRequest.ChangeRange.init -> void
+Nickelony.LanguageServer.Client.DocumentSynchronizationRequest.Deconstruct(out Nickelony.LanguageServer.Client.DocumentSynchronizationKind Kind, out Nickelony.LanguageServer.Client.DocumentSnapshot! Document, out Nickelony.LanguageServer.Client.DocumentChangeRange? ChangeRange) -> void
+Nickelony.LanguageServer.Client.DocumentSynchronizationRequest.Document.get -> Nickelony.LanguageServer.Client.DocumentSnapshot!
+Nickelony.LanguageServer.Client.DocumentSynchronizationRequest.Document.init -> void
+Nickelony.LanguageServer.Client.DocumentSynchronizationRequest.DocumentSynchronizationRequest() -> void
+Nickelony.LanguageServer.Client.DocumentSynchronizationRequest.DocumentSynchronizationRequest(Nickelony.LanguageServer.Client.DocumentSynchronizationKind Kind, Nickelony.LanguageServer.Client.DocumentSnapshot! Document, Nickelony.LanguageServer.Client.DocumentChangeRange? ChangeRange = null) -> void
+Nickelony.LanguageServer.Client.DocumentSynchronizationRequest.Equals(Nickelony.LanguageServer.Client.DocumentSynchronizationRequest other) -> bool
+Nickelony.LanguageServer.Client.DocumentSynchronizationRequest.Kind.get -> Nickelony.LanguageServer.Client.DocumentSynchronizationKind
+Nickelony.LanguageServer.Client.DocumentSynchronizationRequest.Kind.init -> void
+Nickelony.LanguageServer.Client.FileChangeBatch
+Nickelony.LanguageServer.Client.FileChangeBatch.Count.get -> int
+Nickelony.LanguageServer.Client.FileChangeBatch.Entries.get -> System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.WorkspaceFileChange>!
+Nickelony.LanguageServer.Client.FileChangeBatch.FileChangeBatch(System.Collections.Generic.IEnumerable<Nickelony.LanguageServer.Client.WorkspaceFileChange>! entries) -> void
+Nickelony.LanguageServer.Client.FileChangeKind
+Nickelony.LanguageServer.Client.FileChangeKind.Changed = 2 -> Nickelony.LanguageServer.Client.FileChangeKind
+Nickelony.LanguageServer.Client.FileChangeKind.Created = 1 -> Nickelony.LanguageServer.Client.FileChangeKind
+Nickelony.LanguageServer.Client.FileChangeKind.Deleted = 3 -> Nickelony.LanguageServer.Client.FileChangeKind
+Nickelony.LanguageServer.Client.FileEventPayload
+Nickelony.LanguageServer.Client.FileEventPayload.Deconstruct(out string! Uri, out Nickelony.LanguageServer.Client.FileChangeKind Type) -> void
+Nickelony.LanguageServer.Client.FileEventPayload.Equals(Nickelony.LanguageServer.Client.FileEventPayload other) -> bool
+Nickelony.LanguageServer.Client.FileEventPayload.FileEventPayload() -> void
+Nickelony.LanguageServer.Client.FileEventPayload.FileEventPayload(string! Uri, Nickelony.LanguageServer.Client.FileChangeKind Type) -> void
+Nickelony.LanguageServer.Client.FileEventPayload.Type.get -> Nickelony.LanguageServer.Client.FileChangeKind
+Nickelony.LanguageServer.Client.FileEventPayload.Type.init -> void
+Nickelony.LanguageServer.Client.FileEventPayload.Uri.get -> string!
+Nickelony.LanguageServer.Client.FileEventPayload.Uri.init -> void
+Nickelony.LanguageServer.Client.FormattingOptionsPayload
+Nickelony.LanguageServer.Client.FormattingOptionsPayload.Deconstruct(out int TabSize, out bool InsertSpaces) -> void
+Nickelony.LanguageServer.Client.FormattingOptionsPayload.Equals(Nickelony.LanguageServer.Client.FormattingOptionsPayload other) -> bool
+Nickelony.LanguageServer.Client.FormattingOptionsPayload.FormattingOptionsPayload() -> void
+Nickelony.LanguageServer.Client.FormattingOptionsPayload.FormattingOptionsPayload(int TabSize, bool InsertSpaces) -> void
+Nickelony.LanguageServer.Client.FormattingOptionsPayload.InsertSpaces.get -> bool
+Nickelony.LanguageServer.Client.FormattingOptionsPayload.InsertSpaces.init -> void
+Nickelony.LanguageServer.Client.FormattingOptionsPayload.TabSize.get -> int
+Nickelony.LanguageServer.Client.FormattingOptionsPayload.TabSize.init -> void
+Nickelony.LanguageServer.Client.HoverResponse
+Nickelony.LanguageServer.Client.HoverResponse.Contents.get -> System.Text.Json.JsonElement?
+Nickelony.LanguageServer.Client.HoverResponse.Contents.init -> void
+Nickelony.LanguageServer.Client.HoverResponse.HoverResponse() -> void
+Nickelony.LanguageServer.Client.HoverResponse.Range.get -> Nickelony.LanguageServer.Client.ProtocolRangePayload?
+Nickelony.LanguageServer.Client.HoverResponse.Range.init -> void
+Nickelony.LanguageServer.Client.ILanguageServerClient
+Nickelony.LanguageServer.Client.ILanguageServerClient.DiagnosticsPublished -> System.EventHandler<Nickelony.LanguageServer.Client.DiagnosticsPublishedEventArgs!>?
+Nickelony.LanguageServer.Client.ILanguageServerClient.IsReady.get -> bool
+Nickelony.LanguageServer.Client.ILanguageServerClient.LastStartupException.get -> System.Exception?
+Nickelony.LanguageServer.Client.ILanguageServerClient.SemanticTokenModifiers.get -> System.Collections.Generic.IReadOnlyList<string!>!
+Nickelony.LanguageServer.Client.ILanguageServerClient.SemanticTokenTypes.get -> System.Collections.Generic.IReadOnlyList<string!>!
+Nickelony.LanguageServer.Client.ILanguageServerClient.SemanticTokensRefreshRequested -> System.EventHandler?
+Nickelony.LanguageServer.Client.ILanguageServerClient.SendNotificationAsync(string! method, object? parameters, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task!
+Nickelony.LanguageServer.Client.ILanguageServerClient.SendRequestAsync<TResult>(string! method, object! parameters, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task<TResult>!
+Nickelony.LanguageServer.Client.ILanguageServerClient.StartAsync(System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task<bool>!
+Nickelony.LanguageServer.Client.ILanguageServerClient.SupportsCodeActionResolve.get -> bool
+Nickelony.LanguageServer.Client.ILanguageServerClient.SupportsCodeActions.get -> bool
+Nickelony.LanguageServer.Client.ILanguageServerClient.SupportsCompletionResolve.get -> bool
+Nickelony.LanguageServer.Client.ILanguageServerClient.SupportsDefinition.get -> bool
+Nickelony.LanguageServer.Client.ILanguageServerClient.SupportsDocumentSymbols.get -> bool
+Nickelony.LanguageServer.Client.ILanguageServerClient.SupportsFormatting.get -> bool
+Nickelony.LanguageServer.Client.ILanguageServerClient.SupportsHover.get -> bool
+Nickelony.LanguageServer.Client.ILanguageServerClient.SupportsReferences.get -> bool
+Nickelony.LanguageServer.Client.ILanguageServerClient.SupportsRename.get -> bool
+Nickelony.LanguageServer.Client.ILanguageServerClient.SupportsSemanticTokensDelta.get -> bool
+Nickelony.LanguageServer.Client.ILanguageServerClient.SupportsSemanticTokensFull.get -> bool
+Nickelony.LanguageServer.Client.ILanguageServerClient.SupportsSignatureHelp.get -> bool
+Nickelony.LanguageServer.Client.ILanguageServerClient.TextDocumentSyncKind.get -> Nickelony.LanguageServer.Client.TextDocumentSyncKind
+Nickelony.LanguageServer.Client.ILanguageServerClient.TransportGeneration.get -> long
+Nickelony.LanguageServer.Client.ILanguageServerClient.TransportUnavailable -> System.EventHandler<Nickelony.LanguageServer.Client.TransportUnavailableEventArgs!>?
+Nickelony.LanguageServer.Client.ILanguageServerClient.TryMarkTransportUnhealthy(long transportGeneration) -> bool
+Nickelony.LanguageServer.Client.ILanguageServerConnection
+Nickelony.LanguageServer.Client.ILanguageServerConnection.ErrorStream.get -> System.IO.Stream?
+Nickelony.LanguageServer.Client.ILanguageServerConnection.Process.get -> System.Diagnostics.Process?
+Nickelony.LanguageServer.Client.ILanguageServerConnection.ReadStream.get -> System.IO.Stream!
+Nickelony.LanguageServer.Client.ILanguageServerConnection.WriteStream.get -> System.IO.Stream!
+Nickelony.LanguageServer.Client.ILanguageServerTransport
+Nickelony.LanguageServer.Client.ILanguageServerTransport.ConnectAsync(Nickelony.LanguageServer.Client.LanguageServerTransportContext! context, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task<Nickelony.LanguageServer.Client.ILanguageServerConnection!>!
+Nickelony.LanguageServer.Client.InsertTextFormat
+Nickelony.LanguageServer.Client.InsertTextFormat.PlainText = 1 -> Nickelony.LanguageServer.Client.InsertTextFormat
+Nickelony.LanguageServer.Client.InsertTextFormat.Snippet = 2 -> Nickelony.LanguageServer.Client.InsertTextFormat
+Nickelony.LanguageServer.Client.LanguageServerClient
+Nickelony.LanguageServer.Client.LanguageServerClient.DiagnosticsPublished -> System.EventHandler<Nickelony.LanguageServer.Client.DiagnosticsPublishedEventArgs!>?
+Nickelony.LanguageServer.Client.LanguageServerClient.Dispose() -> void
+Nickelony.LanguageServer.Client.LanguageServerClient.DisposeAsync() -> System.Threading.Tasks.ValueTask
+Nickelony.LanguageServer.Client.LanguageServerClient.IsReady.get -> bool
+Nickelony.LanguageServer.Client.LanguageServerClient.LanguageServerClient(System.Collections.Generic.IReadOnlyList<string!>! workspaceRootDirectoryPaths, string! serverExecutablePath, Nickelony.LanguageServer.Client.LanguageServerClientOptions! options, Microsoft.Extensions.Logging.ILogger? logger = null) -> void
+Nickelony.LanguageServer.Client.LanguageServerClient.LastStartupException.get -> System.Exception?
+Nickelony.LanguageServer.Client.LanguageServerClient.SemanticTokenModifiers.get -> System.Collections.Generic.IReadOnlyList<string!>!
+Nickelony.LanguageServer.Client.LanguageServerClient.SemanticTokenTypes.get -> System.Collections.Generic.IReadOnlyList<string!>!
+Nickelony.LanguageServer.Client.LanguageServerClient.SemanticTokensRefreshRequested -> System.EventHandler?
+Nickelony.LanguageServer.Client.LanguageServerClient.SendNotificationAsync(string! method, object? parameters, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task!
+Nickelony.LanguageServer.Client.LanguageServerClient.SendRequestAsync<TResult>(string! method, object! parameters, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task<TResult>!
+Nickelony.LanguageServer.Client.LanguageServerClient.StartAsync(System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task<bool>!
+Nickelony.LanguageServer.Client.LanguageServerClient.SupportsCodeActionResolve.get -> bool
+Nickelony.LanguageServer.Client.LanguageServerClient.SupportsCodeActions.get -> bool
+Nickelony.LanguageServer.Client.LanguageServerClient.SupportsCompletionResolve.get -> bool
+Nickelony.LanguageServer.Client.LanguageServerClient.SupportsDefinition.get -> bool
+Nickelony.LanguageServer.Client.LanguageServerClient.SupportsDocumentSymbols.get -> bool
+Nickelony.LanguageServer.Client.LanguageServerClient.SupportsFormatting.get -> bool
+Nickelony.LanguageServer.Client.LanguageServerClient.SupportsHover.get -> bool
+Nickelony.LanguageServer.Client.LanguageServerClient.SupportsReferences.get -> bool
+Nickelony.LanguageServer.Client.LanguageServerClient.SupportsRename.get -> bool
+Nickelony.LanguageServer.Client.LanguageServerClient.SupportsSemanticTokensDelta.get -> bool
+Nickelony.LanguageServer.Client.LanguageServerClient.SupportsSemanticTokensFull.get -> bool
+Nickelony.LanguageServer.Client.LanguageServerClient.SupportsSignatureHelp.get -> bool
+Nickelony.LanguageServer.Client.LanguageServerClient.TextDocumentSyncKind.get -> Nickelony.LanguageServer.Client.TextDocumentSyncKind
+Nickelony.LanguageServer.Client.LanguageServerClient.TransportGeneration.get -> long
+Nickelony.LanguageServer.Client.LanguageServerClient.TransportUnavailable -> System.EventHandler<Nickelony.LanguageServer.Client.TransportUnavailableEventArgs!>?
+Nickelony.LanguageServer.Client.LanguageServerClient.TryMarkTransportUnhealthy(long transportGeneration) -> bool
+Nickelony.LanguageServer.Client.LanguageServerClientOptions
+Nickelony.LanguageServer.Client.LanguageServerClientOptions.<Clone>$() -> Nickelony.LanguageServer.Client.LanguageServerClientOptions!
+Nickelony.LanguageServer.Client.LanguageServerClientOptions.ClientCapabilitiesProvider.get -> System.Func<System.Collections.Generic.IReadOnlyList<string!>!, object?>!
+Nickelony.LanguageServer.Client.LanguageServerClientOptions.ClientCapabilitiesProvider.init -> void
+Nickelony.LanguageServer.Client.LanguageServerClientOptions.DisposeWaitTimeout.get -> System.TimeSpan
+Nickelony.LanguageServer.Client.LanguageServerClientOptions.DisposeWaitTimeout.init -> void
+Nickelony.LanguageServer.Client.LanguageServerClientOptions.EnvironmentVariables.get -> System.Collections.Generic.IReadOnlyDictionary<string!, string!>!
+Nickelony.LanguageServer.Client.LanguageServerClientOptions.EnvironmentVariables.init -> void
+Nickelony.LanguageServer.Client.LanguageServerClientOptions.Equals(Nickelony.LanguageServer.Client.LanguageServerClientOptions? other) -> bool
+Nickelony.LanguageServer.Client.LanguageServerClientOptions.InitializationOptionsProvider.get -> System.Func<System.Collections.Generic.IReadOnlyList<string!>!, object?>!
+Nickelony.LanguageServer.Client.LanguageServerClientOptions.InitializationOptionsProvider.init -> void
+Nickelony.LanguageServer.Client.LanguageServerClientOptions.InitializeTimeout.get -> System.TimeSpan
+Nickelony.LanguageServer.Client.LanguageServerClientOptions.InitializeTimeout.init -> void
+Nickelony.LanguageServer.Client.LanguageServerClientOptions.LanguageServerClientOptions() -> void
+Nickelony.LanguageServer.Client.LanguageServerClientOptions.RequireTextDocumentSynchronization.get -> bool
+Nickelony.LanguageServer.Client.LanguageServerClientOptions.RequireTextDocumentSynchronization.init -> void
+Nickelony.LanguageServer.Client.LanguageServerClientOptions.ServerArguments.get -> System.Collections.Generic.IReadOnlyList<string!>!
+Nickelony.LanguageServer.Client.LanguageServerClientOptions.ServerArguments.init -> void
+Nickelony.LanguageServer.Client.LanguageServerClientOptions.ServerWorkingDirectory.get -> string?
+Nickelony.LanguageServer.Client.LanguageServerClientOptions.ServerWorkingDirectory.init -> void
+Nickelony.LanguageServer.Client.LanguageServerClientOptions.SettingsProvider.get -> System.Func<object!>!
+Nickelony.LanguageServer.Client.LanguageServerClientOptions.SettingsProvider.init -> void
+Nickelony.LanguageServer.Client.LanguageServerClientOptions.ShutdownRequestTimeout.get -> System.TimeSpan
+Nickelony.LanguageServer.Client.LanguageServerClientOptions.ShutdownRequestTimeout.init -> void
+Nickelony.LanguageServer.Client.LanguageServerClientOptions.Transport.get -> Nickelony.LanguageServer.Client.ILanguageServerTransport!
+Nickelony.LanguageServer.Client.LanguageServerClientOptions.Transport.init -> void
+Nickelony.LanguageServer.Client.LanguageServerPaths
+Nickelony.LanguageServer.Client.LanguageServerRequestRejectedException
+Nickelony.LanguageServer.Client.LanguageServerRequestRejectedException.ErrorCode.get -> int
+Nickelony.LanguageServer.Client.LanguageServerRequestRejectedException.LanguageServerRequestRejectedException(int errorCode, string? message, System.Exception? innerException) -> void
+Nickelony.LanguageServer.Client.LanguageServerTransportChangedException
+Nickelony.LanguageServer.Client.LanguageServerTransportChangedException.LanguageServerTransportChangedException() -> void
+Nickelony.LanguageServer.Client.LanguageServerTransportChangedException.LanguageServerTransportChangedException(string? message) -> void
+Nickelony.LanguageServer.Client.LanguageServerTransportChangedException.LanguageServerTransportChangedException(string? message, System.Exception? innerException) -> void
+Nickelony.LanguageServer.Client.LanguageServerTransportContext
+Nickelony.LanguageServer.Client.LanguageServerTransportContext.<Clone>$() -> Nickelony.LanguageServer.Client.LanguageServerTransportContext!
+Nickelony.LanguageServer.Client.LanguageServerTransportContext.EnvironmentVariables.get -> System.Collections.Generic.IReadOnlyDictionary<string!, string!>!
+Nickelony.LanguageServer.Client.LanguageServerTransportContext.EnvironmentVariables.init -> void
+Nickelony.LanguageServer.Client.LanguageServerTransportContext.Equals(Nickelony.LanguageServer.Client.LanguageServerTransportContext? other) -> bool
+Nickelony.LanguageServer.Client.LanguageServerTransportContext.LanguageServerTransportContext() -> void
+Nickelony.LanguageServer.Client.LanguageServerTransportContext.Logger.get -> Microsoft.Extensions.Logging.ILogger!
+Nickelony.LanguageServer.Client.LanguageServerTransportContext.Logger.init -> void
+Nickelony.LanguageServer.Client.LanguageServerTransportContext.ServerArguments.get -> System.Collections.Generic.IReadOnlyList<string!>!
+Nickelony.LanguageServer.Client.LanguageServerTransportContext.ServerArguments.init -> void
+Nickelony.LanguageServer.Client.LanguageServerTransportContext.ServerExecutablePath.get -> string!
+Nickelony.LanguageServer.Client.LanguageServerTransportContext.ServerExecutablePath.init -> void
+Nickelony.LanguageServer.Client.LanguageServerTransportContext.ServerWorkingDirectory.get -> string!
+Nickelony.LanguageServer.Client.LanguageServerTransportContext.ServerWorkingDirectory.init -> void
+Nickelony.LanguageServer.Client.LanguageServerTransportContext.WorkspaceRootDirectoryPaths.get -> System.Collections.Generic.IReadOnlyList<string!>!
+Nickelony.LanguageServer.Client.LanguageServerTransportContext.WorkspaceRootDirectoryPaths.init -> void
+Nickelony.LanguageServer.Client.LanguageServerTransportException
+Nickelony.LanguageServer.Client.LanguageServerTransportException.LanguageServerTransportException() -> void
+Nickelony.LanguageServer.Client.LanguageServerTransportException.LanguageServerTransportException(string? message) -> void
+Nickelony.LanguageServer.Client.LanguageServerTransportException.LanguageServerTransportException(string? message, System.Exception? innerException) -> void
+Nickelony.LanguageServer.Client.LanguageServerTransportUnavailableException
+Nickelony.LanguageServer.Client.LanguageServerTransportUnavailableException.LanguageServerTransportUnavailableException() -> void
+Nickelony.LanguageServer.Client.LanguageServerTransportUnavailableException.LanguageServerTransportUnavailableException(string? message) -> void
+Nickelony.LanguageServer.Client.LanguageServerTransportUnavailableException.LanguageServerTransportUnavailableException(string? message, System.Exception? innerException) -> void
+Nickelony.LanguageServer.Client.MarkupContentReader
+Nickelony.LanguageServer.Client.OptionalVersionedTextDocumentIdentifier
+Nickelony.LanguageServer.Client.OptionalVersionedTextDocumentIdentifier.Deconstruct(out string! Uri, out int? Version) -> void
+Nickelony.LanguageServer.Client.OptionalVersionedTextDocumentIdentifier.Equals(Nickelony.LanguageServer.Client.OptionalVersionedTextDocumentIdentifier other) -> bool
+Nickelony.LanguageServer.Client.OptionalVersionedTextDocumentIdentifier.OptionalVersionedTextDocumentIdentifier() -> void
+Nickelony.LanguageServer.Client.OptionalVersionedTextDocumentIdentifier.OptionalVersionedTextDocumentIdentifier(string! Uri, int? Version) -> void
+Nickelony.LanguageServer.Client.OptionalVersionedTextDocumentIdentifier.Uri.get -> string!
+Nickelony.LanguageServer.Client.OptionalVersionedTextDocumentIdentifier.Uri.init -> void
+Nickelony.LanguageServer.Client.OptionalVersionedTextDocumentIdentifier.Version.get -> int?
+Nickelony.LanguageServer.Client.OptionalVersionedTextDocumentIdentifier.Version.init -> void
+Nickelony.LanguageServer.Client.ProtocolLocationPayload
+Nickelony.LanguageServer.Client.ProtocolLocationPayload.Deconstruct(out string? Uri, out Nickelony.LanguageServer.Client.ProtocolRangePayload? Range) -> void
+Nickelony.LanguageServer.Client.ProtocolLocationPayload.Equals(Nickelony.LanguageServer.Client.ProtocolLocationPayload other) -> bool
+Nickelony.LanguageServer.Client.ProtocolLocationPayload.ProtocolLocationPayload() -> void
+Nickelony.LanguageServer.Client.ProtocolLocationPayload.ProtocolLocationPayload(string? Uri, Nickelony.LanguageServer.Client.ProtocolRangePayload? Range) -> void
+Nickelony.LanguageServer.Client.ProtocolLocationPayload.Range.get -> Nickelony.LanguageServer.Client.ProtocolRangePayload?
+Nickelony.LanguageServer.Client.ProtocolLocationPayload.Range.init -> void
+Nickelony.LanguageServer.Client.ProtocolLocationPayload.Uri.get -> string?
+Nickelony.LanguageServer.Client.ProtocolLocationPayload.Uri.init -> void
+Nickelony.LanguageServer.Client.ProtocolMarkupContent
+Nickelony.LanguageServer.Client.ProtocolMarkupContent.Equals(Nickelony.LanguageServer.Client.ProtocolMarkupContent other) -> bool
+Nickelony.LanguageServer.Client.ProtocolMarkupContent.IsMarkdown.get -> bool
+Nickelony.LanguageServer.Client.ProtocolMarkupContent.ProtocolMarkupContent() -> void
+Nickelony.LanguageServer.Client.ProtocolMarkupContent.ProtocolMarkupContent(string? text, bool isMarkdown) -> void
+Nickelony.LanguageServer.Client.ProtocolMarkupContent.Text.get -> string!
+Nickelony.LanguageServer.Client.ProtocolPosition
+Nickelony.LanguageServer.Client.ProtocolPosition.Character.get -> int
+Nickelony.LanguageServer.Client.ProtocolPosition.Character.init -> void
+Nickelony.LanguageServer.Client.ProtocolPosition.Deconstruct(out int Line, out int Character) -> void
+Nickelony.LanguageServer.Client.ProtocolPosition.Equals(Nickelony.LanguageServer.Client.ProtocolPosition other) -> bool
+Nickelony.LanguageServer.Client.ProtocolPosition.Line.get -> int
+Nickelony.LanguageServer.Client.ProtocolPosition.Line.init -> void
+Nickelony.LanguageServer.Client.ProtocolPosition.ProtocolPosition() -> void
+Nickelony.LanguageServer.Client.ProtocolPosition.ProtocolPosition(int Line, int Character) -> void
+Nickelony.LanguageServer.Client.ProtocolRangeConversion
+Nickelony.LanguageServer.Client.ProtocolRangePayload
+Nickelony.LanguageServer.Client.ProtocolRangePayload.Deconstruct(out Nickelony.LanguageServer.Client.ProtocolPosition Start, out Nickelony.LanguageServer.Client.ProtocolPosition End) -> void
+Nickelony.LanguageServer.Client.ProtocolRangePayload.End.get -> Nickelony.LanguageServer.Client.ProtocolPosition
+Nickelony.LanguageServer.Client.ProtocolRangePayload.End.init -> void
+Nickelony.LanguageServer.Client.ProtocolRangePayload.Equals(Nickelony.LanguageServer.Client.ProtocolRangePayload other) -> bool
+Nickelony.LanguageServer.Client.ProtocolRangePayload.ProtocolRangePayload() -> void
+Nickelony.LanguageServer.Client.ProtocolRangePayload.ProtocolRangePayload(Nickelony.LanguageServer.Client.ProtocolPosition Start, Nickelony.LanguageServer.Client.ProtocolPosition End) -> void
+Nickelony.LanguageServer.Client.ProtocolRangePayload.Start.get -> Nickelony.LanguageServer.Client.ProtocolPosition
+Nickelony.LanguageServer.Client.ProtocolRangePayload.Start.init -> void
+Nickelony.LanguageServer.Client.ProtocolRangePayloadJsonConverter
+Nickelony.LanguageServer.Client.ProtocolRangePayloadJsonConverter.ProtocolRangePayloadJsonConverter() -> void
+Nickelony.LanguageServer.Client.PublishDiagnosticsParams
+Nickelony.LanguageServer.Client.PublishDiagnosticsParams.CreateSnapshot() -> Nickelony.LanguageServer.Client.PublishDiagnosticsParams!
+Nickelony.LanguageServer.Client.PublishDiagnosticsParams.Deconstruct(out string? Uri, out int? Version, out System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.DiagnosticPayload!>? Diagnostics) -> void
+Nickelony.LanguageServer.Client.PublishDiagnosticsParams.Diagnostics.get -> System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.DiagnosticPayload!>?
+Nickelony.LanguageServer.Client.PublishDiagnosticsParams.Diagnostics.init -> void
+Nickelony.LanguageServer.Client.PublishDiagnosticsParams.Equals(Nickelony.LanguageServer.Client.PublishDiagnosticsParams? other) -> bool
+Nickelony.LanguageServer.Client.PublishDiagnosticsParams.IsDegraded.get -> bool
+Nickelony.LanguageServer.Client.PublishDiagnosticsParams.IsDegraded.init -> void
+Nickelony.LanguageServer.Client.PublishDiagnosticsParams.PublishDiagnosticsParams() -> void
+Nickelony.LanguageServer.Client.PublishDiagnosticsParams.PublishDiagnosticsParams(string? Uri, int? Version, System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.DiagnosticPayload!>? Diagnostics) -> void
+Nickelony.LanguageServer.Client.PublishDiagnosticsParams.Uri.get -> string?
+Nickelony.LanguageServer.Client.PublishDiagnosticsParams.Uri.init -> void
+Nickelony.LanguageServer.Client.PublishDiagnosticsParams.Version.get -> int?
+Nickelony.LanguageServer.Client.PublishDiagnosticsParams.Version.init -> void
+Nickelony.LanguageServer.Client.PublishDiagnosticsParamsJsonConverter
+Nickelony.LanguageServer.Client.PublishDiagnosticsParamsJsonConverter.PublishDiagnosticsParamsJsonConverter() -> void
+Nickelony.LanguageServer.Client.PublishDiagnosticsParamsJsonConverter.PublishDiagnosticsParamsJsonConverter(Microsoft.Extensions.Logging.ILogger? logger) -> void
+Nickelony.LanguageServer.Client.ReferenceContextPayload
+Nickelony.LanguageServer.Client.ReferenceContextPayload.Deconstruct(out bool IncludeDeclaration) -> void
+Nickelony.LanguageServer.Client.ReferenceContextPayload.Equals(Nickelony.LanguageServer.Client.ReferenceContextPayload other) -> bool
+Nickelony.LanguageServer.Client.ReferenceContextPayload.IncludeDeclaration.get -> bool
+Nickelony.LanguageServer.Client.ReferenceContextPayload.IncludeDeclaration.init -> void
+Nickelony.LanguageServer.Client.ReferenceContextPayload.ReferenceContextPayload() -> void
+Nickelony.LanguageServer.Client.ReferenceContextPayload.ReferenceContextPayload(bool IncludeDeclaration) -> void
+Nickelony.LanguageServer.Client.ReferenceLocationPayload
+Nickelony.LanguageServer.Client.ReferenceLocationPayload.<Clone>$() -> Nickelony.LanguageServer.Client.ReferenceLocationPayload!
+Nickelony.LanguageServer.Client.ReferenceLocationPayload.Equals(Nickelony.LanguageServer.Client.ReferenceLocationPayload? other) -> bool
+Nickelony.LanguageServer.Client.ReferenceLocationPayload.Range.get -> Nickelony.LanguageServer.Client.ProtocolRangePayload?
+Nickelony.LanguageServer.Client.ReferenceLocationPayload.Range.init -> void
+Nickelony.LanguageServer.Client.ReferenceLocationPayload.ReferenceLocationPayload() -> void
+Nickelony.LanguageServer.Client.ReferenceLocationPayload.Uri.get -> string?
+Nickelony.LanguageServer.Client.ReferenceLocationPayload.Uri.init -> void
+Nickelony.LanguageServer.Client.ReferenceParams
+Nickelony.LanguageServer.Client.ReferenceParams.Context.get -> Nickelony.LanguageServer.Client.ReferenceContextPayload
+Nickelony.LanguageServer.Client.ReferenceParams.Context.init -> void
+Nickelony.LanguageServer.Client.ReferenceParams.Deconstruct(out Nickelony.LanguageServer.Client.TextDocumentIdentifier TextDocument, out Nickelony.LanguageServer.Client.ProtocolPosition Position, out Nickelony.LanguageServer.Client.ReferenceContextPayload Context) -> void
+Nickelony.LanguageServer.Client.ReferenceParams.Equals(Nickelony.LanguageServer.Client.ReferenceParams other) -> bool
+Nickelony.LanguageServer.Client.ReferenceParams.Position.get -> Nickelony.LanguageServer.Client.ProtocolPosition
+Nickelony.LanguageServer.Client.ReferenceParams.Position.init -> void
+Nickelony.LanguageServer.Client.ReferenceParams.ReferenceParams() -> void
+Nickelony.LanguageServer.Client.ReferenceParams.ReferenceParams(Nickelony.LanguageServer.Client.TextDocumentIdentifier TextDocument, Nickelony.LanguageServer.Client.ProtocolPosition Position, Nickelony.LanguageServer.Client.ReferenceContextPayload Context) -> void
+Nickelony.LanguageServer.Client.ReferenceParams.TextDocument.get -> Nickelony.LanguageServer.Client.TextDocumentIdentifier
+Nickelony.LanguageServer.Client.ReferenceParams.TextDocument.init -> void
+Nickelony.LanguageServer.Client.RenameParams
+Nickelony.LanguageServer.Client.RenameParams.Deconstruct(out Nickelony.LanguageServer.Client.TextDocumentIdentifier TextDocument, out Nickelony.LanguageServer.Client.ProtocolPosition Position, out string! NewName) -> void
+Nickelony.LanguageServer.Client.RenameParams.Equals(Nickelony.LanguageServer.Client.RenameParams other) -> bool
+Nickelony.LanguageServer.Client.RenameParams.NewName.get -> string!
+Nickelony.LanguageServer.Client.RenameParams.NewName.init -> void
+Nickelony.LanguageServer.Client.RenameParams.Position.get -> Nickelony.LanguageServer.Client.ProtocolPosition
+Nickelony.LanguageServer.Client.RenameParams.Position.init -> void
+Nickelony.LanguageServer.Client.RenameParams.RenameParams() -> void
+Nickelony.LanguageServer.Client.RenameParams.RenameParams(Nickelony.LanguageServer.Client.TextDocumentIdentifier TextDocument, Nickelony.LanguageServer.Client.ProtocolPosition Position, string! NewName) -> void
+Nickelony.LanguageServer.Client.RenameParams.TextDocument.get -> Nickelony.LanguageServer.Client.TextDocumentIdentifier
+Nickelony.LanguageServer.Client.RenameParams.TextDocument.init -> void
+Nickelony.LanguageServer.Client.SemanticToken
+Nickelony.LanguageServer.Client.SemanticToken.Character.get -> int
+Nickelony.LanguageServer.Client.SemanticToken.HasModifier(string? modifier) -> bool
+Nickelony.LanguageServer.Client.SemanticToken.Length.get -> int
+Nickelony.LanguageServer.Client.SemanticToken.Line.get -> int
+Nickelony.LanguageServer.Client.SemanticToken.Modifiers.get -> System.Collections.Generic.IReadOnlyList<string!>!
+Nickelony.LanguageServer.Client.SemanticToken.SemanticToken(int line, int character, int length, string! type, System.Collections.Generic.IReadOnlyList<string!>! modifiers) -> void
+Nickelony.LanguageServer.Client.SemanticToken.Type.get -> string!
+Nickelony.LanguageServer.Client.SemanticTokenConversion
+Nickelony.LanguageServer.Client.SemanticTokensDecoder
+Nickelony.LanguageServer.Client.SemanticTokensDeltaParams
+Nickelony.LanguageServer.Client.SemanticTokensDeltaParams.Deconstruct(out Nickelony.LanguageServer.Client.TextDocumentIdentifier TextDocument, out string! PreviousResultId) -> void
+Nickelony.LanguageServer.Client.SemanticTokensDeltaParams.Equals(Nickelony.LanguageServer.Client.SemanticTokensDeltaParams other) -> bool
+Nickelony.LanguageServer.Client.SemanticTokensDeltaParams.PreviousResultId.get -> string!
+Nickelony.LanguageServer.Client.SemanticTokensDeltaParams.PreviousResultId.init -> void
+Nickelony.LanguageServer.Client.SemanticTokensDeltaParams.SemanticTokensDeltaParams() -> void
+Nickelony.LanguageServer.Client.SemanticTokensDeltaParams.SemanticTokensDeltaParams(Nickelony.LanguageServer.Client.TextDocumentIdentifier TextDocument, string! PreviousResultId) -> void
+Nickelony.LanguageServer.Client.SemanticTokensDeltaParams.TextDocument.get -> Nickelony.LanguageServer.Client.TextDocumentIdentifier
+Nickelony.LanguageServer.Client.SemanticTokensDeltaParams.TextDocument.init -> void
+Nickelony.LanguageServer.Client.SemanticTokensDeltaParser
+Nickelony.LanguageServer.Client.SemanticTokensDeltaResponse
+Nickelony.LanguageServer.Client.SemanticTokensDeltaResponse.Data.get -> int[]?
+Nickelony.LanguageServer.Client.SemanticTokensDeltaResponse.Data.init -> void
+Nickelony.LanguageServer.Client.SemanticTokensDeltaResponse.Deconstruct(out string? ResultId, out int[]? Data) -> void
+Nickelony.LanguageServer.Client.SemanticTokensDeltaResponse.Equals(Nickelony.LanguageServer.Client.SemanticTokensDeltaResponse other) -> bool
+Nickelony.LanguageServer.Client.SemanticTokensDeltaResponse.ResultId.get -> string?
+Nickelony.LanguageServer.Client.SemanticTokensDeltaResponse.ResultId.init -> void
+Nickelony.LanguageServer.Client.SemanticTokensDeltaResponse.SemanticTokensDeltaResponse() -> void
+Nickelony.LanguageServer.Client.SemanticTokensDeltaResponse.SemanticTokensDeltaResponse(string? ResultId, int[]? Data) -> void
+Nickelony.LanguageServer.Client.SemanticTokensEditPayload
+Nickelony.LanguageServer.Client.SemanticTokensEditPayload.Data.get -> int[]?
+Nickelony.LanguageServer.Client.SemanticTokensEditPayload.Data.init -> void
+Nickelony.LanguageServer.Client.SemanticTokensEditPayload.Deconstruct(out int? Start, out int? DeleteCount, out int[]? Data) -> void
+Nickelony.LanguageServer.Client.SemanticTokensEditPayload.DeleteCount.get -> int?
+Nickelony.LanguageServer.Client.SemanticTokensEditPayload.DeleteCount.init -> void
+Nickelony.LanguageServer.Client.SemanticTokensEditPayload.Equals(Nickelony.LanguageServer.Client.SemanticTokensEditPayload other) -> bool
+Nickelony.LanguageServer.Client.SemanticTokensEditPayload.SemanticTokensEditPayload() -> void
+Nickelony.LanguageServer.Client.SemanticTokensEditPayload.SemanticTokensEditPayload(int? Start, int? DeleteCount, int[]? Data) -> void
+Nickelony.LanguageServer.Client.SemanticTokensEditPayload.Start.get -> int?
+Nickelony.LanguageServer.Client.SemanticTokensEditPayload.Start.init -> void
+Nickelony.LanguageServer.Client.SemanticTokensParams
+Nickelony.LanguageServer.Client.SemanticTokensParams.Deconstruct(out Nickelony.LanguageServer.Client.TextDocumentIdentifier TextDocument) -> void
+Nickelony.LanguageServer.Client.SemanticTokensParams.Equals(Nickelony.LanguageServer.Client.SemanticTokensParams other) -> bool
+Nickelony.LanguageServer.Client.SemanticTokensParams.SemanticTokensParams() -> void
+Nickelony.LanguageServer.Client.SemanticTokensParams.SemanticTokensParams(Nickelony.LanguageServer.Client.TextDocumentIdentifier TextDocument) -> void
+Nickelony.LanguageServer.Client.SemanticTokensParams.TextDocument.get -> Nickelony.LanguageServer.Client.TextDocumentIdentifier
+Nickelony.LanguageServer.Client.SemanticTokensParams.TextDocument.init -> void
+Nickelony.LanguageServer.Client.SemanticTokensResponsePayload
+Nickelony.LanguageServer.Client.SemanticTokensResponsePayload.Data.get -> int[]?
+Nickelony.LanguageServer.Client.SemanticTokensResponsePayload.Data.init -> void
+Nickelony.LanguageServer.Client.SemanticTokensResponsePayload.Deconstruct(out string? ResultId, out int[]? Data, out System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.SemanticTokensEditPayload>? Edits) -> void
+Nickelony.LanguageServer.Client.SemanticTokensResponsePayload.Edits.get -> System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.SemanticTokensEditPayload>?
+Nickelony.LanguageServer.Client.SemanticTokensResponsePayload.Edits.init -> void
+Nickelony.LanguageServer.Client.SemanticTokensResponsePayload.Equals(Nickelony.LanguageServer.Client.SemanticTokensResponsePayload other) -> bool
+Nickelony.LanguageServer.Client.SemanticTokensResponsePayload.ResultId.get -> string?
+Nickelony.LanguageServer.Client.SemanticTokensResponsePayload.ResultId.init -> void
+Nickelony.LanguageServer.Client.SemanticTokensResponsePayload.SemanticTokensResponsePayload() -> void
+Nickelony.LanguageServer.Client.SemanticTokensResponsePayload.SemanticTokensResponsePayload(string? ResultId, int[]? Data, System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.SemanticTokensEditPayload>? Edits) -> void
+Nickelony.LanguageServer.Client.SignatureHelpContextPayload
+Nickelony.LanguageServer.Client.SignatureHelpContextPayload.ActiveSignatureHelp.get -> Nickelony.LanguageServer.Client.SignatureHelpResponse?
+Nickelony.LanguageServer.Client.SignatureHelpContextPayload.ActiveSignatureHelp.init -> void
+Nickelony.LanguageServer.Client.SignatureHelpContextPayload.Deconstruct(out Nickelony.LanguageServer.Client.SignatureHelpTriggerKind TriggerKind, out bool IsRetrigger, out string? TriggerCharacter, out Nickelony.LanguageServer.Client.SignatureHelpResponse? ActiveSignatureHelp) -> void
+Nickelony.LanguageServer.Client.SignatureHelpContextPayload.Equals(Nickelony.LanguageServer.Client.SignatureHelpContextPayload other) -> bool
+Nickelony.LanguageServer.Client.SignatureHelpContextPayload.IsRetrigger.get -> bool
+Nickelony.LanguageServer.Client.SignatureHelpContextPayload.IsRetrigger.init -> void
+Nickelony.LanguageServer.Client.SignatureHelpContextPayload.SignatureHelpContextPayload() -> void
+Nickelony.LanguageServer.Client.SignatureHelpContextPayload.SignatureHelpContextPayload(Nickelony.LanguageServer.Client.SignatureHelpTriggerKind TriggerKind, bool IsRetrigger, string? TriggerCharacter = null, Nickelony.LanguageServer.Client.SignatureHelpResponse? ActiveSignatureHelp = null) -> void
+Nickelony.LanguageServer.Client.SignatureHelpContextPayload.TriggerCharacter.get -> string?
+Nickelony.LanguageServer.Client.SignatureHelpContextPayload.TriggerCharacter.init -> void
+Nickelony.LanguageServer.Client.SignatureHelpContextPayload.TriggerKind.get -> Nickelony.LanguageServer.Client.SignatureHelpTriggerKind
+Nickelony.LanguageServer.Client.SignatureHelpContextPayload.TriggerKind.init -> void
+Nickelony.LanguageServer.Client.SignatureHelpParameterPayload
+Nickelony.LanguageServer.Client.SignatureHelpParameterPayload.<Clone>$() -> Nickelony.LanguageServer.Client.SignatureHelpParameterPayload!
+Nickelony.LanguageServer.Client.SignatureHelpParameterPayload.Documentation.get -> System.Text.Json.JsonElement?
+Nickelony.LanguageServer.Client.SignatureHelpParameterPayload.Documentation.init -> void
+Nickelony.LanguageServer.Client.SignatureHelpParameterPayload.Equals(Nickelony.LanguageServer.Client.SignatureHelpParameterPayload? other) -> bool
+Nickelony.LanguageServer.Client.SignatureHelpParameterPayload.Label.get -> System.Text.Json.JsonElement
+Nickelony.LanguageServer.Client.SignatureHelpParameterPayload.Label.init -> void
+Nickelony.LanguageServer.Client.SignatureHelpParameterPayload.SignatureHelpParameterPayload() -> void
+Nickelony.LanguageServer.Client.SignatureHelpParameterPayloadJsonConverter
+Nickelony.LanguageServer.Client.SignatureHelpParameterPayloadJsonConverter.SignatureHelpParameterPayloadJsonConverter() -> void
+Nickelony.LanguageServer.Client.SignatureHelpParams
+Nickelony.LanguageServer.Client.SignatureHelpParams.Context.get -> Nickelony.LanguageServer.Client.SignatureHelpContextPayload?
+Nickelony.LanguageServer.Client.SignatureHelpParams.Context.init -> void
+Nickelony.LanguageServer.Client.SignatureHelpParams.Deconstruct(out Nickelony.LanguageServer.Client.TextDocumentIdentifier TextDocument, out Nickelony.LanguageServer.Client.ProtocolPosition Position, out Nickelony.LanguageServer.Client.SignatureHelpContextPayload? Context) -> void
+Nickelony.LanguageServer.Client.SignatureHelpParams.Equals(Nickelony.LanguageServer.Client.SignatureHelpParams other) -> bool
+Nickelony.LanguageServer.Client.SignatureHelpParams.Position.get -> Nickelony.LanguageServer.Client.ProtocolPosition
+Nickelony.LanguageServer.Client.SignatureHelpParams.Position.init -> void
+Nickelony.LanguageServer.Client.SignatureHelpParams.SignatureHelpParams() -> void
+Nickelony.LanguageServer.Client.SignatureHelpParams.SignatureHelpParams(Nickelony.LanguageServer.Client.TextDocumentIdentifier TextDocument, Nickelony.LanguageServer.Client.ProtocolPosition Position, Nickelony.LanguageServer.Client.SignatureHelpContextPayload? Context = null) -> void
+Nickelony.LanguageServer.Client.SignatureHelpParams.TextDocument.get -> Nickelony.LanguageServer.Client.TextDocumentIdentifier
+Nickelony.LanguageServer.Client.SignatureHelpParams.TextDocument.init -> void
+Nickelony.LanguageServer.Client.SignatureHelpResponse
+Nickelony.LanguageServer.Client.SignatureHelpResponse.ActiveParameter.get -> System.Text.Json.JsonElement
+Nickelony.LanguageServer.Client.SignatureHelpResponse.ActiveParameter.init -> void
+Nickelony.LanguageServer.Client.SignatureHelpResponse.ActiveSignature.get -> int?
+Nickelony.LanguageServer.Client.SignatureHelpResponse.ActiveSignature.init -> void
+Nickelony.LanguageServer.Client.SignatureHelpResponse.SignatureHelpResponse() -> void
+Nickelony.LanguageServer.Client.SignatureHelpResponse.Signatures.get -> System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.SignatureHelpSignaturePayload!>?
+Nickelony.LanguageServer.Client.SignatureHelpResponse.Signatures.init -> void
+Nickelony.LanguageServer.Client.SignatureHelpResponseJsonConverter
+Nickelony.LanguageServer.Client.SignatureHelpResponseJsonConverter.SignatureHelpResponseJsonConverter() -> void
+Nickelony.LanguageServer.Client.SignatureHelpResponseJsonConverter.SignatureHelpResponseJsonConverter(Microsoft.Extensions.Logging.ILogger? logger) -> void
+Nickelony.LanguageServer.Client.SignatureHelpSignaturePayload
+Nickelony.LanguageServer.Client.SignatureHelpSignaturePayload.<Clone>$() -> Nickelony.LanguageServer.Client.SignatureHelpSignaturePayload!
+Nickelony.LanguageServer.Client.SignatureHelpSignaturePayload.ActiveParameter.get -> System.Text.Json.JsonElement
+Nickelony.LanguageServer.Client.SignatureHelpSignaturePayload.ActiveParameter.init -> void
+Nickelony.LanguageServer.Client.SignatureHelpSignaturePayload.Documentation.get -> System.Text.Json.JsonElement?
+Nickelony.LanguageServer.Client.SignatureHelpSignaturePayload.Documentation.init -> void
+Nickelony.LanguageServer.Client.SignatureHelpSignaturePayload.Equals(Nickelony.LanguageServer.Client.SignatureHelpSignaturePayload? other) -> bool
+Nickelony.LanguageServer.Client.SignatureHelpSignaturePayload.Label.get -> string?
+Nickelony.LanguageServer.Client.SignatureHelpSignaturePayload.Label.init -> void
+Nickelony.LanguageServer.Client.SignatureHelpSignaturePayload.Parameters.get -> System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.SignatureHelpParameterPayload!>?
+Nickelony.LanguageServer.Client.SignatureHelpSignaturePayload.Parameters.init -> void
+Nickelony.LanguageServer.Client.SignatureHelpSignaturePayload.SignatureHelpSignaturePayload() -> void
+Nickelony.LanguageServer.Client.SignatureHelpSignaturePayloadJsonConverter
+Nickelony.LanguageServer.Client.SignatureHelpSignaturePayloadJsonConverter.SignatureHelpSignaturePayloadJsonConverter() -> void
+Nickelony.LanguageServer.Client.SignatureHelpSignaturePayloadJsonConverter.SignatureHelpSignaturePayloadJsonConverter(Microsoft.Extensions.Logging.ILogger? logger) -> void
+Nickelony.LanguageServer.Client.SignatureHelpTriggerKind
+Nickelony.LanguageServer.Client.SignatureHelpTriggerKind.ContentChange = 3 -> Nickelony.LanguageServer.Client.SignatureHelpTriggerKind
+Nickelony.LanguageServer.Client.SignatureHelpTriggerKind.Invoked = 1 -> Nickelony.LanguageServer.Client.SignatureHelpTriggerKind
+Nickelony.LanguageServer.Client.SignatureHelpTriggerKind.TriggerCharacter = 2 -> Nickelony.LanguageServer.Client.SignatureHelpTriggerKind
+Nickelony.LanguageServer.Client.SignatureLabelParser
+Nickelony.LanguageServer.Client.StdioLanguageServerTransport
+Nickelony.LanguageServer.Client.StdioLanguageServerTransport.ConnectAsync(Nickelony.LanguageServer.Client.LanguageServerTransportContext! context, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task<Nickelony.LanguageServer.Client.ILanguageServerConnection!>!
+Nickelony.LanguageServer.Client.StdioLanguageServerTransport.StdioLanguageServerTransport() -> void
+Nickelony.LanguageServer.Client.SymbolKind
+Nickelony.LanguageServer.Client.SymbolKind.Array = 18 -> Nickelony.LanguageServer.Client.SymbolKind
+Nickelony.LanguageServer.Client.SymbolKind.Boolean = 17 -> Nickelony.LanguageServer.Client.SymbolKind
+Nickelony.LanguageServer.Client.SymbolKind.Class = 5 -> Nickelony.LanguageServer.Client.SymbolKind
+Nickelony.LanguageServer.Client.SymbolKind.Constant = 14 -> Nickelony.LanguageServer.Client.SymbolKind
+Nickelony.LanguageServer.Client.SymbolKind.Constructor = 9 -> Nickelony.LanguageServer.Client.SymbolKind
+Nickelony.LanguageServer.Client.SymbolKind.Enum = 10 -> Nickelony.LanguageServer.Client.SymbolKind
+Nickelony.LanguageServer.Client.SymbolKind.EnumMember = 22 -> Nickelony.LanguageServer.Client.SymbolKind
+Nickelony.LanguageServer.Client.SymbolKind.Event = 24 -> Nickelony.LanguageServer.Client.SymbolKind
+Nickelony.LanguageServer.Client.SymbolKind.Field = 8 -> Nickelony.LanguageServer.Client.SymbolKind
+Nickelony.LanguageServer.Client.SymbolKind.File = 1 -> Nickelony.LanguageServer.Client.SymbolKind
+Nickelony.LanguageServer.Client.SymbolKind.Function = 12 -> Nickelony.LanguageServer.Client.SymbolKind
+Nickelony.LanguageServer.Client.SymbolKind.Interface = 11 -> Nickelony.LanguageServer.Client.SymbolKind
+Nickelony.LanguageServer.Client.SymbolKind.Key = 20 -> Nickelony.LanguageServer.Client.SymbolKind
+Nickelony.LanguageServer.Client.SymbolKind.Method = 6 -> Nickelony.LanguageServer.Client.SymbolKind
+Nickelony.LanguageServer.Client.SymbolKind.Module = 2 -> Nickelony.LanguageServer.Client.SymbolKind
+Nickelony.LanguageServer.Client.SymbolKind.Namespace = 3 -> Nickelony.LanguageServer.Client.SymbolKind
+Nickelony.LanguageServer.Client.SymbolKind.Null = 21 -> Nickelony.LanguageServer.Client.SymbolKind
+Nickelony.LanguageServer.Client.SymbolKind.Number = 16 -> Nickelony.LanguageServer.Client.SymbolKind
+Nickelony.LanguageServer.Client.SymbolKind.Object = 19 -> Nickelony.LanguageServer.Client.SymbolKind
+Nickelony.LanguageServer.Client.SymbolKind.Operator = 25 -> Nickelony.LanguageServer.Client.SymbolKind
+Nickelony.LanguageServer.Client.SymbolKind.Package = 4 -> Nickelony.LanguageServer.Client.SymbolKind
+Nickelony.LanguageServer.Client.SymbolKind.Property = 7 -> Nickelony.LanguageServer.Client.SymbolKind
+Nickelony.LanguageServer.Client.SymbolKind.String = 15 -> Nickelony.LanguageServer.Client.SymbolKind
+Nickelony.LanguageServer.Client.SymbolKind.Struct = 23 -> Nickelony.LanguageServer.Client.SymbolKind
+Nickelony.LanguageServer.Client.SymbolKind.TypeParameter = 26 -> Nickelony.LanguageServer.Client.SymbolKind
+Nickelony.LanguageServer.Client.SymbolKind.Variable = 13 -> Nickelony.LanguageServer.Client.SymbolKind
+Nickelony.LanguageServer.Client.SymbolLocationPayload
+Nickelony.LanguageServer.Client.SymbolLocationPayload.Deconstruct(out string! Uri, out Nickelony.LanguageServer.Client.ProtocolRangePayload Range) -> void
+Nickelony.LanguageServer.Client.SymbolLocationPayload.Equals(Nickelony.LanguageServer.Client.SymbolLocationPayload? other) -> bool
+Nickelony.LanguageServer.Client.SymbolLocationPayload.Range.get -> Nickelony.LanguageServer.Client.ProtocolRangePayload
+Nickelony.LanguageServer.Client.SymbolLocationPayload.Range.init -> void
+Nickelony.LanguageServer.Client.SymbolLocationPayload.SymbolLocationPayload() -> void
+Nickelony.LanguageServer.Client.SymbolLocationPayload.SymbolLocationPayload(string! Uri, Nickelony.LanguageServer.Client.ProtocolRangePayload Range) -> void
+Nickelony.LanguageServer.Client.SymbolLocationPayload.Uri.get -> string!
+Nickelony.LanguageServer.Client.SymbolLocationPayload.Uri.init -> void
+Nickelony.LanguageServer.Client.SymbolTag
+Nickelony.LanguageServer.Client.SymbolTag.Deprecated = 1 -> Nickelony.LanguageServer.Client.SymbolTag
+Nickelony.LanguageServer.Client.TextCompletionItemKindConversion
+Nickelony.LanguageServer.Client.TextDocumentContentChangePayload
+Nickelony.LanguageServer.Client.TextDocumentContentChangePayload.Deconstruct(out string! Text, out Nickelony.LanguageServer.Client.ProtocolRangePayload? Range) -> void
+Nickelony.LanguageServer.Client.TextDocumentContentChangePayload.Equals(Nickelony.LanguageServer.Client.TextDocumentContentChangePayload other) -> bool
+Nickelony.LanguageServer.Client.TextDocumentContentChangePayload.Range.get -> Nickelony.LanguageServer.Client.ProtocolRangePayload?
+Nickelony.LanguageServer.Client.TextDocumentContentChangePayload.Range.init -> void
+Nickelony.LanguageServer.Client.TextDocumentContentChangePayload.Text.get -> string!
+Nickelony.LanguageServer.Client.TextDocumentContentChangePayload.Text.init -> void
+Nickelony.LanguageServer.Client.TextDocumentContentChangePayload.TextDocumentContentChangePayload() -> void
+Nickelony.LanguageServer.Client.TextDocumentContentChangePayload.TextDocumentContentChangePayload(string! Text, Nickelony.LanguageServer.Client.ProtocolRangePayload? Range = null) -> void
+Nickelony.LanguageServer.Client.TextDocumentIdentifier
+Nickelony.LanguageServer.Client.TextDocumentIdentifier.Deconstruct(out string! Uri) -> void
+Nickelony.LanguageServer.Client.TextDocumentIdentifier.Equals(Nickelony.LanguageServer.Client.TextDocumentIdentifier other) -> bool
+Nickelony.LanguageServer.Client.TextDocumentIdentifier.TextDocumentIdentifier() -> void
+Nickelony.LanguageServer.Client.TextDocumentIdentifier.TextDocumentIdentifier(string! Uri) -> void
+Nickelony.LanguageServer.Client.TextDocumentIdentifier.Uri.get -> string!
+Nickelony.LanguageServer.Client.TextDocumentIdentifier.Uri.init -> void
+Nickelony.LanguageServer.Client.TextDocumentPositionParams
+Nickelony.LanguageServer.Client.TextDocumentPositionParams.Deconstruct(out Nickelony.LanguageServer.Client.TextDocumentIdentifier TextDocument, out Nickelony.LanguageServer.Client.ProtocolPosition Position) -> void
+Nickelony.LanguageServer.Client.TextDocumentPositionParams.Equals(Nickelony.LanguageServer.Client.TextDocumentPositionParams other) -> bool
+Nickelony.LanguageServer.Client.TextDocumentPositionParams.Position.get -> Nickelony.LanguageServer.Client.ProtocolPosition
+Nickelony.LanguageServer.Client.TextDocumentPositionParams.Position.init -> void
+Nickelony.LanguageServer.Client.TextDocumentPositionParams.TextDocument.get -> Nickelony.LanguageServer.Client.TextDocumentIdentifier
+Nickelony.LanguageServer.Client.TextDocumentPositionParams.TextDocument.init -> void
+Nickelony.LanguageServer.Client.TextDocumentPositionParams.TextDocumentPositionParams() -> void
+Nickelony.LanguageServer.Client.TextDocumentPositionParams.TextDocumentPositionParams(Nickelony.LanguageServer.Client.TextDocumentIdentifier TextDocument, Nickelony.LanguageServer.Client.ProtocolPosition Position) -> void
+Nickelony.LanguageServer.Client.TextDocumentSymbolKindConversion
+Nickelony.LanguageServer.Client.TextDocumentSyncKind
+Nickelony.LanguageServer.Client.TextDocumentSyncKind.Full = 1 -> Nickelony.LanguageServer.Client.TextDocumentSyncKind
+Nickelony.LanguageServer.Client.TextDocumentSyncKind.Incremental = 2 -> Nickelony.LanguageServer.Client.TextDocumentSyncKind
+Nickelony.LanguageServer.Client.TextDocumentSyncKind.None = 0 -> Nickelony.LanguageServer.Client.TextDocumentSyncKind
+Nickelony.LanguageServer.Client.TextEditPayload
+Nickelony.LanguageServer.Client.TextEditPayload.AnnotationId.get -> string?
+Nickelony.LanguageServer.Client.TextEditPayload.AnnotationId.init -> void
+Nickelony.LanguageServer.Client.TextEditPayload.Deconstruct(out Nickelony.LanguageServer.Client.ProtocolRangePayload? Range, out string? NewText, out string? AnnotationId) -> void
+Nickelony.LanguageServer.Client.TextEditPayload.Equals(Nickelony.LanguageServer.Client.TextEditPayload other) -> bool
+Nickelony.LanguageServer.Client.TextEditPayload.NewText.get -> string?
+Nickelony.LanguageServer.Client.TextEditPayload.NewText.init -> void
+Nickelony.LanguageServer.Client.TextEditPayload.Range.get -> Nickelony.LanguageServer.Client.ProtocolRangePayload?
+Nickelony.LanguageServer.Client.TextEditPayload.Range.init -> void
+Nickelony.LanguageServer.Client.TextEditPayload.TextEditPayload() -> void
+Nickelony.LanguageServer.Client.TextEditPayload.TextEditPayload(Nickelony.LanguageServer.Client.ProtocolRangePayload? Range, string? NewText, string? AnnotationId = null) -> void
+Nickelony.LanguageServer.Client.TolerantCollectionJsonConverter<TElement>
+Nickelony.LanguageServer.Client.TolerantCollectionJsonConverter<TElement>.TolerantCollectionJsonConverter() -> void
+Nickelony.LanguageServer.Client.TolerantCollectionJsonConverter<TElement>.TolerantCollectionJsonConverter(Microsoft.Extensions.Logging.ILogger? logger) -> void
+Nickelony.LanguageServer.Client.TolerantCollectionJsonConverter<TElement>.TolerantCollectionJsonConverter(Microsoft.Extensions.Logging.ILogger? logger, bool requireArrayRoot) -> void
+Nickelony.LanguageServer.Client.TrackedDocumentInitialState
+Nickelony.LanguageServer.Client.TrackedDocumentInitialState.Content.get -> string!
+Nickelony.LanguageServer.Client.TrackedDocumentInitialState.Content.init -> void
+Nickelony.LanguageServer.Client.TrackedDocumentInitialState.Deconstruct(out string! FilePath, out string! Uri, out string! Content, out int Version, out bool IsOpen, out int OpenReferenceCount, out int RequestReferenceCount, out long LastAccessStamp) -> void
+Nickelony.LanguageServer.Client.TrackedDocumentInitialState.Equals(Nickelony.LanguageServer.Client.TrackedDocumentInitialState other) -> bool
+Nickelony.LanguageServer.Client.TrackedDocumentInitialState.FilePath.get -> string!
+Nickelony.LanguageServer.Client.TrackedDocumentInitialState.FilePath.init -> void
+Nickelony.LanguageServer.Client.TrackedDocumentInitialState.IsOpen.get -> bool
+Nickelony.LanguageServer.Client.TrackedDocumentInitialState.IsOpen.init -> void
+Nickelony.LanguageServer.Client.TrackedDocumentInitialState.LastAccessStamp.get -> long
+Nickelony.LanguageServer.Client.TrackedDocumentInitialState.LastAccessStamp.init -> void
+Nickelony.LanguageServer.Client.TrackedDocumentInitialState.OpenReferenceCount.get -> int
+Nickelony.LanguageServer.Client.TrackedDocumentInitialState.OpenReferenceCount.init -> void
+Nickelony.LanguageServer.Client.TrackedDocumentInitialState.RequestReferenceCount.get -> int
+Nickelony.LanguageServer.Client.TrackedDocumentInitialState.RequestReferenceCount.init -> void
+Nickelony.LanguageServer.Client.TrackedDocumentInitialState.TrackedDocumentInitialState() -> void
+Nickelony.LanguageServer.Client.TrackedDocumentInitialState.TrackedDocumentInitialState(string! FilePath, string! Uri, string! Content, int Version, bool IsOpen, int OpenReferenceCount, int RequestReferenceCount, long LastAccessStamp) -> void
+Nickelony.LanguageServer.Client.TrackedDocumentInitialState.Uri.get -> string!
+Nickelony.LanguageServer.Client.TrackedDocumentInitialState.Uri.init -> void
+Nickelony.LanguageServer.Client.TrackedDocumentInitialState.Version.get -> int
+Nickelony.LanguageServer.Client.TrackedDocumentInitialState.Version.init -> void
+Nickelony.LanguageServer.Client.TrackedDocumentState
+Nickelony.LanguageServer.Client.TrackedDocumentState.Content.get -> string!
+Nickelony.LanguageServer.Client.TrackedDocumentState.CreateSnapshot() -> Nickelony.LanguageServer.Client.DocumentSnapshot!
+Nickelony.LanguageServer.Client.TrackedDocumentState.FilePath.get -> string!
+Nickelony.LanguageServer.Client.TrackedDocumentState.IsOpen.get -> bool
+Nickelony.LanguageServer.Client.TrackedDocumentState.LastAccessStamp.get -> long
+Nickelony.LanguageServer.Client.TrackedDocumentState.MarkDocumentClosed() -> void
+Nickelony.LanguageServer.Client.TrackedDocumentState.References.get -> Nickelony.LanguageServer.Client.DocumentReferenceTracker!
+Nickelony.LanguageServer.Client.TrackedDocumentState.RenameDocument(string! filePath, string! uri) -> void
+Nickelony.LanguageServer.Client.TrackedDocumentState.ReopenDocument(string! content) -> void
+Nickelony.LanguageServer.Client.TrackedDocumentState.ReplaceContent(string! content) -> string!
+Nickelony.LanguageServer.Client.TrackedDocumentState.SetLastAccessStamp(long lastAccessStamp) -> void
+Nickelony.LanguageServer.Client.TrackedDocumentState.TrackedDocumentState(Nickelony.LanguageServer.Client.TrackedDocumentInitialState initialState) -> void
+Nickelony.LanguageServer.Client.TrackedDocumentState.Uri.get -> string!
+Nickelony.LanguageServer.Client.TrackedDocumentState.Version.get -> int
+Nickelony.LanguageServer.Client.TrackedDocumentStore<TTrackedDocumentState>
+Nickelony.LanguageServer.Client.TrackedDocumentStore<TTrackedDocumentState>.GetDocumentSnapshot(string! filePath) -> Nickelony.LanguageServer.Client.DocumentSnapshot?
+Nickelony.LanguageServer.Client.TrackedDocumentStore<TTrackedDocumentState>.GetOpenDocuments() -> System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.DocumentSnapshot!>!
+Nickelony.LanguageServer.Client.TrackedDocumentStore<TTrackedDocumentState>.PrepareForRestart() -> System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.DocumentSnapshot!>!
+Nickelony.LanguageServer.Client.TrackedDocumentStore<TTrackedDocumentState>.ReleaseRequestByReference(Nickelony.LanguageServer.Client.DocumentRequestReference! requestReference) -> void
+Nickelony.LanguageServer.Client.TrackedDocumentStore<TTrackedDocumentState>.Rename(string! oldFilePath, string! newFilePath, string? content = null) -> Nickelony.LanguageServer.Client.DocumentRenameResult
+Nickelony.LanguageServer.Client.TrackedDocumentStore<TTrackedDocumentState>.Synchronize(string! filePath, string! content, Nickelony.LanguageServer.Client.DocumentReferenceAcquisition references = Nickelony.LanguageServer.Client.DocumentReferenceAcquisition.None, bool includeChangeRange = true, Nickelony.LanguageServer.Client.DocumentRequestReference? requestReference = null) -> Nickelony.LanguageServer.Client.DocumentSynchronizationRequest?
+Nickelony.LanguageServer.Client.TrackedDocumentStore<TTrackedDocumentState>.TrackedDocumentStore() -> void
+Nickelony.LanguageServer.Client.TrackedDocumentStore<TTrackedDocumentState>.TrimIdleDocuments(int maxCount) -> System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.DocumentSnapshot!>!
+Nickelony.LanguageServer.Client.TrackedDocumentStore<TTrackedDocumentState>.TryClose(string! filePath, out Nickelony.LanguageServer.Client.DocumentSnapshot? closingDocument) -> Nickelony.LanguageServer.Client.DocumentCloseOutcome
+Nickelony.LanguageServer.Client.TrackedDocumentStore<TTrackedDocumentState>.TryReleaseRequestByPath(string! filePath, out Nickelony.LanguageServer.Client.DocumentSnapshot? closingDocument) -> bool
+Nickelony.LanguageServer.Client.TrackedDocumentStore<TTrackedDocumentState>.TryReopenTrackedDocument(string! filePath) -> Nickelony.LanguageServer.Client.DocumentSynchronizationRequest?
+Nickelony.LanguageServer.Client.TrackedDocumentStore<TTrackedDocumentState>.WithTrackedDocument(string! filePath, System.Action<TTrackedDocumentState!>! mutateTrackedDocument) -> void
+Nickelony.LanguageServer.Client.TrackedDocumentStore<TTrackedDocumentState>.WithTrackedDocument<TResult>(string! filePath, System.Func<TTrackedDocumentState!, TResult>! accessTrackedDocument, TResult fallbackValue) -> TResult
+Nickelony.LanguageServer.Client.TransportUnavailableEventArgs
+Nickelony.LanguageServer.Client.TransportUnavailableEventArgs.Generation.get -> long
+Nickelony.LanguageServer.Client.TransportUnavailableEventArgs.TransportUnavailableEventArgs(long generation) -> void
+Nickelony.LanguageServer.Client.VersionedTextDocumentIdentifier
+Nickelony.LanguageServer.Client.VersionedTextDocumentIdentifier.Deconstruct(out string! Uri, out int Version) -> void
+Nickelony.LanguageServer.Client.VersionedTextDocumentIdentifier.Equals(Nickelony.LanguageServer.Client.VersionedTextDocumentIdentifier other) -> bool
+Nickelony.LanguageServer.Client.VersionedTextDocumentIdentifier.Uri.get -> string!
+Nickelony.LanguageServer.Client.VersionedTextDocumentIdentifier.Uri.init -> void
+Nickelony.LanguageServer.Client.VersionedTextDocumentIdentifier.Version.get -> int
+Nickelony.LanguageServer.Client.VersionedTextDocumentIdentifier.Version.init -> void
+Nickelony.LanguageServer.Client.VersionedTextDocumentIdentifier.VersionedTextDocumentIdentifier() -> void
+Nickelony.LanguageServer.Client.VersionedTextDocumentIdentifier.VersionedTextDocumentIdentifier(string! Uri, int Version) -> void
+Nickelony.LanguageServer.Client.WorkspaceChangeAccumulator
+Nickelony.LanguageServer.Client.WorkspaceChangeAccumulator.Add(string! path, Nickelony.LanguageServer.Client.FileChangeKind kind) -> void
+Nickelony.LanguageServer.Client.WorkspaceChangeAccumulator.AddRange(System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.WorkspaceFileChange>! changes) -> void
+Nickelony.LanguageServer.Client.WorkspaceChangeAccumulator.DrainBatch() -> Nickelony.LanguageServer.Client.FileChangeBatch!
+Nickelony.LanguageServer.Client.WorkspaceChangeAccumulator.IsEmpty.get -> bool
+Nickelony.LanguageServer.Client.WorkspaceChangeAccumulator.WorkspaceChangeAccumulator() -> void
+Nickelony.LanguageServer.Client.WorkspaceDocumentChangePayload
+Nickelony.LanguageServer.Client.WorkspaceDocumentChangePayload.Edits.get -> System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.TextEditPayload>?
+Nickelony.LanguageServer.Client.WorkspaceDocumentChangePayload.Equals(Nickelony.LanguageServer.Client.WorkspaceDocumentChangePayload? other) -> bool
+Nickelony.LanguageServer.Client.WorkspaceDocumentChangePayload.IsResourceOperation.get -> bool
+Nickelony.LanguageServer.Client.WorkspaceDocumentChangePayload.Kind.get -> string?
+Nickelony.LanguageServer.Client.WorkspaceDocumentChangePayload.NewUri.get -> string?
+Nickelony.LanguageServer.Client.WorkspaceDocumentChangePayload.OldUri.get -> string?
+Nickelony.LanguageServer.Client.WorkspaceDocumentChangePayload.Options.get -> Nickelony.LanguageServer.Client.WorkspaceResourceOperationOptionsPayload?
+Nickelony.LanguageServer.Client.WorkspaceDocumentChangePayload.TextDocument.get -> Nickelony.LanguageServer.Client.OptionalVersionedTextDocumentIdentifier?
+Nickelony.LanguageServer.Client.WorkspaceDocumentChangePayload.Uri.get -> string?
+Nickelony.LanguageServer.Client.WorkspaceDocumentChangePayload.WorkspaceDocumentChangePayload() -> void
+Nickelony.LanguageServer.Client.WorkspaceDocumentChangePayload.WorkspaceDocumentChangePayload(Nickelony.LanguageServer.Client.OptionalVersionedTextDocumentIdentifier? textDocument, System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.TextEditPayload>? edits, string? kind, string? uri, string? oldUri, string? newUri, Nickelony.LanguageServer.Client.WorkspaceResourceOperationOptionsPayload? options = null) -> void
+Nickelony.LanguageServer.Client.WorkspaceEditChangeAnnotationPayload
+Nickelony.LanguageServer.Client.WorkspaceEditChangeAnnotationPayload.Deconstruct(out string? Label, out bool? NeedsConfirmation, out string? Description) -> void
+Nickelony.LanguageServer.Client.WorkspaceEditChangeAnnotationPayload.Description.get -> string?
+Nickelony.LanguageServer.Client.WorkspaceEditChangeAnnotationPayload.Description.init -> void
+Nickelony.LanguageServer.Client.WorkspaceEditChangeAnnotationPayload.Equals(Nickelony.LanguageServer.Client.WorkspaceEditChangeAnnotationPayload other) -> bool
+Nickelony.LanguageServer.Client.WorkspaceEditChangeAnnotationPayload.Label.get -> string?
+Nickelony.LanguageServer.Client.WorkspaceEditChangeAnnotationPayload.Label.init -> void
+Nickelony.LanguageServer.Client.WorkspaceEditChangeAnnotationPayload.NeedsConfirmation.get -> bool?
+Nickelony.LanguageServer.Client.WorkspaceEditChangeAnnotationPayload.NeedsConfirmation.init -> void
+Nickelony.LanguageServer.Client.WorkspaceEditChangeAnnotationPayload.WorkspaceEditChangeAnnotationPayload() -> void
+Nickelony.LanguageServer.Client.WorkspaceEditChangeAnnotationPayload.WorkspaceEditChangeAnnotationPayload(string? Label, bool? NeedsConfirmation, string? Description) -> void
+Nickelony.LanguageServer.Client.WorkspaceEditResponse
+Nickelony.LanguageServer.Client.WorkspaceEditResponse.ChangeAnnotations.get -> System.Collections.Generic.IReadOnlyDictionary<string!, Nickelony.LanguageServer.Client.WorkspaceEditChangeAnnotationPayload>?
+Nickelony.LanguageServer.Client.WorkspaceEditResponse.Changes.get -> System.Collections.Generic.IReadOnlyDictionary<string!, System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.TextEditPayload>?>?
+Nickelony.LanguageServer.Client.WorkspaceEditResponse.DocumentChanges.get -> System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.WorkspaceDocumentChangePayload!>?
+Nickelony.LanguageServer.Client.WorkspaceEditResponse.Equals(Nickelony.LanguageServer.Client.WorkspaceEditResponse other) -> bool
+Nickelony.LanguageServer.Client.WorkspaceEditResponse.WorkspaceEditResponse() -> void
+Nickelony.LanguageServer.Client.WorkspaceEditResponse.WorkspaceEditResponse(System.Collections.Generic.IReadOnlyDictionary<string!, System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.TextEditPayload>?>? changes, System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.WorkspaceDocumentChangePayload!>? documentChanges, System.Collections.Generic.IReadOnlyDictionary<string!, Nickelony.LanguageServer.Client.WorkspaceEditChangeAnnotationPayload>? changeAnnotations = null) -> void
+Nickelony.LanguageServer.Client.WorkspaceFileChange
+Nickelony.LanguageServer.Client.WorkspaceFileChange.Deconstruct(out string! Path, out Nickelony.LanguageServer.Client.FileChangeKind Kind) -> void
+Nickelony.LanguageServer.Client.WorkspaceFileChange.Equals(Nickelony.LanguageServer.Client.WorkspaceFileChange other) -> bool
+Nickelony.LanguageServer.Client.WorkspaceFileChange.Kind.get -> Nickelony.LanguageServer.Client.FileChangeKind
+Nickelony.LanguageServer.Client.WorkspaceFileChange.Kind.init -> void
+Nickelony.LanguageServer.Client.WorkspaceFileChange.Path.get -> string!
+Nickelony.LanguageServer.Client.WorkspaceFileChange.Path.init -> void
+Nickelony.LanguageServer.Client.WorkspaceFileChange.WorkspaceFileChange() -> void
+Nickelony.LanguageServer.Client.WorkspaceFileChange.WorkspaceFileChange(string! Path, Nickelony.LanguageServer.Client.FileChangeKind Kind) -> void
+Nickelony.LanguageServer.Client.WorkspaceFileWatcher
+Nickelony.LanguageServer.Client.WorkspaceFileWatcher.Dispose() -> void
+Nickelony.LanguageServer.Client.WorkspaceFileWatcher.DisposeAsync() -> System.Threading.Tasks.ValueTask
+Nickelony.LanguageServer.Client.WorkspaceFileWatcher.IsDisposed.get -> bool
+Nickelony.LanguageServer.Client.WorkspaceFileWatcher.Start(out System.Exception? startupException) -> Nickelony.LanguageServer.Client.WorkspaceWatcherStartOutcome
+Nickelony.LanguageServer.Client.WorkspaceFileWatcher.WorkspaceFileWatcher(string! workspaceRootDirectoryPath, System.Func<Nickelony.LanguageServer.Client.FileChangeBatch!, System.Threading.CancellationToken, System.Threading.Tasks.Task!>! dispatchAsync, System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.WorkspaceWatchSpecification>! watchSpecifications, System.Action<Nickelony.LanguageServer.Client.WorkspaceFileWatcher!, System.Exception?>? onWatcherFailed = null, Microsoft.Extensions.Logging.ILogger? logger = null) -> void
+Nickelony.LanguageServer.Client.WorkspaceResourceOperationOptionsPayload
+Nickelony.LanguageServer.Client.WorkspaceResourceOperationOptionsPayload.Deconstruct(out bool? Overwrite, out bool? IgnoreIfExists, out bool? IgnoreIfNotExists, out bool? Recursive) -> void
+Nickelony.LanguageServer.Client.WorkspaceResourceOperationOptionsPayload.Equals(Nickelony.LanguageServer.Client.WorkspaceResourceOperationOptionsPayload other) -> bool
+Nickelony.LanguageServer.Client.WorkspaceResourceOperationOptionsPayload.IgnoreIfExists.get -> bool?
+Nickelony.LanguageServer.Client.WorkspaceResourceOperationOptionsPayload.IgnoreIfExists.init -> void
+Nickelony.LanguageServer.Client.WorkspaceResourceOperationOptionsPayload.IgnoreIfNotExists.get -> bool?
+Nickelony.LanguageServer.Client.WorkspaceResourceOperationOptionsPayload.IgnoreIfNotExists.init -> void
+Nickelony.LanguageServer.Client.WorkspaceResourceOperationOptionsPayload.Overwrite.get -> bool?
+Nickelony.LanguageServer.Client.WorkspaceResourceOperationOptionsPayload.Overwrite.init -> void
+Nickelony.LanguageServer.Client.WorkspaceResourceOperationOptionsPayload.Recursive.get -> bool?
+Nickelony.LanguageServer.Client.WorkspaceResourceOperationOptionsPayload.Recursive.init -> void
+Nickelony.LanguageServer.Client.WorkspaceResourceOperationOptionsPayload.WorkspaceResourceOperationOptionsPayload() -> void
+Nickelony.LanguageServer.Client.WorkspaceResourceOperationOptionsPayload.WorkspaceResourceOperationOptionsPayload(bool? Overwrite = null, bool? IgnoreIfExists = null, bool? IgnoreIfNotExists = null, bool? Recursive = null) -> void
+Nickelony.LanguageServer.Client.WorkspaceSnapshotEntry
+Nickelony.LanguageServer.Client.WorkspaceSnapshotEntry.ContentFingerprint.get -> ulong
+Nickelony.LanguageServer.Client.WorkspaceSnapshotEntry.ContentFingerprint.init -> void
+Nickelony.LanguageServer.Client.WorkspaceSnapshotEntry.Deconstruct(out bool IsDirectory, out long LastWriteUtcTicks, out long Length, out ulong ContentFingerprint) -> void
+Nickelony.LanguageServer.Client.WorkspaceSnapshotEntry.Equals(Nickelony.LanguageServer.Client.WorkspaceSnapshotEntry other) -> bool
+Nickelony.LanguageServer.Client.WorkspaceSnapshotEntry.IsDirectory.get -> bool
+Nickelony.LanguageServer.Client.WorkspaceSnapshotEntry.IsDirectory.init -> void
+Nickelony.LanguageServer.Client.WorkspaceSnapshotEntry.LastWriteUtcTicks.get -> long
+Nickelony.LanguageServer.Client.WorkspaceSnapshotEntry.LastWriteUtcTicks.init -> void
+Nickelony.LanguageServer.Client.WorkspaceSnapshotEntry.Length.get -> long
+Nickelony.LanguageServer.Client.WorkspaceSnapshotEntry.Length.init -> void
+Nickelony.LanguageServer.Client.WorkspaceSnapshotEntry.WorkspaceSnapshotEntry() -> void
+Nickelony.LanguageServer.Client.WorkspaceSnapshotEntry.WorkspaceSnapshotEntry(bool IsDirectory, long LastWriteUtcTicks, long Length, ulong ContentFingerprint) -> void
+Nickelony.LanguageServer.Client.WorkspaceSnapshotTracker
+Nickelony.LanguageServer.Client.WorkspaceSnapshotTracker.ApplyChanges(System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.WorkspaceFileChange>! changes) -> void
+Nickelony.LanguageServer.Client.WorkspaceSnapshotTracker.CaptureTrackedSnapshot() -> void
+Nickelony.LanguageServer.Client.WorkspaceSnapshotTracker.CloneTrackedSnapshot() -> System.Collections.Generic.Dictionary<string!, Nickelony.LanguageServer.Client.WorkspaceSnapshotEntry>!
+Nickelony.LanguageServer.Client.WorkspaceSnapshotTracker.ReplaceTrackedSnapshotWithCurrent() -> System.Collections.Generic.Dictionary<string!, Nickelony.LanguageServer.Client.WorkspaceSnapshotEntry>!
+Nickelony.LanguageServer.Client.WorkspaceSnapshotTracker.WorkspaceSnapshotTracker(string! workspaceRootDirectoryPath, System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.WorkspaceWatchSpecification>! watchSpecifications, Microsoft.Extensions.Logging.ILogger? logger = null) -> void
+Nickelony.LanguageServer.Client.WorkspaceWatchSpecification
+Nickelony.LanguageServer.Client.WorkspaceWatchSpecification.Deconstruct(out string! Filter, out bool IncludeSubdirectories) -> void
+Nickelony.LanguageServer.Client.WorkspaceWatchSpecification.Equals(Nickelony.LanguageServer.Client.WorkspaceWatchSpecification other) -> bool
+Nickelony.LanguageServer.Client.WorkspaceWatchSpecification.Filter.get -> string!
+Nickelony.LanguageServer.Client.WorkspaceWatchSpecification.Filter.init -> void
+Nickelony.LanguageServer.Client.WorkspaceWatchSpecification.IncludeSubdirectories.get -> bool
+Nickelony.LanguageServer.Client.WorkspaceWatchSpecification.IncludeSubdirectories.init -> void
+Nickelony.LanguageServer.Client.WorkspaceWatchSpecification.WorkspaceWatchSpecification() -> void
+Nickelony.LanguageServer.Client.WorkspaceWatchSpecification.WorkspaceWatchSpecification(string! Filter, bool IncludeSubdirectories) -> void
+Nickelony.LanguageServer.Client.WorkspaceWatcherStartOutcome
+Nickelony.LanguageServer.Client.WorkspaceWatcherStartOutcome.AlreadyRunning = 2 -> Nickelony.LanguageServer.Client.WorkspaceWatcherStartOutcome
+Nickelony.LanguageServer.Client.WorkspaceWatcherStartOutcome.Disposed = 3 -> Nickelony.LanguageServer.Client.WorkspaceWatcherStartOutcome
+Nickelony.LanguageServer.Client.WorkspaceWatcherStartOutcome.Started = 1 -> Nickelony.LanguageServer.Client.WorkspaceWatcherStartOutcome
+Nickelony.LanguageServer.Client.WorkspaceWatcherStartOutcome.StartupFailed = 5 -> Nickelony.LanguageServer.Client.WorkspaceWatcherStartOutcome
+Nickelony.LanguageServer.Client.WorkspaceWatcherStartOutcome.WorkspaceRootMissing = 4 -> Nickelony.LanguageServer.Client.WorkspaceWatcherStartOutcome
+abstract Nickelony.LanguageServer.Client.CompletionTextEditPayload.<Clone>$() -> Nickelony.LanguageServer.Client.CompletionTextEditPayload!
+abstract Nickelony.LanguageServer.Client.TrackedDocumentStore<TTrackedDocumentState>.CreateTrackedDocumentState(Nickelony.LanguageServer.Client.TrackedDocumentInitialState initialState) -> TTrackedDocumentState!
+abstract Nickelony.LanguageServer.Client.TrackedDocumentStore<TTrackedDocumentState>.GetLastAccessStamp(TTrackedDocumentState! state) -> long
+abstract Nickelony.LanguageServer.Client.TrackedDocumentStore<TTrackedDocumentState>.MarkTrackedDocumentClosed(TTrackedDocumentState! state) -> void
+abstract Nickelony.LanguageServer.Client.TrackedDocumentStore<TTrackedDocumentState>.RenameTrackedDocumentState(TTrackedDocumentState! state, string! filePath, string! uri) -> void
+abstract Nickelony.LanguageServer.Client.TrackedDocumentStore<TTrackedDocumentState>.ReopenTrackedDocumentState(TTrackedDocumentState! state, string! content) -> void
+abstract Nickelony.LanguageServer.Client.TrackedDocumentStore<TTrackedDocumentState>.ReplaceTrackedDocumentContent(TTrackedDocumentState! state, string! content) -> string!
+abstract Nickelony.LanguageServer.Client.TrackedDocumentStore<TTrackedDocumentState>.TouchTrackedDocumentState(TTrackedDocumentState! state, long lastAccessStamp) -> void
+override Nickelony.LanguageServer.Client.CodeActionCommandPayload.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.CodeActionContextPayload.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.CodeActionDisabledPayload.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.CodeActionParams.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.CodeActionsResponseJsonConverter.Read(ref System.Text.Json.Utf8JsonReader reader, System.Type! typeToConvert, System.Text.Json.JsonSerializerOptions! options) -> Nickelony.LanguageServer.Client.CodeActionsResponse!
+override Nickelony.LanguageServer.Client.CodeActionsResponseJsonConverter.Write(System.Text.Json.Utf8JsonWriter! writer, Nickelony.LanguageServer.Client.CodeActionsResponse! value, System.Text.Json.JsonSerializerOptions! options) -> void
+override Nickelony.LanguageServer.Client.CompletionContextPayload.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.CompletionInsertReplaceTextEditPayload.<Clone>$() -> Nickelony.LanguageServer.Client.CompletionInsertReplaceTextEditPayload!
+override Nickelony.LanguageServer.Client.CompletionInsertReplaceTextEditPayload.Equals(object? obj) -> bool
+override Nickelony.LanguageServer.Client.CompletionInsertReplaceTextEditPayload.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.CompletionInsertReplaceTextEditPayload.ToString() -> string!
+override Nickelony.LanguageServer.Client.CompletionItemPayload.Equals(object? obj) -> bool
+override Nickelony.LanguageServer.Client.CompletionItemPayload.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.CompletionItemPayload.ToString() -> string!
+override Nickelony.LanguageServer.Client.CompletionParams.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.CompletionRangeTextEditPayload.<Clone>$() -> Nickelony.LanguageServer.Client.CompletionRangeTextEditPayload!
+override Nickelony.LanguageServer.Client.CompletionRangeTextEditPayload.Equals(object? obj) -> bool
+override Nickelony.LanguageServer.Client.CompletionRangeTextEditPayload.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.CompletionRangeTextEditPayload.ToString() -> string!
+override Nickelony.LanguageServer.Client.CompletionResponseJsonConverter.Read(ref System.Text.Json.Utf8JsonReader reader, System.Type! typeToConvert, System.Text.Json.JsonSerializerOptions! options) -> Nickelony.LanguageServer.Client.CompletionResponse?
+override Nickelony.LanguageServer.Client.CompletionResponseJsonConverter.Write(System.Text.Json.Utf8JsonWriter! writer, Nickelony.LanguageServer.Client.CompletionResponse! value, System.Text.Json.JsonSerializerOptions! options) -> void
+override Nickelony.LanguageServer.Client.CompletionTextEditPayload.Equals(object? obj) -> bool
+override Nickelony.LanguageServer.Client.CompletionTextEditPayload.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.CompletionTextEditPayload.ToString() -> string!
+override Nickelony.LanguageServer.Client.CompletionTextEditPayloadJsonConverter.Read(ref System.Text.Json.Utf8JsonReader reader, System.Type! typeToConvert, System.Text.Json.JsonSerializerOptions! options) -> Nickelony.LanguageServer.Client.CompletionTextEditPayload!
+override Nickelony.LanguageServer.Client.CompletionTextEditPayloadJsonConverter.Write(System.Text.Json.Utf8JsonWriter! writer, Nickelony.LanguageServer.Client.CompletionTextEditPayload! value, System.Text.Json.JsonSerializerOptions! options) -> void
+override Nickelony.LanguageServer.Client.DefinitionResponseJsonConverter.Read(ref System.Text.Json.Utf8JsonReader reader, System.Type! typeToConvert, System.Text.Json.JsonSerializerOptions! options) -> Nickelony.LanguageServer.Client.DefinitionResponse!
+override Nickelony.LanguageServer.Client.DefinitionResponseJsonConverter.Write(System.Text.Json.Utf8JsonWriter! writer, Nickelony.LanguageServer.Client.DefinitionResponse! value, System.Text.Json.JsonSerializerOptions! options) -> void
+override Nickelony.LanguageServer.Client.DefinitionTargetPayload.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.DiagnosticCodeDescriptionPayload.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.DiagnosticPayload.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.DiagnosticRelatedInformationPayload.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.DidChangeConfigurationParams.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.DidChangeTextDocumentParams.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.DidChangeWatchedFilesParams.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.DidCloseTextDocumentParams.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.DidOpenTextDocumentParams.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.DidOpenTextDocumentPayload.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.DocumentChangeRange.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.DocumentFormattingParams.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.DocumentRenameRequest.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.DocumentRenameResult.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.DocumentSymbolParams.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.DocumentSymbolsResponseJsonConverter.Read(ref System.Text.Json.Utf8JsonReader reader, System.Type! typeToConvert, System.Text.Json.JsonSerializerOptions! options) -> Nickelony.LanguageServer.Client.DocumentSymbolsResponse!
+override Nickelony.LanguageServer.Client.DocumentSymbolsResponseJsonConverter.Write(System.Text.Json.Utf8JsonWriter! writer, Nickelony.LanguageServer.Client.DocumentSymbolsResponse! value, System.Text.Json.JsonSerializerOptions! options) -> void
+override Nickelony.LanguageServer.Client.DocumentSynchronizationRequest.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.FileEventPayload.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.FormattingOptionsPayload.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.LanguageServerClientOptions.Equals(object? obj) -> bool
+override Nickelony.LanguageServer.Client.LanguageServerClientOptions.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.LanguageServerClientOptions.ToString() -> string!
+override Nickelony.LanguageServer.Client.LanguageServerTransportContext.Equals(object? obj) -> bool
+override Nickelony.LanguageServer.Client.LanguageServerTransportContext.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.LanguageServerTransportContext.ToString() -> string!
+override Nickelony.LanguageServer.Client.OptionalVersionedTextDocumentIdentifier.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.ProtocolLocationPayload.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.ProtocolMarkupContent.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.ProtocolPosition.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.ProtocolRangePayload.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.ProtocolRangePayloadJsonConverter.Read(ref System.Text.Json.Utf8JsonReader reader, System.Type! typeToConvert, System.Text.Json.JsonSerializerOptions! options) -> Nickelony.LanguageServer.Client.ProtocolRangePayload
+override Nickelony.LanguageServer.Client.ProtocolRangePayloadJsonConverter.Write(System.Text.Json.Utf8JsonWriter! writer, Nickelony.LanguageServer.Client.ProtocolRangePayload value, System.Text.Json.JsonSerializerOptions! options) -> void
+override Nickelony.LanguageServer.Client.PublishDiagnosticsParams.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.PublishDiagnosticsParamsJsonConverter.Read(ref System.Text.Json.Utf8JsonReader reader, System.Type! typeToConvert, System.Text.Json.JsonSerializerOptions! options) -> Nickelony.LanguageServer.Client.PublishDiagnosticsParams!
+override Nickelony.LanguageServer.Client.PublishDiagnosticsParamsJsonConverter.Write(System.Text.Json.Utf8JsonWriter! writer, Nickelony.LanguageServer.Client.PublishDiagnosticsParams! value, System.Text.Json.JsonSerializerOptions! options) -> void
+override Nickelony.LanguageServer.Client.ReferenceContextPayload.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.ReferenceLocationPayload.Equals(object? obj) -> bool
+override Nickelony.LanguageServer.Client.ReferenceLocationPayload.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.ReferenceLocationPayload.ToString() -> string!
+override Nickelony.LanguageServer.Client.ReferenceParams.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.RenameParams.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.SemanticTokensDeltaParams.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.SemanticTokensDeltaResponse.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.SemanticTokensEditPayload.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.SemanticTokensParams.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.SemanticTokensResponsePayload.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.SignatureHelpContextPayload.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.SignatureHelpParameterPayload.Equals(object? obj) -> bool
+override Nickelony.LanguageServer.Client.SignatureHelpParameterPayload.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.SignatureHelpParameterPayload.ToString() -> string!
+override Nickelony.LanguageServer.Client.SignatureHelpParameterPayloadJsonConverter.Read(ref System.Text.Json.Utf8JsonReader reader, System.Type! typeToConvert, System.Text.Json.JsonSerializerOptions! options) -> Nickelony.LanguageServer.Client.SignatureHelpParameterPayload!
+override Nickelony.LanguageServer.Client.SignatureHelpParameterPayloadJsonConverter.Write(System.Text.Json.Utf8JsonWriter! writer, Nickelony.LanguageServer.Client.SignatureHelpParameterPayload! value, System.Text.Json.JsonSerializerOptions! options) -> void
+override Nickelony.LanguageServer.Client.SignatureHelpParams.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.SignatureHelpResponseJsonConverter.Read(ref System.Text.Json.Utf8JsonReader reader, System.Type! typeToConvert, System.Text.Json.JsonSerializerOptions! options) -> Nickelony.LanguageServer.Client.SignatureHelpResponse?
+override Nickelony.LanguageServer.Client.SignatureHelpResponseJsonConverter.Write(System.Text.Json.Utf8JsonWriter! writer, Nickelony.LanguageServer.Client.SignatureHelpResponse! value, System.Text.Json.JsonSerializerOptions! options) -> void
+override Nickelony.LanguageServer.Client.SignatureHelpSignaturePayload.Equals(object? obj) -> bool
+override Nickelony.LanguageServer.Client.SignatureHelpSignaturePayload.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.SignatureHelpSignaturePayload.ToString() -> string!
+override Nickelony.LanguageServer.Client.SignatureHelpSignaturePayloadJsonConverter.Read(ref System.Text.Json.Utf8JsonReader reader, System.Type! typeToConvert, System.Text.Json.JsonSerializerOptions! options) -> Nickelony.LanguageServer.Client.SignatureHelpSignaturePayload?
+override Nickelony.LanguageServer.Client.SignatureHelpSignaturePayloadJsonConverter.Write(System.Text.Json.Utf8JsonWriter! writer, Nickelony.LanguageServer.Client.SignatureHelpSignaturePayload! value, System.Text.Json.JsonSerializerOptions! options) -> void
+override Nickelony.LanguageServer.Client.SymbolLocationPayload.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.TextDocumentContentChangePayload.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.TextDocumentIdentifier.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.TextDocumentPositionParams.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.TextEditPayload.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.TolerantCollectionJsonConverter<TElement>.CanConvert(System.Type! typeToConvert) -> bool
+override Nickelony.LanguageServer.Client.TolerantCollectionJsonConverter<TElement>.CreateConverter(System.Type! typeToConvert, System.Text.Json.JsonSerializerOptions! options) -> System.Text.Json.Serialization.JsonConverter!
+override Nickelony.LanguageServer.Client.TrackedDocumentInitialState.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.VersionedTextDocumentIdentifier.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.WorkspaceDocumentChangePayload.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.WorkspaceEditChangeAnnotationPayload.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.WorkspaceEditResponse.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.WorkspaceFileChange.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.WorkspaceResourceOperationOptionsPayload.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.WorkspaceSnapshotEntry.GetHashCode() -> int
+override Nickelony.LanguageServer.Client.WorkspaceWatchSpecification.GetHashCode() -> int
+override sealed Nickelony.LanguageServer.Client.CompletionInsertReplaceTextEditPayload.Equals(Nickelony.LanguageServer.Client.CompletionTextEditPayload? other) -> bool
+override sealed Nickelony.LanguageServer.Client.CompletionRangeTextEditPayload.Equals(Nickelony.LanguageServer.Client.CompletionTextEditPayload? other) -> bool
+static Nickelony.LanguageServer.Client.CodeActionCommandPayload.operator !=(Nickelony.LanguageServer.Client.CodeActionCommandPayload left, Nickelony.LanguageServer.Client.CodeActionCommandPayload right) -> bool
+static Nickelony.LanguageServer.Client.CodeActionCommandPayload.operator ==(Nickelony.LanguageServer.Client.CodeActionCommandPayload left, Nickelony.LanguageServer.Client.CodeActionCommandPayload right) -> bool
+static Nickelony.LanguageServer.Client.CodeActionContextPayload.operator !=(Nickelony.LanguageServer.Client.CodeActionContextPayload left, Nickelony.LanguageServer.Client.CodeActionContextPayload right) -> bool
+static Nickelony.LanguageServer.Client.CodeActionContextPayload.operator ==(Nickelony.LanguageServer.Client.CodeActionContextPayload left, Nickelony.LanguageServer.Client.CodeActionContextPayload right) -> bool
+static Nickelony.LanguageServer.Client.CodeActionDisabledPayload.operator !=(Nickelony.LanguageServer.Client.CodeActionDisabledPayload left, Nickelony.LanguageServer.Client.CodeActionDisabledPayload right) -> bool
+static Nickelony.LanguageServer.Client.CodeActionDisabledPayload.operator ==(Nickelony.LanguageServer.Client.CodeActionDisabledPayload left, Nickelony.LanguageServer.Client.CodeActionDisabledPayload right) -> bool
+static Nickelony.LanguageServer.Client.CodeActionParams.operator !=(Nickelony.LanguageServer.Client.CodeActionParams left, Nickelony.LanguageServer.Client.CodeActionParams right) -> bool
+static Nickelony.LanguageServer.Client.CodeActionParams.operator ==(Nickelony.LanguageServer.Client.CodeActionParams left, Nickelony.LanguageServer.Client.CodeActionParams right) -> bool
+static Nickelony.LanguageServer.Client.CompletionContextPayload.operator !=(Nickelony.LanguageServer.Client.CompletionContextPayload left, Nickelony.LanguageServer.Client.CompletionContextPayload right) -> bool
+static Nickelony.LanguageServer.Client.CompletionContextPayload.operator ==(Nickelony.LanguageServer.Client.CompletionContextPayload left, Nickelony.LanguageServer.Client.CompletionContextPayload right) -> bool
+static Nickelony.LanguageServer.Client.CompletionInsertReplaceTextEditPayload.operator !=(Nickelony.LanguageServer.Client.CompletionInsertReplaceTextEditPayload? left, Nickelony.LanguageServer.Client.CompletionInsertReplaceTextEditPayload? right) -> bool
+static Nickelony.LanguageServer.Client.CompletionInsertReplaceTextEditPayload.operator ==(Nickelony.LanguageServer.Client.CompletionInsertReplaceTextEditPayload? left, Nickelony.LanguageServer.Client.CompletionInsertReplaceTextEditPayload? right) -> bool
+static Nickelony.LanguageServer.Client.CompletionItemPayload.operator !=(Nickelony.LanguageServer.Client.CompletionItemPayload? left, Nickelony.LanguageServer.Client.CompletionItemPayload? right) -> bool
+static Nickelony.LanguageServer.Client.CompletionItemPayload.operator ==(Nickelony.LanguageServer.Client.CompletionItemPayload? left, Nickelony.LanguageServer.Client.CompletionItemPayload? right) -> bool
+static Nickelony.LanguageServer.Client.CompletionParams.operator !=(Nickelony.LanguageServer.Client.CompletionParams left, Nickelony.LanguageServer.Client.CompletionParams right) -> bool
+static Nickelony.LanguageServer.Client.CompletionParams.operator ==(Nickelony.LanguageServer.Client.CompletionParams left, Nickelony.LanguageServer.Client.CompletionParams right) -> bool
+static Nickelony.LanguageServer.Client.CompletionRangeTextEditPayload.operator !=(Nickelony.LanguageServer.Client.CompletionRangeTextEditPayload? left, Nickelony.LanguageServer.Client.CompletionRangeTextEditPayload? right) -> bool
+static Nickelony.LanguageServer.Client.CompletionRangeTextEditPayload.operator ==(Nickelony.LanguageServer.Client.CompletionRangeTextEditPayload? left, Nickelony.LanguageServer.Client.CompletionRangeTextEditPayload? right) -> bool
+static Nickelony.LanguageServer.Client.CompletionTextEditPayload.operator !=(Nickelony.LanguageServer.Client.CompletionTextEditPayload? left, Nickelony.LanguageServer.Client.CompletionTextEditPayload? right) -> bool
+static Nickelony.LanguageServer.Client.CompletionTextEditPayload.operator ==(Nickelony.LanguageServer.Client.CompletionTextEditPayload? left, Nickelony.LanguageServer.Client.CompletionTextEditPayload? right) -> bool
+static Nickelony.LanguageServer.Client.DefinitionTargetPayload.operator !=(Nickelony.LanguageServer.Client.DefinitionTargetPayload? left, Nickelony.LanguageServer.Client.DefinitionTargetPayload? right) -> bool
+static Nickelony.LanguageServer.Client.DefinitionTargetPayload.operator ==(Nickelony.LanguageServer.Client.DefinitionTargetPayload? left, Nickelony.LanguageServer.Client.DefinitionTargetPayload? right) -> bool
+static Nickelony.LanguageServer.Client.DiagnosticCodeDescriptionPayload.operator !=(Nickelony.LanguageServer.Client.DiagnosticCodeDescriptionPayload left, Nickelony.LanguageServer.Client.DiagnosticCodeDescriptionPayload right) -> bool
+static Nickelony.LanguageServer.Client.DiagnosticCodeDescriptionPayload.operator ==(Nickelony.LanguageServer.Client.DiagnosticCodeDescriptionPayload left, Nickelony.LanguageServer.Client.DiagnosticCodeDescriptionPayload right) -> bool
+static Nickelony.LanguageServer.Client.DiagnosticPayload.operator !=(Nickelony.LanguageServer.Client.DiagnosticPayload? left, Nickelony.LanguageServer.Client.DiagnosticPayload? right) -> bool
+static Nickelony.LanguageServer.Client.DiagnosticPayload.operator ==(Nickelony.LanguageServer.Client.DiagnosticPayload? left, Nickelony.LanguageServer.Client.DiagnosticPayload? right) -> bool
+static Nickelony.LanguageServer.Client.DiagnosticRelatedInformationPayload.operator !=(Nickelony.LanguageServer.Client.DiagnosticRelatedInformationPayload left, Nickelony.LanguageServer.Client.DiagnosticRelatedInformationPayload right) -> bool
+static Nickelony.LanguageServer.Client.DiagnosticRelatedInformationPayload.operator ==(Nickelony.LanguageServer.Client.DiagnosticRelatedInformationPayload left, Nickelony.LanguageServer.Client.DiagnosticRelatedInformationPayload right) -> bool
+static Nickelony.LanguageServer.Client.DidChangeConfigurationParams.operator !=(Nickelony.LanguageServer.Client.DidChangeConfigurationParams left, Nickelony.LanguageServer.Client.DidChangeConfigurationParams right) -> bool
+static Nickelony.LanguageServer.Client.DidChangeConfigurationParams.operator ==(Nickelony.LanguageServer.Client.DidChangeConfigurationParams left, Nickelony.LanguageServer.Client.DidChangeConfigurationParams right) -> bool
+static Nickelony.LanguageServer.Client.DidChangeTextDocumentParams.operator !=(Nickelony.LanguageServer.Client.DidChangeTextDocumentParams left, Nickelony.LanguageServer.Client.DidChangeTextDocumentParams right) -> bool
+static Nickelony.LanguageServer.Client.DidChangeTextDocumentParams.operator ==(Nickelony.LanguageServer.Client.DidChangeTextDocumentParams left, Nickelony.LanguageServer.Client.DidChangeTextDocumentParams right) -> bool
+static Nickelony.LanguageServer.Client.DidChangeWatchedFilesParams.operator !=(Nickelony.LanguageServer.Client.DidChangeWatchedFilesParams left, Nickelony.LanguageServer.Client.DidChangeWatchedFilesParams right) -> bool
+static Nickelony.LanguageServer.Client.DidChangeWatchedFilesParams.operator ==(Nickelony.LanguageServer.Client.DidChangeWatchedFilesParams left, Nickelony.LanguageServer.Client.DidChangeWatchedFilesParams right) -> bool
+static Nickelony.LanguageServer.Client.DidCloseTextDocumentParams.operator !=(Nickelony.LanguageServer.Client.DidCloseTextDocumentParams left, Nickelony.LanguageServer.Client.DidCloseTextDocumentParams right) -> bool
+static Nickelony.LanguageServer.Client.DidCloseTextDocumentParams.operator ==(Nickelony.LanguageServer.Client.DidCloseTextDocumentParams left, Nickelony.LanguageServer.Client.DidCloseTextDocumentParams right) -> bool
+static Nickelony.LanguageServer.Client.DidOpenTextDocumentParams.operator !=(Nickelony.LanguageServer.Client.DidOpenTextDocumentParams left, Nickelony.LanguageServer.Client.DidOpenTextDocumentParams right) -> bool
+static Nickelony.LanguageServer.Client.DidOpenTextDocumentParams.operator ==(Nickelony.LanguageServer.Client.DidOpenTextDocumentParams left, Nickelony.LanguageServer.Client.DidOpenTextDocumentParams right) -> bool
+static Nickelony.LanguageServer.Client.DidOpenTextDocumentPayload.operator !=(Nickelony.LanguageServer.Client.DidOpenTextDocumentPayload left, Nickelony.LanguageServer.Client.DidOpenTextDocumentPayload right) -> bool
+static Nickelony.LanguageServer.Client.DidOpenTextDocumentPayload.operator ==(Nickelony.LanguageServer.Client.DidOpenTextDocumentPayload left, Nickelony.LanguageServer.Client.DidOpenTextDocumentPayload right) -> bool
+static Nickelony.LanguageServer.Client.DocumentChangeRange.operator !=(Nickelony.LanguageServer.Client.DocumentChangeRange left, Nickelony.LanguageServer.Client.DocumentChangeRange right) -> bool
+static Nickelony.LanguageServer.Client.DocumentChangeRange.operator ==(Nickelony.LanguageServer.Client.DocumentChangeRange left, Nickelony.LanguageServer.Client.DocumentChangeRange right) -> bool
+static Nickelony.LanguageServer.Client.DocumentFormattingParams.operator !=(Nickelony.LanguageServer.Client.DocumentFormattingParams left, Nickelony.LanguageServer.Client.DocumentFormattingParams right) -> bool
+static Nickelony.LanguageServer.Client.DocumentFormattingParams.operator ==(Nickelony.LanguageServer.Client.DocumentFormattingParams left, Nickelony.LanguageServer.Client.DocumentFormattingParams right) -> bool
+static Nickelony.LanguageServer.Client.DocumentRenameRequest.operator !=(Nickelony.LanguageServer.Client.DocumentRenameRequest left, Nickelony.LanguageServer.Client.DocumentRenameRequest right) -> bool
+static Nickelony.LanguageServer.Client.DocumentRenameRequest.operator ==(Nickelony.LanguageServer.Client.DocumentRenameRequest left, Nickelony.LanguageServer.Client.DocumentRenameRequest right) -> bool
+static Nickelony.LanguageServer.Client.DocumentRenameResult.operator !=(Nickelony.LanguageServer.Client.DocumentRenameResult left, Nickelony.LanguageServer.Client.DocumentRenameResult right) -> bool
+static Nickelony.LanguageServer.Client.DocumentRenameResult.operator ==(Nickelony.LanguageServer.Client.DocumentRenameResult left, Nickelony.LanguageServer.Client.DocumentRenameResult right) -> bool
+static Nickelony.LanguageServer.Client.DocumentSymbolParams.operator !=(Nickelony.LanguageServer.Client.DocumentSymbolParams left, Nickelony.LanguageServer.Client.DocumentSymbolParams right) -> bool
+static Nickelony.LanguageServer.Client.DocumentSymbolParams.operator ==(Nickelony.LanguageServer.Client.DocumentSymbolParams left, Nickelony.LanguageServer.Client.DocumentSymbolParams right) -> bool
+static Nickelony.LanguageServer.Client.DocumentSynchronizationRequest.operator !=(Nickelony.LanguageServer.Client.DocumentSynchronizationRequest left, Nickelony.LanguageServer.Client.DocumentSynchronizationRequest right) -> bool
+static Nickelony.LanguageServer.Client.DocumentSynchronizationRequest.operator ==(Nickelony.LanguageServer.Client.DocumentSynchronizationRequest left, Nickelony.LanguageServer.Client.DocumentSynchronizationRequest right) -> bool
+static Nickelony.LanguageServer.Client.FileEventPayload.operator !=(Nickelony.LanguageServer.Client.FileEventPayload left, Nickelony.LanguageServer.Client.FileEventPayload right) -> bool
+static Nickelony.LanguageServer.Client.FileEventPayload.operator ==(Nickelony.LanguageServer.Client.FileEventPayload left, Nickelony.LanguageServer.Client.FileEventPayload right) -> bool
+static Nickelony.LanguageServer.Client.FormattingOptionsPayload.operator !=(Nickelony.LanguageServer.Client.FormattingOptionsPayload left, Nickelony.LanguageServer.Client.FormattingOptionsPayload right) -> bool
+static Nickelony.LanguageServer.Client.FormattingOptionsPayload.operator ==(Nickelony.LanguageServer.Client.FormattingOptionsPayload left, Nickelony.LanguageServer.Client.FormattingOptionsPayload right) -> bool
+static Nickelony.LanguageServer.Client.LanguageServerClient.CreateProtocolSerializerOptions() -> System.Text.Json.JsonSerializerOptions!
+static Nickelony.LanguageServer.Client.LanguageServerClientOptions.Default.get -> Nickelony.LanguageServer.Client.LanguageServerClientOptions!
+static Nickelony.LanguageServer.Client.LanguageServerClientOptions.operator !=(Nickelony.LanguageServer.Client.LanguageServerClientOptions? left, Nickelony.LanguageServer.Client.LanguageServerClientOptions? right) -> bool
+static Nickelony.LanguageServer.Client.LanguageServerClientOptions.operator ==(Nickelony.LanguageServer.Client.LanguageServerClientOptions? left, Nickelony.LanguageServer.Client.LanguageServerClientOptions? right) -> bool
+static Nickelony.LanguageServer.Client.LanguageServerPaths.AreLocalPathsEqual(string? left, string? right, Nickelony.IDEKit.Core.Pathing.LocalPathComparisonPolicy? pathComparison = null) -> bool
+static Nickelony.LanguageServer.Client.LanguageServerPaths.CreateFileUri(string! filePath) -> string!
+static Nickelony.LanguageServer.Client.LanguageServerPaths.LocalPathComparer.get -> System.StringComparer!
+static Nickelony.LanguageServer.Client.LanguageServerPaths.LocalPathComparison.get -> System.StringComparison
+static Nickelony.LanguageServer.Client.LanguageServerPaths.NormalizeLocalPath(System.Uri! uri) -> string!
+static Nickelony.LanguageServer.Client.LanguageServerPaths.NormalizeLocalPath(string! filePath) -> string!
+static Nickelony.LanguageServer.Client.LanguageServerPaths.NormalizeWorkspaceRoots(System.Collections.Generic.IReadOnlyList<string!>! workspaceRootDirectoryPaths) -> string![]!
+static Nickelony.LanguageServer.Client.LanguageServerPaths.PathComparison.get -> Nickelony.IDEKit.Core.Pathing.LocalPathComparisonPolicy
+static Nickelony.LanguageServer.Client.LanguageServerPaths.TryGetLocalPath(string? uriText, out string! filePath) -> bool
+static Nickelony.LanguageServer.Client.LanguageServerPaths.TryNormalizeLocalPath(string? filePath, out string! normalizedFilePath) -> bool
+static Nickelony.LanguageServer.Client.LanguageServerPaths.UsesCaseSensitiveLocalPaths.get -> bool
+static Nickelony.LanguageServer.Client.LanguageServerTransportContext.operator !=(Nickelony.LanguageServer.Client.LanguageServerTransportContext? left, Nickelony.LanguageServer.Client.LanguageServerTransportContext? right) -> bool
+static Nickelony.LanguageServer.Client.LanguageServerTransportContext.operator ==(Nickelony.LanguageServer.Client.LanguageServerTransportContext? left, Nickelony.LanguageServer.Client.LanguageServerTransportContext? right) -> bool
+static Nickelony.LanguageServer.Client.MarkupContentReader.ExtractContent(System.Text.Json.JsonElement element) -> Nickelony.LanguageServer.Client.ProtocolMarkupContent
+static Nickelony.LanguageServer.Client.MarkupContentReader.NormalizeMarkdownText(string? text) -> string?
+static Nickelony.LanguageServer.Client.OptionalVersionedTextDocumentIdentifier.operator !=(Nickelony.LanguageServer.Client.OptionalVersionedTextDocumentIdentifier left, Nickelony.LanguageServer.Client.OptionalVersionedTextDocumentIdentifier right) -> bool
+static Nickelony.LanguageServer.Client.OptionalVersionedTextDocumentIdentifier.operator ==(Nickelony.LanguageServer.Client.OptionalVersionedTextDocumentIdentifier left, Nickelony.LanguageServer.Client.OptionalVersionedTextDocumentIdentifier right) -> bool
+static Nickelony.LanguageServer.Client.ProtocolLocationPayload.operator !=(Nickelony.LanguageServer.Client.ProtocolLocationPayload left, Nickelony.LanguageServer.Client.ProtocolLocationPayload right) -> bool
+static Nickelony.LanguageServer.Client.ProtocolLocationPayload.operator ==(Nickelony.LanguageServer.Client.ProtocolLocationPayload left, Nickelony.LanguageServer.Client.ProtocolLocationPayload right) -> bool
+static Nickelony.LanguageServer.Client.ProtocolMarkupContent.operator !=(Nickelony.LanguageServer.Client.ProtocolMarkupContent left, Nickelony.LanguageServer.Client.ProtocolMarkupContent right) -> bool
+static Nickelony.LanguageServer.Client.ProtocolMarkupContent.operator ==(Nickelony.LanguageServer.Client.ProtocolMarkupContent left, Nickelony.LanguageServer.Client.ProtocolMarkupContent right) -> bool
+static Nickelony.LanguageServer.Client.ProtocolPosition.operator !=(Nickelony.LanguageServer.Client.ProtocolPosition left, Nickelony.LanguageServer.Client.ProtocolPosition right) -> bool
+static Nickelony.LanguageServer.Client.ProtocolPosition.operator ==(Nickelony.LanguageServer.Client.ProtocolPosition left, Nickelony.LanguageServer.Client.ProtocolPosition right) -> bool
+static Nickelony.LanguageServer.Client.ProtocolRangeConversion.TryGetTextPosition(Nickelony.LanguageServer.Client.ProtocolPosition position, out Nickelony.IDEKit.Core.Text.TextPosition textPosition) -> bool
+static Nickelony.LanguageServer.Client.ProtocolRangeConversion.TryGetTextPositionRange(Nickelony.LanguageServer.Client.ProtocolRangePayload? rangePayload, out Nickelony.IDEKit.Core.Text.TextPositionRange range) -> bool
+static Nickelony.LanguageServer.Client.ProtocolRangePayload.operator !=(Nickelony.LanguageServer.Client.ProtocolRangePayload left, Nickelony.LanguageServer.Client.ProtocolRangePayload right) -> bool
+static Nickelony.LanguageServer.Client.ProtocolRangePayload.operator ==(Nickelony.LanguageServer.Client.ProtocolRangePayload left, Nickelony.LanguageServer.Client.ProtocolRangePayload right) -> bool
+static Nickelony.LanguageServer.Client.PublishDiagnosticsParams.operator !=(Nickelony.LanguageServer.Client.PublishDiagnosticsParams? left, Nickelony.LanguageServer.Client.PublishDiagnosticsParams? right) -> bool
+static Nickelony.LanguageServer.Client.PublishDiagnosticsParams.operator ==(Nickelony.LanguageServer.Client.PublishDiagnosticsParams? left, Nickelony.LanguageServer.Client.PublishDiagnosticsParams? right) -> bool
+static Nickelony.LanguageServer.Client.ReferenceContextPayload.operator !=(Nickelony.LanguageServer.Client.ReferenceContextPayload left, Nickelony.LanguageServer.Client.ReferenceContextPayload right) -> bool
+static Nickelony.LanguageServer.Client.ReferenceContextPayload.operator ==(Nickelony.LanguageServer.Client.ReferenceContextPayload left, Nickelony.LanguageServer.Client.ReferenceContextPayload right) -> bool
+static Nickelony.LanguageServer.Client.ReferenceLocationPayload.operator !=(Nickelony.LanguageServer.Client.ReferenceLocationPayload? left, Nickelony.LanguageServer.Client.ReferenceLocationPayload? right) -> bool
+static Nickelony.LanguageServer.Client.ReferenceLocationPayload.operator ==(Nickelony.LanguageServer.Client.ReferenceLocationPayload? left, Nickelony.LanguageServer.Client.ReferenceLocationPayload? right) -> bool
+static Nickelony.LanguageServer.Client.ReferenceParams.operator !=(Nickelony.LanguageServer.Client.ReferenceParams left, Nickelony.LanguageServer.Client.ReferenceParams right) -> bool
+static Nickelony.LanguageServer.Client.ReferenceParams.operator ==(Nickelony.LanguageServer.Client.ReferenceParams left, Nickelony.LanguageServer.Client.ReferenceParams right) -> bool
+static Nickelony.LanguageServer.Client.RenameParams.operator !=(Nickelony.LanguageServer.Client.RenameParams left, Nickelony.LanguageServer.Client.RenameParams right) -> bool
+static Nickelony.LanguageServer.Client.RenameParams.operator ==(Nickelony.LanguageServer.Client.RenameParams left, Nickelony.LanguageServer.Client.RenameParams right) -> bool
+static Nickelony.LanguageServer.Client.SemanticTokenConversion.ToTextSemanticTokens(System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.SemanticToken!>! tokens, Nickelony.IDEKit.Core.Text.TextLineMap! lineMap) -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.SemanticTokens.TextSemanticToken!>!
+static Nickelony.LanguageServer.Client.SemanticTokensDecoder.Decode(System.Collections.Generic.IReadOnlyList<int>! data, string! content, System.Collections.Generic.IReadOnlyList<string!>? tokenTypes, System.Collections.Generic.IReadOnlyList<string!>? tokenModifiers) -> System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.SemanticToken!>!
+static Nickelony.LanguageServer.Client.SemanticTokensDeltaParams.operator !=(Nickelony.LanguageServer.Client.SemanticTokensDeltaParams left, Nickelony.LanguageServer.Client.SemanticTokensDeltaParams right) -> bool
+static Nickelony.LanguageServer.Client.SemanticTokensDeltaParams.operator ==(Nickelony.LanguageServer.Client.SemanticTokensDeltaParams left, Nickelony.LanguageServer.Client.SemanticTokensDeltaParams right) -> bool
+static Nickelony.LanguageServer.Client.SemanticTokensDeltaParser.Parse(Nickelony.LanguageServer.Client.SemanticTokensResponsePayload? response) -> Nickelony.LanguageServer.Client.SemanticTokensDeltaResponse
+static Nickelony.LanguageServer.Client.SemanticTokensDeltaParser.Parse(Nickelony.LanguageServer.Client.SemanticTokensResponsePayload? response, Microsoft.Extensions.Logging.ILogger? logger) -> Nickelony.LanguageServer.Client.SemanticTokensDeltaResponse
+static Nickelony.LanguageServer.Client.SemanticTokensDeltaResponse.operator !=(Nickelony.LanguageServer.Client.SemanticTokensDeltaResponse left, Nickelony.LanguageServer.Client.SemanticTokensDeltaResponse right) -> bool
+static Nickelony.LanguageServer.Client.SemanticTokensDeltaResponse.operator ==(Nickelony.LanguageServer.Client.SemanticTokensDeltaResponse left, Nickelony.LanguageServer.Client.SemanticTokensDeltaResponse right) -> bool
+static Nickelony.LanguageServer.Client.SemanticTokensEditPayload.operator !=(Nickelony.LanguageServer.Client.SemanticTokensEditPayload left, Nickelony.LanguageServer.Client.SemanticTokensEditPayload right) -> bool
+static Nickelony.LanguageServer.Client.SemanticTokensEditPayload.operator ==(Nickelony.LanguageServer.Client.SemanticTokensEditPayload left, Nickelony.LanguageServer.Client.SemanticTokensEditPayload right) -> bool
+static Nickelony.LanguageServer.Client.SemanticTokensParams.operator !=(Nickelony.LanguageServer.Client.SemanticTokensParams left, Nickelony.LanguageServer.Client.SemanticTokensParams right) -> bool
+static Nickelony.LanguageServer.Client.SemanticTokensParams.operator ==(Nickelony.LanguageServer.Client.SemanticTokensParams left, Nickelony.LanguageServer.Client.SemanticTokensParams right) -> bool
+static Nickelony.LanguageServer.Client.SemanticTokensResponsePayload.operator !=(Nickelony.LanguageServer.Client.SemanticTokensResponsePayload left, Nickelony.LanguageServer.Client.SemanticTokensResponsePayload right) -> bool
+static Nickelony.LanguageServer.Client.SemanticTokensResponsePayload.operator ==(Nickelony.LanguageServer.Client.SemanticTokensResponsePayload left, Nickelony.LanguageServer.Client.SemanticTokensResponsePayload right) -> bool
+static Nickelony.LanguageServer.Client.SignatureHelpContextPayload.operator !=(Nickelony.LanguageServer.Client.SignatureHelpContextPayload left, Nickelony.LanguageServer.Client.SignatureHelpContextPayload right) -> bool
+static Nickelony.LanguageServer.Client.SignatureHelpContextPayload.operator ==(Nickelony.LanguageServer.Client.SignatureHelpContextPayload left, Nickelony.LanguageServer.Client.SignatureHelpContextPayload right) -> bool
+static Nickelony.LanguageServer.Client.SignatureHelpParameterPayload.operator !=(Nickelony.LanguageServer.Client.SignatureHelpParameterPayload? left, Nickelony.LanguageServer.Client.SignatureHelpParameterPayload? right) -> bool
+static Nickelony.LanguageServer.Client.SignatureHelpParameterPayload.operator ==(Nickelony.LanguageServer.Client.SignatureHelpParameterPayload? left, Nickelony.LanguageServer.Client.SignatureHelpParameterPayload? right) -> bool
+static Nickelony.LanguageServer.Client.SignatureHelpParams.operator !=(Nickelony.LanguageServer.Client.SignatureHelpParams left, Nickelony.LanguageServer.Client.SignatureHelpParams right) -> bool
+static Nickelony.LanguageServer.Client.SignatureHelpParams.operator ==(Nickelony.LanguageServer.Client.SignatureHelpParams left, Nickelony.LanguageServer.Client.SignatureHelpParams right) -> bool
+static Nickelony.LanguageServer.Client.SignatureHelpSignaturePayload.operator !=(Nickelony.LanguageServer.Client.SignatureHelpSignaturePayload? left, Nickelony.LanguageServer.Client.SignatureHelpSignaturePayload? right) -> bool
+static Nickelony.LanguageServer.Client.SignatureHelpSignaturePayload.operator ==(Nickelony.LanguageServer.Client.SignatureHelpSignaturePayload? left, Nickelony.LanguageServer.Client.SignatureHelpSignaturePayload? right) -> bool
+static Nickelony.LanguageServer.Client.SignatureLabelParser.TryExtractParameterLabel(string! signatureLabel, System.Text.Json.JsonElement parameterLabelElement, out string? parameterLabel) -> bool
+static Nickelony.LanguageServer.Client.StdioLanguageServerTransport.Default.get -> Nickelony.LanguageServer.Client.StdioLanguageServerTransport!
+static Nickelony.LanguageServer.Client.SymbolLocationPayload.operator !=(Nickelony.LanguageServer.Client.SymbolLocationPayload? left, Nickelony.LanguageServer.Client.SymbolLocationPayload? right) -> bool
+static Nickelony.LanguageServer.Client.SymbolLocationPayload.operator ==(Nickelony.LanguageServer.Client.SymbolLocationPayload? left, Nickelony.LanguageServer.Client.SymbolLocationPayload? right) -> bool
+static Nickelony.LanguageServer.Client.TextCompletionItemKindConversion.FromLspKind(int lspKind) -> Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind!
+static Nickelony.LanguageServer.Client.TextDocumentContentChangePayload.operator !=(Nickelony.LanguageServer.Client.TextDocumentContentChangePayload left, Nickelony.LanguageServer.Client.TextDocumentContentChangePayload right) -> bool
+static Nickelony.LanguageServer.Client.TextDocumentContentChangePayload.operator ==(Nickelony.LanguageServer.Client.TextDocumentContentChangePayload left, Nickelony.LanguageServer.Client.TextDocumentContentChangePayload right) -> bool
+static Nickelony.LanguageServer.Client.TextDocumentIdentifier.operator !=(Nickelony.LanguageServer.Client.TextDocumentIdentifier left, Nickelony.LanguageServer.Client.TextDocumentIdentifier right) -> bool
+static Nickelony.LanguageServer.Client.TextDocumentIdentifier.operator ==(Nickelony.LanguageServer.Client.TextDocumentIdentifier left, Nickelony.LanguageServer.Client.TextDocumentIdentifier right) -> bool
+static Nickelony.LanguageServer.Client.TextDocumentPositionParams.operator !=(Nickelony.LanguageServer.Client.TextDocumentPositionParams left, Nickelony.LanguageServer.Client.TextDocumentPositionParams right) -> bool
+static Nickelony.LanguageServer.Client.TextDocumentPositionParams.operator ==(Nickelony.LanguageServer.Client.TextDocumentPositionParams left, Nickelony.LanguageServer.Client.TextDocumentPositionParams right) -> bool
+static Nickelony.LanguageServer.Client.TextDocumentSymbolKindConversion.FromLspKind(int lspKind) -> Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind
+static Nickelony.LanguageServer.Client.TextDocumentSymbolKindConversion.TryFromLspKind(int lspKind, out Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind kind) -> bool
+static Nickelony.LanguageServer.Client.TextEditPayload.operator !=(Nickelony.LanguageServer.Client.TextEditPayload left, Nickelony.LanguageServer.Client.TextEditPayload right) -> bool
+static Nickelony.LanguageServer.Client.TextEditPayload.operator ==(Nickelony.LanguageServer.Client.TextEditPayload left, Nickelony.LanguageServer.Client.TextEditPayload right) -> bool
+static Nickelony.LanguageServer.Client.TrackedDocumentInitialState.operator !=(Nickelony.LanguageServer.Client.TrackedDocumentInitialState left, Nickelony.LanguageServer.Client.TrackedDocumentInitialState right) -> bool
+static Nickelony.LanguageServer.Client.TrackedDocumentInitialState.operator ==(Nickelony.LanguageServer.Client.TrackedDocumentInitialState left, Nickelony.LanguageServer.Client.TrackedDocumentInitialState right) -> bool
+static Nickelony.LanguageServer.Client.VersionedTextDocumentIdentifier.operator !=(Nickelony.LanguageServer.Client.VersionedTextDocumentIdentifier left, Nickelony.LanguageServer.Client.VersionedTextDocumentIdentifier right) -> bool
+static Nickelony.LanguageServer.Client.VersionedTextDocumentIdentifier.operator ==(Nickelony.LanguageServer.Client.VersionedTextDocumentIdentifier left, Nickelony.LanguageServer.Client.VersionedTextDocumentIdentifier right) -> bool
+static Nickelony.LanguageServer.Client.WorkspaceDocumentChangePayload.operator !=(Nickelony.LanguageServer.Client.WorkspaceDocumentChangePayload? left, Nickelony.LanguageServer.Client.WorkspaceDocumentChangePayload? right) -> bool
+static Nickelony.LanguageServer.Client.WorkspaceDocumentChangePayload.operator ==(Nickelony.LanguageServer.Client.WorkspaceDocumentChangePayload? left, Nickelony.LanguageServer.Client.WorkspaceDocumentChangePayload? right) -> bool
+static Nickelony.LanguageServer.Client.WorkspaceEditChangeAnnotationPayload.operator !=(Nickelony.LanguageServer.Client.WorkspaceEditChangeAnnotationPayload left, Nickelony.LanguageServer.Client.WorkspaceEditChangeAnnotationPayload right) -> bool
+static Nickelony.LanguageServer.Client.WorkspaceEditChangeAnnotationPayload.operator ==(Nickelony.LanguageServer.Client.WorkspaceEditChangeAnnotationPayload left, Nickelony.LanguageServer.Client.WorkspaceEditChangeAnnotationPayload right) -> bool
+static Nickelony.LanguageServer.Client.WorkspaceEditResponse.operator !=(Nickelony.LanguageServer.Client.WorkspaceEditResponse left, Nickelony.LanguageServer.Client.WorkspaceEditResponse right) -> bool
+static Nickelony.LanguageServer.Client.WorkspaceEditResponse.operator ==(Nickelony.LanguageServer.Client.WorkspaceEditResponse left, Nickelony.LanguageServer.Client.WorkspaceEditResponse right) -> bool
+static Nickelony.LanguageServer.Client.WorkspaceFileChange.operator !=(Nickelony.LanguageServer.Client.WorkspaceFileChange left, Nickelony.LanguageServer.Client.WorkspaceFileChange right) -> bool
+static Nickelony.LanguageServer.Client.WorkspaceFileChange.operator ==(Nickelony.LanguageServer.Client.WorkspaceFileChange left, Nickelony.LanguageServer.Client.WorkspaceFileChange right) -> bool
+static Nickelony.LanguageServer.Client.WorkspaceResourceOperationOptionsPayload.operator !=(Nickelony.LanguageServer.Client.WorkspaceResourceOperationOptionsPayload left, Nickelony.LanguageServer.Client.WorkspaceResourceOperationOptionsPayload right) -> bool
+static Nickelony.LanguageServer.Client.WorkspaceResourceOperationOptionsPayload.operator ==(Nickelony.LanguageServer.Client.WorkspaceResourceOperationOptionsPayload left, Nickelony.LanguageServer.Client.WorkspaceResourceOperationOptionsPayload right) -> bool
+static Nickelony.LanguageServer.Client.WorkspaceSnapshotEntry.operator !=(Nickelony.LanguageServer.Client.WorkspaceSnapshotEntry left, Nickelony.LanguageServer.Client.WorkspaceSnapshotEntry right) -> bool
+static Nickelony.LanguageServer.Client.WorkspaceSnapshotEntry.operator ==(Nickelony.LanguageServer.Client.WorkspaceSnapshotEntry left, Nickelony.LanguageServer.Client.WorkspaceSnapshotEntry right) -> bool
+static Nickelony.LanguageServer.Client.WorkspaceSnapshotTracker.BuildDeltaBatch(System.Collections.Generic.IReadOnlyDictionary<string!, Nickelony.LanguageServer.Client.WorkspaceSnapshotEntry>! previousSnapshot, System.Collections.Generic.IReadOnlyDictionary<string!, Nickelony.LanguageServer.Client.WorkspaceSnapshotEntry>! currentSnapshot) -> Nickelony.LanguageServer.Client.FileChangeBatch!
+static Nickelony.LanguageServer.Client.WorkspaceWatchSpecification.operator !=(Nickelony.LanguageServer.Client.WorkspaceWatchSpecification left, Nickelony.LanguageServer.Client.WorkspaceWatchSpecification right) -> bool
+static Nickelony.LanguageServer.Client.WorkspaceWatchSpecification.operator ==(Nickelony.LanguageServer.Client.WorkspaceWatchSpecification left, Nickelony.LanguageServer.Client.WorkspaceWatchSpecification right) -> bool
+virtual Nickelony.LanguageServer.Client.CompletionTextEditPayload.EqualityContract.get -> System.Type!
+virtual Nickelony.LanguageServer.Client.CompletionTextEditPayload.Equals(Nickelony.LanguageServer.Client.CompletionTextEditPayload? other) -> bool
+virtual Nickelony.LanguageServer.Client.CompletionTextEditPayload.PrintMembers(System.Text.StringBuilder! builder) -> bool
+virtual Nickelony.LanguageServer.Client.TrackedDocumentStore<TTrackedDocumentState>.OnTrackedDocumentRenamed(TTrackedDocumentState! state, bool contentChanged) -> void
+~override Nickelony.LanguageServer.Client.CodeActionCommandPayload.Equals(object obj) -> bool
+~override Nickelony.LanguageServer.Client.CodeActionCommandPayload.ToString() -> string
+~override Nickelony.LanguageServer.Client.CodeActionContextPayload.Equals(object obj) -> bool
+~override Nickelony.LanguageServer.Client.CodeActionContextPayload.ToString() -> string
+~override Nickelony.LanguageServer.Client.CodeActionDisabledPayload.Equals(object obj) -> bool
+~override Nickelony.LanguageServer.Client.CodeActionDisabledPayload.ToString() -> string
+~override Nickelony.LanguageServer.Client.CodeActionParams.Equals(object obj) -> bool
+~override Nickelony.LanguageServer.Client.CodeActionParams.ToString() -> string
+~override Nickelony.LanguageServer.Client.CompletionContextPayload.Equals(object obj) -> bool
+~override Nickelony.LanguageServer.Client.CompletionContextPayload.ToString() -> string
+~override Nickelony.LanguageServer.Client.CompletionParams.Equals(object obj) -> bool
+~override Nickelony.LanguageServer.Client.CompletionParams.ToString() -> string
+override Nickelony.LanguageServer.Client.DefinitionTargetPayload.Equals(object? obj) -> bool
+override Nickelony.LanguageServer.Client.DefinitionTargetPayload.ToString() -> string!
+~override Nickelony.LanguageServer.Client.DiagnosticCodeDescriptionPayload.Equals(object obj) -> bool
+~override Nickelony.LanguageServer.Client.DiagnosticCodeDescriptionPayload.ToString() -> string
+override Nickelony.LanguageServer.Client.DiagnosticPayload.Equals(object? obj) -> bool
+override Nickelony.LanguageServer.Client.DiagnosticPayload.ToString() -> string!
+~override Nickelony.LanguageServer.Client.DiagnosticRelatedInformationPayload.Equals(object obj) -> bool
+~override Nickelony.LanguageServer.Client.DiagnosticRelatedInformationPayload.ToString() -> string
+~override Nickelony.LanguageServer.Client.DidChangeConfigurationParams.Equals(object obj) -> bool
+~override Nickelony.LanguageServer.Client.DidChangeConfigurationParams.ToString() -> string
+~override Nickelony.LanguageServer.Client.DidChangeTextDocumentParams.Equals(object obj) -> bool
+~override Nickelony.LanguageServer.Client.DidChangeTextDocumentParams.ToString() -> string
+~override Nickelony.LanguageServer.Client.DidChangeWatchedFilesParams.Equals(object obj) -> bool
+~override Nickelony.LanguageServer.Client.DidChangeWatchedFilesParams.ToString() -> string
+~override Nickelony.LanguageServer.Client.DidCloseTextDocumentParams.Equals(object obj) -> bool
+~override Nickelony.LanguageServer.Client.DidCloseTextDocumentParams.ToString() -> string
+~override Nickelony.LanguageServer.Client.DidOpenTextDocumentParams.Equals(object obj) -> bool
+~override Nickelony.LanguageServer.Client.DidOpenTextDocumentParams.ToString() -> string
+~override Nickelony.LanguageServer.Client.DidOpenTextDocumentPayload.Equals(object obj) -> bool
+~override Nickelony.LanguageServer.Client.DidOpenTextDocumentPayload.ToString() -> string
+~override Nickelony.LanguageServer.Client.DocumentChangeRange.Equals(object obj) -> bool
+~override Nickelony.LanguageServer.Client.DocumentChangeRange.ToString() -> string
+~override Nickelony.LanguageServer.Client.DocumentFormattingParams.Equals(object obj) -> bool
+~override Nickelony.LanguageServer.Client.DocumentFormattingParams.ToString() -> string
+~override Nickelony.LanguageServer.Client.DocumentRenameRequest.Equals(object obj) -> bool
+~override Nickelony.LanguageServer.Client.DocumentRenameRequest.ToString() -> string
+~override Nickelony.LanguageServer.Client.DocumentRenameResult.Equals(object obj) -> bool
+~override Nickelony.LanguageServer.Client.DocumentRenameResult.ToString() -> string
+~override Nickelony.LanguageServer.Client.DocumentSymbolParams.Equals(object obj) -> bool
+~override Nickelony.LanguageServer.Client.DocumentSymbolParams.ToString() -> string
+~override Nickelony.LanguageServer.Client.DocumentSynchronizationRequest.Equals(object obj) -> bool
+~override Nickelony.LanguageServer.Client.DocumentSynchronizationRequest.ToString() -> string
+~override Nickelony.LanguageServer.Client.FileEventPayload.Equals(object obj) -> bool
+~override Nickelony.LanguageServer.Client.FileEventPayload.ToString() -> string
+~override Nickelony.LanguageServer.Client.FormattingOptionsPayload.Equals(object obj) -> bool
+~override Nickelony.LanguageServer.Client.FormattingOptionsPayload.ToString() -> string
+~override Nickelony.LanguageServer.Client.OptionalVersionedTextDocumentIdentifier.Equals(object obj) -> bool
+~override Nickelony.LanguageServer.Client.OptionalVersionedTextDocumentIdentifier.ToString() -> string
+~override Nickelony.LanguageServer.Client.ProtocolLocationPayload.Equals(object obj) -> bool
+~override Nickelony.LanguageServer.Client.ProtocolLocationPayload.ToString() -> string
+~override Nickelony.LanguageServer.Client.ProtocolMarkupContent.Equals(object obj) -> bool
+~override Nickelony.LanguageServer.Client.ProtocolMarkupContent.ToString() -> string
+~override Nickelony.LanguageServer.Client.ProtocolPosition.Equals(object obj) -> bool
+~override Nickelony.LanguageServer.Client.ProtocolPosition.ToString() -> string
+~override Nickelony.LanguageServer.Client.ProtocolRangePayload.Equals(object obj) -> bool
+~override Nickelony.LanguageServer.Client.ProtocolRangePayload.ToString() -> string
+override Nickelony.LanguageServer.Client.PublishDiagnosticsParams.Equals(object? obj) -> bool
+override Nickelony.LanguageServer.Client.PublishDiagnosticsParams.ToString() -> string!
+~override Nickelony.LanguageServer.Client.ReferenceContextPayload.Equals(object obj) -> bool
+~override Nickelony.LanguageServer.Client.ReferenceContextPayload.ToString() -> string
+~override Nickelony.LanguageServer.Client.ReferenceParams.Equals(object obj) -> bool
+~override Nickelony.LanguageServer.Client.ReferenceParams.ToString() -> string
+~override Nickelony.LanguageServer.Client.RenameParams.Equals(object obj) -> bool
+~override Nickelony.LanguageServer.Client.RenameParams.ToString() -> string
+~override Nickelony.LanguageServer.Client.SemanticTokensDeltaParams.Equals(object obj) -> bool
+~override Nickelony.LanguageServer.Client.SemanticTokensDeltaParams.ToString() -> string
+~override Nickelony.LanguageServer.Client.SemanticTokensDeltaResponse.Equals(object obj) -> bool
+~override Nickelony.LanguageServer.Client.SemanticTokensDeltaResponse.ToString() -> string
+~override Nickelony.LanguageServer.Client.SemanticTokensEditPayload.Equals(object obj) -> bool
+~override Nickelony.LanguageServer.Client.SemanticTokensEditPayload.ToString() -> string
+~override Nickelony.LanguageServer.Client.SemanticTokensParams.Equals(object obj) -> bool
+~override Nickelony.LanguageServer.Client.SemanticTokensParams.ToString() -> string
+~override Nickelony.LanguageServer.Client.SemanticTokensResponsePayload.Equals(object obj) -> bool
+~override Nickelony.LanguageServer.Client.SemanticTokensResponsePayload.ToString() -> string
+~override Nickelony.LanguageServer.Client.SignatureHelpContextPayload.Equals(object obj) -> bool
+~override Nickelony.LanguageServer.Client.SignatureHelpContextPayload.ToString() -> string
+~override Nickelony.LanguageServer.Client.SignatureHelpParams.Equals(object obj) -> bool
+~override Nickelony.LanguageServer.Client.SignatureHelpParams.ToString() -> string
+override Nickelony.LanguageServer.Client.SymbolLocationPayload.Equals(object? obj) -> bool
+override Nickelony.LanguageServer.Client.SymbolLocationPayload.ToString() -> string!
+~override Nickelony.LanguageServer.Client.TextDocumentContentChangePayload.Equals(object obj) -> bool
+~override Nickelony.LanguageServer.Client.TextDocumentContentChangePayload.ToString() -> string
+~override Nickelony.LanguageServer.Client.TextDocumentIdentifier.Equals(object obj) -> bool
+~override Nickelony.LanguageServer.Client.TextDocumentIdentifier.ToString() -> string
+~override Nickelony.LanguageServer.Client.TextDocumentPositionParams.Equals(object obj) -> bool
+~override Nickelony.LanguageServer.Client.TextDocumentPositionParams.ToString() -> string
+~override Nickelony.LanguageServer.Client.TextEditPayload.Equals(object obj) -> bool
+~override Nickelony.LanguageServer.Client.TextEditPayload.ToString() -> string
+~override Nickelony.LanguageServer.Client.TrackedDocumentInitialState.Equals(object obj) -> bool
+~override Nickelony.LanguageServer.Client.TrackedDocumentInitialState.ToString() -> string
+~override Nickelony.LanguageServer.Client.VersionedTextDocumentIdentifier.Equals(object obj) -> bool
+~override Nickelony.LanguageServer.Client.VersionedTextDocumentIdentifier.ToString() -> string
+override Nickelony.LanguageServer.Client.WorkspaceDocumentChangePayload.Equals(object? obj) -> bool
+override Nickelony.LanguageServer.Client.WorkspaceDocumentChangePayload.ToString() -> string!
+~override Nickelony.LanguageServer.Client.WorkspaceEditChangeAnnotationPayload.Equals(object obj) -> bool
+~override Nickelony.LanguageServer.Client.WorkspaceEditChangeAnnotationPayload.ToString() -> string
+~override Nickelony.LanguageServer.Client.WorkspaceEditResponse.Equals(object obj) -> bool
+~override Nickelony.LanguageServer.Client.WorkspaceEditResponse.ToString() -> string
+~override Nickelony.LanguageServer.Client.WorkspaceFileChange.Equals(object obj) -> bool
+~override Nickelony.LanguageServer.Client.WorkspaceFileChange.ToString() -> string
+~override Nickelony.LanguageServer.Client.WorkspaceResourceOperationOptionsPayload.Equals(object obj) -> bool
+~override Nickelony.LanguageServer.Client.WorkspaceResourceOperationOptionsPayload.ToString() -> string
+~override Nickelony.LanguageServer.Client.WorkspaceSnapshotEntry.Equals(object obj) -> bool
+~override Nickelony.LanguageServer.Client.WorkspaceSnapshotEntry.ToString() -> string
+~override Nickelony.LanguageServer.Client.WorkspaceWatchSpecification.Equals(object obj) -> bool
+~override Nickelony.LanguageServer.Client.WorkspaceWatchSpecification.ToString() -> string

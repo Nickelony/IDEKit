@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="MarkdownEmitter.Remarks">
+      <para>
+      The Markdig parse and the toolkit-neutral mapping decisions live in the shared
+      <see cref="MarkdownDocumentModelBuilder"/>; this emitter only resolves the toolkit concerns (fonts,
+      brushes, element types) while it walks the model. Code blocks are delegated to
+      <see cref="MarkdownCodeBlockFactory"/>.
+      </para>
+      <para>
+      All members create and touch the toolkit's elements and must run on the UI thread that owns the target
+      elements. The caller owns text normalization and the plain-text fallback behavior; a parsing or
+      rendering failure propagates to the caller.
+      </para>
+    </member>
+  </members>
+</doc>

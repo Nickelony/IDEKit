@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <IsPackable>false</IsPackable>
+    <RunSettingsFilePath>test.runsettings</RunSettingsFilePath>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="coverlet.collector" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="MSTest.TestAdapter" />
+    <PackageReference Include="MSTest.TestFramework" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\src\IDEKit\AvalonEdit\Nickelony.IDEKit.AvalonEdit.Markdown\Nickelony.IDEKit.AvalonEdit.Markdown.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\..\..\shared\TestHelpers\WPFTestHost.cs" Link="shared\WPFTestHost.cs" />
+    <Compile Include="..\..\..\..\shared\TestHelpers\CapturingLogger.cs" Link="shared\CapturingLogger.cs" />
+    <!-- Shared binding tests: one body compiled into the AvalonEdit and AvaloniaEdit suites, with a
+         per-binding namespace selected by the AVALONIAEDIT define. -->
+    <Compile Include="..\..\..\..\shared\Editor.Markdown.Tests\**\*.cs" Link="shared\Editor.Markdown.Tests\%(RecursiveDir)%(Filename)%(Extension)" />
+    <Compile Include="..\..\..\TestSupport\TestCategories.cs" Link="TestSupport\TestCategories.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
+    <Using Include="Nickelony.IDEKit.Testing" />
+    <Using Include="Nickelony.Testing" />
+  </ItemGroup>
+
+</Project>

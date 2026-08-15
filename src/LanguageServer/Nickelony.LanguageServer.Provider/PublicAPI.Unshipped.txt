@@ -1,0 +1,417 @@
+#nullable enable
+*REMOVED*abstract Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase<TDocumentState>.HandleDiagnosticsPayload(string! filePath, Nickelony.LanguageServer.Client.PublishDiagnosticsParams parameters, Nickelony.LanguageServer.Client.DocumentSnapshot! document) -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnostic!>?
+*REMOVED*Nickelony.LanguageServer.Provider.IWorkspaceFileWatcher.Start(out System.Exception? startupException) -> Nickelony.LanguageServer.Client.WorkspaceWatcherStartOutcome
+*REMOVED*Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase<TDocumentState>.LanguageServerIntelliSenseProviderBase(System.Collections.Generic.IReadOnlyList<string!>! workspaceRootDirectoryPaths, Nickelony.LanguageServer.Client.TrackedDocumentStore<TDocumentState!>! documentStore, System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.WorkspaceWatchSpecification>! watchSpecifications, Nickelony.LanguageServer.Client.ILanguageServerClient? client, Nickelony.LanguageServer.Provider.LanguageServerProviderOptions? options = null, Microsoft.Extensions.Logging.ILogger? logger = null) -> void
+*REMOVED*Nickelony.LanguageServer.Provider.WorkspaceFileChangeForwarder.DispatchAsync(System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.WorkspaceFileChange>! changes, System.Func<System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.WorkspaceFileChange>!, System.Threading.CancellationToken, System.Threading.Tasks.Task!>! forwardAsync, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task<bool>!
+*REMOVED*Nickelony.LanguageServer.Provider.WorkspaceFileChangeForwarder.ReplayDeferredAsync(System.Func<System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.WorkspaceFileChange>!, System.Threading.CancellationToken, System.Threading.Tasks.Task!>! forwardAsync, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.WorkspaceFileChange>!>!
+*REMOVED*Nickelony.LanguageServer.Provider.WorkspaceFileChangeForwarder
+*REMOVED*Nickelony.LanguageServer.Provider.WorkspaceFileChangeForwarder.Dispose() -> void
+*REMOVED*Nickelony.LanguageServer.Provider.WorkspaceFileChangeForwarder.WorkspaceFileChangeForwarder(System.Func<bool>! canForwardAccessor, System.Func<bool>! isDisposedAccessor, System.Func<System.Threading.CancellationToken, System.Threading.Tasks.Task<bool>!>! ensureTransportStartedAsync, System.Action! tryMarkTransportUnhealthy, System.Action<Nickelony.LanguageServer.Provider.WorkspaceFileForwardingFailure>? logForwardingFailure = null, bool bufferChangesWhileForwardingDisabled = true) -> void
+*REMOVED*Nickelony.LanguageServer.Provider.WorkspaceFileForwardingFailure
+*REMOVED*~override Nickelony.LanguageServer.Provider.WorkspaceFileForwardingFailure.Equals(object obj) -> bool
+*REMOVED*~override Nickelony.LanguageServer.Provider.WorkspaceFileForwardingFailure.ToString() -> string
+*REMOVED*Nickelony.LanguageServer.Provider.WorkspaceFileForwardingFailure.BatchCount.get -> int
+*REMOVED*Nickelony.LanguageServer.Provider.WorkspaceFileForwardingFailure.BatchCount.init -> void
+*REMOVED*Nickelony.LanguageServer.Provider.WorkspaceFileForwardingFailure.Deconstruct(out System.Exception! Exception, out int BatchCount, out string? FirstPath, out bool WasDropped) -> void
+*REMOVED*Nickelony.LanguageServer.Provider.WorkspaceFileForwardingFailure.Equals(Nickelony.LanguageServer.Provider.WorkspaceFileForwardingFailure other) -> bool
+*REMOVED*Nickelony.LanguageServer.Provider.WorkspaceFileForwardingFailure.Exception.get -> System.Exception!
+*REMOVED*Nickelony.LanguageServer.Provider.WorkspaceFileForwardingFailure.Exception.init -> void
+*REMOVED*Nickelony.LanguageServer.Provider.WorkspaceFileForwardingFailure.FirstPath.get -> string?
+*REMOVED*Nickelony.LanguageServer.Provider.WorkspaceFileForwardingFailure.FirstPath.init -> void
+*REMOVED*Nickelony.LanguageServer.Provider.WorkspaceFileForwardingFailure.WasDropped.get -> bool
+*REMOVED*Nickelony.LanguageServer.Provider.WorkspaceFileForwardingFailure.WasDropped.init -> void
+*REMOVED*Nickelony.LanguageServer.Provider.WorkspaceFileForwardingFailure.WorkspaceFileForwardingFailure() -> void
+*REMOVED*Nickelony.LanguageServer.Provider.WorkspaceFileForwardingFailure.WorkspaceFileForwardingFailure(System.Exception! Exception, int BatchCount, string? FirstPath, bool WasDropped) -> void
+*REMOVED*override Nickelony.LanguageServer.Provider.WorkspaceFileForwardingFailure.GetHashCode() -> int
+*REMOVED*static Nickelony.LanguageServer.Provider.WorkspaceFileForwardingFailure.operator !=(Nickelony.LanguageServer.Provider.WorkspaceFileForwardingFailure left, Nickelony.LanguageServer.Provider.WorkspaceFileForwardingFailure right) -> bool
+*REMOVED*static Nickelony.LanguageServer.Provider.WorkspaceFileForwardingFailure.operator ==(Nickelony.LanguageServer.Provider.WorkspaceFileForwardingFailure left, Nickelony.LanguageServer.Provider.WorkspaceFileForwardingFailure right) -> bool
+*REMOVED*virtual Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase<TDocumentState>.CreateWorkspaceFileWatcher(string! workspaceRootDirectoryPath, System.Func<Nickelony.LanguageServer.Client.FileChangeBatch!, System.Threading.CancellationToken, System.Threading.Tasks.Task!>! dispatchAsync, System.Action<Nickelony.LanguageServer.Provider.IWorkspaceFileWatcher!, System.Exception?>! onWatcherFailed) -> Nickelony.LanguageServer.Provider.IWorkspaceFileWatcher!
+*REMOVED*virtual Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase<TDocumentState>.OnDocumentSynchronizedAsync(Nickelony.LanguageServer.Client.DocumentSnapshot! document, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task!
+~override Nickelony.LanguageServer.Provider.DocumentChangeRange.Equals(object obj) -> bool
+~override Nickelony.LanguageServer.Provider.DocumentChangeRange.ToString() -> string
+~override Nickelony.LanguageServer.Provider.DocumentRenameRequest.Equals(object obj) -> bool
+~override Nickelony.LanguageServer.Provider.DocumentRenameRequest.ToString() -> string
+~override Nickelony.LanguageServer.Provider.DocumentRenameResult.Equals(object obj) -> bool
+~override Nickelony.LanguageServer.Provider.DocumentRenameResult.ToString() -> string
+~override Nickelony.LanguageServer.Provider.DocumentSynchronizationRequest.Equals(object obj) -> bool
+~override Nickelony.LanguageServer.Provider.DocumentSynchronizationRequest.ToString() -> string
+~override Nickelony.LanguageServer.Provider.ProtocolMarkupContent.Equals(object obj) -> bool
+~override Nickelony.LanguageServer.Provider.ProtocolMarkupContent.ToString() -> string
+~override Nickelony.LanguageServer.Provider.TrackedDocumentInitialState.Equals(object obj) -> bool
+~override Nickelony.LanguageServer.Provider.TrackedDocumentInitialState.ToString() -> string
+~override Nickelony.LanguageServer.Provider.WorkspaceFileChange.Equals(object obj) -> bool
+~override Nickelony.LanguageServer.Provider.WorkspaceFileChange.ToString() -> string
+~override Nickelony.LanguageServer.Provider.WorkspaceWatcherStartResult.Equals(object obj) -> bool
+~override Nickelony.LanguageServer.Provider.WorkspaceWatcherStartResult.ToString() -> string
+~override Nickelony.LanguageServer.Provider.WorkspaceWatchSpecification.Equals(object obj) -> bool
+~override Nickelony.LanguageServer.Provider.WorkspaceWatchSpecification.ToString() -> string
+Nickelony.LanguageServer.Provider.DocumentChangeRange
+Nickelony.LanguageServer.Provider.DocumentChangeRange.Deconstruct(out int StartLine, out int StartCharacter, out int EndLine, out int EndCharacter, out string! Text) -> void
+Nickelony.LanguageServer.Provider.DocumentChangeRange.DocumentChangeRange() -> void
+Nickelony.LanguageServer.Provider.DocumentChangeRange.DocumentChangeRange(int StartLine, int StartCharacter, int EndLine, int EndCharacter, string! Text) -> void
+Nickelony.LanguageServer.Provider.DocumentChangeRange.EndCharacter.get -> int
+Nickelony.LanguageServer.Provider.DocumentChangeRange.EndCharacter.init -> void
+Nickelony.LanguageServer.Provider.DocumentChangeRange.EndLine.get -> int
+Nickelony.LanguageServer.Provider.DocumentChangeRange.EndLine.init -> void
+Nickelony.LanguageServer.Provider.DocumentChangeRange.Equals(Nickelony.LanguageServer.Provider.DocumentChangeRange other) -> bool
+Nickelony.LanguageServer.Provider.DocumentChangeRange.StartCharacter.get -> int
+Nickelony.LanguageServer.Provider.DocumentChangeRange.StartCharacter.init -> void
+Nickelony.LanguageServer.Provider.DocumentChangeRange.StartLine.get -> int
+Nickelony.LanguageServer.Provider.DocumentChangeRange.StartLine.init -> void
+Nickelony.LanguageServer.Provider.DocumentChangeRange.Text.get -> string!
+Nickelony.LanguageServer.Provider.DocumentChangeRange.Text.init -> void
+Nickelony.LanguageServer.Provider.DocumentCloseOutcome
+Nickelony.LanguageServer.Provider.DocumentCloseOutcome.BusyWithRequests = 3 -> Nickelony.LanguageServer.Provider.DocumentCloseOutcome
+Nickelony.LanguageServer.Provider.DocumentCloseOutcome.Closed = 1 -> Nickelony.LanguageServer.Provider.DocumentCloseOutcome
+Nickelony.LanguageServer.Provider.DocumentCloseOutcome.StillOpen = 2 -> Nickelony.LanguageServer.Provider.DocumentCloseOutcome
+Nickelony.LanguageServer.Provider.DocumentCloseOutcome.Untracked = 0 -> Nickelony.LanguageServer.Provider.DocumentCloseOutcome
+Nickelony.LanguageServer.Provider.DocumentReferenceAcquisition
+Nickelony.LanguageServer.Provider.DocumentReferenceAcquisition.None = 0 -> Nickelony.LanguageServer.Provider.DocumentReferenceAcquisition
+Nickelony.LanguageServer.Provider.DocumentReferenceAcquisition.Open = 1 -> Nickelony.LanguageServer.Provider.DocumentReferenceAcquisition
+Nickelony.LanguageServer.Provider.DocumentReferenceAcquisition.Request = 2 -> Nickelony.LanguageServer.Provider.DocumentReferenceAcquisition
+Nickelony.LanguageServer.Provider.DocumentReferenceTracker
+Nickelony.LanguageServer.Provider.DocumentReferenceTracker.DocumentReferenceTracker(int openReferenceCount = 0, int requestReferenceCount = 0) -> void
+Nickelony.LanguageServer.Provider.DocumentReferenceTracker.HasOpenReferences.get -> bool
+Nickelony.LanguageServer.Provider.DocumentReferenceTracker.IsIdle.get -> bool
+Nickelony.LanguageServer.Provider.DocumentReferenceTracker.OpenReferenceCount.get -> int
+Nickelony.LanguageServer.Provider.DocumentReferenceTracker.RequestReferenceCount.get -> int
+Nickelony.LanguageServer.Provider.DocumentRenameOutcome
+Nickelony.LanguageServer.Provider.DocumentRenameOutcome.DestinationTracked = 2 -> Nickelony.LanguageServer.Provider.DocumentRenameOutcome
+Nickelony.LanguageServer.Provider.DocumentRenameOutcome.PathsEquivalent = 0 -> Nickelony.LanguageServer.Provider.DocumentRenameOutcome
+Nickelony.LanguageServer.Provider.DocumentRenameOutcome.Renamed = 3 -> Nickelony.LanguageServer.Provider.DocumentRenameOutcome
+Nickelony.LanguageServer.Provider.DocumentRenameOutcome.SourceUntracked = 1 -> Nickelony.LanguageServer.Provider.DocumentRenameOutcome
+Nickelony.LanguageServer.Provider.DocumentRenameRequest
+Nickelony.LanguageServer.Provider.DocumentRenameRequest.Deconstruct(out Nickelony.LanguageServer.Provider.DocumentSnapshot? PreviousDocument, out Nickelony.LanguageServer.Provider.DocumentSnapshot! RenamedDocument, out bool ReopenServerDocument) -> void
+Nickelony.LanguageServer.Provider.DocumentRenameRequest.DocumentRenameRequest() -> void
+Nickelony.LanguageServer.Provider.DocumentRenameRequest.DocumentRenameRequest(Nickelony.LanguageServer.Provider.DocumentSnapshot? PreviousDocument, Nickelony.LanguageServer.Provider.DocumentSnapshot! RenamedDocument, bool ReopenServerDocument) -> void
+Nickelony.LanguageServer.Provider.DocumentRenameRequest.Equals(Nickelony.LanguageServer.Provider.DocumentRenameRequest other) -> bool
+Nickelony.LanguageServer.Provider.DocumentRenameRequest.PreviousDocument.get -> Nickelony.LanguageServer.Provider.DocumentSnapshot?
+Nickelony.LanguageServer.Provider.DocumentRenameRequest.PreviousDocument.init -> void
+Nickelony.LanguageServer.Provider.DocumentRenameRequest.RenamedDocument.get -> Nickelony.LanguageServer.Provider.DocumentSnapshot!
+Nickelony.LanguageServer.Provider.DocumentRenameRequest.RenamedDocument.init -> void
+Nickelony.LanguageServer.Provider.DocumentRenameRequest.ReopenServerDocument.get -> bool
+Nickelony.LanguageServer.Provider.DocumentRenameRequest.ReopenServerDocument.init -> void
+Nickelony.LanguageServer.Provider.DocumentRenameResult
+Nickelony.LanguageServer.Provider.DocumentRenameResult.Deconstruct(out Nickelony.LanguageServer.Provider.DocumentRenameOutcome Outcome, out Nickelony.LanguageServer.Provider.DocumentRenameRequest? Request) -> void
+Nickelony.LanguageServer.Provider.DocumentRenameResult.DocumentRenameResult() -> void
+Nickelony.LanguageServer.Provider.DocumentRenameResult.DocumentRenameResult(Nickelony.LanguageServer.Provider.DocumentRenameOutcome Outcome, Nickelony.LanguageServer.Provider.DocumentRenameRequest? Request) -> void
+Nickelony.LanguageServer.Provider.DocumentRenameResult.Equals(Nickelony.LanguageServer.Provider.DocumentRenameResult other) -> bool
+Nickelony.LanguageServer.Provider.DocumentRenameResult.Outcome.get -> Nickelony.LanguageServer.Provider.DocumentRenameOutcome
+Nickelony.LanguageServer.Provider.DocumentRenameResult.Outcome.init -> void
+Nickelony.LanguageServer.Provider.DocumentRenameResult.Request.get -> Nickelony.LanguageServer.Provider.DocumentRenameRequest?
+Nickelony.LanguageServer.Provider.DocumentRenameResult.Request.init -> void
+Nickelony.LanguageServer.Provider.DocumentRequestReference
+Nickelony.LanguageServer.Provider.DocumentRequestReference.CurrentFilePath.get -> string?
+Nickelony.LanguageServer.Provider.DocumentRequestReference.DocumentRequestReference() -> void
+Nickelony.LanguageServer.Provider.DocumentRequestReference.IsAcquired.get -> bool
+Nickelony.LanguageServer.Provider.DocumentSnapshot
+Nickelony.LanguageServer.Provider.DocumentSnapshot.Content.get -> string!
+Nickelony.LanguageServer.Provider.DocumentSnapshot.DocumentSnapshot(string! filePath, string! uri, string! content, int version) -> void
+Nickelony.LanguageServer.Provider.DocumentSnapshot.FilePath.get -> string!
+Nickelony.LanguageServer.Provider.DocumentSnapshot.Uri.get -> string!
+Nickelony.LanguageServer.Provider.DocumentSnapshot.Version.get -> int
+Nickelony.LanguageServer.Provider.DocumentSynchronizationKind
+Nickelony.LanguageServer.Provider.DocumentSynchronizationKind.Change = 1 -> Nickelony.LanguageServer.Provider.DocumentSynchronizationKind
+Nickelony.LanguageServer.Provider.DocumentSynchronizationKind.Close = 2 -> Nickelony.LanguageServer.Provider.DocumentSynchronizationKind
+Nickelony.LanguageServer.Provider.DocumentSynchronizationKind.Open = 0 -> Nickelony.LanguageServer.Provider.DocumentSynchronizationKind
+Nickelony.LanguageServer.Provider.DocumentSynchronizationRequest
+Nickelony.LanguageServer.Provider.DocumentSynchronizationRequest.ChangeRange.get -> Nickelony.LanguageServer.Provider.DocumentChangeRange?
+Nickelony.LanguageServer.Provider.DocumentSynchronizationRequest.ChangeRange.init -> void
+Nickelony.LanguageServer.Provider.DocumentSynchronizationRequest.Deconstruct(out Nickelony.LanguageServer.Provider.DocumentSynchronizationKind Kind, out Nickelony.LanguageServer.Provider.DocumentSnapshot! Document, out Nickelony.LanguageServer.Provider.DocumentChangeRange? ChangeRange) -> void
+Nickelony.LanguageServer.Provider.DocumentSynchronizationRequest.Document.get -> Nickelony.LanguageServer.Provider.DocumentSnapshot!
+Nickelony.LanguageServer.Provider.DocumentSynchronizationRequest.Document.init -> void
+Nickelony.LanguageServer.Provider.DocumentSynchronizationRequest.DocumentSynchronizationRequest() -> void
+Nickelony.LanguageServer.Provider.DocumentSynchronizationRequest.DocumentSynchronizationRequest(Nickelony.LanguageServer.Provider.DocumentSynchronizationKind Kind, Nickelony.LanguageServer.Provider.DocumentSnapshot! Document, Nickelony.LanguageServer.Provider.DocumentChangeRange? ChangeRange = null) -> void
+Nickelony.LanguageServer.Provider.DocumentSynchronizationRequest.Equals(Nickelony.LanguageServer.Provider.DocumentSynchronizationRequest other) -> bool
+Nickelony.LanguageServer.Provider.DocumentSynchronizationRequest.Kind.get -> Nickelony.LanguageServer.Provider.DocumentSynchronizationKind
+Nickelony.LanguageServer.Provider.DocumentSynchronizationRequest.Kind.init -> void
+Nickelony.LanguageServer.Provider.FileChangeBatch
+Nickelony.LanguageServer.Provider.FileChangeBatch.Count.get -> int
+Nickelony.LanguageServer.Provider.FileChangeBatch.Entries.get -> System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Provider.WorkspaceFileChange>!
+Nickelony.LanguageServer.Provider.FileChangeBatch.FileChangeBatch(System.Collections.Generic.IEnumerable<Nickelony.LanguageServer.Provider.WorkspaceFileChange>! entries) -> void
+Nickelony.LanguageServer.Provider.IWorkspaceFileWatcher.Start() -> Nickelony.LanguageServer.Provider.WorkspaceWatcherStartResult
+Nickelony.LanguageServer.Provider.MarkupContentReader
+Nickelony.LanguageServer.Provider.ProtocolMarkupContent
+Nickelony.LanguageServer.Provider.ProtocolMarkupContent.Equals(Nickelony.LanguageServer.Provider.ProtocolMarkupContent other) -> bool
+Nickelony.LanguageServer.Provider.ProtocolMarkupContent.Kind.get -> Nickelony.IDEKit.IntelliSense.TextMarkupKind
+Nickelony.LanguageServer.Provider.ProtocolMarkupContent.ProtocolMarkupContent() -> void
+Nickelony.LanguageServer.Provider.ProtocolMarkupContent.ProtocolMarkupContent(string? text, Nickelony.IDEKit.IntelliSense.TextMarkupKind kind) -> void
+Nickelony.LanguageServer.Provider.ProtocolMarkupContent.Text.get -> string!
+Nickelony.LanguageServer.Provider.ProtocolRangeConversion
+Nickelony.LanguageServer.Provider.SemanticTokenConversion
+Nickelony.LanguageServer.Provider.TextCompletionItemKindConversion
+Nickelony.LanguageServer.Provider.TextDocumentSymbolKindConversion
+Nickelony.LanguageServer.Provider.TrackedDocumentInitialState
+Nickelony.LanguageServer.Provider.TrackedDocumentInitialState.Content.get -> string!
+Nickelony.LanguageServer.Provider.TrackedDocumentInitialState.Content.init -> void
+Nickelony.LanguageServer.Provider.TrackedDocumentInitialState.Deconstruct(out string! FilePath, out string! Uri, out string! Content, out int Version, out bool IsOpen, out int OpenReferenceCount, out int RequestReferenceCount, out long LastAccessStamp) -> void
+Nickelony.LanguageServer.Provider.TrackedDocumentInitialState.Equals(Nickelony.LanguageServer.Provider.TrackedDocumentInitialState other) -> bool
+Nickelony.LanguageServer.Provider.TrackedDocumentInitialState.FilePath.get -> string!
+Nickelony.LanguageServer.Provider.TrackedDocumentInitialState.FilePath.init -> void
+Nickelony.LanguageServer.Provider.TrackedDocumentInitialState.IsOpen.get -> bool
+Nickelony.LanguageServer.Provider.TrackedDocumentInitialState.IsOpen.init -> void
+Nickelony.LanguageServer.Provider.TrackedDocumentInitialState.LastAccessStamp.get -> long
+Nickelony.LanguageServer.Provider.TrackedDocumentInitialState.LastAccessStamp.init -> void
+Nickelony.LanguageServer.Provider.TrackedDocumentInitialState.OpenReferenceCount.get -> int
+Nickelony.LanguageServer.Provider.TrackedDocumentInitialState.OpenReferenceCount.init -> void
+Nickelony.LanguageServer.Provider.TrackedDocumentInitialState.RequestReferenceCount.get -> int
+Nickelony.LanguageServer.Provider.TrackedDocumentInitialState.RequestReferenceCount.init -> void
+Nickelony.LanguageServer.Provider.TrackedDocumentInitialState.TrackedDocumentInitialState() -> void
+Nickelony.LanguageServer.Provider.TrackedDocumentInitialState.TrackedDocumentInitialState(string! FilePath, string! Uri, string! Content, int Version, bool IsOpen, int OpenReferenceCount, int RequestReferenceCount, long LastAccessStamp) -> void
+Nickelony.LanguageServer.Provider.TrackedDocumentInitialState.Uri.get -> string!
+Nickelony.LanguageServer.Provider.TrackedDocumentInitialState.Uri.init -> void
+Nickelony.LanguageServer.Provider.TrackedDocumentInitialState.Version.get -> int
+Nickelony.LanguageServer.Provider.TrackedDocumentInitialState.Version.init -> void
+Nickelony.LanguageServer.Provider.TrackedDocumentState
+Nickelony.LanguageServer.Provider.TrackedDocumentState.Content.get -> string!
+Nickelony.LanguageServer.Provider.TrackedDocumentState.CreateSnapshot() -> Nickelony.LanguageServer.Provider.DocumentSnapshot!
+Nickelony.LanguageServer.Provider.TrackedDocumentState.FilePath.get -> string!
+Nickelony.LanguageServer.Provider.TrackedDocumentState.IsOpen.get -> bool
+Nickelony.LanguageServer.Provider.TrackedDocumentState.LastAccessStamp.get -> long
+Nickelony.LanguageServer.Provider.TrackedDocumentState.MarkDocumentClosed() -> void
+Nickelony.LanguageServer.Provider.TrackedDocumentState.References.get -> Nickelony.LanguageServer.Provider.DocumentReferenceTracker!
+Nickelony.LanguageServer.Provider.TrackedDocumentState.RenameDocument(string! filePath, string! uri) -> void
+Nickelony.LanguageServer.Provider.TrackedDocumentState.ReopenDocument(string! content) -> void
+Nickelony.LanguageServer.Provider.TrackedDocumentState.ReplaceContent(string! content) -> string!
+Nickelony.LanguageServer.Provider.TrackedDocumentState.SetLastAccessStamp(long lastAccessStamp) -> void
+Nickelony.LanguageServer.Provider.TrackedDocumentState.TrackedDocumentState(Nickelony.LanguageServer.Provider.TrackedDocumentInitialState initialState) -> void
+Nickelony.LanguageServer.Provider.TrackedDocumentState.Uri.get -> string!
+Nickelony.LanguageServer.Provider.TrackedDocumentState.Version.get -> int
+Nickelony.LanguageServer.Provider.WorkspaceFileChange
+Nickelony.LanguageServer.Provider.WorkspaceFileChange.Deconstruct(out string! Path, out Nickelony.LanguageServer.Client.FileChangeKind Kind) -> void
+Nickelony.LanguageServer.Provider.WorkspaceFileChange.Equals(Nickelony.LanguageServer.Provider.WorkspaceFileChange other) -> bool
+Nickelony.LanguageServer.Provider.WorkspaceFileChange.Kind.get -> Nickelony.LanguageServer.Client.FileChangeKind
+Nickelony.LanguageServer.Provider.WorkspaceFileChange.Kind.init -> void
+Nickelony.LanguageServer.Provider.WorkspaceFileChange.Path.get -> string!
+Nickelony.LanguageServer.Provider.WorkspaceFileChange.Path.init -> void
+Nickelony.LanguageServer.Provider.WorkspaceFileChange.WorkspaceFileChange() -> void
+Nickelony.LanguageServer.Provider.WorkspaceFileChange.WorkspaceFileChange(string! Path, Nickelony.LanguageServer.Client.FileChangeKind Kind) -> void
+Nickelony.LanguageServer.Provider.WorkspaceFileWatcher
+Nickelony.LanguageServer.Provider.WorkspaceFileWatcher.Dispose() -> void
+Nickelony.LanguageServer.Provider.WorkspaceFileWatcher.DisposeAsync() -> System.Threading.Tasks.ValueTask
+Nickelony.LanguageServer.Provider.WorkspaceFileWatcher.IsDisposed.get -> bool
+Nickelony.LanguageServer.Provider.WorkspaceFileWatcher.Start() -> Nickelony.LanguageServer.Provider.WorkspaceWatcherStartResult
+Nickelony.LanguageServer.Provider.WorkspaceFileWatcher.WorkspaceFileWatcher(string! workspaceRootDirectoryPath, System.Func<Nickelony.LanguageServer.Provider.FileChangeBatch!, System.Threading.CancellationToken, System.Threading.Tasks.Task!>! dispatchAsync, System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Provider.WorkspaceWatchSpecification>! watchSpecifications, System.Action<Nickelony.LanguageServer.Provider.WorkspaceFileWatcher!, System.Exception?>? onWatcherFailed = null, Microsoft.Extensions.Logging.ILogger? logger = null) -> void
+Nickelony.LanguageServer.Provider.WorkspaceWatcherStartOutcome
+Nickelony.LanguageServer.Provider.WorkspaceWatcherStartOutcome.AlreadyRunning = 2 -> Nickelony.LanguageServer.Provider.WorkspaceWatcherStartOutcome
+Nickelony.LanguageServer.Provider.WorkspaceWatcherStartOutcome.Disposed = 3 -> Nickelony.LanguageServer.Provider.WorkspaceWatcherStartOutcome
+Nickelony.LanguageServer.Provider.WorkspaceWatcherStartOutcome.Started = 1 -> Nickelony.LanguageServer.Provider.WorkspaceWatcherStartOutcome
+Nickelony.LanguageServer.Provider.WorkspaceWatcherStartOutcome.StartupFailed = 5 -> Nickelony.LanguageServer.Provider.WorkspaceWatcherStartOutcome
+Nickelony.LanguageServer.Provider.WorkspaceWatcherStartOutcome.WorkspaceRootMissing = 4 -> Nickelony.LanguageServer.Provider.WorkspaceWatcherStartOutcome
+Nickelony.LanguageServer.Provider.WorkspaceWatcherStartResult
+Nickelony.LanguageServer.Provider.WorkspaceWatcherStartResult.Deconstruct(out Nickelony.LanguageServer.Provider.WorkspaceWatcherStartOutcome Outcome, out System.Exception? StartupException) -> void
+Nickelony.LanguageServer.Provider.WorkspaceWatcherStartResult.Equals(Nickelony.LanguageServer.Provider.WorkspaceWatcherStartResult other) -> bool
+Nickelony.LanguageServer.Provider.WorkspaceWatcherStartResult.Outcome.get -> Nickelony.LanguageServer.Provider.WorkspaceWatcherStartOutcome
+Nickelony.LanguageServer.Provider.WorkspaceWatcherStartResult.Outcome.init -> void
+Nickelony.LanguageServer.Provider.WorkspaceWatcherStartResult.Started.get -> bool
+Nickelony.LanguageServer.Provider.WorkspaceWatcherStartResult.StartupException.get -> System.Exception?
+Nickelony.LanguageServer.Provider.WorkspaceWatcherStartResult.StartupException.init -> void
+Nickelony.LanguageServer.Provider.WorkspaceWatcherStartResult.WorkspaceWatcherStartResult() -> void
+Nickelony.LanguageServer.Provider.WorkspaceWatcherStartResult.WorkspaceWatcherStartResult(Nickelony.LanguageServer.Provider.WorkspaceWatcherStartOutcome Outcome, System.Exception? StartupException) -> void
+Nickelony.LanguageServer.Provider.WorkspaceWatchSpecification
+Nickelony.LanguageServer.Provider.WorkspaceWatchSpecification.Deconstruct(out string! Filter, out bool IncludeSubdirectories) -> void
+Nickelony.LanguageServer.Provider.WorkspaceWatchSpecification.Equals(Nickelony.LanguageServer.Provider.WorkspaceWatchSpecification other) -> bool
+Nickelony.LanguageServer.Provider.WorkspaceWatchSpecification.Filter.get -> string!
+Nickelony.LanguageServer.Provider.WorkspaceWatchSpecification.Filter.init -> void
+Nickelony.LanguageServer.Provider.WorkspaceWatchSpecification.IncludeSubdirectories.get -> bool
+Nickelony.LanguageServer.Provider.WorkspaceWatchSpecification.IncludeSubdirectories.init -> void
+Nickelony.LanguageServer.Provider.WorkspaceWatchSpecification.WorkspaceWatchSpecification() -> void
+Nickelony.LanguageServer.Provider.WorkspaceWatchSpecification.WorkspaceWatchSpecification(string! Filter, bool IncludeSubdirectories) -> void
+override Nickelony.LanguageServer.Provider.DocumentChangeRange.GetHashCode() -> int
+override Nickelony.LanguageServer.Provider.DocumentRenameRequest.GetHashCode() -> int
+override Nickelony.LanguageServer.Provider.DocumentRenameResult.GetHashCode() -> int
+override Nickelony.LanguageServer.Provider.DocumentSynchronizationRequest.GetHashCode() -> int
+override Nickelony.LanguageServer.Provider.ProtocolMarkupContent.GetHashCode() -> int
+override Nickelony.LanguageServer.Provider.TrackedDocumentInitialState.GetHashCode() -> int
+override Nickelony.LanguageServer.Provider.WorkspaceFileChange.GetHashCode() -> int
+override Nickelony.LanguageServer.Provider.WorkspaceWatcherStartResult.GetHashCode() -> int
+override Nickelony.LanguageServer.Provider.WorkspaceWatchSpecification.GetHashCode() -> int
+static Nickelony.LanguageServer.Provider.DocumentChangeRange.operator !=(Nickelony.LanguageServer.Provider.DocumentChangeRange left, Nickelony.LanguageServer.Provider.DocumentChangeRange right) -> bool
+static Nickelony.LanguageServer.Provider.DocumentChangeRange.operator ==(Nickelony.LanguageServer.Provider.DocumentChangeRange left, Nickelony.LanguageServer.Provider.DocumentChangeRange right) -> bool
+static Nickelony.LanguageServer.Provider.DocumentRenameRequest.operator !=(Nickelony.LanguageServer.Provider.DocumentRenameRequest left, Nickelony.LanguageServer.Provider.DocumentRenameRequest right) -> bool
+static Nickelony.LanguageServer.Provider.DocumentRenameRequest.operator ==(Nickelony.LanguageServer.Provider.DocumentRenameRequest left, Nickelony.LanguageServer.Provider.DocumentRenameRequest right) -> bool
+static Nickelony.LanguageServer.Provider.DocumentRenameResult.operator !=(Nickelony.LanguageServer.Provider.DocumentRenameResult left, Nickelony.LanguageServer.Provider.DocumentRenameResult right) -> bool
+static Nickelony.LanguageServer.Provider.DocumentRenameResult.operator ==(Nickelony.LanguageServer.Provider.DocumentRenameResult left, Nickelony.LanguageServer.Provider.DocumentRenameResult right) -> bool
+static Nickelony.LanguageServer.Provider.DocumentSynchronizationRequest.operator !=(Nickelony.LanguageServer.Provider.DocumentSynchronizationRequest left, Nickelony.LanguageServer.Provider.DocumentSynchronizationRequest right) -> bool
+static Nickelony.LanguageServer.Provider.DocumentSynchronizationRequest.operator ==(Nickelony.LanguageServer.Provider.DocumentSynchronizationRequest left, Nickelony.LanguageServer.Provider.DocumentSynchronizationRequest right) -> bool
+static Nickelony.LanguageServer.Provider.MarkupContentReader.ExtractContent(System.Text.Json.JsonElement element) -> Nickelony.LanguageServer.Provider.ProtocolMarkupContent
+static Nickelony.LanguageServer.Provider.MarkupContentReader.NormalizeMarkdownText(string? text) -> string?
+static Nickelony.LanguageServer.Provider.ProtocolMarkupContent.operator !=(Nickelony.LanguageServer.Provider.ProtocolMarkupContent left, Nickelony.LanguageServer.Provider.ProtocolMarkupContent right) -> bool
+static Nickelony.LanguageServer.Provider.ProtocolMarkupContent.operator ==(Nickelony.LanguageServer.Provider.ProtocolMarkupContent left, Nickelony.LanguageServer.Provider.ProtocolMarkupContent right) -> bool
+static Nickelony.LanguageServer.Provider.ProtocolRangeConversion.TryGetTextPosition(Nickelony.LanguageServer.Client.ProtocolPosition position, out Nickelony.IDEKit.Core.Text.TextPosition textPosition) -> bool
+static Nickelony.LanguageServer.Provider.ProtocolRangeConversion.TryGetTextPositionRange(Nickelony.LanguageServer.Client.ProtocolRangePayload? rangePayload, out Nickelony.IDEKit.Core.Text.TextPositionRange range) -> bool
+static Nickelony.LanguageServer.Provider.SemanticTokenConversion.ToTextSemanticTokens(System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Abstractions.SemanticToken!>! tokens, Nickelony.IDEKit.Core.Text.TextLineMap! lineMap) -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.SemanticTokens.TextSemanticToken!>!
+static Nickelony.LanguageServer.Provider.TextCompletionItemKindConversion.FromLspKind(int lspKind) -> Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItemKind!
+static Nickelony.LanguageServer.Provider.TextDocumentSymbolKindConversion.FromLspKind(int lspKind) -> Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind
+static Nickelony.LanguageServer.Provider.TextDocumentSymbolKindConversion.TryFromLspKind(int lspKind, out Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbolKind kind) -> bool
+static Nickelony.LanguageServer.Provider.TrackedDocumentInitialState.operator !=(Nickelony.LanguageServer.Provider.TrackedDocumentInitialState left, Nickelony.LanguageServer.Provider.TrackedDocumentInitialState right) -> bool
+static Nickelony.LanguageServer.Provider.TrackedDocumentInitialState.operator ==(Nickelony.LanguageServer.Provider.TrackedDocumentInitialState left, Nickelony.LanguageServer.Provider.TrackedDocumentInitialState right) -> bool
+static Nickelony.LanguageServer.Provider.WorkspaceFileChange.operator !=(Nickelony.LanguageServer.Provider.WorkspaceFileChange left, Nickelony.LanguageServer.Provider.WorkspaceFileChange right) -> bool
+static Nickelony.LanguageServer.Provider.WorkspaceFileChange.operator ==(Nickelony.LanguageServer.Provider.WorkspaceFileChange left, Nickelony.LanguageServer.Provider.WorkspaceFileChange right) -> bool
+static Nickelony.LanguageServer.Provider.WorkspaceWatcherStartResult.operator !=(Nickelony.LanguageServer.Provider.WorkspaceWatcherStartResult left, Nickelony.LanguageServer.Provider.WorkspaceWatcherStartResult right) -> bool
+static Nickelony.LanguageServer.Provider.WorkspaceWatcherStartResult.operator ==(Nickelony.LanguageServer.Provider.WorkspaceWatcherStartResult left, Nickelony.LanguageServer.Provider.WorkspaceWatcherStartResult right) -> bool
+static Nickelony.LanguageServer.Provider.WorkspaceWatchSpecification.operator !=(Nickelony.LanguageServer.Provider.WorkspaceWatchSpecification left, Nickelony.LanguageServer.Provider.WorkspaceWatchSpecification right) -> bool
+static Nickelony.LanguageServer.Provider.WorkspaceWatchSpecification.operator ==(Nickelony.LanguageServer.Provider.WorkspaceWatchSpecification left, Nickelony.LanguageServer.Provider.WorkspaceWatchSpecification right) -> bool
+Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase
+Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase.AddAdmittedCallback<TDelegate>(ref TDelegate? callbackField, TDelegate? value) -> void
+Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase.CapabilitiesChanged -> System.EventHandler?
+Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase.Client.get -> Nickelony.LanguageServer.Client.ILanguageServerClient?
+Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase.CloseDocument(string! filePath) -> void
+Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase.Dispose() -> void
+Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase.DiagnosticsUpdated -> System.EventHandler<Nickelony.LanguageServer.Abstractions.DiagnosticsUpdatedEventArgs!>?
+Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase.DisposeAsync() -> System.Threading.Tasks.ValueTask
+Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase.GetDiagnostics(string! filePath) -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnostic!>!
+Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase.IsAvailable.get -> bool
+Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase.IsDisposed.get -> bool
+Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase.LanguageServerIntelliSenseProviderBase(System.Collections.Generic.IReadOnlyList<string!>! workspaceRootDirectoryPaths, Nickelony.LanguageServer.Provider.TrackedDocumentStore! documentStore, System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Provider.WorkspaceWatchSpecification>! watchSpecifications, Nickelony.LanguageServer.Client.ILanguageServerClient? client, Nickelony.LanguageServer.Provider.LanguageServerProviderOptions? options = null, Microsoft.Extensions.Logging.ILogger? logger = null) -> void
+Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase.Logger.get -> Microsoft.Extensions.Logging.ILogger!
+Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase.MoveDocument(string! oldFilePath, string! newFilePath, string! documentText) -> void
+Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase.ObserveBackgroundTask(System.Threading.Tasks.Task! task, string! operation) -> void
+Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase.OpenDocument(string! filePath, string! documentText) -> void
+Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase.RaiseSubscribers<TDelegate>(System.Func<TDelegate?>! callbackAccessor, System.Action<TDelegate!>! invoke, string! subscriberDescription) -> void
+Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase.RemoveCallback<TDelegate>(ref TDelegate? callbackField, TDelegate? value) -> void
+Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase.ReportMissingClientFailure() -> void
+Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase.SendDocumentPositionRequestAsync<TResponse, TResult>(string! filePath, string! documentText, Nickelony.IDEKit.Core.Text.TextPosition position, string! method, System.Func<Nickelony.LanguageServer.Client.TextDocumentIdentifier, Nickelony.LanguageServer.Client.ProtocolPosition, object!>! buildParameters, System.Func<TResponse, TResult>! parseResponse, TResult fallbackValue, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task<TResult>!
+Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase.SendDocumentRequestAsync<TResponse, TResult>(string! filePath, string! documentText, string! method, System.Func<Nickelony.LanguageServer.Client.ILanguageServerClient!, bool>! supportsRequest, System.Func<Nickelony.LanguageServer.Client.TextDocumentIdentifier, object!>! buildParameters, System.Func<TResponse, TResult>! parseResponse, TResult fallbackValue, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task<TResult>!
+Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase.SendRequestAsync<TResponse>(string! method, object! parameters, TResponse fallbackValue, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task<TResponse>!
+Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase.StartupFailed -> System.EventHandler<Nickelony.LanguageServer.Abstractions.StartupFailedEventArgs!>?
+Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase.State.get -> Nickelony.LanguageServer.Abstractions.LanguageServerProviderState
+Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase.SupportsCodeActions.get -> bool
+Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase.SupportsDocumentSymbols.get -> bool
+Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase.SupportsFormatting.get -> bool
+Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase.SupportsReferences.get -> bool
+Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase.SupportsRename.get -> bool
+Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase.UpdateDocument(string! filePath, string! documentText) -> void
+Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase.WorkspaceWatcherFailed -> System.EventHandler<Nickelony.LanguageServer.Abstractions.WorkspaceWatcherFailedEventArgs!>?
+Nickelony.LanguageServer.Provider.TrackedDocumentStore
+Nickelony.LanguageServer.Provider.TrackedDocumentStore.GetDocumentSnapshot(string! filePath) -> Nickelony.LanguageServer.Provider.DocumentSnapshot?
+Nickelony.LanguageServer.Provider.TrackedDocumentStore.GetOpenDocuments() -> System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Provider.DocumentSnapshot!>!
+Nickelony.LanguageServer.Provider.TrackedDocumentStore.IsTracked(string! filePath) -> bool
+Nickelony.LanguageServer.Provider.TrackedDocumentStore.PrepareForRestart() -> System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Provider.DocumentSnapshot!>!
+Nickelony.LanguageServer.Provider.TrackedDocumentStore.ReleaseRequestByReference(Nickelony.LanguageServer.Provider.DocumentRequestReference! requestReference) -> void
+Nickelony.LanguageServer.Provider.TrackedDocumentStore.Rename(string! oldFilePath, string! newFilePath, string? content = null) -> Nickelony.LanguageServer.Provider.DocumentRenameResult
+Nickelony.LanguageServer.Provider.TrackedDocumentStore.Synchronize(string! filePath, string! content, Nickelony.LanguageServer.Provider.DocumentReferenceAcquisition references = Nickelony.LanguageServer.Provider.DocumentReferenceAcquisition.None, bool includeChangeRange = true, Nickelony.LanguageServer.Provider.DocumentRequestReference? requestReference = null) -> Nickelony.LanguageServer.Provider.DocumentSynchronizationRequest?
+Nickelony.LanguageServer.Provider.TrackedDocumentStore.TrackedDocumentStore() -> void
+Nickelony.LanguageServer.Provider.TrackedDocumentStore.TrimIdleDocuments(int maxCount) -> System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Provider.DocumentSnapshot!>!
+Nickelony.LanguageServer.Provider.TrackedDocumentStore.TryClose(string! filePath, out Nickelony.LanguageServer.Provider.DocumentSnapshot? closingDocument) -> Nickelony.LanguageServer.Provider.DocumentCloseOutcome
+Nickelony.LanguageServer.Provider.TrackedDocumentStore.TryReopenTrackedDocument(string! filePath) -> Nickelony.LanguageServer.Provider.DocumentSynchronizationRequest?
+Nickelony.LanguageServer.Provider.TrackedDocumentStore.WithTrackedDocument(string! filePath, System.Action<Nickelony.LanguageServer.Provider.TrackedDocumentState!>! mutateTrackedDocument) -> void
+Nickelony.LanguageServer.Provider.TrackedDocumentStore.WithTrackedDocument<TResult>(string! filePath, System.Func<Nickelony.LanguageServer.Provider.TrackedDocumentState!, TResult>! accessTrackedDocument, TResult fallbackValue) -> TResult
+*REMOVED*Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase<TDocumentState>
+*REMOVED*Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase<TDocumentState>.AddAdmittedCallback<TDelegate>(ref TDelegate? callbackField, TDelegate? value) -> void
+*REMOVED*Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase<TDocumentState>.CapabilitiesChanged -> System.EventHandler?
+*REMOVED*Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase<TDocumentState>.Client.get -> Nickelony.LanguageServer.Client.ILanguageServerClient?
+*REMOVED*Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase<TDocumentState>.CloseDocument(string! filePath) -> void
+*REMOVED*Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase<TDocumentState>.DiagnosticsUpdated -> System.EventHandler<Nickelony.LanguageServer.Abstractions.DiagnosticsUpdatedEventArgs!>?
+*REMOVED*Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase<TDocumentState>.Dispose() -> void
+*REMOVED*Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase<TDocumentState>.DisposeAsync() -> System.Threading.Tasks.ValueTask
+*REMOVED*Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase<TDocumentState>.GetDiagnostics(string! filePath) -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnostic!>!
+*REMOVED*Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase<TDocumentState>.IsAvailable.get -> bool
+*REMOVED*Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase<TDocumentState>.IsDisposed.get -> bool
+*REMOVED*Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase<TDocumentState>.Logger.get -> Microsoft.Extensions.Logging.ILogger!
+*REMOVED*Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase<TDocumentState>.MoveDocument(string! oldFilePath, string! newFilePath, string! documentText) -> void
+*REMOVED*Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase<TDocumentState>.ObserveBackgroundTask(System.Threading.Tasks.Task! task, string! operation) -> void
+*REMOVED*Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase<TDocumentState>.OpenDocument(string! filePath, string! documentText) -> void
+*REMOVED*Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase<TDocumentState>.RaiseSubscribers<TDelegate>(System.Func<TDelegate?>! callbackAccessor, System.Action<TDelegate!>! invoke, string! subscriberDescription) -> void
+*REMOVED*Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase<TDocumentState>.RemoveCallback<TDelegate>(ref TDelegate? callbackField, TDelegate? value) -> void
+*REMOVED*Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase<TDocumentState>.ReportMissingClientFailure() -> void
+*REMOVED*Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase<TDocumentState>.RequestDispatcher.get -> Nickelony.LanguageServer.Provider.LanguageServerRequestDispatcher!
+*REMOVED*Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase<TDocumentState>.SendDocumentPositionRequestAsync<TResponse, TResult>(string! filePath, string! documentText, Nickelony.IDEKit.Core.Text.TextPosition position, string! method, System.Func<Nickelony.LanguageServer.Client.TextDocumentIdentifier, Nickelony.LanguageServer.Client.ProtocolPosition, object!>! buildParameters, System.Func<TResponse, TResult>! parseResponse, TResult fallbackValue, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task<TResult>!
+*REMOVED*Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase<TDocumentState>.SendDocumentRequestAsync<TResponse, TResult>(string! filePath, string! documentText, string! method, System.Func<Nickelony.LanguageServer.Client.ILanguageServerClient!, bool>! supportsRequest, System.Func<Nickelony.LanguageServer.Client.TextDocumentIdentifier, object!>! buildParameters, System.Func<TResponse, TResult>! parseResponse, TResult fallbackValue, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task<TResult>!
+*REMOVED*Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase<TDocumentState>.StartupFailed -> System.EventHandler<Nickelony.LanguageServer.Abstractions.StartupFailedEventArgs!>?
+*REMOVED*Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase<TDocumentState>.State.get -> Nickelony.LanguageServer.Abstractions.LanguageServerProviderState
+*REMOVED*Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase<TDocumentState>.SupportsCodeActions.get -> bool
+*REMOVED*Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase<TDocumentState>.SupportsDocumentSymbols.get -> bool
+*REMOVED*Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase<TDocumentState>.SupportsFormatting.get -> bool
+*REMOVED*Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase<TDocumentState>.SupportsReferences.get -> bool
+*REMOVED*Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase<TDocumentState>.SupportsRename.get -> bool
+*REMOVED*Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase<TDocumentState>.UpdateDocument(string! filePath, string! documentText) -> void
+*REMOVED*Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase<TDocumentState>.WorkspaceWatcherFailed -> System.EventHandler<Nickelony.LanguageServer.Abstractions.WorkspaceWatcherFailedEventArgs!>?
+abstract Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase.CreateMissingClientFailureMessage() -> string?
+abstract Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase.CreateSettingsPayload() -> object!
+abstract Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase.CreateStartupFailureMessage(bool isPersistentFailure) -> string?
+virtual Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase.GetCodeActionsAsync(Nickelony.LanguageServer.Abstractions.LanguageServerCodeActionRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Abstractions.TextCodeAction!>!>!
+virtual Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase.GetCompletionItemsAsync(Nickelony.LanguageServer.Abstractions.LanguageServerCompletionRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem!>!>!
+virtual Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase.GetDefinitionAsync(Nickelony.LanguageServer.Abstractions.LanguageServerDefinitionRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionLocation?>!
+virtual Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase.GetDocumentSymbolsAsync(Nickelony.LanguageServer.Abstractions.LanguageServerDocumentSymbolRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbol!>!>!
+virtual Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase.GetHoverAsync(Nickelony.LanguageServer.Abstractions.LanguageServerHoverRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.IntelliSense.Hover.TextHoverInfo?>!
+virtual Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase.GetSignatureHelpAsync(Nickelony.LanguageServer.Abstractions.LanguageServerSignatureHelpRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelp?>!
+virtual Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase.GetTrackedDiagnostics(string! normalizedFilePath) -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnostic!>!
+virtual Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase.HandleDiagnosticsPayload(string! filePath, Nickelony.LanguageServer.Client.PublishDiagnosticsParams! parameters, Nickelony.LanguageServer.Provider.DocumentSnapshot! document) -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnostic!>?
+abstract Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase.InvalidateTrackedDocumentSynchronization(string! filePath) -> void
+abstract Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase.IsConfigurationPath(string! normalizedPath) -> bool
+abstract Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase.LanguageId.get -> string!
+abstract Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase.ProviderDisplayName.get -> string!
+abstract Nickelony.LanguageServer.Provider.TrackedDocumentStore.CreateTrackedDocumentState(Nickelony.LanguageServer.Provider.TrackedDocumentInitialState initialState) -> Nickelony.LanguageServer.Provider.TrackedDocumentState!
+abstract Nickelony.LanguageServer.Provider.TrackedDocumentStore.GetLastAccessStamp(Nickelony.LanguageServer.Provider.TrackedDocumentState! state) -> long
+abstract Nickelony.LanguageServer.Provider.TrackedDocumentStore.MarkTrackedDocumentClosed(Nickelony.LanguageServer.Provider.TrackedDocumentState! state) -> void
+abstract Nickelony.LanguageServer.Provider.TrackedDocumentStore.RenameTrackedDocumentState(Nickelony.LanguageServer.Provider.TrackedDocumentState! state, string! filePath, string! uri) -> void
+abstract Nickelony.LanguageServer.Provider.TrackedDocumentStore.ReopenTrackedDocumentState(Nickelony.LanguageServer.Provider.TrackedDocumentState! state, string! content) -> void
+abstract Nickelony.LanguageServer.Provider.TrackedDocumentStore.ReplaceTrackedDocumentContent(Nickelony.LanguageServer.Provider.TrackedDocumentState! state, string! content) -> string!
+abstract Nickelony.LanguageServer.Provider.TrackedDocumentStore.TouchTrackedDocumentState(Nickelony.LanguageServer.Provider.TrackedDocumentState! state, long lastAccessStamp) -> void
+virtual Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase.CreateWorkspaceFileWatcher(string! workspaceRootDirectoryPath, System.Func<Nickelony.LanguageServer.Provider.FileChangeBatch!, System.Threading.CancellationToken, System.Threading.Tasks.Task!>! dispatchAsync, System.Action<Nickelony.LanguageServer.Provider.IWorkspaceFileWatcher!, System.Exception?>! onWatcherFailed) -> Nickelony.LanguageServer.Provider.IWorkspaceFileWatcher!
+virtual Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase.OnDisposing() -> void
+virtual Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase.OnDocumentMoved(string! filePath) -> void
+virtual Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase.OnDocumentSynchronizedAsync(Nickelony.LanguageServer.Provider.DocumentSnapshot! document, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task!
+virtual Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase.OnTrackedDocumentInvalidated(string! filePath) -> void
+virtual Nickelony.LanguageServer.Provider.TrackedDocumentStore.OnTrackedDocumentRenamed(Nickelony.LanguageServer.Provider.TrackedDocumentState! state, bool contentChanged) -> void
+*REMOVED*abstract Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase<TDocumentState>.CreateMissingClientFailureMessage() -> string?
+*REMOVED*abstract Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase<TDocumentState>.CreateSettingsPayload() -> object!
+*REMOVED*abstract Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase<TDocumentState>.CreateStartupFailureMessage(bool isPersistentFailure) -> string?
+*REMOVED*abstract Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase<TDocumentState>.FormatDocumentAsync(Nickelony.LanguageServer.Abstractions.TextFormatRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.LanguageServer.Abstractions.TextWorkspaceEdit?>!
+*REMOVED*abstract Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase<TDocumentState>.GetCodeActionsAsync(Nickelony.LanguageServer.Abstractions.LanguageServerCodeActionRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Abstractions.TextCodeAction!>!>!
+*REMOVED*abstract Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase<TDocumentState>.GetCompletionItemsAsync(Nickelony.LanguageServer.Abstractions.LanguageServerCompletionRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem!>!>!
+*REMOVED*abstract Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase<TDocumentState>.GetDefinitionAsync(string! filePath, string! documentText, Nickelony.IDEKit.Core.Text.TextPosition position, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionLocation?>!
+*REMOVED*abstract Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase<TDocumentState>.GetDocumentSymbolsAsync(string! filePath, string! documentText, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbol!>!>!
+*REMOVED*abstract Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase<TDocumentState>.GetHoverAsync(string! filePath, string! documentText, Nickelony.IDEKit.Core.Text.TextPosition position, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.IntelliSense.Hover.TextHoverInfo?>!
+*REMOVED*abstract Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase<TDocumentState>.GetReferencesAsync(Nickelony.LanguageServer.Abstractions.TextReferenceRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Abstractions.TextReferenceLocation!>!>!
+*REMOVED*abstract Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase<TDocumentState>.GetSignatureHelpAsync(Nickelony.LanguageServer.Abstractions.LanguageServerSignatureHelpRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelp?>!
+*REMOVED*abstract Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase<TDocumentState>.GetTrackedDiagnostics(string! normalizedFilePath) -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnostic!>!
+*REMOVED*abstract Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase<TDocumentState>.InvalidateTrackedDocumentSynchronization(string! filePath) -> void
+*REMOVED*abstract Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase<TDocumentState>.IsConfigurationPath(string! normalizedPath) -> bool
+*REMOVED*abstract Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase<TDocumentState>.LanguageId.get -> string!
+*REMOVED*abstract Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase<TDocumentState>.ProviderDisplayName.get -> string!
+*REMOVED*abstract Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase<TDocumentState>.RenameSymbolAsync(Nickelony.LanguageServer.Abstractions.TextRenameRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.LanguageServer.Abstractions.TextWorkspaceEdit?>!
+*REMOVED*virtual Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase<TDocumentState>.OnDisposing() -> void
+*REMOVED*virtual Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase<TDocumentState>.OnDocumentMoved(string! filePath) -> void
+*REMOVED*virtual Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase<TDocumentState>.OnTrackedDocumentInvalidated(string! filePath) -> void
+*REMOVED*Nickelony.LanguageServer.Provider.LanguageServerRequestDispatcher
+*REMOVED*Nickelony.LanguageServer.Provider.LanguageServerRequestDispatcher.LanguageServerRequestDispatcher(string! workspaceRootsDisplayText, Nickelony.LanguageServer.Client.ILanguageServerClient? client, Nickelony.LanguageServer.Provider.LanguageServerProviderOptions! options, Nickelony.LanguageServer.Provider.LanguageServerRequestDispatcherContext! context) -> void
+*REMOVED*Nickelony.LanguageServer.Provider.LanguageServerRequestDispatcher.ResetTimeoutTracking(long transportGeneration) -> void
+*REMOVED*Nickelony.LanguageServer.Provider.LanguageServerRequestDispatcher.SendAsync<TResponse>(string! method, object! parameters, TResponse fallbackValue, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task<TResponse>!
+*REMOVED*Nickelony.LanguageServer.Provider.LanguageServerRequestDispatcherContext
+*REMOVED*Nickelony.LanguageServer.Provider.LanguageServerRequestDispatcherContext.<Clone>$() -> Nickelony.LanguageServer.Provider.LanguageServerRequestDispatcherContext!
+*REMOVED*Nickelony.LanguageServer.Provider.LanguageServerRequestDispatcherContext.Deconstruct(out System.Func<bool>! IsDisposedAccessor, out System.Func<System.Threading.CancellationToken, System.Threading.Tasks.Task<bool>!>! EnsureTransportStartedAsync, out Microsoft.Extensions.Logging.ILogger! Logger, out System.Threading.CancellationToken DisposeToken) -> void
+*REMOVED*Nickelony.LanguageServer.Provider.LanguageServerRequestDispatcherContext.DisposeToken.get -> System.Threading.CancellationToken
+*REMOVED*Nickelony.LanguageServer.Provider.LanguageServerRequestDispatcherContext.DisposeToken.init -> void
+*REMOVED*Nickelony.LanguageServer.Provider.LanguageServerRequestDispatcherContext.EnsureTransportStartedAsync.get -> System.Func<System.Threading.CancellationToken, System.Threading.Tasks.Task<bool>!>!
+*REMOVED*Nickelony.LanguageServer.Provider.LanguageServerRequestDispatcherContext.EnsureTransportStartedAsync.init -> void
+*REMOVED*Nickelony.LanguageServer.Provider.LanguageServerRequestDispatcherContext.Equals(Nickelony.LanguageServer.Provider.LanguageServerRequestDispatcherContext? other) -> bool
+*REMOVED*Nickelony.LanguageServer.Provider.LanguageServerRequestDispatcherContext.IsDisposedAccessor.get -> System.Func<bool>!
+*REMOVED*Nickelony.LanguageServer.Provider.LanguageServerRequestDispatcherContext.IsDisposedAccessor.init -> void
+*REMOVED*Nickelony.LanguageServer.Provider.LanguageServerRequestDispatcherContext.LanguageServerRequestDispatcherContext(System.Func<bool>! IsDisposedAccessor, System.Func<System.Threading.CancellationToken, System.Threading.Tasks.Task<bool>!>! EnsureTransportStartedAsync, Microsoft.Extensions.Logging.ILogger! Logger, System.Threading.CancellationToken DisposeToken) -> void
+*REMOVED*Nickelony.LanguageServer.Provider.LanguageServerRequestDispatcherContext.Logger.get -> Microsoft.Extensions.Logging.ILogger!
+*REMOVED*Nickelony.LanguageServer.Provider.LanguageServerRequestDispatcherContext.Logger.init -> void
+*REMOVED*override Nickelony.LanguageServer.Provider.LanguageServerRequestDispatcherContext.Equals(object? obj) -> bool
+*REMOVED*override Nickelony.LanguageServer.Provider.LanguageServerRequestDispatcherContext.GetHashCode() -> int
+*REMOVED*override Nickelony.LanguageServer.Provider.LanguageServerRequestDispatcherContext.ToString() -> string!
+*REMOVED*static Nickelony.LanguageServer.Provider.LanguageServerRequestDispatcherContext.operator !=(Nickelony.LanguageServer.Provider.LanguageServerRequestDispatcherContext? left, Nickelony.LanguageServer.Provider.LanguageServerRequestDispatcherContext? right) -> bool
+*REMOVED*static Nickelony.LanguageServer.Provider.LanguageServerRequestDispatcherContext.operator ==(Nickelony.LanguageServer.Provider.LanguageServerRequestDispatcherContext? left, Nickelony.LanguageServer.Provider.LanguageServerRequestDispatcherContext? right) -> bool
+Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase.GetSemanticTokens(string! filePath) -> System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Abstractions.SemanticToken!>!
+Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase.SemanticTokensUpdated -> System.EventHandler<Nickelony.LanguageServer.Abstractions.SemanticTokensUpdatedEventArgs!>?
+virtual Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase.GetTrackedSemanticTokens(string! normalizedFilePath) -> System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Abstractions.SemanticToken!>!
+virtual Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase.TryStoreSemanticTokens(string! normalizedFilePath, int documentVersion, System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Abstractions.SemanticToken!>! semanticTokens) -> bool
+virtual Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase.FormatDocumentAsync(Nickelony.LanguageServer.Abstractions.LanguageServerFormattingRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.LanguageServer.Abstractions.TextWorkspaceEdit?>!
+virtual Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase.RenameSymbolAsync(Nickelony.LanguageServer.Abstractions.LanguageServerRenameRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.LanguageServer.Abstractions.TextWorkspaceEdit?>!
+virtual Nickelony.LanguageServer.Provider.LanguageServerIntelliSenseProviderBase.GetReferencesAsync(Nickelony.LanguageServer.Abstractions.LanguageServerReferenceRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Abstractions.TextReferenceLocation!>!>!
+Nickelony.LanguageServer.Provider.WorkspaceEditConversion
+static Nickelony.LanguageServer.Provider.WorkspaceEditConversion.Parse(Nickelony.LanguageServer.Client.WorkspaceEditResponse? response, Microsoft.Extensions.Logging.ILogger? logger = null) -> Nickelony.LanguageServer.Abstractions.TextWorkspaceEdit?
+static Nickelony.LanguageServer.Provider.WorkspaceEditConversion.AppendTextEdits(System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.TextEditPayload>? edits, System.Collections.Generic.List<Nickelony.LanguageServer.Abstractions.TextEdit!>! textEdits) -> void
+Nickelony.LanguageServer.Provider.FormattingOptionsConversion
+static Nickelony.LanguageServer.Provider.FormattingOptionsConversion.ToPayload(Nickelony.LanguageServer.Abstractions.TextFormattingOptions! options) -> Nickelony.LanguageServer.Client.FormattingOptionsPayload
+Nickelony.LanguageServer.Provider.SemanticTokensDecoder
+static Nickelony.LanguageServer.Provider.SemanticTokensDecoder.Decode(System.Collections.Generic.IReadOnlyList<int>! data, string! content, System.Collections.Generic.IReadOnlyList<string!>? tokenTypes, System.Collections.Generic.IReadOnlyList<string!>? tokenModifiers) -> System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Abstractions.SemanticToken!>!
+Nickelony.LanguageServer.Provider.WorkspaceFileWatcherFactory
+virtual Nickelony.LanguageServer.Provider.WorkspaceFileWatcherFactory.Invoke(string! workspaceRootDirectoryPath, System.Func<Nickelony.LanguageServer.Provider.FileChangeBatch!, System.Threading.CancellationToken, System.Threading.Tasks.Task!>! dispatchAsync, System.Action<Nickelony.LanguageServer.Provider.IWorkspaceFileWatcher!, System.Exception?>! onWatcherFailed) -> Nickelony.LanguageServer.Provider.IWorkspaceFileWatcher!
+Nickelony.LanguageServer.Provider.LanguageServerProviderOptions.WorkspaceFileWatcherFactory.get -> Nickelony.LanguageServer.Provider.WorkspaceFileWatcherFactory?
+Nickelony.LanguageServer.Provider.LanguageServerProviderOptions.WorkspaceFileWatcherFactory.init -> void

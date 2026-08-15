@@ -1,0 +1,10 @@
+#nullable enable
+Nickelony.KeyBindings.Avalonia.KeyBindingDispatcherExtensions
+Nickelony.KeyBindings.Avalonia.KeyCodeMapper
+Nickelony.KeyBindings.Avalonia.KeyEventArgsExtensions
+static Nickelony.KeyBindings.Avalonia.KeyBindingDispatcherExtensions.HandleKeyDown<TCommandId>(this Nickelony.KeyBindings.KeyBindingDispatcher<TCommandId>! dispatcher, Avalonia.Input.KeyEventArgs! e, string? context) -> Nickelony.KeyBindings.KeyChordDispatchResult
+static Nickelony.KeyBindings.Avalonia.KeyCodeMapper.ToAvaloniaKey(Nickelony.KeyBindings.KeyCode keyCode) -> Avalonia.Input.Key
+static Nickelony.KeyBindings.Avalonia.KeyCodeMapper.ToKeyCode(Avalonia.Input.Key key) -> Nickelony.KeyBindings.KeyCode?
+static Nickelony.KeyBindings.Avalonia.KeyCodeMapper.ToKeyModifierSet(Avalonia.Input.KeyModifiers modifiers) -> Nickelony.KeyBindings.KeyModifierSet
+static Nickelony.KeyBindings.Avalonia.KeyCodeMapper.ToAvaloniaKeyModifiers(Nickelony.KeyBindings.KeyModifierSet modifiers) -> Avalonia.Input.KeyModifiers
+static Nickelony.KeyBindings.Avalonia.KeyEventArgsExtensions.ToKeyCombo(this Avalonia.Input.KeyEventArgs! e) -> Nickelony.KeyBindings.KeyCombo?

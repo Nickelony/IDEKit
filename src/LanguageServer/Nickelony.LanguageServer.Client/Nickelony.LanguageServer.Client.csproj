@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>Nickelony.LanguageServer.Client</RootNamespace>
+    <AssemblyName>Nickelony.LanguageServer.Client</AssemblyName>
+    <PackageId>Nickelony.LanguageServer.Client</PackageId>
+    <Description>Lightweight LSP client for .NET built on StreamJsonRpc - spawns a language-server process and speaks LSP over stdio.</Description>
+    <PackageTags>language-server;lsp;editor;intellisense;nickelony</PackageTags>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <WarningsAsErrors>CS1591;RS0016;RS0017</WarningsAsErrors>
+    <!-- CA1848 ("use LoggerMessage delegates") is deliberately not enforced for this package: messages go through
+         the ILogger extension methods for readability and low call-site churn, and they are low-frequency lifecycle
+         and failure-path diagnostics rather than hot-path work. This follows the family logging policy in
+         CODE_STYLE_GUIDELINES.md; hot-path migration to LoggerMessage remains possible when a measurement justifies it. -->
+    <NoWarn>$(NoWarn);CA1848</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Public-API surface baseline: an unlisted public member fails the build (RS0016/RS0017). -->
+    <PackageReference Include="Microsoft.CodeAnalysis.PublicApiAnalyzers" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
+    <PackageReference Include="StreamJsonRpc" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+    <None Include="..\..\..\icons\$(PackageIcon)" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\..\shared\Protocol\LspMethodNames.cs" Link="Protocol\LspMethodNames.cs" />
+    <Compile Include="..\..\..\shared\Protocol\JsonElementReadHelpers.cs" Link="Protocol\JsonElementReadHelpers.cs" />
+  </ItemGroup>
+
+</Project>

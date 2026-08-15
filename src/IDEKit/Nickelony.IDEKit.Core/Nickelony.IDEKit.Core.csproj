@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>Nickelony.IDEKit.Core</RootNamespace>
+    <AssemblyName>Nickelony.IDEKit.Core</AssemblyName>
+    <PackageId>Nickelony.IDEKit.Core</PackageId>
+    <Description>Dependency-free text snapshots, ranges, edits, and host-independent editor utilities and contracts.</Description>
+    <PackageTags>text-editor;editor;text;utilities;nickelony</PackageTags>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <WarningsAsErrors>CS1591;RS0016;RS0017</WarningsAsErrors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Public-API surface baseline: an unlisted public member fails the build (RS0016/RS0017). -->
+    <PackageReference Include="Microsoft.CodeAnalysis.PublicApiAnalyzers" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Nickelony.IDEKit.Core.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\..\shared\Infrastructure\TextMatchProbe.cs" Link="Infrastructure\TextMatchProbe.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+    <None Include="..\..\..\icons\$(PackageIcon)" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+</Project>

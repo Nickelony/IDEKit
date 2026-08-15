@@ -1,0 +1,92 @@
+#nullable enable
+Nickelony.IDEKit.Processes.IProcessHandle
+Nickelony.IDEKit.Processes.IProcessHandle.ExitCode.get -> int
+Nickelony.IDEKit.Processes.IProcessHandle.Kill() -> void
+Nickelony.IDEKit.Processes.IProcessHandle.KillEntireProcessTree() -> void
+Nickelony.IDEKit.Processes.IProcessHandle.ReadStandardErrorAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<string!>!
+Nickelony.IDEKit.Processes.IProcessHandle.ReadStandardOutputAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<string!>!
+Nickelony.IDEKit.Processes.IProcessHandle.StandardError.get -> string!
+Nickelony.IDEKit.Processes.IProcessHandle.StandardOutput.get -> string!
+Nickelony.IDEKit.Processes.IProcessHandle.WaitForExit() -> void
+Nickelony.IDEKit.Processes.IProcessHandle.WaitForExit(int timeoutMilliseconds) -> bool
+Nickelony.IDEKit.Processes.IProcessHandle.WaitForExitAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task!
+Nickelony.IDEKit.Processes.IProcessRunner
+Nickelony.IDEKit.Processes.IProcessRunner.Run(Nickelony.IDEKit.Processes.ProcessRunRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> Nickelony.IDEKit.Processes.ProcessRunResult!
+Nickelony.IDEKit.Processes.IProcessRunner.RunAsync(Nickelony.IDEKit.Processes.ProcessRunRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.Processes.ProcessRunResult!>!
+Nickelony.IDEKit.Processes.IProcessRunner.Start(Nickelony.IDEKit.Processes.ProcessRunRequest! request) -> Nickelony.IDEKit.Processes.IProcessHandle!
+Nickelony.IDEKit.Processes.ProcessRunOutcome
+Nickelony.IDEKit.Processes.ProcessRunOutcome.Canceled = 4 -> Nickelony.IDEKit.Processes.ProcessRunOutcome
+Nickelony.IDEKit.Processes.ProcessRunOutcome.CanceledBeforeStart = 1 -> Nickelony.IDEKit.Processes.ProcessRunOutcome
+Nickelony.IDEKit.Processes.ProcessRunOutcome.Exited = 2 -> Nickelony.IDEKit.Processes.ProcessRunOutcome
+Nickelony.IDEKit.Processes.ProcessRunOutcome.NoProcessHandle = 0 -> Nickelony.IDEKit.Processes.ProcessRunOutcome
+Nickelony.IDEKit.Processes.ProcessRunOutcome.TimedOut = 3 -> Nickelony.IDEKit.Processes.ProcessRunOutcome
+Nickelony.IDEKit.Processes.ProcessRunRequest
+Nickelony.IDEKit.Processes.ProcessRunRequest.<Clone>$() -> Nickelony.IDEKit.Processes.ProcessRunRequest!
+Nickelony.IDEKit.Processes.ProcessRunRequest.ArgumentList.get -> System.Collections.Generic.IReadOnlyList<string!>!
+Nickelony.IDEKit.Processes.ProcessRunRequest.ArgumentList.init -> void
+Nickelony.IDEKit.Processes.ProcessRunRequest.Arguments.get -> string!
+Nickelony.IDEKit.Processes.ProcessRunRequest.Arguments.init -> void
+Nickelony.IDEKit.Processes.ProcessRunRequest.CreateNoWindow.get -> bool
+Nickelony.IDEKit.Processes.ProcessRunRequest.CreateNoWindow.init -> void
+Nickelony.IDEKit.Processes.ProcessRunRequest.EnvironmentVariables.get -> System.Collections.Generic.IReadOnlyDictionary<string!, string!>!
+Nickelony.IDEKit.Processes.ProcessRunRequest.EnvironmentVariables.init -> void
+Nickelony.IDEKit.Processes.ProcessRunRequest.Equals(Nickelony.IDEKit.Processes.ProcessRunRequest? other) -> bool
+Nickelony.IDEKit.Processes.ProcessRunRequest.FileName.get -> string!
+Nickelony.IDEKit.Processes.ProcessRunRequest.FileName.init -> void
+Nickelony.IDEKit.Processes.ProcessRunRequest.ProcessRunRequest() -> void
+Nickelony.IDEKit.Processes.ProcessRunRequest.RedirectStandardError.get -> bool
+Nickelony.IDEKit.Processes.ProcessRunRequest.RedirectStandardError.init -> void
+Nickelony.IDEKit.Processes.ProcessRunRequest.RedirectStandardOutput.get -> bool
+Nickelony.IDEKit.Processes.ProcessRunRequest.RedirectStandardOutput.init -> void
+Nickelony.IDEKit.Processes.ProcessRunRequest.StandardErrorEncoding.get -> System.Text.Encoding?
+Nickelony.IDEKit.Processes.ProcessRunRequest.StandardErrorEncoding.init -> void
+Nickelony.IDEKit.Processes.ProcessRunRequest.StandardOutputEncoding.get -> System.Text.Encoding?
+Nickelony.IDEKit.Processes.ProcessRunRequest.StandardOutputEncoding.init -> void
+Nickelony.IDEKit.Processes.ProcessRunRequest.Timeout.get -> System.TimeSpan?
+Nickelony.IDEKit.Processes.ProcessRunRequest.Timeout.init -> void
+Nickelony.IDEKit.Processes.ProcessRunRequest.UseShellExecute.get -> bool
+Nickelony.IDEKit.Processes.ProcessRunRequest.UseShellExecute.init -> void
+Nickelony.IDEKit.Processes.ProcessRunRequest.WorkingDirectory.get -> string?
+Nickelony.IDEKit.Processes.ProcessRunRequest.WorkingDirectory.init -> void
+Nickelony.IDEKit.Processes.ProcessRunResult
+Nickelony.IDEKit.Processes.ProcessRunResult.<Clone>$() -> Nickelony.IDEKit.Processes.ProcessRunResult!
+Nickelony.IDEKit.Processes.ProcessRunResult.Equals(Nickelony.IDEKit.Processes.ProcessRunResult? other) -> bool
+Nickelony.IDEKit.Processes.ProcessRunResult.ExitCode.get -> int?
+Nickelony.IDEKit.Processes.ProcessRunResult.ExitCode.init -> void
+Nickelony.IDEKit.Processes.ProcessRunResult.Outcome.get -> Nickelony.IDEKit.Processes.ProcessRunOutcome
+Nickelony.IDEKit.Processes.ProcessRunResult.Outcome.init -> void
+Nickelony.IDEKit.Processes.ProcessRunResult.ProcessRunResult() -> void
+Nickelony.IDEKit.Processes.ProcessRunResult.StandardError.get -> string?
+Nickelony.IDEKit.Processes.ProcessRunResult.StandardError.init -> void
+Nickelony.IDEKit.Processes.ProcessRunResult.StandardOutput.get -> string?
+Nickelony.IDEKit.Processes.ProcessRunResult.StandardOutput.init -> void
+Nickelony.IDEKit.Processes.ProcessRunner
+Nickelony.IDEKit.Processes.ProcessRunner.ProcessRunner() -> void
+Nickelony.IDEKit.Processes.ProcessRunner.ProcessRunner(Nickelony.IDEKit.Processes.ProcessRunnerOptions! options) -> void
+Nickelony.IDEKit.Processes.ProcessRunner.Run(Nickelony.IDEKit.Processes.ProcessRunRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> Nickelony.IDEKit.Processes.ProcessRunResult!
+Nickelony.IDEKit.Processes.ProcessRunner.RunAsync(Nickelony.IDEKit.Processes.ProcessRunRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.Processes.ProcessRunResult!>!
+Nickelony.IDEKit.Processes.ProcessRunner.Start(Nickelony.IDEKit.Processes.ProcessRunRequest! request) -> Nickelony.IDEKit.Processes.IProcessHandle!
+Nickelony.IDEKit.Processes.ProcessRunnerOptions
+Nickelony.IDEKit.Processes.ProcessRunnerOptions.<Clone>$() -> Nickelony.IDEKit.Processes.ProcessRunnerOptions!
+Nickelony.IDEKit.Processes.ProcessRunnerOptions.Equals(Nickelony.IDEKit.Processes.ProcessRunnerOptions? other) -> bool
+Nickelony.IDEKit.Processes.ProcessRunnerOptions.OutputDrainGracePeriod.get -> System.TimeSpan
+Nickelony.IDEKit.Processes.ProcessRunnerOptions.OutputDrainGracePeriod.init -> void
+Nickelony.IDEKit.Processes.ProcessRunnerOptions.ProcessRunnerOptions() -> void
+Nickelony.IDEKit.Processes.ProcessRunnerOptions.TerminationGracePeriod.get -> System.TimeSpan
+Nickelony.IDEKit.Processes.ProcessRunnerOptions.TerminationGracePeriod.init -> void
+override Nickelony.IDEKit.Processes.ProcessRunRequest.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Processes.ProcessRunRequest.GetHashCode() -> int
+override Nickelony.IDEKit.Processes.ProcessRunRequest.ToString() -> string!
+override Nickelony.IDEKit.Processes.ProcessRunResult.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Processes.ProcessRunResult.GetHashCode() -> int
+override Nickelony.IDEKit.Processes.ProcessRunResult.ToString() -> string!
+override Nickelony.IDEKit.Processes.ProcessRunnerOptions.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Processes.ProcessRunnerOptions.GetHashCode() -> int
+override Nickelony.IDEKit.Processes.ProcessRunnerOptions.ToString() -> string!
+static Nickelony.IDEKit.Processes.ProcessRunRequest.operator !=(Nickelony.IDEKit.Processes.ProcessRunRequest? left, Nickelony.IDEKit.Processes.ProcessRunRequest? right) -> bool
+static Nickelony.IDEKit.Processes.ProcessRunRequest.operator ==(Nickelony.IDEKit.Processes.ProcessRunRequest? left, Nickelony.IDEKit.Processes.ProcessRunRequest? right) -> bool
+static Nickelony.IDEKit.Processes.ProcessRunResult.operator !=(Nickelony.IDEKit.Processes.ProcessRunResult? left, Nickelony.IDEKit.Processes.ProcessRunResult? right) -> bool
+static Nickelony.IDEKit.Processes.ProcessRunResult.operator ==(Nickelony.IDEKit.Processes.ProcessRunResult? left, Nickelony.IDEKit.Processes.ProcessRunResult? right) -> bool
+static Nickelony.IDEKit.Processes.ProcessRunnerOptions.Default.get -> Nickelony.IDEKit.Processes.ProcessRunnerOptions!
+static Nickelony.IDEKit.Processes.ProcessRunnerOptions.operator !=(Nickelony.IDEKit.Processes.ProcessRunnerOptions? left, Nickelony.IDEKit.Processes.ProcessRunnerOptions? right) -> bool
+static Nickelony.IDEKit.Processes.ProcessRunnerOptions.operator ==(Nickelony.IDEKit.Processes.ProcessRunnerOptions? left, Nickelony.IDEKit.Processes.ProcessRunnerOptions? right) -> bool

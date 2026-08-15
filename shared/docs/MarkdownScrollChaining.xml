@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="MarkdownScrollChaining.AttachViewer">
+      <summary>
+      Attaches wheel routing to a rendered viewer or plain-text fallback viewer according to the
+      options: nothing when wheel chaining is disabled, pass-through when the content cannot scroll,
+      and full routing otherwise.
+      </summary>
+      <param name="viewer">The viewer to attach to.</param>
+      <param name="options">The rendering options that select the behavior.</param>
+    </member>
+    <member name="MarkdownScrollChaining.AttachCodeBlock">
+      <summary>
+      Attaches wheel routing to a code-block editor. A code-block editor hosted without the rendered
+      viewer scrolls itself and forwards an unconsumable wheel to its parent; inside the viewer, the
+      viewer's handler routes the wheel to the editor first. Nothing is attached when wheel chaining or
+      scrolling is disabled.
+      </summary>
+      <param name="editor">The code-block editor to attach to.</param>
+      <param name="options">The rendering options that select the behavior.</param>
+    </member>
+  </members>
+</doc>

@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <IsPackable>false</IsPackable>
+    <RunSettingsFilePath>test.runsettings</RunSettingsFilePath>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="coverlet.collector" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="MSTest.TestAdapter" />
+    <PackageReference Include="MSTest.TestFramework" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\src\LanguageServer\Nickelony.LanguageServer.Client\Nickelony.LanguageServer.Client.csproj" />
+    <ProjectReference Include="..\Nickelony.LanguageServer.Client.Tests.FakeServer\Nickelony.LanguageServer.Client.Tests.FakeServer.csproj" ReferenceOutputAssembly="false" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\TestSupport\TestLoggerScope.cs" Link="Support\TestLoggerScope.cs" />
+    <Compile Include="..\..\TestSupport\TestPolling.cs" Link="Support\TestPolling.cs" />
+    <Compile Include="..\..\TestSupport\TestCategories.cs" Link="Support\TestCategories.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- The real-process test runs the compiled fake server; the output directory is injected so the test can
+         find the build output without depending on the working directory or on the fake server's target
+         framework. -->
+    <AssemblyMetadata Include="FakeServerOutputDirectory" Value="$(MSBuildThisFileDirectory)..\Nickelony.LanguageServer.Client.Tests.FakeServer\bin\$(Configuration)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
+  </ItemGroup>
+
+</Project>

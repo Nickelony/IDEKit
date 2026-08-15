@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="BookmarkMargin.Class">
+      <summary>
+      Renders an icon beside every visible marked line and toggles a bookmark when the left mouse
+      button is pressed.
+      </summary>
+      <remarks>
+      <para>
+      The margin invalidates itself when its text view, visual lines, or scroll offset change and
+      after it toggles a bookmark. A source that implements <see cref="IChangeNotificationSource"/> is
+      followed while the margin is connected to a text view; a source without notifications requires
+      the host to invalidate the margin after its bookmarks change.
+      </para>
+      <para>
+      A left-button press on a visual line's margin row requests a toggle for that line's bookmark
+      through <see cref="OnBookmarkToggleRequested"/>; a press on a row without a visual line (for
+      example past the end of the document) does nothing. The horizontal press position is not
+      inspected.
+      </para>
+      <para>
+      The icon and the reserved width scale with the margin's font size.
+      </para>
+      <para>
+      The icon drawing is replaceable: the type installs a non-normative sample icon (an amber flag,
+      see <see cref="SampleIconBrush"/> and <see cref="SampleIconGeometry"/>) as its authored default
+      so the margin is visible without configuration. Assign
+      <see cref="LineStatusIconMarginBase.IconBrush"/> and <see cref="LineStatusIconMarginBase.IconGeometry"/>
+      for the host's own identity, or override <see cref="LineStatusIconMarginBase.DrawMarker"/> in a
+      derived margin. The toggle decision is delegated to <see cref="OnBookmarkToggleRequested"/>, whose
+      default toggles through the source; a derived margin can override it to add modifier keys,
+      confirmation, or a context-menu route.
+      </para>
+      </remarks>
+    </member>
+    <member name="SampleIconBrush">
+      <summary>
+      Gets the sample icon brush the margin installs as its non-normative default: an amber brush
+      suitable for a bookmark flag.
+      </summary>
+      <remarks>
+      The default exists so a bookmark margin is visible without configuration. A host that wants its
+      own identity assigns <see cref="LineStatusIconMarginBase.IconBrush"/> (or overrides the property's
+      default value in a derived margin).
+      </remarks>
+    </member>
+    <member name="SampleIconGeometry">
+      <summary>
+      Gets the sample icon geometry the margin installs as its non-normative default: a bookmark flag
+      authored for the design font size.
+      </summary>
+      <remarks>
+      The default exists so a bookmark margin is visible without configuration. A host that wants its
+      own identity assigns <see cref="LineStatusIconMarginBase.IconGeometry"/> (or overrides the property's
+      default value in a derived margin).
+      </remarks>
+    </member>
+    <member name="TestHooks">
+      <summary>
+      Gets the test-only hooks of the margin. The member is <see langword="internal"/> and reachable only
+      through <c>InternalsVisibleTo</c>, so the margin's public shape carries no test surface.
+      </summary>
+    </member>
+    <member name="TryToggleBookmarkAt">
+      <summary>
+      Runs the icon-click path for a margin-relative position without a routed event, exactly as the
+      base margin's press handling does: the resolved line's toggle is requested, and the margin
+      invalidates itself when the request is handled. A test seam, because a synthetic event cannot
+      carry a deterministic position.
+      </summary>
+      <param name="position">The position in the margin's coordinate space.</param>
+      <returns>
+      <see langword="true"/> when a line was found and the click was handled; otherwise,
+      <see langword="false"/>.
+      </returns>
+    </member>
+    <member name="BookmarkMargin">
+      <summary>
+      Initializes a new instance of the <see cref="BookmarkMargin"/> class.
+      </summary>
+      <param name="bookmarkSource">The source used to query and toggle bookmarks.</param>
+      <exception cref="ArgumentNullException"><paramref name="bookmarkSource"/> is <see langword="null"/>.</exception>
+    </member>
+    <member name="OnBookmarkToggleRequested">
+      <summary>
+      Requests a bookmark toggle for the document line at the supplied offset and reports whether the
+      request was handled.
+      </summary>
+      <remarks>
+      <para>
+      The default toggles through <see cref="IBookmarkSource.ToggleBookmark"/> and returns
+      <see langword="true"/>, so the margin invalidates itself and marks the click handled. A derived
+      margin can override this member to apply a different gesture policy (modifier keys,
+      confirmation, or a context-menu route); returning <see langword="false"/> leaves the click
+      unhandled and the margin uninvalidated.
+      </para>
+      <para>
+      The member is called only for a click that resolved to a visual line, so
+      <paramref name="lineOffset"/> is the first document line offset of the clicked line.
+      </para>
+      </remarks>
+      <param name="lineOffset">The zero-based offset of the clicked line.</param>
+      <returns><see langword="true"/> when the toggle was performed; otherwise, <see langword="false"/>.</returns>
+    </member>
+  </members>
+</doc>

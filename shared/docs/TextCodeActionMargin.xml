@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="TextCodeActionMargin.Class">
+      <summary>
+      Renders the code-action indicator (a light-bulb icon) for the visible indicator line and opens the
+      actions menu when the left mouse button is pressed on that line.
+      </summary>
+      <remarks>
+      <para>
+      The margin is driven by its <see cref="TextCodeActionController"/>: the controller reports the
+      indicator's line and raises a change notification when the available actions change, so a connected
+      margin invalidates itself without further host calls.
+      </para>
+      <para>
+      A left-button press on the indicator's line opens the actions menu anchored at the click; a press
+      on a row without the indicator does nothing. The margin reserves the base class's standard width
+      and the icon scales with the margin's font size, so the margin width stays proportional to the
+      text when the editor font changes.
+      </para>
+      <para>
+      The icon's brush and geometry are replaceable through the inherited properties (the defaults are a
+      theme-neutral gray and the library's light-bulb icon), and hosts are expected to set the brush to
+      their theme's hint or accent color. The left-press gesture is the library default and can be turned
+      off with <see cref="OpenOnLeftPress"/>; a host that owns the gesture opens the same menu through
+      <see cref="TextCodeActionController.TryOpenActions(int, Point)"/> with its own anchor.
+      </para>
+      </remarks>
+    </member>
+    <member name="OpenOnLeftPressProperty">
+      <summary>
+      Identifies the <see cref="OpenOnLeftPress"/> property.
+      </summary>
+    </member>
+    <member name="OpenOnLeftPress">
+      <summary>
+      Gets or sets a value indicating whether a left-button press on the indicator's line opens the
+      actions menu. Defaults to <see langword="true"/>.
+      </summary>
+      <remarks>
+      Set this to <see langword="false"/> when the host owns the open gesture. The margin then leaves
+      the press untouched, and the host opens the same menu through
+      <see cref="TextCodeActionController.TryOpenActions(int, Point)"/> with its own anchor.
+      </remarks>
+    </member>
+    <member name="TextCodeActionMargin">
+      <summary>
+      Initializes a new instance of the <see cref="TextCodeActionMargin"/> class.
+      </summary>
+      <param name="controller">The controller that supplies the indicator line and receives clicks.</param>
+      <exception cref="ArgumentNullException"><paramref name="controller"/> is <see langword="null"/>.</exception>
+    </member>
+    <member name="TestHooks">
+      <summary>
+      Gets the test-only hooks of the margin. The member is <see langword="internal"/> and reachable only
+      through <c>InternalsVisibleTo</c>, so the margin's public shape carries no test surface.
+      </summary>
+    </member>
+    <member name="TryOpenActionsAt">
+      <summary>
+      Opens the actions menu for the line at the specified margin-relative position when it shows
+      the indicator.
+      </summary>
+      <param name="position">The position in the margin's coordinate space.</param>
+      <returns><see langword="true"/> when the menu opened; otherwise, <see langword="false"/>.</returns>
+    </member>
+  </members>
+</doc>

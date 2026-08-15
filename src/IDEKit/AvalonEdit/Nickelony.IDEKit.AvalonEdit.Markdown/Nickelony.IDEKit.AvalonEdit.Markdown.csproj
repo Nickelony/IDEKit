@@ -1,0 +1,47 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <RootNamespace>Nickelony.IDEKit.AvalonEdit.Markdown</RootNamespace>
+    <AssemblyName>Nickelony.IDEKit.AvalonEdit.Markdown</AssemblyName>
+    <PackageId>Nickelony.IDEKit.AvalonEdit.Markdown</PackageId>
+    <Description>Markdown rendering for AvalonEdit editors: a Markdig-backed renderer that produces WPF FlowDocuments and embedded AvalonEdit code blocks.</Description>
+    <PackageTags>text-editor;editor;avaloneditor;wpf;markdown;tooltip;flowdocument;nickelony</PackageTags>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <WarningsAsErrors>CS1591;RS0016;RS0017</WarningsAsErrors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Public-API surface baseline: an unlisted public member fails the build (RS0016/RS0017). -->
+    <PackageReference Include="Microsoft.CodeAnalysis.PublicApiAnalyzers" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AvalonEdit" />
+    <PackageReference Include="Markdig" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\..\..\shared\Infrastructure\BrushHelpers.cs" Link="Infrastructure\BrushHelpers.cs" />
+    <Compile Include="..\..\..\..\shared\Infrastructure\NumericValidation.cs" Link="Infrastructure\NumericValidation.cs" />
+    <!-- Shared binding source: one file compiled into the AvalonEdit and AvaloniaEdit Markdown
+         packages, with a per-binding namespace selected by the AVALONIAEDIT define. -->
+    <Compile Include="..\..\..\..\shared\Editor.Markdown\**\*.cs" Link="%(RecursiveDir)%(Filename)%(Extension)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Nickelony.IDEKit.Core\Nickelony.IDEKit.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Nickelony.IDEKit.AvalonEdit.Markdown.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+    <None Include="..\..\..\..\icons\$(PackageIcon)" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+</Project>

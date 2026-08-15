@@ -1,0 +1,44 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>Nickelony.LanguageServer.CSharp</RootNamespace>
+    <AssemblyName>Nickelony.LanguageServer.CSharp</AssemblyName>
+    <PackageId>Nickelony.LanguageServer.CSharp</PackageId>
+    <Description>Lightweight C# language-server provider for the Nickelony Language Server family, backed by Microsoft's Roslyn language server.</Description>
+    <PackageTags>language-server;lsp;csharp;roslyn;intellisense;nickelony</PackageTags>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <WarningsAsErrors>CS1591;RS0016;RS0017</WarningsAsErrors>
+    <!-- CA1848 ("use LoggerMessage delegates") is deliberately not enforced for this package, for the same reason as
+         the other provider packages: messages go through the ILogger extension methods for readability and low
+         call-site churn, and they are low-frequency lifecycle and diagnostic messages rather than hot-path work. -->
+    <NoWarn>$(NoWarn);CA1848</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Public-API surface baseline: an unlisted public member fails the build (RS0016/RS0017). -->
+    <PackageReference Include="Microsoft.CodeAnalysis.PublicApiAnalyzers" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Nickelony.LanguageServer.Client\Nickelony.LanguageServer.Client.csproj" />
+    <ProjectReference Include="..\Nickelony.LanguageServer.Provider\Nickelony.LanguageServer.Provider.csproj" />
+    <ProjectReference Include="..\Nickelony.LanguageServer.Roslyn\Nickelony.LanguageServer.Roslyn.csproj" />
+  </ItemGroup>
+
+  <!-- This package is a thin language layer over Nickelony.LanguageServer.Roslyn: the handshake, the launch profile,
+       the tracked-document payload caching, and the pull-diagnostics loop all live in the shared core, so nothing
+       here duplicates that plumbing. It references the Client and Provider assemblies for the shared framework types
+       (the internal dependency-injection constructor takes an ILanguageServerClient) and must not link
+       shared/Protocol/LspMethodNames.cs or shared/Infrastructure/OptionalText.cs: compiling the same internal type
+       twice makes a used name ambiguous (CS0436). -->
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+    <None Include="..\..\..\icons\$(PackageIcon)" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+</Project>

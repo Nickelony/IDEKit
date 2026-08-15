@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+    <RunSettingsFilePath>test.runsettings</RunSettingsFilePath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="coverlet.collector" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="MSTest.TestAdapter" />
+    <PackageReference Include="MSTest.TestFramework" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\src\LanguageServer\Nickelony.LanguageServer.Abstractions\Nickelony.LanguageServer.Abstractions.csproj" />
+    <ProjectReference Include="..\..\..\src\LanguageServer\Nickelony.LanguageServer.Client\Nickelony.LanguageServer.Client.csproj" />
+    <ProjectReference Include="..\..\..\src\LanguageServer\Nickelony.LanguageServer.Provider\Nickelony.LanguageServer.Provider.csproj" />
+    <ProjectReference Include="..\..\..\src\LanguageServer\Nickelony.LanguageServer.Roslyn\Nickelony.LanguageServer.Roslyn.csproj" />
+    <ProjectReference Include="..\..\..\src\LanguageServer\Nickelony.LanguageServer.VisualBasic\Nickelony.LanguageServer.VisualBasic.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\TestSupport\TestLoggerScope.cs" Link="Support\TestLoggerScope.cs" />
+    <Compile Include="..\..\TestSupport\TemporaryDirectory.cs" Link="Support\TemporaryDirectory.cs" />
+    <Compile Include="..\..\TestSupport\TestPolling.cs" Link="Support\TestPolling.cs" />
+    <Compile Include="..\..\TestSupport\TestCategories.cs" Link="Support\TestCategories.cs" />
+    <Compile Include="..\..\TestSupport\FakeLanguageServerClient.cs" Link="Support\FakeLanguageServerClient.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
+  </ItemGroup>
+
+</Project>

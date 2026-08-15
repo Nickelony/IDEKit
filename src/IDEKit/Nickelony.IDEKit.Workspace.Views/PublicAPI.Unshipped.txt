@@ -1,0 +1,171 @@
+#nullable enable
+*REMOVED*Nickelony.IDEKit.Workspace.Views.IWorkspaceDocumentView.AcknowledgeApply(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentMutationResult! result) -> Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewRefreshResult!
+Nickelony.IDEKit.Workspace.Views.IWorkspaceDocumentView.AcknowledgeApply(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentMutationResult! result) -> Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewApplyResult!
+Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManager.WorkspaceDocumentManager(Nickelony.IDEKit.Workspace.Documents.IWorkspaceDocumentStore! store, System.Func<System.Action!, System.Threading.Tasks.Task!>! dispatchViewAction) -> void
+Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerCommitResult.Failure.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure?
+Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerCommitResult.ViewSynchronization.get -> Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewSynchronizationResult!
+Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerConflictResolutionResult.Failure.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure?
+Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerConflictResolutionResult.ViewSynchronization.get -> Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewSynchronizationResult!
+Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDeleteResult.Failure.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure?
+Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDeleteResult.ViewSynchronization.get -> Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewSynchronizationResult!
+Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDirectoryDeleteResult.Failure.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure?
+Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDirectoryDeleteResult.ViewSynchronization.get -> Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewSynchronizationResult!
+Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDirectoryRenameResult.Failure.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure?
+Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDirectoryRenameResult.ViewSynchronization.get -> Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewSynchronizationResult!
+Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerMutationResult.ViewSynchronization.get -> Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewSynchronizationResult!
+Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerReloadResult.Failure.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure?
+Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerReloadResult.ViewSynchronization.get -> Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewSynchronizationResult!
+Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerRenameResult.Failure.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure?
+Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerRenameResult.ViewSynchronization.get -> Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewSynchronizationResult!
+Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerSaveAsResult.Failure.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure?
+Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerSaveAsResult.ViewSynchronization.get -> Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewSynchronizationResult!
+Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewApplyOutcome
+Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewApplyOutcome.Applied = 0 -> Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewApplyOutcome
+Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewApplyOutcome.Failed = 1 -> Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewApplyOutcome
+Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewApplyResult
+Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewApplyResult.<Clone>$() -> Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewApplyResult!
+Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewApplyResult.Deconstruct(out Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewApplyOutcome Outcome, out Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure? Failure) -> void
+Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewApplyResult.Equals(Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewApplyResult? other) -> bool
+Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewApplyResult.Failure.get -> Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure?
+Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewApplyResult.Failure.init -> void
+Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewApplyResult.Outcome.get -> Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewApplyOutcome
+Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewApplyResult.Outcome.init -> void
+Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewApplyResult.WorkspaceDocumentViewApplyResult(Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewApplyOutcome Outcome, Nickelony.IDEKit.Workspace.Documents.WorkspaceOperationFailure? Failure = null) -> void
+override Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewApplyResult.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewApplyResult.GetHashCode() -> int
+override Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewApplyResult.ToString() -> string!
+static Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerCommitResult.Blocked(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot? snapshot, Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewSynchronizationResult! viewSynchronization) -> Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerCommitResult!
+static Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerCommitResult.FromStore(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitResult! storeResult, Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewSynchronizationResult! viewSynchronization) -> Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerCommitResult!
+static Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerConflictResolutionResult.Blocked(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot? snapshot, Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewSynchronizationResult! viewSynchronization) -> Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerConflictResolutionResult!
+static Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerConflictResolutionResult.FromStore(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionResult! storeResult, Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewSynchronizationResult! viewSynchronization) -> Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerConflictResolutionResult!
+static Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDeleteResult.Blocked(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot? snapshot, Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewSynchronizationResult! viewSynchronization) -> Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDeleteResult!
+static Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDeleteResult.FromStore(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteResult! storeResult, Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewSynchronizationResult! viewSynchronization) -> Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDeleteResult!
+static Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDirectoryDeleteResult.Blocked(System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot!>! sourceSnapshots, Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewSynchronizationResult! viewSynchronization) -> Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDirectoryDeleteResult!
+static Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDirectoryDeleteResult.FromStore(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteResult! storeResult, Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewSynchronizationResult! viewSynchronization) -> Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDirectoryDeleteResult!
+static Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDirectoryRenameResult.Blocked(System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot!>! sourceSnapshots, Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewSynchronizationResult! viewSynchronization) -> Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDirectoryRenameResult!
+static Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDirectoryRenameResult.FromStore(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameResult! storeResult, Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewSynchronizationResult! viewSynchronization) -> Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDirectoryRenameResult!
+static Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerMutationResult.FromStore(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentMutationResult! storeResult, Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewSynchronizationResult! viewSynchronization) -> Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerMutationResult!
+static Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerReloadResult.Blocked(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot? snapshot, Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewSynchronizationResult! viewSynchronization) -> Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerReloadResult!
+static Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerReloadResult.FromStore(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadResult! storeResult, Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewSynchronizationResult! viewSynchronization) -> Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerReloadResult!
+static Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerRenameResult.FromStore(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameResult! storeResult, Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewSynchronizationResult! viewSynchronization) -> Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerRenameResult!
+static Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerSaveAsResult.FromStore(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsResult! storeResult, Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewSynchronizationResult! viewSynchronization) -> Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerSaveAsResult!
+static Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewApplyResult.operator !=(Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewApplyResult? left, Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewApplyResult? right) -> bool
+static Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewApplyResult.operator ==(Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewApplyResult? left, Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewApplyResult? right) -> bool
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManager.WorkspaceDocumentManager(Nickelony.IDEKit.Workspace.Documents.IWorkspaceDocumentStore! store, System.Func<System.Action!, System.Threading.Tasks.Task!>! dispatchViewAction, Nickelony.IDEKit.Core.Pathing.LocalPathComparisonPolicy? pathComparison = null) -> void
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerCommitResult.<Clone>$() -> Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerCommitResult!
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerCommitResult.Deconstruct(out Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitResult? StoreResult, out Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewSynchronizationResult! Views, out Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot? Snapshot) -> void
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerCommitResult.Equals(Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerCommitResult? other) -> bool
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerCommitResult.Snapshot.init -> void
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerCommitResult.StoreResult.init -> void
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerCommitResult.Views.get -> Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewSynchronizationResult!
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerCommitResult.Views.init -> void
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerCommitResult.WorkspaceDocumentManagerCommitResult(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentCommitResult? StoreResult, Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewSynchronizationResult! Views, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot? Snapshot) -> void
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerConflictResolutionResult.<Clone>$() -> Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerConflictResolutionResult!
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerConflictResolutionResult.Deconstruct(out Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionResult? StoreResult, out Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewSynchronizationResult! Views, out Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot? Snapshot) -> void
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerConflictResolutionResult.Equals(Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerConflictResolutionResult? other) -> bool
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerConflictResolutionResult.Snapshot.init -> void
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerConflictResolutionResult.StoreResult.init -> void
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerConflictResolutionResult.Views.get -> Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewSynchronizationResult!
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerConflictResolutionResult.Views.init -> void
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerConflictResolutionResult.WorkspaceDocumentManagerConflictResolutionResult(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentConflictResolutionResult? StoreResult, Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewSynchronizationResult! Views, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot? Snapshot) -> void
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDeleteResult.<Clone>$() -> Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDeleteResult!
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDeleteResult.Deconstruct(out Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteResult? StoreResult, out Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewSynchronizationResult! Views, out Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot? Snapshot) -> void
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDeleteResult.Equals(Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDeleteResult? other) -> bool
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDeleteResult.Snapshot.init -> void
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDeleteResult.StoreResult.init -> void
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDeleteResult.Views.get -> Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewSynchronizationResult!
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDeleteResult.Views.init -> void
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDeleteResult.WorkspaceDocumentManagerDeleteResult(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDeleteResult? StoreResult, Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewSynchronizationResult! Views, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot? Snapshot) -> void
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDirectoryDeleteResult.<Clone>$() -> Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDirectoryDeleteResult!
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDirectoryDeleteResult.Deconstruct(out Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteResult? StoreResult, out Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewSynchronizationResult! Views, out System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot!>! Snapshots) -> void
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDirectoryDeleteResult.Equals(Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDirectoryDeleteResult? other) -> bool
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDirectoryDeleteResult.Snapshots.init -> void
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDirectoryDeleteResult.StoreResult.init -> void
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDirectoryDeleteResult.Views.get -> Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewSynchronizationResult!
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDirectoryDeleteResult.Views.init -> void
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDirectoryDeleteResult.WorkspaceDocumentManagerDirectoryDeleteResult(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryDeleteResult? StoreResult, Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewSynchronizationResult! Views, System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot!>! Snapshots) -> void
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDirectoryRenameResult.<Clone>$() -> Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDirectoryRenameResult!
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDirectoryRenameResult.Deconstruct(out Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameResult? StoreResult, out Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewSynchronizationResult! Views, out System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot!>! Snapshots) -> void
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDirectoryRenameResult.Equals(Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDirectoryRenameResult? other) -> bool
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDirectoryRenameResult.Snapshots.init -> void
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDirectoryRenameResult.StoreResult.init -> void
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDirectoryRenameResult.Views.get -> Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewSynchronizationResult!
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDirectoryRenameResult.Views.init -> void
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDirectoryRenameResult.WorkspaceDocumentManagerDirectoryRenameResult(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentDirectoryRenameResult? StoreResult, Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewSynchronizationResult! Views, System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot!>! Snapshots) -> void
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerMutationResult.<Clone>$() -> Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerMutationResult!
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerMutationResult.Deconstruct(out Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentMutationResult! StoreResult, out Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewSynchronizationResult! Views, out Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot? Snapshot) -> void
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerMutationResult.Equals(Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerMutationResult? other) -> bool
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerMutationResult.Snapshot.init -> void
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerMutationResult.StoreResult.init -> void
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerMutationResult.Views.get -> Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewSynchronizationResult!
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerMutationResult.Views.init -> void
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerMutationResult.WorkspaceDocumentManagerMutationResult(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentMutationResult! StoreResult, Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewSynchronizationResult! Views, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot? Snapshot) -> void
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerReloadResult.<Clone>$() -> Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerReloadResult!
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerReloadResult.Deconstruct(out Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadResult? StoreResult, out Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewSynchronizationResult! Views, out Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot? Snapshot) -> void
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerReloadResult.Equals(Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerReloadResult? other) -> bool
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerReloadResult.Snapshot.init -> void
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerReloadResult.StoreResult.init -> void
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerReloadResult.Views.get -> Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewSynchronizationResult!
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerReloadResult.Views.init -> void
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerReloadResult.WorkspaceDocumentManagerReloadResult(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentReloadResult? StoreResult, Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewSynchronizationResult! Views, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot? Snapshot) -> void
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerRenameResult.<Clone>$() -> Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerRenameResult!
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerRenameResult.Deconstruct(out Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameResult! StoreResult, out Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewSynchronizationResult! Views, out Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot? Snapshot) -> void
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerRenameResult.Equals(Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerRenameResult? other) -> bool
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerRenameResult.Snapshot.init -> void
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerRenameResult.StoreResult.init -> void
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerRenameResult.Views.get -> Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewSynchronizationResult!
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerRenameResult.Views.init -> void
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerRenameResult.WorkspaceDocumentManagerRenameResult(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentRenameResult! StoreResult, Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewSynchronizationResult! Views, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot? Snapshot) -> void
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerSaveAsResult.<Clone>$() -> Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerSaveAsResult!
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerSaveAsResult.Deconstruct(out Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsResult! StoreResult, out Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewSynchronizationResult! Views, out Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot? Snapshot) -> void
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerSaveAsResult.Equals(Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerSaveAsResult? other) -> bool
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerSaveAsResult.Snapshot.init -> void
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerSaveAsResult.StoreResult.init -> void
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerSaveAsResult.Views.get -> Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewSynchronizationResult!
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerSaveAsResult.Views.init -> void
+*REMOVED*Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerSaveAsResult.WorkspaceDocumentManagerSaveAsResult(Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSaveAsResult! StoreResult, Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentViewSynchronizationResult! Views, Nickelony.IDEKit.Workspace.Documents.WorkspaceDocumentSnapshot? Snapshot) -> void
+*REMOVED*override Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerCommitResult.Equals(object? obj) -> bool
+*REMOVED*override Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerCommitResult.GetHashCode() -> int
+*REMOVED*override Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerCommitResult.ToString() -> string!
+*REMOVED*override Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerConflictResolutionResult.Equals(object? obj) -> bool
+*REMOVED*override Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerConflictResolutionResult.GetHashCode() -> int
+*REMOVED*override Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerConflictResolutionResult.ToString() -> string!
+*REMOVED*override Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDeleteResult.Equals(object? obj) -> bool
+*REMOVED*override Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDeleteResult.GetHashCode() -> int
+*REMOVED*override Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDeleteResult.ToString() -> string!
+*REMOVED*override Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDirectoryDeleteResult.Equals(object? obj) -> bool
+*REMOVED*override Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDirectoryDeleteResult.GetHashCode() -> int
+*REMOVED*override Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDirectoryDeleteResult.ToString() -> string!
+*REMOVED*override Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDirectoryRenameResult.Equals(object? obj) -> bool
+*REMOVED*override Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDirectoryRenameResult.GetHashCode() -> int
+*REMOVED*override Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDirectoryRenameResult.ToString() -> string!
+*REMOVED*override Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerMutationResult.Equals(object? obj) -> bool
+*REMOVED*override Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerMutationResult.GetHashCode() -> int
+*REMOVED*override Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerMutationResult.ToString() -> string!
+*REMOVED*override Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerReloadResult.Equals(object? obj) -> bool
+*REMOVED*override Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerReloadResult.GetHashCode() -> int
+*REMOVED*override Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerReloadResult.ToString() -> string!
+*REMOVED*override Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerRenameResult.Equals(object? obj) -> bool
+*REMOVED*override Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerRenameResult.GetHashCode() -> int
+*REMOVED*override Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerRenameResult.ToString() -> string!
+*REMOVED*override Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerSaveAsResult.Equals(object? obj) -> bool
+*REMOVED*override Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerSaveAsResult.GetHashCode() -> int
+*REMOVED*override Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerSaveAsResult.ToString() -> string!
+*REMOVED*static Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerCommitResult.operator !=(Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerCommitResult? left, Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerCommitResult? right) -> bool
+*REMOVED*static Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerCommitResult.operator ==(Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerCommitResult? left, Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerCommitResult? right) -> bool
+*REMOVED*static Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerConflictResolutionResult.operator !=(Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerConflictResolutionResult? left, Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerConflictResolutionResult? right) -> bool
+*REMOVED*static Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerConflictResolutionResult.operator ==(Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerConflictResolutionResult? left, Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerConflictResolutionResult? right) -> bool
+*REMOVED*static Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDeleteResult.operator !=(Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDeleteResult? left, Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDeleteResult? right) -> bool
+*REMOVED*static Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDeleteResult.operator ==(Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDeleteResult? left, Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDeleteResult? right) -> bool
+*REMOVED*static Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDirectoryDeleteResult.operator !=(Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDirectoryDeleteResult? left, Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDirectoryDeleteResult? right) -> bool
+*REMOVED*static Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDirectoryDeleteResult.operator ==(Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDirectoryDeleteResult? left, Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDirectoryDeleteResult? right) -> bool
+*REMOVED*static Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDirectoryRenameResult.operator !=(Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDirectoryRenameResult? left, Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDirectoryRenameResult? right) -> bool
+*REMOVED*static Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDirectoryRenameResult.operator ==(Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDirectoryRenameResult? left, Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerDirectoryRenameResult? right) -> bool
+*REMOVED*static Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerMutationResult.operator !=(Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerMutationResult? left, Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerMutationResult? right) -> bool
+*REMOVED*static Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerMutationResult.operator ==(Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerMutationResult? left, Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerMutationResult? right) -> bool
+*REMOVED*static Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerReloadResult.operator !=(Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerReloadResult? left, Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerReloadResult? right) -> bool
+*REMOVED*static Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerReloadResult.operator ==(Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerReloadResult? left, Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerReloadResult? right) -> bool
+*REMOVED*static Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerRenameResult.operator !=(Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerRenameResult? left, Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerRenameResult? right) -> bool
+*REMOVED*static Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerRenameResult.operator ==(Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerRenameResult? left, Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerRenameResult? right) -> bool
+*REMOVED*static Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerSaveAsResult.operator !=(Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerSaveAsResult? left, Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerSaveAsResult? right) -> bool
+*REMOVED*static Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerSaveAsResult.operator ==(Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerSaveAsResult? left, Nickelony.IDEKit.Workspace.Views.WorkspaceDocumentManagerSaveAsResult? right) -> bool

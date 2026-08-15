@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <RunConfiguration>
+    <!--
+      Several transport tests park a JSON-RPC operation on a gate and await the client's reaction. The
+      session timeout turns a wedged gate into a failed run instead of an indefinitely hanging one; the
+      budget stays deliberately generous because the suite also contains real-process and real-watcher
+      tests whose legitimate worst-case runtime must not abort a healthy session on a loaded machine.
+    -->
+    <TestSessionTimeout>600000</TestSessionTimeout>
+  </RunConfiguration>
+</RunSettings>

@@ -1,0 +1,7 @@
+#nullable enable
+*REMOVED*Nickelony.IDEKit.AvalonEdit.Markdown.MarkdownRenderTheme.SurfaceBackground.get -> System.Windows.Media.Brush!
+Nickelony.IDEKit.AvalonEdit.Markdown.MarkdownRenderTheme.SurfaceBackground.get -> System.Windows.Media.SolidColorBrush!
+*REMOVED*Nickelony.IDEKit.AvalonEdit.Markdown.MarkdownRenderTheme.Foreground.get -> System.Windows.Media.Brush!
+Nickelony.IDEKit.AvalonEdit.Markdown.MarkdownRenderTheme.Foreground.get -> System.Windows.Media.SolidColorBrush!
+*REMOVED*Nickelony.IDEKit.AvalonEdit.Markdown.MarkdownRenderTheme.LinkForeground.get -> System.Windows.Media.Brush!
+Nickelony.IDEKit.AvalonEdit.Markdown.MarkdownRenderTheme.LinkForeground.get -> System.Windows.Media.SolidColorBrush!

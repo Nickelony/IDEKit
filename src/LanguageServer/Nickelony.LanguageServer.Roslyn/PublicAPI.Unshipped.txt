@@ -1,0 +1,26 @@
+#nullable enable
+Nickelony.LanguageServer.Roslyn.RoslynLanguageServerIntelliSenseProvider
+Nickelony.LanguageServer.Roslyn.RoslynLanguageServerIntelliSenseProvider.RoslynLanguageServerIntelliSenseProvider(System.Collections.Generic.IReadOnlyList<string!>! workspaceRootDirectoryPaths, System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Provider.WorkspaceWatchSpecification>! languageWatchSpecifications, string? serverExecutablePath, Nickelony.LanguageServer.Roslyn.RoslynLanguageServerOptions? options = null, Nickelony.LanguageServer.Provider.LanguageServerProviderOptions? providerOptions = null, Microsoft.Extensions.Logging.ILogger? logger = null) -> void
+Nickelony.LanguageServer.Roslyn.RoslynLanguageServerOptions
+Nickelony.LanguageServer.Roslyn.RoslynLanguageServerOptions.<Clone>$() -> Nickelony.LanguageServer.Roslyn.RoslynLanguageServerOptions!
+Nickelony.LanguageServer.Roslyn.RoslynLanguageServerOptions.AutoLoadProjectsMaximum.get -> int?
+Nickelony.LanguageServer.Roslyn.RoslynLanguageServerOptions.AutoLoadProjectsMaximum.init -> void
+Nickelony.LanguageServer.Roslyn.RoslynLanguageServerOptions.Equals(Nickelony.LanguageServer.Roslyn.RoslynLanguageServerOptions? other) -> bool
+Nickelony.LanguageServer.Roslyn.RoslynLanguageServerOptions.RoslynLanguageServerOptions() -> void
+Nickelony.LanguageServer.Roslyn.RoslynLanguageServerOptions.ShowCompletionItemsFromUnimportedNamespaces.get -> bool
+Nickelony.LanguageServer.Roslyn.RoslynLanguageServerOptions.ShowCompletionItemsFromUnimportedNamespaces.init -> void
+override Nickelony.LanguageServer.Roslyn.RoslynLanguageServerIntelliSenseProvider.CreateMissingClientFailureMessage() -> string!
+override Nickelony.LanguageServer.Roslyn.RoslynLanguageServerIntelliSenseProvider.CreateSettingsPayload() -> object!
+override Nickelony.LanguageServer.Roslyn.RoslynLanguageServerIntelliSenseProvider.CreateStartupFailureMessage(bool isPersistentFailure) -> string!
+override Nickelony.LanguageServer.Roslyn.RoslynLanguageServerIntelliSenseProvider.GetTrackedDiagnostics(string! normalizedFilePath) -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnostic!>!
+override Nickelony.LanguageServer.Roslyn.RoslynLanguageServerIntelliSenseProvider.GetTrackedSemanticTokens(string! normalizedFilePath) -> System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Abstractions.SemanticToken!>!
+override Nickelony.LanguageServer.Roslyn.RoslynLanguageServerIntelliSenseProvider.HandleDiagnosticsPayload(string! filePath, Nickelony.LanguageServer.Client.PublishDiagnosticsParams! parameters, Nickelony.LanguageServer.Provider.DocumentSnapshot! document) -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.Diagnostics.TextDiagnostic!>?
+override Nickelony.LanguageServer.Roslyn.RoslynLanguageServerIntelliSenseProvider.InvalidateTrackedDocumentSynchronization(string! filePath) -> void
+override Nickelony.LanguageServer.Roslyn.RoslynLanguageServerIntelliSenseProvider.IsConfigurationPath(string! normalizedPath) -> bool
+override Nickelony.LanguageServer.Roslyn.RoslynLanguageServerIntelliSenseProvider.TryStoreSemanticTokens(string! normalizedFilePath, int documentVersion, System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Abstractions.SemanticToken!>! semanticTokens) -> bool
+override Nickelony.LanguageServer.Roslyn.RoslynLanguageServerOptions.Equals(object? obj) -> bool
+override Nickelony.LanguageServer.Roslyn.RoslynLanguageServerOptions.GetHashCode() -> int
+override Nickelony.LanguageServer.Roslyn.RoslynLanguageServerOptions.ToString() -> string!
+static Nickelony.LanguageServer.Roslyn.RoslynLanguageServerOptions.Default.get -> Nickelony.LanguageServer.Roslyn.RoslynLanguageServerOptions!
+static Nickelony.LanguageServer.Roslyn.RoslynLanguageServerOptions.operator !=(Nickelony.LanguageServer.Roslyn.RoslynLanguageServerOptions? left, Nickelony.LanguageServer.Roslyn.RoslynLanguageServerOptions? right) -> bool
+static Nickelony.LanguageServer.Roslyn.RoslynLanguageServerOptions.operator ==(Nickelony.LanguageServer.Roslyn.RoslynLanguageServerOptions? left, Nickelony.LanguageServer.Roslyn.RoslynLanguageServerOptions? right) -> bool

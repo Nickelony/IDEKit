@@ -1,0 +1,148 @@
+#nullable enable
+Nickelony.KeyBindings.CommandCatalog<TCommandId>
+Nickelony.KeyBindings.CommandCatalog<TCommandId>.CommandCatalog(System.Collections.Generic.IReadOnlyList<Nickelony.KeyBindings.CommandDescriptor<TCommandId>!>! descriptors) -> void
+Nickelony.KeyBindings.CommandCatalog<TCommandId>.Descriptors.get -> System.Collections.Generic.IReadOnlyCollection<Nickelony.KeyBindings.CommandDescriptor<TCommandId>!>!
+Nickelony.KeyBindings.CommandCatalog<TCommandId>.TryGetDescriptor(TCommandId command, out Nickelony.KeyBindings.CommandDescriptor<TCommandId>? descriptor) -> bool
+Nickelony.KeyBindings.CommandDescriptor<TCommandId>
+Nickelony.KeyBindings.CommandDescriptor<TCommandId>.Command.get -> TCommandId
+Nickelony.KeyBindings.CommandDescriptor<TCommandId>.CommandDescriptor(TCommandId command, string! serializedId, Nickelony.KeyBindings.CommandRemappingPolicy remappingPolicy, params Nickelony.KeyBindings.KeyChord[]! defaultBindings) -> void
+Nickelony.KeyBindings.CommandDescriptor<TCommandId>.Context.get -> string?
+Nickelony.KeyBindings.CommandDescriptor<TCommandId>.Context.init -> void
+Nickelony.KeyBindings.CommandDescriptor<TCommandId>.DefaultBindings.get -> System.Collections.Generic.IReadOnlyList<Nickelony.KeyBindings.KeyChord>!
+Nickelony.KeyBindings.CommandDescriptor<TCommandId>.RemappingPolicy.get -> Nickelony.KeyBindings.CommandRemappingPolicy
+Nickelony.KeyBindings.CommandDescriptor<TCommandId>.SerializedId.get -> string!
+Nickelony.KeyBindings.CommandRemappingPolicy
+Nickelony.KeyBindings.CommandRemappingPolicy.HostManaged = 1 -> Nickelony.KeyBindings.CommandRemappingPolicy
+Nickelony.KeyBindings.CommandRemappingPolicy.HostReserved = 2 -> Nickelony.KeyBindings.CommandRemappingPolicy
+Nickelony.KeyBindings.CommandRemappingPolicy.Remappable = 0 -> Nickelony.KeyBindings.CommandRemappingPolicy
+Nickelony.KeyBindings.IKeyBindingOverridesStore
+Nickelony.KeyBindings.IKeyBindingOverridesStore.Load() -> Nickelony.KeyBindings.KeyBindingOverrides!
+Nickelony.KeyBindings.IKeyBindingOverridesStore.Save(Nickelony.KeyBindings.KeyBindingOverrides! snapshot) -> bool
+Nickelony.KeyBindings.IKeyBindingService<TCommandId>
+Nickelony.KeyBindings.IKeyBindingService<TCommandId>.Apply(TCommandId command, System.Collections.Generic.IReadOnlyList<Nickelony.KeyBindings.KeyChord>! bindings, Nickelony.KeyBindings.KeyBindingConflictPolicy conflictPolicy = Nickelony.KeyBindings.KeyBindingConflictPolicy.Reject) -> Nickelony.KeyBindings.KeyBindingOutcome
+Nickelony.KeyBindings.IKeyBindingService<TCommandId>.BindingsChanged -> System.EventHandler?
+Nickelony.KeyBindings.IKeyBindingService<TCommandId>.Contexts.get -> System.Collections.Generic.IReadOnlyCollection<string!>!
+Nickelony.KeyBindings.IKeyBindingService<TCommandId>.GetBindings(TCommandId command) -> System.Collections.Generic.IReadOnlyList<Nickelony.KeyBindings.KeyChord>!
+Nickelony.KeyBindings.IKeyBindingService<TCommandId>.GetDisplayText(TCommandId command, string! fallbackDisplayText = "") -> string!
+Nickelony.KeyBindings.IKeyBindingService<TCommandId>.IsChordPrefix(Nickelony.KeyBindings.KeyChord keyChord, string? context) -> bool
+Nickelony.KeyBindings.IKeyBindingService<TCommandId>.Reset(TCommandId command) -> Nickelony.KeyBindings.KeyBindingOutcome
+Nickelony.KeyBindings.IKeyBindingService<TCommandId>.ResetAll() -> Nickelony.KeyBindings.KeyBindingOutcome
+Nickelony.KeyBindings.IKeyBindingService<TCommandId>.TryGetCommand(Nickelony.KeyBindings.KeyChord keyChord, string? context, out TCommandId? command) -> bool
+Nickelony.KeyBindings.IKeyDisplayTextFormatter
+Nickelony.KeyBindings.IKeyDisplayTextFormatter.GetDisplayText(Nickelony.KeyBindings.KeyChord keyChord) -> string!
+Nickelony.KeyBindings.IKeyDisplayTextFormatter.GetDisplayText(Nickelony.KeyBindings.KeyCombo keyCombo) -> string!
+Nickelony.KeyBindings.KeyBindingConflictPolicy
+Nickelony.KeyBindings.KeyBindingConflictPolicy.Reject = 0 -> Nickelony.KeyBindings.KeyBindingConflictPolicy
+Nickelony.KeyBindings.KeyBindingConflictPolicy.Replace = 1 -> Nickelony.KeyBindings.KeyBindingConflictPolicy
+Nickelony.KeyBindings.KeyBindingDispatcher<TCommandId>
+Nickelony.KeyBindings.KeyBindingDispatcher<TCommandId>.CancelPendingChord() -> void
+Nickelony.KeyBindings.KeyBindingDispatcher<TCommandId>.HasPendingChord.get -> bool
+Nickelony.KeyBindings.KeyBindingDispatcher<TCommandId>.PendingChord.get -> Nickelony.KeyBindings.KeyChord
+Nickelony.KeyBindings.KeyBindingDispatcherChain
+Nickelony.KeyBindings.KeyBindingOutcome
+Nickelony.KeyBindings.KeyBindingOutcome.Conflict = 6 -> Nickelony.KeyBindings.KeyBindingOutcome
+Nickelony.KeyBindings.KeyBindingOutcome.DuplicateInCommand = 5 -> Nickelony.KeyBindings.KeyBindingOutcome
+Nickelony.KeyBindings.KeyBindingOutcome.NotRemappable = 3 -> Nickelony.KeyBindings.KeyBindingOutcome
+Nickelony.KeyBindings.KeyBindingOutcome.PersistenceFailed = 8 -> Nickelony.KeyBindings.KeyBindingOutcome
+Nickelony.KeyBindings.KeyBindingOutcome.PrefixConflict = 7 -> Nickelony.KeyBindings.KeyBindingOutcome
+Nickelony.KeyBindings.KeyBindingOutcome.Reserved = 4 -> Nickelony.KeyBindings.KeyBindingOutcome
+Nickelony.KeyBindings.KeyBindingOutcome.Succeeded = 1 -> Nickelony.KeyBindings.KeyBindingOutcome
+Nickelony.KeyBindings.KeyBindingOutcome.UnknownCommand = 2 -> Nickelony.KeyBindings.KeyBindingOutcome
+Nickelony.KeyBindings.KeyBindingOutcome.Unspecified = 0 -> Nickelony.KeyBindings.KeyBindingOutcome
+Nickelony.KeyBindings.KeyBindingOverrideBinding
+Nickelony.KeyBindings.KeyBindingOverrideBinding.Clone() -> Nickelony.KeyBindings.KeyBindingOverrideBinding!
+Nickelony.KeyBindings.KeyBindingOverrideBinding.KeyBindingOverrideBinding() -> void
+Nickelony.KeyBindings.KeyBindingOverrideBinding.Strokes.get -> System.Collections.Generic.List<Nickelony.KeyBindings.KeyBindingOverrideStroke!>!
+Nickelony.KeyBindings.KeyBindingOverrideBinding.Strokes.set -> void
+Nickelony.KeyBindings.KeyBindingOverrideEntry
+Nickelony.KeyBindings.KeyBindingOverrideEntry.Bindings.get -> System.Collections.Generic.List<Nickelony.KeyBindings.KeyBindingOverrideBinding!>!
+Nickelony.KeyBindings.KeyBindingOverrideEntry.Bindings.set -> void
+Nickelony.KeyBindings.KeyBindingOverrideEntry.Clone() -> Nickelony.KeyBindings.KeyBindingOverrideEntry!
+Nickelony.KeyBindings.KeyBindingOverrideEntry.KeyBindingOverrideEntry() -> void
+Nickelony.KeyBindings.KeyBindingOverrideEntry.SerializedId.get -> string!
+Nickelony.KeyBindings.KeyBindingOverrideEntry.SerializedId.set -> void
+Nickelony.KeyBindings.KeyBindingOverrideStroke
+Nickelony.KeyBindings.KeyBindingOverrideStroke.Clone() -> Nickelony.KeyBindings.KeyBindingOverrideStroke!
+Nickelony.KeyBindings.KeyBindingOverrideStroke.KeyBindingOverrideStroke() -> void
+Nickelony.KeyBindings.KeyBindingOverrideStroke.KeyName.get -> string!
+Nickelony.KeyBindings.KeyBindingOverrideStroke.KeyName.set -> void
+Nickelony.KeyBindings.KeyBindingOverrideStroke.Modifiers.get -> int
+Nickelony.KeyBindings.KeyBindingOverrideStroke.Modifiers.set -> void
+Nickelony.KeyBindings.KeyBindingOverrides
+Nickelony.KeyBindings.KeyBindingOverrides.Clone() -> Nickelony.KeyBindings.KeyBindingOverrides!
+Nickelony.KeyBindings.KeyBindingOverrides.Entries.get -> System.Collections.Generic.List<Nickelony.KeyBindings.KeyBindingOverrideEntry!>!
+Nickelony.KeyBindings.KeyBindingOverrides.Entries.set -> void
+Nickelony.KeyBindings.KeyBindingOverrides.KeyBindingOverrides() -> void
+Nickelony.KeyBindings.KeyBindingOverrides.Version.get -> int
+Nickelony.KeyBindings.KeyBindingOverrides.Version.set -> void
+Nickelony.KeyBindings.KeyBindingService<TCommandId>
+Nickelony.KeyBindings.KeyBindingService<TCommandId>.Apply(TCommandId command, System.Collections.Generic.IReadOnlyList<Nickelony.KeyBindings.KeyChord>! bindings, Nickelony.KeyBindings.KeyBindingConflictPolicy conflictPolicy = Nickelony.KeyBindings.KeyBindingConflictPolicy.Reject) -> Nickelony.KeyBindings.KeyBindingOutcome
+Nickelony.KeyBindings.KeyBindingService<TCommandId>.BindingsChanged -> System.EventHandler?
+Nickelony.KeyBindings.KeyBindingService<TCommandId>.Contexts.get -> System.Collections.Generic.IReadOnlyCollection<string!>!
+Nickelony.KeyBindings.KeyBindingService<TCommandId>.GetBindings(TCommandId command) -> System.Collections.Generic.IReadOnlyList<Nickelony.KeyBindings.KeyChord>!
+Nickelony.KeyBindings.KeyBindingService<TCommandId>.GetDisplayText(TCommandId command, string! fallbackDisplayText = "") -> string!
+Nickelony.KeyBindings.KeyBindingService<TCommandId>.IsChordPrefix(Nickelony.KeyBindings.KeyChord keyChord, string? context) -> bool
+Nickelony.KeyBindings.KeyBindingService<TCommandId>.KeyBindingService(Nickelony.KeyBindings.CommandCatalog<TCommandId>! catalog, Nickelony.KeyBindings.IKeyBindingOverridesStore! overridesStore, Nickelony.KeyBindings.KeyBindingServiceOptions? options = null) -> void
+Nickelony.KeyBindings.KeyBindingService<TCommandId>.Reset(TCommandId command) -> Nickelony.KeyBindings.KeyBindingOutcome
+Nickelony.KeyBindings.KeyBindingService<TCommandId>.ResetAll() -> Nickelony.KeyBindings.KeyBindingOutcome
+Nickelony.KeyBindings.KeyBindingService<TCommandId>.TryGetCommand(Nickelony.KeyBindings.KeyChord keyChord, string? context, out TCommandId? command) -> bool
+Nickelony.KeyBindings.KeyBindingServiceOptions
+Nickelony.KeyBindings.KeyBindingServiceOptions.<Clone>$() -> Nickelony.KeyBindings.KeyBindingServiceOptions!
+Nickelony.KeyBindings.KeyBindingServiceOptions.DisplayTextFormatter.get -> Nickelony.KeyBindings.IKeyDisplayTextFormatter!
+Nickelony.KeyBindings.KeyBindingServiceOptions.DisplayTextFormatter.init -> void
+Nickelony.KeyBindings.KeyBindingServiceOptions.Equals(Nickelony.KeyBindings.KeyBindingServiceOptions? other) -> bool
+Nickelony.KeyBindings.KeyBindingServiceOptions.KeyBindingServiceOptions() -> void
+Nickelony.KeyBindings.KeyBindingServiceOptions.Logger.get -> Microsoft.Extensions.Logging.ILogger?
+Nickelony.KeyBindings.KeyBindingServiceOptions.Logger.init -> void
+Nickelony.KeyBindings.KeyChord
+Nickelony.KeyBindings.KeyChord.Equals(Nickelony.KeyBindings.KeyChord other) -> bool
+Nickelony.KeyBindings.KeyChord.IsInitialized.get -> bool
+Nickelony.KeyBindings.KeyChord.KeyChord() -> void
+Nickelony.KeyBindings.KeyChord.KeyChord(System.Collections.Generic.IEnumerable<Nickelony.KeyBindings.KeyCombo>! strokes) -> void
+Nickelony.KeyBindings.KeyChord.KeyChord(params Nickelony.KeyBindings.KeyCombo[]! strokes) -> void
+Nickelony.KeyBindings.KeyChord.StrokeCount.get -> int
+Nickelony.KeyBindings.KeyChord.Strokes.get -> System.ReadOnlySpan<Nickelony.KeyBindings.KeyCombo>
+Nickelony.KeyBindings.KeyChordDispatchResult
+Nickelony.KeyBindings.KeyChordDispatchResult.Executed = 2 -> Nickelony.KeyBindings.KeyChordDispatchResult
+Nickelony.KeyBindings.KeyChordDispatchResult.NotHandled = 0 -> Nickelony.KeyBindings.KeyChordDispatchResult
+Nickelony.KeyBindings.KeyChordDispatchResult.Pending = 1 -> Nickelony.KeyBindings.KeyChordDispatchResult
+Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCombo
+Nickelony.KeyBindings.KeyCombo.Equals(Nickelony.KeyBindings.KeyCombo other) -> bool
+Nickelony.KeyBindings.KeyCombo.IsInitialized.get -> bool
+Nickelony.KeyBindings.KeyCombo.Key.get -> Nickelony.KeyBindings.KeyCode
+Nickelony.KeyBindings.KeyCombo.KeyCombo() -> void
+Nickelony.KeyBindings.KeyCombo.KeyCombo(Nickelony.KeyBindings.KeyCode key, Nickelony.KeyBindings.KeyModifiers modifiers) -> void
+Nickelony.KeyBindings.KeyCombo.Modifiers.get -> Nickelony.KeyBindings.KeyModifiers
+Nickelony.KeyBindings.KeyDisplayTextFormatter
+Nickelony.KeyBindings.KeyDisplayTextFormatter.GetDisplayText(Nickelony.KeyBindings.KeyChord keyChord) -> string!
+Nickelony.KeyBindings.KeyDisplayTextFormatter.GetDisplayText(Nickelony.KeyBindings.KeyCombo keyCombo) -> string!
+Nickelony.KeyBindings.KeyDisplayTextFormatter.KeyDisplayTextFormatter() -> void
+Nickelony.KeyBindings.KeyModifiers
+Nickelony.KeyBindings.KeyModifiers.Alt = 1 -> Nickelony.KeyBindings.KeyModifiers
+Nickelony.KeyBindings.KeyModifiers.Control = 2 -> Nickelony.KeyBindings.KeyModifiers
+Nickelony.KeyBindings.KeyModifiers.Meta = 8 -> Nickelony.KeyBindings.KeyModifiers
+Nickelony.KeyBindings.KeyModifiers.None = 0 -> Nickelony.KeyBindings.KeyModifiers
+Nickelony.KeyBindings.KeyModifiers.Shift = 4 -> Nickelony.KeyBindings.KeyModifiers
+const Nickelony.KeyBindings.KeyBindingOverrides.CurrentVersion = 3 -> int
+override Nickelony.KeyBindings.KeyBindingServiceOptions.Equals(object? obj) -> bool
+override Nickelony.KeyBindings.KeyBindingServiceOptions.GetHashCode() -> int
+override Nickelony.KeyBindings.KeyBindingServiceOptions.ToString() -> string!
+override Nickelony.KeyBindings.KeyChord.Equals(object? obj) -> bool
+override Nickelony.KeyBindings.KeyChord.GetHashCode() -> int
+override Nickelony.KeyBindings.KeyCombo.GetHashCode() -> int
+static Nickelony.KeyBindings.KeyBindingServiceOptions.Default.get -> Nickelony.KeyBindings.KeyBindingServiceOptions!
+static Nickelony.KeyBindings.KeyBindingServiceOptions.operator !=(Nickelony.KeyBindings.KeyBindingServiceOptions? left, Nickelony.KeyBindings.KeyBindingServiceOptions? right) -> bool
+static Nickelony.KeyBindings.KeyBindingServiceOptions.operator ==(Nickelony.KeyBindings.KeyBindingServiceOptions? left, Nickelony.KeyBindings.KeyBindingServiceOptions? right) -> bool
+static Nickelony.KeyBindings.KeyChord.TryParse(string? text, out Nickelony.KeyBindings.KeyChord keyChord) -> bool
+static Nickelony.KeyBindings.KeyChord.implicit operator Nickelony.KeyBindings.KeyChord(Nickelony.KeyBindings.KeyCombo combo) -> Nickelony.KeyBindings.KeyChord
+static Nickelony.KeyBindings.KeyChord.operator !=(Nickelony.KeyBindings.KeyChord left, Nickelony.KeyBindings.KeyChord right) -> bool
+static Nickelony.KeyBindings.KeyChord.operator ==(Nickelony.KeyBindings.KeyChord left, Nickelony.KeyBindings.KeyChord right) -> bool
+static Nickelony.KeyBindings.KeyCombo.TryParse(string? text, out Nickelony.KeyBindings.KeyCombo keyCombo) -> bool
+static Nickelony.KeyBindings.KeyCombo.operator !=(Nickelony.KeyBindings.KeyCombo left, Nickelony.KeyBindings.KeyCombo right) -> bool
+static Nickelony.KeyBindings.KeyCombo.operator ==(Nickelony.KeyBindings.KeyCombo left, Nickelony.KeyBindings.KeyCombo right) -> bool
+static Nickelony.KeyBindings.KeyDisplayTextFormatter.Default.get -> Nickelony.KeyBindings.KeyDisplayTextFormatter!
+virtual Nickelony.KeyBindings.KeyDisplayTextFormatter.GetKeyText(Nickelony.KeyBindings.KeyCode key) -> string!
+virtual Nickelony.KeyBindings.KeyDisplayTextFormatter.GetModifierName(Nickelony.KeyBindings.KeyModifiers modifier) -> string!
+~override Nickelony.KeyBindings.KeyCombo.Equals(object obj) -> bool
+~override Nickelony.KeyBindings.KeyCombo.ToString() -> string

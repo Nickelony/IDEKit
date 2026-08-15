@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <RunConfiguration>
+    <!--
+      A session timeout turns a wedged test into a failed run instead of an indefinitely hanging one. The
+      budget is deliberately generous so a loaded machine does not abort a healthy session.
+    -->
+    <TestSessionTimeout>600000</TestSessionTimeout>
+  </RunConfiguration>
+</RunSettings>
