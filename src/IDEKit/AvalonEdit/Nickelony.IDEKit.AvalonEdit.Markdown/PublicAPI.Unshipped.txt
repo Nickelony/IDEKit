@@ -1,7 +1,8 @@
 #nullable enable
-*REMOVED*Nickelony.IDEKit.AvalonEdit.Markdown.MarkdownRenderTheme.SurfaceBackground.get -> System.Windows.Media.Brush!
-Nickelony.IDEKit.AvalonEdit.Markdown.MarkdownRenderTheme.SurfaceBackground.get -> System.Windows.Media.SolidColorBrush!
-*REMOVED*Nickelony.IDEKit.AvalonEdit.Markdown.MarkdownRenderTheme.Foreground.get -> System.Windows.Media.Brush!
-Nickelony.IDEKit.AvalonEdit.Markdown.MarkdownRenderTheme.Foreground.get -> System.Windows.Media.SolidColorBrush!
-*REMOVED*Nickelony.IDEKit.AvalonEdit.Markdown.MarkdownRenderTheme.LinkForeground.get -> System.Windows.Media.Brush!
-Nickelony.IDEKit.AvalonEdit.Markdown.MarkdownRenderTheme.LinkForeground.get -> System.Windows.Media.SolidColorBrush!
+Nickelony.IDEKit.AvalonEdit.Markdown.CodeBlockHighlightingInstaller
+Nickelony.IDEKit.AvalonEdit.Markdown.MarkdownRenderer
+static Nickelony.IDEKit.AvalonEdit.Markdown.MarkdownRenderer.CreateCodeBlockEditor(string? language, string! code, Nickelony.IDEKit.Markdown.MarkdownRenderTheme? theme = null, Nickelony.IDEKit.Markdown.MarkdownRenderOptions? options = null, Nickelony.IDEKit.AvalonEdit.Markdown.CodeBlockHighlightingInstaller? customHighlightingInstaller = null) -> ICSharpCode.AvalonEdit.TextEditor!
+static Nickelony.IDEKit.AvalonEdit.Markdown.MarkdownRenderer.CreateContent(string! content, Nickelony.IDEKit.Markdown.MarkdownRenderTheme? theme = null, Nickelony.IDEKit.Markdown.MarkdownRenderOptions? options = null, Nickelony.IDEKit.AvalonEdit.Markdown.CodeBlockHighlightingInstaller? customHighlightingInstaller = null) -> System.Windows.FrameworkElement!
+static Nickelony.IDEKit.AvalonEdit.Markdown.MarkdownRenderer.CreateContentTree(string! content, Nickelony.IDEKit.Markdown.MarkdownRenderTheme? theme = null, Nickelony.IDEKit.Markdown.MarkdownRenderOptions? options = null, Nickelony.IDEKit.AvalonEdit.Markdown.CodeBlockHighlightingInstaller? customHighlightingInstaller = null) -> System.Windows.Documents.FlowDocument!
+static Nickelony.IDEKit.AvalonEdit.Markdown.MarkdownRenderer.CreatePlainTextContent(string! content, Nickelony.IDEKit.Markdown.MarkdownRenderTheme? theme = null, Nickelony.IDEKit.Markdown.MarkdownRenderOptions? options = null) -> System.Windows.Controls.ScrollViewer!
+virtual Nickelony.IDEKit.AvalonEdit.Markdown.CodeBlockHighlightingInstaller.Invoke(ICSharpCode.AvalonEdit.TextEditor! editor, string? language) -> bool

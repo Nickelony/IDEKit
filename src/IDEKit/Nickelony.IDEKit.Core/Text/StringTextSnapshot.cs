@@ -1,34 +1,32 @@
 namespace Nickelony.IDEKit.Core.Text;
 
-/// <summary>
-/// An <see cref="ITextSnapshot"/> backed by an immutable string.
-/// Line metadata is materialized on first access (one line entry per line) and recognizes LF, CRLF,
-/// and CR line terminators, so a snapshot used only for text or character reads never builds it.
-/// </summary>
+/// <summary>An <see cref="ITextSnapshot"/> backed by an immutable string.</summary>
+/// <remarks>
+/// Line metadata is materialized on first access, so a snapshot that reads only text or characters never builds it. It holds one entry per line
+/// and recognizes LF, CRLF, and lone CR as line terminators. Each entry is one object, because <see cref="Lines"/> and <see cref="GetLineByOffset"/>
+/// return <see cref="ITextLine"/> instances; a packed offset table would need another <see cref="ITextLine"/> shape, and the published contract keeps
+/// this one.
+/// </remarks>
 public sealed class StringTextSnapshot : ITextSnapshot
 {
 	private readonly string _text;
 
-	// Both members are materialized lazily, so a consumer that only reads the text or characters
-	// never pays the line-table cost. The benign race (two threads building equivalent tables) is
-	// accepted: the values are immutable once assigned.
+	// The line table and its read-only view are materialized lazily, so a consumer that only reads the
+	// text or characters never pays the line-table cost. The benign race (two threads building
+	// equivalent tables) is accepted: the values are immutable once assigned.
 	private StringTextLine[]? _lines;
 	private IReadOnlyList<ITextLine>? _linesView;
 
-	/// <summary>
-	/// Initializes a new instance of the <see cref="StringTextSnapshot"/> class.
-	/// </summary>
 	/// <param name="text">The source text. A <see langword="null"/> value is treated as an empty string.</param>
-	/// <param name="fileName">An optional file name associated with this text.</param>
-	public StringTextSnapshot(string? text, string? fileName = null)
+	/// <param name="documentId">An optional identifier of the document this text belongs to.</param>
+	public StringTextSnapshot(string? text, string? documentId = null)
 	{
 		_text = text ?? string.Empty;
-
-		FileName = fileName;
+		DocumentId = documentId;
 	}
 
 	/// <inheritdoc/>
-	public string? FileName { get; }
+	public string? DocumentId { get; }
 
 	/// <inheritdoc/>
 	public int TextLength => _text.Length;
@@ -37,10 +35,6 @@ public sealed class StringTextSnapshot : ITextSnapshot
 	public int LineCount => LineData.Length;
 
 	/// <inheritdoc/>
-	/// <remarks>
-	/// The read-only view is created once, on first access, and cached, so repeated reads do not
-	/// allocate.
-	/// </remarks>
 	public IReadOnlyList<ITextLine> Lines => LineView;
 
 	/// <inheritdoc/>
@@ -53,20 +47,19 @@ public sealed class StringTextSnapshot : ITextSnapshot
 	}
 
 	/// <inheritdoc/>
-	/// <remarks>
-	/// A range that covers the entire text returns the backing instance instead of copying it.
-	/// </remarks>
 	public string GetText(int offset, int length)
 	{
-		ArgumentOutOfRangeException.ThrowIfNegative(offset);
-		ArgumentOutOfRangeException.ThrowIfGreaterThan(offset, _text.Length);
-
+		TextOffsetValidation.ValidateOffset(textLength: _text.Length, offset, parameterName: nameof(offset), offsetDescription: "string snapshot");
 		ArgumentOutOfRangeException.ThrowIfNegative(length);
-		ArgumentOutOfRangeException.ThrowIfGreaterThan(length, _text.Length - offset);
 
-		return offset == 0 && length == _text.Length
-			? _text
-			: _text.Substring(offset, length);
+		TextOffsetValidation.ValidateRange(
+			textLength: _text.Length,
+			range: new TextRange(offset, length),
+			parameterName: nameof(length),
+			rangeDescription: "string snapshot"
+		);
+
+		return offset == 0 && length == _text.Length ? _text : _text.Substring(offset, length);
 	}
 
 	/// <inheritdoc/>
@@ -89,19 +82,13 @@ public sealed class StringTextSnapshot : ITextSnapshot
 		return LineData[lineNumber - 1];
 	}
 
-	/// <summary>
-	/// Gets the lazily built line table.
-	/// </summary>
 	private StringTextLine[] LineData => _lines ??= BuildLines(_text);
 
-	/// <summary>
-	/// Gets the lazily created read-only line view.
-	/// </summary>
 	private IReadOnlyList<ITextLine> LineView => _linesView ??= Array.AsReadOnly(LineData);
 
 	private static StringTextLine[] BuildLines(string text)
 	{
-		(int[] lineStartOffsets, int[] lineLengths) = TextLineTable.Build(text);
+		(int[] lineStartOffsets, int[] lineLengths) = TextLineIndexBuilder.Build(text);
 		var lines = new StringTextLine[lineStartOffsets.Length];
 
 		for (int index = 0; index < lines.Length; index++)
@@ -112,7 +99,7 @@ public sealed class StringTextSnapshot : ITextSnapshot
 
 	private sealed class StringTextLine : ITextLine
 	{
-		public StringTextLine(int offset, int length, int lineNumber)
+		internal StringTextLine(int offset, int length, int lineNumber)
 		{
 			Offset = offset;
 			Length = length;

@@ -1,4 +1,4 @@
-using static Nickelony.IDEKit.Core.Tests.EnumValueAssert;
+using static Nickelony.IDEKit.Core.Tests.EnumValueTestHelpers;
 
 namespace Nickelony.IDEKit.Core.Tests;
 
@@ -8,46 +8,36 @@ public sealed class EnumValueStabilityTests
 	[TestMethod]
 	public void CommentVocabularyValues_AreStable()
 	{
-		AssertPinnedValues(
-			(CommentKind.Line, 0),
-			(CommentKind.Block, 1));
+		AssertPinnedValues((CommentKind.Line, 0), (CommentKind.Block, 1));
 
 		AssertPinnedValues(
-			(StringLiteralStyle.None, 0),
-			(StringLiteralStyle.DoubleQuoted, 1),
-			(StringLiteralStyle.SingleQuoted, 2),
-			(StringLiteralStyle.BacktickQuoted, 4),
-			(StringLiteralStyle.TripleDoubleQuoted, 8),
-			(StringLiteralStyle.TripleSingleQuoted, 16),
-			(StringLiteralStyle.LongBracketQuoted, 32),
-			(StringLiteralStyle.VerbatimDoubleQuoted, 64));
+			(StringLiteralStyles.None, 0),
+			(StringLiteralStyles.DoubleQuoted, 1),
+			(StringLiteralStyles.SingleQuoted, 2),
+			(StringLiteralStyles.BacktickQuoted, 4),
+			(StringLiteralStyles.TripleDoubleQuoted, 8),
+			(StringLiteralStyles.TripleSingleQuoted, 16),
+			(StringLiteralStyles.LongBracketQuoted, 32),
+			(StringLiteralStyles.VerbatimDoubleQuoted, 64)
+		);
 
-		AssertPinnedValues(
-			(TextLineCommentAction.Comment, 0),
-			(TextLineCommentAction.Uncomment, 1),
-			(TextLineCommentAction.Toggle, 2));
+		AssertPinnedValues((LineCommentActionKind.Comment, 0), (LineCommentActionKind.Uncomment, 1), (LineCommentActionKind.Toggle, 2));
 	}
 
 	[TestMethod]
 	public void AutoClosingVocabularyValues_AreStable()
 	{
 		AssertPinnedValues(
-			(TextAutoClosingActionKind.None, 0),
-			(TextAutoClosingActionKind.InsertClosingText, 1),
-			(TextAutoClosingActionKind.SkipExistingClosingText, 2));
+			(AutoClosingActionKind.None, 0),
+			(AutoClosingActionKind.InsertClosingText, 1),
+			(AutoClosingActionKind.SkipExistingClosingText, 2)
+		);
 
-		AssertPinnedValues(
-			(TextAutoClosingPairKind.Bracket, 0),
-			(TextAutoClosingPairKind.Quote, 1));
+		AssertPinnedValues((AutoClosingPairKind.Bracket, 0), (AutoClosingPairKind.Quote, 1));
 
-		AssertPinnedValues(
-			(TextAutoClosingProvenance.Auto, 0),
-			(TextAutoClosingProvenance.Always, 1),
-			(TextAutoClosingProvenance.Never, 2));
+		AssertPinnedValues((AutoClosingTrackingMode.TrackedOnly, 0), (AutoClosingTrackingMode.Always, 1), (AutoClosingTrackingMode.Never, 2));
 
-		AssertPinnedValues(
-			(IdentifierSpanMode.Containing, 0),
-			(IdentifierSpanMode.EndingAtOffset, 1));
+		AssertPinnedValues((IdentifierSpanMode.Containing, 0), (IdentifierSpanMode.EndingAtOffset, 1), (IdentifierSpanMode.AtOffset, 2));
 	}
 
 	[TestMethod]
@@ -58,29 +48,28 @@ public sealed class EnumValueStabilityTests
 			(RequestOutcome.Completed, 1),
 			(RequestOutcome.Canceled, 2),
 			(RequestOutcome.Superseded, 3),
-			(RequestOutcome.RejectedByCurrentState, 4));
+			(RequestOutcome.RejectedByCurrentState, 4)
+		);
 
 		AssertPinnedValues(
-			(TextDiagnosticSeverity.None, 0),
-			(TextDiagnosticSeverity.Error, 1),
-			(TextDiagnosticSeverity.Warning, 2),
-			(TextDiagnosticSeverity.Information, 3),
-			(TextDiagnosticSeverity.Hint, 4));
+			(DiagnosticSeverity.None, 0),
+			(DiagnosticSeverity.Error, 1),
+			(DiagnosticSeverity.Warning, 2),
+			(DiagnosticSeverity.Information, 3),
+			(DiagnosticSeverity.Hint, 4)
+		);
 	}
 
 	/// <summary>
-	/// Pins every member of one enum exactly once: an added member, a renumbered member, a
-	/// duplicated pin, or (for non-flags enums) a duplicated numeric value all fail the test.
+	/// Pins every member of one enum exactly once: an added member, a renumbered member, a duplicated pin, or (for non-flags enums)
+	/// a duplicated numeric value all fail the test.
 	/// </summary>
 	private static void AssertPinnedValues<TEnum>(params (TEnum Member, int Value)[] pinned)
 		where TEnum : struct, Enum
 	{
 		TEnum[] members = Enum.GetValues<TEnum>();
 
-		Assert.AreEqual(
-			members.Length,
-			pinned.Length,
-			$"Every {typeof(TEnum).Name} member must be pinned exactly once.");
+		Assert.HasCount(members.Length, pinned, $"Every {typeof(TEnum).Name} member must be pinned exactly once.");
 
 		var pinnedNames = new HashSet<string>(StringComparer.Ordinal);
 		var pinnedValues = new HashSet<int>();
@@ -97,6 +86,6 @@ public sealed class EnumValueStabilityTests
 		}
 
 		foreach (TEnum member in members)
-			Assert.IsTrue(pinnedNames.Contains(member.ToString()), $"The {typeof(TEnum).Name} member {member} is not pinned.");
+			Assert.Contains(member.ToString(), pinnedNames, $"The {typeof(TEnum).Name} member {member} is not pinned.");
 	}
 }

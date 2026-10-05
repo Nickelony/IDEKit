@@ -1,0 +1,696 @@
+#nullable enable
+Nickelony.IDEKit.Markdown.IMarkdownHighlightingCatalog<TDefinition>
+Nickelony.IDEKit.Markdown.IMarkdownHighlightingCatalog<TDefinition>.GetDefinition(string! name) -> TDefinition?
+Nickelony.IDEKit.Markdown.IMarkdownHighlightingCatalog<TDefinition>.GetDefinitionByExtension(string! extension) -> TDefinition?
+Nickelony.IDEKit.Markdown.IMarkdownHighlightingCatalog<TDefinition>.GetDefinitions() -> System.Collections.Generic.IReadOnlyList<TDefinition!>!
+Nickelony.IDEKit.Markdown.IMarkdownHighlightingCatalog<TDefinition>.GetName(TDefinition! definition) -> string!
+Nickelony.IDEKit.Markdown.MarkdownFlowDirection
+Nickelony.IDEKit.Markdown.MarkdownFlowDirection.LeftToRight = 0 -> Nickelony.IDEKit.Markdown.MarkdownFlowDirection
+Nickelony.IDEKit.Markdown.MarkdownFlowDirection.RightToLeft = 1 -> Nickelony.IDEKit.Markdown.MarkdownFlowDirection
+Nickelony.IDEKit.Markdown.MarkdownHighlightingResolver
+Nickelony.IDEKit.Markdown.MarkdownHyperlinkActivator
+Nickelony.IDEKit.Markdown.MarkdownRenderOptions
+Nickelony.IDEKit.Markdown.MarkdownRenderOptions.<Clone>$() -> Nickelony.IDEKit.Markdown.MarkdownRenderOptions!
+Nickelony.IDEKit.Markdown.MarkdownRenderOptions.AllowCodeBlockSelection.get -> bool
+Nickelony.IDEKit.Markdown.MarkdownRenderOptions.AllowCodeBlockSelection.init -> void
+Nickelony.IDEKit.Markdown.MarkdownRenderOptions.AllowContentInteraction.get -> bool
+Nickelony.IDEKit.Markdown.MarkdownRenderOptions.AllowContentInteraction.init -> void
+Nickelony.IDEKit.Markdown.MarkdownRenderOptions.AllowScrolling.get -> bool
+Nickelony.IDEKit.Markdown.MarkdownRenderOptions.AllowScrolling.init -> void
+Nickelony.IDEKit.Markdown.MarkdownRenderOptions.AllowWheelChaining.get -> bool
+Nickelony.IDEKit.Markdown.MarkdownRenderOptions.AllowWheelChaining.init -> void
+Nickelony.IDEKit.Markdown.MarkdownRenderOptions.Equals(Nickelony.IDEKit.Markdown.MarkdownRenderOptions? other) -> bool
+Nickelony.IDEKit.Markdown.MarkdownRenderOptions.HighlightingAliases.get -> System.Collections.Generic.IReadOnlyDictionary<string!, string!>!
+Nickelony.IDEKit.Markdown.MarkdownRenderOptions.HighlightingAliases.init -> void
+Nickelony.IDEKit.Markdown.MarkdownRenderOptions.Logger.get -> Microsoft.Extensions.Logging.ILogger?
+Nickelony.IDEKit.Markdown.MarkdownRenderOptions.Logger.init -> void
+Nickelony.IDEKit.Markdown.MarkdownRenderOptions.MarkdownRenderOptions() -> void
+Nickelony.IDEKit.Markdown.MarkdownRenderOptions.OpenExternalUri.get -> System.Func<System.Uri!, bool>?
+Nickelony.IDEKit.Markdown.MarkdownRenderOptions.OpenExternalUri.init -> void
+Nickelony.IDEKit.Markdown.MarkdownRenderOptions.OpenHyperlink.get -> System.Func<System.Uri!, bool>?
+Nickelony.IDEKit.Markdown.MarkdownRenderOptions.OpenHyperlink.init -> void
+Nickelony.IDEKit.Markdown.MarkdownRenderOptions.SupportedHyperlinkSchemes.get -> System.Collections.Generic.IReadOnlySet<string!>!
+Nickelony.IDEKit.Markdown.MarkdownRenderOptions.SupportedHyperlinkSchemes.init -> void
+Nickelony.IDEKit.Markdown.MarkdownRenderPipeline
+Nickelony.IDEKit.Markdown.MarkdownRenderTheme
+Nickelony.IDEKit.Markdown.MarkdownRenderTheme.<Clone>$() -> Nickelony.IDEKit.Markdown.MarkdownRenderTheme!
+Nickelony.IDEKit.Markdown.MarkdownRenderTheme.BlockSpacing.get -> double
+Nickelony.IDEKit.Markdown.MarkdownRenderTheme.BlockSpacing.init -> void
+Nickelony.IDEKit.Markdown.MarkdownRenderTheme.BodyFontFamily.get -> string?
+Nickelony.IDEKit.Markdown.MarkdownRenderTheme.BodyFontFamily.init -> void
+Nickelony.IDEKit.Markdown.MarkdownRenderTheme.BodyFontSize.get -> double
+Nickelony.IDEKit.Markdown.MarkdownRenderTheme.BodyFontSize.init -> void
+Nickelony.IDEKit.Markdown.MarkdownRenderTheme.BorderBlendRatio.get -> double
+Nickelony.IDEKit.Markdown.MarkdownRenderTheme.BorderBlendRatio.init -> void
+Nickelony.IDEKit.Markdown.MarkdownRenderTheme.CodeBackgroundBlendRatio.get -> double
+Nickelony.IDEKit.Markdown.MarkdownRenderTheme.CodeBackgroundBlendRatio.init -> void
+Nickelony.IDEKit.Markdown.MarkdownRenderTheme.CodeFontFamily.get -> string?
+Nickelony.IDEKit.Markdown.MarkdownRenderTheme.CodeFontFamily.init -> void
+Nickelony.IDEKit.Markdown.MarkdownRenderTheme.CodeFontSize.get -> double
+Nickelony.IDEKit.Markdown.MarkdownRenderTheme.CodeFontSize.init -> void
+Nickelony.IDEKit.Markdown.MarkdownRenderTheme.CodeMaxWidth.get -> double
+Nickelony.IDEKit.Markdown.MarkdownRenderTheme.CodeMaxWidth.init -> void
+Nickelony.IDEKit.Markdown.MarkdownRenderTheme.Equals(Nickelony.IDEKit.Markdown.MarkdownRenderTheme? other) -> bool
+Nickelony.IDEKit.Markdown.MarkdownRenderTheme.FlowDirection.get -> Nickelony.IDEKit.Markdown.MarkdownFlowDirection
+Nickelony.IDEKit.Markdown.MarkdownRenderTheme.FlowDirection.init -> void
+Nickelony.IDEKit.Markdown.MarkdownRenderTheme.Foreground.get -> Nickelony.IDEKit.Core.Media.ArgbColor
+Nickelony.IDEKit.Markdown.MarkdownRenderTheme.Foreground.init -> void
+Nickelony.IDEKit.Markdown.MarkdownRenderTheme.HeadingFontSizeScales.get -> System.Collections.Generic.IReadOnlyList<double>!
+Nickelony.IDEKit.Markdown.MarkdownRenderTheme.HeadingFontSizeScales.init -> void
+Nickelony.IDEKit.Markdown.MarkdownRenderTheme.LinkForeground.get -> Nickelony.IDEKit.Core.Media.ArgbColor
+Nickelony.IDEKit.Markdown.MarkdownRenderTheme.LinkForeground.init -> void
+Nickelony.IDEKit.Markdown.MarkdownRenderTheme.MarkdownRenderTheme() -> void
+Nickelony.IDEKit.Markdown.MarkdownRenderTheme.MaxHeight.get -> double
+Nickelony.IDEKit.Markdown.MarkdownRenderTheme.MaxHeight.init -> void
+Nickelony.IDEKit.Markdown.MarkdownRenderTheme.MaxVisibleCodeBlockLines.get -> int
+Nickelony.IDEKit.Markdown.MarkdownRenderTheme.MaxVisibleCodeBlockLines.init -> void
+Nickelony.IDEKit.Markdown.MarkdownRenderTheme.MaxWidth.get -> double
+Nickelony.IDEKit.Markdown.MarkdownRenderTheme.MaxWidth.init -> void
+Nickelony.IDEKit.Markdown.MarkdownRenderTheme.SurfaceBackground.get -> Nickelony.IDEKit.Core.Media.ArgbColor
+Nickelony.IDEKit.Markdown.MarkdownRenderTheme.SurfaceBackground.init -> void
+Nickelony.IDEKit.Markdown.MarkdownThickness
+Nickelony.IDEKit.Markdown.MarkdownThickness.Bottom.get -> double
+Nickelony.IDEKit.Markdown.MarkdownThickness.Bottom.init -> void
+Nickelony.IDEKit.Markdown.MarkdownThickness.Deconstruct(out double Left, out double Top, out double Right, out double Bottom) -> void
+Nickelony.IDEKit.Markdown.MarkdownThickness.Equals(Nickelony.IDEKit.Markdown.MarkdownThickness other) -> bool
+Nickelony.IDEKit.Markdown.MarkdownThickness.Left.get -> double
+Nickelony.IDEKit.Markdown.MarkdownThickness.Left.init -> void
+Nickelony.IDEKit.Markdown.MarkdownThickness.MarkdownThickness() -> void
+Nickelony.IDEKit.Markdown.MarkdownThickness.MarkdownThickness(double Left, double Top, double Right, double Bottom) -> void
+Nickelony.IDEKit.Markdown.MarkdownThickness.Right.get -> double
+Nickelony.IDEKit.Markdown.MarkdownThickness.Right.init -> void
+Nickelony.IDEKit.Markdown.MarkdownThickness.Top.get -> double
+Nickelony.IDEKit.Markdown.MarkdownThickness.Top.init -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownBlock
+Nickelony.IDEKit.Markdown.Model.MarkdownBlock.MarkdownBlock() -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownBlock.MarkdownBlock(Nickelony.IDEKit.Markdown.Model.MarkdownBlock! original) -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownCodeBlock
+Nickelony.IDEKit.Markdown.Model.MarkdownCodeBlock.Code.get -> string!
+Nickelony.IDEKit.Markdown.Model.MarkdownCodeBlock.Code.init -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownCodeBlock.Deconstruct(out string? Language, out string! Code) -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownCodeBlock.Equals(Nickelony.IDEKit.Markdown.Model.MarkdownCodeBlock? other) -> bool
+Nickelony.IDEKit.Markdown.Model.MarkdownCodeBlock.Language.get -> string?
+Nickelony.IDEKit.Markdown.Model.MarkdownCodeBlock.Language.init -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownCodeBlock.MarkdownCodeBlock(string? Language, string! Code) -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownCodeBlock.NormalizedCode.get -> string!
+Nickelony.IDEKit.Markdown.Model.MarkdownCodeSpan
+Nickelony.IDEKit.Markdown.Model.MarkdownCodeSpan.Deconstruct(out string! Text) -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownCodeSpan.Equals(Nickelony.IDEKit.Markdown.Model.MarkdownCodeSpan? other) -> bool
+Nickelony.IDEKit.Markdown.Model.MarkdownCodeSpan.MarkdownCodeSpan(string! Text) -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownCodeSpan.Text.get -> string!
+Nickelony.IDEKit.Markdown.Model.MarkdownCodeSpan.Text.init -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownColumnAlignment
+Nickelony.IDEKit.Markdown.Model.MarkdownColumnAlignment.Center = 1 -> Nickelony.IDEKit.Markdown.Model.MarkdownColumnAlignment
+Nickelony.IDEKit.Markdown.Model.MarkdownColumnAlignment.Left = 0 -> Nickelony.IDEKit.Markdown.Model.MarkdownColumnAlignment
+Nickelony.IDEKit.Markdown.Model.MarkdownColumnAlignment.Right = 2 -> Nickelony.IDEKit.Markdown.Model.MarkdownColumnAlignment
+Nickelony.IDEKit.Markdown.Model.MarkdownDocumentModel
+Nickelony.IDEKit.Markdown.Model.MarkdownDocumentModel.<Clone>$() -> Nickelony.IDEKit.Markdown.Model.MarkdownDocumentModel!
+Nickelony.IDEKit.Markdown.Model.MarkdownDocumentModel.Blocks.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Model.MarkdownBlock!>!
+Nickelony.IDEKit.Markdown.Model.MarkdownDocumentModel.Blocks.init -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownDocumentModel.Deconstruct(out System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Model.MarkdownBlock!>! Blocks) -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownDocumentModel.Equals(Nickelony.IDEKit.Markdown.Model.MarkdownDocumentModel? other) -> bool
+Nickelony.IDEKit.Markdown.Model.MarkdownDocumentModel.MarkdownDocumentModel(System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Model.MarkdownBlock!>! Blocks) -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownDocumentModelBuilder
+Nickelony.IDEKit.Markdown.Model.MarkdownEmphasis
+Nickelony.IDEKit.Markdown.Model.MarkdownEmphasis.Deconstruct(out Nickelony.IDEKit.Markdown.Model.MarkdownEmphasisKind Kind, out System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Model.MarkdownInline!>! Inlines) -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownEmphasis.Equals(Nickelony.IDEKit.Markdown.Model.MarkdownEmphasis? other) -> bool
+Nickelony.IDEKit.Markdown.Model.MarkdownEmphasis.Inlines.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Model.MarkdownInline!>!
+Nickelony.IDEKit.Markdown.Model.MarkdownEmphasis.Inlines.init -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownEmphasis.Kind.get -> Nickelony.IDEKit.Markdown.Model.MarkdownEmphasisKind
+Nickelony.IDEKit.Markdown.Model.MarkdownEmphasis.Kind.init -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownEmphasis.MarkdownEmphasis(Nickelony.IDEKit.Markdown.Model.MarkdownEmphasisKind Kind, System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Model.MarkdownInline!>! Inlines) -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownEmphasisKind
+Nickelony.IDEKit.Markdown.Model.MarkdownEmphasisKind.Bold = 0 -> Nickelony.IDEKit.Markdown.Model.MarkdownEmphasisKind
+Nickelony.IDEKit.Markdown.Model.MarkdownEmphasisKind.Italic = 1 -> Nickelony.IDEKit.Markdown.Model.MarkdownEmphasisKind
+Nickelony.IDEKit.Markdown.Model.MarkdownEmphasisKind.Strikethrough = 2 -> Nickelony.IDEKit.Markdown.Model.MarkdownEmphasisKind
+Nickelony.IDEKit.Markdown.Model.MarkdownHeading
+Nickelony.IDEKit.Markdown.Model.MarkdownHeading.Deconstruct(out int Level, out System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Model.MarkdownInline!>! Inlines) -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownHeading.Equals(Nickelony.IDEKit.Markdown.Model.MarkdownHeading? other) -> bool
+Nickelony.IDEKit.Markdown.Model.MarkdownHeading.Inlines.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Model.MarkdownInline!>!
+Nickelony.IDEKit.Markdown.Model.MarkdownHeading.Inlines.init -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownHeading.Level.get -> int
+Nickelony.IDEKit.Markdown.Model.MarkdownHeading.Level.init -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownHeading.MarkdownHeading(int Level, System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Model.MarkdownInline!>! Inlines) -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownImagePlaceholder
+Nickelony.IDEKit.Markdown.Model.MarkdownImagePlaceholder.Deconstruct(out string! Text) -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownImagePlaceholder.Equals(Nickelony.IDEKit.Markdown.Model.MarkdownImagePlaceholder? other) -> bool
+Nickelony.IDEKit.Markdown.Model.MarkdownImagePlaceholder.MarkdownImagePlaceholder(string! Text) -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownImagePlaceholder.Text.get -> string!
+Nickelony.IDEKit.Markdown.Model.MarkdownImagePlaceholder.Text.init -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownInline
+Nickelony.IDEKit.Markdown.Model.MarkdownInline.MarkdownInline() -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownInline.MarkdownInline(Nickelony.IDEKit.Markdown.Model.MarkdownInline! original) -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownLineBreak
+Nickelony.IDEKit.Markdown.Model.MarkdownLineBreak.Equals(Nickelony.IDEKit.Markdown.Model.MarkdownLineBreak? other) -> bool
+Nickelony.IDEKit.Markdown.Model.MarkdownLineBreak.MarkdownLineBreak() -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownLink
+Nickelony.IDEKit.Markdown.Model.MarkdownLink.Deconstruct(out System.Uri? OpenableUri, out System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Model.MarkdownInline!>! Inlines) -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownLink.Equals(Nickelony.IDEKit.Markdown.Model.MarkdownLink? other) -> bool
+Nickelony.IDEKit.Markdown.Model.MarkdownLink.Inlines.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Model.MarkdownInline!>!
+Nickelony.IDEKit.Markdown.Model.MarkdownLink.Inlines.init -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownLink.MarkdownLink(System.Uri? OpenableUri, System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Model.MarkdownInline!>! Inlines) -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownLink.OpenableUri.get -> System.Uri?
+Nickelony.IDEKit.Markdown.Model.MarkdownLink.OpenableUri.init -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownList
+Nickelony.IDEKit.Markdown.Model.MarkdownList.Deconstruct(out bool IsOrdered, out int StartIndex, out bool IsLoose, out System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Model.MarkdownListItem!>! Items) -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownList.Equals(Nickelony.IDEKit.Markdown.Model.MarkdownList? other) -> bool
+Nickelony.IDEKit.Markdown.Model.MarkdownList.IsLoose.get -> bool
+Nickelony.IDEKit.Markdown.Model.MarkdownList.IsLoose.init -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownList.IsOrdered.get -> bool
+Nickelony.IDEKit.Markdown.Model.MarkdownList.IsOrdered.init -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownList.Items.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Model.MarkdownListItem!>!
+Nickelony.IDEKit.Markdown.Model.MarkdownList.Items.init -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownList.MarkdownList(bool IsOrdered, int StartIndex, bool IsLoose, System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Model.MarkdownListItem!>! Items) -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownList.StartIndex.get -> int
+Nickelony.IDEKit.Markdown.Model.MarkdownList.StartIndex.init -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownListItem
+Nickelony.IDEKit.Markdown.Model.MarkdownListItem.<Clone>$() -> Nickelony.IDEKit.Markdown.Model.MarkdownListItem!
+Nickelony.IDEKit.Markdown.Model.MarkdownListItem.Blocks.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Model.MarkdownBlock!>!
+Nickelony.IDEKit.Markdown.Model.MarkdownListItem.Blocks.init -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownListItem.Deconstruct(out System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Model.MarkdownBlock!>! Blocks) -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownListItem.Equals(Nickelony.IDEKit.Markdown.Model.MarkdownListItem? other) -> bool
+Nickelony.IDEKit.Markdown.Model.MarkdownListItem.MarkdownListItem(System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Model.MarkdownBlock!>! Blocks) -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownParagraph
+Nickelony.IDEKit.Markdown.Model.MarkdownParagraph.Deconstruct(out System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Model.MarkdownInline!>! Inlines) -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownParagraph.Equals(Nickelony.IDEKit.Markdown.Model.MarkdownParagraph? other) -> bool
+Nickelony.IDEKit.Markdown.Model.MarkdownParagraph.Inlines.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Model.MarkdownInline!>!
+Nickelony.IDEKit.Markdown.Model.MarkdownParagraph.Inlines.init -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownParagraph.MarkdownParagraph(System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Model.MarkdownInline!>! Inlines) -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownQuote
+Nickelony.IDEKit.Markdown.Model.MarkdownQuote.Blocks.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Model.MarkdownBlock!>!
+Nickelony.IDEKit.Markdown.Model.MarkdownQuote.Blocks.init -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownQuote.Deconstruct(out System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Model.MarkdownBlock!>! Blocks) -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownQuote.Equals(Nickelony.IDEKit.Markdown.Model.MarkdownQuote? other) -> bool
+Nickelony.IDEKit.Markdown.Model.MarkdownQuote.MarkdownQuote(System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Model.MarkdownBlock!>! Blocks) -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownSpan
+Nickelony.IDEKit.Markdown.Model.MarkdownSpan.Deconstruct(out System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Model.MarkdownInline!>! Inlines) -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownSpan.Equals(Nickelony.IDEKit.Markdown.Model.MarkdownSpan? other) -> bool
+Nickelony.IDEKit.Markdown.Model.MarkdownSpan.Inlines.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Model.MarkdownInline!>!
+Nickelony.IDEKit.Markdown.Model.MarkdownSpan.Inlines.init -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownSpan.MarkdownSpan(System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Model.MarkdownInline!>! Inlines) -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownTable
+Nickelony.IDEKit.Markdown.Model.MarkdownTable.ColumnAlignments.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Model.MarkdownColumnAlignment?>!
+Nickelony.IDEKit.Markdown.Model.MarkdownTable.ColumnAlignments.init -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownTable.Deconstruct(out System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Model.MarkdownTableRow!>! Rows, out System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Model.MarkdownColumnAlignment?>! ColumnAlignments) -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownTable.Equals(Nickelony.IDEKit.Markdown.Model.MarkdownTable? other) -> bool
+Nickelony.IDEKit.Markdown.Model.MarkdownTable.MarkdownTable(System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Model.MarkdownTableRow!>! Rows, System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Model.MarkdownColumnAlignment?>! ColumnAlignments) -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownTable.Rows.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Model.MarkdownTableRow!>!
+Nickelony.IDEKit.Markdown.Model.MarkdownTable.Rows.init -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownTableCell
+Nickelony.IDEKit.Markdown.Model.MarkdownTableCell.<Clone>$() -> Nickelony.IDEKit.Markdown.Model.MarkdownTableCell!
+Nickelony.IDEKit.Markdown.Model.MarkdownTableCell.Alignment.get -> Nickelony.IDEKit.Markdown.Model.MarkdownColumnAlignment?
+Nickelony.IDEKit.Markdown.Model.MarkdownTableCell.Alignment.init -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownTableCell.Blocks.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Model.MarkdownBlock!>!
+Nickelony.IDEKit.Markdown.Model.MarkdownTableCell.Blocks.init -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownTableCell.Deconstruct(out System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Model.MarkdownBlock!>! Blocks, out Nickelony.IDEKit.Markdown.Model.MarkdownColumnAlignment? Alignment) -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownTableCell.Equals(Nickelony.IDEKit.Markdown.Model.MarkdownTableCell? other) -> bool
+Nickelony.IDEKit.Markdown.Model.MarkdownTableCell.MarkdownTableCell(System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Model.MarkdownBlock!>! Blocks, Nickelony.IDEKit.Markdown.Model.MarkdownColumnAlignment? Alignment) -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownTableRow
+Nickelony.IDEKit.Markdown.Model.MarkdownTableRow.<Clone>$() -> Nickelony.IDEKit.Markdown.Model.MarkdownTableRow!
+Nickelony.IDEKit.Markdown.Model.MarkdownTableRow.Cells.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Model.MarkdownTableCell!>!
+Nickelony.IDEKit.Markdown.Model.MarkdownTableRow.Cells.init -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownTableRow.Deconstruct(out bool IsHeader, out System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Model.MarkdownTableCell!>! Cells) -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownTableRow.Equals(Nickelony.IDEKit.Markdown.Model.MarkdownTableRow? other) -> bool
+Nickelony.IDEKit.Markdown.Model.MarkdownTableRow.IsHeader.get -> bool
+Nickelony.IDEKit.Markdown.Model.MarkdownTableRow.IsHeader.init -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownTableRow.MarkdownTableRow(bool IsHeader, System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Model.MarkdownTableCell!>! Cells) -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownText
+Nickelony.IDEKit.Markdown.Model.MarkdownText.Deconstruct(out string! Text) -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownText.Equals(Nickelony.IDEKit.Markdown.Model.MarkdownText? other) -> bool
+Nickelony.IDEKit.Markdown.Model.MarkdownText.MarkdownText(string! Text) -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownText.Text.get -> string!
+Nickelony.IDEKit.Markdown.Model.MarkdownText.Text.init -> void
+Nickelony.IDEKit.Markdown.Model.MarkdownThematicBreak
+Nickelony.IDEKit.Markdown.Model.MarkdownThematicBreak.Equals(Nickelony.IDEKit.Markdown.Model.MarkdownThematicBreak? other) -> bool
+Nickelony.IDEKit.Markdown.Model.MarkdownThematicBreak.MarkdownThematicBreak() -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownBlockPlan
+Nickelony.IDEKit.Markdown.Planning.MarkdownBlockPlan.MarkdownBlockPlan() -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownBlockPlan.MarkdownBlockPlan(Nickelony.IDEKit.Markdown.Planning.MarkdownBlockPlan! original) -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownBlockPlan.SuppressVerticalSpacing.get -> bool
+Nickelony.IDEKit.Markdown.Planning.MarkdownBlockPlan.SuppressVerticalSpacing.init -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownCodeBlockPlan
+Nickelony.IDEKit.Markdown.Planning.MarkdownCodeBlockPlan.Block.get -> Nickelony.IDEKit.Markdown.Model.MarkdownCodeBlock!
+Nickelony.IDEKit.Markdown.Planning.MarkdownCodeBlockPlan.Block.init -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownCodeBlockPlan.BorderThickness.get -> Nickelony.IDEKit.Markdown.MarkdownThickness
+Nickelony.IDEKit.Markdown.Planning.MarkdownCodeBlockPlan.BorderThickness.init -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownCodeBlockPlan.CornerRadius.get -> double
+Nickelony.IDEKit.Markdown.Planning.MarkdownCodeBlockPlan.CornerRadius.init -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownCodeBlockPlan.Deconstruct(out Nickelony.IDEKit.Markdown.Model.MarkdownCodeBlock! Block, out Nickelony.IDEKit.Markdown.MarkdownThickness Margin, out Nickelony.IDEKit.Markdown.MarkdownThickness Padding, out Nickelony.IDEKit.Markdown.MarkdownThickness BorderThickness, out double CornerRadius, out double MaxWidth, out double WrapWidth) -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownCodeBlockPlan.Equals(Nickelony.IDEKit.Markdown.Planning.MarkdownCodeBlockPlan? other) -> bool
+Nickelony.IDEKit.Markdown.Planning.MarkdownCodeBlockPlan.Margin.get -> Nickelony.IDEKit.Markdown.MarkdownThickness
+Nickelony.IDEKit.Markdown.Planning.MarkdownCodeBlockPlan.Margin.init -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownCodeBlockPlan.MarkdownCodeBlockPlan(Nickelony.IDEKit.Markdown.Model.MarkdownCodeBlock! Block, Nickelony.IDEKit.Markdown.MarkdownThickness Margin, Nickelony.IDEKit.Markdown.MarkdownThickness Padding, Nickelony.IDEKit.Markdown.MarkdownThickness BorderThickness, double CornerRadius, double MaxWidth, double WrapWidth) -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownCodeBlockPlan.MaxWidth.get -> double
+Nickelony.IDEKit.Markdown.Planning.MarkdownCodeBlockPlan.MaxWidth.init -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownCodeBlockPlan.Padding.get -> Nickelony.IDEKit.Markdown.MarkdownThickness
+Nickelony.IDEKit.Markdown.Planning.MarkdownCodeBlockPlan.Padding.init -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownCodeBlockPlan.WrapWidth.get -> double
+Nickelony.IDEKit.Markdown.Planning.MarkdownCodeBlockPlan.WrapWidth.init -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownCodeSpanPlan
+Nickelony.IDEKit.Markdown.Planning.MarkdownCodeSpanPlan.BorderThickness.get -> Nickelony.IDEKit.Markdown.MarkdownThickness
+Nickelony.IDEKit.Markdown.Planning.MarkdownCodeSpanPlan.BorderThickness.init -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownCodeSpanPlan.CornerRadius.get -> double
+Nickelony.IDEKit.Markdown.Planning.MarkdownCodeSpanPlan.CornerRadius.init -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownCodeSpanPlan.Deconstruct(out string! Text, out Nickelony.IDEKit.Markdown.MarkdownThickness Padding, out Nickelony.IDEKit.Markdown.MarkdownThickness BorderThickness, out double CornerRadius, out double MaxWidth) -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownCodeSpanPlan.Equals(Nickelony.IDEKit.Markdown.Planning.MarkdownCodeSpanPlan? other) -> bool
+Nickelony.IDEKit.Markdown.Planning.MarkdownCodeSpanPlan.MarkdownCodeSpanPlan(string! Text, Nickelony.IDEKit.Markdown.MarkdownThickness Padding, Nickelony.IDEKit.Markdown.MarkdownThickness BorderThickness, double CornerRadius, double MaxWidth) -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownCodeSpanPlan.MaxWidth.get -> double
+Nickelony.IDEKit.Markdown.Planning.MarkdownCodeSpanPlan.MaxWidth.init -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownCodeSpanPlan.Padding.get -> Nickelony.IDEKit.Markdown.MarkdownThickness
+Nickelony.IDEKit.Markdown.Planning.MarkdownCodeSpanPlan.Padding.init -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownCodeSpanPlan.Text.get -> string!
+Nickelony.IDEKit.Markdown.Planning.MarkdownCodeSpanPlan.Text.init -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownEmphasisPlan
+Nickelony.IDEKit.Markdown.Planning.MarkdownEmphasisPlan.Deconstruct(out Nickelony.IDEKit.Markdown.Model.MarkdownEmphasisKind Kind, out System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Planning.MarkdownInlinePlan!>! Inlines) -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownEmphasisPlan.Equals(Nickelony.IDEKit.Markdown.Planning.MarkdownEmphasisPlan? other) -> bool
+Nickelony.IDEKit.Markdown.Planning.MarkdownEmphasisPlan.Inlines.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Planning.MarkdownInlinePlan!>!
+Nickelony.IDEKit.Markdown.Planning.MarkdownEmphasisPlan.Inlines.init -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownEmphasisPlan.Kind.get -> Nickelony.IDEKit.Markdown.Model.MarkdownEmphasisKind
+Nickelony.IDEKit.Markdown.Planning.MarkdownEmphasisPlan.Kind.init -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownEmphasisPlan.MarkdownEmphasisPlan(Nickelony.IDEKit.Markdown.Model.MarkdownEmphasisKind Kind, System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Planning.MarkdownInlinePlan!>! Inlines) -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownHeadingPlan
+Nickelony.IDEKit.Markdown.Planning.MarkdownHeadingPlan.Deconstruct(out Nickelony.IDEKit.Markdown.MarkdownThickness Margin, out double FontSize, out bool IsBold, out System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Planning.MarkdownInlinePlan!>! Inlines) -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownHeadingPlan.Equals(Nickelony.IDEKit.Markdown.Planning.MarkdownHeadingPlan? other) -> bool
+Nickelony.IDEKit.Markdown.Planning.MarkdownHeadingPlan.FontSize.get -> double
+Nickelony.IDEKit.Markdown.Planning.MarkdownHeadingPlan.FontSize.init -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownHeadingPlan.Inlines.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Planning.MarkdownInlinePlan!>!
+Nickelony.IDEKit.Markdown.Planning.MarkdownHeadingPlan.Inlines.init -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownHeadingPlan.IsBold.get -> bool
+Nickelony.IDEKit.Markdown.Planning.MarkdownHeadingPlan.IsBold.init -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownHeadingPlan.Margin.get -> Nickelony.IDEKit.Markdown.MarkdownThickness
+Nickelony.IDEKit.Markdown.Planning.MarkdownHeadingPlan.Margin.init -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownHeadingPlan.MarkdownHeadingPlan(Nickelony.IDEKit.Markdown.MarkdownThickness Margin, double FontSize, bool IsBold, System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Planning.MarkdownInlinePlan!>! Inlines) -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownImagePlaceholderPlan
+Nickelony.IDEKit.Markdown.Planning.MarkdownImagePlaceholderPlan.Deconstruct(out string! Text) -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownImagePlaceholderPlan.Equals(Nickelony.IDEKit.Markdown.Planning.MarkdownImagePlaceholderPlan? other) -> bool
+Nickelony.IDEKit.Markdown.Planning.MarkdownImagePlaceholderPlan.MarkdownImagePlaceholderPlan(string! Text) -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownImagePlaceholderPlan.Text.get -> string!
+Nickelony.IDEKit.Markdown.Planning.MarkdownImagePlaceholderPlan.Text.init -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownInlinePlan
+Nickelony.IDEKit.Markdown.Planning.MarkdownInlinePlan.MarkdownInlinePlan() -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownInlinePlan.MarkdownInlinePlan(Nickelony.IDEKit.Markdown.Planning.MarkdownInlinePlan! original) -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownLineBreakPlan
+Nickelony.IDEKit.Markdown.Planning.MarkdownLineBreakPlan.Equals(Nickelony.IDEKit.Markdown.Planning.MarkdownLineBreakPlan? other) -> bool
+Nickelony.IDEKit.Markdown.Planning.MarkdownLineBreakPlan.MarkdownLineBreakPlan() -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownLinkPlan
+Nickelony.IDEKit.Markdown.Planning.MarkdownLinkPlan.Deconstruct(out System.Uri? OpenableUri, out bool IsFocusable, out System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Planning.MarkdownInlinePlan!>! Inlines) -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownLinkPlan.Equals(Nickelony.IDEKit.Markdown.Planning.MarkdownLinkPlan? other) -> bool
+Nickelony.IDEKit.Markdown.Planning.MarkdownLinkPlan.Inlines.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Planning.MarkdownInlinePlan!>!
+Nickelony.IDEKit.Markdown.Planning.MarkdownLinkPlan.Inlines.init -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownLinkPlan.IsFocusable.get -> bool
+Nickelony.IDEKit.Markdown.Planning.MarkdownLinkPlan.IsFocusable.init -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownLinkPlan.MarkdownLinkPlan(System.Uri? OpenableUri, bool IsFocusable, System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Planning.MarkdownInlinePlan!>! Inlines) -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownLinkPlan.OpenableUri.get -> System.Uri?
+Nickelony.IDEKit.Markdown.Planning.MarkdownLinkPlan.OpenableUri.init -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownListItemPlan
+Nickelony.IDEKit.Markdown.Planning.MarkdownListItemPlan.<Clone>$() -> Nickelony.IDEKit.Markdown.Planning.MarkdownListItemPlan!
+Nickelony.IDEKit.Markdown.Planning.MarkdownListItemPlan.Blocks.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Planning.MarkdownBlockPlan!>!
+Nickelony.IDEKit.Markdown.Planning.MarkdownListItemPlan.Blocks.init -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownListItemPlan.Deconstruct(out string! Marker, out System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Planning.MarkdownBlockPlan!>! Blocks) -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownListItemPlan.Equals(Nickelony.IDEKit.Markdown.Planning.MarkdownListItemPlan? other) -> bool
+Nickelony.IDEKit.Markdown.Planning.MarkdownListItemPlan.MarkdownListItemPlan(string! Marker, System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Planning.MarkdownBlockPlan!>! Blocks) -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownListItemPlan.Marker.get -> string!
+Nickelony.IDEKit.Markdown.Planning.MarkdownListItemPlan.Marker.init -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownListPlan
+Nickelony.IDEKit.Markdown.Planning.MarkdownListPlan.Deconstruct(out Nickelony.IDEKit.Markdown.MarkdownThickness Margin, out bool IsOrdered, out int StartIndex, out double MarkerGap, out System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Planning.MarkdownListItemPlan!>! Items) -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownListPlan.Equals(Nickelony.IDEKit.Markdown.Planning.MarkdownListPlan? other) -> bool
+Nickelony.IDEKit.Markdown.Planning.MarkdownListPlan.IsOrdered.get -> bool
+Nickelony.IDEKit.Markdown.Planning.MarkdownListPlan.IsOrdered.init -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownListPlan.Items.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Planning.MarkdownListItemPlan!>!
+Nickelony.IDEKit.Markdown.Planning.MarkdownListPlan.Items.init -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownListPlan.Margin.get -> Nickelony.IDEKit.Markdown.MarkdownThickness
+Nickelony.IDEKit.Markdown.Planning.MarkdownListPlan.Margin.init -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownListPlan.MarkdownListPlan(Nickelony.IDEKit.Markdown.MarkdownThickness Margin, bool IsOrdered, int StartIndex, double MarkerGap, System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Planning.MarkdownListItemPlan!>! Items) -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownListPlan.MarkerGap.get -> double
+Nickelony.IDEKit.Markdown.Planning.MarkdownListPlan.MarkerGap.init -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownListPlan.StartIndex.get -> int
+Nickelony.IDEKit.Markdown.Planning.MarkdownListPlan.StartIndex.init -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownParagraphPlan
+Nickelony.IDEKit.Markdown.Planning.MarkdownParagraphPlan.Deconstruct(out Nickelony.IDEKit.Markdown.MarkdownThickness Margin, out System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Planning.MarkdownInlinePlan!>! Inlines) -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownParagraphPlan.Equals(Nickelony.IDEKit.Markdown.Planning.MarkdownParagraphPlan? other) -> bool
+Nickelony.IDEKit.Markdown.Planning.MarkdownParagraphPlan.Inlines.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Planning.MarkdownInlinePlan!>!
+Nickelony.IDEKit.Markdown.Planning.MarkdownParagraphPlan.Inlines.init -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownParagraphPlan.Margin.get -> Nickelony.IDEKit.Markdown.MarkdownThickness
+Nickelony.IDEKit.Markdown.Planning.MarkdownParagraphPlan.Margin.init -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownParagraphPlan.MarkdownParagraphPlan(Nickelony.IDEKit.Markdown.MarkdownThickness Margin, System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Planning.MarkdownInlinePlan!>! Inlines) -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownQuotePlan
+Nickelony.IDEKit.Markdown.Planning.MarkdownQuotePlan.Blocks.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Planning.MarkdownBlockPlan!>!
+Nickelony.IDEKit.Markdown.Planning.MarkdownQuotePlan.Blocks.init -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownQuotePlan.BorderThickness.get -> Nickelony.IDEKit.Markdown.MarkdownThickness
+Nickelony.IDEKit.Markdown.Planning.MarkdownQuotePlan.BorderThickness.init -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownQuotePlan.Deconstruct(out Nickelony.IDEKit.Markdown.MarkdownThickness Margin, out Nickelony.IDEKit.Markdown.MarkdownThickness Padding, out Nickelony.IDEKit.Markdown.MarkdownThickness BorderThickness, out System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Planning.MarkdownBlockPlan!>! Blocks) -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownQuotePlan.Equals(Nickelony.IDEKit.Markdown.Planning.MarkdownQuotePlan? other) -> bool
+Nickelony.IDEKit.Markdown.Planning.MarkdownQuotePlan.Margin.get -> Nickelony.IDEKit.Markdown.MarkdownThickness
+Nickelony.IDEKit.Markdown.Planning.MarkdownQuotePlan.Margin.init -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownQuotePlan.MarkdownQuotePlan(Nickelony.IDEKit.Markdown.MarkdownThickness Margin, Nickelony.IDEKit.Markdown.MarkdownThickness Padding, Nickelony.IDEKit.Markdown.MarkdownThickness BorderThickness, System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Planning.MarkdownBlockPlan!>! Blocks) -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownQuotePlan.Padding.get -> Nickelony.IDEKit.Markdown.MarkdownThickness
+Nickelony.IDEKit.Markdown.Planning.MarkdownQuotePlan.Padding.init -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownRenderPlanner
+Nickelony.IDEKit.Markdown.Planning.MarkdownSpanPlan
+Nickelony.IDEKit.Markdown.Planning.MarkdownSpanPlan.Deconstruct(out System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Planning.MarkdownInlinePlan!>! Inlines) -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownSpanPlan.Equals(Nickelony.IDEKit.Markdown.Planning.MarkdownSpanPlan? other) -> bool
+Nickelony.IDEKit.Markdown.Planning.MarkdownSpanPlan.Inlines.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Planning.MarkdownInlinePlan!>!
+Nickelony.IDEKit.Markdown.Planning.MarkdownSpanPlan.Inlines.init -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownSpanPlan.MarkdownSpanPlan(System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Planning.MarkdownInlinePlan!>! Inlines) -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownTableCellPlan
+Nickelony.IDEKit.Markdown.Planning.MarkdownTableCellPlan.<Clone>$() -> Nickelony.IDEKit.Markdown.Planning.MarkdownTableCellPlan!
+Nickelony.IDEKit.Markdown.Planning.MarkdownTableCellPlan.Alignment.get -> Nickelony.IDEKit.Markdown.Model.MarkdownColumnAlignment?
+Nickelony.IDEKit.Markdown.Planning.MarkdownTableCellPlan.Alignment.init -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownTableCellPlan.Blocks.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Planning.MarkdownBlockPlan!>!
+Nickelony.IDEKit.Markdown.Planning.MarkdownTableCellPlan.Blocks.init -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownTableCellPlan.BorderThickness.get -> Nickelony.IDEKit.Markdown.MarkdownThickness
+Nickelony.IDEKit.Markdown.Planning.MarkdownTableCellPlan.BorderThickness.init -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownTableCellPlan.Deconstruct(out Nickelony.IDEKit.Markdown.MarkdownThickness Padding, out Nickelony.IDEKit.Markdown.MarkdownThickness BorderThickness, out bool IsBold, out Nickelony.IDEKit.Markdown.Model.MarkdownColumnAlignment? Alignment, out System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Planning.MarkdownBlockPlan!>! Blocks) -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownTableCellPlan.Equals(Nickelony.IDEKit.Markdown.Planning.MarkdownTableCellPlan? other) -> bool
+Nickelony.IDEKit.Markdown.Planning.MarkdownTableCellPlan.IsBold.get -> bool
+Nickelony.IDEKit.Markdown.Planning.MarkdownTableCellPlan.IsBold.init -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownTableCellPlan.MarkdownTableCellPlan(Nickelony.IDEKit.Markdown.MarkdownThickness Padding, Nickelony.IDEKit.Markdown.MarkdownThickness BorderThickness, bool IsBold, Nickelony.IDEKit.Markdown.Model.MarkdownColumnAlignment? Alignment, System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Planning.MarkdownBlockPlan!>! Blocks) -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownTableCellPlan.Padding.get -> Nickelony.IDEKit.Markdown.MarkdownThickness
+Nickelony.IDEKit.Markdown.Planning.MarkdownTableCellPlan.Padding.init -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownTablePlan
+Nickelony.IDEKit.Markdown.Planning.MarkdownTablePlan.ColumnCount.get -> int
+Nickelony.IDEKit.Markdown.Planning.MarkdownTablePlan.ColumnCount.init -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownTablePlan.Deconstruct(out Nickelony.IDEKit.Markdown.MarkdownThickness Margin, out int ColumnCount, out System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Planning.MarkdownTableRowPlan!>! Rows) -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownTablePlan.Equals(Nickelony.IDEKit.Markdown.Planning.MarkdownTablePlan? other) -> bool
+Nickelony.IDEKit.Markdown.Planning.MarkdownTablePlan.Margin.get -> Nickelony.IDEKit.Markdown.MarkdownThickness
+Nickelony.IDEKit.Markdown.Planning.MarkdownTablePlan.Margin.init -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownTablePlan.MarkdownTablePlan(Nickelony.IDEKit.Markdown.MarkdownThickness Margin, int ColumnCount, System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Planning.MarkdownTableRowPlan!>! Rows) -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownTablePlan.Rows.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Planning.MarkdownTableRowPlan!>!
+Nickelony.IDEKit.Markdown.Planning.MarkdownTablePlan.Rows.init -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownTableRowPlan
+Nickelony.IDEKit.Markdown.Planning.MarkdownTableRowPlan.<Clone>$() -> Nickelony.IDEKit.Markdown.Planning.MarkdownTableRowPlan!
+Nickelony.IDEKit.Markdown.Planning.MarkdownTableRowPlan.Cells.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Planning.MarkdownTableCellPlan!>!
+Nickelony.IDEKit.Markdown.Planning.MarkdownTableRowPlan.Cells.init -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownTableRowPlan.Deconstruct(out System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Planning.MarkdownTableCellPlan!>! Cells) -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownTableRowPlan.Equals(Nickelony.IDEKit.Markdown.Planning.MarkdownTableRowPlan? other) -> bool
+Nickelony.IDEKit.Markdown.Planning.MarkdownTableRowPlan.MarkdownTableRowPlan(System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Planning.MarkdownTableCellPlan!>! Cells) -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownTextPlan
+Nickelony.IDEKit.Markdown.Planning.MarkdownTextPlan.Deconstruct(out string! Text) -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownTextPlan.Equals(Nickelony.IDEKit.Markdown.Planning.MarkdownTextPlan? other) -> bool
+Nickelony.IDEKit.Markdown.Planning.MarkdownTextPlan.MarkdownTextPlan(string! Text) -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownTextPlan.Text.get -> string!
+Nickelony.IDEKit.Markdown.Planning.MarkdownTextPlan.Text.init -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownThematicBreakPlan
+Nickelony.IDEKit.Markdown.Planning.MarkdownThematicBreakPlan.Deconstruct(out Nickelony.IDEKit.Markdown.MarkdownThickness Margin, out double Thickness) -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownThematicBreakPlan.Equals(Nickelony.IDEKit.Markdown.Planning.MarkdownThematicBreakPlan? other) -> bool
+Nickelony.IDEKit.Markdown.Planning.MarkdownThematicBreakPlan.Margin.get -> Nickelony.IDEKit.Markdown.MarkdownThickness
+Nickelony.IDEKit.Markdown.Planning.MarkdownThematicBreakPlan.Margin.init -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownThematicBreakPlan.MarkdownThematicBreakPlan(Nickelony.IDEKit.Markdown.MarkdownThickness Margin, double Thickness) -> void
+Nickelony.IDEKit.Markdown.Planning.MarkdownThematicBreakPlan.Thickness.get -> double
+Nickelony.IDEKit.Markdown.Planning.MarkdownThematicBreakPlan.Thickness.init -> void
+abstract Nickelony.IDEKit.Markdown.Model.MarkdownBlock.<Clone>$() -> Nickelony.IDEKit.Markdown.Model.MarkdownBlock!
+abstract Nickelony.IDEKit.Markdown.Model.MarkdownInline.<Clone>$() -> Nickelony.IDEKit.Markdown.Model.MarkdownInline!
+abstract Nickelony.IDEKit.Markdown.Planning.MarkdownBlockPlan.<Clone>$() -> Nickelony.IDEKit.Markdown.Planning.MarkdownBlockPlan!
+abstract Nickelony.IDEKit.Markdown.Planning.MarkdownInlinePlan.<Clone>$() -> Nickelony.IDEKit.Markdown.Planning.MarkdownInlinePlan!
+const Nickelony.IDEKit.Markdown.MarkdownRenderTheme.DefaultCodeFontFamily = "Consolas, Courier New" -> string!
+const Nickelony.IDEKit.Markdown.MarkdownRenderTheme.FontSizeUpperBound = 160000 -> double
+override Nickelony.IDEKit.Markdown.MarkdownRenderOptions.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Markdown.MarkdownRenderOptions.GetHashCode() -> int
+override Nickelony.IDEKit.Markdown.MarkdownRenderOptions.ToString() -> string!
+override Nickelony.IDEKit.Markdown.MarkdownRenderTheme.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Markdown.MarkdownRenderTheme.GetHashCode() -> int
+override Nickelony.IDEKit.Markdown.MarkdownRenderTheme.ToString() -> string!
+override Nickelony.IDEKit.Markdown.MarkdownThickness.GetHashCode() -> int
+override Nickelony.IDEKit.Markdown.Model.MarkdownBlock.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Markdown.Model.MarkdownBlock.GetHashCode() -> int
+override Nickelony.IDEKit.Markdown.Model.MarkdownBlock.ToString() -> string!
+override Nickelony.IDEKit.Markdown.Model.MarkdownCodeBlock.<Clone>$() -> Nickelony.IDEKit.Markdown.Model.MarkdownCodeBlock!
+override Nickelony.IDEKit.Markdown.Model.MarkdownCodeBlock.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Markdown.Model.MarkdownCodeBlock.GetHashCode() -> int
+override Nickelony.IDEKit.Markdown.Model.MarkdownCodeBlock.ToString() -> string!
+override Nickelony.IDEKit.Markdown.Model.MarkdownCodeSpan.<Clone>$() -> Nickelony.IDEKit.Markdown.Model.MarkdownCodeSpan!
+override Nickelony.IDEKit.Markdown.Model.MarkdownCodeSpan.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Markdown.Model.MarkdownCodeSpan.GetHashCode() -> int
+override Nickelony.IDEKit.Markdown.Model.MarkdownCodeSpan.ToString() -> string!
+override Nickelony.IDEKit.Markdown.Model.MarkdownDocumentModel.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Markdown.Model.MarkdownDocumentModel.GetHashCode() -> int
+override Nickelony.IDEKit.Markdown.Model.MarkdownDocumentModel.ToString() -> string!
+override Nickelony.IDEKit.Markdown.Model.MarkdownEmphasis.<Clone>$() -> Nickelony.IDEKit.Markdown.Model.MarkdownEmphasis!
+override Nickelony.IDEKit.Markdown.Model.MarkdownEmphasis.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Markdown.Model.MarkdownEmphasis.GetHashCode() -> int
+override Nickelony.IDEKit.Markdown.Model.MarkdownEmphasis.ToString() -> string!
+override Nickelony.IDEKit.Markdown.Model.MarkdownHeading.<Clone>$() -> Nickelony.IDEKit.Markdown.Model.MarkdownHeading!
+override Nickelony.IDEKit.Markdown.Model.MarkdownHeading.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Markdown.Model.MarkdownHeading.GetHashCode() -> int
+override Nickelony.IDEKit.Markdown.Model.MarkdownHeading.ToString() -> string!
+override Nickelony.IDEKit.Markdown.Model.MarkdownImagePlaceholder.<Clone>$() -> Nickelony.IDEKit.Markdown.Model.MarkdownImagePlaceholder!
+override Nickelony.IDEKit.Markdown.Model.MarkdownImagePlaceholder.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Markdown.Model.MarkdownImagePlaceholder.GetHashCode() -> int
+override Nickelony.IDEKit.Markdown.Model.MarkdownImagePlaceholder.ToString() -> string!
+override Nickelony.IDEKit.Markdown.Model.MarkdownInline.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Markdown.Model.MarkdownInline.GetHashCode() -> int
+override Nickelony.IDEKit.Markdown.Model.MarkdownInline.ToString() -> string!
+override Nickelony.IDEKit.Markdown.Model.MarkdownLineBreak.<Clone>$() -> Nickelony.IDEKit.Markdown.Model.MarkdownLineBreak!
+override Nickelony.IDEKit.Markdown.Model.MarkdownLineBreak.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Markdown.Model.MarkdownLineBreak.GetHashCode() -> int
+override Nickelony.IDEKit.Markdown.Model.MarkdownLineBreak.ToString() -> string!
+override Nickelony.IDEKit.Markdown.Model.MarkdownLink.<Clone>$() -> Nickelony.IDEKit.Markdown.Model.MarkdownLink!
+override Nickelony.IDEKit.Markdown.Model.MarkdownLink.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Markdown.Model.MarkdownLink.GetHashCode() -> int
+override Nickelony.IDEKit.Markdown.Model.MarkdownLink.ToString() -> string!
+override Nickelony.IDEKit.Markdown.Model.MarkdownList.<Clone>$() -> Nickelony.IDEKit.Markdown.Model.MarkdownList!
+override Nickelony.IDEKit.Markdown.Model.MarkdownList.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Markdown.Model.MarkdownList.GetHashCode() -> int
+override Nickelony.IDEKit.Markdown.Model.MarkdownList.ToString() -> string!
+override Nickelony.IDEKit.Markdown.Model.MarkdownListItem.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Markdown.Model.MarkdownListItem.GetHashCode() -> int
+override Nickelony.IDEKit.Markdown.Model.MarkdownListItem.ToString() -> string!
+override Nickelony.IDEKit.Markdown.Model.MarkdownParagraph.<Clone>$() -> Nickelony.IDEKit.Markdown.Model.MarkdownParagraph!
+override Nickelony.IDEKit.Markdown.Model.MarkdownParagraph.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Markdown.Model.MarkdownParagraph.GetHashCode() -> int
+override Nickelony.IDEKit.Markdown.Model.MarkdownParagraph.ToString() -> string!
+override Nickelony.IDEKit.Markdown.Model.MarkdownQuote.<Clone>$() -> Nickelony.IDEKit.Markdown.Model.MarkdownQuote!
+override Nickelony.IDEKit.Markdown.Model.MarkdownQuote.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Markdown.Model.MarkdownQuote.GetHashCode() -> int
+override Nickelony.IDEKit.Markdown.Model.MarkdownQuote.ToString() -> string!
+override Nickelony.IDEKit.Markdown.Model.MarkdownSpan.<Clone>$() -> Nickelony.IDEKit.Markdown.Model.MarkdownSpan!
+override Nickelony.IDEKit.Markdown.Model.MarkdownSpan.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Markdown.Model.MarkdownSpan.GetHashCode() -> int
+override Nickelony.IDEKit.Markdown.Model.MarkdownSpan.ToString() -> string!
+override Nickelony.IDEKit.Markdown.Model.MarkdownTable.<Clone>$() -> Nickelony.IDEKit.Markdown.Model.MarkdownTable!
+override Nickelony.IDEKit.Markdown.Model.MarkdownTable.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Markdown.Model.MarkdownTable.GetHashCode() -> int
+override Nickelony.IDEKit.Markdown.Model.MarkdownTable.ToString() -> string!
+override Nickelony.IDEKit.Markdown.Model.MarkdownTableCell.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Markdown.Model.MarkdownTableCell.GetHashCode() -> int
+override Nickelony.IDEKit.Markdown.Model.MarkdownTableCell.ToString() -> string!
+override Nickelony.IDEKit.Markdown.Model.MarkdownTableRow.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Markdown.Model.MarkdownTableRow.GetHashCode() -> int
+override Nickelony.IDEKit.Markdown.Model.MarkdownTableRow.ToString() -> string!
+override Nickelony.IDEKit.Markdown.Model.MarkdownText.<Clone>$() -> Nickelony.IDEKit.Markdown.Model.MarkdownText!
+override Nickelony.IDEKit.Markdown.Model.MarkdownText.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Markdown.Model.MarkdownText.GetHashCode() -> int
+override Nickelony.IDEKit.Markdown.Model.MarkdownText.ToString() -> string!
+override Nickelony.IDEKit.Markdown.Model.MarkdownThematicBreak.<Clone>$() -> Nickelony.IDEKit.Markdown.Model.MarkdownThematicBreak!
+override Nickelony.IDEKit.Markdown.Model.MarkdownThematicBreak.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Markdown.Model.MarkdownThematicBreak.GetHashCode() -> int
+override Nickelony.IDEKit.Markdown.Model.MarkdownThematicBreak.ToString() -> string!
+override Nickelony.IDEKit.Markdown.Planning.MarkdownBlockPlan.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Markdown.Planning.MarkdownBlockPlan.GetHashCode() -> int
+override Nickelony.IDEKit.Markdown.Planning.MarkdownBlockPlan.ToString() -> string!
+override Nickelony.IDEKit.Markdown.Planning.MarkdownCodeBlockPlan.<Clone>$() -> Nickelony.IDEKit.Markdown.Planning.MarkdownCodeBlockPlan!
+override Nickelony.IDEKit.Markdown.Planning.MarkdownCodeBlockPlan.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Markdown.Planning.MarkdownCodeBlockPlan.GetHashCode() -> int
+override Nickelony.IDEKit.Markdown.Planning.MarkdownCodeBlockPlan.ToString() -> string!
+override Nickelony.IDEKit.Markdown.Planning.MarkdownCodeSpanPlan.<Clone>$() -> Nickelony.IDEKit.Markdown.Planning.MarkdownCodeSpanPlan!
+override Nickelony.IDEKit.Markdown.Planning.MarkdownCodeSpanPlan.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Markdown.Planning.MarkdownCodeSpanPlan.GetHashCode() -> int
+override Nickelony.IDEKit.Markdown.Planning.MarkdownCodeSpanPlan.ToString() -> string!
+override Nickelony.IDEKit.Markdown.Planning.MarkdownEmphasisPlan.<Clone>$() -> Nickelony.IDEKit.Markdown.Planning.MarkdownEmphasisPlan!
+override Nickelony.IDEKit.Markdown.Planning.MarkdownEmphasisPlan.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Markdown.Planning.MarkdownEmphasisPlan.GetHashCode() -> int
+override Nickelony.IDEKit.Markdown.Planning.MarkdownEmphasisPlan.ToString() -> string!
+override Nickelony.IDEKit.Markdown.Planning.MarkdownHeadingPlan.<Clone>$() -> Nickelony.IDEKit.Markdown.Planning.MarkdownHeadingPlan!
+override Nickelony.IDEKit.Markdown.Planning.MarkdownHeadingPlan.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Markdown.Planning.MarkdownHeadingPlan.GetHashCode() -> int
+override Nickelony.IDEKit.Markdown.Planning.MarkdownHeadingPlan.ToString() -> string!
+override Nickelony.IDEKit.Markdown.Planning.MarkdownImagePlaceholderPlan.<Clone>$() -> Nickelony.IDEKit.Markdown.Planning.MarkdownImagePlaceholderPlan!
+override Nickelony.IDEKit.Markdown.Planning.MarkdownImagePlaceholderPlan.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Markdown.Planning.MarkdownImagePlaceholderPlan.GetHashCode() -> int
+override Nickelony.IDEKit.Markdown.Planning.MarkdownImagePlaceholderPlan.ToString() -> string!
+override Nickelony.IDEKit.Markdown.Planning.MarkdownInlinePlan.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Markdown.Planning.MarkdownInlinePlan.GetHashCode() -> int
+override Nickelony.IDEKit.Markdown.Planning.MarkdownInlinePlan.ToString() -> string!
+override Nickelony.IDEKit.Markdown.Planning.MarkdownLineBreakPlan.<Clone>$() -> Nickelony.IDEKit.Markdown.Planning.MarkdownLineBreakPlan!
+override Nickelony.IDEKit.Markdown.Planning.MarkdownLineBreakPlan.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Markdown.Planning.MarkdownLineBreakPlan.GetHashCode() -> int
+override Nickelony.IDEKit.Markdown.Planning.MarkdownLineBreakPlan.ToString() -> string!
+override Nickelony.IDEKit.Markdown.Planning.MarkdownLinkPlan.<Clone>$() -> Nickelony.IDEKit.Markdown.Planning.MarkdownLinkPlan!
+override Nickelony.IDEKit.Markdown.Planning.MarkdownLinkPlan.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Markdown.Planning.MarkdownLinkPlan.GetHashCode() -> int
+override Nickelony.IDEKit.Markdown.Planning.MarkdownLinkPlan.ToString() -> string!
+override Nickelony.IDEKit.Markdown.Planning.MarkdownListItemPlan.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Markdown.Planning.MarkdownListItemPlan.GetHashCode() -> int
+override Nickelony.IDEKit.Markdown.Planning.MarkdownListItemPlan.ToString() -> string!
+override Nickelony.IDEKit.Markdown.Planning.MarkdownListPlan.<Clone>$() -> Nickelony.IDEKit.Markdown.Planning.MarkdownListPlan!
+override Nickelony.IDEKit.Markdown.Planning.MarkdownListPlan.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Markdown.Planning.MarkdownListPlan.GetHashCode() -> int
+override Nickelony.IDEKit.Markdown.Planning.MarkdownListPlan.ToString() -> string!
+override Nickelony.IDEKit.Markdown.Planning.MarkdownParagraphPlan.<Clone>$() -> Nickelony.IDEKit.Markdown.Planning.MarkdownParagraphPlan!
+override Nickelony.IDEKit.Markdown.Planning.MarkdownParagraphPlan.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Markdown.Planning.MarkdownParagraphPlan.GetHashCode() -> int
+override Nickelony.IDEKit.Markdown.Planning.MarkdownParagraphPlan.ToString() -> string!
+override Nickelony.IDEKit.Markdown.Planning.MarkdownQuotePlan.<Clone>$() -> Nickelony.IDEKit.Markdown.Planning.MarkdownQuotePlan!
+override Nickelony.IDEKit.Markdown.Planning.MarkdownQuotePlan.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Markdown.Planning.MarkdownQuotePlan.GetHashCode() -> int
+override Nickelony.IDEKit.Markdown.Planning.MarkdownQuotePlan.ToString() -> string!
+override Nickelony.IDEKit.Markdown.Planning.MarkdownSpanPlan.<Clone>$() -> Nickelony.IDEKit.Markdown.Planning.MarkdownSpanPlan!
+override Nickelony.IDEKit.Markdown.Planning.MarkdownSpanPlan.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Markdown.Planning.MarkdownSpanPlan.GetHashCode() -> int
+override Nickelony.IDEKit.Markdown.Planning.MarkdownSpanPlan.ToString() -> string!
+override Nickelony.IDEKit.Markdown.Planning.MarkdownTableCellPlan.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Markdown.Planning.MarkdownTableCellPlan.GetHashCode() -> int
+override Nickelony.IDEKit.Markdown.Planning.MarkdownTableCellPlan.ToString() -> string!
+override Nickelony.IDEKit.Markdown.Planning.MarkdownTablePlan.<Clone>$() -> Nickelony.IDEKit.Markdown.Planning.MarkdownTablePlan!
+override Nickelony.IDEKit.Markdown.Planning.MarkdownTablePlan.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Markdown.Planning.MarkdownTablePlan.GetHashCode() -> int
+override Nickelony.IDEKit.Markdown.Planning.MarkdownTablePlan.ToString() -> string!
+override Nickelony.IDEKit.Markdown.Planning.MarkdownTableRowPlan.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Markdown.Planning.MarkdownTableRowPlan.GetHashCode() -> int
+override Nickelony.IDEKit.Markdown.Planning.MarkdownTableRowPlan.ToString() -> string!
+override Nickelony.IDEKit.Markdown.Planning.MarkdownTextPlan.<Clone>$() -> Nickelony.IDEKit.Markdown.Planning.MarkdownTextPlan!
+override Nickelony.IDEKit.Markdown.Planning.MarkdownTextPlan.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Markdown.Planning.MarkdownTextPlan.GetHashCode() -> int
+override Nickelony.IDEKit.Markdown.Planning.MarkdownTextPlan.ToString() -> string!
+override Nickelony.IDEKit.Markdown.Planning.MarkdownThematicBreakPlan.<Clone>$() -> Nickelony.IDEKit.Markdown.Planning.MarkdownThematicBreakPlan!
+override Nickelony.IDEKit.Markdown.Planning.MarkdownThematicBreakPlan.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Markdown.Planning.MarkdownThematicBreakPlan.GetHashCode() -> int
+override Nickelony.IDEKit.Markdown.Planning.MarkdownThematicBreakPlan.ToString() -> string!
+override sealed Nickelony.IDEKit.Markdown.Model.MarkdownCodeBlock.Equals(Nickelony.IDEKit.Markdown.Model.MarkdownBlock? other) -> bool
+override sealed Nickelony.IDEKit.Markdown.Model.MarkdownCodeSpan.Equals(Nickelony.IDEKit.Markdown.Model.MarkdownInline? other) -> bool
+override sealed Nickelony.IDEKit.Markdown.Model.MarkdownEmphasis.Equals(Nickelony.IDEKit.Markdown.Model.MarkdownInline? other) -> bool
+override sealed Nickelony.IDEKit.Markdown.Model.MarkdownHeading.Equals(Nickelony.IDEKit.Markdown.Model.MarkdownBlock? other) -> bool
+override sealed Nickelony.IDEKit.Markdown.Model.MarkdownImagePlaceholder.Equals(Nickelony.IDEKit.Markdown.Model.MarkdownInline? other) -> bool
+override sealed Nickelony.IDEKit.Markdown.Model.MarkdownLineBreak.Equals(Nickelony.IDEKit.Markdown.Model.MarkdownInline? other) -> bool
+override sealed Nickelony.IDEKit.Markdown.Model.MarkdownLink.Equals(Nickelony.IDEKit.Markdown.Model.MarkdownInline? other) -> bool
+override sealed Nickelony.IDEKit.Markdown.Model.MarkdownList.Equals(Nickelony.IDEKit.Markdown.Model.MarkdownBlock? other) -> bool
+override sealed Nickelony.IDEKit.Markdown.Model.MarkdownParagraph.Equals(Nickelony.IDEKit.Markdown.Model.MarkdownBlock? other) -> bool
+override sealed Nickelony.IDEKit.Markdown.Model.MarkdownQuote.Equals(Nickelony.IDEKit.Markdown.Model.MarkdownBlock? other) -> bool
+override sealed Nickelony.IDEKit.Markdown.Model.MarkdownSpan.Equals(Nickelony.IDEKit.Markdown.Model.MarkdownInline? other) -> bool
+override sealed Nickelony.IDEKit.Markdown.Model.MarkdownTable.Equals(Nickelony.IDEKit.Markdown.Model.MarkdownBlock? other) -> bool
+override sealed Nickelony.IDEKit.Markdown.Model.MarkdownText.Equals(Nickelony.IDEKit.Markdown.Model.MarkdownInline? other) -> bool
+override sealed Nickelony.IDEKit.Markdown.Model.MarkdownThematicBreak.Equals(Nickelony.IDEKit.Markdown.Model.MarkdownBlock? other) -> bool
+override sealed Nickelony.IDEKit.Markdown.Planning.MarkdownCodeBlockPlan.Equals(Nickelony.IDEKit.Markdown.Planning.MarkdownBlockPlan? other) -> bool
+override sealed Nickelony.IDEKit.Markdown.Planning.MarkdownCodeSpanPlan.Equals(Nickelony.IDEKit.Markdown.Planning.MarkdownInlinePlan? other) -> bool
+override sealed Nickelony.IDEKit.Markdown.Planning.MarkdownEmphasisPlan.Equals(Nickelony.IDEKit.Markdown.Planning.MarkdownInlinePlan? other) -> bool
+override sealed Nickelony.IDEKit.Markdown.Planning.MarkdownHeadingPlan.Equals(Nickelony.IDEKit.Markdown.Planning.MarkdownBlockPlan? other) -> bool
+override sealed Nickelony.IDEKit.Markdown.Planning.MarkdownImagePlaceholderPlan.Equals(Nickelony.IDEKit.Markdown.Planning.MarkdownInlinePlan? other) -> bool
+override sealed Nickelony.IDEKit.Markdown.Planning.MarkdownLineBreakPlan.Equals(Nickelony.IDEKit.Markdown.Planning.MarkdownInlinePlan? other) -> bool
+override sealed Nickelony.IDEKit.Markdown.Planning.MarkdownLinkPlan.Equals(Nickelony.IDEKit.Markdown.Planning.MarkdownInlinePlan? other) -> bool
+override sealed Nickelony.IDEKit.Markdown.Planning.MarkdownListPlan.Equals(Nickelony.IDEKit.Markdown.Planning.MarkdownBlockPlan? other) -> bool
+override sealed Nickelony.IDEKit.Markdown.Planning.MarkdownParagraphPlan.Equals(Nickelony.IDEKit.Markdown.Planning.MarkdownBlockPlan? other) -> bool
+override sealed Nickelony.IDEKit.Markdown.Planning.MarkdownQuotePlan.Equals(Nickelony.IDEKit.Markdown.Planning.MarkdownBlockPlan? other) -> bool
+override sealed Nickelony.IDEKit.Markdown.Planning.MarkdownSpanPlan.Equals(Nickelony.IDEKit.Markdown.Planning.MarkdownInlinePlan? other) -> bool
+override sealed Nickelony.IDEKit.Markdown.Planning.MarkdownTablePlan.Equals(Nickelony.IDEKit.Markdown.Planning.MarkdownBlockPlan? other) -> bool
+override sealed Nickelony.IDEKit.Markdown.Planning.MarkdownTextPlan.Equals(Nickelony.IDEKit.Markdown.Planning.MarkdownInlinePlan? other) -> bool
+override sealed Nickelony.IDEKit.Markdown.Planning.MarkdownThematicBreakPlan.Equals(Nickelony.IDEKit.Markdown.Planning.MarkdownBlockPlan? other) -> bool
+static Nickelony.IDEKit.Markdown.MarkdownHighlightingResolver.Resolve<TDefinition>(string? language, System.Collections.Generic.IReadOnlyDictionary<string!, string!>! aliases, Nickelony.IDEKit.Markdown.IMarkdownHighlightingCatalog<TDefinition!>! catalog) -> TDefinition?
+static Nickelony.IDEKit.Markdown.MarkdownHyperlinkActivator.TryOpenHyperlink(System.Uri! uri, Nickelony.IDEKit.Markdown.MarkdownRenderOptions! options) -> bool
+static Nickelony.IDEKit.Markdown.MarkdownRenderOptions.Default.get -> Nickelony.IDEKit.Markdown.MarkdownRenderOptions!
+static Nickelony.IDEKit.Markdown.MarkdownRenderOptions.operator !=(Nickelony.IDEKit.Markdown.MarkdownRenderOptions? left, Nickelony.IDEKit.Markdown.MarkdownRenderOptions? right) -> bool
+static Nickelony.IDEKit.Markdown.MarkdownRenderOptions.operator ==(Nickelony.IDEKit.Markdown.MarkdownRenderOptions? left, Nickelony.IDEKit.Markdown.MarkdownRenderOptions? right) -> bool
+static Nickelony.IDEKit.Markdown.MarkdownRenderPipeline.CreateContent<TTree, TContent>(string! content, Nickelony.IDEKit.Markdown.MarkdownRenderOptions! options, System.Func<Nickelony.IDEKit.Markdown.Model.MarkdownDocumentModel!, TTree!>! emit, System.Func<TTree!, TContent>! createViewer, System.Func<string!, TContent>! createFallback) -> TContent
+static Nickelony.IDEKit.Markdown.MarkdownRenderPipeline.CreateContentTree<TTree>(string! content, Nickelony.IDEKit.Markdown.MarkdownRenderOptions! options, System.Func<Nickelony.IDEKit.Markdown.Model.MarkdownDocumentModel!, TTree!>! emit, System.Func<TTree!>! createEmpty, System.Func<string!, TTree!>! createPlainText) -> TTree!
+static Nickelony.IDEKit.Markdown.MarkdownRenderPipeline.CreatePlainTextContent<TContent>(string! content, System.Func<string!, TContent>! createFallback) -> TContent
+static Nickelony.IDEKit.Markdown.MarkdownRenderTheme.Default.get -> Nickelony.IDEKit.Markdown.MarkdownRenderTheme!
+static Nickelony.IDEKit.Markdown.MarkdownRenderTheme.operator !=(Nickelony.IDEKit.Markdown.MarkdownRenderTheme? left, Nickelony.IDEKit.Markdown.MarkdownRenderTheme? right) -> bool
+static Nickelony.IDEKit.Markdown.MarkdownRenderTheme.operator ==(Nickelony.IDEKit.Markdown.MarkdownRenderTheme? left, Nickelony.IDEKit.Markdown.MarkdownRenderTheme? right) -> bool
+static Nickelony.IDEKit.Markdown.MarkdownThickness.Below(double bottom) -> Nickelony.IDEKit.Markdown.MarkdownThickness
+static Nickelony.IDEKit.Markdown.MarkdownThickness.Symmetric(double horizontal, double vertical) -> Nickelony.IDEKit.Markdown.MarkdownThickness
+static Nickelony.IDEKit.Markdown.MarkdownThickness.Uniform(double width) -> Nickelony.IDEKit.Markdown.MarkdownThickness
+static Nickelony.IDEKit.Markdown.MarkdownThickness.operator !=(Nickelony.IDEKit.Markdown.MarkdownThickness left, Nickelony.IDEKit.Markdown.MarkdownThickness right) -> bool
+static Nickelony.IDEKit.Markdown.MarkdownThickness.operator ==(Nickelony.IDEKit.Markdown.MarkdownThickness left, Nickelony.IDEKit.Markdown.MarkdownThickness right) -> bool
+static Nickelony.IDEKit.Markdown.Model.MarkdownBlock.operator !=(Nickelony.IDEKit.Markdown.Model.MarkdownBlock? left, Nickelony.IDEKit.Markdown.Model.MarkdownBlock? right) -> bool
+static Nickelony.IDEKit.Markdown.Model.MarkdownBlock.operator ==(Nickelony.IDEKit.Markdown.Model.MarkdownBlock? left, Nickelony.IDEKit.Markdown.Model.MarkdownBlock? right) -> bool
+static Nickelony.IDEKit.Markdown.Model.MarkdownCodeBlock.operator !=(Nickelony.IDEKit.Markdown.Model.MarkdownCodeBlock? left, Nickelony.IDEKit.Markdown.Model.MarkdownCodeBlock? right) -> bool
+static Nickelony.IDEKit.Markdown.Model.MarkdownCodeBlock.operator ==(Nickelony.IDEKit.Markdown.Model.MarkdownCodeBlock? left, Nickelony.IDEKit.Markdown.Model.MarkdownCodeBlock? right) -> bool
+static Nickelony.IDEKit.Markdown.Model.MarkdownCodeSpan.operator !=(Nickelony.IDEKit.Markdown.Model.MarkdownCodeSpan? left, Nickelony.IDEKit.Markdown.Model.MarkdownCodeSpan? right) -> bool
+static Nickelony.IDEKit.Markdown.Model.MarkdownCodeSpan.operator ==(Nickelony.IDEKit.Markdown.Model.MarkdownCodeSpan? left, Nickelony.IDEKit.Markdown.Model.MarkdownCodeSpan? right) -> bool
+static Nickelony.IDEKit.Markdown.Model.MarkdownDocumentModel.operator !=(Nickelony.IDEKit.Markdown.Model.MarkdownDocumentModel? left, Nickelony.IDEKit.Markdown.Model.MarkdownDocumentModel? right) -> bool
+static Nickelony.IDEKit.Markdown.Model.MarkdownDocumentModel.operator ==(Nickelony.IDEKit.Markdown.Model.MarkdownDocumentModel? left, Nickelony.IDEKit.Markdown.Model.MarkdownDocumentModel? right) -> bool
+static Nickelony.IDEKit.Markdown.Model.MarkdownDocumentModelBuilder.Build(string! markdown, System.Collections.Generic.IReadOnlySet<string!>! supportedSchemes) -> Nickelony.IDEKit.Markdown.Model.MarkdownDocumentModel!
+static Nickelony.IDEKit.Markdown.Model.MarkdownEmphasis.operator !=(Nickelony.IDEKit.Markdown.Model.MarkdownEmphasis? left, Nickelony.IDEKit.Markdown.Model.MarkdownEmphasis? right) -> bool
+static Nickelony.IDEKit.Markdown.Model.MarkdownEmphasis.operator ==(Nickelony.IDEKit.Markdown.Model.MarkdownEmphasis? left, Nickelony.IDEKit.Markdown.Model.MarkdownEmphasis? right) -> bool
+static Nickelony.IDEKit.Markdown.Model.MarkdownHeading.operator !=(Nickelony.IDEKit.Markdown.Model.MarkdownHeading? left, Nickelony.IDEKit.Markdown.Model.MarkdownHeading? right) -> bool
+static Nickelony.IDEKit.Markdown.Model.MarkdownHeading.operator ==(Nickelony.IDEKit.Markdown.Model.MarkdownHeading? left, Nickelony.IDEKit.Markdown.Model.MarkdownHeading? right) -> bool
+static Nickelony.IDEKit.Markdown.Model.MarkdownImagePlaceholder.operator !=(Nickelony.IDEKit.Markdown.Model.MarkdownImagePlaceholder? left, Nickelony.IDEKit.Markdown.Model.MarkdownImagePlaceholder? right) -> bool
+static Nickelony.IDEKit.Markdown.Model.MarkdownImagePlaceholder.operator ==(Nickelony.IDEKit.Markdown.Model.MarkdownImagePlaceholder? left, Nickelony.IDEKit.Markdown.Model.MarkdownImagePlaceholder? right) -> bool
+static Nickelony.IDEKit.Markdown.Model.MarkdownInline.operator !=(Nickelony.IDEKit.Markdown.Model.MarkdownInline? left, Nickelony.IDEKit.Markdown.Model.MarkdownInline? right) -> bool
+static Nickelony.IDEKit.Markdown.Model.MarkdownInline.operator ==(Nickelony.IDEKit.Markdown.Model.MarkdownInline? left, Nickelony.IDEKit.Markdown.Model.MarkdownInline? right) -> bool
+static Nickelony.IDEKit.Markdown.Model.MarkdownLineBreak.operator !=(Nickelony.IDEKit.Markdown.Model.MarkdownLineBreak? left, Nickelony.IDEKit.Markdown.Model.MarkdownLineBreak? right) -> bool
+static Nickelony.IDEKit.Markdown.Model.MarkdownLineBreak.operator ==(Nickelony.IDEKit.Markdown.Model.MarkdownLineBreak? left, Nickelony.IDEKit.Markdown.Model.MarkdownLineBreak? right) -> bool
+static Nickelony.IDEKit.Markdown.Model.MarkdownLink.operator !=(Nickelony.IDEKit.Markdown.Model.MarkdownLink? left, Nickelony.IDEKit.Markdown.Model.MarkdownLink? right) -> bool
+static Nickelony.IDEKit.Markdown.Model.MarkdownLink.operator ==(Nickelony.IDEKit.Markdown.Model.MarkdownLink? left, Nickelony.IDEKit.Markdown.Model.MarkdownLink? right) -> bool
+static Nickelony.IDEKit.Markdown.Model.MarkdownList.operator !=(Nickelony.IDEKit.Markdown.Model.MarkdownList? left, Nickelony.IDEKit.Markdown.Model.MarkdownList? right) -> bool
+static Nickelony.IDEKit.Markdown.Model.MarkdownList.operator ==(Nickelony.IDEKit.Markdown.Model.MarkdownList? left, Nickelony.IDEKit.Markdown.Model.MarkdownList? right) -> bool
+static Nickelony.IDEKit.Markdown.Model.MarkdownListItem.operator !=(Nickelony.IDEKit.Markdown.Model.MarkdownListItem? left, Nickelony.IDEKit.Markdown.Model.MarkdownListItem? right) -> bool
+static Nickelony.IDEKit.Markdown.Model.MarkdownListItem.operator ==(Nickelony.IDEKit.Markdown.Model.MarkdownListItem? left, Nickelony.IDEKit.Markdown.Model.MarkdownListItem? right) -> bool
+static Nickelony.IDEKit.Markdown.Model.MarkdownParagraph.operator !=(Nickelony.IDEKit.Markdown.Model.MarkdownParagraph? left, Nickelony.IDEKit.Markdown.Model.MarkdownParagraph? right) -> bool
+static Nickelony.IDEKit.Markdown.Model.MarkdownParagraph.operator ==(Nickelony.IDEKit.Markdown.Model.MarkdownParagraph? left, Nickelony.IDEKit.Markdown.Model.MarkdownParagraph? right) -> bool
+static Nickelony.IDEKit.Markdown.Model.MarkdownQuote.operator !=(Nickelony.IDEKit.Markdown.Model.MarkdownQuote? left, Nickelony.IDEKit.Markdown.Model.MarkdownQuote? right) -> bool
+static Nickelony.IDEKit.Markdown.Model.MarkdownQuote.operator ==(Nickelony.IDEKit.Markdown.Model.MarkdownQuote? left, Nickelony.IDEKit.Markdown.Model.MarkdownQuote? right) -> bool
+static Nickelony.IDEKit.Markdown.Model.MarkdownSpan.operator !=(Nickelony.IDEKit.Markdown.Model.MarkdownSpan? left, Nickelony.IDEKit.Markdown.Model.MarkdownSpan? right) -> bool
+static Nickelony.IDEKit.Markdown.Model.MarkdownSpan.operator ==(Nickelony.IDEKit.Markdown.Model.MarkdownSpan? left, Nickelony.IDEKit.Markdown.Model.MarkdownSpan? right) -> bool
+static Nickelony.IDEKit.Markdown.Model.MarkdownTable.operator !=(Nickelony.IDEKit.Markdown.Model.MarkdownTable? left, Nickelony.IDEKit.Markdown.Model.MarkdownTable? right) -> bool
+static Nickelony.IDEKit.Markdown.Model.MarkdownTable.operator ==(Nickelony.IDEKit.Markdown.Model.MarkdownTable? left, Nickelony.IDEKit.Markdown.Model.MarkdownTable? right) -> bool
+static Nickelony.IDEKit.Markdown.Model.MarkdownTableCell.operator !=(Nickelony.IDEKit.Markdown.Model.MarkdownTableCell? left, Nickelony.IDEKit.Markdown.Model.MarkdownTableCell? right) -> bool
+static Nickelony.IDEKit.Markdown.Model.MarkdownTableCell.operator ==(Nickelony.IDEKit.Markdown.Model.MarkdownTableCell? left, Nickelony.IDEKit.Markdown.Model.MarkdownTableCell? right) -> bool
+static Nickelony.IDEKit.Markdown.Model.MarkdownTableRow.operator !=(Nickelony.IDEKit.Markdown.Model.MarkdownTableRow? left, Nickelony.IDEKit.Markdown.Model.MarkdownTableRow? right) -> bool
+static Nickelony.IDEKit.Markdown.Model.MarkdownTableRow.operator ==(Nickelony.IDEKit.Markdown.Model.MarkdownTableRow? left, Nickelony.IDEKit.Markdown.Model.MarkdownTableRow? right) -> bool
+static Nickelony.IDEKit.Markdown.Model.MarkdownText.operator !=(Nickelony.IDEKit.Markdown.Model.MarkdownText? left, Nickelony.IDEKit.Markdown.Model.MarkdownText? right) -> bool
+static Nickelony.IDEKit.Markdown.Model.MarkdownText.operator ==(Nickelony.IDEKit.Markdown.Model.MarkdownText? left, Nickelony.IDEKit.Markdown.Model.MarkdownText? right) -> bool
+static Nickelony.IDEKit.Markdown.Model.MarkdownThematicBreak.operator !=(Nickelony.IDEKit.Markdown.Model.MarkdownThematicBreak? left, Nickelony.IDEKit.Markdown.Model.MarkdownThematicBreak? right) -> bool
+static Nickelony.IDEKit.Markdown.Model.MarkdownThematicBreak.operator ==(Nickelony.IDEKit.Markdown.Model.MarkdownThematicBreak? left, Nickelony.IDEKit.Markdown.Model.MarkdownThematicBreak? right) -> bool
+static Nickelony.IDEKit.Markdown.Planning.MarkdownBlockPlan.operator !=(Nickelony.IDEKit.Markdown.Planning.MarkdownBlockPlan? left, Nickelony.IDEKit.Markdown.Planning.MarkdownBlockPlan? right) -> bool
+static Nickelony.IDEKit.Markdown.Planning.MarkdownBlockPlan.operator ==(Nickelony.IDEKit.Markdown.Planning.MarkdownBlockPlan? left, Nickelony.IDEKit.Markdown.Planning.MarkdownBlockPlan? right) -> bool
+static Nickelony.IDEKit.Markdown.Planning.MarkdownCodeBlockPlan.operator !=(Nickelony.IDEKit.Markdown.Planning.MarkdownCodeBlockPlan? left, Nickelony.IDEKit.Markdown.Planning.MarkdownCodeBlockPlan? right) -> bool
+static Nickelony.IDEKit.Markdown.Planning.MarkdownCodeBlockPlan.operator ==(Nickelony.IDEKit.Markdown.Planning.MarkdownCodeBlockPlan? left, Nickelony.IDEKit.Markdown.Planning.MarkdownCodeBlockPlan? right) -> bool
+static Nickelony.IDEKit.Markdown.Planning.MarkdownCodeSpanPlan.operator !=(Nickelony.IDEKit.Markdown.Planning.MarkdownCodeSpanPlan? left, Nickelony.IDEKit.Markdown.Planning.MarkdownCodeSpanPlan? right) -> bool
+static Nickelony.IDEKit.Markdown.Planning.MarkdownCodeSpanPlan.operator ==(Nickelony.IDEKit.Markdown.Planning.MarkdownCodeSpanPlan? left, Nickelony.IDEKit.Markdown.Planning.MarkdownCodeSpanPlan? right) -> bool
+static Nickelony.IDEKit.Markdown.Planning.MarkdownEmphasisPlan.operator !=(Nickelony.IDEKit.Markdown.Planning.MarkdownEmphasisPlan? left, Nickelony.IDEKit.Markdown.Planning.MarkdownEmphasisPlan? right) -> bool
+static Nickelony.IDEKit.Markdown.Planning.MarkdownEmphasisPlan.operator ==(Nickelony.IDEKit.Markdown.Planning.MarkdownEmphasisPlan? left, Nickelony.IDEKit.Markdown.Planning.MarkdownEmphasisPlan? right) -> bool
+static Nickelony.IDEKit.Markdown.Planning.MarkdownHeadingPlan.operator !=(Nickelony.IDEKit.Markdown.Planning.MarkdownHeadingPlan? left, Nickelony.IDEKit.Markdown.Planning.MarkdownHeadingPlan? right) -> bool
+static Nickelony.IDEKit.Markdown.Planning.MarkdownHeadingPlan.operator ==(Nickelony.IDEKit.Markdown.Planning.MarkdownHeadingPlan? left, Nickelony.IDEKit.Markdown.Planning.MarkdownHeadingPlan? right) -> bool
+static Nickelony.IDEKit.Markdown.Planning.MarkdownImagePlaceholderPlan.operator !=(Nickelony.IDEKit.Markdown.Planning.MarkdownImagePlaceholderPlan? left, Nickelony.IDEKit.Markdown.Planning.MarkdownImagePlaceholderPlan? right) -> bool
+static Nickelony.IDEKit.Markdown.Planning.MarkdownImagePlaceholderPlan.operator ==(Nickelony.IDEKit.Markdown.Planning.MarkdownImagePlaceholderPlan? left, Nickelony.IDEKit.Markdown.Planning.MarkdownImagePlaceholderPlan? right) -> bool
+static Nickelony.IDEKit.Markdown.Planning.MarkdownInlinePlan.operator !=(Nickelony.IDEKit.Markdown.Planning.MarkdownInlinePlan? left, Nickelony.IDEKit.Markdown.Planning.MarkdownInlinePlan? right) -> bool
+static Nickelony.IDEKit.Markdown.Planning.MarkdownInlinePlan.operator ==(Nickelony.IDEKit.Markdown.Planning.MarkdownInlinePlan? left, Nickelony.IDEKit.Markdown.Planning.MarkdownInlinePlan? right) -> bool
+static Nickelony.IDEKit.Markdown.Planning.MarkdownLineBreakPlan.operator !=(Nickelony.IDEKit.Markdown.Planning.MarkdownLineBreakPlan? left, Nickelony.IDEKit.Markdown.Planning.MarkdownLineBreakPlan? right) -> bool
+static Nickelony.IDEKit.Markdown.Planning.MarkdownLineBreakPlan.operator ==(Nickelony.IDEKit.Markdown.Planning.MarkdownLineBreakPlan? left, Nickelony.IDEKit.Markdown.Planning.MarkdownLineBreakPlan? right) -> bool
+static Nickelony.IDEKit.Markdown.Planning.MarkdownLinkPlan.operator !=(Nickelony.IDEKit.Markdown.Planning.MarkdownLinkPlan? left, Nickelony.IDEKit.Markdown.Planning.MarkdownLinkPlan? right) -> bool
+static Nickelony.IDEKit.Markdown.Planning.MarkdownLinkPlan.operator ==(Nickelony.IDEKit.Markdown.Planning.MarkdownLinkPlan? left, Nickelony.IDEKit.Markdown.Planning.MarkdownLinkPlan? right) -> bool
+static Nickelony.IDEKit.Markdown.Planning.MarkdownListItemPlan.operator !=(Nickelony.IDEKit.Markdown.Planning.MarkdownListItemPlan? left, Nickelony.IDEKit.Markdown.Planning.MarkdownListItemPlan? right) -> bool
+static Nickelony.IDEKit.Markdown.Planning.MarkdownListItemPlan.operator ==(Nickelony.IDEKit.Markdown.Planning.MarkdownListItemPlan? left, Nickelony.IDEKit.Markdown.Planning.MarkdownListItemPlan? right) -> bool
+static Nickelony.IDEKit.Markdown.Planning.MarkdownListPlan.operator !=(Nickelony.IDEKit.Markdown.Planning.MarkdownListPlan? left, Nickelony.IDEKit.Markdown.Planning.MarkdownListPlan? right) -> bool
+static Nickelony.IDEKit.Markdown.Planning.MarkdownListPlan.operator ==(Nickelony.IDEKit.Markdown.Planning.MarkdownListPlan? left, Nickelony.IDEKit.Markdown.Planning.MarkdownListPlan? right) -> bool
+static Nickelony.IDEKit.Markdown.Planning.MarkdownParagraphPlan.operator !=(Nickelony.IDEKit.Markdown.Planning.MarkdownParagraphPlan? left, Nickelony.IDEKit.Markdown.Planning.MarkdownParagraphPlan? right) -> bool
+static Nickelony.IDEKit.Markdown.Planning.MarkdownParagraphPlan.operator ==(Nickelony.IDEKit.Markdown.Planning.MarkdownParagraphPlan? left, Nickelony.IDEKit.Markdown.Planning.MarkdownParagraphPlan? right) -> bool
+static Nickelony.IDEKit.Markdown.Planning.MarkdownQuotePlan.operator !=(Nickelony.IDEKit.Markdown.Planning.MarkdownQuotePlan? left, Nickelony.IDEKit.Markdown.Planning.MarkdownQuotePlan? right) -> bool
+static Nickelony.IDEKit.Markdown.Planning.MarkdownQuotePlan.operator ==(Nickelony.IDEKit.Markdown.Planning.MarkdownQuotePlan? left, Nickelony.IDEKit.Markdown.Planning.MarkdownQuotePlan? right) -> bool
+static Nickelony.IDEKit.Markdown.Planning.MarkdownRenderPlanner.Plan(Nickelony.IDEKit.Markdown.Model.MarkdownDocumentModel! model, Nickelony.IDEKit.Markdown.MarkdownRenderTheme! theme, Nickelony.IDEKit.Markdown.MarkdownRenderOptions! options) -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Markdown.Planning.MarkdownBlockPlan!>!
+static Nickelony.IDEKit.Markdown.Planning.MarkdownSpanPlan.operator !=(Nickelony.IDEKit.Markdown.Planning.MarkdownSpanPlan? left, Nickelony.IDEKit.Markdown.Planning.MarkdownSpanPlan? right) -> bool
+static Nickelony.IDEKit.Markdown.Planning.MarkdownSpanPlan.operator ==(Nickelony.IDEKit.Markdown.Planning.MarkdownSpanPlan? left, Nickelony.IDEKit.Markdown.Planning.MarkdownSpanPlan? right) -> bool
+static Nickelony.IDEKit.Markdown.Planning.MarkdownTableCellPlan.operator !=(Nickelony.IDEKit.Markdown.Planning.MarkdownTableCellPlan? left, Nickelony.IDEKit.Markdown.Planning.MarkdownTableCellPlan? right) -> bool
+static Nickelony.IDEKit.Markdown.Planning.MarkdownTableCellPlan.operator ==(Nickelony.IDEKit.Markdown.Planning.MarkdownTableCellPlan? left, Nickelony.IDEKit.Markdown.Planning.MarkdownTableCellPlan? right) -> bool
+static Nickelony.IDEKit.Markdown.Planning.MarkdownTablePlan.operator !=(Nickelony.IDEKit.Markdown.Planning.MarkdownTablePlan? left, Nickelony.IDEKit.Markdown.Planning.MarkdownTablePlan? right) -> bool
+static Nickelony.IDEKit.Markdown.Planning.MarkdownTablePlan.operator ==(Nickelony.IDEKit.Markdown.Planning.MarkdownTablePlan? left, Nickelony.IDEKit.Markdown.Planning.MarkdownTablePlan? right) -> bool
+static Nickelony.IDEKit.Markdown.Planning.MarkdownTableRowPlan.operator !=(Nickelony.IDEKit.Markdown.Planning.MarkdownTableRowPlan? left, Nickelony.IDEKit.Markdown.Planning.MarkdownTableRowPlan? right) -> bool
+static Nickelony.IDEKit.Markdown.Planning.MarkdownTableRowPlan.operator ==(Nickelony.IDEKit.Markdown.Planning.MarkdownTableRowPlan? left, Nickelony.IDEKit.Markdown.Planning.MarkdownTableRowPlan? right) -> bool
+static Nickelony.IDEKit.Markdown.Planning.MarkdownTextPlan.operator !=(Nickelony.IDEKit.Markdown.Planning.MarkdownTextPlan? left, Nickelony.IDEKit.Markdown.Planning.MarkdownTextPlan? right) -> bool
+static Nickelony.IDEKit.Markdown.Planning.MarkdownTextPlan.operator ==(Nickelony.IDEKit.Markdown.Planning.MarkdownTextPlan? left, Nickelony.IDEKit.Markdown.Planning.MarkdownTextPlan? right) -> bool
+static Nickelony.IDEKit.Markdown.Planning.MarkdownThematicBreakPlan.operator !=(Nickelony.IDEKit.Markdown.Planning.MarkdownThematicBreakPlan? left, Nickelony.IDEKit.Markdown.Planning.MarkdownThematicBreakPlan? right) -> bool
+static Nickelony.IDEKit.Markdown.Planning.MarkdownThematicBreakPlan.operator ==(Nickelony.IDEKit.Markdown.Planning.MarkdownThematicBreakPlan? left, Nickelony.IDEKit.Markdown.Planning.MarkdownThematicBreakPlan? right) -> bool
+virtual Nickelony.IDEKit.Markdown.Model.MarkdownBlock.EqualityContract.get -> System.Type!
+virtual Nickelony.IDEKit.Markdown.Model.MarkdownBlock.Equals(Nickelony.IDEKit.Markdown.Model.MarkdownBlock? other) -> bool
+virtual Nickelony.IDEKit.Markdown.Model.MarkdownBlock.PrintMembers(System.Text.StringBuilder! builder) -> bool
+virtual Nickelony.IDEKit.Markdown.Model.MarkdownInline.EqualityContract.get -> System.Type!
+virtual Nickelony.IDEKit.Markdown.Model.MarkdownInline.Equals(Nickelony.IDEKit.Markdown.Model.MarkdownInline? other) -> bool
+virtual Nickelony.IDEKit.Markdown.Model.MarkdownInline.PrintMembers(System.Text.StringBuilder! builder) -> bool
+virtual Nickelony.IDEKit.Markdown.Planning.MarkdownBlockPlan.EqualityContract.get -> System.Type!
+virtual Nickelony.IDEKit.Markdown.Planning.MarkdownBlockPlan.Equals(Nickelony.IDEKit.Markdown.Planning.MarkdownBlockPlan? other) -> bool
+virtual Nickelony.IDEKit.Markdown.Planning.MarkdownBlockPlan.PrintMembers(System.Text.StringBuilder! builder) -> bool
+virtual Nickelony.IDEKit.Markdown.Planning.MarkdownInlinePlan.EqualityContract.get -> System.Type!
+virtual Nickelony.IDEKit.Markdown.Planning.MarkdownInlinePlan.Equals(Nickelony.IDEKit.Markdown.Planning.MarkdownInlinePlan? other) -> bool
+virtual Nickelony.IDEKit.Markdown.Planning.MarkdownInlinePlan.PrintMembers(System.Text.StringBuilder! builder) -> bool
+~override Nickelony.IDEKit.Markdown.MarkdownThickness.Equals(object obj) -> bool
+~override Nickelony.IDEKit.Markdown.MarkdownThickness.ToString() -> string

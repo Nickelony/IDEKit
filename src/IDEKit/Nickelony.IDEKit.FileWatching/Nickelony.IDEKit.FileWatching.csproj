@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<RootNamespace>Nickelony.IDEKit.FileWatching</RootNamespace>
+		<AssemblyName>Nickelony.IDEKit.FileWatching</AssemblyName>
+		<PackageId>Nickelony.IDEKit.FileWatching</PackageId>
+		<Description>Debounced file-system watching with snapshot-based recovery for editor and language-server hosts.</Description>
+		<PackageTags>file-watcher;file-system;workspace;text-editor;nickelony</PackageTags>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<WarningsAsErrors>RS0016;RS0017</WarningsAsErrors>
+		<RequireConfigureAwait>true</RequireConfigureAwait>
+		<!-- CA1848 is not enforced: this package logs direct diagnostics through the ILogger extension methods (CONVENTIONS.md, rule L1). -->
+		<NoWarn>$(NoWarn);CA1848</NoWarn>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.CodeAnalysis.PublicApiAnalyzers" PrivateAssets="all" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<InternalsVisibleTo Include="Nickelony.IDEKit.FileWatching.Tests" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Nickelony.IDEKit.Core\Nickelony.IDEKit.Core.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="README.md" Pack="true" PackagePath="\" />
+		<None Include="..\..\..\icons\$(PackageIcon)" Pack="true" PackagePath="\" />
+	</ItemGroup>
+</Project>

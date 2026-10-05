@@ -5,14 +5,14 @@ public sealed class IndentationPolicyContractTests
 {
 	private sealed class TrailingBracePolicy : IIndentationPolicy
 	{
-		public string GetDesiredIndentation(in IndentationContext context)
+		public string GetDesiredIndentation(in IndentationRequest request)
 		{
-			// The context carries line text only, so the policy derives the previous indentation with
+			// The request carries line text only, so the policy derives the previous indentation with
 			// the same shared scan the strategy itself uses.
-			string previousIndentation = IndentationOperations.GetLeadingWhitespace(context.PreviousLineText);
+			string previousIndentation = LineTextOperations.GetLeadingWhitespace(request.PreviousLineText);
 
-			return context.UseSmartIndent && context.PreviousLineText.TrimEnd().EndsWith('{')
-				? previousIndentation + context.IndentationUnit
+			return request.UseSmartIndent && request.PreviousLineText.TrimEnd().EndsWith('{')
+				? previousIndentation + request.IndentationUnit
 				: previousIndentation;
 		}
 	}
@@ -21,34 +21,42 @@ public sealed class IndentationPolicyContractTests
 	public void GetDesiredIndentation_SmartIndentEnabled_AddsOneUnit()
 	{
 		IIndentationPolicy policy = new TrailingBracePolicy();
-		var context = new IndentationContext(
+
+		var request = new IndentationRequest(
 			PreviousLineText: "\tif x then {",
 			CurrentLineText: string.Empty,
 			IndentationUnit: "\t",
-			UseSmartIndent: true);
+			UseSmartIndent: true
+		);
 
-		Assert.AreEqual("\t\t", policy.GetDesiredIndentation(context));
+		Assert.AreEqual("\t\t", policy.GetDesiredIndentation(request));
 	}
 
 	[TestMethod]
 	public void GetDesiredIndentation_SmartIndentDisabled_KeepsBaseIndentation()
 	{
 		IIndentationPolicy policy = new TrailingBracePolicy();
-		var context = new IndentationContext("\tif x then {", string.Empty, "\t", UseSmartIndent: false);
 
-		Assert.AreEqual("\t", policy.GetDesiredIndentation(context));
+		var request = new IndentationRequest(
+			PreviousLineText: "\tif x then {",
+			CurrentLineText: string.Empty,
+			IndentationUnit: "\t",
+			UseSmartIndent: false
+		);
+
+		Assert.AreEqual("\t", policy.GetDesiredIndentation(request));
 	}
 
 	[TestMethod]
-	public void IndentationContext_Default_CarriesNullTextAndDisabledSmartIndent()
+	public void IndentationRequest_Default_CarriesNullTextAndDisabledSmartIndent()
 	{
 		// A default instance carries null text members even though they are annotated non-nullable;
-		// hosts always construct the context from live line text.
-		var context = default(IndentationContext);
+		// hosts always construct the request from live line text.
+		var request = default(IndentationRequest);
 
-		Assert.IsNull(context.PreviousLineText);
-		Assert.IsNull(context.CurrentLineText);
-		Assert.IsNull(context.IndentationUnit);
-		Assert.IsFalse(context.UseSmartIndent);
+		Assert.IsNull(request.PreviousLineText);
+		Assert.IsNull(request.CurrentLineText);
+		Assert.IsNull(request.IndentationUnit);
+		Assert.IsFalse(request.UseSmartIndent);
 	}
 }

@@ -1,4 +1,3 @@
-global using Microsoft.Extensions.Logging;
-global using Nickelony.LanguageServer.Abstractions;
-global using Nickelony.LanguageServer.Client;
+global using Nickelony.IDEKit.Core.Paths;
+global using Nickelony.IDEKit.FileWatching;
 global using Nickelony.LanguageServer.Provider;

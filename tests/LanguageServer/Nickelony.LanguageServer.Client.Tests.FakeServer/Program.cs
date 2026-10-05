@@ -3,12 +3,8 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 
-// Minimal LSP fake server over stdio used by the real-process transport tests: it answers initialize and
-// shutdown, echoes example/echo requests so a round trip beyond the initialize handshake can be exercised,
-// answers every other request with a JSON-RPC method-not-found error so its scope fails fast instead of leaving a
-// caller to time out, ignores notifications, writes one stderr marker, and exits on the exit notification. The
-// optional --exit-immediately argument makes it crash before the handshake for the crash-path test, and the
-// optional --capabilities <json> argument scripts the capability object it advertises from initialize.
+// Minimal stdio LSP fake server for the real-process client tests. Supports --exit-immediately (crash before
+// the handshake) and --capabilities <json> (script the advertised capabilities).
 
 Console.Error.WriteLine("fake-server stderr marker");
 
@@ -44,7 +40,7 @@ while (true)
 
 	try
 	{
-		JsonNode? node = JsonNode.Parse(message);
+		var node = JsonNode.Parse(message);
 		method = node?["method"]?.GetValue<string>();
 		id = node?["id"]?.GetValue<int>();
 		parameters = node?["params"];
@@ -63,11 +59,13 @@ while (true)
 		case "initialize":
 			if (id is int initializeId)
 				await WriteMessageAsync(stdout, $"{{\"jsonrpc\":\"2.0\",\"id\":{initializeId},\"result\":{{\"capabilities\":{capabilitiesJson}}}}}");
+
 			break;
 
 		case "shutdown":
 			if (id is int shutdownId)
 				await WriteMessageAsync(stdout, $"{{\"jsonrpc\":\"2.0\",\"id\":{shutdownId},\"result\":null}}");
+
 			break;
 
 		case "exit":
@@ -77,15 +75,24 @@ while (true)
 			// Echoes the request parameters back so a real-process test can prove a request/response round trip
 			// beyond the initialize handshake carries the caller payload over the stdio pipes.
 			if (id is int echoId)
-				await WriteMessageAsync(stdout, $"{{\"jsonrpc\":\"2.0\",\"id\":{echoId},\"result\":{{\"echoed\":{parameters?.ToJsonString() ?? "null"}}}}}");
+			{
+				await WriteMessageAsync(
+					stdout,
+					$"{{\"jsonrpc\":\"2.0\",\"id\":{echoId},\"result\":{{\"echoed\":{parameters?.ToJsonString() ?? "null"}}}}}"
+				);
+			}
+
 			break;
 
 		default:
-			// Requests outside the initialize/shutdown scope are answered explicitly so a caller fails fast
+			// Requests that no case above handles are answered with a method-not-found error so a caller fails fast
 			// instead of waiting for a response that never arrives; notifications (no id) stay ignored.
 			if (id is int unknownMethodId)
 			{
-				await WriteMessageAsync(stdout, $"{{\"jsonrpc\":\"2.0\",\"id\":{unknownMethodId},\"error\":{{\"code\":-32601,\"message\":\"Method not found\"}}}}");
+				await WriteMessageAsync(
+					stdout,
+					$"{{\"jsonrpc\":\"2.0\",\"id\":{unknownMethodId},\"error\":{{\"code\":-32601,\"message\":\"Method not found\"}}}}"
+				);
 			}
 
 			break;
@@ -106,14 +113,8 @@ static async Task<string?> ReadMessageAsync(Stream stream)
 
 		header.Append((char)value);
 
-		if (header.Length >= 4
-			&& header[^4] == '\r'
-			&& header[^3] == '\n'
-			&& header[^2] == '\r'
-			&& header[^1] == '\n')
-		{
+		if (header.Length >= 4 && header[^4] == '\r' && header[^3] == '\n' && header[^2] == '\r' && header[^1] == '\n')
 			break;
-		}
 	}
 
 	foreach (string line in header.ToString().Split("\r\n", StringSplitOptions.RemoveEmptyEntries))
@@ -148,5 +149,6 @@ static async Task WriteMessageAsync(Stream stream, string json)
 
 	await stream.WriteAsync(header);
 	await stream.WriteAsync(payload);
+
 	await stream.FlushAsync();
 }

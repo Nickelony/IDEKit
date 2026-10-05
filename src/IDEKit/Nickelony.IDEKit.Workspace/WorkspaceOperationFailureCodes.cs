@@ -1,28 +1,18 @@
+using System.Text;
+
 namespace Nickelony.IDEKit.Workspace;
 
-/// <summary>
-/// Lists the stable failure codes produced by workspace operations.
-/// </summary>
+/// <summary>Lists the stable failure codes produced by workspace operations.</summary>
 /// <remarks>
-/// <para>
-/// <see cref="Documents.WorkspaceOperationFailure.Code"/> carries one of these values for failures
-/// produced by the document-authority package, including its workspace-edit application slice;
-/// view-manager failures use
-/// <c>Nickelony.IDEKit.Workspace.Views.WorkspaceViewOperationFailureCodes</c> instead, so each slice
-/// owns its vocabulary. A custom file-system implementation reports its own failures with the codes
-/// that describe its operation; reusing these spellings where they fit keeps host handling uniform.
-/// </para>
-/// <para>
-/// The class lives outside the <c>Documents</c> namespace because the codes are shared vocabulary
-/// rather than document-authority surface.
-/// </para>
+/// <see cref="WorkspaceOperationFailure.Code"/> carries one of these values for document-authority failures. A custom file-system implementation
+/// reports its own failures with the codes that describe its operation, reusing these spellings where they fit. The set can grow, so a host
+/// that branches on a code keeps a default branch.
 /// </remarks>
 public static class WorkspaceOperationFailureCodes
 {
 	/// <summary>The document could not be loaded from disk when it was opened.</summary>
 	public const string LoadFailed = "LoadFailed";
 
-	/// <summary>The document could not be written to disk.</summary>
 	public const string WriteFailed = "WriteFailed";
 
 	/// <summary>The document could not be read from disk during a reload or conflict resolution.</summary>
@@ -39,22 +29,24 @@ public static class WorkspaceOperationFailureCodes
 
 	/// <summary>The file content is not valid for the selected encoding.</summary>
 	/// <remarks>
-	/// Bytes that cannot be decoded or characters that cannot be encoded are reported with the failing
-	/// operation's own outcome, so a host that branches on the outcome alone can match this code to
-	/// distinguish an encoding problem from an I/O problem.
+	/// A decode failure and an encode failure both report this code with the failing operation's own outcome, so a host can distinguish an encoding
+	/// problem from an I/O problem.
 	/// </remarks>
 	public const string InvalidEncoding = "InvalidEncoding";
 
-	/// <summary>A file or directory move did not complete.</summary>
 	public const string MoveFailed = "MoveFailed";
 
-	/// <summary>The move failed and its final state could not be established; for example, a case-only rename whose rollback move also failed.</summary>
+	/// <summary>
+	/// The move failed and its final state could not be established; for example, a case-only move whose rollback move also failed.
+	/// </summary>
 	public const string MoveStateUnknown = "MoveStateUnknown";
 
-	/// <summary>A file or directory delete did not complete.</summary>
 	public const string DeleteFailed = "DeleteFailed";
 
-	/// <summary>A file or directory could not be accessed because of a permission failure. The write paths report it for replace, move, and delete operations, and the read paths report it for open, reload, and conflict-resolution reads instead of the generic failure code; directory-operation descendant stamp captures report it as well.</summary>
+	/// <summary>
+	/// A file or directory could not be accessed because of a permission failure, reported by the read, write, move, and delete paths in place
+	/// of the generic failure code.
+	/// </summary>
 	public const string AccessDenied = "AccessDenied";
 
 	/// <summary>A move or save-as destination already exists.</summary>
@@ -63,18 +55,52 @@ public static class WorkspaceOperationFailureCodes
 	/// <summary>The replacement may have completed, but its final state could not be established.</summary>
 	public const string ReplacementStateUnknown = "ReplacementStateUnknown";
 
-	/// <summary>The operation was canceled before it completed.</summary>
 	public const string Canceled = "Canceled";
 
-	/// <summary>A prepared workspace-edit target was rejected without the document being mutated.</summary>
-	public const string TargetNotChanged = "TargetNotChanged";
+	/// <summary>A reload asked for an encoding, but the file system returned decoded content, so there are no bytes to decode.</summary>
+	/// <remarks>
+	/// A custom file system that decodes inside its read must return the bytes for a document to be reopened with an encoding.
+	/// </remarks>
+	public const string EncodingNotApplicable = "EncodingNotApplicable";
 
-	/// <summary>A prepared workspace-edit target was not attempted because an earlier target for the same document was rejected.</summary>
-	public const string TargetSkipped = "TargetSkipped";
+	/// <summary>The process cannot resolve an encoding that the operation needs, typically because no code-page provider is registered.</summary>
+	/// <remarks>
+	/// An open, a reload, a conflict resolution and a save report it in place of <see cref="InvalidEncoding"/> when the encoding
+	/// cannot be resolved at all. Registering the provider recovers, because nothing is cached for the failure.
+	/// </remarks>
+	public const string EncodingUnavailable = "EncodingUnavailable";
 
-	/// <summary>A prepared workspace-edit target returned a replacement outcome outside the document authority's vocabulary, so its final state is unknown.</summary>
-	public const string TargetOutcomeUnknown = "TargetOutcomeUnknown";
+	// A permission failure is a property of the path, not of the read: every read path reports
+	// AccessDenied for it like the write paths, so a host can tell an unfixable permission problem from
+	// a transient read failure. A decode failure is an encoding problem, so open, reload and conflict
+	// resolution agree on InvalidEncoding for the same root cause. Anything else takes the caller's
+	// fallback code, which names the operation: LoadFailed for an open, ReadFailed for a reload.
+	internal static string ClassifyReadFailure(Exception exception, string fallbackCode)
+	{
+		return exception switch
+		{
+			DecoderFallbackException => WorkspaceOperationFailureCodes.InvalidEncoding,
+			EncodingUnavailableException => WorkspaceOperationFailureCodes.EncodingUnavailable,
+			UnauthorizedAccessException => WorkspaceOperationFailureCodes.AccessDenied,
+			_ => fallbackCode,
+		};
+	}
 
-	/// <summary>A prepared workspace-edit target's replacement delegate threw, so its final state is unknown.</summary>
-	public const string TargetApplicationFailed = "TargetApplicationFailed";
+	// Encoding failures are a property of the content and the selected format, not a write problem:
+	// the decode paths classify the equivalent condition as InvalidEncoding, so writes do too instead
+	// of reporting an unfixable encoding mismatch as a generic write failure.
+	internal static string ClassifyWriteFailure(Exception exception)
+	{
+		return exception switch
+		{
+			EncoderFallbackException => WorkspaceOperationFailureCodes.InvalidEncoding,
+			EncodingUnavailableException => WorkspaceOperationFailureCodes.EncodingUnavailable,
+			_ => WorkspaceOperationFailureCodes.WriteFailed,
+		};
+	}
+
+	// A faulted directory operation reports an UnauthorizedAccessException as AccessDenied, like the
+	// read paths; any other exception keeps the operation's own failure code.
+	internal static string ClassifyDirectoryOperationFailure(Exception exception, string operationCode) =>
+		exception is UnauthorizedAccessException ? WorkspaceOperationFailureCodes.AccessDenied : operationCode;
 }

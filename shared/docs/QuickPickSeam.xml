@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+	<members>
+		<member name="CreatePopup">
+			<summary>Creates the popup that holds the window, placed at the top center of <paramref name="host" />.</summary>
+			<param name="host">The element the popup is placed against.</param>
+			<param name="frame">The frame that draws the border and the background of the window; the popup's child.</param>
+			<returns>The popup, closed.</returns>
+		</member>
+
+		<member name="SetTopOffset">
+			<summary>Sets the distance between the top of the host and the window.</summary>
+			<param name="popup">The popup that holds the window.</param>
+			<param name="offset">The distance in device-independent units.</param>
+		</member>
+
+		<member name="ReleasePopup">
+			<summary>Releases the references that tie the popup to its host, so the host does not keep a disposed presenter alive.</summary>
+			<param name="popup">The popup to release.</param>
+		</member>
+
+		<member name="CreateList">
+			<summary>Creates the list of rows, whose rows the presenter draws unless the theme supplies a template.</summary>
+			<param name="createRow">Writes the visual of a row.</param>
+			<returns>The list, without items.</returns>
+		</member>
+
+		<member name="SetItemTemplate">
+			<summary>Sets the template of the host that draws every row, or restores the presenter's own rows.</summary>
+			<param name="list">The list of rows.</param>
+			<param name="template">The template of the host, or <see langword="null" /> to draw each row with the presenter.</param>
+		</member>
+
+		<member name="SetAccessibleName">
+			<summary>Sets the name that a screen reader announces for an element.</summary>
+			<param name="element">The element to name.</param>
+			<param name="name">The name.</param>
+		</member>
+
+		<member name="StyleActiveRow">
+			<summary>Gives the active row, which the list shows as its selected row, the colors of the theme.</summary>
+			<param name="list">The list of rows.</param>
+			<param name="background">The background of the active row.</param>
+			<param name="foreground">The text color of the active row.</param>
+		</member>
+
+		<member name="SetVisible">
+			<summary>Shows or hides an element, so that it takes no space while it is hidden.</summary>
+			<param name="element">The element to change.</param>
+			<param name="isVisible">Whether the element is shown.</param>
+		</member>
+
+		<member name="SetRuns">
+			<summary>Replaces the content of a text block with runs, each drawn bold or not.</summary>
+			<param name="textBlock">The text block to fill.</param>
+			<param name="runs">The runs, in order.</param>
+		</member>
+
+		<member name="ScrollIntoView">
+			<summary>Scrolls the list until a row is visible.</summary>
+			<param name="list">The list of rows.</param>
+			<param name="index">The index of the row.</param>
+		</member>
+
+		<member name="GetWidth">
+			<summary>Reads the laid-out width of the host.</summary>
+			<param name="host">The host element.</param>
+			<returns>The width, or <c>0</c> when the host has not been laid out.</returns>
+		</member>
+
+		<member name="FocusInput">
+			<summary>Gives the keyboard focus to the input of the window that has opened.</summary>
+			<param name="input">The input.</param>
+		</member>
+
+		<member name="GetFocusedElement">
+			<summary>Reads the element that holds the keyboard focus, so the focus can return to it when the window closes.</summary>
+			<param name="host">The host element, whose window or top level the focus belongs to.</param>
+			<returns>The focused element, or <see langword="null" /> when nothing is focused.</returns>
+		</member>
+
+		<member name="RestoreFocus">
+			<summary>Returns the keyboard focus to the element that held it before the window opened, when it can still take it.</summary>
+			<param name="element">The element <see cref="GetFocusedElement" /> returned.</param>
+			<param name="host">The host element.</param>
+		</member>
+
+		<member name="SubscribeInput">
+			<summary>Routes the key presses of the input, the changes of its text and the clicks on the rows to the presenter.</summary>
+			<param name="input">The input.</param>
+			<param name="list">The list of rows.</param>
+			<param name="keyDown">Handles a key press before the input does, and returns whether it handled the key.</param>
+			<param name="textChanged">Reports that the text of the input changed.</param>
+			<param name="rowClicked">Reports the index of the row that a click on the list released over.</param>
+			<returns>A subscription that removes the handlers when it is disposed.</returns>
+		</member>
+
+		<member name="SubscribeDismissal">
+			<summary>
+			  Reports the events that end the session without an accept: the popup closing, the window of the host deactivating, and the keyboard
+			  focus leaving the window.
+			</summary>
+			<param name="host">The host element.</param>
+			<param name="popup">The popup that holds the window.</param>
+			<param name="dismiss">Ends the session.</param>
+			<returns>A subscription that removes the handlers when it is disposed.</returns>
+		</member>
+	</members>
+</doc>

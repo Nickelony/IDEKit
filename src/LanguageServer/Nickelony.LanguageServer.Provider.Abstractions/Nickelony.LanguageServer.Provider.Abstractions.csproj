@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<RootNamespace>Nickelony.LanguageServer.Provider.Abstractions</RootNamespace>
+		<AssemblyName>Nickelony.LanguageServer.Provider.Abstractions</AssemblyName>
+		<PackageId>Nickelony.LanguageServer.Provider.Abstractions</PackageId>
+		<Description>The provider contract that hosts and language packages share: the aggregate provider interface, its capability snapshot and its failure payloads. It references only Nickelony.IDEKit.LanguageFeatures and no language-protocol implementation.</Description>
+		<PackageTags>language-server;lsp;editor;intellisense;provider;abstractions;nickelony</PackageTags>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<WarningsAsErrors>RS0016;RS0017</WarningsAsErrors>
+		<RequireConfigureAwait>true</RequireConfigureAwait>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.CodeAnalysis.PublicApiAnalyzers" PrivateAssets="all" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\IDEKit\Nickelony.IDEKit.LanguageFeatures\Nickelony.IDEKit.LanguageFeatures.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="README.md" Pack="true" PackagePath="\" />
+		<None Include="..\..\..\icons\$(PackageIcon)" Pack="true" PackagePath="\" />
+	</ItemGroup>
+</Project>

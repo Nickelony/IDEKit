@@ -1,83 +1,67 @@
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Text;
 
 namespace Nickelony.IDEKit.Processes;
 
 /// <summary>
-/// Runs external processes from <see cref="ProcessRunRequest"/> values, handling timeouts, cancellation,
-/// output capture, and process-tree termination.
+/// Runs external processes from <see cref="ProcessRunRequest"/> values, handling timeouts, cancellation, output capture,
+/// and process-tree termination.
 /// </summary>
 /// <remarks>
 /// The runner holds immutable configuration and is safe for concurrent calls.
 /// </remarks>
-public sealed class ProcessRunner : IProcessRunner
+public sealed class ProcessRunner : IProcessRunner, IProcessLauncher
 {
-	private readonly IProcessLauncher _launcher;
+	private readonly IProcessHandleFactory _handleFactory;
 	private readonly ProcessRunnerOptions _options;
 
-	/// <summary>
-	/// Initializes a new instance of the <see cref="ProcessRunner"/> class with the default options.
-	/// </summary>
-	public ProcessRunner()
-		: this(new ProcessLauncher())
-	{
-	}
+	/// <param name="options">The run options; <see langword="null"/> takes <see cref="ProcessRunnerOptions.Default"/>.</param>
+	public ProcessRunner(ProcessRunnerOptions? options = null)
+		: this(new ProcessHandleFactory(), options) { }
 
-	/// <summary>
-	/// Initializes a new instance of the <see cref="ProcessRunner"/> class with the given options.
-	/// </summary>
-	/// <param name="options">The run options.</param>
-	/// <exception cref="ArgumentNullException"><paramref name="options"/> is <see langword="null"/>.</exception>
-	public ProcessRunner(ProcessRunnerOptions options)
-		: this(new ProcessLauncher(), options ?? throw new ArgumentNullException(nameof(options)))
+	internal ProcessRunner(IProcessHandleFactory handleFactory, ProcessRunnerOptions? options = null)
 	{
-	}
-
-	internal ProcessRunner(IProcessLauncher launcher, ProcessRunnerOptions? options = null)
-	{
-		_launcher = launcher;
+		_handleFactory = handleFactory;
 		_options = options ?? ProcessRunnerOptions.Default;
 	}
 
 	/// <inheritdoc/>
 	public IProcessHandle Start(ProcessRunRequest request)
 	{
+		ArgumentNullException.ThrowIfNull(request);
 		ValidateRequest(request);
 
 		// A shell launch resolves the target through the operating system without returning a process handle,
 		// so it cannot satisfy this contract; Run and RunAsync report it as NoProcessHandle.
 		if (request.UseShellExecute)
-			throw new ArgumentException(
-				"Shell execution does not produce a process handle; use Run or RunAsync.",
-				nameof(request));
+			throw new ArgumentException("Shell execution does not produce a process handle; use Run or RunAsync.", nameof(request));
 
-		return _launcher.Start(request, _options)
-			?? throw new InvalidOperationException("The process could not be started.");
+		return _handleFactory.Create(request, _options) ?? throw new InvalidOperationException("The process could not be started.");
 	}
 
 	/// <inheritdoc/>
-	public ProcessRunResult Run(ProcessRunRequest request, CancellationToken cancellationToken = default)
-		=> RunAsync(request, cancellationToken).GetAwaiter().GetResult();
+	public ProcessRunResult Run(ProcessRunRequest request, CancellationToken cancellationToken = default) =>
+		RunAsync(request, cancellationToken).GetAwaiter().GetResult();
 
 	/// <inheritdoc/>
 	public async Task<ProcessRunResult> RunAsync(ProcessRunRequest request, CancellationToken cancellationToken = default)
 	{
+		ArgumentNullException.ThrowIfNull(request);
 		ValidateRequest(request);
 
 		// A canceled token must not spawn a doomed process or produce its side effects.
 		if (cancellationToken.IsCancellationRequested)
 			return new ProcessRunResult { Outcome = ProcessRunOutcome.CanceledBeforeStart };
 
-		using IProcessHandle? process = _launcher.Start(request, _options);
+		using IProcessHandle? process = _handleFactory.Create(request, _options);
 
 		if (process is null)
 		{
 			// Shell execution can satisfy the request without returning a process handle.
 			return new ProcessRunResult
 			{
-				Outcome = cancellationToken.IsCancellationRequested
-					? ProcessRunOutcome.CanceledBeforeStart
-					: ProcessRunOutcome.NoProcessHandle,
+				Outcome = cancellationToken.IsCancellationRequested ? ProcessRunOutcome.CanceledBeforeStart : ProcessRunOutcome.NoProcessHandle,
 			};
 		}
 
@@ -87,9 +71,7 @@ public sealed class ProcessRunner : IProcessRunner
 		try
 		{
 			outcome = await WaitForExitOutcomeAsync(process, request.Timeout, cancellationToken).ConfigureAwait(false);
-
-			exitObserved = outcome == ProcessRunOutcome.Exited
-				|| await TerminateProcessTreeAsync(process).ConfigureAwait(false);
+			exitObserved = outcome == ProcessRunOutcome.Exited || await TerminateProcessTreeAsync(process).ConfigureAwait(false);
 		}
 		catch
 		{
@@ -97,7 +79,7 @@ public sealed class ProcessRunner : IProcessRunner
 			// failure the caller has to observe, so a termination failure is swallowed here.
 			try
 			{
-				TryTerminateBestEffort(process);
+				TerminateBestEffort(process);
 			}
 			catch
 			{
@@ -109,6 +91,7 @@ public sealed class ProcessRunner : IProcessRunner
 
 		string? standardOutput = null;
 		string? standardError = null;
+
 		bool standardOutputTruncated = false;
 		bool standardErrorTruncated = false;
 
@@ -154,15 +137,18 @@ public sealed class ProcessRunner : IProcessRunner
 	// that depend on the final property values before anything is launched.
 	private static void ValidateRequest(ProcessRunRequest request)
 	{
-		ArgumentNullException.ThrowIfNull(request);
-
 		if (request.RawArguments.Length > 0 && request.ArgumentList.Count > 0)
 			throw new ArgumentException("Set either RawArguments or ArgumentList, not both.", nameof(request));
 
 		if (request.UseShellExecute)
 		{
 			if (request.RedirectStandardOutput || request.RedirectStandardError)
-				throw new ArgumentException("Shell execution cannot be combined with standard-output or standard-error redirection.", nameof(request));
+			{
+				throw new ArgumentException(
+					"Shell execution cannot be combined with standard-output or standard-error redirection.",
+					nameof(request)
+				);
+			}
 
 			// Only Windows rejects environment overrides combined with shell execution; the runner rejects them
 			// on every platform so a request behaves the same everywhere.
@@ -182,7 +168,8 @@ public sealed class ProcessRunner : IProcessRunner
 	private static async Task<ProcessRunOutcome> WaitForExitOutcomeAsync(
 		IProcessHandle process,
 		TimeSpan? timeout,
-		CancellationToken cancellationToken)
+		CancellationToken cancellationToken
+	)
 	{
 		// A null timeout and Timeout.InfiniteTimeSpan both wait indefinitely.
 		TimeSpan? deadline = timeout is { } value && value != Timeout.InfiniteTimeSpan ? value : null;
@@ -195,9 +182,7 @@ public sealed class ProcessRunner : IProcessRunner
 			if (process.WaitForExit(0))
 				return ProcessRunOutcome.Exited;
 
-			return cancellationToken.IsCancellationRequested
-				? ProcessRunOutcome.Canceled
-				: ProcessRunOutcome.TimedOut;
+			return cancellationToken.IsCancellationRequested ? ProcessRunOutcome.Canceled : ProcessRunOutcome.TimedOut;
 		}
 
 		if (deadline is null && !cancellationToken.CanBeCanceled)
@@ -220,20 +205,16 @@ public sealed class ProcessRunner : IProcessRunner
 		{
 			// The caller's cancellation is the stronger signal: it wins when it is observed, and a deadline
 			// that fired alone is reported as a timeout.
-			return cancellationToken.IsCancellationRequested
-				? ProcessRunOutcome.Canceled
-				: ProcessRunOutcome.TimedOut;
+			return cancellationToken.IsCancellationRequested ? ProcessRunOutcome.Canceled : ProcessRunOutcome.TimedOut;
 		}
 	}
 
-	// Reads a captured stream within the output-drain grace period. Pipes stay open as long as any descendant
-	// holds them, so an unfinished drain is reported as unavailable output instead of an unbounded wait. Only the
-	// failures the capture can raise are reported that way - a pipe that fails while it is read (IOException or
-	// InvalidDataException), a capture against a disposed handle (ObjectDisposedException), a configured encoding
-	// that rejects a captured byte sequence (DecoderFallbackException), and the drain grace period
-	// (OperationCanceledException) - so the capture cannot change the outcome of an otherwise completed run; every
-	// other failure, including an out-of-memory condition, propagates instead of being disguised as unavailable
-	// output.
+	// Reads a captured stream within the output-drain grace period. Pipes stay open while any descendant holds
+	// them, so an unfinished drain is reported as unavailable output instead of an unbounded wait. Only the
+	// failures the capture can raise are reported that way - a pipe that fails while read (IOException or
+	// InvalidDataException), a capture against a disposed handle (ObjectDisposedException), a rejected byte
+	// sequence (DecoderFallbackException), and the grace period (OperationCanceledException) - so the capture
+	// cannot change an otherwise completed run; every other failure, out-of-memory included, propagates.
 	private async Task<string?> ReadCapturedOutputAsync(Func<CancellationToken, Task<string>> readAsync)
 	{
 		using var drainSource = new CancellationTokenSource(_options.OutputDrainGracePeriod);
@@ -242,7 +223,14 @@ public sealed class ProcessRunner : IProcessRunner
 		{
 			return await readAsync(drainSource.Token).ConfigureAwait(false);
 		}
-		catch (Exception exception) when (exception is IOException or InvalidDataException or ObjectDisposedException or DecoderFallbackException or OperationCanceledException)
+		catch (Exception exception)
+			when (exception
+					is IOException
+						or InvalidDataException
+						or ObjectDisposedException
+						or DecoderFallbackException
+						or OperationCanceledException
+			)
 		{
 			return null;
 		}
@@ -253,7 +241,7 @@ public sealed class ProcessRunner : IProcessRunner
 	// assumed; a failed kill must not turn into an unbounded wait.
 	private async Task<bool> TerminateProcessTreeAsync(IProcessHandle process)
 	{
-		TryTerminateBestEffort(process);
+		TerminateBestEffort(process);
 
 		try
 		{
@@ -267,7 +255,7 @@ public sealed class ProcessRunner : IProcessRunner
 		}
 		catch (InvalidOperationException)
 		{
-			// The handle can no longer observe the process; the exit stays unobserved.
+			// The handle cannot observe the process; the exit stays unobserved.
 			return false;
 		}
 		catch (Win32Exception)
@@ -277,7 +265,7 @@ public sealed class ProcessRunner : IProcessRunner
 		}
 	}
 
-	private static void TryTerminateBestEffort(IProcessHandle process)
+	private static void TerminateBestEffort(IProcessHandle process)
 	{
 		try
 		{
@@ -307,13 +295,9 @@ public sealed class ProcessRunner : IProcessRunner
 	private static bool IsTerminationFailure(Exception exception)
 	{
 		if (exception is not AggregateException aggregate)
-		{
-			return exception is InvalidOperationException and not ObjectDisposedException
-				or NotSupportedException
-				or Win32Exception;
-		}
+			return exception is (InvalidOperationException and not ObjectDisposedException) or NotSupportedException or Win32Exception;
 
-		var innerFailures = aggregate.InnerExceptions;
+		ReadOnlyCollection<Exception> innerFailures = aggregate.InnerExceptions;
 
 		if (innerFailures.Count == 0)
 			return false;

@@ -1,27 +1,34 @@
 using Nickelony.IDEKit.Workspace.Documents;
-using Nickelony.IDEKit.Workspace.Documents.FileSystem;
+using Nickelony.IDEKit.Workspace.FileSystem;
 
 namespace Nickelony.IDEKit.Workspace.Tests;
 
 public sealed partial class WorkspaceDocumentStoreTests
 {
 	[TestMethod]
-	[Timeout(15000)]
+	[Timeout(15000, CooperativeCancellation = true)]
 	public async Task RenameDirectory_OpenDuringMove_WaitsForCompletionAndReadsTheVacatedSourcePath()
 	{
 		var fileSystem = new FakeFileSystem("content", s_defaultFormat);
 		var pendingMove = new TaskCompletionSource<WorkspaceFileMoveResult>(TaskCreationOptions.RunContinuationsAsynchronously);
+
 		fileSystem.PendingMoveDirectory = pendingMove.Task;
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot tracked = (await store.OpenAsync(TestPath("folder", "tracked.lua"), s_openOptions)).Snapshot!;
+
+		WorkspaceDocumentSnapshot tracked = (
+			await store.OpenAsync(TestPath("folder", "tracked.lua"), s_openOptions, TestContext.CancellationToken)
+		).Snapshot!;
 
 		Task<WorkspaceDocumentDirectoryRenameResult> rename = store.RenameDirectoryAsync(
-			new WorkspaceDocumentDirectoryRenameRequest(TestPath("folder"), TestPath("moved")));
+			new WorkspaceDocumentDirectoryRenameRequest(TestPath("folder"), TestPath("moved")),
+			TestContext.CancellationToken
+		);
+
 		await fileSystem.MoveDirectories.WhenReachedAsync(1);
 
 		// An open for a path inside the moving directory publishes no load while the rename holds its
 		// reservation: the open runs synchronously up to the wait, so the read count is unchanged.
-		Task<WorkspaceDocumentOpenResult> lateOpen = store.OpenAsync(TestPath("folder", "late.lua"), s_openOptions);
+		Task<WorkspaceDocumentOpenResult> lateOpen = store.OpenAsync(TestPath("folder", "late.lua"), s_openOptions, TestContext.CancellationToken);
 		Assert.AreEqual(1, fileSystem.ReadCount);
 
 		// The directory moved away with the file, so the resumed open reads the vacated source path as
@@ -33,7 +40,7 @@ public sealed partial class WorkspaceDocumentStoreTests
 		WorkspaceDocumentOpenResult newcomer = await lateOpen;
 
 		Assert.AreEqual(WorkspaceDocumentDirectoryRenameOutcome.Renamed, result.Outcome);
-		Assert.AreEqual(1, result.Snapshots.Count);
+		Assert.HasCount(1, result.Snapshots);
 		Assert.IsTrue(store.TryGetSnapshot(TestPath("moved", "tracked.lua"), out WorkspaceDocumentSnapshot? rebased));
 		Assert.AreEqual(tracked.DocumentKey, rebased!.DocumentKey);
 		Assert.AreEqual(WorkspaceDocumentOpenOutcome.Opened, newcomer.Outcome);
@@ -42,23 +49,29 @@ public sealed partial class WorkspaceDocumentStoreTests
 	}
 
 	[TestMethod]
-	[Timeout(15000)]
+	[Timeout(15000, CooperativeCancellation = true)]
 	public async Task RenameDirectory_CanceledWhileDraining_ReportsCanceledWithCurrentSnapshots()
 	{
 		var fileSystem = new FakeFileSystem("content", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot tracked = (await store.OpenAsync(TestPath("folder", "tracked.lua"), s_openOptions)).Snapshot!;
+
+		WorkspaceDocumentSnapshot tracked = (
+			await store.OpenAsync(TestPath("folder", "tracked.lua"), s_openOptions, TestContext.CancellationToken)
+		).Snapshot!;
 
 		// Hold a subtree load open so the rename parks in its drain phase.
 		var pendingRead = new TaskCompletionSource<WorkspaceFileReadResult>(TaskCreationOptions.RunContinuationsAsynchronously);
 		fileSystem.PendingRead = pendingRead.Task;
-		Task<WorkspaceDocumentOpenResult> lateOpen = store.OpenAsync(TestPath("folder", "late.lua"), s_openOptions);
+		Task<WorkspaceDocumentOpenResult> lateOpen = store.OpenAsync(TestPath("folder", "late.lua"), s_openOptions, TestContext.CancellationToken);
 		await fileSystem.Reads.WhenReachedAsync(2);
 
 		using var cancellation = new CancellationTokenSource();
+
 		Task<WorkspaceDocumentDirectoryRenameResult> rename = store.RenameDirectoryAsync(
 			new WorkspaceDocumentDirectoryRenameRequest(TestPath("folder"), TestPath("moved")),
-			cancellation.Token);
+			cancellation.Token
+		);
+
 		cancellation.Cancel();
 
 		WorkspaceDocumentDirectoryRenameResult result = await rename;
@@ -66,34 +79,40 @@ public sealed partial class WorkspaceDocumentStoreTests
 		// Cancellation before the capture phase reports the currently tracked descendants, and the
 		// directory reservation is released so the pending load can complete.
 		Assert.AreEqual(WorkspaceDocumentDirectoryRenameOutcome.Canceled, result.Outcome);
-		Assert.AreEqual(1, result.Snapshots.Count);
+		Assert.HasCount(1, result.Snapshots);
 		Assert.AreEqual(tracked.DocumentKey, result.Snapshots[0].DocumentKey);
 		Assert.AreEqual(0, fileSystem.MoveDirectoryCount);
 
 		pendingRead.SetResult(fileSystem.CreateReadResult());
+
 		Assert.AreEqual(WorkspaceDocumentOpenOutcome.Opened, (await lateOpen).Outcome);
 		Assert.IsTrue(store.TryGetSnapshot(tracked.DocumentId, out _));
 	}
 
 	[TestMethod]
-	[Timeout(15000)]
+	[Timeout(15000, CooperativeCancellation = true)]
 	public async Task RenameDirectory_InFlightSubtreeOpen_DrainsBeforeTheMove()
 	{
 		var fileSystem = new FakeFileSystem("content", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		await store.OpenAsync(TestPath("folder", "tracked.lua"), s_openOptions);
+
+		await store.OpenAsync(TestPath("folder", "tracked.lua"), s_openOptions, TestContext.CancellationToken);
 
 		// The second load is held open so the rename starts while the subtree open is in flight.
-		var lateStamp = new FileStamp(true, 7, DateTime.UnixEpoch.AddMinutes(2), "late");
+		var lateStamp = new FileStamp(Exists: true, Length: 7, LastWriteTimeUtc: DateTime.UnixEpoch.AddMinutes(2), ContentHash: "late");
 		var pendingRead = new TaskCompletionSource<WorkspaceFileReadResult>(TaskCreationOptions.RunContinuationsAsynchronously);
+
 		fileSystem.PendingRead = pendingRead.Task;
-		Task<WorkspaceDocumentOpenResult> lateOpen = store.OpenAsync(TestPath("folder", "late.lua"), s_openOptions);
+		Task<WorkspaceDocumentOpenResult> lateOpen = store.OpenAsync(TestPath("folder", "late.lua"), s_openOptions, TestContext.CancellationToken);
 		await fileSystem.Reads.WhenReachedAsync(2);
 
 		// The in-flight load is drained before the physical move, so the directory move has not started
 		// while the read is pending.
 		Task<WorkspaceDocumentDirectoryRenameResult> rename = store.RenameDirectoryAsync(
-			new WorkspaceDocumentDirectoryRenameRequest(TestPath("folder"), TestPath("moved")));
+			new WorkspaceDocumentDirectoryRenameRequest(TestPath("folder"), TestPath("moved")),
+			TestContext.CancellationToken
+		);
+
 		Assert.AreEqual(0, fileSystem.MoveDirectoryCount);
 
 		// The drained document lands under the source path first and is then rebased with its siblings;
@@ -106,33 +125,47 @@ public sealed partial class WorkspaceDocumentStoreTests
 
 		Assert.AreEqual(WorkspaceDocumentDirectoryRenameOutcome.Renamed, result.Outcome);
 		Assert.AreEqual(1, fileSystem.MoveDirectoryCount);
-		Assert.AreEqual(2, result.Snapshots.Count);
+		Assert.HasCount(2, result.Snapshots);
 		Assert.IsTrue(store.TryGetSnapshot(TestPath("moved", "tracked.lua"), out _));
 		Assert.IsTrue(store.TryGetSnapshot(TestPath("moved", "late.lua"), out WorkspaceDocumentSnapshot? rebased));
 		Assert.AreEqual(newcomer.Snapshot!.DocumentKey, rebased!.DocumentKey);
 	}
 
 	[TestMethod]
-	[Timeout(15000)]
+	[Timeout(15000, CooperativeCancellation = true)]
 	public async Task RenameDirectory_FileRenameIntoTheMovingDirectory_ReportsDestinationBusy()
 	{
 		var fileSystem = new FakeFileSystem("content", s_defaultFormat);
 		var pendingMove = new TaskCompletionSource<WorkspaceFileMoveResult>(TaskCreationOptions.RunContinuationsAsynchronously);
+
 		fileSystem.PendingMoveDirectory = pendingMove.Task;
+
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot inside = (await store.OpenAsync(TestPath("folder", "one.lua"), s_openOptions)).Snapshot!;
-		WorkspaceDocumentSnapshot outside = (await store.OpenAsync(TestPath("script.lua"), s_openOptions)).Snapshot!;
+
+		WorkspaceDocumentSnapshot inside = (
+			await store.OpenAsync(TestPath("folder", "one.lua"), s_openOptions, TestContext.CancellationToken)
+		).Snapshot!;
+
+		WorkspaceDocumentSnapshot outside = (await store.OpenAsync(TestPath("script.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
 
 		Task<WorkspaceDocumentDirectoryRenameResult> renameDirectory = store.RenameDirectoryAsync(
-			new WorkspaceDocumentDirectoryRenameRequest(TestPath("folder"), TestPath("moved")));
+			new WorkspaceDocumentDirectoryRenameRequest(TestPath("folder"), TestPath("moved")),
+			TestContext.CancellationToken
+		);
+
 		await fileSystem.MoveDirectories.WhenReachedAsync(1);
 
 		// A destination inside the moving subtree is busy for the whole directory operation: the file
 		// rename must not land a file in a directory that is about to be vacated.
-		WorkspaceDocumentRenameResult rename = await store.RenameAsync(new WorkspaceDocumentRenameRequest(
-			new(outside.DocumentKey, outside.DocumentId, outside.Version),
-			outside.OnDiskStamp,
-			TestPath("folder", "script.lua")));
+		WorkspaceDocumentRenameResult rename = await store.RenameAsync(
+			new WorkspaceDocumentRenameRequest(
+				new(outside.DocumentKey, outside.DocumentId, outside.Version),
+				outside.OnDiskStamp,
+				TestPath("folder", "script.lua")
+			),
+
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(WorkspaceDocumentRenameOutcome.DestinationBusy, rename.Outcome);
 		Assert.AreEqual(0, fileSystem.Moves.Count);
@@ -144,24 +177,33 @@ public sealed partial class WorkspaceDocumentStoreTests
 	}
 
 	[TestMethod]
-	[Timeout(15000)]
+	[Timeout(15000, CooperativeCancellation = true)]
 	public async Task RenameDirectory_SaveAsIntoTheMovingDirectory_ReportsDestinationBusy()
 	{
 		var fileSystem = new FakeFileSystem("content", s_defaultFormat);
 		var pendingMove = new TaskCompletionSource<WorkspaceFileMoveResult>(TaskCreationOptions.RunContinuationsAsynchronously);
+
 		fileSystem.PendingMoveDirectory = pendingMove.Task;
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		await store.OpenAsync(TestPath("folder", "one.lua"), s_openOptions);
-		WorkspaceDocumentSnapshot outside = (await store.OpenAsync(TestPath("script.lua"), s_openOptions)).Snapshot!;
+		await store.OpenAsync(TestPath("folder", "one.lua"), s_openOptions, TestContext.CancellationToken);
+		WorkspaceDocumentSnapshot outside = (await store.OpenAsync(TestPath("script.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
 
 		Task<WorkspaceDocumentDirectoryRenameResult> renameDirectory = store.RenameDirectoryAsync(
-			new WorkspaceDocumentDirectoryRenameRequest(TestPath("folder"), TestPath("moved")));
+			new WorkspaceDocumentDirectoryRenameRequest(TestPath("folder"), TestPath("moved")),
+			TestContext.CancellationToken
+		);
+
 		await fileSystem.MoveDirectories.WhenReachedAsync(1);
 
-		WorkspaceDocumentSaveAsResult saveAs = await store.SaveAsAsync(new WorkspaceDocumentSaveAsRequest(
-			new(outside.DocumentKey, outside.DocumentId, outside.Version),
-			outside.OnDiskStamp,
-			TestPath("folder", "copy.lua")));
+		WorkspaceDocumentSaveAsResult saveAs = await store.SaveAsAsync(
+			new WorkspaceDocumentSaveAsRequest(
+				new(outside.DocumentKey, outside.DocumentId, outside.Version),
+				outside.OnDiskStamp,
+				TestPath("folder", "copy.lua")
+			),
+
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(WorkspaceDocumentSaveAsOutcome.DestinationBusy, saveAs.Outcome);
 		Assert.AreEqual(0, fileSystem.ReplaceCount);
@@ -172,25 +214,204 @@ public sealed partial class WorkspaceDocumentStoreTests
 	}
 
 	[TestMethod]
-	[Timeout(15000)]
+	[Timeout(15000, CooperativeCancellation = true)]
+	public async Task RenameDirectory_DestinationInsideAnInFlightDirectoryDelete_ReportsDestinationBusyAndReservesNothing()
+	{
+		var fileSystem = new FakeFileSystem("content", s_defaultFormat);
+		var pendingDelete = new TaskCompletionSource<WorkspaceFileDeleteResult>(TaskCreationOptions.RunContinuationsAsynchronously);
+
+		fileSystem.PendingDirectoryDelete = pendingDelete.Task;
+
+		await using var store = new WorkspaceDocumentStore(fileSystem);
+
+		await store.OpenAsync(TestPath("folder", "one.lua"), s_openOptions, TestContext.CancellationToken);
+		await store.OpenAsync(TestPath("other", "two.lua"), s_openOptions, TestContext.CancellationToken);
+
+		Task<WorkspaceDocumentDirectoryDeleteResult> delete = store.DeleteDirectoryAsync(
+			new WorkspaceDocumentDirectoryDeleteRequest(TestPath("folder")),
+			TestContext.CancellationToken
+		);
+
+		await fileSystem.DirectoryDeletes.WhenReachedAsync(1);
+
+		// The delete collected its subtree before this rename started, so a rename whose destination lies
+		// inside that subtree would reserve paths the delete never sees and then run against the same
+		// directory. It reports busy and touches nothing.
+		WorkspaceDocumentDirectoryRenameResult busy = await store.RenameDirectoryAsync(
+			new WorkspaceDocumentDirectoryRenameRequest(TestPath("other"), TestPath("folder", "moved")),
+			TestContext.CancellationToken
+		);
+
+		Assert.AreEqual(WorkspaceDocumentDirectoryRenameOutcome.DestinationBusy, busy.Outcome);
+		Assert.AreEqual(0, fileSystem.MoveDirectoryCount);
+		Assert.IsTrue(store.TryGetSnapshot(TestPath("other", "two.lua"), out _));
+
+		pendingDelete.SetResult(new WorkspaceFileDeleteResult(WorkspaceFileDeleteOutcome.Deleted));
+		Assert.AreEqual(WorkspaceDocumentDirectoryDeleteOutcome.Deleted, (await delete).Outcome);
+
+		// The rejected rename left no destination reservation behind, so the same rename succeeds once the
+		// delete has finished.
+		WorkspaceDocumentDirectoryRenameResult retry = await store.RenameDirectoryAsync(
+			new WorkspaceDocumentDirectoryRenameRequest(TestPath("other"), TestPath("folder", "moved")),
+			TestContext.CancellationToken
+		);
+
+		Assert.AreEqual(WorkspaceDocumentDirectoryRenameOutcome.Renamed, retry.Outcome);
+		Assert.IsTrue(store.TryGetSnapshot(TestPath("folder", "moved", "two.lua"), out _));
+	}
+
+	[TestMethod]
+	[Timeout(15000, CooperativeCancellation = true)]
+	public async Task RenameDirectory_DestinationInsideAnInFlightDirectoryRename_ReportsDestinationBusyAndReservesNothing()
+	{
+		var fileSystem = new FakeFileSystem("content", s_defaultFormat);
+		var pendingMove = new TaskCompletionSource<WorkspaceFileMoveResult>(TaskCreationOptions.RunContinuationsAsynchronously);
+
+		fileSystem.PendingMoveDirectory = pendingMove.Task;
+
+		await using var store = new WorkspaceDocumentStore(fileSystem);
+
+		await store.OpenAsync(TestPath("folder", "one.lua"), s_openOptions, TestContext.CancellationToken);
+		await store.OpenAsync(TestPath("other", "two.lua"), s_openOptions, TestContext.CancellationToken);
+
+		Task<WorkspaceDocumentDirectoryRenameResult> first = store.RenameDirectoryAsync(
+			new WorkspaceDocumentDirectoryRenameRequest(TestPath("folder"), TestPath("moved")),
+			TestContext.CancellationToken
+		);
+
+		await fileSystem.MoveDirectories.WhenReachedAsync(1);
+
+		WorkspaceDocumentDirectoryRenameResult busy = await store.RenameDirectoryAsync(
+			new WorkspaceDocumentDirectoryRenameRequest(TestPath("other"), TestPath("folder", "inner")),
+			TestContext.CancellationToken
+		);
+
+		Assert.AreEqual(WorkspaceDocumentDirectoryRenameOutcome.DestinationBusy, busy.Outcome);
+		Assert.AreEqual(1, fileSystem.MoveDirectoryCount);
+		Assert.IsTrue(store.TryGetSnapshot(TestPath("other", "two.lua"), out _));
+
+		pendingMove.SetResult(new WorkspaceFileMoveResult(WorkspaceFileMoveOutcome.Moved));
+		Assert.AreEqual(WorkspaceDocumentDirectoryRenameOutcome.Renamed, (await first).Outcome);
+
+		// The source path is free again after the first rename, and the rejected one reserved nothing.
+		fileSystem.PendingMoveDirectory = null;
+
+		WorkspaceDocumentDirectoryRenameResult retry = await store.RenameDirectoryAsync(
+			new WorkspaceDocumentDirectoryRenameRequest(TestPath("other"), TestPath("folder", "inner")),
+			TestContext.CancellationToken
+		);
+
+		Assert.AreEqual(WorkspaceDocumentDirectoryRenameOutcome.Renamed, retry.Outcome);
+	}
+
+	[TestMethod]
+	[Timeout(15000, CooperativeCancellation = true)]
+	public async Task RenameDirectory_SourceWithNoTrackedDocumentsIntoAnInFlightDirectory_ReportsDestinationBusy()
+	{
+		var fileSystem = new FakeFileSystem("content", s_defaultFormat);
+		var pendingDelete = new TaskCompletionSource<WorkspaceFileDeleteResult>(TaskCreationOptions.RunContinuationsAsynchronously);
+
+		fileSystem.PendingDirectoryDelete = pendingDelete.Task;
+		await using var store = new WorkspaceDocumentStore(fileSystem);
+		await store.OpenAsync(TestPath("folder", "one.lua"), s_openOptions, TestContext.CancellationToken);
+
+		Task<WorkspaceDocumentDirectoryDeleteResult> delete = store.DeleteDirectoryAsync(
+			new WorkspaceDocumentDirectoryDeleteRequest(TestPath("folder")),
+			TestContext.CancellationToken
+		);
+
+		await fileSystem.DirectoryDeletes.WhenReachedAsync(1);
+
+		// No tracked document moves, so only the destination directory itself can show the overlap.
+		WorkspaceDocumentDirectoryRenameResult busy = await store.RenameDirectoryAsync(
+			new WorkspaceDocumentDirectoryRenameRequest(TestPath("untracked"), TestPath("folder", "inner")),
+			TestContext.CancellationToken
+		);
+
+		Assert.AreEqual(WorkspaceDocumentDirectoryRenameOutcome.DestinationBusy, busy.Outcome);
+		Assert.AreEqual(0, fileSystem.MoveDirectoryCount);
+
+		pendingDelete.SetResult(new WorkspaceFileDeleteResult(WorkspaceFileDeleteOutcome.Deleted));
+		Assert.AreEqual(WorkspaceDocumentDirectoryDeleteOutcome.Deleted, (await delete).Outcome);
+	}
+
+	[TestMethod]
+	[Timeout(15000, CooperativeCancellation = true)]
+	public async Task RenameDirectory_RebasedPathInsideADeeperInFlightDirectoryDelete_ReportsDestinationBusy()
+	{
+		var fileSystem = new FakeFileSystem("content", s_defaultFormat);
+		var pendingDelete = new TaskCompletionSource<WorkspaceFileDeleteResult>(TaskCreationOptions.RunContinuationsAsynchronously);
+
+		fileSystem.PendingDirectoryDelete = pendingDelete.Task;
+		await using var store = new WorkspaceDocumentStore(fileSystem);
+		await store.OpenAsync(TestPath("other", "sub", "two.lua"), s_openOptions, TestContext.CancellationToken);
+
+		// The delete tracks no document, and the destination directory lies outside its subtree, so
+		// only the rebased path of the moving document shows that the rename lands inside it.
+		Task<WorkspaceDocumentDirectoryDeleteResult> delete = store.DeleteDirectoryAsync(
+			new WorkspaceDocumentDirectoryDeleteRequest(TestPath("folder", "sub")),
+			TestContext.CancellationToken
+		);
+
+		await fileSystem.DirectoryDeletes.WhenReachedAsync(1);
+
+		WorkspaceDocumentDirectoryRenameResult busy = await store.RenameDirectoryAsync(
+			new WorkspaceDocumentDirectoryRenameRequest(TestPath("other"), TestPath("folder")),
+			TestContext.CancellationToken
+		);
+
+		Assert.AreEqual(WorkspaceDocumentDirectoryRenameOutcome.DestinationBusy, busy.Outcome);
+		Assert.AreEqual(0, fileSystem.MoveDirectoryCount);
+		Assert.IsTrue(store.TryGetSnapshot(TestPath("other", "sub", "two.lua"), out _));
+
+		pendingDelete.SetResult(new WorkspaceFileDeleteResult(WorkspaceFileDeleteOutcome.Deleted));
+		Assert.AreEqual(WorkspaceDocumentDirectoryDeleteOutcome.Deleted, (await delete).Outcome);
+	}
+
+	[TestMethod]
+	[Timeout(15000, CooperativeCancellation = true)]
+	public async Task RenameDirectory_DestinationInsideItsOwnSource_IsNotReportedBusyByItsOwnReservation()
+	{
+		var fileSystem = new FakeFileSystem("content", s_defaultFormat) { MoveDirectoryResult = new(WorkspaceFileMoveOutcome.MoveFailed) };
+		await using var store = new WorkspaceDocumentStore(fileSystem);
+
+		await store.OpenAsync(TestPath("folder", "one.lua"), s_openOptions, TestContext.CancellationToken);
+
+		// The rename's own reservation covers the destination, and the file system, not the busy check,
+		// rejects a move into the directory being moved.
+		WorkspaceDocumentDirectoryRenameResult result = await store.RenameDirectoryAsync(
+			new WorkspaceDocumentDirectoryRenameRequest(TestPath("folder"), TestPath("folder", "inner")),
+			TestContext.CancellationToken
+		);
+
+		Assert.AreEqual(WorkspaceDocumentDirectoryRenameOutcome.MoveFailed, result.Outcome);
+		Assert.AreEqual(1, fileSystem.MoveDirectoryCount);
+	}
+
+	[TestMethod]
+	[Timeout(15000, CooperativeCancellation = true)]
 	public async Task DeleteDirectory_OpenDuringDelete_WaitsForCompletionAndReadsTheDeletedPath()
 	{
 		var fileSystem = new FakeFileSystem("content", s_defaultFormat);
 		var pendingDelete = new TaskCompletionSource<WorkspaceFileDeleteResult>(TaskCreationOptions.RunContinuationsAsynchronously);
+
 		fileSystem.PendingDirectoryDelete = pendingDelete.Task;
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		await store.OpenAsync(TestPath("folder", "one.lua"), s_openOptions);
+		await store.OpenAsync(TestPath("folder", "one.lua"), s_openOptions, TestContext.CancellationToken);
 
 		Task<WorkspaceDocumentDirectoryDeleteResult> delete = store.DeleteDirectoryAsync(
-			new WorkspaceDocumentDirectoryDeleteRequest(TestPath("folder")));
+			new WorkspaceDocumentDirectoryDeleteRequest(TestPath("folder")),
+			TestContext.CancellationToken
+		);
+
 		await fileSystem.DirectoryDeletes.WhenReachedAsync(1);
 
 		// An open for a path inside the directory publishes no load while the delete holds its
 		// reservation: the open runs synchronously up to the wait, so the read count is unchanged.
-		Task<WorkspaceDocumentOpenResult> lateOpen = store.OpenAsync(TestPath("folder", "two.lua"), s_openOptions);
+		Task<WorkspaceDocumentOpenResult> lateOpen = store.OpenAsync(TestPath("folder", "two.lua"), s_openOptions, TestContext.CancellationToken);
 		Assert.AreEqual(1, fileSystem.ReadCount);
 
-		// The deleted path no longer contains a file, so the resumed open creates a new document for it.
+		// The deleted path holds no file, so the resumed open creates a new document for it.
 		fileSystem.ReadResults.Enqueue(Task.FromResult(WorkspaceFileReadResult.Missing));
 		pendingDelete.SetResult(new WorkspaceFileDeleteResult(WorkspaceFileDeleteOutcome.Deleted));
 
@@ -198,7 +419,7 @@ public sealed partial class WorkspaceDocumentStoreTests
 		WorkspaceDocumentOpenResult newcomer = await lateOpen;
 
 		Assert.AreEqual(WorkspaceDocumentDirectoryDeleteOutcome.Deleted, result.Outcome);
-		Assert.AreEqual(1, result.Snapshots.Count);
+		Assert.HasCount(1, result.Snapshots);
 		Assert.IsFalse(store.TryGetSnapshot(TestPath("folder", "one.lua"), out _));
 		Assert.AreEqual(WorkspaceDocumentOpenOutcome.Opened, newcomer.Outcome);
 		Assert.AreEqual(FileStamp.Missing, newcomer.Snapshot!.OnDiskStamp);
@@ -207,24 +428,29 @@ public sealed partial class WorkspaceDocumentStoreTests
 	}
 
 	[TestMethod]
-	[Timeout(15000)]
+	[Timeout(15000, CooperativeCancellation = true)]
 	public async Task DeleteDirectory_InFlightSubtreeOpen_DrainsBeforeTheDelete()
 	{
 		var fileSystem = new FakeFileSystem("content", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		await store.OpenAsync(TestPath("folder", "one.lua"), s_openOptions);
+
+		await store.OpenAsync(TestPath("folder", "one.lua"), s_openOptions, TestContext.CancellationToken);
 
 		// The second load is held open so the delete starts while the subtree open is in flight.
-		var lateStamp = new FileStamp(true, 7, DateTime.UnixEpoch.AddMinutes(2), "late");
+		var lateStamp = new FileStamp(Exists: true, Length: 7, LastWriteTimeUtc: DateTime.UnixEpoch.AddMinutes(2), ContentHash: "late");
 		var pendingRead = new TaskCompletionSource<WorkspaceFileReadResult>(TaskCreationOptions.RunContinuationsAsynchronously);
+
 		fileSystem.PendingRead = pendingRead.Task;
-		Task<WorkspaceDocumentOpenResult> lateOpen = store.OpenAsync(TestPath("folder", "two.lua"), s_openOptions);
+		Task<WorkspaceDocumentOpenResult> lateOpen = store.OpenAsync(TestPath("folder", "two.lua"), s_openOptions, TestContext.CancellationToken);
 		await fileSystem.Reads.WhenReachedAsync(2);
 
 		// The in-flight load is drained before the physical delete, so the directory delete has not
 		// started while the read is pending.
 		Task<WorkspaceDocumentDirectoryDeleteResult> delete = store.DeleteDirectoryAsync(
-			new WorkspaceDocumentDirectoryDeleteRequest(TestPath("folder")));
+			new WorkspaceDocumentDirectoryDeleteRequest(TestPath("folder")),
+			TestContext.CancellationToken
+		);
+
 		Assert.AreEqual(0, fileSystem.DirectoryDeletes.Count);
 
 		// The drained document lands under the directory first and is then removed from tracking with
@@ -232,64 +458,75 @@ public sealed partial class WorkspaceDocumentStoreTests
 		// pre-delete validation observes the captured state.
 		fileSystem.CapturedStamps.Enqueue(fileSystem.CreateReadResult().OnDiskStamp);
 		fileSystem.CapturedStamps.Enqueue(lateStamp);
+
 		pendingRead.SetResult(WorkspaceFileReadResult.FromContent("late-content", s_defaultFormat, lateStamp));
 
 		WorkspaceDocumentDirectoryDeleteResult result = await delete;
 		WorkspaceDocumentOpenResult newcomer = await lateOpen;
 
 		Assert.AreEqual(WorkspaceDocumentDirectoryDeleteOutcome.Deleted, result.Outcome);
-		Assert.AreEqual(2, result.Snapshots.Count);
+		Assert.HasCount(2, result.Snapshots);
 		Assert.AreEqual(WorkspaceDocumentOpenOutcome.Opened, newcomer.Outcome);
-		Assert.AreEqual(0, store.GetSnapshotsUnderDirectory(TestPath("folder")).Count);
+		Assert.IsEmpty(store.GetSnapshotsUnderDirectory(TestPath("folder")));
 	}
 
 	[TestMethod]
-	[Timeout(15000)]
-	public async Task DeleteDirectory_ThrowingPostGateSetup_ReportsFailureWithoutLeakingGatesOrFlags()
+	[Timeout(15000, CooperativeCancellation = true)]
+	public async Task DeleteDirectory_ThrowingPostGateSetup_ReportsFailureWithoutLeakingGatesOrReservations()
 	{
 		var fileSystem = new FakeFileSystem("content", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot tracked = (await store.OpenAsync(TestPath("folder", "tracked.lua"), s_openOptions)).Snapshot!;
 
-		// The post-gate setup publishes the descendant delete flags after every gate is acquired; make it
-		// throw so the driver's gate-release path runs with ownership still held by the operation.
+		WorkspaceDocumentSnapshot tracked = (
+			await store.OpenAsync(TestPath("folder", "tracked.lua"), s_openOptions, TestContext.CancellationToken)
+		).Snapshot!;
+
+		// The post-gate setup publishes the descendant delete reservations after every gate is acquired;
+		// make it throw so the driver's gate-release path runs with ownership still held by the operation.
 		store.TestHooks.DirectoryOperationPostGateSetup = () => throw new InvalidOperationException("setup failed");
 
 		WorkspaceDocumentDirectoryDeleteResult result = await store.DeleteDirectoryAsync(
-			new WorkspaceDocumentDirectoryDeleteRequest(TestPath("folder")));
+			new WorkspaceDocumentDirectoryDeleteRequest(TestPath("folder")),
+			TestContext.CancellationToken
+		);
 
 		// The failure maps to the operation's fault outcome, and neither the acquired gates nor the
-		// published delete flags may stay behind: a gated delete on the tracked descendant must complete
+		// published delete reservations may stay behind: a gated delete on the tracked descendant must complete
 		// instead of reporting OperationInProgress for the life of the store.
 		Assert.AreEqual(WorkspaceDocumentDirectoryDeleteOutcome.DeleteFailed, result.Outcome);
 
 		store.TestHooks.DirectoryOperationPostGateSetup = null;
-		WorkspaceDocumentDeleteResult delete = await store.DeleteAsync(new WorkspaceDocumentDeleteRequest(
-			new(tracked.DocumentKey, tracked.DocumentId, tracked.Version),
-			tracked.OnDiskStamp));
+
+		WorkspaceDocumentDeleteResult delete = await store.DeleteAsync(
+			new WorkspaceDocumentDeleteRequest(new(tracked.DocumentKey, tracked.DocumentId, tracked.Version), tracked.OnDiskStamp),
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(WorkspaceDocumentDeleteOutcome.Deleted, delete.Outcome);
 	}
 
 	[TestMethod]
-	[Timeout(15000)]
+	[Timeout(15000, CooperativeCancellation = true)]
 	public async Task DeleteDirectory_DisposedBeforeTheLifetimeLink_ReportsCanceled()
 	{
 		var fileSystem = new FakeFileSystem("content", s_defaultFormat);
 		var store = new WorkspaceDocumentStore(fileSystem);
+
 		try
 		{
-			await store.OpenAsync(TestPath("folder", "tracked.lua"), s_openOptions);
+			await store.OpenAsync(TestPath("folder", "tracked.lua"), s_openOptions, TestContext.CancellationToken);
 
 			// Disposal completes synchronously - nothing is in flight - in the window between the
 			// directory operation publishing its reservation and linking to the lifetime token, so the
-			// source the link would read is already released.
+			// lifetime the link would read is already disposed.
 			store.TestHooks.DirectoryOperationBeforeLifetimeLink = () => store.DisposeAsync().AsTask().GetAwaiter().GetResult();
 
 			WorkspaceDocumentDirectoryDeleteResult result = await store.DeleteDirectoryAsync(
-				new WorkspaceDocumentDirectoryDeleteRequest(TestPath("folder")));
+				new WorkspaceDocumentDirectoryDeleteRequest(TestPath("folder")),
+				TestContext.CancellationToken
+			);
 
-			// The released lifetime source maps to the documented cancellation outcome instead of the
+			// The disposed lifetime maps to the documented cancellation outcome instead of the
 			// fault an ObjectDisposedException from the link would produce.
 			Assert.AreEqual(WorkspaceDocumentDirectoryDeleteOutcome.Canceled, result.Outcome);
 		}

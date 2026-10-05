@@ -1,5 +1,6 @@
+using Nickelony.IDEKit.Core.Text;
 using Nickelony.IDEKit.Workspace.Documents;
-using Nickelony.IDEKit.Workspace.Documents.FileSystem;
+using Nickelony.IDEKit.Workspace.FileSystem;
 
 namespace Nickelony.IDEKit.Workspace.Tests;
 
@@ -11,22 +12,25 @@ public sealed partial class WorkspaceDocumentStoreTests
 		var fileSystem = new FakeFileSystem("original", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
 
-		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions)).Snapshot!;
-		WorkspaceDocumentMutationResult edited = store.Replace(new WorkspaceDocumentReplaceRequest(
-			new(initial.DocumentKey, initial.DocumentId, initial.Version),
-			"logical",
-			initial.FileFormat));
-		FileStamp externalStamp = new(true, 3, DateTime.UnixEpoch.AddMinutes(1), "disk");
-		fileSystem.ReadResults.Enqueue(Task.FromResult(WorkspaceFileReadResult.FromContent(
-			"disk",
-			s_defaultFormat,
-			externalStamp)));
+		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
+
+		WorkspaceDocumentMutationResult edited = store.Replace(
+			new WorkspaceDocumentReplaceRequest(new(initial.DocumentKey, initial.DocumentId, initial.Version), "logical", initial.FileFormat)
+		);
+
+		FileStamp externalStamp = new(Exists: true, Length: 3, LastWriteTimeUtc: DateTime.UnixEpoch.AddMinutes(1), ContentHash: "disk");
+
+		fileSystem.ReadResults.Enqueue(Task.FromResult(WorkspaceFileReadResult.FromContent("disk", s_defaultFormat, externalStamp)));
 
 		WorkspaceDocumentConflictResolutionResult result = await store.ResolveExternalConflictAsync(
 			new WorkspaceDocumentConflictResolutionRequest(
 				new(initial.DocumentKey, initial.DocumentId, edited.Snapshot!.Version),
 				externalStamp,
-				WorkspaceDocumentConflictResolutionChoice.UseDisk));
+				WorkspaceDocumentConflictResolutionMode.ResolveWithDisk
+			),
+
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(WorkspaceDocumentConflictResolutionOutcome.ResolvedWithDisk, result.Outcome);
 		Assert.AreEqual("disk", result.Snapshot!.Content);
@@ -43,20 +47,26 @@ public sealed partial class WorkspaceDocumentStoreTests
 		var fileSystem = new FakeFileSystem("original", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
 
-		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions)).Snapshot!;
-		WorkspaceDocumentMutationResult edited = store.Replace(new WorkspaceDocumentReplaceRequest(
-			new(initial.DocumentKey, initial.DocumentId, initial.Version),
-			"logical",
-			initial.FileFormat));
-		FileStamp externalStamp = new(true, 6, DateTime.UnixEpoch.AddMinutes(1), "external");
-		FileStamp committedStamp = new(true, 7, DateTime.UnixEpoch.AddMinutes(2), "committed");
+		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
+
+		WorkspaceDocumentMutationResult edited = store.Replace(
+			new WorkspaceDocumentReplaceRequest(new(initial.DocumentKey, initial.DocumentId, initial.Version), "logical", initial.FileFormat)
+		);
+
+		FileStamp externalStamp = new(Exists: true, Length: 6, LastWriteTimeUtc: DateTime.UnixEpoch.AddMinutes(1), ContentHash: "external");
+		FileStamp committedStamp = new(Exists: true, Length: 7, LastWriteTimeUtc: DateTime.UnixEpoch.AddMinutes(2), ContentHash: "committed");
+
 		fileSystem.ReplacementStamp = committedStamp;
 
 		WorkspaceDocumentConflictResolutionResult result = await store.ResolveExternalConflictAsync(
 			new WorkspaceDocumentConflictResolutionRequest(
 				new(initial.DocumentKey, initial.DocumentId, edited.Snapshot!.Version),
 				externalStamp,
-				WorkspaceDocumentConflictResolutionChoice.UseLogical));
+				WorkspaceDocumentConflictResolutionMode.ResolveWithLogical
+			),
+
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(WorkspaceDocumentConflictResolutionOutcome.ResolvedWithLogical, result.Outcome);
 		Assert.AreEqual("logical", result.Snapshot!.Content);
@@ -73,18 +83,23 @@ public sealed partial class WorkspaceDocumentStoreTests
 		var fileSystem = new FakeFileSystem("original", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
 
-		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions)).Snapshot!;
-		WorkspaceDocumentMutationResult edited = store.Replace(new WorkspaceDocumentReplaceRequest(
-			new(initial.DocumentKey, initial.DocumentId, initial.Version),
-			"logical",
-			initial.FileFormat));
+		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
+
+		WorkspaceDocumentMutationResult edited = store.Replace(
+			new WorkspaceDocumentReplaceRequest(new(initial.DocumentKey, initial.DocumentId, initial.Version), "logical", initial.FileFormat)
+		);
+
 		fileSystem.ReadResults.Enqueue(Task.FromResult(WorkspaceFileReadResult.Missing));
 
 		WorkspaceDocumentConflictResolutionResult result = await store.ResolveExternalConflictAsync(
 			new WorkspaceDocumentConflictResolutionRequest(
 				new(initial.DocumentKey, initial.DocumentId, edited.Snapshot!.Version),
 				FileStamp.Missing,
-				WorkspaceDocumentConflictResolutionChoice.UseDisk));
+				WorkspaceDocumentConflictResolutionMode.ResolveWithDisk
+			),
+
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(WorkspaceDocumentConflictResolutionOutcome.ResolvedWithDisk, result.Outcome);
 		Assert.AreEqual(string.Empty, result.Snapshot!.Content);
@@ -101,19 +116,25 @@ public sealed partial class WorkspaceDocumentStoreTests
 		var fileSystem = new FakeFileSystem("original", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
 
-		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions)).Snapshot!;
-		WorkspaceDocumentMutationResult edited = store.Replace(new WorkspaceDocumentReplaceRequest(
-			new(initial.DocumentKey, initial.DocumentId, initial.Version),
-			"logical",
-			initial.FileFormat));
-		FileStamp committedStamp = new(true, 7, DateTime.UnixEpoch.AddMinutes(2), "committed");
+		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
+
+		WorkspaceDocumentMutationResult edited = store.Replace(
+			new WorkspaceDocumentReplaceRequest(new(initial.DocumentKey, initial.DocumentId, initial.Version), "logical", initial.FileFormat)
+		);
+
+		FileStamp committedStamp = new(Exists: true, Length: 7, LastWriteTimeUtc: DateTime.UnixEpoch.AddMinutes(2), ContentHash: "committed");
+
 		fileSystem.ReplacementStamp = committedStamp;
 
 		WorkspaceDocumentConflictResolutionResult result = await store.ResolveExternalConflictAsync(
 			new WorkspaceDocumentConflictResolutionRequest(
 				new(initial.DocumentKey, initial.DocumentId, edited.Snapshot!.Version),
 				FileStamp.Missing,
-				WorkspaceDocumentConflictResolutionChoice.UseLogical));
+				WorkspaceDocumentConflictResolutionMode.ResolveWithLogical
+			),
+
+			TestContext.CancellationToken
+		);
 
 		// The missing file is created from the logical content with a missing-file expectation.
 		Assert.AreEqual(WorkspaceDocumentConflictResolutionOutcome.ResolvedWithLogical, result.Outcome);
@@ -129,18 +150,23 @@ public sealed partial class WorkspaceDocumentStoreTests
 		var fileSystem = new FakeFileSystem("original", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
 
-		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions)).Snapshot!;
-		WorkspaceDocumentMutationResult edited = store.Replace(new WorkspaceDocumentReplaceRequest(
-			new(initial.DocumentKey, initial.DocumentId, initial.Version),
-			"logical",
-			initial.FileFormat));
+		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
+
+		WorkspaceDocumentMutationResult edited = store.Replace(
+			new WorkspaceDocumentReplaceRequest(new(initial.DocumentKey, initial.DocumentId, initial.Version), "logical", initial.FileFormat)
+		);
+
 		fileSystem.ReadResults.Enqueue(Task.FromResult(WorkspaceFileReadResult.Directory));
 
 		WorkspaceDocumentConflictResolutionResult result = await store.ResolveExternalConflictAsync(
 			new WorkspaceDocumentConflictResolutionRequest(
 				new(initial.DocumentKey, initial.DocumentId, edited.Snapshot!.Version),
 				FileStamp.Missing,
-				WorkspaceDocumentConflictResolutionChoice.UseDisk));
+				WorkspaceDocumentConflictResolutionMode.ResolveWithDisk
+			),
+
+			TestContext.CancellationToken
+		);
 
 		// A directory is not disk content to adopt: the resolution fails with the directory-specific
 		// code and keeps the logical content.
@@ -156,32 +182,37 @@ public sealed partial class WorkspaceDocumentStoreTests
 		var fileSystem = new FakeFileSystem("original", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
 
-		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions)).Snapshot!;
-		WorkspaceDocumentMutationResult edited = store.Replace(new WorkspaceDocumentReplaceRequest(
-			new(initial.DocumentKey, initial.DocumentId, initial.Version),
-			"logical",
-			initial.FileFormat));
-		FileStamp diskStamp = new(true, 3, DateTime.UnixEpoch.AddMinutes(1), "disk");
-		fileSystem.ReadResults.Enqueue(Task.FromResult(WorkspaceFileReadResult.FromContent(
-			"disk",
-			s_defaultFormat,
-			diskStamp)));
+		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
+
+		WorkspaceDocumentMutationResult edited = store.Replace(
+			new WorkspaceDocumentReplaceRequest(new(initial.DocumentKey, initial.DocumentId, initial.Version), "logical", initial.FileFormat)
+		);
+
+		FileStamp diskStamp = new(Exists: true, Length: 3, LastWriteTimeUtc: DateTime.UnixEpoch.AddMinutes(1), ContentHash: "disk");
+
+		fileSystem.ReadResults.Enqueue(Task.FromResult(WorkspaceFileReadResult.FromContent("disk", s_defaultFormat, diskStamp)));
 
 		// The read carries the stamp of the bytes it returned, so the resolution must not re-capture the
 		// destination. The enqueued capture is never consumed when that holds.
-		fileSystem.CapturedStamps.Enqueue(new FileStamp(true, 4, DateTime.UnixEpoch.AddMinutes(2), "later"));
+		fileSystem.CapturedStamps.Enqueue(
+			new FileStamp(Exists: true, Length: 4, LastWriteTimeUtc: DateTime.UnixEpoch.AddMinutes(2), ContentHash: "later")
+		);
 
 		WorkspaceDocumentConflictResolutionResult result = await store.ResolveExternalConflictAsync(
 			new WorkspaceDocumentConflictResolutionRequest(
 				new(initial.DocumentKey, initial.DocumentId, edited.Snapshot!.Version),
 				diskStamp,
-				WorkspaceDocumentConflictResolutionChoice.UseDisk));
+				WorkspaceDocumentConflictResolutionMode.ResolveWithDisk
+			),
+
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(WorkspaceDocumentConflictResolutionOutcome.ResolvedWithDisk, result.Outcome);
 		Assert.AreEqual("disk", result.Snapshot!.Content);
 		Assert.AreEqual(diskStamp, result.Snapshot.OnDiskStamp);
 		Assert.IsFalse(result.Snapshot.IsDirty);
-		Assert.AreEqual(1, fileSystem.CapturedStamps.Count);
+		Assert.HasCount(1, fileSystem.CapturedStamps);
 	}
 
 	[TestMethod]
@@ -190,23 +221,26 @@ public sealed partial class WorkspaceDocumentStoreTests
 		var fileSystem = new FakeFileSystem("original", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
 
-		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions)).Snapshot!;
-		WorkspaceDocumentMutationResult edited = store.Replace(new WorkspaceDocumentReplaceRequest(
-			new(initial.DocumentKey, initial.DocumentId, initial.Version),
-			"logical",
-			initial.FileFormat));
-		FileStamp observedStamp = new(true, 3, DateTime.UnixEpoch.AddMinutes(1), "observed");
-		FileStamp readStamp = new(true, 4, DateTime.UnixEpoch.AddMinutes(2), "read");
-		fileSystem.ReadResults.Enqueue(Task.FromResult(WorkspaceFileReadResult.FromContent(
-			"disk",
-			s_defaultFormat,
-			readStamp)));
+		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
+
+		WorkspaceDocumentMutationResult edited = store.Replace(
+			new WorkspaceDocumentReplaceRequest(new(initial.DocumentKey, initial.DocumentId, initial.Version), "logical", initial.FileFormat)
+		);
+
+		FileStamp observedStamp = new(Exists: true, Length: 3, LastWriteTimeUtc: DateTime.UnixEpoch.AddMinutes(1), ContentHash: "observed");
+		FileStamp readStamp = new(Exists: true, Length: 4, LastWriteTimeUtc: DateTime.UnixEpoch.AddMinutes(2), ContentHash: "read");
+
+		fileSystem.ReadResults.Enqueue(Task.FromResult(WorkspaceFileReadResult.FromContent("disk", s_defaultFormat, readStamp)));
 
 		WorkspaceDocumentConflictResolutionResult result = await store.ResolveExternalConflictAsync(
 			new WorkspaceDocumentConflictResolutionRequest(
 				new(initial.DocumentKey, initial.DocumentId, edited.Snapshot!.Version),
 				observedStamp,
-				WorkspaceDocumentConflictResolutionChoice.UseDisk));
+				WorkspaceDocumentConflictResolutionMode.ResolveWithDisk
+			),
+
+			TestContext.CancellationToken
+		);
 
 		// The disk changed again after the conflict was observed, so the logical content is retained
 		// (still dirty) and the fresh stamp is reported for the next attempt.
@@ -221,17 +255,22 @@ public sealed partial class WorkspaceDocumentStoreTests
 	{
 		var fileSystem = new FakeFileSystem("original", s_defaultFormat);
 		var pendingDelete = new TaskCompletionSource<WorkspaceFileDeleteResult>(TaskCreationOptions.RunContinuationsAsynchronously);
-		fileSystem.PendingDelete = pendingDelete.Task;
-		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions)).Snapshot!;
-		WorkspaceDocumentMutationResult edited = store.Replace(new WorkspaceDocumentReplaceRequest(
-			new(initial.DocumentKey, initial.DocumentId, initial.Version),
-			"logical",
-			initial.FileFormat));
 
-		Task<WorkspaceDocumentDeleteResult> delete = store.DeleteAsync(new WorkspaceDocumentDeleteRequest(
-			new(initial.DocumentKey, initial.DocumentId, edited.Snapshot!.Version),
-			initial.OnDiskStamp));
+		fileSystem.PendingDelete = pendingDelete.Task;
+
+		await using var store = new WorkspaceDocumentStore(fileSystem);
+
+		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
+
+		WorkspaceDocumentMutationResult edited = store.Replace(
+			new WorkspaceDocumentReplaceRequest(new(initial.DocumentKey, initial.DocumentId, initial.Version), "logical", initial.FileFormat)
+		);
+
+		Task<WorkspaceDocumentDeleteResult> delete = store.DeleteAsync(
+			new WorkspaceDocumentDeleteRequest(new(initial.DocumentKey, initial.DocumentId, edited.Snapshot!.Version), initial.OnDiskStamp),
+			TestContext.CancellationToken
+		);
+
 		await fileSystem.Deletes.WhenReachedAsync(1);
 
 		// Resolving with the logical content writes the document, so it is rejected while the delete
@@ -241,9 +280,14 @@ public sealed partial class WorkspaceDocumentStoreTests
 			new WorkspaceDocumentConflictResolutionRequest(
 				new(initial.DocumentKey, initial.DocumentId, edited.Snapshot.Version),
 				initial.OnDiskStamp,
-				WorkspaceDocumentConflictResolutionChoice.UseLogical));
+				WorkspaceDocumentConflictResolutionMode.ResolveWithLogical
+			),
+
+			TestContext.CancellationToken
+		);
 
 		pendingDelete.SetResult(new WorkspaceFileDeleteResult(WorkspaceFileDeleteOutcome.Deleted));
+
 		WorkspaceDocumentDeleteResult deleted = await delete;
 
 		Assert.AreEqual(WorkspaceDocumentConflictResolutionOutcome.OperationInProgress, result.Outcome);
@@ -257,15 +301,22 @@ public sealed partial class WorkspaceDocumentStoreTests
 	{
 		var fileSystem = new FakeFileSystem("original", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions)).Snapshot!;
+
+		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
 
 		// An undefined choice must not silently take the UseDisk branch; it is rejected as an
 		// argument error instead of discarding unpublishable logical content.
-		await Assert.ThrowsExactlyAsync<ArgumentOutOfRangeException>(() => store.ResolveExternalConflictAsync(
-			new WorkspaceDocumentConflictResolutionRequest(
-				new(initial.DocumentKey, initial.DocumentId, initial.Version),
-				initial.OnDiskStamp,
-				(WorkspaceDocumentConflictResolutionChoice)42)));
+		await Assert.ThrowsExactlyAsync<ArgumentOutOfRangeException>(() =>
+			store.ResolveExternalConflictAsync(
+				new WorkspaceDocumentConflictResolutionRequest(
+					new(initial.DocumentKey, initial.DocumentId, initial.Version),
+					initial.OnDiskStamp,
+					(WorkspaceDocumentConflictResolutionMode)42
+				),
+
+				TestContext.CancellationToken
+			)
+		);
 	}
 
 	[TestMethod]
@@ -274,24 +325,35 @@ public sealed partial class WorkspaceDocumentStoreTests
 		var fileSystem = new FakeFileSystem("original", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
 
-		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions)).Snapshot!;
-		WorkspaceDocumentMutationResult edited = store.Replace(new WorkspaceDocumentReplaceRequest(
-			new(initial.DocumentKey, initial.DocumentId, initial.Version),
-			"logical",
-			initial.FileFormat));
+		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
+
+		WorkspaceDocumentMutationResult edited = store.Replace(
+			new WorkspaceDocumentReplaceRequest(new(initial.DocumentKey, initial.DocumentId, initial.Version), "logical", initial.FileFormat)
+		);
+
 		var pendingRead = new TaskCompletionSource<WorkspaceFileReadResult>(TaskCreationOptions.RunContinuationsAsynchronously);
 		fileSystem.PendingRead = pendingRead.Task;
+
 		Task<WorkspaceDocumentConflictResolutionResult> resolutionTask = store.ResolveExternalConflictAsync(
 			new WorkspaceDocumentConflictResolutionRequest(
 				new(initial.DocumentKey, initial.DocumentId, edited.Snapshot!.Version),
 				initial.OnDiskStamp,
-				WorkspaceDocumentConflictResolutionChoice.UseDisk));
+				WorkspaceDocumentConflictResolutionMode.ResolveWithDisk
+			),
+
+			TestContext.CancellationToken
+		);
+
 		await fileSystem.Reads.WhenReachedAsync(2);
 
-		WorkspaceDocumentMutationResult laterEdit = store.Replace(new WorkspaceDocumentReplaceRequest(
-			new(initial.DocumentKey, initial.DocumentId, edited.Snapshot.Version),
-			"later logical",
-			initial.FileFormat));
+		WorkspaceDocumentMutationResult laterEdit = store.Replace(
+			new WorkspaceDocumentReplaceRequest(
+				new(initial.DocumentKey, initial.DocumentId, edited.Snapshot.Version),
+				"later logical",
+				initial.FileFormat
+			)
+		);
+
 		pendingRead.SetResult(WorkspaceFileReadResult.FromContent("disk", s_defaultFormat, initial.OnDiskStamp));
 
 		WorkspaceDocumentConflictResolutionResult result = await resolutionTask;
@@ -306,31 +368,46 @@ public sealed partial class WorkspaceDocumentStoreTests
 	{
 		var fileSystem = new FakeFileSystem("original", s_defaultFormat);
 		var pendingReplacement = new TaskCompletionSource<WorkspaceFileReplacementResult>(TaskCreationOptions.RunContinuationsAsynchronously);
+
 		fileSystem.PendingReplacement = pendingReplacement.Task;
+
 		await using var store = new WorkspaceDocumentStore(fileSystem);
 
-		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions)).Snapshot!;
-		WorkspaceDocumentMutationResult edited = store.Replace(new WorkspaceDocumentReplaceRequest(
-			new(initial.DocumentKey, initial.DocumentId, initial.Version),
-			"logical",
-			initial.FileFormat));
-		FileStamp observedStamp = new(true, 8, DateTime.UnixEpoch.AddMinutes(1), "external");
+		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
+
+		WorkspaceDocumentMutationResult edited = store.Replace(
+			new WorkspaceDocumentReplaceRequest(new(initial.DocumentKey, initial.DocumentId, initial.Version), "logical", initial.FileFormat)
+		);
+
+		FileStamp observedStamp = new(Exists: true, Length: 8, LastWriteTimeUtc: DateTime.UnixEpoch.AddMinutes(1), ContentHash: "external");
 
 		// The conditional replacement validates the observed stamp itself, so no capture is enqueued.
 		Task<WorkspaceDocumentConflictResolutionResult> resolutionTask = store.ResolveExternalConflictAsync(
 			new WorkspaceDocumentConflictResolutionRequest(
 				new(initial.DocumentKey, initial.DocumentId, edited.Snapshot!.Version),
 				observedStamp,
-				WorkspaceDocumentConflictResolutionChoice.UseLogical));
+				WorkspaceDocumentConflictResolutionMode.ResolveWithLogical
+			),
+
+			TestContext.CancellationToken
+		);
+
 		await fileSystem.Replacements.WhenReachedAsync(1);
 
-		WorkspaceDocumentMutationResult laterEdit = store.Replace(new WorkspaceDocumentReplaceRequest(
-			new(initial.DocumentKey, initial.DocumentId, edited.Snapshot.Version),
-			"later logical",
-			initial.FileFormat));
-		pendingReplacement.SetResult(new WorkspaceFileReplacementResult(
-			WorkspaceFileReplacementOutcome.Replaced,
-			new FileStamp(true, 7, DateTime.UnixEpoch.AddMinutes(1), "committed")));
+		WorkspaceDocumentMutationResult laterEdit = store.Replace(
+			new WorkspaceDocumentReplaceRequest(
+				new(initial.DocumentKey, initial.DocumentId, edited.Snapshot.Version),
+				"later logical",
+				initial.FileFormat
+			)
+		);
+
+		pendingReplacement.SetResult(
+			new WorkspaceFileReplacementResult(
+				WorkspaceFileReplacementOutcome.Replaced,
+				new FileStamp(Exists: true, Length: 7, LastWriteTimeUtc: DateTime.UnixEpoch.AddMinutes(1), ContentHash: "committed")
+			)
+		);
 
 		WorkspaceDocumentConflictResolutionResult result = await resolutionTask;
 
@@ -347,13 +424,14 @@ public sealed partial class WorkspaceDocumentStoreTests
 		var fileSystem = new FakeFileSystem("original", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
 
-		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions)).Snapshot!;
-		WorkspaceDocumentMutationResult edited = store.Replace(new WorkspaceDocumentReplaceRequest(
-			new(initial.DocumentKey, initial.DocumentId, initial.Version),
-			"logical",
-			initial.FileFormat));
-		FileStamp observedStamp = new(true, 6, DateTime.UnixEpoch.AddMinutes(1), "observed");
-		FileStamp secondStamp = new(true, 7, DateTime.UnixEpoch.AddMinutes(2), "second");
+		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
+
+		WorkspaceDocumentMutationResult edited = store.Replace(
+			new WorkspaceDocumentReplaceRequest(new(initial.DocumentKey, initial.DocumentId, initial.Version), "logical", initial.FileFormat)
+		);
+
+		FileStamp observedStamp = new(Exists: true, Length: 6, LastWriteTimeUtc: DateTime.UnixEpoch.AddMinutes(1), ContentHash: "observed");
+		FileStamp secondStamp = new(Exists: true, Length: 7, LastWriteTimeUtc: DateTime.UnixEpoch.AddMinutes(2), ContentHash: "second");
 
 		// The destination changed again after the conflict was observed; the conditional replacement
 		// detects it and reports the conflict with the newly observed stamp instead of overwriting.
@@ -364,7 +442,11 @@ public sealed partial class WorkspaceDocumentStoreTests
 			new WorkspaceDocumentConflictResolutionRequest(
 				new(initial.DocumentKey, initial.DocumentId, edited.Snapshot!.Version),
 				observedStamp,
-				WorkspaceDocumentConflictResolutionChoice.UseLogical));
+				WorkspaceDocumentConflictResolutionMode.ResolveWithLogical
+			),
+
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(WorkspaceDocumentConflictResolutionOutcome.ExternalFileConflict, result.Outcome);
 		Assert.AreEqual(secondStamp, result.ObservedOnDiskStamp);
@@ -380,13 +462,18 @@ public sealed partial class WorkspaceDocumentStoreTests
 	{
 		var fileSystem = new FakeFileSystem("original", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions)).Snapshot!;
+
+		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
 
 		WorkspaceDocumentConflictResolutionResult result = await store.ResolveExternalConflictAsync(
 			new WorkspaceDocumentConflictResolutionRequest(
 				new(initial.DocumentKey, TestPath("other.lua"), initial.Version),
 				initial.OnDiskStamp,
-				WorkspaceDocumentConflictResolutionChoice.UseDisk));
+				WorkspaceDocumentConflictResolutionMode.ResolveWithDisk
+			),
+
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(WorkspaceDocumentConflictResolutionOutcome.DocumentNotFound, result.Outcome);
 		Assert.IsNull(result.Snapshot);
@@ -398,13 +485,18 @@ public sealed partial class WorkspaceDocumentStoreTests
 	{
 		var fileSystem = new FakeFileSystem("original", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions)).Snapshot!;
+
+		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
 
 		WorkspaceDocumentConflictResolutionResult result = await store.ResolveExternalConflictAsync(
 			new WorkspaceDocumentConflictResolutionRequest(
 				new(new WorkspaceDocumentKey(Guid.NewGuid()), initial.DocumentId, initial.Version),
 				initial.OnDiskStamp,
-				WorkspaceDocumentConflictResolutionChoice.UseDisk));
+				WorkspaceDocumentConflictResolutionMode.ResolveWithDisk
+			),
+
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(WorkspaceDocumentConflictResolutionOutcome.StaleDocumentInstance, result.Outcome);
 		Assert.IsNotNull(result.Snapshot);
@@ -418,13 +510,16 @@ public sealed partial class WorkspaceDocumentStoreTests
 	{
 		var fileSystem = new FakeFileSystem("original", s_defaultFormat);
 		var pendingDelete = new TaskCompletionSource<WorkspaceFileDeleteResult>(TaskCreationOptions.RunContinuationsAsynchronously);
+
 		fileSystem.PendingDelete = pendingDelete.Task;
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions)).Snapshot!;
+		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
 
-		Task<WorkspaceDocumentDeleteResult> delete = store.DeleteAsync(new WorkspaceDocumentDeleteRequest(
-			new(initial.DocumentKey, initial.DocumentId, initial.Version),
-			initial.OnDiskStamp));
+		Task<WorkspaceDocumentDeleteResult> delete = store.DeleteAsync(
+			new WorkspaceDocumentDeleteRequest(new(initial.DocumentKey, initial.DocumentId, initial.Version), initial.OnDiskStamp),
+			TestContext.CancellationToken
+		);
+
 		await fileSystem.Deletes.WhenReachedAsync(1);
 
 		// The delete holds the document's disk-operation gate, so the conflict resolution is rejected
@@ -433,9 +528,14 @@ public sealed partial class WorkspaceDocumentStoreTests
 			new WorkspaceDocumentConflictResolutionRequest(
 				new(initial.DocumentKey, initial.DocumentId, initial.Version),
 				initial.OnDiskStamp,
-				WorkspaceDocumentConflictResolutionChoice.UseDisk));
+				WorkspaceDocumentConflictResolutionMode.ResolveWithDisk
+			),
+
+			TestContext.CancellationToken
+		);
 
 		pendingDelete.SetResult(new WorkspaceFileDeleteResult(WorkspaceFileDeleteOutcome.Deleted));
+
 		WorkspaceDocumentDeleteResult deleted = await delete;
 
 		Assert.AreEqual(WorkspaceDocumentConflictResolutionOutcome.OperationInProgress, result.Outcome);
@@ -450,12 +550,15 @@ public sealed partial class WorkspaceDocumentStoreTests
 	{
 		var fileSystem = new FakeFileSystem("original", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions)).Snapshot!;
-		WorkspaceDocumentMutationResult edited = store.Replace(new WorkspaceDocumentReplaceRequest(
-			new(initial.DocumentKey, initial.DocumentId, initial.Version),
-			"logical",
-			initial.FileFormat));
-		FileStamp observedStamp = new(true, 8, DateTime.UnixEpoch.AddMinutes(1), "external");
+
+		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
+
+		WorkspaceDocumentMutationResult edited = store.Replace(
+			new WorkspaceDocumentReplaceRequest(new(initial.DocumentKey, initial.DocumentId, initial.Version), "logical", initial.FileFormat)
+		);
+
+		FileStamp observedStamp = new(Exists: true, Length: 8, LastWriteTimeUtc: DateTime.UnixEpoch.AddMinutes(1), ContentHash: "external");
+
 		fileSystem.ReadResults.Enqueue(Task.FromException<WorkspaceFileReadResult>(new IOException("read failed")));
 
 		// The read itself faulting is a read failure with the logical content retained, not a conflict;
@@ -464,7 +567,11 @@ public sealed partial class WorkspaceDocumentStoreTests
 			new WorkspaceDocumentConflictResolutionRequest(
 				new(initial.DocumentKey, initial.DocumentId, edited.Snapshot!.Version),
 				observedStamp,
-				WorkspaceDocumentConflictResolutionChoice.UseDisk));
+				WorkspaceDocumentConflictResolutionMode.ResolveWithDisk
+			),
+
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(WorkspaceDocumentConflictResolutionOutcome.ReadFailed, result.Outcome);
 		Assert.AreEqual(WorkspaceOperationFailureCodes.ReadFailed, result.Failure!.Code);
@@ -478,12 +585,14 @@ public sealed partial class WorkspaceDocumentStoreTests
 	{
 		var fileSystem = new FakeFileSystem("disk", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions)).Snapshot!;
-		TextFileFormat windows1252Format = new(TextEncodingKind.Windows1252, false, TextNewlineStyle.None);
-		WorkspaceDocumentMutationResult edited = store.Replace(new WorkspaceDocumentReplaceRequest(
-			new(initial.DocumentKey, initial.DocumentId, initial.Version),
-			"\u2603",
-			windows1252Format));
+
+		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
+		TextFileFormat windows1252Format = new(TextEncoding.Windows1252, false, LineTerminatorStyle.None);
+
+		WorkspaceDocumentMutationResult edited = store.Replace(
+			new WorkspaceDocumentReplaceRequest(new(initial.DocumentKey, initial.DocumentId, initial.Version), "\u2603", windows1252Format)
+		);
+
 		Assert.AreEqual(WorkspaceDocumentMutationOutcome.Changed, edited.Outcome);
 
 		// The force-write cannot encode the logical content in the document's format, so the resolution
@@ -492,7 +601,11 @@ public sealed partial class WorkspaceDocumentStoreTests
 			new WorkspaceDocumentConflictResolutionRequest(
 				new(initial.DocumentKey, initial.DocumentId, edited.Snapshot!.Version),
 				initial.OnDiskStamp,
-				WorkspaceDocumentConflictResolutionChoice.UseLogical));
+				WorkspaceDocumentConflictResolutionMode.ResolveWithLogical
+			),
+
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(WorkspaceDocumentConflictResolutionOutcome.WriteFailed, result.Outcome);
 		Assert.AreEqual(WorkspaceOperationFailureCodes.InvalidEncoding, result.Failure!.Code);
@@ -505,11 +618,12 @@ public sealed partial class WorkspaceDocumentStoreTests
 	{
 		var fileSystem = new FakeFileSystem("original", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions)).Snapshot!;
-		WorkspaceDocumentMutationResult edited = store.Replace(new WorkspaceDocumentReplaceRequest(
-			new(initial.DocumentKey, initial.DocumentId, initial.Version),
-			"logical",
-			initial.FileFormat));
+
+		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
+
+		WorkspaceDocumentMutationResult edited = store.Replace(
+			new WorkspaceDocumentReplaceRequest(new(initial.DocumentKey, initial.DocumentId, initial.Version), "logical", initial.FileFormat)
+		);
 
 		// The replacement completes but reports no resulting stamp, and the re-capture fails: whether the
 		// write took effect is unknown, so the outcome is state-unknown rather than a failure or a commit.
@@ -522,12 +636,16 @@ public sealed partial class WorkspaceDocumentStoreTests
 			new WorkspaceDocumentConflictResolutionRequest(
 				new(initial.DocumentKey, initial.DocumentId, edited.Snapshot!.Version),
 				initial.OnDiskStamp,
-				WorkspaceDocumentConflictResolutionChoice.UseLogical));
+				WorkspaceDocumentConflictResolutionMode.ResolveWithLogical
+			),
+
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(WorkspaceDocumentConflictResolutionOutcome.ReplacementStateUnknown, result.Outcome);
 		Assert.AreEqual(WorkspaceOperationFailureCodes.ReplacementStateUnknown, result.Failure!.Code);
 		Assert.AreSame(captureFailure, result.Failure.Exception);
-		StringAssert.Contains(result.Failure.Message, "capture failed");
+		Assert.Contains("capture failed", result.Failure.Message);
 		Assert.AreEqual(1, fileSystem.ReplaceCount);
 		Assert.IsTrue(result.Snapshot!.IsDirty);
 	}
@@ -537,21 +655,28 @@ public sealed partial class WorkspaceDocumentStoreTests
 	{
 		var fileSystem = new FakeFileSystem("original", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions)).Snapshot!;
-		WorkspaceDocumentMutationResult edited = store.Replace(new WorkspaceDocumentReplaceRequest(
-			new(initial.DocumentKey, initial.DocumentId, initial.Version),
-			"logical",
-			initial.FileFormat));
+
+		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
+
+		WorkspaceDocumentMutationResult edited = store.Replace(
+			new WorkspaceDocumentReplaceRequest(new(initial.DocumentKey, initial.DocumentId, initial.Version), "logical", initial.FileFormat)
+		);
+
 		var pendingRead = new TaskCompletionSource<WorkspaceFileReadResult>(TaskCreationOptions.RunContinuationsAsynchronously);
 		fileSystem.PendingRead = pendingRead.Task;
 
 		using var cancellation = new CancellationTokenSource();
+
 		Task<WorkspaceDocumentConflictResolutionResult> resolutionTask = store.ResolveExternalConflictAsync(
 			new WorkspaceDocumentConflictResolutionRequest(
 				new(initial.DocumentKey, initial.DocumentId, edited.Snapshot!.Version),
 				initial.OnDiskStamp,
-				WorkspaceDocumentConflictResolutionChoice.UseDisk),
-			cancellation.Token);
+				WorkspaceDocumentConflictResolutionMode.ResolveWithDisk
+			),
+
+			cancellation.Token
+		);
+
 		await fileSystem.Reads.WhenReachedAsync(2);
 		cancellation.Cancel();
 
@@ -567,11 +692,12 @@ public sealed partial class WorkspaceDocumentStoreTests
 	{
 		var fileSystem = new FakeFileSystem("original", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions)).Snapshot!;
-		WorkspaceDocumentMutationResult edited = store.Replace(new WorkspaceDocumentReplaceRequest(
-			new(initial.DocumentKey, initial.DocumentId, initial.Version),
-			"logical",
-			initial.FileFormat));
+
+		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
+
+		WorkspaceDocumentMutationResult edited = store.Replace(
+			new WorkspaceDocumentReplaceRequest(new(initial.DocumentKey, initial.DocumentId, initial.Version), "logical", initial.FileFormat)
+		);
 
 		// The request carries the pre-edit version; the stale expectation is rejected by the
 		// operation preamble before any conflict work starts.
@@ -579,7 +705,11 @@ public sealed partial class WorkspaceDocumentStoreTests
 			new WorkspaceDocumentConflictResolutionRequest(
 				new(initial.DocumentKey, initial.DocumentId, initial.Version),
 				initial.OnDiskStamp,
-				WorkspaceDocumentConflictResolutionChoice.UseDisk));
+				WorkspaceDocumentConflictResolutionMode.ResolveWithDisk
+			),
+
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(WorkspaceDocumentConflictResolutionOutcome.StaleDocument, result.Outcome);
 		Assert.AreEqual(edited.Snapshot!.Version, result.Snapshot!.Version);
@@ -587,26 +717,34 @@ public sealed partial class WorkspaceDocumentStoreTests
 	}
 
 	[TestMethod]
-	[Timeout(15000)]
+	[Timeout(15000, CooperativeCancellation = true)]
 	public async Task ResolveExternalConflict_CancellationDuringWrite_ReportsCanceled()
 	{
 		var fileSystem = new FakeFileSystem("original", s_defaultFormat);
 		var pendingReplacement = new TaskCompletionSource<WorkspaceFileReplacementResult>(TaskCreationOptions.RunContinuationsAsynchronously);
+
 		fileSystem.PendingReplacement = pendingReplacement.Task;
+
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions)).Snapshot!;
-		WorkspaceDocumentMutationResult edited = store.Replace(new WorkspaceDocumentReplaceRequest(
-			new(initial.DocumentKey, initial.DocumentId, initial.Version),
-			"logical",
-			initial.FileFormat));
+
+		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
+
+		WorkspaceDocumentMutationResult edited = store.Replace(
+			new WorkspaceDocumentReplaceRequest(new(initial.DocumentKey, initial.DocumentId, initial.Version), "logical", initial.FileFormat)
+		);
 
 		using var cancellation = new CancellationTokenSource();
+
 		Task<WorkspaceDocumentConflictResolutionResult> resolutionTask = store.ResolveExternalConflictAsync(
 			new WorkspaceDocumentConflictResolutionRequest(
 				new(initial.DocumentKey, initial.DocumentId, edited.Snapshot!.Version),
 				initial.OnDiskStamp,
-				WorkspaceDocumentConflictResolutionChoice.UseLogical),
-			cancellation.Token);
+				WorkspaceDocumentConflictResolutionMode.ResolveWithLogical
+			),
+
+			cancellation.Token
+		);
+
 		await fileSystem.Replacements.WhenReachedAsync(1);
 		cancellation.Cancel();
 
@@ -622,9 +760,9 @@ public sealed partial class WorkspaceDocumentStoreTests
 	{
 		var fileSystem = new FakeFileSystem("original", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions)).Snapshot!;
-		fileSystem.ReadResults.Enqueue(Task.FromException<WorkspaceFileReadResult>(
-			new UnauthorizedAccessException("The file could not be read.")));
+
+		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
+		fileSystem.ReadResults.Enqueue(Task.FromException<WorkspaceFileReadResult>(new UnauthorizedAccessException("The file could not be read.")));
 
 		// The conflict-resolution read maps a permission failure to AccessDenied like the reload read
 		// path, so the host sees one permission vocabulary across read and write operations.
@@ -632,10 +770,48 @@ public sealed partial class WorkspaceDocumentStoreTests
 			new WorkspaceDocumentConflictResolutionRequest(
 				new(initial.DocumentKey, initial.DocumentId, initial.Version),
 				initial.OnDiskStamp,
-				WorkspaceDocumentConflictResolutionChoice.UseDisk));
+				WorkspaceDocumentConflictResolutionMode.ResolveWithDisk
+			),
+
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(WorkspaceDocumentConflictResolutionOutcome.ReadFailed, result.Outcome);
 		Assert.AreEqual(WorkspaceOperationFailureCodes.AccessDenied, result.Failure!.Code);
 		Assert.IsTrue(store.TryGetSnapshot(initial.DocumentId, out _));
+	}
+
+	[TestMethod]
+	public async Task ResolveExternalConflict_UseDiskWithBytesWithoutABom_DecodesWithTheNoBomEncodingOfTheDocument()
+	{
+		var fileSystem = new FakeFileSystem("original", s_defaultFormat);
+		await using var store = new WorkspaceDocumentStore(fileSystem);
+
+		var utf16Options = new WorkspaceDocumentOpenOptions([TextEncoding.Utf16LittleEndian], s_defaultFormat);
+		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), utf16Options, TestContext.CancellationToken)).Snapshot!;
+
+		WorkspaceDocumentMutationResult edited = store.Replace(
+			new WorkspaceDocumentReplaceRequest(new(initial.DocumentKey, initial.DocumentId, initial.Version), "logical", initial.FileFormat)
+		);
+
+		FileStamp externalStamp = new(Exists: true, Length: 4, LastWriteTimeUtc: DateTime.UnixEpoch.AddMinutes(1), ContentHash: "disk");
+
+		// "ab" as UTF-16 little endian without a byte-order mark: the document's own no-BOM encoding decodes it, where UTF-8 reads four characters.
+		fileSystem.ReadResults.Enqueue(
+			Task.FromResult(WorkspaceFileReadResult.FromBytes(externalStamp, new ReadOnlyMemory<byte>([0x61, 0x00, 0x62, 0x00])))
+		);
+
+		WorkspaceDocumentConflictResolutionResult result = await store.ResolveExternalConflictAsync(
+			new WorkspaceDocumentConflictResolutionRequest(
+				new(initial.DocumentKey, initial.DocumentId, edited.Snapshot!.Version),
+				externalStamp,
+				WorkspaceDocumentConflictResolutionMode.ResolveWithDisk
+			),
+
+			TestContext.CancellationToken
+		);
+
+		Assert.AreEqual(WorkspaceDocumentConflictResolutionOutcome.ResolvedWithDisk, result.Outcome);
+		Assert.AreEqual("ab", result.Snapshot!.Content);
 	}
 }

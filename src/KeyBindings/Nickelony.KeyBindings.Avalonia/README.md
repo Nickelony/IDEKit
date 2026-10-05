@@ -1,70 +1,52 @@
 # Nickelony.KeyBindings.Avalonia
 
-Avalonia adapter for [`Nickelony.KeyBindings`](../Nickelony.KeyBindings/README.md).
-It maps Avalonia input to the host-neutral key model and provides the Avalonia entry point.
-The package is cross-platform: it targets `net8.0`, unlike the Windows-only
-`Nickelony.KeyBindings.Wpf` sibling.
+Avalonia adapter for
+[`Nickelony.KeyBindings`](https://github.com/Nickelony/LanguageServer/blob/main/src/KeyBindings/Nickelony.KeyBindings/README.md):
+it maps Avalonia input to the toolkit-neutral key model and provides the Avalonia entry point. It depends on
+`Nickelony.KeyBindings` and `Avalonia`, targets `net8.0`, and uses only `Avalonia.Input`, unlike the
+Windows-only `Nickelony.KeyBindings.Wpf` sibling.
 
 ## Getting started
 
 ```sh
-dotnet add package Nickelony.KeyBindings.Avalonia
+dotnet add package Nickelony.KeyBindings.Avalonia --prerelease
 ```
 
 An Avalonia host dispatches key events through the adapter:
 
 ```csharp
+using Avalonia.Input;
+using Nickelony.KeyBindings;
 using Nickelony.KeyBindings.Avalonia;
 
-private void OnEditorKeyDown(object? sender, KeyEventArgs e)
+// The handler of the key-down event of the element that has the focus. The dispatcher is built as in the
+// Nickelony.KeyBindings readme, and the gate is created once over the element that routes the key events.
+void OnEditorKeyDown(IKeyBindingDispatcher dispatcher, KeyRepeatGate repeatGate, KeyEventArgs e)
 {
-	// Both results consume the keystroke: Executed ran a command, Pending buffered a chord.
-	// The second argument is the host's active context token, or null when it has none.
-	if (_shortcutDispatcher.HandleKeyDown(e, _editor.ActiveMode.Token) != KeyChordDispatchResult.NotHandled)
-		e.Handled = true;
+    // Both outcomes consume the stroke: Executed ran a command, Pending buffered a chord.
+    // The second argument is the active context token of the host, or null when it has none;
+    // the third ignores a repeated press of a held key.
+    if (dispatcher.HandleKeyDown(e, context: null, repeatGate) != KeyStrokeDispatchOutcome.NotHandled)
+        e.Handled = true;
 }
 ```
 
-## Dependencies
+## Remarks
 
-`Nickelony.KeyBindings` (the host-neutral command and key model the adapter maps onto) and
-`Avalonia` (whose `Avalonia.Input` model it uses). The package targets `net8.0` and uses only the
-`Avalonia.Input` types, so a cross-platform Avalonia host takes no Windows-only dependency.
+- **Handled events are skipped.** An event another handler already marked handled is never dispatched.
+- **Auto-repeat needs a gate.** Avalonia's `KeyEventArgs` exposes no auto-repeat flag, so the adapter tracks held keys
+  in a `KeyRepeatGate`, which you create over the element that routes the key events (`new KeyRepeatGate(window)`) and
+  dispose with it.
+- **The gate admits a press once**, forgets a key on its release (handled releases included), and forgets
+  every key when focus leaves its scope or its window is deactivated. A call without a gate dispatches every repeat.
+- **No AltGr filter.** An AltGr filter would depend on how Avalonia reports the left Ctrl and right Alt pair that
+  Windows sends, and a Ctrl+Alt heuristic would silently drop genuine Ctrl+Alt bindings. WPF's `KeyDownHandlingOptions`
+  has no counterpart here.
+- **No display formatter.** Display text is toolkit-free: use the neutral `KeyDisplayTextFormatter`, or a
+  `DesktopKeyDisplayTextFormatter` over a `KeyBindingPlatformProfile` preset, through `KeyBindingServiceOptions.DisplayTextFormatter`.
 
-## What's inside
-
-- `KeyCodeMapper` - converts between `Avalonia.Input.Key` and `KeyCode`, and between
-  `Avalonia.Input.KeyModifiers` and `KeyModifierSet`.
-- `KeyEventArgsExtensions.ToKeyCombo` - creates a `KeyCombo` from a `KeyEventArgs`, reading the key
-  from `KeyEventArgs.Key` and the modifiers from `KeyEventArgs.KeyModifiers`.
-- `KeyBindingDispatcherExtensions.HandleKeyDown` - dispatches a `KeyEventArgs` through
-  `KeyBindingDispatcher<TCommandId>` and returns `KeyChordDispatchResult`: `Executed` when a command ran,
-  `Pending` when the stroke started or continued a chord, and `NotHandled` otherwise. The caller marks the
-  event `Handled` for both `Executed` and `Pending`. The active context token is a required argument, so a
-  host whose control has view modes passes the token of its current mode and a host with no contexts
-  passes `null`. An event another handler already marked handled is never dispatched.
-
-The adapter carries the input axis only - key mapping, event conversion, and dispatch. Two parts of
-the `Nickelony.KeyBindings.Wpf` surface are deliberately absent, because Avalonia cannot express what
-they need:
-
-- **No `KeyDownHandlingOptions`.** Avalonia's `KeyEventArgs` exposes no auto-repeat flag (there is no
-  auto-repeat signal anywhere in Avalonia) and no left/right key state (`IKeyboardDevice` is empty), so
-  neither an auto-repeat filter nor a correct AltGr filter can be written. A Ctrl+Alt heuristic would
-  silently drop genuine Ctrl+Alt bindings, so a host that needs either filter applies its own policy
-  before it calls the adapter.
-- **No display formatter.** Display text is toolkit-free: the neutral `KeyDisplayTextFormatter` renders
-  canonical names, and the `DesktopKeyDisplayTextFormatter` in the same `Nickelony.KeyBindings` package
-  renders the Windows, Linux, and macOS desktop conventions from the `Windows`/`Linux`/`MacOS` presets
-  (a bare `DesktopKeyDisplayConventions` carries the neutral `Control`/`Meta`/`Numpad ` labels). A host
-  assigns one of those to `KeyBindingServiceOptions.DisplayTextFormatter`; there is no Avalonia-specific
-  text to add.
-
-A `Pending` result means the dispatcher buffered a chord stroke. The adapter contains no timer: the
-host supplies the cancel triggers with `CancelPendingChord` (Escape, focus loss, an idle timeout of its
-own), because the timing policy belongs to the toolkit. A host that participates in a context chain
-should route the stroke with `KeyBindingDispatcherChain.DispatchInPriorityOrder` instead of calling
-the adapter for one dispatcher, and it passes the same active token to every dispatcher in the chain.
+The [key bindings guide](https://github.com/Nickelony/LanguageServer/blob/main/docs/KeyBindingsGuide.md) owns
+the dispatch and hosting contracts, the pending-chord cancel triggers, and the display text conventions.
 
 ## License
 

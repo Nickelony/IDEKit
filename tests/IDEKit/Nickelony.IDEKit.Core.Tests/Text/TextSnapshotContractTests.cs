@@ -15,7 +15,7 @@ public sealed class TextSnapshotContractTests
 		ITextSnapshot snapshot = new StringTextSnapshot(text);
 
 		Assert.AreEqual(text.Length, snapshot.TextLength);
-		Assert.IsTrue(snapshot.LineCount >= 1);
+		Assert.IsGreaterThanOrEqualTo(1, snapshot.LineCount);
 
 		int nextLineStart = 0;
 
@@ -92,8 +92,8 @@ public sealed class TextSnapshotContractTests
 	}
 
 	/// <summary>
-	/// Derives the document's line start offsets from the raw text, so the expected line of an offset
-	/// is computed independently of the snapshot's own line table.
+	/// Derives the document's line start offsets from the raw text, so the expected line of an offset is computed independently of the snapshot's
+	/// own line table.
 	/// </summary>
 	private static List<int> GetExpectedLineStarts(string text)
 	{

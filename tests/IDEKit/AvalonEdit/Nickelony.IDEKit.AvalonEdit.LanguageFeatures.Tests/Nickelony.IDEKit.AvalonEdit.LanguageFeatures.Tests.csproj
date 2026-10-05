@@ -1,38 +1,46 @@
 <Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net8.0-windows</TargetFramework>
+		<UseWPF>true</UseWPF>
+		<EditorEngine>Wpf</EditorEngine>
+		<IsPackable>false</IsPackable>
+		<IsTestProject>true</IsTestProject>
+		<!-- The Performance tier is deselected because its budgets vary with the machine and its load; see tests/TestSupport/README.md. -->
+		<VSTestTestCaseFilter>TestCategory!=Performance</VSTestTestCaseFilter>
+	</PropertyGroup>
 
-  <PropertyGroup>
-    <TargetFramework>net8.0-windows</TargetFramework>
-    <UseWPF>true</UseWPF>
-    <IsPackable>false</IsPackable>
-    <RunSettingsFilePath>test.runsettings</RunSettingsFilePath>
-    <IsTestProject>true</IsTestProject>
-  </PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="coverlet.collector" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" />
+		<PackageReference Include="MSTest.TestAdapter" />
+		<PackageReference Include="MSTest.TestFramework" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="coverlet.collector" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" />
-    <PackageReference Include="MSTest.TestAdapter" />
-    <PackageReference Include="MSTest.TestFramework" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\..\src\IDEKit\AvalonEdit\Nickelony.IDEKit.AvalonEdit.LanguageFeatures\Nickelony.IDEKit.AvalonEdit.LanguageFeatures.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\..\src\IDEKit\AvalonEdit\Nickelony.IDEKit.AvalonEdit.LanguageFeatures\Nickelony.IDEKit.AvalonEdit.LanguageFeatures.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Include="..\..\..\TestSupport\RecordingLogger.cs" Link="TestSupport\RecordingLogger.cs" />
+		<Compile Include="..\..\..\TestSupport\Wpf\FakeKeyboardDevice.cs" Link="TestSupport\FakeKeyboardDevice.cs" />
+		<Compile Include="..\..\TestSupport\TestBitmapRendering.Wpf.cs" Link="TestSupport\TestBitmapRendering.Wpf.cs" />
+		<Compile Include="..\..\TestSupport\WpfTestHost.cs" Link="TestSupport\WpfTestHost.cs" />
+		<Compile Include="..\..\..\TestSupport\Wpf\WpfToolkitTestHost.cs" Link="TestSupport\WpfToolkitTestHost.cs" />
+		<Compile Include="..\..\..\TestSupport\Wpf\HostWindow.cs" Link="TestSupport\HostWindow.cs" />
+		<Compile Include="..\..\TestSupport\TestThreads.cs" Link="TestSupport\TestThreads.cs" />
+		<Compile Include="..\..\TestSupport\ScriptedCompletionProvider.cs" Link="TestSupport\ScriptedCompletionProvider.cs" />
+		<Compile Include="..\..\..\TestSupport\Wpf\DispatcherTestHelpers.cs" Link="TestSupport\DispatcherTestHelpers.cs" />
+		<Compile Include="..\..\..\TestSupport\Wpf\TestWindowActivation.cs" Link="TestSupport\TestWindowActivation.cs" />
+		<!-- Shared binding tests: one body compiled into the AvalonEdit and AvaloniaEdit suites, with a
+		     per-binding namespace, engine using, and test-class attribute selected by the AVALONIAEDIT define. -->
+		<Compile Include="..\..\Shared\Editor.LanguageFeatures.Tests\**\*.cs" LinkBase="." />
+		<Compile Include="..\..\..\TestSupport\TestCategories.cs" Link="TestSupport\TestCategories.cs" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Compile Include="..\..\..\..\shared\TestHelpers\CapturingLogger.cs" Link="shared\CapturingLogger.cs" />
-    <Compile Include="..\..\..\..\shared\TestHelpers\TestBitmapRendering.cs" Link="shared\TestBitmapRendering.cs" />
-    <Compile Include="..\..\..\..\shared\TestHelpers\WPFTestHost.cs" Link="shared\WPFTestHost.cs" />
-    <!-- Shared binding tests: one body compiled into the AvalonEdit and AvaloniaEdit suites, with a
-         per-binding namespace, engine using, and test-class attribute selected by the AVALONIAEDIT define. -->
-    <Compile Include="..\..\..\..\shared\Editor.LanguageFeatures.Tests\**\*.cs" Link="shared\Editor.LanguageFeatures.Tests\%(RecursiveDir)%(Filename)%(Extension)" />
-    <Compile Include="..\..\..\TestSupport\TestCategories.cs" Link="TestSupport\TestCategories.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
-    <Using Include="Nickelony.IDEKit.Testing" />
-    <Using Include="Nickelony.Testing" />
-  </ItemGroup>
-
+	<ItemGroup>
+		<Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
+		<Using Include="Nickelony.IDEKit.Testing" />
+		<Using Include="Nickelony.IDEKit.Testing.WpfTestHost" Alias="TestHost" />
+		<Using Include="Nickelony.Testing" />
+	</ItemGroup>
 </Project>

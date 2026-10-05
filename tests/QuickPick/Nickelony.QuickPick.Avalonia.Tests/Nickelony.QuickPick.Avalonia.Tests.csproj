@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<IsPackable>false</IsPackable>
+		<IsTestProject>true</IsTestProject>
+		<DefineConstants>$(DefineConstants);AVALONIAQUICKPICK</DefineConstants>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="coverlet.collector" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" />
+		<PackageReference Include="MSTest.TestAdapter" />
+		<PackageReference Include="MSTest.TestFramework" />
+		<!-- The window tests run on the headless platform, whose UI thread the controls of the window require. -->
+		<PackageReference Include="Avalonia.Headless" />
+		<PackageReference Include="Avalonia.Themes.Fluent" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\src\QuickPick\Nickelony.QuickPick.Avalonia\Nickelony.QuickPick.Avalonia.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Include="..\..\TestSupport\Avalonia\AvaloniaTestApp.cs" Link="TestSupport\AvaloniaTestApp.cs" />
+		<Compile Include="..\..\TestSupport\Avalonia\AvaloniaTestClassAttribute.cs" Link="TestSupport\AvaloniaTestClassAttribute.cs" />
+		<Compile Include="..\..\TestSupport\Avalonia\AvaloniaTestMethodAttribute.cs" Link="TestSupport\AvaloniaTestMethodAttribute.cs" />
+		<Compile Include="..\..\TestSupport\Avalonia\AvaloniaToolkitTestHost.cs" Link="TestSupport\AvaloniaToolkitTestHost.cs" />
+		<Compile Include="..\..\TestSupport\Avalonia\HostWindow.cs" Link="TestSupport\HostWindow.cs" />
+		<Compile Include="..\..\TestSupport\Avalonia\TestWindowActivation.cs" Link="TestSupport\TestWindowActivation.cs" />
+		<Compile Include="..\..\TestSupport\Avalonia\DispatcherTestHelpers.cs" Link="TestSupport\DispatcherTestHelpers.cs" />
+		<Compile Include="..\..\TestSupport\TestCategories.cs" Link="TestSupport\TestCategories.cs" />
+		<!-- Shared presenter tests: one body compiled into the WPF and the Avalonia suites, with a per-toolkit namespace and using selected by the AVALONIAQUICKPICK define. -->
+		<Compile Include="..\Shared\Presenter.Tests\**\*.cs" LinkBase="." />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
+		<Using Include="Nickelony.QuickPick.Avalonia.Tests.AvaloniaTestHost" Alias="TestHost" />
+		<Using Include="Nickelony.Testing.AvaloniaTestClassAttribute" Alias="TestClassAttribute" />
+		<Using Include="Nickelony.Testing.AvaloniaTestClassAttribute" Alias="STATestClassAttribute" />
+		<Using Include="Nickelony.Testing" />
+	</ItemGroup>
+</Project>

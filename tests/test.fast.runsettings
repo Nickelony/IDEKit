@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <RunConfiguration>
+    <!--
+      The fast profile deselects the Integration tier, which needs a real child process. The tier policy is in
+      tests/TestSupport/README.md.
+    -->
+    <TestCaseFilter>TestCategory!=Integration</TestCaseFilter>
+  </RunConfiguration>
+</RunSettings>

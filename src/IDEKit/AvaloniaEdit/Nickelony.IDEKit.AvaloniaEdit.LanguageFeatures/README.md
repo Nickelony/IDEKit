@@ -1,193 +1,81 @@
 # Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures
 
-The language-features UI layer of the Nickelony.IDEKit package family. It brings
-the hover, signature-help, completion-window, and code-action controllers plus the
-definition-navigation, diagnostic-segment projection, and semantic-token colorizing
-helpers to AvaloniaEdit editors, built on the dependency-free
-`Nickelony.IDEKit.Core` and `Nickelony.IDEKit.IntelliSense` contracts and
-host-state records plus the `Nickelony.IDEKit.AvaloniaEdit` document/editing
-helpers.
-
-## Shared source
-
-This package does not duplicate the reference `Nickelony.IDEKit.AvalonEdit.LanguageFeatures` file-for-file.
-The files that are identical modulo the engine namespace are a single source under
-`shared/Editor.LanguageFeatures/` at the repository root, linked into this project and compiled with the
-`AVALONIAEDIT` constant defined; each such file opens with an `#if AVALONIAEDIT` header that selects the
-AvaloniaEdit `using` and this package's namespace. Only the files whose bodies genuinely diverge live here as
-their own AvaloniaEdit siblings, and their causes are recorded in `docs/EditorBindingGuide.md`.
+The AvaloniaEdit binding of the IDEKit language features: it binds the language-feature controllers and services to an
+AvaloniaEdit editor, one feature per namespace, as the [feature slices](https://github.com/Nickelony/LanguageServer/blob/main/docs/EditorLanguageFeaturesGuide.md#feature-slices) describe. It builds on the dependency-free `Nickelony.IDEKit.Core`
+contracts, `Nickelony.IDEKit.LanguageFeatures`, `Nickelony.IDEKit.LanguageFeatures.Controllers` and the `Nickelony.IDEKit.AvaloniaEdit` document and editing
+helpers. It targets `net8.0` and also depends on `Avalonia.AvaloniaEdit`.
 
 ## Getting started
 
 ```powershell
-dotnet add package Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures
+dotnet add package Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures --prerelease
 ```
 
-The [wiring example](#wiring-example) below composes the controllers on an
-AvaloniaEdit editor; the per-slice inventory and the behavioral reference live in
-[REFERENCE.md](REFERENCE.md).
-
-## Requirements
-
-.NET 8 (`net8.0`) and Avalonia; `Avalonia.AvaloniaEdit` 12.0.0.
-
-## Dependencies
-
-`Nickelony.IDEKit.Core`, `Nickelony.IDEKit.IntelliSense`, and `Nickelony.IDEKit.AvaloniaEdit`, plus `Microsoft.Extensions.Logging.Abstractions` for the controllers' optional loggers.
-
-### Logging
-
-Controllers accept an optional `Microsoft.Extensions.Logging.ILogger` and
-default to `NullLogger` when none is supplied, so hosts control where request
-failures are logged. Event ids are stable, unique within this package, and drawn
-from the package's own `1000` block, so they never collide with the larger blocks
-the sibling packages allocate (Markdown `2000`, TextMate `3000`, and
-`Nickelony.KeyBindings` `4000`): completion request failures use
-`1000`, the completion tooltip presenter uses `1001` (description resolve
-failed) and `1002` (tooltip access unsupported), hover uses `1010`-`1012`
-(request failed, host callback failed, offset mismatch), signature help uses
-`1020` (request failed) and `1021` (host callback failed), and code actions use
-`1030` (request failed) and `1031` (host callback failed).
-
-## Thread affinity
-
-The controllers are created and used on the UI thread that owns the editor: they
-touch editor and popup state directly, and their debounce timers run on that
-thread's dispatcher. Provider requests stay asynchronous; their continuations are
-marshalled back to the owning thread, explicitly when the creating thread captured
-no synchronization context. The normative thread-affinity contract is in
-[REFERENCE.md](REFERENCE.md).
-
-## Package layering
-
-A helper stays in this package when it consumes an IntelliSense payload and would
-otherwise force the base package to reference IntelliSense (dependency inversion).
-`SemanticTokensColorizer` and `ISemanticTokenStyleResolver` are the clearest
-instance of that rule: they paint
-`Nickelony.IDEKit.IntelliSense.SemanticTokens.TextSemanticToken`, so they live here
-instead of in `Nickelony.IDEKit.AvaloniaEdit`. Keep editor-neutral, payload-free
-helpers in the base package and IntelliSense-payload consumers in this one.
-
-## Host integration seams
-
-The controllers are hook-driven: they take hooks for offset resolution,
-request execution, and presentation, so a host wires them to its own editor
-state and skins. Host hooks are grouped in dedicated hook types
-(`TextCompletionControllerHooks`, `TextHoverControllerHooks`,
-`TextSignatureHelpControllerHooks`, and `TextCodeActionControllerHooks`), so wiring stays declarative and new hooks
-can be added without growing the constructors. `TextCompletionController` takes
-the text area, its `CompletionWindowSkin`, the options record, and the hooks, and
-creates the `CompletionWindowCoordinator` for that text area itself, exposed as
-`controller.WindowCoordinator`: a host observes window closures through
-`WindowCoordinator.WindowClosed` without keeping its own window-tracking state
-(the closure and presentation guarantees are normative and live in
-[REFERENCE.md](REFERENCE.md)). Hosts keep their own completion-item
-and window styling (for example a `CompletionData` type and window-style skin)
-and can supply item factories and display-text selectors. The scheduled request
-callback is a hook (`TextCompletionControllerHooks.ScheduledRequestAsync`): the
-controller is fully configured when it is constructed, and a host that never
-schedules requests simply omits the callback.
-
-Trigger and popup-precedence policy stays in the host: helpers such as
-"Ctrl+Space input", "F12 or Ctrl+Click for go-to-definition", or "do not show
-hover while another popup is open" are a few lines of host code and are
-deliberately not part of this package.
-
-The controllers bind to the editor differently by design: the completion
-controller takes the text area (it owns its window coordinator), the hover
-controller takes the element hover positions resolve against plus its hooks,
-and the signature help controller is host-state driven through hooks only. Each
-shape matches what the controller actually touches.
-
-The completion window keeps the editor's keyboard focus by default:
-`NonActivatingWindow` defaults to `true`, and the controller installs explicit
-click selection so a click in the list selects an item without taking focus from
-the editor. On AvaloniaEdit the window is a popup hosted in the editor's own
-window, so the non-activation policy itself is a no-op there; a host that wants
-the list to activate normally sets `NonActivatingWindow = false`, which installs
-neither. The option remarks describe both modes. The empty-list close behavior is
-normative and lives in [REFERENCE.md](REFERENCE.md).
-
-The controller also installs the commit-character input policy while it is
-alive: when the selected item's completion data declares commit characters
-(`ICommitCharacterCompletionData`, which the default bridge implements from the
-shared item), a typed character from that set accepts the item and is still
-typed, so one keystroke both commits and inserts the character. The policy runs
-in the text-entering stage, which AvaloniaEdit raises before the text is
-inserted, so the accept happens before text-composition services such as an
-auto-closing service see the character, and it repeats the check in the routed
-text-input stage, which carries input that bypasses the entering stage.
-Handlers that share the text-input stage still run in subscription order, so a host that must see the character first subscribes its input services before the controller; `AcceptOnCommitCharacters = false` turns the policy off.
-
-The default bridge likewise feeds item facts into behavior:
-
-- The item's additional text edits are applied together with the insertion as one undo unit
-  (malformed, stale, or conflicting entries are skipped individually through the shared edit kernel).
-- A deprecated item's label renders struck through without changing selection or committing.
-- The item's commit characters drive the input policy above.
-- The item's `FilterText` (falling back to the label) is the filter key; the label stays the
-  displayed content.
-
-## Wiring example
-
-The following sketch wires the completion and hover controllers for an editor;
-production hosts add lifetime management (`Dispose` on editor teardown) and
-their own item and tooltip presentation. `RequestCompletionAsync`,
-`RefreshCompletionState`, `BuildHoverRequestState`, `RequestHoverAsync`, and
-`ShowHoverTooltip` stand for host-defined methods used by the sketch.
+A `CompletionPresenter` shows the answers in the completion window, and a controller from
+`CompletionControllerFactory` asks the provider for them. Every hook is optional. Typed letters then open the
+window on their own, and so do the trigger characters of a provider that implements `ICompletionTriggerCharacters`.
+Without a `ScopeAt` hook every offset counts as code, so a letter in a comment opens the window too. The example
+sets one presenter hook and also asks at once:
 
 ```csharp
-var options = TextCompletionControllerOptions.Default with
-{
-    RequestDebounceDelay = TimeSpan.FromMilliseconds(50.0)
-};
+using AvaloniaEdit;
+using Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Completion;
+using Nickelony.IDEKit.LanguageFeatures.Completion;
+using Nickelony.IDEKit.LanguageFeatures.Controllers.Completion;
 
-// The scheduled-request hook runs the standard pipeline through the controller field, so the
-// field is assigned after construction from the callback's point of view.
-TextCompletionController? completion = null;
+var editor = new TextEditor { Text = "pri", CaretOffset = 3 };
 
-completion = new TextCompletionController(
+// For example, a LanguageServerFeatureProvider, which also names the server's trigger characters.
+ICompletionProvider provider = CreateCompletionProvider();
+
+// AvaloniaEdit hosts the completion list in a popup that carries no font of its own, so the
+// list gets the editor's font instead of the window.
+using var presenter = new CompletionPresenter(
     editor.TextArea,
-    CompletionWindowSkin.Default,
-    options,
-    new TextCompletionControllerHooks
-    {
-        // AvaloniaEdit hosts the completion list in a popup that carries no font of its own, so
-        // the editor's font is applied to the completion list rather than to the window.
-        ConfigureWindow = window => window.CompletionList.FontSize = editor.FontSize,
-        GetDisplayInfo = item => (item.Text, null),
-        ResolveDescriptionAsync = (item, cancellationToken) => Task.FromResult<object?>(item.Description),
-        TooltipSkin = CompletionTooltipSkin.Default with
-        {
-            Background = Brushes.Black,
-            BorderBrush = Brushes.Gray
-        },
+    CompletionPresentationOptions.Default,
+    new CompletionPresenterHooks { ConfigureWindow = window => window.CompletionList.FontSize = editor.FontSize });
 
-        // The debounced request produces the decision; its items go through the default
-        // TextCompletionItemCompletionData adapter, so no item mapper is needed here.
-        ScheduledRequestAsync = () => completion!.RequestAsync(RequestCompletionAsync)
-    });
+using CompletionController completion = CompletionControllerFactory.Create(
+    editor.TextArea,
+    documentId: "C:/scripts/main.lua",
+    provider,
+    presenter);
 
-// Observe every closure of a shown window, including host-forced closes.
-completion.WindowCoordinator.WindowClosed += (_, _) => RefreshCompletionState();
-
-var hover = new TextHoverController(
-    editor,
-    new TextHoverControllerHooks
-    {
-        GetOffsetFromPoint = point => editor.GetPositionFromPoint(point) is { } position
-            ? editor.Document.GetOffset(position.Location)
-            : null,
-        BuildEvaluationState = BuildHoverRequestState,
-        RequestHoverAsync = RequestHoverAsync,
-        ShowTooltip = ShowHoverTooltip
-    });
+// Call on the UI thread. The chosen item replaces the word before the caret, "pri".
+bool opened = await completion.RequestAsync();
 ```
 
-## Reference
+## Remarks
 
-The normative reference lives in [REFERENCE.md](REFERENCE.md): the feature-slice inventory, the request-coordination and completion-decision semantics, completion window sizing and tooltips, tooltip availability, and thread affinity.
+- The controllers are hook-driven and created and used on the editor's UI thread; host hooks are grouped
+  in dedicated hook types.
+- Completion and the presenter overload of `SignatureHelpControllerFactory` open on typed characters, and key
+  gestures and popup precedence stay in the host.
+- A host that starts every completion request itself sets `CompletionTriggerPolicy.Manual` on
+  `CompletionControllerOptions.Triggers`, and one that turns typing triggers off at run time answers
+  `CompletionScopes.None` from `ScopeAt`.
+- Controllers accept an optional `Microsoft.Extensions.Logging.ILogger` and default to `NullLogger`; a
+  provider failure inside a controller-owned pipeline is logged and reported as a not-applied result
+  instead of thrown.
+- A presenter that draws a window, a menu or a popup takes its look as one `presentation` argument, the
+  `...PresentationOptions` record of its feature, which holds the themes and the settings of the presenter; a host
+  restyles with `CompletionPresentationOptions.Default with { WindowTheme = ... }`.
+- This binding builds no completion tooltip pipeline, because AvaloniaEdit publishes no completion tooltip
+  member: it declares no `TooltipTheme` option, no `ConfigureTooltip`, `ResolveDescriptionAsync` or
+  `BuildMarkdownContent` hook, and no `IsTooltipSupported` query. AvaloniaEdit shows an item's `Description` in its own tooltip, so a
+  Markdown documentation shows there as raw text.
+- `CompletionWindowOptions.PreventActivation` does not change activation here, because the completion window is a
+  popup inside the editor's own window. The option still decides whether the presenter installs the explicit click
+  selection: `true`, the default, installs it, and `false` installs nothing.
+- Semantic-token colorizing lives here, not in the base package, because it paints a language-feature
+  payload and would otherwise force the base package to reference `LanguageFeatures`.
+- The [language-features guide](https://github.com/Nickelony/LanguageServer/blob/main/docs/EditorLanguageFeaturesGuide.md)
+  owns the [typing triggers](https://github.com/Nickelony/LanguageServer/blob/main/docs/EditorLanguageFeaturesGuide.md#typing-triggers),
+  the request-coordination semantics, the completion window sizing and tooltip rules, the refresh behavior,
+  code actions, and thread affinity.
+- The controllers whose request logic names no engine type come from `Nickelony.IDEKit.LanguageFeatures.Controllers`;
+  this package adds their factories and the presenters that show the results.
 
 ## License
 
-MIT (c) 2026 Kewin Kupilas.
+MIT © 2026 Kewin Kupilas.

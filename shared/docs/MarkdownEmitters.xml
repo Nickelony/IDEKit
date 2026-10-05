@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+	<members>
+		<member name="MarkdownEmitters.Remarks">
+			<para>
+			  The Markdig parse and the toolkit-neutral mapping decisions live in the engine-neutral <see cref="MarkdownDocumentModelBuilder" />,
+			  and the layout decisions (spacing, heading size, list markers, spacing suppression, table structure)
+			  live in the render plan that <see cref="MarkdownRenderPlanner" /> builds from the model.
+			  This emitter only resolves the toolkit concerns (fonts, brushes, element types) while it walks that plan, and code blocks are delegated
+			  to <see cref="MarkdownCodeBlockFactory" />.
+			</para>
+			<para>
+			  All members create and touch the toolkit's elements and must run on the UI thread that owns the target elements. The caller normalizes
+			  line endings and owns the plain-text fallback behavior; a parsing or rendering failure propagates to the caller.
+			</para>
+		</member>
+	</members>
+</doc>

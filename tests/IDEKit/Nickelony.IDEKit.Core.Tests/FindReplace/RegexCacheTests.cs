@@ -2,11 +2,11 @@ using System.Text.RegularExpressions;
 
 namespace Nickelony.IDEKit.Core.Tests;
 
-/// <summary>
-/// Pins the bounded regex cache's key, eviction and bound contract. The cache is process-global, so
-/// these probes assert absolute entry counts and must not overlap another test that searches: the
-/// class is excluded from the suite's parallel run.
-/// </summary>
+/// <summary>Pins the bounded regex cache's key, eviction and bound contract.</summary>
+/// <remarks>
+/// The cache is process-global, so these probes assert absolute entry counts and must not overlap another test that searches: the class is excluded
+/// from the suite's parallel run.
+/// </remarks>
 [TestClass]
 [DoNotParallelize]
 public sealed class RegexCacheTests

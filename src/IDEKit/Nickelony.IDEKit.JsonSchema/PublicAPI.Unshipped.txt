@@ -1,1 +1,46 @@
 #nullable enable
+Nickelony.IDEKit.JsonSchema.JsonSchemaPropertyType
+Nickelony.IDEKit.JsonSchema.JsonSchemaPropertyType.Array = 1 -> Nickelony.IDEKit.JsonSchema.JsonSchemaPropertyType
+Nickelony.IDEKit.JsonSchema.JsonSchemaPropertyType.Boolean = 5 -> Nickelony.IDEKit.JsonSchema.JsonSchemaPropertyType
+Nickelony.IDEKit.JsonSchema.JsonSchemaPropertyType.Integer = 3 -> Nickelony.IDEKit.JsonSchema.JsonSchemaPropertyType
+Nickelony.IDEKit.JsonSchema.JsonSchemaPropertyType.Null = 6 -> Nickelony.IDEKit.JsonSchema.JsonSchemaPropertyType
+Nickelony.IDEKit.JsonSchema.JsonSchemaPropertyType.Number = 4 -> Nickelony.IDEKit.JsonSchema.JsonSchemaPropertyType
+Nickelony.IDEKit.JsonSchema.JsonSchemaPropertyType.Object = 0 -> Nickelony.IDEKit.JsonSchema.JsonSchemaPropertyType
+Nickelony.IDEKit.JsonSchema.JsonSchemaPropertyType.String = 2 -> Nickelony.IDEKit.JsonSchema.JsonSchemaPropertyType
+Nickelony.IDEKit.JsonSchema.JsonSchemaVocabularyIndex
+Nickelony.IDEKit.JsonSchema.JsonSchemaVocabularyIndex.Constants.get -> System.Collections.Generic.IReadOnlyList<string!>!
+Nickelony.IDEKit.JsonSchema.JsonSchemaVocabularyIndex.JsonSchemaVocabularyIndex(System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.JsonSchema.JsonSchemaVocabularyPropertyDescriptor!>! properties, System.Collections.Generic.IReadOnlyList<string!>! constants) -> void
+Nickelony.IDEKit.JsonSchema.JsonSchemaVocabularyIndex.Properties.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.JsonSchema.JsonSchemaVocabularyPropertyDescriptor!>!
+Nickelony.IDEKit.JsonSchema.JsonSchemaVocabularyIndexBuilder
+Nickelony.IDEKit.JsonSchema.JsonSchemaVocabularyIndexFailure
+Nickelony.IDEKit.JsonSchema.JsonSchemaVocabularyIndexFailure.<Clone>$() -> Nickelony.IDEKit.JsonSchema.JsonSchemaVocabularyIndexFailure!
+Nickelony.IDEKit.JsonSchema.JsonSchemaVocabularyIndexFailure.Code.get -> string!
+Nickelony.IDEKit.JsonSchema.JsonSchemaVocabularyIndexFailure.Code.init -> void
+Nickelony.IDEKit.JsonSchema.JsonSchemaVocabularyIndexFailure.Deconstruct(out string! Code, out string! Message, out System.Exception! Exception) -> void
+Nickelony.IDEKit.JsonSchema.JsonSchemaVocabularyIndexFailure.Equals(Nickelony.IDEKit.JsonSchema.JsonSchemaVocabularyIndexFailure? other) -> bool
+Nickelony.IDEKit.JsonSchema.JsonSchemaVocabularyIndexFailure.Exception.get -> System.Exception!
+Nickelony.IDEKit.JsonSchema.JsonSchemaVocabularyIndexFailure.Exception.init -> void
+Nickelony.IDEKit.JsonSchema.JsonSchemaVocabularyIndexFailure.JsonSchemaVocabularyIndexFailure(string! Code, string! Message, System.Exception! Exception) -> void
+Nickelony.IDEKit.JsonSchema.JsonSchemaVocabularyIndexFailure.Message.get -> string!
+Nickelony.IDEKit.JsonSchema.JsonSchemaVocabularyIndexFailure.Message.init -> void
+Nickelony.IDEKit.JsonSchema.JsonSchemaVocabularyIndexFailureCodes
+Nickelony.IDEKit.JsonSchema.JsonSchemaVocabularyIndexResult
+Nickelony.IDEKit.JsonSchema.JsonSchemaVocabularyIndexResult.Failure.get -> Nickelony.IDEKit.JsonSchema.JsonSchemaVocabularyIndexFailure?
+Nickelony.IDEKit.JsonSchema.JsonSchemaVocabularyIndexResult.Index.get -> Nickelony.IDEKit.JsonSchema.JsonSchemaVocabularyIndex?
+Nickelony.IDEKit.JsonSchema.JsonSchemaVocabularyIndexResult.Succeeded.get -> bool
+Nickelony.IDEKit.JsonSchema.JsonSchemaVocabularyIndexResult.Warnings.get -> System.Collections.Generic.IReadOnlyList<string!>!
+Nickelony.IDEKit.JsonSchema.JsonSchemaVocabularyPropertyDescriptor
+Nickelony.IDEKit.JsonSchema.JsonSchemaVocabularyPropertyDescriptor.Description.get -> string?
+Nickelony.IDEKit.JsonSchema.JsonSchemaVocabularyPropertyDescriptor.IsArrayOnly.get -> bool
+Nickelony.IDEKit.JsonSchema.JsonSchemaVocabularyPropertyDescriptor.JsonSchemaVocabularyPropertyDescriptor(string! name, System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.JsonSchema.JsonSchemaPropertyType>! types, string? description) -> void
+Nickelony.IDEKit.JsonSchema.JsonSchemaVocabularyPropertyDescriptor.Name.get -> string!
+Nickelony.IDEKit.JsonSchema.JsonSchemaVocabularyPropertyDescriptor.Types.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.JsonSchema.JsonSchemaPropertyType>!
+const Nickelony.IDEKit.JsonSchema.JsonSchemaVocabularyIndexFailureCodes.ParseFailed = "ParseFailed" -> string!
+const Nickelony.IDEKit.JsonSchema.JsonSchemaVocabularyIndexFailureCodes.ReadFailed = "ReadFailed" -> string!
+override Nickelony.IDEKit.JsonSchema.JsonSchemaVocabularyIndexFailure.Equals(object? obj) -> bool
+override Nickelony.IDEKit.JsonSchema.JsonSchemaVocabularyIndexFailure.GetHashCode() -> int
+override Nickelony.IDEKit.JsonSchema.JsonSchemaVocabularyIndexFailure.ToString() -> string!
+static Nickelony.IDEKit.JsonSchema.JsonSchemaVocabularyIndexBuilder.Build(System.IO.TextReader! reader) -> Nickelony.IDEKit.JsonSchema.JsonSchemaVocabularyIndexResult!
+static Nickelony.IDEKit.JsonSchema.JsonSchemaVocabularyIndexBuilder.Build(System.Text.Json.JsonElement schema) -> Nickelony.IDEKit.JsonSchema.JsonSchemaVocabularyIndexResult!
+static Nickelony.IDEKit.JsonSchema.JsonSchemaVocabularyIndexFailure.operator !=(Nickelony.IDEKit.JsonSchema.JsonSchemaVocabularyIndexFailure? left, Nickelony.IDEKit.JsonSchema.JsonSchemaVocabularyIndexFailure? right) -> bool
+static Nickelony.IDEKit.JsonSchema.JsonSchemaVocabularyIndexFailure.operator ==(Nickelony.IDEKit.JsonSchema.JsonSchemaVocabularyIndexFailure? left, Nickelony.IDEKit.JsonSchema.JsonSchemaVocabularyIndexFailure? right) -> bool

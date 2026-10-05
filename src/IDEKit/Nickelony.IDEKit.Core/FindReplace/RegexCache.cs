@@ -4,17 +4,11 @@ using System.Text.RegularExpressions;
 
 namespace Nickelony.IDEKit.Core.FindReplace;
 
-/// <summary>
-/// Provides the bounded regex cache that backs the <see cref="FindReplaceText"/> helpers.
-/// </summary>
+/// <summary>Provides the bounded regex cache that backs the <see cref="FindReplaceOperations"/> helpers.</summary>
 /// <remarks>
-/// The cache is keyed by pattern, options, the effective timeout, and - for case-insensitive patterns
-/// that do not opt into <see cref="RegexOptions.CultureInvariant"/> - the culture captured at creation,
-/// so repeated searches over one pattern do not re-parse it. It is bounded and insertion-ordered: when
-/// it is full the oldest entry is evicted, so a burst of distinct patterns churns the cache predictably
-/// instead of evicting an arbitrary entry. The cache is trimmed back to the limit after an insert that
-/// exceeds it, so racing misses can briefly hold a few extra entries but the count cannot keep growing
-/// under concurrency.
+/// Keyed by pattern, options, the effective timeout, and - for case-insensitive patterns that keep the current culture - the captured culture,
+/// so repeated searches do not re-parse the pattern. Bounded and insertion-ordered: a full cache evicts the oldest entry, and an insert
+/// that overflows the limit trims it back, so the count cannot grow without bound under concurrency.
 /// </remarks>
 internal static class RegexCache
 {
@@ -28,23 +22,12 @@ internal static class RegexCache
 
 	private static readonly object s_evictionLock = new();
 
-	/// <summary>
-	/// Gets the number of cached regexes. Internal so the test assembly can verify the bound without
-	/// exposing the cache.
-	/// </summary>
 	internal static int CachedRegexCount => s_regexCache.Count;
 
-	/// <summary>
-	/// Returns a cached regex for the supplied pattern, options, and timeout, creating it on first
-	/// use.
-	/// </summary>
-	/// <param name="pattern">The regular expression pattern.</param>
-	/// <param name="options">The options used for matching.</param>
-	/// <param name="matchTimeout">
-	/// The maximum time for a single match attempt. A non-positive value maps to
-	/// <see cref="Regex.InfiniteMatchTimeout"/>, matching the public helpers' documented default.
-	/// </param>
-	/// <returns>The cached or newly created regex.</returns>
+	/// <summary>Returns a cached regex for a search, creating it on first use.</summary>
+	/// <remarks>
+	/// A non-positive <paramref name="matchTimeout"/> maps to <see cref="Regex.InfiniteMatchTimeout"/>.
+	/// </remarks>
 	internal static Regex CreateRegex(string pattern, RegexOptions options, TimeSpan matchTimeout)
 	{
 		// Normalize the timeout before it enters the key so equivalent requests - zero and
@@ -54,11 +37,10 @@ internal static class RegexCache
 		// A case-insensitive pattern without CultureInvariant resolves case equivalence with the
 		// culture captured at construction, so that culture joins the key; every other pattern shares
 		// one culture-independent slot.
-		string? capturedCultureName = (options & RegexOptions.IgnoreCase) != 0
-			&& (options & RegexOptions.CultureInvariant) == 0
-				? CultureInfo.CurrentCulture.Name
-				: null;
-		var key = new RegexCacheKey(pattern, options, effectiveMatchTimeout, capturedCultureName);
+		string? capturedCultureName =
+			(options & RegexOptions.IgnoreCase) != 0 && (options & RegexOptions.CultureInvariant) == 0 ? CultureInfo.CurrentCulture.Name : null;
+
+		var key = new RegexCacheKey(pattern, options, MatchTimeout: effectiveMatchTimeout, capturedCultureName);
 
 		if (s_regexCache.TryGetValue(key, out Regex? cachedRegex))
 			return cachedRegex;
@@ -80,11 +62,11 @@ internal static class RegexCache
 		return regex;
 	}
 
-	/// <summary>
-	/// Evicts entries until the cache is at or below the limit. The trim is serialized by
-	/// <see cref="s_evictionLock"/> so racing inserts cannot starve one another's evictions, and it
-	/// runs only when an insert overflowed the cache, so the read path stays lock-free.
-	/// </summary>
+	/// <summary>Evicts entries until the cache is at or below the limit.</summary>
+	/// <remarks>
+	/// The trim is serialized so racing inserts cannot starve one another's evictions, and runs only after an insert overflowed the cache,
+	/// so the read path stays lock-free.
+	/// </remarks>
 	private static void TrimToMaximumCount()
 	{
 		lock (s_evictionLock)
@@ -97,12 +79,12 @@ internal static class RegexCache
 		}
 	}
 
-	/// <summary>
-	/// Evicts the least recently inserted cached regex. The eviction is insertion-ordered rather
-	/// than least-recently-used: a hit does not reorder the cache, which keeps the read path
-	/// allocation- and write-free.
-	/// </summary>
+	/// <summary>Evicts the earliest inserted cached regex.</summary>
 	/// <returns><see langword="true"/> when an entry was evicted, or <see langword="false"/> when the cache was empty.</returns>
+	/// <remarks>
+	/// Eviction is insertion-ordered rather than least-recently-used: a hit does not reorder the cache, keeping the read path allocation-
+	/// and write-free.
+	/// </remarks>
 	private static bool EvictOldestCachedRegex()
 	{
 		// Dequeue in insertion order and remove the first key that is still present. A key whose entry

@@ -1,9 +1,8 @@
 namespace Nickelony.IDEKit.Core.Tests;
 
 /// <summary>
-/// Pins the <see cref="IBookmarkStore"/> contract with a host-bridge reference implementation: a
-/// save/load round trip over normalized one-based line numbers, an empty result that is distinct
-/// from a failed load, and the documented null-argument guards.
+/// Pins the <see cref="IBookmarkStore"/> contract with a host-bridge reference implementation: a save/load round trip over normalized
+/// one-based line numbers, an empty result that is distinct from a failed load, and the documented <see langword="null"/>-argument guards.
 /// </summary>
 [TestClass]
 public sealed class BookmarkStoreContractTests
@@ -15,7 +14,7 @@ public sealed class BookmarkStoreContractTests
 
 		Assert.IsTrue(store.TrySave("script.lua", [5, 1, 5]));
 		Assert.IsTrue(store.TryLoad("script.lua", out IReadOnlyList<int> restored));
-		CollectionAssert.AreEqual(new[] { 1, 5 }, restored.ToArray());
+		Assert.AreSequenceEqual([1, 5], [.. restored]);
 	}
 
 	[TestMethod]
@@ -27,7 +26,7 @@ public sealed class BookmarkStoreContractTests
 		// can tell it apart from a storage failure.
 		Assert.IsTrue(store.TryLoad("script.lua", out IReadOnlyList<int> restored));
 		Assert.IsNotNull(restored);
-		Assert.AreEqual(0, restored.Count);
+		Assert.IsEmpty(restored);
 	}
 
 	[TestMethod]
@@ -53,7 +52,6 @@ public sealed class BookmarkStoreContractTests
 	public void TryLoad_NullFilePath_Throws()
 	{
 		IBookmarkStore store = new ReferenceBookmarkStore();
-
 		Assert.ThrowsExactly<ArgumentNullException>(() => store.TryLoad(null!, out _));
 	}
 
@@ -73,11 +71,7 @@ public sealed class BookmarkStoreContractTests
 
 			// The contract stores one-based, ascending, de-duplicated numbers; an empty set clears the
 			// stored entry.
-			_stored[filePath] = bookmarkLineNumbers
-				.Where(line => line >= 1)
-				.Distinct()
-				.Order()
-				.ToArray();
+			_stored[filePath] = [.. bookmarkLineNumbers.Where(line => line >= 1).Distinct().Order()];
 
 			return true;
 		}
@@ -88,13 +82,11 @@ public sealed class BookmarkStoreContractTests
 
 			if (_failingLoads.Contains(filePath))
 			{
-				bookmarkLineNumbers = Array.Empty<int>();
+				bookmarkLineNumbers = [];
 				return false;
 			}
 
-			bookmarkLineNumbers = _stored.TryGetValue(filePath, out IReadOnlyList<int>? stored)
-				? stored
-				: Array.Empty<int>();
+			bookmarkLineNumbers = _stored.TryGetValue(filePath, out IReadOnlyList<int>? stored) ? stored : [];
 
 			return true;
 		}

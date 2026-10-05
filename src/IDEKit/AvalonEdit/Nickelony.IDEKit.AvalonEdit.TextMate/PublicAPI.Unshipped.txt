@@ -1,1 +1,6 @@
 #nullable enable
+Nickelony.IDEKit.AvalonEdit.TextMate.TextMateHighlightingSession
+Nickelony.IDEKit.AvalonEdit.TextMate.TextMateHighlightingSession.Dispose() -> void
+Nickelony.IDEKit.AvalonEdit.TextMate.TextMateHighlightingSession.Theme.get -> Nickelony.IDEKit.TextMate.TextMateTokenTheme!
+Nickelony.IDEKit.AvalonEdit.TextMate.TextMateHighlightingSession.Theme.set -> void
+static Nickelony.IDEKit.AvalonEdit.TextMate.TextMateHighlightingSession.Start(ICSharpCode.AvalonEdit.Rendering.TextView! textView, TextMateSharp.Grammars.IGrammar! grammar, Nickelony.IDEKit.TextMate.TextMateTokenTheme! theme, Microsoft.Extensions.Logging.ILogger? logger = null) -> Nickelony.IDEKit.AvalonEdit.TextMate.TextMateHighlightingSession!

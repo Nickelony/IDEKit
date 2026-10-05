@@ -1,4 +1,4 @@
-using static Nickelony.IDEKit.Core.Tests.TextEditInputs;
+using static Nickelony.IDEKit.Core.Tests.TextIncrementalEditTestHelpers;
 
 namespace Nickelony.IDEKit.Core.Tests;
 
@@ -8,28 +8,37 @@ public sealed class PreparedTextEditsTests
 	[TestMethod]
 	public void Constructor_UnorderedOperations_Throws()
 	{
-		Assert.ThrowsExactly<ArgumentException>(() => new PreparedTextEdits(
-			[new TextEditOperation(0, 1, "x", 0), new TextEditOperation(2, 3, "y", 1)]));
+		Assert.ThrowsExactly<ArgumentException>(() =>
+			new PreparedTextEdits([
+				new TextEditOperation(range: TextRange.FromBounds(0, 1), newText: "x", editIndex: 0),
+				new TextEditOperation(range: TextRange.FromBounds(2, 3), newText: "y", editIndex: 1),
+			])
+		);
 	}
 
 	[TestMethod]
-	public void Constructor_NullOperation_Throws()
-	{
-		Assert.ThrowsExactly<ArgumentException>(() => new PreparedTextEdits([null!]));
-	}
+	public void Constructor_NullOperation_Throws() => Assert.ThrowsExactly<ArgumentException>(() => new PreparedTextEdits([null!]));
 
 	[TestMethod]
 	public void Constructor_OverlappingOperations_Throws()
 	{
-		Assert.ThrowsExactly<ArgumentException>(() => new PreparedTextEdits(
-			[new TextEditOperation(7, 9, "y", 1), new TextEditOperation(5, 10, "x", 0)]));
+		Assert.ThrowsExactly<ArgumentException>(() =>
+			new PreparedTextEdits([
+				new TextEditOperation(range: TextRange.FromBounds(7, 9), newText: "y", editIndex: 1),
+				new TextEditOperation(range: TextRange.FromBounds(5, 10), newText: "x", editIndex: 0),
+			])
+		);
 	}
 
 	[TestMethod]
 	public void Constructor_InsertionBeforeReplacementAtSameStartOffset_Throws()
 	{
-		Assert.ThrowsExactly<ArgumentException>(() => new PreparedTextEdits(
-			[new TextEditOperation(3, 3, "X", 0), new TextEditOperation(3, 5, "Y", 1)]));
+		Assert.ThrowsExactly<ArgumentException>(() =>
+			new PreparedTextEdits([
+				new TextEditOperation(range: TextRange.FromBounds(3, 3), newText: "X", editIndex: 0),
+				new TextEditOperation(range: TextRange.FromBounds(3, 5), newText: "Y", editIndex: 1),
+			])
+		);
 	}
 
 	[TestMethod]
@@ -37,10 +46,12 @@ public sealed class PreparedTextEditsTests
 	{
 		// Same-offset insertions are valid; the list order defines the order their texts appear in
 		// the resulting text (the first list entry applies last and lands leftmost).
-		var edits = new PreparedTextEdits(
-			[new TextEditOperation(3, 3, "Y", 1), new TextEditOperation(3, 3, "X", 0)]);
+		var edits = new PreparedTextEdits([
+			new TextEditOperation(range: TextRange.FromBounds(3, 3), newText: "Y", editIndex: 1),
+			new TextEditOperation(range: TextRange.FromBounds(3, 3), newText: "X", editIndex: 0),
+		]);
 
-		Assert.AreEqual(2, edits.Operations.Count);
+		Assert.HasCount(2, edits.Operations);
 		Assert.AreEqual("Y", edits.Operations[0].NewText);
 		Assert.AreEqual("X", edits.Operations[1].NewText);
 	}
@@ -50,11 +61,11 @@ public sealed class PreparedTextEditsTests
 	{
 		// A no-op operation cannot conflict with another operation or with the required order, so it
 		// is accepted and preserved in the batch.
-		var noOp = new TextEditOperation(2, 2, string.Empty, 0);
+		var noOp = new TextEditOperation(range: TextRange.FromBounds(2, 2), newText: string.Empty, editIndex: 0);
 
 		var edits = new PreparedTextEdits([noOp]);
 
-		Assert.AreEqual(1, edits.Operations.Count);
+		Assert.HasCount(1, edits.Operations);
 		Assert.AreEqual(noOp, edits.Operations[0]);
 	}
 
@@ -63,10 +74,12 @@ public sealed class PreparedTextEditsTests
 	{
 		// List order applies the replacement before the insertion, matching the kernel's ordering rule;
 		// the insertion point maps before the inserted text.
-		var batch = new PreparedTextEdits(
-			[new TextEditOperation(3, 5, "Y", 1), new TextEditOperation(3, 3, "X", 0)]);
+		var batch = new PreparedTextEdits([
+			new TextEditOperation(range: TextRange.FromBounds(3, 5), newText: "Y", editIndex: 1),
+			new TextEditOperation(range: TextRange.FromBounds(3, 3), newText: "X", editIndex: 0),
+		]);
 
-		Assert.AreEqual(2, batch.Operations.Count);
+		Assert.HasCount(2, batch.Operations);
 		Assert.AreEqual(3, batch.MapOffset(3));
 		Assert.AreEqual(5, batch.MapOffset(4));
 	}
@@ -74,11 +87,9 @@ public sealed class PreparedTextEditsTests
 	[TestMethod]
 	public void MapOffset_AccountsForReplacementAndInsertionDeltas()
 	{
-		TextEditPreparationResult result = TextEditKernel.Prepare(
-			new StringTextSnapshot("abcdef"),
-			[CreateEdit(1, 2, "X"), CreateEdit(5, 0, "YZ")]);
+		TextEditPreparationResult result = TextEditKernel.Prepare(new StringTextSnapshot("abcdef"), [CreateEdit(1, 2, "X"), CreateEdit(5, 0, "YZ")]);
 
-		Assert.IsTrue(result.IsValid);
+		Assert.IsTrue(result.Succeeded);
 		Assert.AreEqual(0, result.Edits.MapOffset(0));
 		Assert.AreEqual(1, result.Edits.MapOffset(1));
 		Assert.AreEqual(2, result.Edits.MapOffset(3));
@@ -88,11 +99,9 @@ public sealed class PreparedTextEditsTests
 	[TestMethod]
 	public void MapOffset_EndOfReplacedRange_MapsAfterLongerReplacement()
 	{
-		TextEditPreparationResult result = TextEditKernel.Prepare(
-			new StringTextSnapshot("abcdef"),
-			[CreateEdit(1, 2, "XYZ")]);
+		TextEditPreparationResult result = TextEditKernel.Prepare(new StringTextSnapshot("abcdef"), [CreateEdit(1, 2, "XYZ")]);
 
-		Assert.IsTrue(result.IsValid);
+		Assert.IsTrue(result.Succeeded);
 
 		// The end of the replaced range maps after the replacement, not inside it.
 		Assert.AreEqual(4, result.Edits.MapOffset(3));
@@ -101,21 +110,16 @@ public sealed class PreparedTextEditsTests
 	[TestMethod]
 	public void MapOffset_InsideReplacedRange_MapsRelativePosition()
 	{
-		TextEditPreparationResult result = TextEditKernel.Prepare(
-			new StringTextSnapshot("abcdef"),
-			[CreateEdit(1, 2, "XYZ")]);
-
+		TextEditPreparationResult result = TextEditKernel.Prepare(new StringTextSnapshot("abcdef"), [CreateEdit(1, 2, "XYZ")]);
 		Assert.AreEqual(2, result.Edits.MapOffset(2));
 	}
 
 	[TestMethod]
 	public void MapOffset_InsideShorterReplacement_ClampsToReplacementEnd()
 	{
-		TextEditPreparationResult result = TextEditKernel.Prepare(
-			new StringTextSnapshot("abcdef"),
-			[CreateEdit(1, 4, "x")]);
+		TextEditPreparationResult result = TextEditKernel.Prepare(new StringTextSnapshot("abcdef"), [CreateEdit(1, 4, "x")]);
 
-		Assert.IsTrue(result.IsValid);
+		Assert.IsTrue(result.Succeeded);
 
 		// The source offset is inside the replaced range, so it maps to the same relative position
 		// clamped to the shorter replacement text.
@@ -125,11 +129,9 @@ public sealed class PreparedTextEditsTests
 	[TestMethod]
 	public void MapOffset_InsideDeletedRange_MapsToDeletionPoint()
 	{
-		TextEditPreparationResult result = TextEditKernel.Prepare(
-			new StringTextSnapshot("abcdef"),
-			[CreateEdit(1, 4, string.Empty)]);
+		TextEditPreparationResult result = TextEditKernel.Prepare(new StringTextSnapshot("abcdef"), [CreateEdit(1, 4, string.Empty)]);
 
-		Assert.IsTrue(result.IsValid);
+		Assert.IsTrue(result.Succeeded);
 		Assert.AreEqual(1, result.Edits.MapOffset(3));
 
 		// The end of the deleted range maps after the deletion.
@@ -139,11 +141,9 @@ public sealed class PreparedTextEditsTests
 	[TestMethod]
 	public void MapOffset_AtInsertionPoint_MapsBeforeInsertedText()
 	{
-		TextEditPreparationResult result = TextEditKernel.Prepare(
-			new StringTextSnapshot("abcdef"),
-			[CreateEdit(3, 0, "ZZ")]);
+		TextEditPreparationResult result = TextEditKernel.Prepare(new StringTextSnapshot("abcdef"), [CreateEdit(3, 0, "ZZ")]);
 
-		Assert.IsTrue(result.IsValid);
+		Assert.IsTrue(result.Succeeded);
 
 		// The start of the zero-length range wins over its end, so the insertion point itself maps
 		// before the inserted text while later offsets shift past it.
@@ -157,9 +157,10 @@ public sealed class PreparedTextEditsTests
 	{
 		TextEditPreparationResult result = TextEditKernel.Prepare(
 			new StringTextSnapshot("abcdef"),
-			[CreateEdit(1, 2, "X"), CreateEdit(1, 0, "Y"), CreateEdit(3, 0, "Z")]);
+			[CreateEdit(1, 2, "X"), CreateEdit(1, 0, "Y"), CreateEdit(3, 0, "Z")]
+		);
 
-		Assert.IsTrue(result.IsValid);
+		Assert.IsTrue(result.Succeeded);
 
 		// The batch produces "aYXZdef": the insertion at the replacement start lands before "X" and
 		// the insertion at its end before "Z". Offsets at both insertion points map before the
@@ -177,11 +178,9 @@ public sealed class PreparedTextEditsTests
 	[TestMethod]
 	public void MapOffset_InsertionAtDocumentEnd_MapsBeforeInsertedText()
 	{
-		TextEditPreparationResult result = TextEditKernel.Prepare(
-			new StringTextSnapshot("abc"),
-			[CreateEdit(3, 0, "XY")]);
+		TextEditPreparationResult result = TextEditKernel.Prepare(new StringTextSnapshot("abc"), [CreateEdit(3, 0, "XY")]);
 
-		Assert.IsTrue(result.IsValid);
+		Assert.IsTrue(result.Succeeded);
 
 		// The start of the zero-length range wins at the end of the text as well, so the document-end
 		// offset maps before the inserted text even though the edited document is longer.
@@ -190,14 +189,32 @@ public sealed class PreparedTextEditsTests
 	}
 
 	[TestMethod]
-	public void MapOffset_WithoutOperations_ReturnsOffset()
+	public void MapOffset_WithoutOperations_ReturnsOffset() => Assert.AreEqual(5, new PreparedTextEdits([]).MapOffset(5));
+
+	[TestMethod]
+	public void MapOffset_NegativeOffset_Throws() => Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => new PreparedTextEdits([]).MapOffset(-1));
+
+	[TestMethod]
+	public void ApplyTo_AppliesEveryOperationInOnePass()
 	{
-		Assert.AreEqual(5, new PreparedTextEdits([]).MapOffset(5));
+		var edits = new PreparedTextEdits([
+			new TextEditOperation(range: TextRange.FromBounds(6, 11), newText: "there", editIndex: 1),
+			new TextEditOperation(range: TextRange.FromBounds(0, 0), newText: ">> ", editIndex: 0),
+		]);
+
+		Assert.AreEqual(">> hello there", edits.ApplyTo("hello world"));
 	}
 
 	[TestMethod]
-	public void MapOffset_NegativeOffset_Throws()
+	public void ApplyTo_NoOperations_ReturnsTheTextUnchanged() => Assert.AreEqual("same", new PreparedTextEdits([]).ApplyTo("same"));
+
+	[TestMethod]
+	public void ApplyTo_NullText_Throws() => Assert.ThrowsExactly<ArgumentNullException>(() => new PreparedTextEdits([]).ApplyTo(null!));
+
+	[TestMethod]
+	public void ApplyTo_RangeBeyondTheText_Throws()
 	{
-		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => new PreparedTextEdits([]).MapOffset(-1));
+		var edits = new PreparedTextEdits([new TextEditOperation(range: TextRange.FromBounds(2, 9), newText: "x", editIndex: 0)]);
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => edits.ApplyTo("abc"));
 	}
 }

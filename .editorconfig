@@ -1,0 +1,530 @@
+root = true
+
+[*.cs]
+
+# A pin is a `dotnet_diagnostic.<ID>.severity` line, one for each ZA rule, and format.ps1 runs each rule that is not `none`.
+# A `none` rule ships off and stays off: it is the half of a pair whose other half is on, or a rule that asks for a shape the tree does not write.
+# The pins follow Stanza's, except where a comment says why this tree differs.
+
+# Blank lines between units.
+dotnet_diagnostic.ZA0001.severity = warning
+dotnet_diagnostic.ZA0002.severity = warning
+dotnet_diagnostic.ZA0003.severity = warning
+dotnet_diagnostic.ZA0004.severity = warning
+dotnet_diagnostic.ZA0005.severity = warning
+dotnet_diagnostic.ZA0006.severity = warning
+dotnet_diagnostic.ZA0007.severity = warning
+
+# Off, unlike Stanza: the IDE step and CSharpier both remove the blank line this rule puts between import groups.
+dotnet_diagnostic.ZA0008.severity = none
+
+dotnet_diagnostic.ZA0009.severity = warning
+dotnet_diagnostic.ZA0052.severity = warning
+dotnet_diagnostic.ZA0053.severity = warning
+
+# Blank lines inside delimited lists.
+dotnet_diagnostic.ZA0010.severity = none
+dotnet_diagnostic.ZA0011.severity = warning
+dotnet_diagnostic.ZA0012.severity = warning
+dotnet_diagnostic.ZA0013.severity = warning
+dotnet_diagnostic.ZA0014.severity = none
+dotnet_diagnostic.ZA0015.severity = warning
+dotnet_diagnostic.ZA0016.severity = warning
+dotnet_diagnostic.ZA0017.severity = none
+dotnet_diagnostic.ZA0018.severity = warning
+dotnet_diagnostic.ZA0019.severity = warning
+dotnet_diagnostic.ZA0020.severity = none
+dotnet_diagnostic.ZA0021.severity = warning
+dotnet_diagnostic.ZA0022.severity = warning
+dotnet_diagnostic.ZA0023.severity = none
+dotnet_diagnostic.ZA0024.severity = warning
+dotnet_diagnostic.ZA0025.severity = warning
+dotnet_diagnostic.ZA0026.severity = none
+dotnet_diagnostic.ZA0027.severity = warning
+dotnet_diagnostic.ZA0028.severity = warning
+dotnet_diagnostic.ZA0029.severity = none
+dotnet_diagnostic.ZA0030.severity = warning
+dotnet_diagnostic.ZA0031.severity = warning
+dotnet_diagnostic.ZA0032.severity = none
+dotnet_diagnostic.ZA0033.severity = warning
+
+# Clauses and braces.
+dotnet_diagnostic.ZA0034.severity = none
+dotnet_diagnostic.ZA0035.severity = warning
+dotnet_diagnostic.ZA0036.severity = warning
+dotnet_diagnostic.ZA0037.severity = warning
+dotnet_diagnostic.ZA0038.severity = warning
+dotnet_diagnostic.ZA0039.severity = warning
+
+# Member bodies.
+dotnet_diagnostic.ZA0040.severity = warning
+dotnet_diagnostic.ZA0041.severity = warning
+dotnet_diagnostic.ZA0042.severity = none
+dotnet_diagnostic.ZA0043.severity = warning
+dotnet_diagnostic.ZA0044.severity = warning
+dotnet_diagnostic.ZA0045.severity = warning
+dotnet_diagnostic.ZA0046.severity = none
+
+# Regions.
+dotnet_diagnostic.ZA0047.severity = warning
+dotnet_diagnostic.ZA0048.severity = warning
+dotnet_diagnostic.ZA0049.severity = warning
+
+# Argument names.
+dotnet_diagnostic.ZA0050.severity = warning
+dotnet_diagnostic.ZA0051.severity = warning
+
+# Markup in raw strings.
+dotnet_diagnostic.ZA0101.severity = warning
+dotnet_diagnostic.ZA0102.severity = none
+dotnet_diagnostic.ZA0103.severity = warning
+dotnet_diagnostic.ZA0104.severity = warning
+dotnet_diagnostic.ZA0105.severity = warning
+
+# Documentation comments.
+dotnet_diagnostic.ZA0201.severity = warning
+dotnet_diagnostic.ZA0202.severity = warning
+dotnet_diagnostic.ZA0203.severity = warning
+dotnet_diagnostic.ZA0204.severity = warning
+dotnet_diagnostic.ZA0205.severity = warning
+dotnet_diagnostic.ZA0206.severity = warning
+dotnet_diagnostic.ZA0207.severity = none
+dotnet_diagnostic.ZA0208.severity = warning
+dotnet_diagnostic.ZA0209.severity = warning
+dotnet_diagnostic.ZA0210.severity = warning
+dotnet_diagnostic.ZA0211.severity = warning
+dotnet_diagnostic.ZA0212.severity = warning
+dotnet_diagnostic.ZA0213.severity = warning
+
+# Plain comments.
+dotnet_diagnostic.ZA0214.severity = warning
+dotnet_diagnostic.ZA0215.severity = warning
+dotnet_diagnostic.ZA0216.severity = warning
+
+# Disables expression body suggestions that conflict with the configured Stanza body rules.
+dotnet_diagnostic.IDE0021.severity = none
+dotnet_diagnostic.IDE0022.severity = none
+dotnet_diagnostic.IDE0023.severity = none
+dotnet_diagnostic.IDE0024.severity = none
+dotnet_diagnostic.IDE0061.severity = none
+
+# Disabled so a named tuple stays one variable instead of being deconstructed into separate variables.
+dotnet_diagnostic.IDE0042.severity = none
+
+# Disabled so a fix does not discard an unused expression value with `_ = ...`.
+dotnet_diagnostic.IDE0058.severity = none
+
+# Disabled so a fix does not remove an assignment whose value is never read.
+dotnet_diagnostic.IDE0059.severity = none
+
+# `csharp_style_prefer_primary_constructors` states the preference,
+# and this rule stays off so the style pass of format.ps1 does not convert an explicit constructor.
+dotnet_diagnostic.IDE0290.severity = none
+
+# Disabled because the fix merges an assignment into an initializer across an `#if` region, which leaves one branch invalid.
+dotnet_diagnostic.IDE0017.severity = none
+
+# Disabled because the flat-namespace packages and the test projects keep one namespace each, so a namespace need not match its folder.
+# `NamespaceGuardTests` checks the folder-derived namespaces that CONVENTIONS.md requires.
+dotnet_diagnostic.IDE0130.severity = none
+
+# The naming rules below report as IDE1006. No project sets EnforceCodeStyleInBuild,
+# so the IDE rules apply in the IDE and in format.ps1, not in the build.
+dotnet_diagnostic.IDE1006.severity = warning
+
+# A public member needs a doc only when the doc carries a fact its name and signature do not, as AGENTS.md says.
+dotnet_diagnostic.CS1591.severity = none
+
+# Disabled so a fix does not hoist a constant array argument into a new static field.
+dotnet_diagnostic.CA1861.severity = none
+
+# Disabled so a fix does not hoist a `SearchValues` instance into a new static field.
+dotnet_diagnostic.CA1870.severity = none
+
+# CA1709 stays off: its two-letter acronym rule is stricter than the Id and Ui casing the repository uses.
+
+# Disabled so a fix does not add `[ResourceLock]` to a test class or method.
+dotnet_diagnostic.MSTEST0074.severity = none
+dotnet_diagnostic.MSTEST0075.severity = none
+
+# Disabled so a fix does not rewrite an assertion on a comparison into another `Assert` method.
+dotnet_diagnostic.MSTEST0037.severity = none
+
+# Disabled so a fix does not pass `TestContext.CancellationToken` to an async overload that accepts a token.
+dotnet_diagnostic.MSTEST0049.severity = none
+
+# Disabled so a fix does not change how a test times out.
+dotnet_diagnostic.MSTEST0045.severity = none
+
+# Disabled so a fix does not turn an inconclusive result or an early return into a condition attribute that skips the test.
+dotnet_diagnostic.MSTEST0061.severity = none
+dotnet_diagnostic.MSTEST0079.severity = none
+dotnet_diagnostic.MSTEST0080.severity = none
+dotnet_diagnostic.MSTEST0083.severity = none
+
+# Disabled because the fix also enables unsafe code, a change to the project's compilation options.
+dotnet_diagnostic.SYSLIB1054.severity = none
+
+# Keep this equal to `printWidth` in `.csharpierrc.json`. Documentation comments wrap at this width too,
+# because `stanza_doc_max_line_length` is not set.
+stanza_max_line_length = 150
+
+stanza_doc_min_tail_words = 3
+
+# Words a documentation line should not end on. The option ships no list, so this list belongs to this tree.
+stanza_doc_weak_tail_words = a, about, above, across, after, again, against, all, almost, along, already, also, although, always, am, among, an, and, another, any, anybody, anyone, anything, are, around, as, at, atop, back, be, because, been, before, behind, being, below, beneath, beside, besides, between, beyond, both, but, by, can, cannot, could, did, do, does, doing, done, down, during, each, either, else, enough, even, ever, every, everybody, everyone, everything, except, few, for, from, further, had, has, have, having, he, her, here, hers, herself, him, himself, his, how, however, i, if, in, inside, instead, into, is, it, its, itself, just, least, less, like, many, may, me, might, mine, more, most, much, must, my, myself, near, neither, never, no, nobody, none, nor, not, nothing, now, of, off, on, once, one, only, onto, or, other, others, otherwise, our, ours, ourselves, out, outside, over, own, past, per, plus, rather, same, she, should, since, so, some, somebody, someone, something, still, such, than, that, the, their, theirs, them, themselves, then, there, therefore, these, they, this, those, though, through, throughout, thus, till, to, too, toward, towards, under, underneath, unless, until, up, upon, us, very, via, was, we, were, what, whatever, when, whenever, where, whereas, wherever, whether, which, while, who, whom, whose, why, will, with, within, without, would, yet, you, your, yours, yourself, yourselves
+
+stanza_multiline_body_trigger = body
+
+# Case-insensitive: a call's shorthand keeps its own case, so `Bind(Value)` for a parameter named `value` stays unnamed.
+stanza_named_argument_case = insensitive
+
+# The analyzer reads markup in every raw string by default; this pin gives stanza-markup the same scope for the C# files it reads.
+stanza_markup_scope = all
+
+# Indentation and line endings.
+indent_size = 4
+indent_style = tab
+tab_width = 4
+end_of_line = crlf
+insert_final_newline = true
+
+# Editor behavior.
+dotnet_hide_advanced_members = false
+dotnet_member_insertion_location = with_other_members_of_the_same_kind
+dotnet_property_generation_behavior = prefer_throwing_properties
+dotnet_search_reference_assemblies = true
+
+# Imports and the file header.
+dotnet_separate_import_directive_groups = false
+dotnet_sort_system_directives_first = true
+file_header_template = unset
+csharp_using_directive_placement = outside_namespace:warning
+
+# Qualification with this.
+dotnet_style_qualification_for_event = false:warning
+dotnet_style_qualification_for_field = false:warning
+dotnet_style_qualification_for_method = false:warning
+dotnet_style_qualification_for_property = false:warning
+
+# Predefined types.
+dotnet_style_predefined_type_for_locals_parameters_members = true:warning
+dotnet_style_predefined_type_for_member_access = true:warning
+
+# Parentheses.
+dotnet_style_parentheses_in_arithmetic_binary_operators = always_for_clarity:warning
+dotnet_style_parentheses_in_other_binary_operators = always_for_clarity:warning
+dotnet_style_parentheses_in_other_operators = never_if_unnecessary:warning
+dotnet_style_parentheses_in_relational_binary_operators = always_for_clarity:warning
+
+# Modifiers.
+dotnet_style_require_accessibility_modifiers = for_non_interface_members
+csharp_preferred_modifier_order = public,private,protected,internal,file,static,extern,new,virtual,abstract,sealed,override,readonly,unsafe,required,volatile,async
+
+# Expression preferences.
+dotnet_prefer_system_hash_code = true:warning
+dotnet_style_coalesce_expression = true:warning
+dotnet_style_collection_initializer = true:warning
+dotnet_style_explicit_tuple_names = true:warning
+dotnet_style_namespace_match_folder = true
+dotnet_style_null_propagation = true:warning
+dotnet_style_object_initializer = true:warning
+dotnet_style_operator_placement_when_wrapping = beginning_of_line
+dotnet_style_prefer_auto_properties = true:warning
+dotnet_style_prefer_collection_expression = when_types_loosely_match
+dotnet_style_prefer_compound_assignment = true:warning
+
+# An if/else that assigns or returns stays a statement instead of becoming a conditional expression.
+dotnet_style_prefer_conditional_expression_over_assignment = false
+dotnet_style_prefer_conditional_expression_over_return = false
+
+dotnet_style_prefer_foreach_explicit_cast_in_source = when_strongly_typed
+dotnet_style_prefer_inferred_anonymous_type_member_names = true
+dotnet_style_prefer_inferred_tuple_names = true:warning
+dotnet_style_prefer_is_null_check_over_reference_equality_method = true:warning
+dotnet_style_prefer_non_hidden_explicit_cast_in_source = true
+dotnet_style_prefer_simplified_boolean_expressions = true:warning
+dotnet_style_prefer_simplified_interpolation = true
+
+# Fields and unused code.
+dotnet_style_readonly_field = true:warning
+dotnet_code_quality_unused_parameters = all:warning
+dotnet_remove_unnecessary_suppression_exclusions = none
+
+# Blank lines in code.
+dotnet_style_allow_multiple_blank_lines_experimental = false:warning
+dotnet_style_allow_statement_immediately_after_block_experimental = false:warning
+csharp_style_allow_blank_line_after_colon_in_constructor_initializer_experimental = false:warning
+csharp_style_allow_blank_line_after_token_in_arrow_expression_clause_experimental = true:silent
+csharp_style_allow_blank_line_after_token_in_conditional_expression_experimental = false:warning
+csharp_style_allow_blank_lines_between_consecutive_braces_experimental = false:warning
+csharp_style_allow_embedded_statements_on_same_line_experimental = false:warning
+
+# The var keyword.
+csharp_style_var_elsewhere = false:warning
+csharp_style_var_for_built_in_types = false:warning
+csharp_style_var_when_type_is_apparent = true:warning
+
+# Expression bodies.
+csharp_style_expression_bodied_accessors = when_on_single_line:warning
+csharp_style_expression_bodied_constructors = when_on_single_line
+csharp_style_expression_bodied_indexers = when_on_single_line:warning
+csharp_style_expression_bodied_lambdas = when_on_single_line:warning
+csharp_style_expression_bodied_local_functions = when_on_single_line
+csharp_style_expression_bodied_methods = when_on_single_line
+csharp_style_expression_bodied_operators = when_on_single_line
+csharp_style_expression_bodied_properties = when_on_single_line:warning
+
+# Pattern matching and null checks.
+csharp_style_pattern_matching_over_as_with_null_check = true:warning
+csharp_style_pattern_matching_over_is_with_cast_check = true:warning
+csharp_style_prefer_extended_property_pattern = true
+csharp_style_prefer_not_pattern = true:warning
+csharp_style_prefer_pattern_matching = true:warning
+csharp_style_prefer_switch_expression = true
+csharp_style_conditional_delegate_call = true:warning
+
+# Static and readonly.
+csharp_prefer_static_anonymous_function = true:warning
+csharp_prefer_static_local_function = true:warning
+csharp_style_prefer_readonly_struct = true:warning
+csharp_style_prefer_readonly_struct_member = true
+
+# Declarations and statements.
+csharp_prefer_braces = when_multiline:warning
+csharp_prefer_simple_using_statement = true:warning
+csharp_prefer_system_threading_lock = true
+csharp_style_namespace_declarations = file_scoped:warning
+csharp_style_prefer_labeled_jump_statements = true
+csharp_style_prefer_method_group_conversion = true:warning
+csharp_style_prefer_primary_constructors = true
+csharp_style_prefer_simple_property_accessors = true
+csharp_style_prefer_top_level_statements = true:suggestion
+
+# Expressions and types.
+csharp_prefer_simple_default_expression = true:warning
+csharp_style_deconstructed_variable_declaration = true
+csharp_style_implicit_object_creation_when_type_is_apparent = true:warning
+csharp_style_inlined_variable_declaration = true:warning
+csharp_style_prefer_implicitly_typed_lambda_expression = true
+csharp_style_prefer_index_operator = true:warning
+csharp_style_prefer_local_over_anonymous_function = true:warning
+csharp_style_prefer_null_check_over_type_check = true:warning
+csharp_style_prefer_range_operator = true:warning
+csharp_style_prefer_tuple_swap = true:warning
+csharp_style_prefer_unbound_generic_type_in_nameof = true
+csharp_style_prefer_utf8_string_literals = true
+csharp_style_throw_expression = true:warning
+
+# The discard form that IDE0058 and IDE0059 would write; both are disabled above.
+csharp_style_unused_value_assignment_preference = discard_variable
+csharp_style_unused_value_expression_statement_preference = discard_variable
+
+# Braces and new lines.
+csharp_new_line_before_catch = true
+csharp_new_line_before_else = true
+csharp_new_line_before_finally = true
+csharp_new_line_before_members_in_anonymous_types = true
+csharp_new_line_before_members_in_object_initializers = true
+csharp_new_line_before_open_brace = all
+csharp_new_line_between_query_expression_clauses = true
+
+# Indentation of blocks and labels.
+csharp_indent_block_contents = true
+csharp_indent_braces = false
+csharp_indent_case_contents = true
+csharp_indent_case_contents_when_block = true
+csharp_indent_labels = one_less_than_current
+csharp_indent_switch_labels = true
+
+# Spacing.
+csharp_space_after_cast = false
+csharp_space_after_colon_in_inheritance_clause = true
+csharp_space_after_comma = true
+csharp_space_after_dot = false
+csharp_space_after_keywords_in_control_flow_statements = true
+csharp_space_after_semicolon_in_for_statement = true
+csharp_space_around_binary_operators = before_and_after
+csharp_space_around_declaration_statements = false
+csharp_space_before_colon_in_inheritance_clause = true
+csharp_space_before_comma = false
+csharp_space_before_dot = false
+csharp_space_before_open_square_brackets = false
+csharp_space_before_semicolon_in_for_statement = false
+csharp_space_between_empty_square_brackets = false
+csharp_space_between_method_call_empty_parameter_list_parentheses = false
+csharp_space_between_method_call_name_and_opening_parenthesis = false
+csharp_space_between_method_call_parameter_list_parentheses = false
+csharp_space_between_method_declaration_empty_parameter_list_parentheses = false
+csharp_space_between_method_declaration_name_and_open_parenthesis = false
+csharp_space_between_method_declaration_parameter_list_parentheses = false
+csharp_space_between_parentheses = false
+csharp_space_between_square_brackets = false
+
+# Single-line blocks and statements.
+csharp_preserve_single_line_blocks = true
+csharp_preserve_single_line_statements = true
+
+# The naming rules below follow the .NET identifier guidance and the dotnet/runtime coding style:
+#   https://learn.microsoft.com/dotnet/csharp/fundamentals/coding-style/identifier-names
+#   https://github.com/dotnet/runtime/blob/main/docs/coding-guidelines/coding-style.md
+# Conventions with no rule behind them: an `Attribute` suffix on a type, a plural enum name, no double underscore,
+# and no abbreviation where the full word fits.
+
+dotnet_naming_rule.interface_should_be_begins_with_i.severity = warning
+dotnet_naming_rule.interface_should_be_begins_with_i.symbols = interface
+dotnet_naming_rule.interface_should_be_begins_with_i.style = begins_with_i
+
+dotnet_naming_rule.types_should_be_pascal_case.severity = warning
+dotnet_naming_rule.types_should_be_pascal_case.symbols = types
+dotnet_naming_rule.types_should_be_pascal_case.style = pascal_case
+
+dotnet_naming_rule.namespaces_should_be_pascal_case.severity = warning
+dotnet_naming_rule.namespaces_should_be_pascal_case.symbols = namespaces
+dotnet_naming_rule.namespaces_should_be_pascal_case.style = pascal_case
+
+dotnet_naming_rule.non_field_members_should_be_pascal_case.severity = warning
+dotnet_naming_rule.non_field_members_should_be_pascal_case.symbols = non_field_members
+dotnet_naming_rule.non_field_members_should_be_pascal_case.style = pascal_case
+
+# Type parameters use `T` + PascalCase; bare `T` is valid.
+dotnet_naming_rule.type_parameters_should_be_t_prefixed_pascal_case.severity = warning
+dotnet_naming_rule.type_parameters_should_be_t_prefixed_pascal_case.symbols = type_parameters
+dotnet_naming_rule.type_parameters_should_be_t_prefixed_pascal_case.style = t_prefixed_pascal_case
+
+dotnet_naming_rule.visible_and_const_fields_should_be_pascal_case.severity = warning
+dotnet_naming_rule.visible_and_const_fields_should_be_pascal_case.symbols = visible_fields
+dotnet_naming_rule.visible_and_const_fields_should_be_pascal_case.style = pascal_case
+
+# Private and internal instance fields use `_` + camelCase.
+dotnet_naming_rule.private_fields_should_be_underscored_camel_case.severity = warning
+dotnet_naming_rule.private_fields_should_be_underscored_camel_case.symbols = private_internal_fields
+dotnet_naming_rule.private_fields_should_be_underscored_camel_case.style = underscored_camel_case
+
+dotnet_naming_rule.private_static_fields_should_be_s_prefixed_camel_case.severity = warning
+dotnet_naming_rule.private_static_fields_should_be_s_prefixed_camel_case.symbols = private_internal_static_fields
+dotnet_naming_rule.private_static_fields_should_be_s_prefixed_camel_case.style = s_prefixed_camel_case
+
+# Constants use PascalCase despite the static-field rule.
+dotnet_naming_rule.private_const_fields_should_be_pascal_case.severity = warning
+dotnet_naming_rule.private_const_fields_should_be_pascal_case.symbols = private_internal_const_fields
+dotnet_naming_rule.private_const_fields_should_be_pascal_case.style = pascal_case
+
+dotnet_naming_rule.locals_should_be_camel_case.severity = warning
+dotnet_naming_rule.locals_should_be_camel_case.symbols = locals
+dotnet_naming_rule.locals_should_be_camel_case.style = camel_case
+
+# Parameters use camelCase; a positional record parameter becomes a public property, so it may need a local naming suppression.
+dotnet_naming_rule.parameters_should_be_camel_case.severity = warning
+dotnet_naming_rule.parameters_should_be_camel_case.symbols = parameters
+dotnet_naming_rule.parameters_should_be_camel_case.style = camel_case
+
+# Naming symbol groups.
+dotnet_naming_symbols.interface.applicable_kinds = interface
+dotnet_naming_symbols.interface.applicable_accessibilities = *
+dotnet_naming_symbols.interface.required_modifiers =
+
+dotnet_naming_symbols.types.applicable_kinds = class, struct, enum, delegate
+dotnet_naming_symbols.types.applicable_accessibilities = *
+dotnet_naming_symbols.types.required_modifiers =
+
+dotnet_naming_symbols.namespaces.applicable_kinds = namespace
+dotnet_naming_symbols.namespaces.applicable_accessibilities = *
+dotnet_naming_symbols.namespaces.required_modifiers =
+
+dotnet_naming_symbols.non_field_members.applicable_kinds = property, event, method, local_function
+dotnet_naming_symbols.non_field_members.applicable_accessibilities = *
+dotnet_naming_symbols.non_field_members.required_modifiers =
+
+dotnet_naming_symbols.type_parameters.applicable_kinds = type_parameter
+dotnet_naming_symbols.type_parameters.applicable_accessibilities = *
+dotnet_naming_symbols.type_parameters.required_modifiers =
+
+# Matches fields outside the private and internal groups.
+dotnet_naming_symbols.visible_fields.applicable_kinds = field
+dotnet_naming_symbols.visible_fields.applicable_accessibilities = public, protected, protected_internal, private_protected
+dotnet_naming_symbols.visible_fields.required_modifiers =
+
+dotnet_naming_symbols.private_internal_fields.applicable_kinds = field
+dotnet_naming_symbols.private_internal_fields.applicable_accessibilities = private, internal
+dotnet_naming_symbols.private_internal_fields.required_modifiers =
+
+dotnet_naming_symbols.private_internal_static_fields.applicable_kinds = field
+dotnet_naming_symbols.private_internal_static_fields.applicable_accessibilities = private, internal
+dotnet_naming_symbols.private_internal_static_fields.required_modifiers = static
+
+dotnet_naming_symbols.private_internal_const_fields.applicable_kinds = field
+dotnet_naming_symbols.private_internal_const_fields.applicable_accessibilities = private, internal
+dotnet_naming_symbols.private_internal_const_fields.required_modifiers = const
+
+dotnet_naming_symbols.locals.applicable_kinds = local
+dotnet_naming_symbols.locals.applicable_accessibilities = local
+dotnet_naming_symbols.locals.required_modifiers =
+
+dotnet_naming_symbols.parameters.applicable_kinds = parameter
+dotnet_naming_symbols.parameters.applicable_accessibilities = *
+dotnet_naming_symbols.parameters.required_modifiers =
+
+# Naming styles.
+dotnet_naming_style.pascal_case.capitalization = pascal_case
+dotnet_naming_style.pascal_case.required_prefix =
+dotnet_naming_style.pascal_case.required_suffix =
+dotnet_naming_style.pascal_case.word_separator =
+
+dotnet_naming_style.begins_with_i.capitalization = pascal_case
+dotnet_naming_style.begins_with_i.required_prefix = I
+dotnet_naming_style.begins_with_i.required_suffix =
+dotnet_naming_style.begins_with_i.word_separator =
+
+dotnet_naming_style.t_prefixed_pascal_case.capitalization = pascal_case
+dotnet_naming_style.t_prefixed_pascal_case.required_prefix = T
+dotnet_naming_style.t_prefixed_pascal_case.required_suffix =
+dotnet_naming_style.t_prefixed_pascal_case.word_separator =
+
+dotnet_naming_style.camel_case.capitalization = camel_case
+dotnet_naming_style.camel_case.required_prefix =
+dotnet_naming_style.camel_case.required_suffix =
+dotnet_naming_style.camel_case.word_separator =
+
+dotnet_naming_style.underscored_camel_case.capitalization = camel_case
+dotnet_naming_style.underscored_camel_case.required_prefix = _
+dotnet_naming_style.underscored_camel_case.required_suffix =
+dotnet_naming_style.underscored_camel_case.word_separator =
+
+dotnet_naming_style.s_prefixed_camel_case.capitalization = camel_case
+dotnet_naming_style.s_prefixed_camel_case.required_prefix = s_
+dotnet_naming_style.s_prefixed_camel_case.required_suffix =
+dotnet_naming_style.s_prefixed_camel_case.word_separator =
+
+[tests/**/*.cs]
+
+# A raw string in a test is the input the test reads, so the markup-literal rules would change what it checks.
+dotnet_diagnostic.ZA0101.severity = none
+dotnet_diagnostic.ZA0103.severity = none
+dotnet_diagnostic.ZA0104.severity = none
+dotnet_diagnostic.ZA0105.severity = none
+
+# A test sets its arrange, act and assert steps apart with blank lines, which ZA0052 would gather.
+dotnet_diagnostic.ZA0052.severity = none
+
+# The shared sources, shared test trees and shared test helpers compile into both engine or toolkit views, and these fixes would
+# break the other view: an explicit type can name a type of one toolkit, and a member can read state in one view only.
+[{shared/**,tests/IDEKit/Shared/**,tests/IDEKit/TestSupport/**,tests/QuickPick/Shared/**,tests/Samples/Shared/**,tests/TestSupport/**}]
+dotnet_diagnostic.IDE0008.severity = none
+dotnet_diagnostic.CA1822.severity = none
+
+# stanza-markup reads these keys for the XML member docs; the [*.cs] section does not match .xml files.
+[shared/docs/*.xml]
+stanza_max_line_length = 150
+stanza_doc_min_tail_words = 3
+stanza_doc_weak_tail_words = a, about, above, across, after, again, against, all, almost, along, already, also, although, always, am, among, an, and, another, any, anybody, anyone, anything, are, around, as, at, atop, back, be, because, been, before, behind, being, below, beneath, beside, besides, between, beyond, both, but, by, can, cannot, could, did, do, does, doing, done, down, during, each, either, else, enough, even, ever, every, everybody, everyone, everything, except, few, for, from, further, had, has, have, having, he, her, here, hers, herself, him, himself, his, how, however, i, if, in, inside, instead, into, is, it, its, itself, just, least, less, like, many, may, me, might, mine, more, most, much, must, my, myself, near, neither, never, no, nobody, none, nor, not, nothing, now, of, off, on, once, one, only, onto, or, other, others, otherwise, our, ours, ourselves, out, outside, over, own, past, per, plus, rather, same, she, should, since, so, some, somebody, someone, something, still, such, than, that, the, their, theirs, them, themselves, then, there, therefore, these, they, this, those, though, through, throughout, thus, till, to, too, toward, towards, under, underneath, unless, until, up, upon, us, very, via, was, we, were, what, whatever, when, whenever, where, whereas, wherever, whether, which, while, who, whom, whose, why, will, with, within, without, would, yet, you, your, yours, yourself, yourselves
+stanza_doc_indent_size = 2
+stanza_doc_indent_style = nested
+
+# Member bodies are reprinted without a blank line between their elements, as the `///` comments they include are.
+stanza_markup_doc_reprint = members
+dotnet_diagnostic.ZA0203.severity = warning
+
+# The directory walk already skips bin and obj; this section also keeps an explicit path into them out of the run.
+[**/{bin,obj}/**]
+stanza_markup_enabled = false

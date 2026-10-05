@@ -1,4 +1,4 @@
-using static Nickelony.IDEKit.Core.Tests.TextEditInputs;
+using static Nickelony.IDEKit.Core.Tests.TextIncrementalEditTestHelpers;
 
 namespace Nickelony.IDEKit.Core.Tests;
 
@@ -9,14 +9,9 @@ public sealed class TextEditTargetContractTests
 	public void Apply_PreparedBatchInListOrder_ProducesTheEditedText()
 	{
 		var target = new NaiveTextEditTarget("abcdef");
-		TextEditPreparationResult result = TextEditKernel.Prepare(
-			new StringTextSnapshot("abcdef"),
-			[
-				CreateEdit(1, 1, "B"),
-				CreateEdit(4, 0, "Z")
-			]);
+		TextEditPreparationResult result = TextEditKernel.Prepare(new StringTextSnapshot("abcdef"), [CreateEdit(1, 1, "B"), CreateEdit(4, 0, "Z")]);
 
-		Assert.IsTrue(result.IsValid);
+		Assert.IsTrue(result.Succeeded);
 
 		// The target contract is that a prepared batch applies in list order without sorting, so a
 		// target that does exactly that must produce the edited text from the descending operations.
@@ -36,12 +31,7 @@ public sealed class TextEditTargetContractTests
 		public void Apply(PreparedTextEdits edits)
 		{
 			foreach (TextEditOperation operation in edits.Operations)
-			{
-				Text = string.Concat(
-					Text.AsSpan(0, operation.StartOffset),
-					operation.NewText,
-					Text.AsSpan(operation.EndOffset));
-			}
+				Text = string.Concat(Text.AsSpan(0, operation.Range.Offset), operation.NewText, Text.AsSpan(operation.Range.EndOffset));
 		}
 	}
 }

@@ -427,3 +427,19 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+# ---------------------------------------------------------------------------
+# Local scratch and tooling state (this repository)
+# ---------------------------------------------------------------------------
+# Scratch tree: probe projects, extracts and logs.
+temp/
+# Codebase-memory index artifacts.
+.codebase-memory/
+# Local task definitions are per-machine scratch; .vscode/* above already
+# ignores the rest of the folder. This entry must stay after the
+# !.vscode/tasks.json exception for the ignore to win.
+.vscode/tasks.json
+
+# DocFX: generated API metadata and the built docs site.
+docs/api/
+docs/_site/

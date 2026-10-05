@@ -1,27 +1,27 @@
 namespace Nickelony.KeyBindings.Tests;
 
 [TestClass]
-public class KeyChordTests
+public sealed class KeyChordTests
 {
-	private static KeyCombo Ctrl(KeyCode key) => new(key, KeyModifierSet.Control);
+	private static KeyStroke Ctrl(KeyCode key) => new(key, KeyModifiers.Control);
 
 	[TestMethod]
 	public void Constructor_StoresStrokesInPressOrder()
 	{
-		var chord = new KeyChord(Ctrl(KeyCode.K), new KeyCombo(KeyCode.S, KeyModifierSet.None));
+		var chord = new KeyChord(Ctrl(KeyCode.K), new KeyStroke(KeyCode.S, KeyModifiers.None));
 
 		Assert.AreEqual(2, chord.StrokeCount);
 		Assert.IsTrue(chord.IsInitialized);
 		Assert.AreEqual(Ctrl(KeyCode.K), chord.Strokes[0]);
-		Assert.AreEqual(new KeyCombo(KeyCode.S, KeyModifierSet.None), chord.Strokes[1]);
+		Assert.AreEqual(new KeyStroke(KeyCode.S, KeyModifiers.None), chord.Strokes[1]);
 	}
 
 	[TestMethod]
 	public void Constructor_FromSequence_StoresStrokesInPressOrder()
 	{
-		List<KeyCombo> strokes = [Ctrl(KeyCode.K), Ctrl(KeyCode.S)];
+		List<KeyStroke> strokes = [Ctrl(KeyCode.K), Ctrl(KeyCode.S)];
 
-		var chord = new KeyChord(strokes);
+		var chord = new KeyChord([.. strokes]);
 
 		Assert.AreEqual(2, chord.StrokeCount);
 		Assert.AreEqual(Ctrl(KeyCode.S), chord.Strokes[1]);
@@ -39,28 +39,25 @@ public class KeyChordTests
 	[TestMethod]
 	public void Constructor_NoStrokes_Throws()
 	{
-		// A zero-argument call selects the implicit default constructor of the struct, so the empty case
-		// only reaches the constructor through an explicit empty sequence.
-		Assert.ThrowsExactly<ArgumentException>(() => new KeyChord(Array.Empty<KeyCombo>()));
-		Assert.ThrowsExactly<ArgumentException>(() => new KeyChord(new List<KeyCombo>()));
+		// Only an explicit empty sequence reaches the constructor; a no-argument call is the struct's
+		// parameterless construction and yields the uninitialized default (pinned by DefaultValue_IsNotInitialized).
+		Assert.ThrowsExactly<ArgumentException>(() => new KeyChord([]));
 	}
 
 	[TestMethod]
-	public void Constructor_UninitializedStroke_Throws()
-		=> Assert.ThrowsExactly<ArgumentException>(() => new KeyChord(Ctrl(KeyCode.K), default));
+	public void Constructor_UninitializedStroke_Throws() => Assert.ThrowsExactly<ArgumentException>(() => new KeyChord(Ctrl(KeyCode.K), default));
 
 	[TestMethod]
-	public void Constructor_RepeatedStroke_Throws()
-		=> Assert.ThrowsExactly<ArgumentException>(() => new KeyChord(Ctrl(KeyCode.K), Ctrl(KeyCode.K)));
+	public void Constructor_RepeatedStroke_Throws() => Assert.ThrowsExactly<ArgumentException>(() => new KeyChord(Ctrl(KeyCode.K), Ctrl(KeyCode.K)));
 
 	[TestMethod]
 	public void Constructor_CopiesTheStrokeArray()
 	{
-		KeyCombo[] strokes = [Ctrl(KeyCode.K), Ctrl(KeyCode.S)];
+		KeyStroke[] strokes = [Ctrl(KeyCode.K), Ctrl(KeyCode.S)];
 
 		var chord = new KeyChord(strokes);
 
-		strokes[1] = new KeyCombo(KeyCode.X, KeyModifierSet.None);
+		strokes[1] = new KeyStroke(KeyCode.X, KeyModifiers.None);
 
 		Assert.AreEqual(Ctrl(KeyCode.S), chord.Strokes[1]);
 	}
@@ -73,16 +70,20 @@ public class KeyChordTests
 		Assert.IsFalse(chord.IsInitialized);
 		Assert.AreEqual(0, chord.StrokeCount);
 		Assert.IsTrue(chord.Strokes.IsEmpty);
+
+		// A no-argument creation stays the uninitialized default; only the explicit empty sequence reaches
+		// the constructor and is rejected.
+		Assert.AreEqual(chord, new KeyChord());
 	}
 
 	[TestMethod]
-	public void ImplicitConversion_FromCombo_CreatesAOneStrokeChord()
+	public void ImplicitConversion_FromStroke_CreatesAOneStrokeChord()
 	{
-		KeyChord chord = new KeyCombo(KeyCode.S, KeyModifierSet.Control);
+		KeyChord chord = new KeyStroke(KeyCode.S, KeyModifiers.Control);
 
 		Assert.IsTrue(chord.IsInitialized);
 		Assert.AreEqual(1, chord.StrokeCount);
-		Assert.AreEqual(new KeyCombo(KeyCode.S, KeyModifierSet.Control), chord.Strokes[0]);
+		Assert.AreEqual(new KeyStroke(KeyCode.S, KeyModifiers.Control), chord.Strokes[0]);
 	}
 
 	[TestMethod]
@@ -105,7 +106,7 @@ public class KeyChordTests
 			new(Ctrl(KeyCode.K), Ctrl(KeyCode.S)),
 			new(Ctrl(KeyCode.K), Ctrl(KeyCode.S)),
 			new(Ctrl(KeyCode.K), Ctrl(KeyCode.F)),
-			default
+			default,
 		};
 
 		Assert.HasCount(3, chords);
@@ -134,7 +135,7 @@ public class KeyChordTests
 	{
 		Assert.IsTrue(KeyChord.TryParse("Alt+F4", out KeyChord chord));
 		Assert.AreEqual(1, chord.StrokeCount);
-		Assert.AreEqual(new KeyCombo(KeyCode.F4, KeyModifierSet.Alt), chord.Strokes[0]);
+		Assert.AreEqual(new KeyStroke(KeyCode.F4, KeyModifiers.Alt), chord.Strokes[0]);
 	}
 
 	[TestMethod]
@@ -142,7 +143,19 @@ public class KeyChordTests
 	{
 		// "Ctrl+K Z" is a legitimate two-stroke chord: the continuation stroke carries no modifier of its own.
 		Assert.IsTrue(KeyChord.TryParse("Ctrl+K Z", out KeyChord chord));
-		Assert.AreEqual(new KeyChord(Ctrl(KeyCode.K), new KeyCombo(KeyCode.Z, KeyModifierSet.None)), chord);
+		Assert.AreEqual(new KeyChord(Ctrl(KeyCode.K), new KeyStroke(KeyCode.Z, KeyModifiers.None)), chord);
+	}
+
+	[TestMethod]
+	[DataRow("Ctrl+K Ctrl+S Enter")]
+	[DataRow("Ctrl+K, Ctrl+S, Enter")]
+	[DataRow("Ctrl + K  Ctrl + S  Enter")]
+	public void TryParse_ThreeStrokeText_ReturnsTheFullChord(string text)
+	{
+		var expected = new KeyChord(Ctrl(KeyCode.K), Ctrl(KeyCode.S), new KeyStroke(KeyCode.Enter, KeyModifiers.None));
+
+		Assert.IsTrue(KeyChord.TryParse(text, out KeyChord chord), $"'{text}' does not parse.");
+		Assert.AreEqual(expected, chord);
 	}
 
 	[TestMethod]
@@ -167,12 +180,12 @@ public class KeyChordTests
 	public void TryParse_InvalidChordText_ReturnsFalseAndDefault(string? text)
 	{
 		Assert.IsFalse(KeyChord.TryParse(text, out KeyChord chord), $"'{text}' must not parse.");
-		Assert.AreEqual(default(KeyChord), chord);
+		Assert.AreEqual(default, chord);
 	}
 
 	/// <summary>
-	/// Pins the round-trip the typed-text grammar exists for: the default formatter's own output is
-	/// accepted and yields the stroke it was rendered from, for every key and every modifier combination.
+	/// Pins the round-trip the typed-text grammar exists for: the default formatter's own output is accepted and yields the stroke
+	/// it was rendered from, for every key and every modifier combination.
 	/// </summary>
 	[TestMethod]
 	public void TryParse_DefaultDisplayText_RoundTripsEveryStroke()
@@ -181,11 +194,12 @@ public class KeyChordTests
 		{
 			for (int mask = 0; mask < 16; mask++)
 			{
-				var combo = new KeyCombo(keyCode, (KeyModifierSet)mask);
-				string displayText = KeyDisplayTextFormatter.Default.GetDisplayText(combo);
+				var stroke = new KeyStroke(keyCode, (KeyModifiers)mask);
 
-				Assert.IsTrue(KeyCombo.TryParse(displayText, out KeyCombo parsed), $"'{displayText}' does not parse.");
-				Assert.AreEqual(combo, parsed, $"'{displayText}' does not round-trip.");
+				string displayText = KeyDisplayTextFormatter.Default.GetDisplayText(stroke);
+
+				Assert.IsTrue(KeyStroke.TryParse(displayText, out KeyStroke parsed), $"'{displayText}' does not parse.");
+				Assert.AreEqual(stroke, parsed, $"'{displayText}' does not round-trip.");
 			}
 		}
 	}
@@ -196,9 +210,9 @@ public class KeyChordTests
 		KeyChord[] chords =
 		[
 			new(Ctrl(KeyCode.K), Ctrl(KeyCode.S)),
-			new(Ctrl(KeyCode.K), new KeyCombo(KeyCode.F, KeyModifierSet.None)),
-			new(new KeyCombo(KeyCode.F4, KeyModifierSet.Alt)),
-			new(Ctrl(KeyCode.K), new KeyCombo(KeyCode.D5, KeyModifierSet.Shift), new KeyCombo(KeyCode.Enter, KeyModifierSet.None))
+			new(Ctrl(KeyCode.K), new KeyStroke(KeyCode.F, KeyModifiers.None)),
+			new(new KeyStroke(KeyCode.F4, KeyModifiers.Alt)),
+			new(Ctrl(KeyCode.K), new KeyStroke(KeyCode.D5, KeyModifiers.Shift), new KeyStroke(KeyCode.Enter, KeyModifiers.None)),
 		];
 
 		foreach (KeyChord chord in chords)

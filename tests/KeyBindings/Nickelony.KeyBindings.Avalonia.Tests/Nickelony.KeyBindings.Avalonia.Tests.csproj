@@ -1,28 +1,35 @@
 <Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<IsPackable>false</IsPackable>
+		<IsTestProject>true</IsTestProject>
+	</PropertyGroup>
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <IsPackable>false</IsPackable>
-    <IsTestProject>true</IsTestProject>
-  </PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="coverlet.collector" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" />
+		<PackageReference Include="MSTest.TestAdapter" />
+		<PackageReference Include="MSTest.TestFramework" />
+		<!-- The repeat gate observes routed events, so its tests run windows on the headless platform. -->
+		<PackageReference Include="Avalonia.Headless" />
+		<PackageReference Include="Avalonia.Themes.Fluent" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="coverlet.collector" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" />
-    <PackageReference Include="MSTest.TestAdapter" />
-    <PackageReference Include="MSTest.TestFramework" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\src\KeyBindings\Nickelony.KeyBindings.Avalonia\Nickelony.KeyBindings.Avalonia.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\src\KeyBindings\Nickelony.KeyBindings.Avalonia\Nickelony.KeyBindings.Avalonia.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Include="..\TestSupport\KeyBindingTestHelpers.cs" Link="TestSupport\KeyBindingTestHelpers.cs" />
+		<Compile Include="..\TestSupport\TestCommand.cs" Link="TestSupport\TestCommand.cs" />
+		<Compile Include="..\TestSupport\RecordingOverrideStore.cs" Link="TestSupport\RecordingOverrideStore.cs" />
+		<Compile Include="..\..\TestSupport\Avalonia\AvaloniaTestApp.cs" Link="TestSupport\AvaloniaTestApp.cs" />
+		<Compile Include="..\..\TestSupport\Avalonia\AvaloniaToolkitTestHost.cs" Link="TestSupport\AvaloniaToolkitTestHost.cs" />
+		<Compile Include="..\..\TestSupport\Avalonia\HostWindow.cs" Link="TestSupport\HostWindow.cs" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Compile Include="..\TestHelpers\KeyBindingTestFixtures.cs" Link="TestHelpers\KeyBindingTestFixtures.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
-  </ItemGroup>
-
+	<ItemGroup>
+		<Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
+		<Using Include="Nickelony.Testing" />
+	</ItemGroup>
 </Project>

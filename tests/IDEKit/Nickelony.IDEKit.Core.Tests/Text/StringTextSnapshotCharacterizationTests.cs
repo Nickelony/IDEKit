@@ -10,7 +10,7 @@ public sealed class StringTextSnapshotCharacterizationTests
 	{
 		var snapshot = new StringTextSnapshot("A\U0001F600B", "script.lua");
 
-		Assert.AreEqual("script.lua", snapshot.FileName);
+		Assert.AreEqual("script.lua", snapshot.DocumentId);
 		Assert.AreEqual(4, snapshot.TextLength);
 		Assert.AreEqual('A', snapshot.GetCharAt(0));
 		Assert.AreEqual('\uD83D', snapshot.GetCharAt(1));
@@ -26,7 +26,7 @@ public sealed class StringTextSnapshotCharacterizationTests
 
 		Assert.AreEqual(0, snapshot.TextLength);
 		Assert.AreEqual(1, snapshot.LineCount);
-		Assert.AreEqual("script.lua", snapshot.FileName);
+		Assert.AreEqual("script.lua", snapshot.DocumentId);
 		Assert.AreEqual(string.Empty, snapshot.GetText(0, 0));
 	}
 
@@ -34,13 +34,15 @@ public sealed class StringTextSnapshotCharacterizationTests
 	public void MixedLineEndings_PreserveLineOffsetsAndLengths()
 	{
 		var snapshot = new StringTextSnapshot("one\r\ntwo\nthree\rfour");
-		ITextLine[] lines = snapshot.Lines.ToArray();
+		ITextLine[] lines = [.. snapshot.Lines];
 
 		Assert.AreEqual(4, snapshot.LineCount);
-		AssertLine(lines[0], 1, 0, 3);
-		AssertLine(lines[1], 2, 5, 3);
-		AssertLine(lines[2], 3, 9, 5);
-		AssertLine(lines[3], 4, 15, 4);
+
+		AssertLine(line: lines[0], lineNumber: 1, offset: 0, length: 3);
+		AssertLine(line: lines[1], lineNumber: 2, offset: 5, length: 3);
+		AssertLine(line: lines[2], lineNumber: 3, offset: 9, length: 5);
+		AssertLine(line: lines[3], lineNumber: 4, offset: 15, length: 4);
+
 		Assert.AreEqual(9, snapshot.GetLineByOffset(14).Offset);
 		Assert.AreEqual(15, snapshot.GetLineByOffset(15).Offset);
 		Assert.AreEqual(4, snapshot.GetLineByOffset(snapshot.TextLength).LineNumber);
@@ -53,9 +55,9 @@ public sealed class StringTextSnapshotCharacterizationTests
 		var trailingSnapshot = new StringTextSnapshot("one\n");
 
 		Assert.AreEqual(1, emptySnapshot.LineCount);
-		AssertLine(emptySnapshot.GetLineByNumber(1), 1, 0, 0);
+		AssertLine(line: emptySnapshot.GetLineByNumber(1), lineNumber: 1, offset: 0, length: 0);
 		Assert.AreEqual(2, trailingSnapshot.LineCount);
-		AssertLine(trailingSnapshot.GetLineByNumber(2), 2, 4, 0);
+		AssertLine(line: trailingSnapshot.GetLineByNumber(2), lineNumber: 2, offset: 4, length: 0);
 		Assert.AreEqual(2, trailingSnapshot.GetLineByOffset(trailingSnapshot.TextLength).LineNumber);
 	}
 
@@ -87,7 +89,39 @@ public sealed class StringTextSnapshotCharacterizationTests
 	{
 		var snapshot = new StringTextSnapshot("text");
 
-		var exception = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => snapshot.GetText(3, 2));
+		ArgumentOutOfRangeException exception = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => snapshot.GetText(3, 2));
+
+		Assert.AreEqual("length", exception.ParamName);
+	}
+
+	[TestMethod]
+	public void GetText_OffsetBeyondTheText_ReportsTheOffsetMessage()
+	{
+		var snapshot = new StringTextSnapshot("text");
+
+		ArgumentOutOfRangeException exception = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => snapshot.GetText(5, 0));
+
+		Assert.AreEqual("offset", exception.ParamName);
+		Assert.Contains("The string snapshot offset (5) is outside the document text (length 4).", exception.Message);
+	}
+
+	[TestMethod]
+	public void GetText_RangeBeyondTheText_ReportsTheRangeMessage()
+	{
+		var snapshot = new StringTextSnapshot("text");
+
+		ArgumentOutOfRangeException exception = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => snapshot.GetText(3, 2));
+
+		Assert.AreEqual("length", exception.ParamName);
+		Assert.Contains("The string snapshot range (3..5) is outside the document text (length 4).", exception.Message);
+	}
+
+	[TestMethod]
+	public void GetText_LengthWhoseEndOverflows_ThrowsAgainstTheLength()
+	{
+		var snapshot = new StringTextSnapshot("text");
+
+		ArgumentOutOfRangeException exception = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => snapshot.GetText(3, int.MaxValue));
 
 		Assert.AreEqual("length", exception.ParamName);
 	}
@@ -106,7 +140,6 @@ public sealed class StringTextSnapshotCharacterizationTests
 	public void Lines_AreCachedPerSnapshotInstance()
 	{
 		var snapshot = new StringTextSnapshot("one\ntwo");
-
 		Assert.IsTrue(ReferenceEquals(snapshot.Lines, snapshot.Lines));
 	}
 
@@ -141,6 +174,7 @@ public sealed class StringTextSnapshotCharacterizationTests
 	public void LargeDocument_ExposesCompleteLineMetadata()
 	{
 		const int LineCount = 40_000;
+
 		string text = string.Concat(Enumerable.Repeat("local value = 1\n", LineCount));
 		string largerText = string.Concat(Enumerable.Repeat("local value = 1\n", LineCount * 4));
 
@@ -158,14 +192,18 @@ public sealed class StringTextSnapshotCharacterizationTests
 				var measured = new StringTextSnapshot(text);
 				_ = measured.GetLineByOffset(text.Length);
 			},
+
 			() =>
 			{
 				var measured = new StringTextSnapshot(largerText);
 				_ = measured.GetLineByOffset(largerText.Length);
 			},
-			"Building four times the line count took {0} versus {1}; the build is quadratic.");
+
+			"Building four times the line count took {0} versus {1}; the build is quadratic."
+		);
 
 		var snapshot = new StringTextSnapshot(text);
+
 		ITextLine firstLine = snapshot.GetLineByNumber(1);
 		ITextLine lastLine = snapshot.GetLineByNumber(snapshot.LineCount);
 

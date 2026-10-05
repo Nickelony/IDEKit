@@ -2,51 +2,37 @@ using Nickelony.IDEKit.Core.Text;
 
 namespace Nickelony.IDEKit.Core.Editing;
 
-/// <summary>
-/// Prepares neutral text edits without mutating a document or depending on a UI host or protocol.
-/// </summary>
+/// <summary>Prepares neutral text edits without mutating a document or depending on a UI host or protocol.</summary>
 public static class TextEditKernel
 {
-	/// <summary>
-	/// Validates source-offset edits against a text snapshot and returns descending operations.
-	/// </summary>
-	/// <remarks>
-	/// Insertions that touch a replacement range's boundaries are accepted: an insertion at a replacement's
-	/// start offset is ordered before the replacement, so the inserted text lands before the replacement
-	/// text, and an insertion at the replacement's end offset lands after it. Multiple insertions at one
-	/// source offset are ordered so applying the list in order inserts their texts in the caller's edit
-	/// order. A no-op edit (an empty range with an empty replacement text) contributes no operation, but its
-	/// range is still validated first: a no-op whose range lies outside the document is rejected with the
-	/// range diagnostic instead of being ignored. Pairwise conflicts are reported in a deterministic order,
-	/// capped at a bounded number per batch so a pathological overlapping batch cannot produce a quadratic
-	/// report; a batch with any conflict is rejected regardless of how many conflicts are listed.
-	/// </remarks>
+	/// <summary>Validates source-offset edits against a text snapshot and returns descending operations.</summary>
 	/// <param name="snapshot">The immutable source text used for range validation.</param>
 	/// <param name="edits">
-	/// The edits to validate and prepare. A <see langword="null"/> entry or a <see langword="null"/>
-	/// replacement text is reported as an issue instead of throwing.
+	/// The edits to validate and prepare. A <see langword="null"/> replacement text, which a <see langword="default"/> edit carries,
+	/// is reported as an issue instead of throwing.
 	/// </param>
 	/// <returns>
-	/// <list type="bullet">
-	/// <item>A result containing descending-offset operations when all edits are valid;</item>
-	/// <item>A result with no operations and the collected issues when any edit is rejected.</item>
-	/// </list>
+	/// A successful result containing descending-offset operations when all edits are valid, or a failed result with no operations and the collected
+	/// issues when any edit is rejected.
 	/// </returns>
-	/// <exception cref="ArgumentNullException">
-	/// <paramref name="snapshot"/> or <paramref name="edits"/> is <see langword="null"/>.
-	/// </exception>
-	public static TextEditPreparationResult Prepare(
-		ITextSnapshot snapshot,
-		IEnumerable<TextEditInput?> edits)
+	/// <exception cref="ArgumentNullException"><paramref name="snapshot"/> or <paramref name="edits"/> is <see langword="null"/>.</exception>
+	/// <remarks>
+	/// An insertion that only touches a replacement's boundaries is accepted: one at the replacement's start lands before the replacement
+	/// text and one at its end lands after it. Multiple insertions at one source offset are ordered so applying the list in order inserts their texts
+	/// in the caller's edit order. A no-op edit contributes no operation but is still range-validated, so an out-of-range no-op is rejected;
+	/// any conflict rejects the batch.
+	/// </remarks>
+	public static TextEditPreparationResult Prepare(ITextSnapshot snapshot, IEnumerable<TextIncrementalEdit> edits)
 	{
 		ArgumentNullException.ThrowIfNull(snapshot);
 		ArgumentNullException.ThrowIfNull(edits);
 
 		var candidates = new List<Candidate>();
 		var issues = new List<TextEditPreparationIssue>();
+
 		int editIndex = 0;
 
-		foreach (TextEditInput? edit in edits)
+		foreach (TextIncrementalEdit edit in edits)
 		{
 			TextEditPreparationIssue? invalidIssue = CreateInvalidEditIssue(edit, snapshot.TextLength, editIndex);
 
@@ -54,16 +40,12 @@ public static class TextEditKernel
 			{
 				issues.Add(invalidIssue);
 			}
-			else if (!edit!.IsNoOp)
+			else if (!edit.IsNoOp)
 			{
 				// An empty range with an empty replacement text changes nothing, so it is ignored
 				// instead of being classified as an insertion and rejected for starting inside a
 				// replacement range.
-				candidates.Add(new Candidate(
-					editIndex,
-					edit.Range.Offset,
-					edit.Range.EndOffset,
-					edit.NewText!));
+				candidates.Add(new Candidate(editIndex, edit.Range, edit.NewText));
 			}
 
 			editIndex++;
@@ -78,18 +60,13 @@ public static class TextEditKernel
 		for (int index = 0; index < candidates.Count; index++)
 		{
 			Candidate candidate = candidates[index];
-
-			ascendingOperations[index] = new TextEditOperation(
-				candidate.StartOffset,
-				candidate.EndOffset,
-				candidate.NewText,
-				candidate.EditIndex);
+			ascendingOperations[index] = new TextEditOperation(range: candidate.Range, newText: candidate.NewText, editIndex: candidate.EditIndex);
 		}
 
 		AddConflictIssues(ascendingOperations, issues);
 
 		if (issues.Count > 0)
-			return TextEditPreparationResult.Invalid(issues);
+			return TextEditPreparationResult.Failure(issues);
 
 		// The application order is the reverse of the candidate order, so the highest source offset
 		// applies first; the ascending array is reversed in place because it is not read again and
@@ -99,63 +76,40 @@ public static class TextEditKernel
 		// The shared conflict detector already ran over this batch above, so the carrier is created
 		// through the kernel-validated factory instead of re-detecting the same conflicts in its
 		// validating constructor.
-		return TextEditPreparationResult.Valid(PreparedTextEdits.CreateKernelValidated(ascendingOperations));
+		return TextEditPreparationResult.Success(PreparedTextEdits.CreateKernelValidated(ascendingOperations));
 	}
 
 	/// <summary>
-	/// Prepares a batch in lenient mode: entries that are invalid or that conflict with an earlier
-	/// accepted entry are skipped and reported instead of rejecting the whole batch.
+	/// Prepares a batch in lenient mode: entries that are invalid or that conflict with an earlier accepted entry are skipped and reported
+	/// instead of rejecting the whole batch.
 	/// </summary>
-	/// <remarks>
-	/// <para>
-	/// Entries are evaluated in caller order, so the first entry is always accepted (an earlier entry
-	/// always wins a conflict) and a caller that lists the entry it must apply first keeps that entry
-	/// even when a later entry overlaps it. The accepted operations are ordered from highest to lowest
-	/// source offset, so a caller applies them in list order without an applied entry shifting a
-	/// pending one: at one source offset the operation with the highest edit index applies first,
-	/// which leaves the lowest edit index leftmost in the resulting text.
-	/// </para>
-	/// <list type="bullet">
-	/// <item>An entry is skipped when it is <see langword="null"/>, carries a <see langword="null"/>
-	/// replacement text, has a range outside the snapshot, or conflicts with an earlier accepted entry
-	/// under the shared range rule set (<see cref="TextEditConflictDetector.Conflicts"/>): an insertion
-	/// that only touches a replacement's boundaries is accepted, an insertion strictly inside a
-	/// replacement is skipped, and two replacements conflict when their ranges overlap.</item>
-	/// <item>An entry that changes nothing is ignored and produces neither an operation nor an issue.</item>
-	/// <item>Each skipped entry produces one issue that names the entry as
-	/// <see cref="TextEditPreparationIssue.EditIndex"/> and, for a conflict, the earlier accepted
-	/// entry as <see cref="TextEditPreparationIssue.RelatedEditIndex"/>.</item>
-	/// <item>The acceptance walk compares each entry with the entries accepted before it, so its cost
-	/// grows with the number of accepted entries; a batch in which many entries conflict with one
-	/// another is quadratic. Use the strict
-	/// <see cref="Prepare(ITextSnapshot, IEnumerable{TextEditInput?})"/> mode when a batch must be
-	/// all-or-nothing.</item>
-	/// </list>
-	/// </remarks>
 	/// <param name="snapshot">The immutable source text used for range validation.</param>
 	/// <param name="edits">
-	/// The edits to validate and prepare. A <see langword="null"/> entry or a <see langword="null"/>
-	/// replacement text is skipped with an issue instead of throwing.
+	/// The edits to validate and prepare. A <see langword="null"/> replacement text, which a <see langword="default"/> edit carries,
+	/// is skipped with an issue instead of throwing.
 	/// </param>
 	/// <returns>
-	/// A result carrying the accepted operations and one issue per skipped entry; the batch may be
-	/// empty when every entry was skipped.
+	/// A result carrying the accepted operations and one issue per skipped entry; the batch may be empty when every entry was skipped.
 	/// </returns>
-	/// <exception cref="ArgumentNullException">
-	/// <paramref name="snapshot"/> or <paramref name="edits"/> is <see langword="null"/>.
-	/// </exception>
-	public static TextEditSkipResult PrepareSkippingInvalidEntries(
-		ITextSnapshot snapshot,
-		IEnumerable<TextEditInput?> edits)
+	/// <exception cref="ArgumentNullException"><paramref name="snapshot"/> or <paramref name="edits"/> is <see langword="null"/>.</exception>
+	/// <remarks>
+	/// Entries are evaluated in caller order, so the first valid, non-no-op entry is always accepted and a caller keeps the entry it ranks highest
+	/// by listing it first, even when a later entry overlaps it. An entry is skipped when it carries a <see langword="null"/> replacement text,
+	/// has a range outside the snapshot, or conflicts with an earlier accepted entry under the shared range rule set; a valid no-op
+	/// entry is ignored. The acceptance walk compares each entry with those accepted before it, so the cost is quadratic in the batch size.
+	/// Use <see cref="Prepare(ITextSnapshot, IEnumerable{TextIncrementalEdit})"/> when a batch must be all-or-nothing.
+	/// </remarks>
+	public static TextEditSkipResult PrepareSkippingInvalidEntries(ITextSnapshot snapshot, IEnumerable<TextIncrementalEdit> edits)
 	{
 		ArgumentNullException.ThrowIfNull(snapshot);
 		ArgumentNullException.ThrowIfNull(edits);
 
 		var accepted = new List<TextEditOperation>();
+
 		List<TextEditPreparationIssue>? skippedIssues = null;
 		int editIndex = 0;
 
-		foreach (TextEditInput? edit in edits)
+		foreach (TextIncrementalEdit edit in edits)
 		{
 			TextEditPreparationIssue? invalidIssue = CreateInvalidEditIssue(edit, snapshot.TextLength, editIndex);
 
@@ -163,13 +117,10 @@ public static class TextEditKernel
 			{
 				(skippedIssues ??= []).Add(invalidIssue);
 			}
-			else if (!edit!.IsNoOp)
+			else if (!edit.IsNoOp)
 			{
-				var operation = new TextEditOperation(
-					edit.Range.Offset,
-					edit.Range.EndOffset,
-					edit.NewText!,
-					editIndex);
+				var operation = new TextEditOperation(range: edit.Range, newText: edit.NewText, editIndex);
+
 				TextEditOperation? conflicting = FindAcceptedConflict(operation, accepted);
 
 				if (conflicting is null)
@@ -181,44 +132,27 @@ public static class TextEditKernel
 			editIndex++;
 		}
 
-		// The accepted operations are emitted in the shared application order: highest source offset
-		// first, and at one offset the highest edit index first (the order key is total while edit
-		// indexes are unique per batch).
+		// The accepted operations are emitted in the shared application order, the order key descending:
+		// highest source offset first, then highest end offset, and for equal ranges the highest edit
+		// index first (the order key is total while edit indexes are unique per batch).
 		accepted.Sort(static (left, right) => TextEditOrderKey.From(right).CompareTo(TextEditOrderKey.From(left)));
 
-		return TextEditSkipResult.Create(PreparedTextEdits.CreateKernelValidated([.. accepted]), skippedIssues ?? []);
+		return TextEditSkipResult.Success(PreparedTextEdits.CreateKernelValidated([.. accepted]), skippedIssues ?? []);
 	}
 
-	/// <summary>
-	/// Validates a hand-built batch of operations and returns the operations in application order.
-	/// </summary>
-	/// <remarks>
-	/// <para>
-	/// This is the single construction path for a batch a caller already holds as
-	/// <see cref="TextEditOperation"/> values: a rejected batch is reported as preparation issues,
-	/// exactly as <see cref="Prepare(ITextSnapshot, IEnumerable{TextEditInput?})"/> reports them,
-	/// instead of throwing. The operations are ordered for application, so a caller does not have to
-	/// supply them in order.
-	/// </para>
-	/// <list type="bullet">
-	/// <item><see cref="TextEditOperation"/> validates its own replacement text and offsets, so the
-	/// only invalid entry is a <see langword="null"/> element, reported as
-	/// <see cref="TextEditPreparationIssueKind.NullEdit"/>.</item>
-	/// <item>An operation that changes nothing is ignored and produces no issue.</item>
-	/// <item>Conflicts follow the shared range rule set (<see cref="TextEditConflictDetector"/>):
-	/// an insertion strictly inside a replacement and two overlapping replacements are reported and
-	/// reject the batch.</item>
-	/// <item>Ranges are not validated against a snapshot because none is supplied; use
-	/// <see cref="Prepare(ITextSnapshot, IEnumerable{TextEditInput?})"/> when the ranges must be
-	/// checked against a document.</item>
-	/// </list>
-	/// </remarks>
+	/// <summary>Validates a hand-built batch of operations and returns the operations in application order.</summary>
 	/// <param name="operations">The operations to validate; they need not be ordered.</param>
 	/// <returns>
-	/// A result carrying the operations in descending application order when the batch is valid, or
-	/// the issues that rejected it.
+	/// A successful result carrying the operations in descending application order when the batch is valid, or a failed result carrying the issues
+	/// that rejected it.
 	/// </returns>
 	/// <exception cref="ArgumentNullException"><paramref name="operations"/> is <see langword="null"/>.</exception>
+	/// <remarks>
+	/// A rejected batch is reported as preparation issues instead of throwing.
+	/// <see cref="TextEditOperation"/> validates its own replacement text and offsets, so the only invalid entry is a <see langword="null"/>
+	/// element and a no-op is ignored. Ranges are not validated against a snapshot, and conflicts follow the shared range rule set;
+	/// use <see cref="Prepare(ITextSnapshot, IEnumerable{TextIncrementalEdit})"/> to check ranges against a document.
+	/// </remarks>
 	public static TextEditPreparationResult Prepare(IReadOnlyList<TextEditOperation> operations)
 	{
 		ArgumentNullException.ThrowIfNull(operations);
@@ -232,11 +166,14 @@ public static class TextEditKernel
 
 			if (operation is null)
 			{
-				issues.Add(new TextEditPreparationIssue(
-					TextEditPreparationIssueKind.NullEdit,
-					index,
-					null,
-					"The edit is null."));
+				issues.Add(
+					new TextEditPreparationIssue(
+						kind: TextEditPreparationIssueKind.NullEdit,
+						editIndex: index,
+						relatedEditIndex: null,
+						message: "The edit is null."
+					)
+				);
 			}
 			else if (!operation.IsNoOp)
 			{
@@ -251,74 +188,47 @@ public static class TextEditKernel
 		AddConflictIssues(candidates, issues);
 
 		if (issues.Count > 0)
-			return TextEditPreparationResult.Invalid(issues);
+			return TextEditPreparationResult.Failure(issues);
 
 		// The application order is the reverse of the candidate order, so the highest source offset
 		// applies first.
 		TextEditOperation[] applicationOrder = [.. candidates];
 		Array.Reverse(applicationOrder);
 
-		return TextEditPreparationResult.Valid(PreparedTextEdits.CreateKernelValidated(applicationOrder));
+		return TextEditPreparationResult.Success(PreparedTextEdits.CreateKernelValidated(applicationOrder));
 	}
 
-	/// <summary>
-	/// Creates the issue for an invalid edit, or <see langword="null"/> when the edit is valid.
-	/// </summary>
+	/// <summary>Creates the issue for an invalid edit, or <see langword="null"/> when the edit is valid.</summary>
 	/// <remarks>
-	/// Both preparation modes classify an edit the same way: a <see langword="null"/> entry, a
-	/// <see langword="null"/> replacement text, and a range outside the document are the three invalid
-	/// cases, and the range is validated before the no-op check, so an out-of-range no-op is still
-	/// reported.
+	/// An edit is classified the same way in either preparation mode: an edit is invalid when it carries a <see langword="null"/> replacement text
+	/// or has a range outside the document. The range is validated before the no-op check, so an out-of-range no-op is still reported.
 	/// </remarks>
-	/// <param name="edit">The edit to inspect.</param>
-	/// <param name="textLength">The snapshot length the edit range is validated against.</param>
-	/// <param name="editIndex">The index of the edit within the caller's batch.</param>
-	/// <returns>The invalid-edit issue, or <see langword="null"/> when the edit is valid.</returns>
-	private static TextEditPreparationIssue? CreateInvalidEditIssue(
-		TextEditInput? edit,
-		int textLength,
-		int editIndex)
+	private static TextEditPreparationIssue? CreateInvalidEditIssue(TextIncrementalEdit edit, int textLength, int editIndex)
 	{
-		if (edit is null)
-		{
-			return new TextEditPreparationIssue(
-				TextEditPreparationIssueKind.NullEdit,
-				editIndex,
-				null,
-				"The edit is null.");
-		}
-
 		if (edit.NewText is null)
 		{
 			return new TextEditPreparationIssue(
-				TextEditPreparationIssueKind.NullReplacementText,
+				kind: TextEditPreparationIssueKind.NullReplacementText,
 				editIndex,
-				null,
-				"The edit replacement text is null.");
+				relatedEditIndex: null,
+				message: "The edit replacement text is null."
+			);
 		}
 
 		if (!edit.Range.FitsWithin(textLength))
 		{
 			return new TextEditPreparationIssue(
-				TextEditPreparationIssueKind.RangeOutOfBounds,
+				kind: TextEditPreparationIssueKind.RangeOutOfBounds,
 				editIndex,
-				null,
-				"The edit range is outside the document.");
+				relatedEditIndex: null,
+				message: "The edit range is outside the document."
+			);
 		}
 
 		return null;
 	}
 
-	/// <summary>
-	/// Finds the first accepted operation that conflicts with the candidate under the shared range
-	/// rule set, or <see langword="null"/> when the candidate is accepted.
-	/// </summary>
-	/// <param name="candidate">The candidate operation.</param>
-	/// <param name="accepted">The operations accepted before the candidate, in caller order.</param>
-	/// <returns>The first conflicting accepted operation, or <see langword="null"/>.</returns>
-	private static TextEditOperation? FindAcceptedConflict(
-		TextEditOperation candidate,
-		List<TextEditOperation> accepted)
+	private static TextEditOperation? FindAcceptedConflict(TextEditOperation candidate, List<TextEditOperation> accepted)
 	{
 		for (int index = 0; index < accepted.Count; index++)
 		{
@@ -329,86 +239,57 @@ public static class TextEditKernel
 		return null;
 	}
 
-	/// <summary>
-	/// Creates the issue for an entry skipped because it conflicts with an earlier accepted entry.
-	/// </summary>
-	/// <param name="candidate">The skipped entry.</param>
-	/// <param name="conflicting">The earlier accepted entry it conflicts with.</param>
-	/// <param name="editIndex">The index of the skipped entry within the caller's batch.</param>
-	/// <returns>The conflict issue.</returns>
-	private static TextEditPreparationIssue CreateConflictIssue(
-		TextEditOperation candidate,
-		TextEditOperation conflicting,
-		int editIndex)
+	private static TextEditPreparationIssue CreateConflictIssue(TextEditOperation candidate, TextEditOperation conflicting, int editIndex)
 	{
-		// Exactly one member of a conflicting pair is an insertion (two insertions never conflict),
+		// At most one member of a conflicting pair is an insertion, because two insertions never conflict,
 		// so the pair is an insertion inside a replacement when either member is an insertion and a
 		// replacement overlap otherwise.
-		TextEditConflictKind kind = candidate.Length == 0 || conflicting.Length == 0
-			? TextEditConflictKind.InsertionInsideReplacement
-			: TextEditConflictKind.ReplacementOverlap;
+		TextEditPreparationIssueKind kind =
+			candidate.Range.IsEmpty || conflicting.Range.IsEmpty
+				? TextEditPreparationIssueKind.InsertionInsideReplacement
+				: TextEditPreparationIssueKind.ReplacementOverlap;
 
 		return new TextEditPreparationIssue(
-			MapConflictKind(kind),
+			kind,
 			editIndex,
-			conflicting.EditIndex,
-			TextEditConflictMessages.GetIssueMessage(kind));
+			relatedEditIndex: conflicting.EditIndex,
+			message: TextEditConflictMessages.GetIssueMessage(kind)
+		);
 	}
 
-	/// <summary>
-	/// Bounds the pairwise conflict issues for one batch. The cap only shapes the report: a
-	/// batch with any conflict is rejected regardless of how many conflicts are listed.
-	/// </summary>
+	/// <summary>Caps the pairwise conflict issues for one batch; the cap only shapes the report, since any conflict rejects the batch.</summary>
 	private const int MaximumConflictIssueCount = 512;
 
 	/// <summary>
-	/// Adds an issue for every conflict reported by the shared conflict detector, capped so a
-	/// pathological overlapping batch cannot produce a quadratic issue list.
+	/// Adds an issue for every conflict reported by the shared conflict detector, capped at <see cref="MaximumConflictIssueCount"/> so a pathological
+	/// overlapping batch cannot produce a quadratic issue list.
 	/// </summary>
 	/// <remarks>
-	/// Each issue names the edit it was detected for as <c>EditIndex</c> and the edit it
-	/// conflicts with as <c>RelatedEditIndex</c>. The conflict order is documented on
-	/// <see cref="TextEditConflictDetector.FindConflicts"/>. At most
-	/// <see cref="MaximumConflictIssueCount"/> pairwise conflicts are reported. The shared
-	/// detector is the same rule set that <see cref="PreparedTextEdits"/> validates with, so a
-	/// prepared batch never fails construction.
+	/// The issues follow the order of <see cref="TextEditConflictDetector.FindConflicts"/>.
 	/// </remarks>
-	private static void AddConflictIssues(
-		IReadOnlyList<TextEditOperation> orderedOperations,
-		List<TextEditPreparationIssue> issues)
+	private static void AddConflictIssues(IReadOnlyList<TextEditOperation> orderedOperations, List<TextEditPreparationIssue> issues)
 	{
 		foreach (TextEditConflict conflict in TextEditConflictDetector.FindConflictsInCandidateOrder(orderedOperations, MaximumConflictIssueCount))
 		{
-			issues.Add(new TextEditPreparationIssue(
-				MapConflictKind(conflict.Kind),
-				conflict.EditIndex,
-				conflict.RelatedEditIndex,
-				TextEditConflictMessages.GetIssueMessage(conflict.Kind)));
+			issues.Add(
+				new TextEditPreparationIssue(
+					kind: conflict.Kind,
+					editIndex: conflict.EditIndex,
+					relatedEditIndex: conflict.RelatedEditIndex,
+					message: TextEditConflictMessages.GetIssueMessage(conflict.Kind)
+				)
+			);
 		}
 	}
 
-	/// <summary>
-	/// Projects a conflict rule onto its public issue category.
-	/// </summary>
-	/// <param name="kind">The conflict rule reported by the shared detector.</param>
-	/// <returns>The issue category that describes the conflict.</returns>
-	/// <exception cref="ArgumentOutOfRangeException"><paramref name="kind"/> is not a defined value.</exception>
-	private static TextEditPreparationIssueKind MapConflictKind(TextEditConflictKind kind)
-		=> kind switch
-		{
-			TextEditConflictKind.InsertionInsideReplacement => TextEditPreparationIssueKind.InsertionInsideReplacement,
-			TextEditConflictKind.ReplacementOverlap => TextEditPreparationIssueKind.ReplacementOverlap,
-			_ => throw new ArgumentOutOfRangeException(nameof(kind)),
-		};
-
-	private readonly record struct Candidate(int EditIndex, int StartOffset, int EndOffset, string NewText);
+	private readonly record struct Candidate(int EditIndex, TextRange Range, string NewText)
+	{
+		internal TextEditOrderKey OrderKey => new(Range, EditIndex);
+	}
 
 	private sealed class CandidateComparer : IComparer<Candidate>
 	{
-		public static CandidateComparer Instance { get; } = new();
-
-		public int Compare(Candidate left, Candidate right)
-			=> new TextEditOrderKey(left.StartOffset, left.EndOffset, left.EditIndex)
-				.CompareTo(new TextEditOrderKey(right.StartOffset, right.EndOffset, right.EditIndex));
+		internal static CandidateComparer Instance { get; } = new();
+		public int Compare(Candidate left, Candidate right) => left.OrderKey.CompareTo(right.OrderKey);
 	}
 }

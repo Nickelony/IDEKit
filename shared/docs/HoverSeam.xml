@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+	<members>
+		<member name="SubscribePointer">
+			<summary>Subscribes the pointer-move and pointer-leave handlers, including for events a child already handled.</summary>
+			<param name="textArea">The text area whose pointer is tracked.</param>
+			<param name="moved">The handler that receives the pointer position in the text area's coordinate space.</param>
+			<param name="left">The handler that runs when the pointer leaves the text area.</param>
+			<returns>A subscription that removes the handlers when it is disposed.</returns>
+		</member>
+	</members>
+</doc>

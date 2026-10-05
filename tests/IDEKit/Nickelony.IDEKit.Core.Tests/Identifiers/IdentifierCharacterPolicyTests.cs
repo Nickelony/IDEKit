@@ -40,7 +40,7 @@ public sealed class IdentifierCharacterPolicyTests
 	[TestMethod]
 	public void Create_WithCustomPredicate_AppliesPredicate()
 	{
-		IdentifierCharacterPolicy policy = IdentifierCharacterPolicy.Create(static c => c is 'a' or 'b');
+		var policy = IdentifierCharacterPolicy.Create(static c => c is 'a' or 'b');
 
 		Assert.IsTrue(policy.IsPartCharacter('a'));
 		Assert.IsTrue(policy.IsPartCharacter('b'));
@@ -50,7 +50,7 @@ public sealed class IdentifierCharacterPolicyTests
 	[TestMethod]
 	public void Create_IsStartCharacterDefaultsToPartCharacter()
 	{
-		IdentifierCharacterPolicy policy = IdentifierCharacterPolicy.Create(static c => c == 'a');
+		var policy = IdentifierCharacterPolicy.Create(static c => c == 'a');
 
 		Assert.IsTrue(policy.IsStartCharacter('a'));
 		Assert.IsFalse(policy.IsStartCharacter('b'));
@@ -59,9 +59,7 @@ public sealed class IdentifierCharacterPolicyTests
 	[TestMethod]
 	public void Create_WithSeparateStartPredicate_UsesIt()
 	{
-		IdentifierCharacterPolicy policy = IdentifierCharacterPolicy.Create(
-			static c => char.IsLetterOrDigit(c),
-			static c => char.IsLetter(c));
+		var policy = IdentifierCharacterPolicy.Create(static c => char.IsLetterOrDigit(c), static c => char.IsLetter(c));
 
 		Assert.IsTrue(policy.IsPartCharacter('4'));
 		Assert.IsTrue(policy.IsStartCharacter('x'));

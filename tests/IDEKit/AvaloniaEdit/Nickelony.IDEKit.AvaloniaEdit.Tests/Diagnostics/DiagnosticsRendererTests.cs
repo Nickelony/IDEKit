@@ -8,20 +8,19 @@ using Pen = Avalonia.Media.IPen;
 namespace Nickelony.IDEKit.AvaloniaEdit.Tests;
 
 /// <summary>
-/// The AvaloniaEdit binding of the shared <see cref="DiagnosticsRendererTestsBase"/> renderer scenarios; it
-/// supplies the mirror's draw-capture, frozen-pen, and underline-geometry hooks and adds the immutable
-/// default-pen scenario.
+/// The AvaloniaEdit binding of the shared <see cref="DiagnosticsRendererTestsBase"/> renderer scenarios; it supplies the draw-capture, frozen-pen,
+/// and underline-geometry hooks and adds the immutable default-pen scenario.
 /// </summary>
 [AvaloniaTestClass]
 public sealed class DiagnosticsRendererTests : DiagnosticsRendererTestsBase
 {
 	[TestMethod]
-	public void DefaultPens_AreFrozen()
+	public void DefaultPens_AreImmutable()
 	{
 		DiagnosticsRenderer renderer = CreateRenderer();
 
-		// Avalonia's IPen has no IsFrozen; the renderer's defaults are its shared sample pens, which the
-		// mirror installs as ImmutablePen instances (the frozen-equivalent type).
+		// Avalonia's IPen has no IsFrozen; the renderer's defaults are its shared sample pens, immutable
+		// instances (the frozen-equivalent type).
 		Assert.AreSame(DiagnosticsRenderer.SampleErrorPen, renderer.ErrorPen);
 		Assert.AreSame(DiagnosticsRenderer.SampleWarningPen, renderer.WarningPen);
 		Assert.AreSame(DiagnosticsRenderer.SampleInformationPen, renderer.InformationPen);
@@ -41,14 +40,23 @@ public sealed class DiagnosticsRendererTests : DiagnosticsRendererTestsBase
 	}
 
 	protected override Pen CreateFrozenPen(Color color)
-		=> new ImmutablePen(
-			new ImmutableSolidColorBrush(color.ToUInt32()),
-			1.5,
-			null,
-			PenLineCap.Flat,
-			PenLineJoin.Miter,
-			10.0);
+	{
+		return new ImmutablePen(
+			brush: new ImmutableSolidColorBrush(color.ToUInt32()),
+			thickness: 1.5,
+			dashStyle: null,
+			lineCap: PenLineCap.Flat,
+			lineJoin: PenLineJoin.Miter,
+			miterLimit: 10.0
+		);
+	}
 
-	protected override void AssertUnderlineGeometryShape(GeometryDrawing drawing, TextDiagnosticSeverity severity)
-		=> Assert.IsNotNull(drawing.Geometry, $"Wrong underline geometry for {severity}.");
+	protected override void AssertUnderlineGeometryShape(GeometryDrawing drawing, DiagnosticSeverity severity)
+	{
+		// The renderer batches the underline into a StreamGeometry, but Avalonia records a DrawingGroup
+		// geometry as its internal PlatformGeometry wrapper, which shares no public base with StreamGeometry.
+		// The concrete shape therefore cannot be named here; the extent and squiggle-amplitude checks live in
+		// the shared base, so this hook only pins that an underline geometry was recorded.
+		Assert.IsNotNull(drawing.Geometry, $"Wrong underline geometry for {severity}.");
+	}
 }

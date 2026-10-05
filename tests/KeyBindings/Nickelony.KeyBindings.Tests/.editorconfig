@@ -1,0 +1,9 @@
+# The markup band is off here: the KeyBindingOverrides fixtures are the hand-written documents the
+# round-trip tests parse, so reformatting the markup inside them is churn with no test value. Only this
+# project turns the band off.
+[*.cs]
+dotnet_diagnostic.ZA0101.severity = none
+dotnet_diagnostic.ZA0102.severity = none
+dotnet_diagnostic.ZA0103.severity = none
+dotnet_diagnostic.ZA0104.severity = none
+dotnet_diagnostic.ZA0105.severity = none

@@ -1,0 +1,71 @@
+#nullable enable
+Nickelony.LanguageServer.Provider.Abstractions.ILanguageServerCapabilitiesSource
+Nickelony.LanguageServer.Provider.Abstractions.ILanguageServerCapabilitiesSource.Capabilities.get -> Nickelony.LanguageServer.Provider.Abstractions.LanguageServerFeatureProviderCapabilities!
+Nickelony.LanguageServer.Provider.Abstractions.ILanguageServerCapabilitiesSource.CapabilitiesChanged -> System.EventHandler?
+Nickelony.LanguageServer.Provider.Abstractions.ILanguageServerFeatureProvider
+Nickelony.LanguageServer.Provider.Abstractions.ILanguageServerFeatureProvider.IsAvailable.get -> bool
+Nickelony.LanguageServer.Provider.Abstractions.ILanguageServerFeatureProvider.StartupFailed -> System.EventHandler<Nickelony.LanguageServer.Provider.Abstractions.StartupFailedEventArgs!>?
+Nickelony.LanguageServer.Provider.Abstractions.ILanguageServerFeatureProvider.WorkspaceFileWatchFailed -> System.EventHandler<Nickelony.LanguageServer.Provider.Abstractions.WorkspaceFileWatchFailedEventArgs!>?
+Nickelony.LanguageServer.Provider.Abstractions.LanguageServerFeatureProviderCapabilities
+Nickelony.LanguageServer.Provider.Abstractions.LanguageServerFeatureProviderCapabilities.<Clone>$() -> Nickelony.LanguageServer.Provider.Abstractions.LanguageServerFeatureProviderCapabilities!
+Nickelony.LanguageServer.Provider.Abstractions.LanguageServerFeatureProviderCapabilities.CompletionTriggerCharacters.get -> System.Collections.Generic.IReadOnlyList<string!>!
+Nickelony.LanguageServer.Provider.Abstractions.LanguageServerFeatureProviderCapabilities.CompletionTriggerCharacters.init -> void
+Nickelony.LanguageServer.Provider.Abstractions.LanguageServerFeatureProviderCapabilities.Equals(Nickelony.LanguageServer.Provider.Abstractions.LanguageServerFeatureProviderCapabilities? other) -> bool
+Nickelony.LanguageServer.Provider.Abstractions.LanguageServerFeatureProviderCapabilities.LanguageServerFeatureProviderCapabilities() -> void
+Nickelony.LanguageServer.Provider.Abstractions.LanguageServerFeatureProviderCapabilities.SignatureHelpRetriggerCharacters.get -> System.Collections.Generic.IReadOnlyList<string!>!
+Nickelony.LanguageServer.Provider.Abstractions.LanguageServerFeatureProviderCapabilities.SignatureHelpRetriggerCharacters.init -> void
+Nickelony.LanguageServer.Provider.Abstractions.LanguageServerFeatureProviderCapabilities.SignatureHelpTriggerCharacters.get -> System.Collections.Generic.IReadOnlyList<string!>!
+Nickelony.LanguageServer.Provider.Abstractions.LanguageServerFeatureProviderCapabilities.SignatureHelpTriggerCharacters.init -> void
+Nickelony.LanguageServer.Provider.Abstractions.LanguageServerFeatureProviderCapabilities.SupportsDefinition.get -> bool
+Nickelony.LanguageServer.Provider.Abstractions.LanguageServerFeatureProviderCapabilities.SupportsDefinition.init -> void
+Nickelony.LanguageServer.Provider.Abstractions.LanguageServerFeatureProviderCapabilities.SupportsHover.get -> bool
+Nickelony.LanguageServer.Provider.Abstractions.LanguageServerFeatureProviderCapabilities.SupportsHover.init -> void
+Nickelony.LanguageServer.Provider.Abstractions.LanguageServerFeatureProviderCapabilities.SupportsReferences.get -> bool
+Nickelony.LanguageServer.Provider.Abstractions.LanguageServerFeatureProviderCapabilities.SupportsReferences.init -> void
+Nickelony.LanguageServer.Provider.Abstractions.LanguageServerFeatureProviderCapabilities.SupportsRename.get -> bool
+Nickelony.LanguageServer.Provider.Abstractions.LanguageServerFeatureProviderCapabilities.SupportsRename.init -> void
+Nickelony.LanguageServer.Provider.Abstractions.LanguageServerFeatureProviderCapabilities.SupportsSignatureHelp.get -> bool
+Nickelony.LanguageServer.Provider.Abstractions.LanguageServerFeatureProviderCapabilities.SupportsSignatureHelp.init -> void
+Nickelony.LanguageServer.Provider.Abstractions.ProviderFailureCodes
+Nickelony.LanguageServer.Provider.Abstractions.StartupFailedEventArgs
+Nickelony.LanguageServer.Provider.Abstractions.StartupFailedEventArgs.Failure.get -> Nickelony.LanguageServer.Provider.Abstractions.StartupFailure!
+Nickelony.LanguageServer.Provider.Abstractions.StartupFailedEventArgs.StartupFailedEventArgs(Nickelony.LanguageServer.Provider.Abstractions.StartupFailure! failure) -> void
+Nickelony.LanguageServer.Provider.Abstractions.StartupFailure
+Nickelony.LanguageServer.Provider.Abstractions.StartupFailure.<Clone>$() -> Nickelony.LanguageServer.Provider.Abstractions.StartupFailure!
+Nickelony.LanguageServer.Provider.Abstractions.StartupFailure.Code.get -> string!
+Nickelony.LanguageServer.Provider.Abstractions.StartupFailure.Equals(Nickelony.LanguageServer.Provider.Abstractions.StartupFailure? other) -> bool
+Nickelony.LanguageServer.Provider.Abstractions.StartupFailure.Exception.get -> System.Exception?
+Nickelony.LanguageServer.Provider.Abstractions.StartupFailure.IsPersistent.get -> bool
+Nickelony.LanguageServer.Provider.Abstractions.StartupFailure.Message.get -> string!
+Nickelony.LanguageServer.Provider.Abstractions.StartupFailure.StartupFailure(string! code, string! message, bool isPersistent, System.Exception? exception = null) -> void
+Nickelony.LanguageServer.Provider.Abstractions.WorkspaceFileWatchFailedEventArgs
+Nickelony.LanguageServer.Provider.Abstractions.WorkspaceFileWatchFailedEventArgs.Failure.get -> Nickelony.LanguageServer.Provider.Abstractions.WorkspaceFileWatchFailure!
+Nickelony.LanguageServer.Provider.Abstractions.WorkspaceFileWatchFailedEventArgs.WorkspaceFileWatchFailedEventArgs(Nickelony.LanguageServer.Provider.Abstractions.WorkspaceFileWatchFailure! failure) -> void
+Nickelony.LanguageServer.Provider.Abstractions.WorkspaceFileWatchFailure
+Nickelony.LanguageServer.Provider.Abstractions.WorkspaceFileWatchFailure.<Clone>$() -> Nickelony.LanguageServer.Provider.Abstractions.WorkspaceFileWatchFailure!
+Nickelony.LanguageServer.Provider.Abstractions.WorkspaceFileWatchFailure.Code.get -> string!
+Nickelony.LanguageServer.Provider.Abstractions.WorkspaceFileWatchFailure.Equals(Nickelony.LanguageServer.Provider.Abstractions.WorkspaceFileWatchFailure? other) -> bool
+Nickelony.LanguageServer.Provider.Abstractions.WorkspaceFileWatchFailure.Exception.get -> System.Exception?
+Nickelony.LanguageServer.Provider.Abstractions.WorkspaceFileWatchFailure.Message.get -> string!
+Nickelony.LanguageServer.Provider.Abstractions.WorkspaceFileWatchFailure.WorkspaceFileWatchFailure(string! code, string! message, string? workspaceRootDirectoryPath = null, System.Exception? exception = null) -> void
+Nickelony.LanguageServer.Provider.Abstractions.WorkspaceFileWatchFailure.WorkspaceRootDirectoryPath.get -> string?
+const Nickelony.LanguageServer.Provider.Abstractions.ProviderFailureCodes.ClientUnavailable = "ClientUnavailable" -> string!
+const Nickelony.LanguageServer.Provider.Abstractions.ProviderFailureCodes.FileWatchRecoveryFailed = "FileWatchRecoveryFailed" -> string!
+const Nickelony.LanguageServer.Provider.Abstractions.ProviderFailureCodes.FileWatchStartFailed = "FileWatchStartFailed" -> string!
+const Nickelony.LanguageServer.Provider.Abstractions.ProviderFailureCodes.StartFailed = "StartFailed" -> string!
+override Nickelony.LanguageServer.Provider.Abstractions.LanguageServerFeatureProviderCapabilities.Equals(object? obj) -> bool
+override Nickelony.LanguageServer.Provider.Abstractions.LanguageServerFeatureProviderCapabilities.GetHashCode() -> int
+override Nickelony.LanguageServer.Provider.Abstractions.LanguageServerFeatureProviderCapabilities.ToString() -> string!
+override Nickelony.LanguageServer.Provider.Abstractions.StartupFailure.Equals(object? obj) -> bool
+override Nickelony.LanguageServer.Provider.Abstractions.StartupFailure.GetHashCode() -> int
+override Nickelony.LanguageServer.Provider.Abstractions.StartupFailure.ToString() -> string!
+override Nickelony.LanguageServer.Provider.Abstractions.WorkspaceFileWatchFailure.Equals(object? obj) -> bool
+override Nickelony.LanguageServer.Provider.Abstractions.WorkspaceFileWatchFailure.GetHashCode() -> int
+override Nickelony.LanguageServer.Provider.Abstractions.WorkspaceFileWatchFailure.ToString() -> string!
+static Nickelony.LanguageServer.Provider.Abstractions.LanguageServerFeatureProviderCapabilities.None.get -> Nickelony.LanguageServer.Provider.Abstractions.LanguageServerFeatureProviderCapabilities!
+static Nickelony.LanguageServer.Provider.Abstractions.LanguageServerFeatureProviderCapabilities.operator !=(Nickelony.LanguageServer.Provider.Abstractions.LanguageServerFeatureProviderCapabilities? left, Nickelony.LanguageServer.Provider.Abstractions.LanguageServerFeatureProviderCapabilities? right) -> bool
+static Nickelony.LanguageServer.Provider.Abstractions.LanguageServerFeatureProviderCapabilities.operator ==(Nickelony.LanguageServer.Provider.Abstractions.LanguageServerFeatureProviderCapabilities? left, Nickelony.LanguageServer.Provider.Abstractions.LanguageServerFeatureProviderCapabilities? right) -> bool
+static Nickelony.LanguageServer.Provider.Abstractions.StartupFailure.operator !=(Nickelony.LanguageServer.Provider.Abstractions.StartupFailure? left, Nickelony.LanguageServer.Provider.Abstractions.StartupFailure? right) -> bool
+static Nickelony.LanguageServer.Provider.Abstractions.StartupFailure.operator ==(Nickelony.LanguageServer.Provider.Abstractions.StartupFailure? left, Nickelony.LanguageServer.Provider.Abstractions.StartupFailure? right) -> bool
+static Nickelony.LanguageServer.Provider.Abstractions.WorkspaceFileWatchFailure.operator !=(Nickelony.LanguageServer.Provider.Abstractions.WorkspaceFileWatchFailure? left, Nickelony.LanguageServer.Provider.Abstractions.WorkspaceFileWatchFailure? right) -> bool
+static Nickelony.LanguageServer.Provider.Abstractions.WorkspaceFileWatchFailure.operator ==(Nickelony.LanguageServer.Provider.Abstractions.WorkspaceFileWatchFailure? left, Nickelony.LanguageServer.Provider.Abstractions.WorkspaceFileWatchFailure? right) -> bool

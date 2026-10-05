@@ -1,0 +1,173 @@
+#nullable enable
+Nickelony.QuickPick.IQuickPickProvider
+Nickelony.QuickPick.IQuickPickProvider.AcceptAsync(Nickelony.QuickPick.QuickPickAcceptRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task!
+Nickelony.QuickPick.IQuickPickProvider.CancelPreview() -> void
+Nickelony.QuickPick.IQuickPickProvider.EmptyText.get -> string!
+Nickelony.QuickPick.IQuickPickProvider.FilterMode.get -> Nickelony.QuickPick.QuickPickFilterMode
+Nickelony.QuickPick.IQuickPickProvider.GetFilterText(string! query) -> string!
+Nickelony.QuickPick.IQuickPickProvider.GetItemsAsync(Nickelony.QuickPick.QuickPickRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<Nickelony.QuickPick.QuickPickItem!>!>!
+Nickelony.QuickPick.IQuickPickProvider.Name.get -> string!
+Nickelony.QuickPick.IQuickPickProvider.OnDeactivated() -> void
+Nickelony.QuickPick.IQuickPickProvider.Placeholder.get -> string!
+Nickelony.QuickPick.IQuickPickProvider.Prefix.get -> string!
+Nickelony.QuickPick.IQuickPickProvider.Preview(Nickelony.QuickPick.QuickPickItem! item) -> void
+Nickelony.QuickPick.IQuickPickProvider.QueryDebounceDelay.get -> System.TimeSpan?
+Nickelony.QuickPick.IQuickPickProvider.RecentGroup.get -> Nickelony.QuickPick.QuickPickGroup?
+Nickelony.QuickPick.IQuickPickRecentStore
+Nickelony.QuickPick.IQuickPickRecentStore.Load() -> System.Collections.Generic.IReadOnlyDictionary<string!, System.Collections.Generic.IReadOnlyList<string!>!>!
+Nickelony.QuickPick.IQuickPickRecentStore.Save(System.Collections.Generic.IReadOnlyDictionary<string!, System.Collections.Generic.IReadOnlyList<string!>!>! keysByPrefix) -> bool
+Nickelony.QuickPick.QuickPickAcceptRequest
+Nickelony.QuickPick.QuickPickAcceptRequest.<Clone>$() -> Nickelony.QuickPick.QuickPickAcceptRequest!
+Nickelony.QuickPick.QuickPickAcceptRequest.Equals(Nickelony.QuickPick.QuickPickAcceptRequest? other) -> bool
+Nickelony.QuickPick.QuickPickAcceptRequest.Item.get -> Nickelony.QuickPick.QuickPickItem!
+Nickelony.QuickPick.QuickPickAcceptRequest.Query.get -> string!
+Nickelony.QuickPick.QuickPickAcceptRequest.QuickPickAcceptRequest(Nickelony.QuickPick.QuickPickItem! item, string! query) -> void
+Nickelony.QuickPick.QuickPickController
+Nickelony.QuickPick.QuickPickController.AcceptAsync() -> System.Threading.Tasks.Task<bool>!
+Nickelony.QuickPick.QuickPickController.Changed -> System.EventHandler?
+Nickelony.QuickPick.QuickPickController.Dismiss() -> void
+Nickelony.QuickPick.QuickPickController.Dispose() -> void
+Nickelony.QuickPick.QuickPickController.MoveActive(int delta, bool wrap = true) -> bool
+Nickelony.QuickPick.QuickPickController.Open(string! text = "") -> void
+Nickelony.QuickPick.QuickPickController.QuickPickController(System.Collections.Generic.IReadOnlyList<Nickelony.QuickPick.QuickPickMode!>! modes, Nickelony.QuickPick.IQuickPickRecentStore? recentStore = null, System.Action<System.Exception!>? reportFault = null, Nickelony.QuickPick.QuickPickControllerOptions? options = null, System.TimeProvider? timeProvider = null) -> void
+Nickelony.QuickPick.QuickPickController.Refresh() -> void
+Nickelony.QuickPick.QuickPickController.SetActiveRow(int rowIndex) -> bool
+Nickelony.QuickPick.QuickPickController.SetText(string! text) -> void
+Nickelony.QuickPick.QuickPickController.State.get -> Nickelony.QuickPick.QuickPickPresentationState!
+Nickelony.QuickPick.QuickPickControllerOptions
+Nickelony.QuickPick.QuickPickControllerOptions.<Clone>$() -> Nickelony.QuickPick.QuickPickControllerOptions!
+Nickelony.QuickPick.QuickPickControllerOptions.BusyDelay.get -> System.TimeSpan
+Nickelony.QuickPick.QuickPickControllerOptions.BusyDelay.init -> void
+Nickelony.QuickPick.QuickPickControllerOptions.EnableHelpMode.get -> bool
+Nickelony.QuickPick.QuickPickControllerOptions.EnableHelpMode.init -> void
+Nickelony.QuickPick.QuickPickControllerOptions.Equals(Nickelony.QuickPick.QuickPickControllerOptions? other) -> bool
+Nickelony.QuickPick.QuickPickControllerOptions.HelpModeEmptyText.get -> string!
+Nickelony.QuickPick.QuickPickControllerOptions.HelpModeEmptyText.init -> void
+Nickelony.QuickPick.QuickPickControllerOptions.HelpModePlaceholder.get -> string!
+Nickelony.QuickPick.QuickPickControllerOptions.HelpModePlaceholder.init -> void
+Nickelony.QuickPick.QuickPickControllerOptions.MaxItemCount.get -> int
+Nickelony.QuickPick.QuickPickControllerOptions.MaxItemCount.init -> void
+Nickelony.QuickPick.QuickPickControllerOptions.MaxRecentCount.get -> int
+Nickelony.QuickPick.QuickPickControllerOptions.MaxRecentCount.init -> void
+Nickelony.QuickPick.QuickPickControllerOptions.QueryDebounceDelay.get -> System.TimeSpan
+Nickelony.QuickPick.QuickPickControllerOptions.QueryDebounceDelay.init -> void
+Nickelony.QuickPick.QuickPickControllerOptions.QuickPickControllerOptions() -> void
+Nickelony.QuickPick.QuickPickFilterMode
+Nickelony.QuickPick.QuickPickFilterMode.Fuzzy = 0 -> Nickelony.QuickPick.QuickPickFilterMode
+Nickelony.QuickPick.QuickPickFilterMode.None = 2 -> Nickelony.QuickPick.QuickPickFilterMode
+Nickelony.QuickPick.QuickPickFilterMode.Path = 1 -> Nickelony.QuickPick.QuickPickFilterMode
+Nickelony.QuickPick.QuickPickFilterMode.RankOnly = 3 -> Nickelony.QuickPick.QuickPickFilterMode
+Nickelony.QuickPick.QuickPickFilterMode.Words = 4 -> Nickelony.QuickPick.QuickPickFilterMode
+Nickelony.QuickPick.QuickPickGroup
+Nickelony.QuickPick.QuickPickGroup.<Clone>$() -> Nickelony.QuickPick.QuickPickGroup!
+Nickelony.QuickPick.QuickPickGroup.Equals(Nickelony.QuickPick.QuickPickGroup? other) -> bool
+Nickelony.QuickPick.QuickPickGroup.Id.get -> string!
+Nickelony.QuickPick.QuickPickGroup.Label.get -> string?
+Nickelony.QuickPick.QuickPickGroup.Order.get -> int
+Nickelony.QuickPick.QuickPickGroup.QuickPickGroup(string! id, string? label = null, bool showsCount = false, int order = 0) -> void
+Nickelony.QuickPick.QuickPickGroup.ShowsCount.get -> bool
+Nickelony.QuickPick.QuickPickItem
+Nickelony.QuickPick.QuickPickItem.<Clone>$() -> Nickelony.QuickPick.QuickPickItem!
+Nickelony.QuickPick.QuickPickItem.Description.get -> string?
+Nickelony.QuickPick.QuickPickItem.Description.init -> void
+Nickelony.QuickPick.QuickPickItem.DescriptionHighlights.get -> System.Collections.Generic.IReadOnlyList<Nickelony.Matching.MatchRange>!
+Nickelony.QuickPick.QuickPickItem.DescriptionHighlights.init -> void
+Nickelony.QuickPick.QuickPickItem.Detail.get -> string?
+Nickelony.QuickPick.QuickPickItem.Detail.init -> void
+Nickelony.QuickPick.QuickPickItem.Equals(Nickelony.QuickPick.QuickPickItem? other) -> bool
+Nickelony.QuickPick.QuickPickItem.Group.get -> Nickelony.QuickPick.QuickPickGroup?
+Nickelony.QuickPick.QuickPickItem.Group.init -> void
+Nickelony.QuickPick.QuickPickItem.IconKey.get -> string?
+Nickelony.QuickPick.QuickPickItem.IconKey.init -> void
+Nickelony.QuickPick.QuickPickItem.IsEnabled.get -> bool
+Nickelony.QuickPick.QuickPickItem.IsEnabled.init -> void
+Nickelony.QuickPick.QuickPickItem.Key.get -> string!
+Nickelony.QuickPick.QuickPickItem.Label.get -> string!
+Nickelony.QuickPick.QuickPickItem.LabelHighlights.get -> System.Collections.Generic.IReadOnlyList<Nickelony.Matching.MatchRange>!
+Nickelony.QuickPick.QuickPickItem.LabelHighlights.init -> void
+Nickelony.QuickPick.QuickPickItem.QuickPickItem(string! key, string! label) -> void
+Nickelony.QuickPick.QuickPickItem.Tag.get -> object?
+Nickelony.QuickPick.QuickPickItem.Tag.init -> void
+Nickelony.QuickPick.QuickPickItem.TrailingText.get -> string?
+Nickelony.QuickPick.QuickPickItem.TrailingText.init -> void
+Nickelony.QuickPick.QuickPickMode
+Nickelony.QuickPick.QuickPickMode.<Clone>$() -> Nickelony.QuickPick.QuickPickMode!
+Nickelony.QuickPick.QuickPickMode.Equals(Nickelony.QuickPick.QuickPickMode? other) -> bool
+Nickelony.QuickPick.QuickPickMode.Prefix.get -> string?
+Nickelony.QuickPick.QuickPickMode.Provider.get -> Nickelony.QuickPick.IQuickPickProvider!
+Nickelony.QuickPick.QuickPickMode.QuickPickMode(Nickelony.QuickPick.IQuickPickProvider! provider, string? prefix = null) -> void
+Nickelony.QuickPick.QuickPickPresentationState
+Nickelony.QuickPick.QuickPickPresentationState.<Clone>$() -> Nickelony.QuickPick.QuickPickPresentationState!
+Nickelony.QuickPick.QuickPickPresentationState.ActiveItem.get -> Nickelony.QuickPick.QuickPickItem?
+Nickelony.QuickPick.QuickPickPresentationState.ActiveRowIndex.get -> int
+Nickelony.QuickPick.QuickPickPresentationState.ActiveRowIndex.init -> void
+Nickelony.QuickPick.QuickPickPresentationState.Equals(Nickelony.QuickPick.QuickPickPresentationState? other) -> bool
+Nickelony.QuickPick.QuickPickPresentationState.IsBusy.get -> bool
+Nickelony.QuickPick.QuickPickPresentationState.IsBusy.init -> void
+Nickelony.QuickPick.QuickPickPresentationState.IsOpen.get -> bool
+Nickelony.QuickPick.QuickPickPresentationState.IsOpen.init -> void
+Nickelony.QuickPick.QuickPickPresentationState.Placeholder.get -> string!
+Nickelony.QuickPick.QuickPickPresentationState.Placeholder.init -> void
+Nickelony.QuickPick.QuickPickPresentationState.QuickPickPresentationState() -> void
+Nickelony.QuickPick.QuickPickPresentationState.Rows.get -> System.Collections.Generic.IReadOnlyList<Nickelony.QuickPick.QuickPickRow!>!
+Nickelony.QuickPick.QuickPickPresentationState.Rows.init -> void
+Nickelony.QuickPick.QuickPickPresentationState.Text.get -> string!
+Nickelony.QuickPick.QuickPickPresentationState.Text.init -> void
+Nickelony.QuickPick.QuickPickRequest
+Nickelony.QuickPick.QuickPickRequest.<Clone>$() -> Nickelony.QuickPick.QuickPickRequest!
+Nickelony.QuickPick.QuickPickRequest.Equals(Nickelony.QuickPick.QuickPickRequest? other) -> bool
+Nickelony.QuickPick.QuickPickRequest.Query.get -> string!
+Nickelony.QuickPick.QuickPickRequest.QuickPickRequest(string! query, System.Collections.Generic.IReadOnlyList<string!>! recentKeys) -> void
+Nickelony.QuickPick.QuickPickRequest.RecentKeys.get -> System.Collections.Generic.IReadOnlyList<string!>!
+Nickelony.QuickPick.QuickPickRow
+Nickelony.QuickPick.QuickPickRow.<Clone>$() -> Nickelony.QuickPick.QuickPickRow!
+Nickelony.QuickPick.QuickPickRow.Equals(Nickelony.QuickPick.QuickPickRow? other) -> bool
+Nickelony.QuickPick.QuickPickRow.IsSelectable.get -> bool
+Nickelony.QuickPick.QuickPickRow.Item.get -> Nickelony.QuickPick.QuickPickItem?
+Nickelony.QuickPick.QuickPickRow.Message.get -> string?
+Nickelony.QuickPick.QuickPickRow.SeparatorLabel.get -> string?
+override Nickelony.QuickPick.QuickPickAcceptRequest.Equals(object? obj) -> bool
+override Nickelony.QuickPick.QuickPickAcceptRequest.GetHashCode() -> int
+override Nickelony.QuickPick.QuickPickAcceptRequest.ToString() -> string!
+override Nickelony.QuickPick.QuickPickControllerOptions.Equals(object? obj) -> bool
+override Nickelony.QuickPick.QuickPickControllerOptions.GetHashCode() -> int
+override Nickelony.QuickPick.QuickPickControllerOptions.ToString() -> string!
+override Nickelony.QuickPick.QuickPickGroup.Equals(object? obj) -> bool
+override Nickelony.QuickPick.QuickPickGroup.GetHashCode() -> int
+override Nickelony.QuickPick.QuickPickGroup.ToString() -> string!
+override Nickelony.QuickPick.QuickPickItem.Equals(object? obj) -> bool
+override Nickelony.QuickPick.QuickPickItem.GetHashCode() -> int
+override Nickelony.QuickPick.QuickPickItem.ToString() -> string!
+override Nickelony.QuickPick.QuickPickMode.Equals(object? obj) -> bool
+override Nickelony.QuickPick.QuickPickMode.GetHashCode() -> int
+override Nickelony.QuickPick.QuickPickMode.ToString() -> string!
+override Nickelony.QuickPick.QuickPickPresentationState.Equals(object? obj) -> bool
+override Nickelony.QuickPick.QuickPickPresentationState.GetHashCode() -> int
+override Nickelony.QuickPick.QuickPickPresentationState.ToString() -> string!
+override Nickelony.QuickPick.QuickPickRequest.Equals(object? obj) -> bool
+override Nickelony.QuickPick.QuickPickRequest.GetHashCode() -> int
+override Nickelony.QuickPick.QuickPickRequest.ToString() -> string!
+override Nickelony.QuickPick.QuickPickRow.Equals(object? obj) -> bool
+override Nickelony.QuickPick.QuickPickRow.GetHashCode() -> int
+override Nickelony.QuickPick.QuickPickRow.ToString() -> string!
+static Nickelony.QuickPick.QuickPickAcceptRequest.operator !=(Nickelony.QuickPick.QuickPickAcceptRequest? left, Nickelony.QuickPick.QuickPickAcceptRequest? right) -> bool
+static Nickelony.QuickPick.QuickPickAcceptRequest.operator ==(Nickelony.QuickPick.QuickPickAcceptRequest? left, Nickelony.QuickPick.QuickPickAcceptRequest? right) -> bool
+static Nickelony.QuickPick.QuickPickControllerOptions.Default.get -> Nickelony.QuickPick.QuickPickControllerOptions!
+static Nickelony.QuickPick.QuickPickControllerOptions.operator !=(Nickelony.QuickPick.QuickPickControllerOptions? left, Nickelony.QuickPick.QuickPickControllerOptions? right) -> bool
+static Nickelony.QuickPick.QuickPickControllerOptions.operator ==(Nickelony.QuickPick.QuickPickControllerOptions? left, Nickelony.QuickPick.QuickPickControllerOptions? right) -> bool
+static Nickelony.QuickPick.QuickPickGroup.operator !=(Nickelony.QuickPick.QuickPickGroup? left, Nickelony.QuickPick.QuickPickGroup? right) -> bool
+static Nickelony.QuickPick.QuickPickGroup.operator ==(Nickelony.QuickPick.QuickPickGroup? left, Nickelony.QuickPick.QuickPickGroup? right) -> bool
+static Nickelony.QuickPick.QuickPickItem.operator !=(Nickelony.QuickPick.QuickPickItem? left, Nickelony.QuickPick.QuickPickItem? right) -> bool
+static Nickelony.QuickPick.QuickPickItem.operator ==(Nickelony.QuickPick.QuickPickItem? left, Nickelony.QuickPick.QuickPickItem? right) -> bool
+static Nickelony.QuickPick.QuickPickMode.operator !=(Nickelony.QuickPick.QuickPickMode? left, Nickelony.QuickPick.QuickPickMode? right) -> bool
+static Nickelony.QuickPick.QuickPickMode.operator ==(Nickelony.QuickPick.QuickPickMode? left, Nickelony.QuickPick.QuickPickMode? right) -> bool
+static Nickelony.QuickPick.QuickPickPresentationState.Closed.get -> Nickelony.QuickPick.QuickPickPresentationState!
+static Nickelony.QuickPick.QuickPickPresentationState.operator !=(Nickelony.QuickPick.QuickPickPresentationState? left, Nickelony.QuickPick.QuickPickPresentationState? right) -> bool
+static Nickelony.QuickPick.QuickPickPresentationState.operator ==(Nickelony.QuickPick.QuickPickPresentationState? left, Nickelony.QuickPick.QuickPickPresentationState? right) -> bool
+static Nickelony.QuickPick.QuickPickRequest.operator !=(Nickelony.QuickPick.QuickPickRequest? left, Nickelony.QuickPick.QuickPickRequest? right) -> bool
+static Nickelony.QuickPick.QuickPickRequest.operator ==(Nickelony.QuickPick.QuickPickRequest? left, Nickelony.QuickPick.QuickPickRequest? right) -> bool
+static Nickelony.QuickPick.QuickPickRow.ForItem(Nickelony.QuickPick.QuickPickItem! item) -> Nickelony.QuickPick.QuickPickRow!
+static Nickelony.QuickPick.QuickPickRow.ForMessage(string! text) -> Nickelony.QuickPick.QuickPickRow!
+static Nickelony.QuickPick.QuickPickRow.ForSeparator(string! label) -> Nickelony.QuickPick.QuickPickRow!
+static Nickelony.QuickPick.QuickPickRow.operator !=(Nickelony.QuickPick.QuickPickRow? left, Nickelony.QuickPick.QuickPickRow? right) -> bool
+static Nickelony.QuickPick.QuickPickRow.operator ==(Nickelony.QuickPick.QuickPickRow? left, Nickelony.QuickPick.QuickPickRow? right) -> bool

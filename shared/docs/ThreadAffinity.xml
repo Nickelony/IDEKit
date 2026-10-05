@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+	<members>
+		<member name="ThreadAffinity.Remarks">
+			<para>
+			  The controller invokes the host callbacks and drives its presentation on the thread of its dispatcher, which is the thread that owns
+			  the editor for a controller that serves a text area, so use it from that thread. A provider continuation can resume on a thread-pool
+			  thread when the thread that started the request has no synchronization context that posts to the dispatcher, so every publish goes
+			  through the dispatcher, even when the continuation already runs on the dispatcher's thread.
+			</para>
+		</member>
+	</members>
+</doc>

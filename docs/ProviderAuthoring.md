@@ -1,335 +1,407 @@
 # Provider authoring guide
 
-This guide is for implementing a language provider package on the Nickelony Language Server
-family. It is the provider-side counterpart of the host-facing
-[consumer integration guide](ConsumerIntegration.md). The language-neutral framework lives in the
-`Nickelony.LanguageServer.Provider` package: a provider package derives from
-`LanguageServerIntelliSenseProviderBase` and implements the language-specific
-hooks. `Nickelony.LanguageServer.Lua` (the LuaLS-backed provider) is the verified reference
-implementation of those hooks; every recipe step and trap below matches how that package
-implements it. A second pattern sits between the base and a language package when several languages
-share one server: `Nickelony.LanguageServer.Roslyn` is a shared core that implements every
-language-neutral hook and leaves only the identity abstract, and
-`Nickelony.LanguageServer.CSharp` and `Nickelony.LanguageServer.VisualBasic` derive from it - see
-[Sharing a core across languages](#sharing-a-core-across-languages).
+This guide shows how to add a language to the Nickelony Language Server family. It is the provider-side
+counterpart of the host-facing [consumer integration guide](ConsumerIntegration.md).
+
+A language package ships a factory that returns a `LanguageServerProfile` from
+`Nickelony.LanguageServer.Provider`: the identifiers, watch patterns, handshake payloads and rules of one language
+server. The host hands the profile to the sealed `LanguageServerFeatureProvider`, which implements every
+feature; the LuaLS-backed `Nickelony.LanguageServer.Lua` is the verified reference implementation.
+
+When several languages share one server binary, one factory serves them all and a language selector carries what
+differs: `Nickelony.LanguageServer.Roslyn` serves C# and Visual Basic this way - see [Sharing a
+server across languages](#sharing-a-server-across-languages).
 
 ## Package shape
 
-A provider package sits on three framework packages:
+A language package sits on the framework packages:
 
-- `Nickelony.LanguageServer.Provider` - the provider framework: the provider base class
-  (`LanguageServerIntelliSenseProviderBase`) with the generic semantic-token contract it implements
-  (`ILanguageServerSemanticTokensProvider`, defined in `Abstractions`), the tunables
-  (`LanguageServerProviderOptions`), request dispatch with timeout and restart policy (reached
-  through the provider base's protected `SendRequestAsync` seam), the workspace watch primitive
-  (`WorkspaceFileWatcher`), the tracked-document store framework (`TrackedDocumentStore`,
-  `TrackedDocumentState`), the protocol-to-editor bridges
-  (`ProtocolRangeConversion`, `SemanticTokenConversion`, the kind conversions, and the markup pair),
-  the semantic-token decoder (`SemanticTokensDecoder`),
-  and the internal file-change forwarding, snapshot tracking, per-document operation scheduling,
-  lifecycle, document-synchronization, semantic-token, workspace-watching, and request machinery
-  behind the language hooks.
-- `Nickelony.LanguageServer.Abstractions` - the editor-facing contracts: the provider interface
-  (`ILanguageServerIntelliSenseProvider`), the semantic-token contract
-  (`ILanguageServerSemanticTokensProvider`) and its event payload
-  (`SemanticTokensUpdatedEventArgs`), the lifecycle state enum
-  (`LanguageServerProviderState`), the startup-failure and watcher-failure payloads, and the
-  lifecycle rules that provider authors must honor.
-- `Nickelony.LanguageServer.Client` - the LSP transport and the protocol primitives: process launch
-  and JSON-RPC hosting, the initialize handshake, the capability snapshot, the path helpers
-  (`LanguageServerPaths`), and the protocol payload folders.
+- `Nickelony.LanguageServer.Provider` is the provider framework, with these parts:
+  - The provider is the sealed `LanguageServerFeatureProvider`. It implements the aggregate interface
+    (`ILanguageServerFeatureProvider`, in `Provider.Abstractions`), which inherits the language-feature
+    contracts and sources and the document synchronization target (`IDocumentSynchronizationTarget`).
+  - The authoring surface is what a language package builds: `LanguageServerProfile` with its
+    `FileWatchSpecification` list and `LanguageServerProfileHooks`, the optional `DiagnosticMappingPolicy`,
+    and the `LanguageServerClientCapabilitiesOptions` with its capability deltas.
+  - The tunables are the provider options (`LanguageServerFeatureProviderOptions`).
+  - The internal [response mapping](LanguageServerInternals.md#response-mapping), document tracking,
+    semantic-token decoding, forwarding, snapshot tracking, scheduling, lifecycle, synchronization, watching,
+    and request machinery sit behind the provider.
+- `Nickelony.LanguageServer.Provider.Abstractions` holds the editor-facing contracts: the provider interface
+  (`ILanguageServerFeatureProvider`), the capability snapshot (`LanguageServerFeatureProviderCapabilities` and
+  its source `ILanguageServerCapabilitiesSource`), the startup-failure and watcher-failure payloads, and the
+  lifecycle rules a provider honors. The feature contracts it inherits live in
+  `Nickelony.IDEKit.LanguageFeatures`.
+- `Nickelony.LanguageServer.Client` holds the LSP connection and protocol primitives: process launch and
+  JSON-RPC hosting, the initialize handshake, the capability snapshot, the file-URI conversion
+  (`DocumentUriConversion`), and the protocol payload folders.
 
-The framework packages depend on the IDEKit packages for the editor models; `Client` deliberately has
-**no** `Abstractions` edge (the Provider package bridges the two) and no IDEKit edge either, so
-anything that touches a shared editor model lives in `Provider`. A provider package references the
-framework and owns:
+### What a language package owns
 
-- the composition root: one public provider class deriving from
-  `LanguageServerIntelliSenseProviderBase` and inheriting the base contract and the standard
-  feature implementations (completion, hover, definition, references, rename, formatting,
-  signature help, document symbols, and code actions); it overrides a feature only when the
-  language needs different behavior,
-- the hook implementations: display name, language identifier, configuration-file
-  rule, settings payload, startup-failure reports, and the virtual extension points
-  (`OnDocumentSynchronizedAsync`, `OnTrackedDocumentInvalidated`, `OnDocumentMoved`, `OnDisposing`), plus
-  the constructor arguments the framework needs up front (the tracked-document store and the watch
-  specifications). A provider that exposes diagnostics or semantic tokens also implements the matching
-  optional hooks (step 4),
-- the language-specific contract additions, if any (Lua exposes none: it implements the framework's
-  `ILanguageServerIntelliSenseProvider` and `ILanguageServerSemanticTokensProvider` directly),
-- the option type (Lua: `LuaLanguageServerOptions`) and language-specific event payloads; a provider
-  that shares another package's core reuses that core's options instead of declaring a duplicate
-  (C# and Visual Basic reuse `RoslynLanguageServerOptions`),
-- the client construction with its handshake payload factories (client capabilities,
-  initialization options, settings) and the workspace conventions (watched file patterns,
-  configuration-file refresh rule) fed into the hooks,
-- the mapping slices: one parser partial per feature; the standard feature request-and-parse lives in
-  the framework base, so a provider adds a provider partial only for a language-specific override.
+`Provider.Abstractions` and `Provider` depend on the IDEKit packages for the editor models. `Client`
+deliberately references neither IDEKit nor `Provider.Abstractions`, so the code that converts protocol
+payloads into editor models lives in `Provider`, which bridges them. A language package references the
+framework and owns these parts:
 
-Everything else stays internal to the framework. The Lua package's public surface is exactly two
-types: the provider (`LuaLanguageServerIntelliSenseProvider`) and the language option type
-(`LuaLanguageServerOptions`); a provider that reuses a core's options exposes a single type
-(`CSharpLanguageServerIntelliSenseProvider`, `VisualBasicLanguageServerIntelliSenseProvider`).
-The semantic-token event payload (`SemanticTokensUpdatedEventArgs`) and the semantic-token contract
-(`ILanguageServerSemanticTokensProvider`) are framework types in
-`Nickelony.LanguageServer.Abstractions`.
-The framework ships one concrete store, `ServerPayloadDocumentStore`, that caches the diagnostics and
-semantic-token payloads a language server sends for a document, together with the access stamps the
-synchronization pipeline maintains; `Lua` and `Roslyn` both use it. A provider whose caching needs differ
-supplies its own store and state instead.
-The tracked-document state
-(`ServerPayloadDocumentState`) stays internal, because the provider base and the tracked-document store are
-non-generic and never expose the state type: the store's hooks are typed on `TrackedDocumentState`
-and the store casts to its own state. Keep a new provider package that small and raise
-members to public only when a host needs them.
+- The profile factory is one public static class that returns a `LanguageServerProfile`. It sets the language
+  identifier, the display names, the watch specifications, the diagnostic mapping policy (when the language
+  exposes diagnostics), the client capabilities, the launch settings (`Launch`) and the hooks.
+- The hooks cover the configuration-file rule, the settings document, the initialization options and,
+  optionally, the notifications sent on each session start (`BuildSessionStartNotifications`).
+  `LanguageServerProfileHooks.Default` fits a language that has none of them.
+- The profile sets the startup-failure messages only when its wording differs from the defaults, which the
+  profile builds from the display names.
+- The package declares the option type (Lua: `LuaLanguageServerOptions`; Roslyn: `RoslynLanguageServerOptions`)
+  and feeds its values into the hooks, the launch settings and the workspace conventions (watched file
+  patterns, configuration-file refresh rule).
+- It adds no response mapping and no member to the provider: the framework supplies the standard feature
+  request-and-parse.
 
-### Sharing a core across languages
+### Public surface
 
-When several languages share one server process, put the shared handshake, launch profile, settings,
-and payload caching in a core package that derives from `LanguageServerIntelliSenseProviderBase` and
-implements every language-neutral hook, leaving the identity abstract (`LanguageId`,
-`ProviderDisplayName`). A language package then derives from the core, passes its own source and
-project watch patterns to the core's protected constructor (the core composes them with the shared
-build inputs, so those are declared once across the whole family), and overrides only the identity.
-Use this shape when one server binary serves several languages - `Nickelony.LanguageServer.Roslyn`
-serves C# and Visual Basic, and there is no C#-only or Visual Basic-only server - and the standalone shape above
+- A language package keeps everything beyond its factory and option type internal. The Lua package's public
+  surface is the factory (`LuaLanguageServerProfileFactory`) and the language option type
+  (`LuaLanguageServerOptions`). The Roslyn package adds the language selector (`RoslynLanguage`) to its factory
+  and option type.
+- The framework tracks documents and caches the diagnostics and semantic-token payloads of the server itself,
+  so a language package takes no tracker and declares no state type.
+- Every other member of the provider is internal or private. The collaborators and the request pipeline serve
+  the framework's own tests and the rest is implementation, so a language package never reaches them: an
+  `InternalsVisibleTo` grant names only a test assembly ([architecture
+  guide](ArchitectureGuide.md#internals)).
+- Keep a new language package that small and raise members to public only when a host needs them.
+
+### Sharing a server across languages
+
+When several languages share one server binary, one factory serves them all. It takes a language selector (for
+Roslyn, the `RoslynLanguage` enum) and maps it to an internal descriptor that holds the language's identity
+(the language identifier and the display name) and its own source and project watch patterns. The factory
+composes those patterns with the shared build inputs, declared once, and builds every language-neutral value
+(the handshake, the server arguments, the settings, and the diagnostic mapping) for all of them. One provider
+instance serves one language-server session with one language, so a workspace that mixes the languages runs one
+provider, and one server process, for each.
+
+Use this shape when one server binary serves several languages, as `Nickelony.LanguageServer.Roslyn` does
+for C# and Visual Basic ([Roslyn guide](RoslynGuide.md#position)). Use the standalone shape above
 when the server *is* the language.
 
-Two consequences to plan for:
+Consequences to plan for:
 
-- The core keeps its test-injection constructor `internal` and grants the language packages
-  `InternalsVisibleTo`, rather than exposing it as `protected internal`; a test-only seam should not
-  widen the core's public API.
-- The core's public surface is the abstract provider plus its options, so a language package that
-  reuses those options adds no option type of its own.
+- The selector is a closed set, because the server serves a fixed set of languages, so a host cannot declare a
+  language the server would not analyze. The descriptor is internal, and a test that needs another identifier
+  reaches the factory overload that takes it.
+- The default failure messages name the server and the language apart, so a profile whose server name already
+  holds the language sets its failure messages itself.
 
 ## Recipe
 
-### 1. Contract
+A language package is one factory: it returns a profile that holds the language's data and the few rules that
+only code can express. The skeleton below is the whole of a profile that exposes diagnostics; the steps after it
+explain each part.
 
-Derive from `LanguageServerIntelliSenseProviderBase`, passing the language's tracked-document
-store to the constructor (the base and the store are non-generic, so the language state type is
-never exposed). The base implements `ILanguageServerIntelliSenseProvider` and
-`ILanguageServerSemanticTokensProvider`
-end to end: the lifecycle surface (`IsAvailable`, `State`), the capability flags
-(`SupportsRename`, `SupportsReferences`, `SupportsFormatting`, `SupportsDocumentSymbols`,
-`SupportsCodeActions`), the payload events
-(`DiagnosticsUpdated`, `SemanticTokensUpdated`, `CapabilitiesChanged`, `StartupFailed`, `WorkspaceWatcherFailed`), the
-document lifecycle members (`OpenDocument`, `UpdateDocument`, `CloseDocument`, `MoveDocument`),
-the cached reads (`GetDiagnostics`, `GetSemanticTokens`), the semantic-token refresh controller, and
-the request scaffolding. The base also carries the standard LSP implementation of the feature
-members (completion, hover, definition, references, rename, formatting, signature help, document
-symbols, and code actions), so the language class inherits them and overrides only the ones whose
-behavior differs; it adds any language contract additions (Lua: none).
-The diagnostics and semantic-token hooks are optional: implement them only when the provider exposes
-that feature (the base defaults drop published diagnostics and return no semantic tokens). Each request method accepts the current
-buffer text plus a `TextPosition` (or a request record for features that carry additional state)
-and a `CancellationToken`; the sync surface returns owned snapshots.
+```csharp
+using System.Text.Json.Nodes;
+using Nickelony.LanguageServer.Client;
+using Nickelony.LanguageServer.Provider;
 
-No hook runs during base construction: the tracked-document store and the watch specifications are
-constructor arguments, so a derived provider can build them from its own initialized state. Every
-hook runs lazily on the calling thread after construction completed; `ProviderDisplayName` and
-`LanguageId` are read on demand by log and synchronization paths and must not throw.
+public static class MyLanguageServerProfileFactory
+{
+    public static LanguageServerProfile Create()
+    {
+        return new LanguageServerProfile
+        {
+            LanguageId = "mylang",
+            LanguageDisplayName = "My language",
+            ServerDisplayName = "My language server",
+
+            WatchSpecifications =
+            [
+                new("*.mylang", IncludeSubdirectories: true),
+                new(".mylangrc", IncludeSubdirectories: false),
+            ],
+
+            // Optional: a mapping policy turns diagnostics on.
+            DiagnosticMappingPolicy = DiagnosticMappingPolicy.Default with { UnknownMessage = "Unknown My language diagnostic." },
+
+            ClientCapabilities = LanguageServerClientCapabilitiesOptions.Default with { CodeActionKinds = ["quickfix"] },
+
+            Launch = StdioLanguageServerTransportOptions.Default with { ServerArguments = ["--stdio"] },
+
+            Hooks = new LanguageServerProfileHooks
+            {
+                IsConfigurationPath = static path =>
+                    string.Equals(Path.GetFileName(path), ".mylangrc", StringComparison.OrdinalIgnoreCase),
+
+                BuildSettings = static () => new JsonObject { ["MyLang"] = new JsonObject { ["Strict"] = true } },
+                BuildInitializationOptions = static () => null,
+            },
+        };
+    }
+}
+```
+
+A host creates the provider from the profile, the workspace roots and the server path:
+
+```csharp
+using var provider = new LanguageServerFeatureProvider(
+    MyLanguageServerProfileFactory.Create(),
+    [workspaceRootDirectoryPath],
+    serverExecutablePath,
+    logger: logger);
+```
+
+### 1. Profile and contract
+
+The provider implements `ILanguageServerFeatureProvider` end to end, which includes the diagnostics and
+semantic-token sources:
+
+- The lifecycle and cached reads cover `IsAvailable`, `GetDiagnostics`, `GetSemanticTokens`.
+- The payload events cover `DiagnosticsUpdated`, `SemanticTokensUpdated`, `CapabilitiesChanged`,
+  `StartupFailed`, `WorkspaceFileWatchFailed`.
+- The document lifecycle of `IDocumentSynchronizationTarget` covers `OpenDocument`, `UpdateDocument`, `CloseDocument`,
+  `RenameDocument`.
+- The provider publishes the `Capabilities` snapshot (step 7).
+
+It also exposes the standard LSP implementation of the feature members, each handed to an internal provider of
+its slice. The class is sealed, so a language shapes the features only through the profile (Lua adds no contract
+additions). A feature added after publication arrives as a sibling interface of the provider and not as a new base
+of `ILanguageServerFeatureProvider`, as the [evolution rules](ArchitectureGuide.md#evolution-after-publication)
+say.
+
+Diagnostics are optional: a profile that supplies no `DiagnosticMappingPolicy` exposes none, and the provider
+drops every diagnostics payload. Semantic tokens need nothing from the language; the provider decodes and caches
+them.
+
+Each request method accepts a language-feature request record and a `CancellationToken`. The record carries
+the document identifier (for this provider, a local file path), the current document text, and, for a
+position-scoped feature, a document offset, plus any feature-specific state. The synchronous reads return
+owned snapshots.
+
+No profile delegate runs during construction, so the provider never sees a half-initialized profile: the
+identifiers, display names, watch specifications, messages and the mapping policy are data. The profile
+validates its values as they are assigned and copies its lists, and the provider checks each watch specification
+when it is constructed. Every hook runs lazily, on whichever thread reaches it. `LanguageId` is read on demand by
+the synchronization path.
 
 ### 2. Client construction and handshake
 
-Build one `LanguageServerClient` per provider and pass it to the base constructor, which takes
-ownership of it (the client is disposed with the provider):
+The provider creates one `LanguageServerClient` per instance from the profile and owns it (the client is
+disposed with the provider). `LanguageServerFeatureProvider.Create(profile, roots, client)` adopts a client that
+the host built itself instead; the launch settings, client capabilities and payload builders of the profile
+apply only to a client that the provider creates.
 
-- Pass the normalized workspace roots as a list. The first entry is the primary root
-  (`rootUri`); every entry is advertised through `workspace/workspaceFolders` and answered by
-  the `workspace/workspaceFolders` callback.
-- Pass the server executable path; `null` is a supported configuration that reports a
-  persistent `StartupFailed` instead of throwing.
-- Configure `LanguageServerClientOptions`: `SettingsProvider` (a `Func<object>` that the client
-  caches for `workspace/configuration` answers and refreshes through
-  `workspace/didChangeConfiguration`), plus `ClientCapabilitiesProvider` and
-  `InitializationOptionsProvider` (both `Func<IReadOnlyList<string>, object?>` receiving the
-  normalized roots in caller order). `ServerArguments`, `EnvironmentVariables`, and the
-  `InitializeTimeout`/`ShutdownRequestTimeout`/`DisposeWaitTimeout` budgets cover the process
-  launch.
-- Build the capability and initialization payloads in dedicated factories so tests can pin
-  them (Lua: `ClientCapabilitiesFactory`,
-  `InitializationOptionsFactory`).
+- The provider normalizes the workspace roots first, so an invalid list fails before a client exists. The
+  first entry is the primary root (`rootUri`); every entry is advertised through `workspace/workspaceFolders`
+  and answered by the same callback.
+- A null, empty or whitespace server executable path yields no client, and the provider reports a persistent
+  `StartupFailed` with the `MissingClientFailureMessage` of the profile. `StdioLanguageServerTransport` itself
+  throws for such a path (`ArgumentNullException` for null, `ArgumentException` otherwise).
+- The profile maps onto the client as follows. `Launch` configures the `StdioLanguageServerTransport` that the
+  provider creates over the executable path: the arguments, the working directory, the environment variables
+  and the child-process guard. `ClientCapabilities` feeds the client capabilities through
+  `LanguageServerClientCapabilitiesBuilder`.
+  `Hooks.BuildSettings` is the `SettingsProvider` (a `Func<JsonNode>` that returns the settings document: the
+  client caches it for `workspace/configuration` answers, pushes it through `workspace/didChangeConfiguration`
+  at startup, and pushes it again when the provider calls `PushSettingsAsync`).
+  `Hooks.BuildInitializationOptions` is the initialization options, and `Hooks.BuildSessionStartNotifications`,
+  when set, is the `SessionStartNotificationsProvider`. A host that needs the
+  `InitializeRequestTimeout`/`ShutdownRequestTimeout`/`DisposeWaitTimeout` budgets builds the client itself.
+- The `logger` goes to the client, so its connection and server-message diagnostics reach the host's logger.
+- Declare the capability delta as a `LanguageServerClientCapabilitiesOptions.Default with { ... }` value, and
+  build the initialization options and the settings document in dedicated builders, so tests can pin them
+  (Lua: `LuaLanguageServerProfileFactory.ClientCapabilities`, `InitializationOptionsBuilder`, `SettingsBuilder`).
+  `LanguageServerClientCapabilitiesBuilder.Build` builds the neutral capability baseline from that value.
+- Spell the settings document's member names exactly as the server expects them: the client applies no naming
+  policy to a `JsonNode`, so a section such as LuaLS's `Lua` keeps its casing.
 
-The payload factories may run on background transport threads; keep them thread-safe,
-non-blocking, and cheap.
+The hooks may run on background connection threads: keep them thread-safe, non-blocking, and cheap.
 
 ### 3. Lazy startup and recovery
 
-The base never starts the server from the constructor; it starts on demand - first request,
-first document open/update, first workspace-change forwarding - through one serialized startup path with a fast path
-for an already-healthy client, a startup lock that makes concurrent callers share one recovery
-flow, tracked-document reopen after a transport restart (an open that lands inside a startup or
-replay window is deferred and applied once the startup settles, so its open reference is never
-dropped), and consecutive-failure counting with
-the hard failure threshold from `LanguageServerProviderOptions` (a false start result and an
-unexpected startup exception both count; once the latch engages, the reported failed state holds
-until the provider is recreated and is not downgraded by a later transport fault). The language
-package supplies the failure messages (`CreateStartupFailureMessage` for the transient/persistent
-split, `CreateMissingClientFailureMessage` for the unconfigured-client configuration) and tunes
-the threshold through the options; it otherwise inherits the flow.
+The provider never starts the server from the constructor; it starts on demand (first request, first document
+open/update, first workspace-change forwarding) through one serialized startup path with these behaviors:
+
+- A fast path applies to an already-healthy client.
+- A startup lock makes concurrent callers share one recovery flow.
+- An `OpenDocument` call that lands inside a startup or restart-replay window is retried while that flow
+  settles, up to a bounded number of retries. When the connection keeps failing, the call sends nothing.
+- The record keeps its open lease for a later restart replay only when the open was committed locally. The
+  provider commits locally only while the client is down, because only a start that finds it down takes the
+  replay snapshot. It skips that commit while a start holds the startup lock, while the client is ready, while
+  it is `Starting` or `Failed`, or while an interrupted replay is pending, and the open is retried as the
+  previous bullet describes. An update skipped this way is dropped, and the next update carries the content.
+- Consecutive-failure counting uses the hard failure threshold from `LanguageServerFeatureProviderOptions`,
+  where a false start result and an unexpected startup exception both count; once the latch engages, the
+  reported failed state holds until the provider is recreated and is not downgraded by a later connection
+  fault.
+
+The profile supplies the failure messages: `TransientStartupFailureMessage`, `PersistentStartupFailureMessage`
+and `MissingClientFailureMessage`. They default to sentences built from `ServerDisplayName` and
+`LanguageDisplayName`, and a blank value suppresses that report. A language package sets one only when its
+wording differs, and the Lua and Roslyn packages set none. The host, not the package, tunes the failure threshold
+through `LanguageServerFeatureProviderOptions.HardStartupFailureThreshold`.
 
 ### 4. Document synchronization
 
-The base maps the document lifecycle onto `textDocument/didOpen`, `textDocument/didChange`, and
-`textDocument/didClose`, driven through the framework's internal `DocumentOperationScheduler` (per-document
-serialization, latest-update coalescing, exclusive rename slots) and the language's tracked
-store (the `documentStore` constructor argument). The language package customizes through hooks:
+The provider maps the document lifecycle onto `textDocument/didOpen`, `textDocument/didChange`, and
+`textDocument/didClose`, driven through the framework's internal `DocumentOperationScheduler`
+(per-document serialization, latest-update coalescing, and exclusive operations on one or two document
+paths, as a rename uses) and the framework's document tracker.
 
-- `LanguageId` for the `didOpen` language identifier (Lua sends `"lua"`; C# sends `"csharp"`; Visual Basic sends `"vb"`).
-- `OnDocumentSynchronizedAsync` for post-sync refresh work beyond semantic tokens and diagnostics (the base
-  triggers the semantic-token refresh and, for a pull-capable server, the diagnostics pull itself); it is
-  deliberately not invoked on request-driven synchronization, so each IntelliSense request does
-  not issue an extra request. It runs while the document's scheduler slot is still held (and,
-  during a restart replay, while the provider's startup serialization is held), so a hook must not
-  call provider document or request APIs or await provider startup; detach long-running work
-  instead. A change that a session without a
-  negotiated synchronization mode cannot express skips both the send and this hook, because the
-  server's copy still describes the previous content.
-- `OnTrackedDocumentInvalidated` for language state that must follow close, move,
-  idle trimming, and synchronization invalidation.
-- `InvalidateTrackedDocumentSynchronization` to bridge the base's generic store synchronization
-  invalidation onto the language store (both Lua and Roslyn forward to
-  `ServerPayloadDocumentStore.InvalidateServerSynchronization`).
-- `GetTrackedDiagnostics` and `HandleDiagnosticsPayload` to expose diagnostics; `HandleDiagnosticsPayload`
-  parses and caches a payload for a tracked document (return `null` to drop an unparsable or
-  stale payload). The framework serves both delivery models through the one hook: a push
-  `textDocument/publishDiagnostics` notification and a pull `textDocument/diagnostic` report both arrive here, so a
-  pull-only provider implements only this hook.
-- `GetDiagnosticsSnapshot` (an internal seam reached through the framework's `InternalsVisibleTo`) to expose
-  the cached diagnostic entries together with the content snapshot their offsets refer to; the base's
-  code-action implementation uses it to rebuild the server's diagnostic context for the requested range, so a
-  provider that caches diagnostics overrides it (Lua and Roslyn forward to
-  `ServerPayloadDocumentStore.GetDiagnosticsSnapshot`).
-- `GetTrackedSemanticTokens` and `TryStoreSemanticTokens` to expose semantic tokens through the base's
-  version-fenced token cache; `TryStoreSemanticTokens` returns `false` for a stale token set.
+A profile supplies these values for it:
 
-The diagnostics and semantic-token bullets are optional: a provider that omits them exposes no
-diagnostics or semantic tokens (the base returns empty results and raises no update).
+- `LanguageId` is the `didOpen` language identifier (Lua sends `"lua"`, C# `"csharp"`, Visual Basic `"vb"`).
+- `DiagnosticMappingPolicy` holds the mapping rules that turn diagnostics on. The provider parses and caches
+  both a push `textDocument/publishDiagnostics` notification and a pull `textDocument/diagnostic` report with
+  this one policy, so a pull-only language supplies only the policy. A profile that supplies none drops every
+  diagnostics payload and exposes no diagnostics.
 
-The base chooses the change payload from the negotiated `TextDocumentSyncKind` (incremental when
-accepted, full otherwise; a server that accepts neither fails loudly at that point under the
-default client configuration, and under a client that does not require synchronization a change
-that cannot be expressed is skipped with a warning while the next session re-establishes the full
-content), keeps request-driven synchronization from triggering refreshes, and degrades to the
-documented request fallback when a synchronization send fails.
+After an open or change synchronization, the provider refreshes the semantic tokens and, for a pull-capable
+server, pulls diagnostics. A request that carries newer text refreshes after the change it sends, because the
+host's update with the same text then has nothing to send, and the request's temporary open of a document the
+host did not open refreshes nothing. A change that the negotiated synchronization mode cannot express skips
+the send and the refresh, because the server's copy still describes the previous content.
+
+The provider's code-action request sends the cached diagnostics as the context for the requested range, so a
+profile with a policy gets the server's quick fixes. A profile without one sends an empty context, and a
+server that derives its quick fixes from that context offers none.
+
+The provider caches semantic tokens against the tracked document version, and it rejects a stale token set.
+
+The provider chooses the change payload from the negotiated `TextDocumentSyncKind` (incremental when
+accepted, full otherwise), keeps request-driven synchronization from triggering refreshes, and
+degrades to the documented request fallback when a synchronization send fails.
+
+A server that accepts neither mode fails loudly under the default client configuration; under a
+client that does not require synchronization, a change that cannot be expressed is skipped with a
+warning while the next session re-establishes the full content.
 
 ### 5. Workspace watching
 
-The base mirrors external workspace changes to the server with the Client primitives - one
-watch scope per root (watcher, snapshot tracker, recovery state, failure latch, so a failure is
-contained to its root and the failure message can name it), a shared internal file-change
-forwarder buffering recoverable gaps and replaying them once the server is
-ready again, ownership-based forwarding when roots nest (a path is normally forwarded only by the
-scope whose root is its longest prefix, so overlapping watchers produce one notification; a root
-whose own watcher is inactive stays covered by the delivering watcher), and snapshot
-reconciliation after watcher recovery (changes that cannot be replayed unambiguously are dropped
-rather than approximated).
+The provider mirrors external workspace changes to the server with the [file-watching engine](FileWatchingGuide.md):
 
-The language package supplies:
+- The provider keeps one watch supervisor per root (watcher, snapshot tracker, recovery state, failure latch), so
+  a failure is contained to its root and the failure message can name it.
+- The provider uses a shared internal workspace-change forwarder that buffers recoverable gaps and replays them
+  once the server is ready again.
+- Forwarding is ownership-based when roots nest: a path is normally forwarded only by the scope whose root is
+  its longest prefix, so overlapping watchers produce one notification, and a root whose own watcher is
+  inactive stays covered by the delivering watcher.
+- Snapshot reconciliation after watcher recovery drops changes that cannot be replayed unambiguously rather
+  than approximating them.
 
-- the watch specifications constructor argument - the file patterns to watch (Lua: `*.lua`
-  recursively plus `.luarc.*` in the workspace root; C#: `*.cs` and `*.csproj`, and Visual Basic: `*.vb` and
-  `*.vbproj`, all recursively, with the shared solution, project-asset, build-properties, and build-packages patterns
-  composed in by the Roslyn core). Patterns follow the
-  `WorkspaceWatchSpecification` contract (a file-name filter without directory separators) and the
-  platform's file-name casing behavior. Passing an empty list disables workspace watching for the
-  provider, so a host that bridges file events itself can opt out without faking a pattern.
-- `IsConfigurationPath` - the configuration-file predicate that triggers a settings refresh
-  before the watched-files notification is forwarded. A provider whose settings do not come from a
-  workspace file returns `false` unconditionally (Roslyn, C#, and Visual Basic: their options drive the
-  settings payload, while a watched build-file change is still forwarded so the server reloads the
-  affected projects).
-- `CreateSettingsPayload` - the payload for the resulting `workspace/didChangeConfiguration`
-  notification.
+The profile supplies:
 
-The framework creates each root's watcher through the virtual `CreateWorkspaceFileWatcher` hook,
-which returns an `IWorkspaceFileWatcher`; override it (or assign `WorkspaceFileWatcherFactory` on
-`LanguageServerProviderOptions`) to substitute the watching engine, for example with a host file API,
-without subclassing the provider. The default watches through the framework's `WorkspaceFileWatcher`,
-and a throwing hook surfaces through `WorkspaceWatcherFailed` instead of escaping request APIs.
-`WorkspaceChangeAccumulator` is internal: it is the watcher's debounce buffer and the change
-forwarder's pending buffer, and no consumer needs it as surface.
+- `WatchSpecifications` supplies the file patterns to watch (Lua: `*.lua` recursively
+  plus `.luarc.*` in the workspace root; C#: `*.cs` and `*.csproj`; Visual Basic: `*.vb` and `*.vbproj`, all
+  recursively, with the shared solution, project-asset, build-properties, build-targets, build-packages, and
+  global-json patterns composed in by the Roslyn factory).
+  - Each pattern follows the `FileWatchSpecification` contract, a file-name filter without
+    directory separators, and the platform's file-name casing behavior.
+  - An empty list disables watching, so a language package whose server watches files itself can opt out
+    without faking a pattern.
+- `Hooks.IsConfigurationPath` is the configuration-file predicate that triggers a settings push before the
+  watched-files notification is forwarded: the provider calls `ILanguageServerClient.PushSettingsAsync`, and the
+  client sends the document its `SettingsProvider` returns, the same one that answers `workspace/configuration`.
+  A language whose settings do not come from a workspace file returns `false` unconditionally (Roslyn, for C# and
+  Visual Basic: its options drive the settings, while a watched build-file change is still forwarded so the
+  server reloads the affected projects).
+
+The framework creates each root's watcher itself, with one `FileSystemWatcher` per watch specification; the
+[provider guide](ProviderGuide.md#internal-machinery) describes the machinery. A watcher that fails to start
+is classified as a startup failure and reported once per root through `WorkspaceFileWatchFailed`, until a
+watcher starts again, instead of escaping request APIs.
 
 ### 6. Feature slices
 
-Every feature already has its slice in the framework: the base implements the standard request-and-parse for
-all nine features (completion, hover, definition, references, rename, formatting, signature help, document
-symbols, and code actions), and the mapping layer (`ResponseParser`) converts each response. Override a base
-feature only when the language's wire shape or behavior differs; otherwise there is nothing to implement.
+Every feature already has its slice in the framework: an internal provider such as
+`HoverProvider` sends the standard request, and a static parser beside it converts the response:
+a `{Feature}ResponseParser`, or the shared `WorkspaceEditParser`, `DiagnosticsParser` or
+`SemanticTokensDecoder` for the features that return those shapes. The provider is sealed and the request
+pipeline is internal, so a language package gets the features as they are and cannot send a request of its own
+through the provider.
 
-Adding a new feature, or a language-specific override, keeps the same three-piece slice:
+A feature the framework lacks is added to the framework as a slice of the same shape:
 
 1. A protocol payload family under `Nickelony.LanguageServer.Client/Protocol/` when the wire
    shape is not already modeled. Converters are tolerant by policy: malformed elements are
    skipped with a warning, missing optional pieces degrade instead of failing the whole
    response, and open protocol numerics (kinds, severities) stay representable for the provider
    to map.
-2. A parser partial that maps payloads to the shared IDEKit models. Convert protocol ranges
-   through the document line map; never approximate a malformed edit (a range that cannot be
-   mapped is dropped, not turned into a deletion).
-3. A provider override for the language-specific behavior: call `base` for the standard path where it
-   applies, confirm the server capability, issue the request through the inherited pipeline
-   (`SendDocumentRequestAsync`/`SendDocumentPositionRequestAsync`), and map the response with the parser.
-   The pipeline accepts a reference-type or a value-type `TResponse`: the outcome is classified from the
-   request itself rather than from the response value, so a value-type response does not depend on a null
-   check, and a reference-type payload that arrives as a JSON null returns the fallback instead of reaching
-   the parser.
+2. A static `{Feature}ResponseParser` that maps payloads to the shared IDEKit models, unless a shared parser
+   already maps the response shape. Convert protocol ranges through the document line map; never approximate a
+   malformed edit (a range that cannot be mapped is dropped, not turned into a deletion).
+3. An internal `{Feature}Provider` that implements the feature's language-feature contract:
+   build a `DocumentRequestDescriptor` (the capability gate and the request), send it through
+   `IDocumentRequestPipeline`, and map the response with the parser. The provider exposes it as a public
+   member that guards its arguments and passes the call on. A request-to-wire mapping of one
+   statement stays inline in the provider; a longer one is a static `{Feature}RequestConversion` beside the
+   response parser, so the provider reads as a descriptor, a send and a parse.
+
+The pipeline accepts a reference-type or value-type `TResponse`. It classifies the outcome from the
+request rather than the response value, so a value-type response needs no null check. A reference-type
+payload that arrives as JSON null returns the fallback instead of reaching the parser.
 
 ### 7. Capability flags
 
-Read the negotiated server capabilities through the inherited `Client` accessor and surface
-them as `Supports*` properties (`IsAvailable && Client.Supports*`). Gate each request at dispatch
-time with the client flag - the pipeline takes a `supportsRequest` delegate - and return the
-feature's documented empty/fallback value when the gate fails. All five flags
-(`SupportsReferences`, `SupportsRename`, `SupportsFormatting`, `SupportsDocumentSymbols`, and
-`SupportsCodeActions`) are public on the narrow feature contracts the provider inherits, so a host
-can consult the availability of any gated feature before offering it. A request that is not gated
-must still degrade through the fallback when the server rejects it.
+The provider reads the negotiated server capabilities once per decision, from the client's
+`NegotiatedCapabilities` snapshot, so the flags of one decision never mix two connection generations. The
+provider publishes the flags a host decides on as one `Capabilities` snapshot
+(`LanguageServerFeatureProviderCapabilities`), which reads as `None` while the provider is not available and
+which `CapabilitiesChanged` announces. The pipeline gates each request at dispatch time with the client flag
+(the request descriptor's `SupportsRequest` gate) and returns the feature's documented empty/fallback value
+when the gate fails; a `null` gate leaves the request ungated.
+
+The snapshot carries `SupportsReferences` and `SupportsRename`, whose requests are gated, so a host can consult
+availability before it offers the feature. It also carries `SupportsHover`, `SupportsDefinition` and
+`SupportsSignatureHelp`, whose requests always go out, so a host can skip one the server cannot answer. A request
+that is not gated must still degrade through the fallback when the server rejects it. Formatting, document symbols,
+workspace symbols, code actions and completion resolve are gated the same way but carry no flag, because no host
+decides on them.
 
 ### 8. Callbacks and disposal
 
-The base owns the admission discipline and the disposal sequence: registration goes through the
-admitted add path (`AddAdmittedCallback`), raises go through the subscriber enumerator that
-checks admission per handler and isolates throwing handlers (logged; later subscribers still
-run), fire-and-forget work goes through the background observer (`ObserveBackgroundTask`), and
-disposal closes callback admission, cancels the disposal token, disposes the workspace
-coordinator (watchers and forwarding buffer), cancels queued document work, and disposes the
-client, idempotently. The language package:
+The provider owns the admission discipline and the disposal sequence. Registration ignores a handler added after
+admission closes. Raises run the handlers serially, check admission again before each one, and isolate a
+throwing handler (logged; later subscribers still run). Fire-and-forget work runs under a background observer,
+so a fault is logged instead of surfacing as an unobserved task exception.
 
-- raises its own language events through `RaiseSubscribers`,
-- overrides `OnDisposing` for language-owned teardown (Lua needs none today: the base owns the
-  semantic-token and pull-diagnostics teardown - it removes the refresh-notification subscriptions and drains the
-  in-flight token and diagnostics requests in its own disposal path),
-- keeps the base's deliberate choice not to dispose the dispose token source (request paths may
-  still link timeout tokens against it; see the trap below).
+Disposal cancels the disposal token first, which closes callback admission and stops every collaborator from
+admitting work. It then drops the event subscribers, unsubscribes from the client, disposes the workspace
+coordinator (watchers and forwarding buffer), cancels queued document work, and disposes the client,
+idempotently. The language package adds nothing to it: Lua and Roslyn need no teardown of their own, because
+the provider removes the refresh-notification subscriptions and cancels the in-flight token and diagnostics
+requests in its own disposal path.
 
-## Traps (learned on the reference implementation)
+## Traps
 
 ### Path normalization contract
 
-- Normalize every host-supplied path at the public boundary with
-  `LanguageServerPaths.TryNormalizeLocalPath`; an unusable path is a no-op or empty result,
-  never a throw. Work with normalized paths internally (dictionary keys, routing, comparisons).
-- Convert to protocol URIs with `LanguageServerPaths.CreateFileUri(normalizedPath)` and back
-  with `TryGetLocalPath`; compare with `LanguageServerPaths.AreLocalPathsEqual` /
-  `LanguageServerPaths.LocalPathComparer`, which follow the platform policy (Windows and macOS
-  are case-insensitive).
+- Normalize every host-supplied path at the public boundary with `LocalPath.TryNormalize`; an unusable path,
+  which includes a relative one, is a no-op or empty result, never a throw. Work with normalized paths
+  internally (dictionary keys, routing, comparisons).
+- Convert to protocol URIs with `DocumentUriConversion.CreateFileUri(normalizedPath)` and back with
+  `DocumentUriConversion.TryGetLocalPath`. The framework compares document paths through
+  `LanguageServerFeatureProviderOptions.PathComparison`, which defaults to
+  `LocalPathComparisonPolicy.ForCurrentPlatform` (Windows and macOS are case-insensitive). A language package
+  compares the file-name parts it matches itself, such as extensions, with the platform policy (`Comparer` for
+  dictionary keys, `Comparison` for string operations).
 - Document identity is the normalized path end to end. There is no document-to-root routing
-  layer; roots only shape the initialize payload and the watch scopes.
-- A case-only rename refers to the same document on case-insensitive file systems; the provider
+  layer; roots only shape the initialize payload and the watch supervisors.
+- A case-only rename refers to the same document under a case-insensitive path comparison; the provider
   must treat it as a no-op instead of closing and reopening.
 
 ### Zero-based coordinates and UTF-16
 
-- Protocol positions are zero-based line/character pairs, and characters are UTF-16 code units
-  (LSP's fixed encoding; the client never negotiates another one).
-- The provider model exchanges document offsets or `TextPosition` pairs; convert through
-  `TextLineMap` / `ProtocolRangeConversion` and let the conversion clamp out-of-document
-  coordinates instead of failing.
-- Negative inputs are representable in payloads and clamped at the provider boundary
-  (`SendDocumentPositionRequestAsync` clamps the `TextPosition` components to zero).
+The provider requests carry document offsets, and the request pipeline maps them to positions with the document's
+`TextLineMap`; the [language features guide](LanguageFeaturesGuide.md#text-and-position-conventions) defines
+those conventions. LSP fixes protocol characters to UTF-16 code units, and the client never negotiates another
+encoding.
+
+- `TextLineMap` clamps out-of-document coordinates instead of failing, whereas the framework's range mapping
+  rejects a negative or reversed protocol range.
+- A negative offset, or one past the end of the document, is clamped to the document when the request pipeline
+  maps it to a position.
 - Reversed ranges cannot be converted; drop them (and their containing edit/entry) rather than
   guessing, and keep the protocol numeric accessible so the mapping layer chooses the fallback.
 
@@ -338,130 +410,109 @@ client, idempotently. The language package:
 - Every payload a provider publishes or caches is an owned immutable snapshot detached from
   internal state; consumers must never observe a later mutation through an earlier event.
 - Tracked documents are content plus version; caches are version-fenced, so a payload parsed
-  against an older snapshot cannot overwrite newer state. Diagnostics for documents the provider
-  has never synchronized are dropped: without tracked content, server ranges cannot be mapped.
+  against an older snapshot cannot overwrite newer state. Diagnostics for never-synchronized
+  documents are dropped: without tracked content, server ranges cannot be mapped.
 
-### Threading, callback admission, and disposal
+### Threading and disposal
 
-- Callbacks may arrive on background threads. Handlers run serially for one invocation, and a
-  throwing handler does not prevent later subscribers from being notified.
-- Admission closes before disposal releases resources; registration after admission closes is
-  ignored, and raising checks admission again per handler.
-- The dispose token source is deliberately never disposed by the base:
-  request paths may still link timeout tokens against it during disposal, and linking against
-  the token of a disposed source throws `ObjectDisposedException` instead of surfacing the
-  documented fallback value.
+- Callbacks may arrive on background threads, so a handler never assumes the UI thread.
+- The dispose token source is deliberately never disposed by the provider: request paths may still link
+  timeout tokens against it during disposal, and linking a disposed source's token throws
+  `ObjectDisposedException` instead of surfacing the documented fallback value.
 
 ### Hook fault containment
 
-- The framework contains the language hooks it calls around its own work (the post-synchronization
-  refresh, tracked-document invalidation, the move hook, the failure-text hooks, the
-  configuration-path probe, the settings payload, the diagnostics read): the fault is logged as
-  contained and the operation still reports its documented result.
-- The tracked-document store's required transforms (`CreateTrackedDocumentState`,
-  `ReopenTrackedDocumentState`, `ReplaceTrackedDocumentContent`) are **not** contained. They produce or
-  update the record the framework mirrors, so a fault there propagates unchanged: a contained fault
-  could not report a truthful outcome, and containing it would also swallow the store's deliberate
-  contract exceptions (an already-bound request reference, for example). The store keeps its key
-  invariant (a dictionary entry key always equals its record's current path), so the record stays
-  reachable and the caller can retry the next synchronization.
-- Failure text: the startup-failure and missing-client messages are supplied by the language package,
-  because they carry installation wording and product names. The watcher-failure message is host-neutral
-  framework copy, so the framework authors it and a host localizes by mapping the message at its own
-  presentation layer.
+- The framework contains the profile delegates it calls around its own work (the configuration-path probe) and
+  the word rule of the diagnostic mapping policy: the fault is logged as contained and the operation still
+  reports its documented result. The client contains a fault of its settings provider the same way: the push is
+  skipped and logged, so the watched-files notification still goes out.
+- Failure text: the profile supplies the startup-failure and missing-client messages, which default to sentences
+  built from the display names, and a language package sets them when its wording carries installation
+  instructions or product names. The watcher-failure message is host-neutral framework copy, so the framework
+  authors it and a host localizes by mapping the message at its own presentation layer.
 
 ### Lazy startup and capability flags
 
-- The startup state object owns the state transitions, the failure counters, and the transport
-  generation fencing that makes stale transport events harmless; transitions are ignored once
+- The startup state object owns the state transitions, the failure counters, and the connection
+  generation fencing that makes stale connection events harmless; transitions are ignored once
   disposal starts, and the disposed state is terminal.
-- Capability values are valid for one transport generation: read them through the client
+- Capability values are valid for one connection generation: read them through the client
   (never cache them across restarts), and raise `CapabilitiesChanged` whenever a restart or
-  transport loss may have changed them. Hosts re-read `IsAvailable` and the `Supports*`
-  properties on that event.
+  connection loss may have changed them. Hosts re-read `IsAvailable` and `Capabilities` on that event.
 - `IsAvailable` is a projection: ready session, not disposing, client ready, startup succeeded.
 
 ### Generation invariants
 
-Three owners fence state by transport generation, and a change to one must keep the others
-consistent:
-
-- the provider's startup state (`StartupState`) accepts a completed startup only
-  for the generation that is still ready and rejects unavailability notifications for
-  generations before it - this is the provider-state fence;
-- the client's capability store publishes one immutable snapshot per generation and gates
-  request results and server callbacks on the owning session still being current - this is the
-  capability fence;
-- the request dispatcher tracks consecutive timeouts per generation so a stale timeout cannot
-  mark a replacement transport unhealthy - this is the timeout fence.
-
-The rule they share: act on a generation only after observing that it is still the current one,
-and never let an event for generation N affect generation N+1.
+The startup state, the client's connection state, and the request runner each fence their state by
+connection generation, as the [LanguageServer internals guide](LanguageServerInternals.md) describes. A
+change to one keeps the shared rule: act on a generation only after observing that it is still the current
+one, and never let an event for generation N affect generation N+1.
 
 ### Request dispatch and timeout policy
 
-- Route feature requests through the shared dispatcher and the base's document-request
-  pipeline: ensure the transport is started (capability values only exist after the
-  initialize handshake), check the capability gate, acquire a temporary request reference,
-  synchronize the document, send with the per-request timeout, parse, and release the
-  reference in `finally` (so caller cancellation cannot leak the reference). The release is
-  bound to the record itself (`DocumentRequestReference`), so a rename that rekeys the record
-  cannot strand the reference. An unsupported request therefore produces no document traffic
-  at all.
+- Feature requests go through the shared request runner and the document-request pipeline, which runs
+  these steps in order:
+  1. ensure the connection is started, because capability values exist only after the initialize handshake;
+  2. check the capability gate;
+  3. synchronize the document, which also acquires the temporary request lease;
+  4. send with the per-request timeout;
+  5. parse, and release the lease in `finally` when this request acquired one, so caller cancellation cannot
+     leak it.
+- The release is bound to the record itself (`DocumentRequestLease`), so a rename that relocates the record
+  cannot strand the lease.
+- An unsupported request therefore produces no document traffic at all.
 - Caller cancellation is the only `OperationCanceledException` that escapes to the caller
   (rethrow when the caller's token fired). Provider disposal, provider timeouts, internal
-  transport failure, server rejections, and unsupported capabilities produce the documented
+  connection failure, server rejections, and unsupported capabilities produce the documented
   fallback value instead.
-- The framework defaults (inherited by Lua): 10 seconds per request, and 2 consecutive request
-  timeouts mark the transport unhealthy so the next request restarts it; a successful start, and
-  a server rejection, reset the tracking. Timeout-driven restarts are a deliberate fail-safe for
-  an unresponsive server and deviate from mainstream language-server clients; set
-  `RequestTimeoutRestartThreshold` to `0` (or raise `RequestTimeout`) for a server that
-  legitimately exceeds the timeout while it indexes a workspace.
+- Each request runs under `RequestTimeout`, and `RequestTimeoutRestartThreshold` consecutive timeouts mark
+  the connection unhealthy so the next request restarts it; a successful start, and a server rejection,
+  reset the tracking.
+- The [options](ProviderGuide.md#options) state the defaults, and the setting for a server that legitimately
+  exceeds the timeout while it indexes a workspace.
+- Timeout-driven restarts are a deliberate fail-safe for an unresponsive server, and they deviate from
+  mainstream language-server clients.
 
-### Document reference semantics
+### Document lease semantics
 
-- One `OpenDocument` call acquires one open reference; pair each with one
+- One `OpenDocument` call acquires one open lease; pair each with one
   `CloseDocument` call, so repeated opens require repeated closes. `UpdateDocument` acquires no
-  reference.
-- Request paths acquire a temporary request reference and release it after completion; the
-  reference is released by identity (`DocumentRequestReference`), so it still finds the record
-  when a rename rekeyed it. Idle documents are trimmed beyond the configured cap
-  (`LanguageServerProviderOptions.MaxTrackedIdleDocuments`; Lua: 16) with a `didClose`,
-  while documents held by an open reference are never trimmed. A close that was deferred because a request
-  reference was still active completes when that reference is released.
-- Forward `didClose` only when a server session is running: starting a server just to close a
-  document is wasteful and can race disposal. Closes are delivered through the document's own
-  scheduler slot with a tracked-state recheck, so a close that arrives during a restart replay
-  still closes a document the replay reopened instead of leaving a phantom server-open copy.
+  lease.
+- Request paths acquire a temporary request lease and release it after completion.
+- Idle documents beyond the cap (`LanguageServerFeatureProviderOptions.MaxTrackedIdleDocuments`, in the
+  [options](ProviderGuide.md#options)) are trimmed with a `didClose` each time a request releases its lease, but
+  documents held by an open lease are never trimmed.
+- A close deferred because a request lease was still active completes when that lease is released.
+- Forward `didClose` only when a server session is running: starting a server merely to close a document is
+  wasteful and can race disposal.
+- Closes run in the document's own scheduler slot and recheck the tracked state, so a close that arrives
+  during a restart replay still closes a document the replay reopened instead of leaving a phantom
+  server-open copy.
+- The calls on one document reach its scheduler slot in the order the host made them, also while an earlier call
+  waits for the connection to start. A close made after an open therefore closes the document that open opened,
+  and a close or an open ends the updates of its document that still wait for the connection, so an update made
+  before a close cannot recreate the record the close removed. A call on another document never waits for it.
 
 ### Test strategy
 
-- Unit slices: a fake `ILanguageServerClient` that captures notifications and answers scripted
-  requests (the Client's event and dispatch surface is small enough to fake completely), an
-  `InternalsVisibleTo` test-access bridge for provider internals, and polling helpers for
-  callback admission/disposal timing. Pin handshake factories with payload tests and parsers
-  with raw-JSON tests per feature.
-- Real-server door: an `Integration/` suite that exercises the actual server executable behind
-  an environment-configured archive path and reports inconclusive when no server is configured.
-  Use it for emission questions the fake cannot answer (LuaLS: hierarchical document symbols),
-  keep the suite spec-first, and keep the fakes authoritative for behavior.
+- Unit slices fake `ILanguageServerClient` for captured notifications and scripted request answers, grant a
+  provider package's internals to its own test project with `InternalsVisibleTo`, and pin handshake factories
+  with payload tests and parsers with raw-JSON tests per feature.
+- The Lua tests have an opt-in `Integration/` suite that drives the real server executable and reports
+  inconclusive when none is configured; reserve it for emission questions the fake cannot answer.
 
 ## Server compatibility constraints
 
-The client makes five fixed choices that a candidate language server must fit (the full
-language-#2 kickoff checklist is recorded in `future-backlog-2026-09-17.md`):
+The client makes fixed choices a candidate language server must fit:
 
-- The server process working directory defaults to the executable's folder; set
-  `LanguageServerClientOptions.ServerWorkingDirectory` to pin another directory (for example the
-  workspace root).
-- Positions are zero-based and fixed to UTF-16 code units.
-- Diagnostics are delivered by push and, when the server advertises it, by pull: the framework consumes
+- The server process working directory defaults to the executable's folder; set `ServerWorkingDirectory` on
+  the profile's `Launch` to pin another directory (for example the workspace root).
+- Positions are zero-based UTF-16 code units; see
+  [Zero-based coordinates and UTF-16](#zero-based-coordinates-and-utf-16).
+- Diagnostics arrive by push and, when the server advertises it, by pull: the framework consumes
   `textDocument/publishDiagnostics` when the server pushes, and additionally runs a `textDocument/diagnostic`
-  pull loop when the server advertises `diagnosticProvider` (`SupportsPullDiagnostics`). Both delivery models
-  feed the same language hook and `DiagnosticsUpdated` event.
-- Dynamic registration is unsupported by design: the client advertises
-  `dynamicRegistration = false` and logs and ignores `client/registerCapability` /
-  `client/unregisterCapability`.
-- Multi-root is fixed at construction: all roots are advertised and watched, one watch scope
-  per root, and `workspace/didChangeWorkspaceFolders` is not sent.
+  pull loop when the server advertises `diagnosticProvider`
+  (`NegotiatedCapabilities.SupportsPullDiagnostics`). Both delivery models feed the same diagnostic mapping
+  and `DiagnosticsUpdated` event.
+- Dynamic registration and the fixed multi-root set are covered in the
+  [client limitations](ClientGuide.md#limitations).

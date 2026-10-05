@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+	<members>
+		<member name="CreatePopup">
+			<summary>Creates the popup that shows <paramref name="frame" /> below an anchor rectangle of <paramref name="textArea" />.</summary>
+			<param name="textArea">The text area the popup is placed against.</param>
+			<param name="frame">The border that holds the content and draws the chrome.</param>
+			<returns>The popup, closed; <see cref="ReleasePopup" /> undoes what the creation attached to the text area.</returns>
+		</member>
+
+		<member name="ReleasePopup">
+			<summary>Detaches the popup from the text area it was created against.</summary>
+			<param name="popup">The popup to release, which is closed.</param>
+		</member>
+
+		<member name="SetAnchor">
+			<summary>Places the popup below <paramref name="anchor" />, a rectangle in the coordinate space of the popup's placement target.</summary>
+			<param name="popup">The popup to place.</param>
+			<param name="anchor">The rectangle whose bottom-left corner the popup's top-left corner meets.</param>
+		</member>
+
+		<member name="IsWindowInactive">
+			<summary>Reports whether the window that hosts the text area is inactive.</summary>
+			<param name="textArea">The text area whose window is read.</param>
+			<returns>
+			  <see langword="true" /> when the window that hosts the text area is not the active one; otherwise, <see langword="false" />,
+			  which includes a text area outside any window.
+			</returns>
+		</member>
+
+		<member name="SubscribeClosing">
+			<summary>
+			  Subscribes the events that close an open popup: Esc in the text area, its focus loss and the deactivation of its window.
+			</summary>
+			<param name="textArea">The text area whose events close the popup.</param>
+			<param name="close">The handler that closes the popup.</param>
+			<returns>A subscription that removes the handlers when it is disposed.</returns>
+			<remarks>
+			  The Esc key is read before the editor's own key handlers and marked handled, so the editor never acts on the key that closed the popup;
+			  a key that an earlier handler already handled closes nothing. The window is the one that hosts the text area when the subscription
+			  is made.
+			</remarks>
+		</member>
+	</members>
+</doc>

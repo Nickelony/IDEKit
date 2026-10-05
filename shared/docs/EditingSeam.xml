@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+	<members>
+		<member name="SetScrollOffset">
+			<summary>Scrolls an editor to an exact offset, so code that moved the view can put it back where the user left it.</summary>
+			<param name="editor">The editor to scroll.</param>
+			<param name="horizontalOffset">The distance from the left edge of the text, in device-independent units.</param>
+			<param name="verticalOffset">The distance from the top of the text, in device-independent units.</param>
+		</member>
+	</members>
+</doc>

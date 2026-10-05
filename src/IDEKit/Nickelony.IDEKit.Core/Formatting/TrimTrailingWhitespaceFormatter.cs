@@ -1,35 +1,19 @@
-using Nickelony.IDEKit.Core.Text;
 using System.Text;
+using Nickelony.IDEKit.Core.Text;
 
 namespace Nickelony.IDEKit.Core.Formatting;
 
-/// <summary>
-/// Trims trailing spaces and tabs from each line while preserving the original line
-/// terminators.
-/// </summary>
+/// <summary>Trims trailing spaces and tabs from each line while preserving the original line terminators.</summary>
 /// <remarks>
-/// <para>
-/// LF, CRLF, and lone CR are recognized as line terminators, and a final unterminated line is trimmed
-/// without adding a terminator. Only spaces and tabs are removed; other Unicode whitespace
-/// characters, such as a non-breaking space at the end of a line, are preserved so content that
-/// relies on them is not altered silently. An already-trimmed document is returned unchanged (the same
-/// instance), so callers can detect a no-op by reference.
-/// </para>
-/// <para>
-/// Some formats give trailing whitespace meaning (Markdown hard line breaks are two trailing
-/// spaces, for example); documents in those formats must not be trimmed, so a host selects this
-/// formatter per document type instead of applying it unconditionally.
-/// </para>
+/// LF, CRLF, and lone CR terminate lines, and a final unterminated line is trimmed without adding one. Only spaces and tabs are removed,
+/// so other Unicode whitespace survives, and an already-trimmed document is returned as the same instance. A host applies this formatter per document
+/// type and skips formats where trailing whitespace carries meaning, such as Markdown hard line breaks.
 /// </remarks>
-public sealed class TrimTrailingWhitespaceFormatter : ITextDocumentFormatter
+public sealed class TrimTrailingWhitespaceFormatter : IDocumentFormatter
 {
-	/// <summary>
-	/// Gets the shared instance of the formatter.
-	/// </summary>
 	public static TrimTrailingWhitespaceFormatter Instance { get; } = new();
 
-	private TrimTrailingWhitespaceFormatter()
-	{ }
+	private TrimTrailingWhitespaceFormatter() { }
 
 	/// <inheritdoc/>
 	public string FormatDocument(string content)
@@ -50,6 +34,7 @@ public sealed class TrimTrailingWhitespaceFormatter : ITextDocumentFormatter
 			{
 				builder?.Append(line);
 				builder?.Append(enumerator.Terminator);
+
 				continue;
 			}
 
@@ -68,9 +53,5 @@ public sealed class TrimTrailingWhitespaceFormatter : ITextDocumentFormatter
 		return builder?.ToString() ?? content;
 	}
 
-	/// <summary>
-	/// Determines whether the line ends in a space or tab, the only characters this formatter trims.
-	/// </summary>
-	private static bool EndsInSpaceOrTab(ReadOnlySpan<char> line)
-		=> line.Length > 0 && WhitespaceScan.IsSpaceOrTab(line[^1]);
+	private static bool EndsInSpaceOrTab(ReadOnlySpan<char> line) => line.Length > 0 && WhitespaceScan.IsSpaceOrTab(line[^1]);
 }

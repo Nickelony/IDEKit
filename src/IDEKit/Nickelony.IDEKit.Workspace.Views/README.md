@@ -1,176 +1,111 @@
 # Nickelony.IDEKit.Workspace.Views
 
-UI-framework-free document-view coordination for the `Nickelony.IDEKit.Workspace` document
-authority: the document-view contract (`IWorkspaceDocumentView`) and the manager
-(`WorkspaceDocumentManager`) that synchronizes attached views with tracked documents.
+UI-framework-free document-view coordination for the `Nickelony.IDEKit.Workspace` document authority, with nullable reference types. It owns the document-view contract (`IWorkspaceDocumentView`), the editor view base that implements it (`WorkspaceDocumentTextViewBase`) and the coordinator (`WorkspaceViewCoordinator`, in the `Coordination` namespace) that synchronizes attached views with tracked documents.
 
-The package is the view slice of the workspace family, split into its own package so a host that
-only needs document authority (a headless server, a tool, a service) can adopt
-`Nickelony.IDEKit.Workspace` without taking the view contracts. It depends on
-`Nickelony.IDEKit.Workspace` and `Nickelony.IDEKit.Core`. The sibling READMEs are the
-[document authority](../Nickelony.IDEKit.Workspace/README.md) that the manager coordinates and
-[Core](../Nickelony.IDEKit.Core/README.md), the text primitives the snapshot content uses.
+It is the view slice of the workspace family, split out so a host that only needs document authority (a headless server, a tool, a service) can adopt the [document authority](https://github.com/Nickelony/LanguageServer/blob/main/src/IDEKit/Nickelony.IDEKit.Workspace/README.md) without the view contracts. It depends on that package, on [Core](https://github.com/Nickelony/LanguageServer/blob/main/src/IDEKit/Nickelony.IDEKit.Core/README.md) for the text primitives the snapshot content uses, and on the [language-feature contracts](https://github.com/Nickelony/LanguageServer/blob/main/src/IDEKit/Nickelony.IDEKit.LanguageFeatures/README.md) for the `WorkspaceEdit` that `WorkspaceEditApplier` applies and the `IDocumentSynchronizationTarget` that `WorkspaceDocumentSynchronizer` mirrors documents to.
 
 ## Getting started
 
-Install the package from your configured feed (the library ships from a local
-feed while it is in preview):
-
 ```powershell
-dotnet add package Nickelony.IDEKit.Workspace.Views
+dotnet add package Nickelony.IDEKit.Workspace.Views --prerelease
 ```
 
 ```csharp
+using Nickelony.IDEKit.Core.Threading;
 using Nickelony.IDEKit.Workspace.Documents;
-using Nickelony.IDEKit.Workspace.Documents.FileSystem;
+using Nickelony.IDEKit.Workspace.FileSystem;
 using Nickelony.IDEKit.Workspace.Views;
+using Nickelony.IDEKit.Workspace.Views.Coordination;
 
-// Supplied by the host: the delegate that runs view access where view access is legal - a
-// message-loop dispatcher, or the direct inline adapter shown here. The delegate must run the
-// action before its returned task completes and propagate the action's exceptions; completion may
-// itself be asynchronous.
-Func<Action, Task> dispatchViewAction = action =>
-{
-    action();
-    return Task.CompletedTask;
-};
+// Supplied by the host: the dispatcher of the thread that owns the views, such as the one an editor binding
+// creates with UiDispatcher.FromCurrent().
+IUiDispatcher dispatcher = hostDispatcher;
 
 string scriptDirectory = Path.Combine(Path.GetTempPath(), "workspace", "scripts");
 string scriptPath = Path.Combine(scriptDirectory, "main.lua");
 
 // Create the destination directory first; the store stages every commit through a temporary file
-// beside the target (the commit model lives in the Workspace README).
+// beside the target (https://github.com/Nickelony/LanguageServer/blob/main/docs/WorkspaceGuide.md#the-atomic-write).
 Directory.CreateDirectory(scriptDirectory);
 
 IWorkspaceFileSystem fileSystem = new LocalWorkspaceFileSystem();
 await using var store = new WorkspaceDocumentStore(fileSystem);
-await using var manager = new WorkspaceDocumentManager(store, dispatchViewAction);
-IWorkspaceDocumentView view = new MyDocumentView(scriptPath);
+await using var coordinator = new WorkspaceViewCoordinator(store, dispatcher);
+// MyDocumentView is the host's editor view, shown below; MyEditor stands for the host's editor control, which
+// has a Text, an IsReadOnly flag and a TextChanged event.
+var editor = new MyEditor();
+using var view = new MyDocumentView("main", editor, dispatcher);
 
-WorkspaceDocumentManagerOpenResult opened = await manager.OpenWithViewAsync(
+WorkspaceViewCoordinatorOpenResult opened = await coordinator.OpenWithViewAsync(
     scriptPath,
-    new WorkspaceDocumentOpenOptions(
-        TextEncodingKind.Utf8,
-        new TextFileFormat(TextEncodingKind.Utf8, false, TextNewlineStyle.Lf)),
+    WorkspaceDocumentOpenOptions.Default,
     view);
 
-if (opened.Outcome == WorkspaceDocumentManagerOpenOutcome.Opened)
+if (opened.Outcome == WorkspaceViewCoordinatorOpenOutcome.Opened)
 {
     WorkspaceDocumentSnapshot snapshot = opened.Snapshot!;
-    WorkspaceDocumentManagerCommitResult committed = await manager.CommitAsync(
-        new WorkspaceDocumentCommitRequest(
-            new(snapshot.DocumentKey, snapshot.DocumentId, snapshot.Version),
-            snapshot.OnDiskStamp));
+    WorkspaceViewCoordinatorDocumentResult<WorkspaceDocumentCommitResult> committed = await coordinator.CommitAsync(
+        new WorkspaceDocumentCommitRequest(snapshot.Identity, snapshot.OnDiskStamp));
 }
 ```
 
-## Requirements
+A host derives its editor view from `WorkspaceDocumentTextViewBase`, calls `HandleTextChanged` on each change of
+the editor text, and implements its abstract members:
 
-.NET 8.0 or later (the package targets `net8.0` and is built with nullable reference types
-enabled).
+```csharp
+using Nickelony.IDEKit.Core.Threading;
+using Nickelony.IDEKit.Workspace.Views;
 
-## Dependencies
+public sealed class MyDocumentView : WorkspaceDocumentTextViewBase
+{
+    private readonly MyEditor _editor;
 
-`Nickelony.IDEKit.Workspace` (document authority) and `Nickelony.IDEKit.Core` - both
-UI-framework-free. Targets `net8.0`.
+    // The constructor passes the view id, the dispatcher and the publish delay to the base.
+    public MyDocumentView(string viewId, MyEditor editor, IUiDispatcher dispatcher)
+        : base(viewId, dispatcher, publishDelay: TimeSpan.FromMilliseconds(300))
+    {
+        _editor = editor;
+        _editor.TextChanged += (_, _) => HandleTextChanged();
+    }
 
-## What's inside
+    protected override bool IsReadOnly
+    {
+        get => _editor.IsReadOnly;
+        set => _editor.IsReadOnly = value;
+    }
 
-The package covers:
+    protected override string ReadText() => _editor.Text;
 
-- Attaching a document view to a tracked document (`OpenWithViewAsync`) and closing/unregistering
-  it (`StopAsync`, `UnregisterOpenView`).
-- Publishing view edits back to the document authority: the view raises
-  `IWorkspaceDocumentView.ApplyRequested` and the manager applies the replacement, acknowledging
-  the result to the view.
-- Synchronizing views around document operations: identity changes for rename, save-as, and
-  directory rename; refreshes after commit, reload, and conflict resolution; and closing views when
-  their document is deleted.
-- Reporting view outcomes as a composed value (`WorkspaceDocumentViewSynchronizationResult` with
-  `Synchronized`, `Blocked`, or `Unsynchronized`, carrying the affected views and the failure each
-  reported) next to the store result, so the document-authority outcome and the view outcome stay
-  separate.
+    // Replace only the changed middle, so the caret and the scroll position stay.
+    protected override void ReplaceText(string text) => _editor.ReplaceText(text);
+}
+```
 
-## Operation model
+The [workspace views guide](https://github.com/Nickelony/LanguageServer/blob/main/docs/WorkspaceViewsGuide.md#an-editor-view)
+shows a complete editor view and its publish delay.
 
-- **Construction and identity.** The constructor takes the document store and the dispatch delegate.
-  The manager tracks view membership with the store's own path-comparison policy
-  (`IWorkspaceDocumentReader.PathComparison`), so both slices agree on which paths are the same
-  document.
-- **Result shape.** Every operation result composes the document-authority outcome (`StoreResult`;
-  `null` when attached views blocked the operation before the store was reached) with the
-  view-synchronization outcome (`ViewSynchronization`) and the current `Snapshot`. `Outcome` and
-  `Snapshot` delegate to the store result, and so does `Failure` whenever the store was reached, so
-  `StoreResult` is the single source for the document outcome and a host logs a failure and
-  refreshes a snapshot from one shape. Only the logical-mutation result never reaches the store, so it
-  alone exposes no `Failure`. Construct results through the `FromStore`/`Blocked`
-  factories, which keep the store and view outcomes consistent.
-- **Dispatch delegate.** The manager owns no thread or message loop; every action that touches a view
-  member is dispatched through the delegate supplied to the constructor. The rules:
-  - The delegate must run the action before its returned task completes and let the action's
-    exceptions propagate; the task may complete asynchronously, because the manager awaits it instead
-    of blocking.
-  - The manager consumes the results the action captured right after the task completes.
-  - A headless host passes an inline adapter (`action => { action(); return Task.CompletedTask; }`);
-    a UI host passes a dispatcher that runs the action on its message loop.
-  - Actions may arrive from arbitrary threads, from concurrent operations, and re-entrantly from
-    inside a dispatched action (a view raising `ApplyRequested`); a delegate whose views are not
-    thread-safe or reentrancy-safe must serialize or queue the actions itself, and one manager
-    coordinates one store.
-  - The subscription itself is never dispatched: the add runs on the thread that resumes the attach
-    after its dispatched action completes - not necessarily the caller's thread or the dispatch
-    thread, because the store open between them is asynchronous - a direct `UnregisterOpenView`
-    removes the handler on the calling thread, and manager-initiated removals during a stop or delete
-    teardown run on the dispatch thread; event accessors must be usable from any thread.
-  - The event-driven apply runs its store mutation on the raising thread; the acknowledgment that
-    follows is dispatched.
-  - A view member that throws is isolated (reported through the operation result or recorded as
-    unsynchronized state); a fault raised by the delegate itself surfaces as a failure of the
-    operation.
-  - Host-initiated mutations use `ReplaceAsync`; a view that publishes its own edits raises
-    `ApplyRequested` and learns the outcome through `AcknowledgeApply`.
-- **Draft ownership.** The document authority owns the draft: logical content, the persisted
-  baseline, the dirty flag, and the version pair all live on `WorkspaceDocumentSnapshot` in
-  `Nickelony.IDEKit.Workspace`. A view owns only the interactive buffer it renders and its three
-  relationship members (`DocumentKey`, `HasPendingEdits`, `HasConflict`), and it publishes edits to
-  the authority by raising `ApplyRequested`. The manager therefore never treats a view as the source
-  of truth for document content: it blocks the operations that could lose an unpublished edit and
-  retains a view that failed to adopt a published change, and a host whose view publishes eagerly
-  simply never trips the pending-edit path.
-- **Blocking policy.** Operations that destroy the document behind a view consult attached view
-  state first:
-  - Delete and delete-directory report `Blocked` while a view has pending edits, a conflict, or an
-    unsynchronized failure.
-  - The recovery operations - commit, reload, and conflict resolution - block only on pending edits
-    and conflicts and deliberately ignore a prior synchronization failure, so they can be retried and
-    their post-operation refresh retries the failed synchronization.
-  - Operations that only change the document identity or path - rename, save-as, and directory
-    rename - never block on view state: the move cannot lose view edits, and the identity change is
-    acknowledged afterwards, where a view update failure is reported as `Unsynchronized`.
-- **Unsynchronized state.** A view whose refresh or acknowledgment failed is retained as
-  unsynchronized, with the failure detail for reporting. A successful refresh or identity
-  acknowledgment clears that state; delete and delete-directory report `Blocked` while it is set,
-  and the recovery operations retry the synchronization instead of blocking on it.
-- **Delete guards.** Delete operations (file and directory) and directory moves ask attached views
-  that implement `IWorkspaceDocumentDeleteGuardView` to enter a delete guard (a view-defined
-  barrier, for example suspending live updates while the move runs); a view without the capability
-  is skipped. When a view rejects the guard, the operation is reported as `Blocked` before the store
-  is reached; entered guards are always released, including when the operation throws. A
-  guard-release failure is reported as an unsynchronized issue on the result, and it is also
-  recorded as unsynchronized view state unless the operation closes the view anyway.
-- **Identity changes.** Rename, save-as, and directory rename ask attached views to acknowledge the
-  new identity through `AcknowledgeIdentity`; a view that cannot accept the change is reported as
-  `Unsynchronized` on the result, and the manager keeps reporting the view until a successful
-  refresh or identity acknowledgment clears it.
-- **Reuse and closure.**
-  - A view that is already registered is reported as `AlreadyOpen` with the snapshot of the document
-    it is attached to.
-  - A different view that duplicates a registered view id is `ViewInUse`.
-  - Stopping the manager (`StopAsync`/`DisposeAsync`) rejects new operations, waits for active ones,
-    closes and unregisters every registered view, and releases all view-tracking state.
-  - Never call `StopAsync` from inside a view member or a dispatched action that belongs to an active
-    operation: the stop waits for that operation, which cannot finish while its own thread is blocked
-    on the stop.
+## Remarks
+
+- **The coordinator owns no thread or message loop.** Every view member except the `ApplyRequested` subscription
+  is dispatched through the dispatcher supplied to the constructor. The dispatcher must run the action before its
+  returned task completes and let the action's exceptions propagate, but the task itself may complete
+  asynchronously.
+- **The dispatcher must serialize view access.** The dispatcher can be entered from arbitrary threads, concurrently, and again from inside a dispatched action, so a dispatcher whose views are not thread-safe or reentrancy-safe must serialize or queue the actions itself.
+- **The document authority owns the draft.** A view owns only the interactive buffer it renders and its relationship members (`DocumentKey`, `HasPendingEdits`, `HasConflict`), and it publishes edits by raising `ApplyRequested`.
+- **Blocking is per operation.** The document-destroying operations and a host replacement report `Blocked` while a view holds state the operation would lose; the recovery operations ignore a prior synchronization failure so they can be retried; the identity-only operations never block on view state.
+- **A file or directory delete closes and detaches the views it captured.**
+  A view that implements `IWorkspaceDocumentDeleteLeaseView` gets a barrier around a delete or directory move,
+  and closing a view must be idempotent.
+- **A language server gets one copy of a document however many views show it.** `WorkspaceDocumentSynchronizer`
+  opens a document on its target when the first view attaches and closes it when the last view detaches, so the
+  host never calls the provider's document members itself.
+
+The [workspace views guide](https://github.com/Nickelony/LanguageServer/blob/main/docs/WorkspaceViewsGuide.md)
+owns implementing a view, the dispatcher, the result shape, the blocking policy, delete leases,
+identity changes, reuse and closure, reading documents, applying a language-server edit and mirroring documents
+to a language server. The [workspace
+guide](https://github.com/Nickelony/LanguageServer/blob/main/docs/WorkspaceGuide.md) owns the document
+authority itself.
 
 ## License
 

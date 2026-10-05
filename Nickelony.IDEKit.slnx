@@ -1,0 +1,123 @@
+<Solution>
+	<Folder Name="/src/" />
+
+	<Folder Name="/src/IDEKit/">
+		<Project Path="src/IDEKit/Nickelony.IDEKit.Core/Nickelony.IDEKit.Core.csproj" />
+		<Project Path="src/IDEKit/Nickelony.IDEKit.LanguageFeatures/Nickelony.IDEKit.LanguageFeatures.csproj" />
+		<Project Path="src/IDEKit/Nickelony.IDEKit.LanguageFeatures.Controllers/Nickelony.IDEKit.LanguageFeatures.Controllers.csproj" />
+		<Project Path="src/IDEKit/Nickelony.IDEKit.JsonSchema/Nickelony.IDEKit.JsonSchema.csproj" />
+		<Project Path="src/IDEKit/Nickelony.IDEKit.Markdown/Nickelony.IDEKit.Markdown.csproj" />
+		<Project Path="src/IDEKit/Nickelony.IDEKit.TextMate/Nickelony.IDEKit.TextMate.csproj" />
+		<Project Path="src/IDEKit/Nickelony.IDEKit.FileWatching/Nickelony.IDEKit.FileWatching.csproj" />
+		<Project Path="src/IDEKit/Nickelony.IDEKit.Processes/Nickelony.IDEKit.Processes.csproj" />
+		<Project Path="src/IDEKit/Nickelony.IDEKit.Workspace/Nickelony.IDEKit.Workspace.csproj" />
+		<Project Path="src/IDEKit/Nickelony.IDEKit.Workspace.QuickPick/Nickelony.IDEKit.Workspace.QuickPick.csproj" />
+		<Project Path="src/IDEKit/Nickelony.IDEKit.Workspace.Views/Nickelony.IDEKit.Workspace.Views.csproj" />
+	</Folder>
+
+	<Folder Name="/src/IDEKit/AvalonEdit/">
+		<Project Path="src/IDEKit/AvalonEdit/Nickelony.IDEKit.AvalonEdit/Nickelony.IDEKit.AvalonEdit.csproj" />
+		<Project Path="src/IDEKit/AvalonEdit/Nickelony.IDEKit.AvalonEdit.LanguageFeatures/Nickelony.IDEKit.AvalonEdit.LanguageFeatures.csproj" />
+		<Project Path="src/IDEKit/AvalonEdit/Nickelony.IDEKit.AvalonEdit.Markdown/Nickelony.IDEKit.AvalonEdit.Markdown.csproj" />
+		<Project Path="src/IDEKit/AvalonEdit/Nickelony.IDEKit.AvalonEdit.TextMate/Nickelony.IDEKit.AvalonEdit.TextMate.csproj" />
+	</Folder>
+
+	<Folder Name="/src/IDEKit/AvaloniaEdit/">
+		<Project Path="src/IDEKit/AvaloniaEdit/Nickelony.IDEKit.AvaloniaEdit/Nickelony.IDEKit.AvaloniaEdit.csproj" />
+		<Project Path="src/IDEKit/AvaloniaEdit/Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures/Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.csproj" />
+		<Project Path="src/IDEKit/AvaloniaEdit/Nickelony.IDEKit.AvaloniaEdit.Markdown/Nickelony.IDEKit.AvaloniaEdit.Markdown.csproj" />
+		<Project Path="src/IDEKit/AvaloniaEdit/Nickelony.IDEKit.AvaloniaEdit.TextMate/Nickelony.IDEKit.AvaloniaEdit.TextMate.csproj" />
+	</Folder>
+
+	<Folder Name="/src/KeyBindings/">
+		<Project Path="src/KeyBindings/Nickelony.KeyBindings/Nickelony.KeyBindings.csproj" />
+		<Project Path="src/KeyBindings/Nickelony.KeyBindings.Avalonia/Nickelony.KeyBindings.Avalonia.csproj" />
+		<Project Path="src/KeyBindings/Nickelony.KeyBindings.Wpf/Nickelony.KeyBindings.Wpf.csproj" />
+	</Folder>
+
+	<Folder Name="/src/LanguageServer/">
+		<Project Path="src/LanguageServer/Nickelony.LanguageServer.Provider.Abstractions/Nickelony.LanguageServer.Provider.Abstractions.csproj" />
+		<Project Path="src/LanguageServer/Nickelony.LanguageServer.Client/Nickelony.LanguageServer.Client.csproj" />
+		<Project Path="src/LanguageServer/Nickelony.LanguageServer.Provider/Nickelony.LanguageServer.Provider.csproj" />
+		<Project Path="src/LanguageServer/Nickelony.LanguageServer.Lua/Nickelony.LanguageServer.Lua.csproj" />
+		<Project Path="src/LanguageServer/Nickelony.LanguageServer.Roslyn/Nickelony.LanguageServer.Roslyn.csproj" />
+	</Folder>
+
+	<Folder Name="/src/Matching/">
+		<Project Path="src/Matching/Nickelony.Matching/Nickelony.Matching.csproj" />
+	</Folder>
+
+	<Folder Name="/src/QuickPick/">
+		<Project Path="src/QuickPick/Nickelony.QuickPick/Nickelony.QuickPick.csproj" />
+		<Project Path="src/QuickPick/Nickelony.QuickPick.Avalonia/Nickelony.QuickPick.Avalonia.csproj" />
+		<Project Path="src/QuickPick/Nickelony.QuickPick.Wpf/Nickelony.QuickPick.Wpf.csproj" />
+	</Folder>
+
+	<Folder Name="/samples/">
+		<Project Path="samples/Nickelony.Samples.Avalonia/Nickelony.Samples.Avalonia.csproj" />
+		<Project Path="samples/Nickelony.Samples.Wpf/Nickelony.Samples.Wpf.csproj" />
+	</Folder>
+
+	<Folder Name="/tests/">
+		<Project Path="tests/Nickelony.Repository.Tests/Nickelony.Repository.Tests.csproj" />
+	</Folder>
+
+	<Folder Name="/tests/IDEKit/">
+		<Project Path="tests/IDEKit/Nickelony.IDEKit.Core.Tests/Nickelony.IDEKit.Core.Tests.csproj" />
+		<Project Path="tests/IDEKit/Nickelony.IDEKit.LanguageFeatures.Tests/Nickelony.IDEKit.LanguageFeatures.Tests.csproj" />
+		<Project Path="tests/IDEKit/Nickelony.IDEKit.LanguageFeatures.Controllers.Tests/Nickelony.IDEKit.LanguageFeatures.Controllers.Tests.csproj" />
+		<Project Path="tests/IDEKit/Nickelony.IDEKit.JsonSchema.Tests/Nickelony.IDEKit.JsonSchema.Tests.csproj" />
+		<Project Path="tests/IDEKit/Nickelony.IDEKit.Markdown.Tests/Nickelony.IDEKit.Markdown.Tests.csproj" />
+		<Project Path="tests/IDEKit/Nickelony.IDEKit.TextMate.Tests/Nickelony.IDEKit.TextMate.Tests.csproj" />
+		<Project Path="tests/IDEKit/Nickelony.IDEKit.FileWatching.Tests/Nickelony.IDEKit.FileWatching.Tests.csproj" />
+		<Project Path="tests/IDEKit/Nickelony.IDEKit.Processes.Tests/Nickelony.IDEKit.Processes.Tests.csproj" />
+		<Project Path="tests/IDEKit/Nickelony.IDEKit.Workspace.Tests/Nickelony.IDEKit.Workspace.Tests.csproj" />
+		<Project Path="tests/IDEKit/Nickelony.IDEKit.Workspace.QuickPick.Tests/Nickelony.IDEKit.Workspace.QuickPick.Tests.csproj" />
+		<Project Path="tests/IDEKit/Nickelony.IDEKit.Workspace.Views.Tests/Nickelony.IDEKit.Workspace.Views.Tests.csproj" />
+	</Folder>
+
+	<Folder Name="/tests/IDEKit/AvalonEdit/">
+		<Project Path="tests/IDEKit/AvalonEdit/Nickelony.IDEKit.AvalonEdit.Tests/Nickelony.IDEKit.AvalonEdit.Tests.csproj" />
+		<Project Path="tests/IDEKit/AvalonEdit/Nickelony.IDEKit.AvalonEdit.LanguageFeatures.Tests/Nickelony.IDEKit.AvalonEdit.LanguageFeatures.Tests.csproj" />
+		<Project Path="tests/IDEKit/AvalonEdit/Nickelony.IDEKit.AvalonEdit.Markdown.Tests/Nickelony.IDEKit.AvalonEdit.Markdown.Tests.csproj" />
+		<Project Path="tests/IDEKit/AvalonEdit/Nickelony.IDEKit.AvalonEdit.TextMate.Tests/Nickelony.IDEKit.AvalonEdit.TextMate.Tests.csproj" />
+	</Folder>
+
+	<Folder Name="/tests/IDEKit/AvaloniaEdit/">
+		<Project Path="tests/IDEKit/AvaloniaEdit/Nickelony.IDEKit.AvaloniaEdit.Tests/Nickelony.IDEKit.AvaloniaEdit.Tests.csproj" />
+		<Project Path="tests/IDEKit/AvaloniaEdit/Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Tests/Nickelony.IDEKit.AvaloniaEdit.LanguageFeatures.Tests.csproj" />
+		<Project Path="tests/IDEKit/AvaloniaEdit/Nickelony.IDEKit.AvaloniaEdit.Markdown.Tests/Nickelony.IDEKit.AvaloniaEdit.Markdown.Tests.csproj" />
+		<Project Path="tests/IDEKit/AvaloniaEdit/Nickelony.IDEKit.AvaloniaEdit.TextMate.Tests/Nickelony.IDEKit.AvaloniaEdit.TextMate.Tests.csproj" />
+	</Folder>
+
+	<Folder Name="/tests/KeyBindings/">
+		<Project Path="tests/KeyBindings/Nickelony.KeyBindings.Avalonia.Tests/Nickelony.KeyBindings.Avalonia.Tests.csproj" />
+		<Project Path="tests/KeyBindings/Nickelony.KeyBindings.Tests/Nickelony.KeyBindings.Tests.csproj" />
+		<Project Path="tests/KeyBindings/Nickelony.KeyBindings.Wpf.Tests/Nickelony.KeyBindings.Wpf.Tests.csproj" />
+	</Folder>
+
+	<Folder Name="/tests/Samples/">
+		<Project Path="tests/Samples/Nickelony.Samples.Avalonia.Tests/Nickelony.Samples.Avalonia.Tests.csproj" />
+		<Project Path="tests/Samples/Nickelony.Samples.Wpf.Tests/Nickelony.Samples.Wpf.Tests.csproj" />
+	</Folder>
+
+	<Folder Name="/tests/LanguageServer/">
+		<Project Path="tests/LanguageServer/Nickelony.LanguageServer.Provider.Abstractions.Tests/Nickelony.LanguageServer.Provider.Abstractions.Tests.csproj" />
+		<Project Path="tests/LanguageServer/Nickelony.LanguageServer.Client.Tests/Nickelony.LanguageServer.Client.Tests.csproj" />
+		<Project Path="tests/LanguageServer/Nickelony.LanguageServer.Client.Tests.FakeServer/Nickelony.LanguageServer.Client.Tests.FakeServer.csproj" />
+		<Project Path="tests/LanguageServer/Nickelony.LanguageServer.Lua.Tests/Nickelony.LanguageServer.Lua.Tests.csproj" />
+		<Project Path="tests/LanguageServer/Nickelony.LanguageServer.Provider.Tests/Nickelony.LanguageServer.Provider.Tests.csproj" />
+		<Project Path="tests/LanguageServer/Nickelony.LanguageServer.Roslyn.Tests/Nickelony.LanguageServer.Roslyn.Tests.csproj" />
+	</Folder>
+
+	<Folder Name="/tests/Matching/">
+		<Project Path="tests/Matching/Nickelony.Matching.Tests/Nickelony.Matching.Tests.csproj" />
+	</Folder>
+
+	<Folder Name="/tests/QuickPick/">
+		<Project Path="tests/QuickPick/Nickelony.QuickPick.Avalonia.Tests/Nickelony.QuickPick.Avalonia.Tests.csproj" />
+		<Project Path="tests/QuickPick/Nickelony.QuickPick.CommandsOnly.Tests/Nickelony.QuickPick.CommandsOnly.Tests.csproj" />
+		<Project Path="tests/QuickPick/Nickelony.QuickPick.Tests/Nickelony.QuickPick.Tests.csproj" />
+		<Project Path="tests/QuickPick/Nickelony.QuickPick.Wpf.Tests/Nickelony.QuickPick.Wpf.Tests.csproj" />
+	</Folder>
+</Solution>

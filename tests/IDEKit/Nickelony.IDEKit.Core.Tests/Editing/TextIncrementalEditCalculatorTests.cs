@@ -172,24 +172,17 @@ public sealed class TextIncrementalEditCalculatorTests
 	public void Compute_ChangeAppliedThroughTheEditPipeline_ReproducesTheNewText(string oldText, string newText)
 	{
 		// Hosts mix the incremental calculator with the batch edit pipeline: the computed change is
-		// copied into a TextEditInput and applied as a prepared batch. The round trip must reproduce
+		// copied into a batch and applied as a prepared batch. The round trip must reproduce
 		// the new text exactly, including the CRLF and surrogate widenings.
 		TextIncrementalEdit change = TextIncrementalEditCalculator.Compute(oldText, newText);
-		TextEditPreparationResult result = TextEditKernel.Prepare(
-			new StringTextSnapshot(oldText),
-			[new TextEditInput(change.Range, change.NewText)]);
+		TextEditPreparationResult result = TextEditKernel.Prepare(new StringTextSnapshot(oldText), [change]);
 
-		Assert.IsTrue(result.IsValid);
+		Assert.IsTrue(result.Succeeded);
 
 		string applied = oldText;
 
 		foreach (TextEditOperation operation in result.Edits.Operations)
-		{
-			applied = string.Concat(
-				applied.AsSpan(0, operation.StartOffset),
-				operation.NewText,
-				applied.AsSpan(operation.EndOffset));
-		}
+			applied = string.Concat(applied.AsSpan(0, operation.Range.Offset), operation.NewText, applied.AsSpan(operation.Range.EndOffset));
 
 		Assert.AreEqual(newText, applied);
 	}

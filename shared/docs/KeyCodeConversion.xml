@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+	<members>
+		<member name="KeyCodeConversion.Remarks">
+			<para>
+			  The conversion is an explicit table keyed by the toolkit's <see cref="Key" /> value, so alias members that share a value,
+			  such as <c>Enter</c> and <c>Return</c>, resolve to one <see cref="KeyCode" />.
+			</para>
+			<para>
+			  Keys outside the package's key model have no <see cref="KeyCode" /> member and convert to <see langword="null" />.
+			  They include modifier keys, lock keys, processing pseudo-keys such as <c>ImeProcessed</c>, and the double-byte IME keys
+			  such as <c>DbeHiragana</c>.
+			</para>
+		</member>
+	</members>
+</doc>

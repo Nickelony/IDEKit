@@ -4,18 +4,21 @@ namespace Nickelony.IDEKit.Core.Tests;
 public sealed class IdentifierOperationsTokenSpanTests
 {
 	// Delimiter policy: delimiters and line terminators end a token.
-	private static readonly IdentifierCharacterPolicy s_delimiterPolicy = IdentifierCharacterPolicy.Create(
-		static c => c is not (',' or '=' or ';' or '+' or '-' or '*' or '/' or '(' or ')' or '\r' or '\n'));
+	private static readonly IdentifierCharacterPolicy s_delimiterPolicy = IdentifierCharacterPolicy.Create(static c =>
+		c is not (',' or '=' or ';' or '+' or '-' or '*' or '/' or '(' or ')' or '\r' or '\n')
+	);
 
 	// Structural-delimiter policy: whitespace, structural delimiters, and ':' end a token,
 	// while double quotes remain part of the token.
-	private static readonly IdentifierCharacterPolicy s_structuralDelimiterPolicy = IdentifierCharacterPolicy.Create(
-		static c => c is not (' ' or ',' or '{' or '}' or '[' or ']' or ':' or '\t' or '\n' or '\r'));
+	private static readonly IdentifierCharacterPolicy s_structuralDelimiterPolicy = IdentifierCharacterPolicy.Create(static c =>
+		c is not (' ' or ',' or '{' or '}' or '[' or ']' or ':' or '\t' or '\n' or '\r')
+	);
 
-	// A narrower start rule: digits and underscores may continue a token but not start one.
+	// A narrower start rule: digits may continue a token but not start one.
 	private static readonly IdentifierCharacterPolicy s_continuationPolicy = IdentifierCharacterPolicy.Create(
 		static c => char.IsLetterOrDigit(c) || c == '_',
-		static c => char.IsLetter(c) || c == '_');
+		static c => char.IsLetter(c) || c == '_'
+	);
 
 	[TestMethod]
 	public void FindTokenSpan_DelimiterPolicy_KeyAtLineStart()
@@ -208,7 +211,12 @@ public sealed class IdentifierOperationsTokenSpanTests
 	{
 		var snapshot = new StringTextSnapshot("alpha beta");
 
-		TextRange? range = IdentifierOperations.FindTokenSpan(snapshot, 5, s_structuralDelimiterPolicy, IdentifierSpanMode.EndingAtOffset);
+		TextRange? range = IdentifierOperations.FindTokenSpan(
+			snapshot,
+			offset: 5,
+			policy: s_structuralDelimiterPolicy,
+			mode: IdentifierSpanMode.EndingAtOffset
+		);
 
 		Assert.AreEqual(new TextRange(0, 5), range);
 	}
@@ -218,7 +226,12 @@ public sealed class IdentifierOperationsTokenSpanTests
 	{
 		var snapshot = new StringTextSnapshot("alpha beta");
 
-		TextRange? range = IdentifierOperations.FindTokenSpan(snapshot, snapshot.TextLength, s_structuralDelimiterPolicy, IdentifierSpanMode.EndingAtOffset);
+		TextRange? range = IdentifierOperations.FindTokenSpan(
+			snapshot,
+			offset: snapshot.TextLength,
+			policy: s_structuralDelimiterPolicy,
+			mode: IdentifierSpanMode.EndingAtOffset
+		);
 
 		Assert.AreEqual(new TextRange(6, 4), range);
 	}
@@ -228,7 +241,12 @@ public sealed class IdentifierOperationsTokenSpanTests
 	{
 		var snapshot = new StringTextSnapshot("alpha beta");
 
-		TextRange? range = IdentifierOperations.FindTokenSpan(snapshot, 0, s_structuralDelimiterPolicy, IdentifierSpanMode.EndingAtOffset);
+		TextRange? range = IdentifierOperations.FindTokenSpan(
+			snapshot,
+			offset: 0,
+			policy: s_structuralDelimiterPolicy,
+			mode: IdentifierSpanMode.EndingAtOffset
+		);
 
 		Assert.IsNull(range);
 	}
@@ -238,7 +256,12 @@ public sealed class IdentifierOperationsTokenSpanTests
 	{
 		var snapshot = new StringTextSnapshot("{\"");
 
-		TextRange? range = IdentifierOperations.FindTokenSpan(snapshot, snapshot.TextLength, s_structuralDelimiterPolicy, IdentifierSpanMode.EndingAtOffset);
+		TextRange? range = IdentifierOperations.FindTokenSpan(
+			snapshot,
+			offset: snapshot.TextLength,
+			policy: s_structuralDelimiterPolicy,
+			mode: IdentifierSpanMode.EndingAtOffset
+		);
 
 		Assert.AreEqual(new TextRange(1, 1), range);
 	}
@@ -248,7 +271,12 @@ public sealed class IdentifierOperationsTokenSpanTests
 	{
 		var snapshot = new StringTextSnapshot("{\"abc");
 
-		TextRange? range = IdentifierOperations.FindTokenSpan(snapshot, 4, s_structuralDelimiterPolicy, IdentifierSpanMode.EndingAtOffset);
+		TextRange? range = IdentifierOperations.FindTokenSpan(
+			snapshot,
+			offset: 4,
+			policy: s_structuralDelimiterPolicy,
+			mode: IdentifierSpanMode.EndingAtOffset
+		);
 
 		Assert.AreEqual(new TextRange(1, 3), range);
 	}
@@ -258,7 +286,12 @@ public sealed class IdentifierOperationsTokenSpanTests
 	{
 		var snapshot = new StringTextSnapshot("{\"key\": \"va");
 
-		TextRange? range = IdentifierOperations.FindTokenSpan(snapshot, snapshot.TextLength, s_structuralDelimiterPolicy, IdentifierSpanMode.EndingAtOffset);
+		TextRange? range = IdentifierOperations.FindTokenSpan(
+			snapshot,
+			offset: snapshot.TextLength,
+			policy: s_structuralDelimiterPolicy,
+			mode: IdentifierSpanMode.EndingAtOffset
+		);
 
 		Assert.AreEqual(new TextRange(8, 3), range);
 	}
@@ -319,7 +352,12 @@ public sealed class IdentifierOperationsTokenSpanTests
 		// The caret-adjacent character cannot start a token, but it is a continuation character.
 		var snapshot = new StringTextSnapshot("value = ab1");
 
-		TextRange? range = IdentifierOperations.FindTokenSpan(snapshot, snapshot.TextLength, s_continuationPolicy, IdentifierSpanMode.EndingAtOffset);
+		TextRange? range = IdentifierOperations.FindTokenSpan(
+			snapshot,
+			offset: snapshot.TextLength,
+			policy: s_continuationPolicy,
+			mode: IdentifierSpanMode.EndingAtOffset
+		);
 
 		Assert.AreEqual(new TextRange(8, 3), range);
 	}
@@ -329,7 +367,12 @@ public sealed class IdentifierOperationsTokenSpanTests
 	{
 		var snapshot = new StringTextSnapshot("42");
 
-		TextRange? range = IdentifierOperations.FindTokenSpan(snapshot, snapshot.TextLength, s_continuationPolicy, IdentifierSpanMode.EndingAtOffset);
+		TextRange? range = IdentifierOperations.FindTokenSpan(
+			snapshot,
+			offset: snapshot.TextLength,
+			policy: s_continuationPolicy,
+			mode: IdentifierSpanMode.EndingAtOffset
+		);
 
 		Assert.AreEqual(new TextRange(0, 2), range);
 	}
@@ -340,8 +383,57 @@ public sealed class IdentifierOperationsTokenSpanTests
 		// The word being typed must be adjacent to the caret.
 		var snapshot = new StringTextSnapshot("ab1 ");
 
-		TextRange? range = IdentifierOperations.FindTokenSpan(snapshot, snapshot.TextLength, s_continuationPolicy, IdentifierSpanMode.EndingAtOffset);
+		TextRange? range = IdentifierOperations.FindTokenSpan(
+			snapshot,
+			offset: snapshot.TextLength,
+			policy: s_continuationPolicy,
+			mode: IdentifierSpanMode.EndingAtOffset
+		);
 
 		Assert.IsNull(range);
+	}
+
+	[TestMethod]
+	public void FindTokenSpan_AtOffset_ProbeInsideAToken_ResolvesTheWholeRun() => Assert.AreEqual(new TextRange(4, 3), FindAtOffset("one two", 5));
+
+	[TestMethod]
+	public void FindTokenSpan_AtOffset_ProbeOnASeparator_ReportsNoTokenWhereContainingPrefersThePrecedingOne()
+	{
+		var snapshot = new StringTextSnapshot("one two");
+
+		Assert.IsNull(FindAtOffset("one two", 3));
+		Assert.AreEqual(new TextRange(0, 3), IdentifierOperations.FindTokenSpan(snapshot, 3, IdentifierCharacterPolicy.Default));
+	}
+
+	[TestMethod]
+	public void FindTokenSpan_AtOffset_OffsetAtTheEnd_ProbesTheLastCharacter() => Assert.AreEqual(new TextRange(4, 3), FindAtOffset("one two", 7));
+
+	[TestMethod]
+	public void FindTokenSpan_AtOffset_OffsetAtTheEndAfterASeparator_ReportsNoToken() => Assert.IsNull(FindAtOffset("one two ", 8));
+
+	[TestMethod]
+	public void FindTokenSpan_AtOffset_RunThatStartsWithAContinuationCharacter_ResolvesTheWholeRun() =>
+		Assert.AreEqual(new TextRange(0, 6), FindAtOffset("123abc", 0, s_continuationPolicy));
+
+	[TestMethod]
+	public void FindTokenSpan_AtOffset_OffsetOutsideTheText_ClampsIntoIt()
+	{
+		Assert.AreEqual(new TextRange(0, 5), FindAtOffset("alpha beta", -10));
+		Assert.AreEqual(new TextRange(6, 4), FindAtOffset("alpha beta", 1000));
+	}
+
+	[TestMethod]
+	public void FindTokenSpan_AtOffset_EmptyText_ReportsNoToken() => Assert.IsNull(FindAtOffset(string.Empty, 0));
+
+	private static TextRange? FindAtOffset(string text, int offset, IdentifierCharacterPolicy? policy = null)
+	{
+		var snapshot = new StringTextSnapshot(text);
+
+		return IdentifierOperations.FindTokenSpan(
+			snapshot,
+			offset,
+			policy: policy ?? IdentifierCharacterPolicy.Default,
+			mode: IdentifierSpanMode.AtOffset
+		);
 	}
 }

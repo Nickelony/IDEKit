@@ -1,3 +1,4 @@
+using Nickelony.IDEKit.Core.Editing;
 #if AVALONIAEDIT
 using AvaloniaEdit;
 using AvaloniaEdit.Document;
@@ -5,52 +6,34 @@ using AvaloniaEdit.Document;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Document;
 #endif
-using Nickelony.IDEKit.Core.Editing;
-using Nickelony.IDEKit.Core.Text;
 
 #if AVALONIAEDIT
+
 namespace Nickelony.IDEKit.AvaloniaEdit.Editing;
+
 #else
+
 namespace Nickelony.IDEKit.AvalonEdit.Editing;
+
 #endif
 
-/// <summary>
-/// Applies prepared text-edit batches to the document of the editor's <see cref="TextEditor"/>.
-/// </summary>
+/// <summary>Applies prepared text-edit batches to the document of the editor's <see cref="TextEditor"/>.</summary>
 /// <remarks>
-/// <para>
-/// A batch that contains at least one operation that changes text is applied inside one document update
-/// and one undo step; a batch whose operations all change nothing is skipped entirely.
-/// The per-change <see cref="TextDocument.Changed"/> event is raised once per operation, while the
-/// aggregate events (<see cref="TextDocument.TextChanged"/> and property changes) are raised once when
-/// the update ends.
-/// </para>
-/// <para>
-/// The batch is a <see cref="PreparedTextEdits"/> instance, so it is validated when it is
-/// constructed and cannot silently corrupt the document through a wrong order or a
-/// <see langword="null"/> replacement text. A document-level failure (for example an out-of-range
-/// offset) still surfaces while the batch is applied, and earlier operations may already be
-/// applied.
-/// </para>
-/// <para>
-/// The target tracks the editor's current document through <see cref="Version"/> without subscribing
-/// to its events: the stamp compares the document's version object, which the editor replaces on
-/// every change. The target holds no event subscriptions, so it never keeps the editor or its
-/// document alive.
-/// </para>
+/// A batch with at least one text-changing operation is applied as one replacement
+/// of the span from its lowest to its highest changed offset, with an offset change map that holds one entry per operation, so the batch is one undo
+/// step and raises <see cref="TextDocument.Changed"/> once, while anchors, the caret and the selection still move per operation. An all-no-op batch
+/// is skipped entirely. The batch is a <see cref="PreparedTextEdits"/> instance, so it is validated on construction, and a document-level
+/// failure (for example an out-of-range offset) surfaces before the document changes. The target tracks the editor's current document
+/// through <see cref="CaptureVersion"/> without subscribing to its events, so it adds no event handler to the editor or its document.
 /// </remarks>
-public sealed class TextEditorEditTarget : IVersionedTextEditTarget
+public sealed class TextEditorEditTarget : ITextEditVersionTarget
 {
 	private readonly TextEditor _editor;
 
 	private TextDocument? _trackedDocument;
 	private ITextSourceVersion? _trackedVersion;
-	private bool _initialized;
-	private long _version;
+	private bool _isInitialized;
 
-	/// <summary>
-	/// Initializes a new instance of the <see cref="TextEditorEditTarget"/> class.
-	/// </summary>
 	/// <param name="editor">The editor whose document this target updates.</param>
 	/// <exception cref="ArgumentNullException"><paramref name="editor"/> is <see langword="null"/>.</exception>
 	public TextEditorEditTarget(TextEditor editor)
@@ -61,46 +44,43 @@ public sealed class TextEditorEditTarget : IVersionedTextEditTarget
 
 	/// <inheritdoc/>
 	/// <remarks>
-	/// The editor's current text; an editor without a document has no text, so the read reports an
-	/// empty string.
+	/// The editor's current text; an editor without a document has no text, so the read reports an empty string.
 	/// </remarks>
 	public string Text => _editor.Document?.Text ?? string.Empty;
 
 	/// <inheritdoc/>
 	/// <remarks>
-	/// Each read observes the editor's current document and advances the stamp when it differs from the
-	/// last observed state: an edit made directly, through this target, through another target, or by an
-	/// undo, and a document swap - including clearing the document - all advance it. The first read only
-	/// initializes the state, so the initial stamp is zero. The read never throws, so a target whose
-	/// editor has no document can still be compared. Like every other access to the target, the read
-	/// runs on the editor's thread.
+	/// A side-effect-free read of the stamp the last observation recorded. Because this target
+	/// observes the editor only when <see cref="CaptureVersion"/> or an apply runs, a direct edit between two reads of this member
+	/// is not reflected here; call <see cref="CaptureVersion"/> to observe it.
 	/// </remarks>
-	public long Version
+	public long Version { get; private set; }
+
+	/// <inheritdoc/>
+	/// <remarks>
+	/// Observes the editor's current document and advances the stamp when it differs from the last observed state:
+	/// a direct edit, an edit through any target, an undo, or a document swap (including clearing the document) all advance it, while the first
+	/// call only initializes the state, leaving the initial stamp at zero. The observation never throws, so a target whose editor has no document
+	/// can still be compared, and it runs on the editor's thread like every other access to the target.
+	/// </remarks>
+	public long CaptureVersion()
 	{
-		get
-		{
-			ObserveDocumentState();
-			return _version;
-		}
+		ObserveDocumentState();
+		return Version;
 	}
 
-	/// <summary>
-	/// Observes the editor's current document and advances the stamp when its state differs from the
-	/// last observed one. The first observation initializes the state without advancing.
-	/// </summary>
+	/// <summary>Observes the editor's current document and advances the stamp when its state differs from the last observed one.</summary>
 	/// <remarks>
-	/// The stamp compares the document's <see cref="TextDocument.Version"/> object by reference:
-	/// The editor replaces the version object on every change, so any edit is observed without a change
-	/// subscription. A different current document (or no document) advances the stamp as well, because a
-	/// batch prepared against the previous document is no longer valid.
+	/// The stamp advances on any edit, undo, document swap, or different current document (or no document), because a batch prepared
+	/// against the earlier document does not apply to the current one.
 	/// </remarks>
 	private void ObserveDocumentState()
 	{
 		TextDocument? document = _editor.Document;
 
-		if (!_initialized)
+		if (!_isInitialized)
 		{
-			_initialized = true;
+			_isInitialized = true;
 			_trackedDocument = document;
 			_trackedVersion = document?.Version;
 			return;
@@ -110,45 +90,39 @@ public sealed class TextEditorEditTarget : IVersionedTextEditTarget
 		{
 			_trackedDocument = document;
 			_trackedVersion = document?.Version;
-			_version++;
+			Version++;
 			return;
 		}
 
 		if (document is not null && !ReferenceEquals(_trackedVersion, document.Version))
 		{
 			_trackedVersion = document.Version;
-			_version++;
+			Version++;
 		}
 	}
 
 	/// <inheritdoc/>
-	/// <remarks>
-	/// Operations that would change nothing (<see cref="TextEditOperation.IsNoOp"/>) are skipped, so an
-	/// all-no-op batch changes neither the document nor its undo stack and needs no document. Applying an
-	/// applicable batch advances the stamp even when the target was never observed before, so the
-	/// documented capture-compare workflow sees the edit. A document-level failure (for example an
-	/// out-of-range offset) still surfaces while the batch is applied, and earlier operations may already
-	/// be applied; the stamp advances for those changes as well.
-	/// </remarks>
 	/// <exception cref="InvalidOperationException">The editor has no document assigned.</exception>
+	/// <remarks>
+	/// Operations that would change nothing (<see cref="TextEditOperation.IsNoOp"/>) are skipped,
+	/// so an all-no-op batch changes neither the document nor its undo stack and needs no document. Applying an applicable batch advances
+	/// the stamp even when the target was never observed before, so the documented capture-compare workflow sees the edit. A document-level failure
+	/// (for example an out-of-range offset) surfaces before the document changes, because the batch is one replacement.
+	/// </remarks>
 	public void Apply(PreparedTextEdits edits)
 	{
 		ArgumentNullException.ThrowIfNull(edits);
 
-		if (!HasApplicableOperation(edits))
+		var applicable = ApplicableOperations.Find(edits);
+
+		if (applicable.Count == 0)
 			return;
 
 		TextDocument document = BeginApply();
 
 		try
 		{
-			foreach (TextEditOperation operation in edits.Operations)
-			{
-				if (operation.IsNoOp)
-					continue;
-
-				document.Replace(operation.StartOffset, operation.Length, operation.NewText);
-			}
+			ReplaceBatch(document, edits, applicable);
 		}
 		finally
 		{
@@ -156,24 +130,63 @@ public sealed class TextEditorEditTarget : IVersionedTextEditTarget
 		}
 	}
 
-	/// <summary>
-	/// Applies a single operation to the editor's document without the <see cref="PreparedTextEdits"/>
-	/// carrier that <see cref="Apply(PreparedTextEdits)"/> takes.
-	/// </summary>
+	/// <summary>Replaces the span that the batch changes in one document change, mapping anchors through one entry per operation.</summary>
+	/// <param name="document">The document to change.</param>
+	/// <param name="edits">The batch to apply.</param>
+	/// <param name="applicable">The operations of the batch that change text, with the span they cover and their offset change map.</param>
 	/// <remarks>
-	/// This is the single-operation fast path for the editing hot paths (typing, auto-closing, and
-	/// backspace), where the caller always has exactly one operation and no batch to map. It applies the
-	/// operation under the same document update, undo grouping, no-op skip, and version-stamp policy as
-	/// <see cref="Apply(PreparedTextEdits)"/>. The caller owns the operation and no longer needs it after
-	/// the call.
+	/// The operations run from the highest offset to the lowest, so each map entry names its operation's offset in the unchanged text,
+	/// and the replacement text is built in one pass over the unchanged text between the operations. A single operation is replaced directly.
 	/// </remarks>
+	private static void ReplaceBatch(TextDocument document, PreparedTextEdits edits, ApplicableOperations applicable)
+	{
+		if (applicable.Map is not { } map)
+		{
+			// Without a map the batch holds exactly one operation that changes text.
+			TextEditOperation only = applicable.First!;
+
+			document.Replace(only.Range.Offset, only.Range.Length, only.NewText);
+			return;
+		}
+
+		var replacement = new System.Text.StringBuilder();
+
+		int cursor = applicable.SpanStart;
+
+		for (int index = edits.Operations.Count - 1; index >= 0; index--)
+		{
+			TextEditOperation operation = edits.Operations[index];
+
+			if (operation.IsNoOp)
+				continue;
+
+			replacement.Append(document.GetText(cursor, operation.Range.Offset - cursor)).Append(operation.NewText);
+			cursor = operation.Range.EndOffset;
+		}
+
+		replacement.Append(document.GetText(cursor, applicable.SpanEnd - cursor));
+
+		document.Replace(
+			offset: applicable.SpanStart,
+			length: applicable.SpanEnd - applicable.SpanStart,
+			text: replacement.ToString(),
+			offsetChangeMap: map
+		);
+	}
+
+	/// <summary>
+	/// Applies a single operation to the editor's document without the <see cref="PreparedTextEdits"/> carrier
+	/// that <see cref="Apply(PreparedTextEdits)"/> takes.
+	/// </summary>
 	/// <param name="operation">The operation to apply.</param>
-	/// <exception cref="ArgumentNullException"><paramref name="operation"/> is <see langword="null"/>.</exception>
 	/// <exception cref="InvalidOperationException">The editor has no document assigned.</exception>
+	/// <remarks>
+	/// This is the single-operation fast path for the editing hot paths (typing, auto-closing, and backspace), where the caller
+	/// always has exactly one operation and no batch to map. It applies the operation under the same document update, undo grouping, no-op skip,
+	/// and version-stamp policy as <see cref="Apply(PreparedTextEdits)"/>. The caller owns the operation and may discard it after the call.
+	/// </remarks>
 	internal void ApplySingle(TextEditOperation operation)
 	{
-		ArgumentNullException.ThrowIfNull(operation);
-
 		if (operation.IsNoOp)
 			return;
 
@@ -181,7 +194,7 @@ public sealed class TextEditorEditTarget : IVersionedTextEditTarget
 
 		try
 		{
-			document.Replace(operation.StartOffset, operation.Length, operation.NewText);
+			document.Replace(operation.Range.Offset, operation.Range.Length, operation.NewText);
 		}
 		finally
 		{
@@ -190,20 +203,18 @@ public sealed class TextEditorEditTarget : IVersionedTextEditTarget
 	}
 
 	/// <summary>
-	/// Begins an apply: resolves the target document, records the pre-edit version, and opens the document
-	/// update, which also groups the changes into one undo step.
+	/// Begins an apply: resolves the target document, records the pre-edit version, and opens the document update, which also groups the changes
+	/// into one undo step.
 	/// </summary>
-	/// <remarks>
-	/// The document is resolved once per apply: a <see cref="TextDocument.Changed"/> handler that swaps the
-	/// editor's document must not leave this document's update open or route later operations to the new
-	/// document.
-	/// </remarks>
 	/// <returns>The document the apply targets.</returns>
 	/// <exception cref="InvalidOperationException">The editor has no document assigned.</exception>
+	/// <remarks>
+	/// The document is resolved once per apply: a <see cref="TextDocument.Changed"/> handler that swaps the editor's document must not leave
+	/// this document's update open or route later operations to the new document.
+	/// </remarks>
 	private TextDocument BeginApply()
 	{
-		TextDocument document = _editor.Document
-			?? throw new InvalidOperationException("The editor has no document assigned.");
+		TextDocument document = TextEditorValidation.RequireDocument(_editor);
 
 		// The pre-edit state is recorded first, so the post-edit observation sees this edit even when
 		// the target was never observed before.
@@ -213,28 +224,20 @@ public sealed class TextEditorEditTarget : IVersionedTextEditTarget
 		return document;
 	}
 
-	/// <summary>
-	/// Ends an apply started by <see cref="BeginApply"/>, closing the document update and observing the
-	/// post-edit state.
-	/// </summary>
-	/// <remarks>
-	/// The observation runs even when an operation failed: earlier operations may already have changed the
-	/// document, and the stamp must follow them.
-	/// </remarks>
+	/// <summary>Ends an apply started by <see cref="BeginApply"/>, closing the document update and observing the post-edit state.</summary>
 	/// <param name="document">The document returned by <see cref="BeginApply"/>.</param>
+	/// <remarks>
+	/// The observation runs even when an operation failed: earlier operations may already have changed the document, and the stamp must follow them.
+	/// </remarks>
 	private void EndApply(TextDocument document)
 	{
 		document.EndUpdate();
 		ObserveDocumentState();
 	}
 
-	/// <summary>
-	/// Determines whether the batch contains at least one operation that changes text.
-	/// </summary>
+	/// <summary>Determines whether the batch contains at least one operation that changes text.</summary>
 	/// <param name="edits">The batch to inspect.</param>
-	/// <returns>
-	/// <see langword="true"/> when at least one operation is not a no-op; otherwise, <see langword="false"/>.
-	/// </returns>
+	/// <returns><see langword="true"/> when at least one operation is not a no-op; otherwise, <see langword="false"/>.</returns>
 	private static bool HasApplicableOperation(PreparedTextEdits edits)
 	{
 		foreach (TextEditOperation operation in edits.Operations)
@@ -248,27 +251,91 @@ public sealed class TextEditorEditTarget : IVersionedTextEditTarget
 
 	/// <inheritdoc/>
 	/// <remarks>
-	/// The version check and the apply run in one call on the editor's thread, which is the only
-	/// thread that may touch the target, so a batch prepared against a stale stamp can never be
-	/// applied. The stamp advances when the document changes, so a successful apply also advances it.
-	/// An editor without a document reports <see langword="false"/> instead of throwing for a batch
-	/// with applicable operations, matching the Try convention of the editing helpers: there is no
-	/// document to apply the batch to. A batch without applicable operations needs no document and
-	/// reports success, mirroring <see cref="Apply"/>.
+	/// The version check and the apply run in one call on the editor's thread, so a batch prepared against a stale stamp can never be applied,
+	/// and a successful apply advances the stamp as the document changes. An editor without a document reports <see langword="false"/> for a batch
+	/// with applicable operations, matching the Try convention of the editing helpers, while a batch without applicable operations needs no document
+	/// and reports success, mirroring <see cref="Apply"/>.
 	/// </remarks>
 	public bool TryApply(PreparedTextEdits edits, long expectedVersion)
 	{
 		ArgumentNullException.ThrowIfNull(edits);
 
-		bool hasApplicableOperation = HasApplicableOperation(edits);
-
 		if (_editor.Document is null)
-			return !hasApplicableOperation;
+			return !HasApplicableOperation(edits);
 
-		if (Version != expectedVersion)
+		if (CaptureVersion() != expectedVersion)
 			return false;
 
 		Apply(edits);
 		return true;
+	}
+
+	/// <summary>The operations of a batch that change text, found in one pass over the batch.</summary>
+	private readonly struct ApplicableOperations
+	{
+		private ApplicableOperations(int count, TextEditOperation? first, int spanStart, int spanEnd, OffsetChangeMap? map)
+		{
+			Count = count;
+			First = first;
+			SpanStart = spanStart;
+			SpanEnd = spanEnd;
+			Map = map;
+		}
+
+		/// <summary>The number of operations that change text.</summary>
+		internal int Count { get; }
+
+		/// <summary>The first operation that changes text, or <see langword="null"/> when none does.</summary>
+		internal TextEditOperation? First { get; }
+
+		/// <summary>The lowest offset that an operation changing text starts at.</summary>
+		internal int SpanStart { get; }
+
+		/// <summary>The highest offset that an operation changing text ends at.</summary>
+		internal int SpanEnd { get; }
+
+		/// <summary>
+		/// The offset change map with one entry per operation that changes text in batch order, or <see langword="null"/> when fewer than two do.
+		/// </summary>
+		internal OffsetChangeMap? Map { get; }
+
+		/// <summary>Finds the operations of a batch that change text.</summary>
+		/// <param name="edits">The batch to inspect.</param>
+		/// <returns>The operations that change text, with the span they cover and their offset change map.</returns>
+		internal static ApplicableOperations Find(PreparedTextEdits edits)
+		{
+			TextEditOperation? first = null;
+			OffsetChangeMap? map = null;
+
+			int count = 0;
+			int spanStart = int.MaxValue;
+			int spanEnd = 0;
+
+			foreach (TextEditOperation operation in edits.Operations)
+			{
+				if (operation.IsNoOp)
+					continue;
+
+				count++;
+				spanStart = Math.Min(spanStart, operation.Range.Offset);
+				spanEnd = Math.Max(spanEnd, operation.Range.EndOffset);
+
+				if (first is null)
+				{
+					first = operation;
+					continue;
+				}
+
+				// A single operation needs no map, so the map starts at the second one and takes the first one in before it.
+				map ??= [CreateEntry(first)];
+
+				map.Add(CreateEntry(operation));
+			}
+
+			return new ApplicableOperations(count, first, spanStart, spanEnd, map);
+		}
+
+		private static OffsetChangeMapEntry CreateEntry(TextEditOperation operation) =>
+			new(operation.Range.Offset, operation.Range.Length, operation.NewText.Length);
 	}
 }

@@ -1,0 +1,56 @@
+name: docs
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'docs/**'
+      - 'src/**'
+      - 'shared/**'
+      - '.config/dotnet-tools.json'
+      - '.github/workflows/docs.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: docs-pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      # The version comes from the tool manifest. `dotnet tool restore` is not used because the manifest also
+      # lists the Stanza markup tool, which the runner's package feeds do not carry.
+      - name: Install DocFX at the manifest version
+        shell: pwsh
+        run: |
+          $version = (Get-Content .config/dotnet-tools.json -Raw | ConvertFrom-Json).tools.docfx.version
+          dotnet tool install --global docfx --version $version
+
+      - name: Build the documentation site
+        run: docfx docs/docfx.json
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/_site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

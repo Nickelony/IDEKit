@@ -1,46 +1,50 @@
 <Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<IsPackable>false</IsPackable>
+		<IsTestProject>true</IsTestProject>
+		<EditorEngine>Avalonia</EditorEngine>
+	</PropertyGroup>
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <IsPackable>false</IsPackable>
-    <RunSettingsFilePath>test.runsettings</RunSettingsFilePath>
-    <IsTestProject>true</IsTestProject>
-    <!-- Selects the AvaloniaEdit branch of the shared editor test source under shared\Editor.Tests. -->
-    <DefineConstants>$(DefineConstants);AVALONIAEDIT</DefineConstants>
-  </PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="coverlet.collector" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" />
+		<PackageReference Include="MSTest.TestAdapter" />
+		<PackageReference Include="MSTest.TestFramework" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="coverlet.collector" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" />
-    <PackageReference Include="MSTest.TestAdapter" />
-    <PackageReference Include="MSTest.TestFramework" />
-    <PackageReference Include="Avalonia.Headless" />
-    <PackageReference Include="Avalonia.Themes.Fluent" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\..\src\IDEKit\AvaloniaEdit\Nickelony.IDEKit.AvaloniaEdit\Nickelony.IDEKit.AvaloniaEdit.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\..\src\IDEKit\AvaloniaEdit\Nickelony.IDEKit.AvaloniaEdit\Nickelony.IDEKit.AvaloniaEdit.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Include="..\..\TestSupport\AvaloniaTestApp.cs" Link="TestSupport\AvaloniaTestApp.cs" />
+		<Compile Include="..\..\..\TestSupport\Avalonia\AvaloniaTestClassAttribute.cs" Link="TestSupport\AvaloniaTestClassAttribute.cs" />
+		<Compile Include="..\..\TestSupport\AvaloniaTestHost.cs" Link="TestSupport\AvaloniaTestHost.cs" />
+		<Compile Include="..\..\..\TestSupport\Avalonia\AvaloniaToolkitTestHost.cs" Link="TestSupport\AvaloniaToolkitTestHost.cs" />
+		<Compile Include="..\..\..\TestSupport\Avalonia\HostWindow.cs" Link="TestSupport\HostWindow.cs" />
+		<Compile Include="..\..\..\TestSupport\Avalonia\AvaloniaTestMethodAttribute.cs" Link="TestSupport\AvaloniaTestMethodAttribute.cs" />
+		<Compile Include="..\..\TestSupport\TestThreads.cs" Link="TestSupport\TestThreads.cs" />
+		<Compile Include="..\..\..\TestSupport\Avalonia\DispatcherTestHelpers.cs" Link="TestSupport\DispatcherTestHelpers.cs" />
+		<Compile Include="..\..\..\TestSupport\Avalonia\TestWindowActivation.cs" Link="TestSupport\TestWindowActivation.cs" />
+		<Compile Include="..\..\TestSupport\FakeEditTarget.cs" Link="TestSupport\FakeEditTarget.cs" />
+		<Compile Include="..\..\TestSupport\RecordingEditTarget.cs" Link="TestSupport\RecordingEditTarget.cs" />
+		<Compile Include="..\..\TestSupport\PreparedBatchFactory.cs" Link="TestSupport\PreparedBatchFactory.cs" />
+		<Compile Include="..\..\TestSupport\RecordingBookmarkStore.cs" Link="TestSupport\RecordingBookmarkStore.cs" />
+		<Compile Include="..\..\TestSupport\TestBitmapRendering.Avalonia.cs" Link="TestSupport\TestBitmapRendering.Avalonia.cs" />
+		<!-- Shared binding tests: one body compiled into the AvalonEdit and AvaloniaEdit suites, with a
+		     per-binding namespace, engine using, and test-class attribute selected by the AVALONIAEDIT define. -->
+		<Compile Include="..\..\Shared\Editor.Tests\**\*.cs" LinkBase="." />
+		<Compile Include="..\..\..\TestSupport\TemporaryDirectory.cs" Link="TestSupport\TemporaryDirectory.cs" />
+		<Compile Include="..\..\..\TestSupport\TestCategories.cs" Link="TestSupport\TestCategories.cs" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Compile Include="..\..\..\..\shared\TestHelpers\AvaloniaTestApp.cs" Link="shared\AvaloniaTestApp.cs" />
-    <Compile Include="..\..\..\..\shared\TestHelpers\AvaloniaTestClassAttribute.cs" Link="shared\AvaloniaTestClassAttribute.cs" />
-    <Compile Include="..\..\..\..\shared\TestHelpers\AvaloniaTestHost.cs" Link="shared\AvaloniaTestHost.cs" />
-    <Compile Include="..\..\..\..\shared\TestHelpers\AvaloniaTestMethodAttribute.cs" Link="shared\AvaloniaTestMethodAttribute.cs" />
-    <Compile Include="..\..\..\..\shared\TestHelpers\ContractEditTarget.Avalonia.cs" Link="shared\ContractEditTarget.Avalonia.cs" />
-    <Compile Include="..\..\..\..\shared\TestHelpers\RecordingEditTarget.cs" Link="shared\RecordingEditTarget.cs" />
-    <Compile Include="..\..\..\..\shared\TestHelpers\TestBitmapRendering.Avalonia.cs" Link="shared\TestBitmapRendering.Avalonia.cs" />
-    <!-- Shared binding tests: one body compiled into the AvalonEdit and AvaloniaEdit suites, with a
-         per-binding namespace, engine using, and test-class attribute selected by the AVALONIAEDIT define. -->
-    <Compile Include="..\..\..\..\shared\Editor.Tests\**\*.cs" Link="shared\Editor.Tests\%(RecursiveDir)%(Filename)%(Extension)" />
-    <Compile Include="..\..\..\TestSupport\TemporaryDirectory.cs" Link="TestSupport\TemporaryDirectory.cs" />
-    <Compile Include="..\..\..\TestSupport\TestCategories.cs" Link="TestSupport\TestCategories.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
-    <Using Include="Nickelony.IDEKit.Testing" />
-    <Using Include="Nickelony.Testing" />
-  </ItemGroup>
-
+	<ItemGroup>
+		<Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
+		<Using Include="Nickelony.IDEKit.Testing" />
+		<Using Include="Nickelony.IDEKit.Testing.AvaloniaTestHost" Alias="TestHost" />
+		<Using Include="Nickelony.Testing.AvaloniaTestClassAttribute" Alias="TestClassAttribute" />
+		<Using Include="Nickelony.Testing.AvaloniaTestClassAttribute" Alias="STATestClassAttribute" />
+		<Using Include="Nickelony.Testing" />
+	</ItemGroup>
 </Project>

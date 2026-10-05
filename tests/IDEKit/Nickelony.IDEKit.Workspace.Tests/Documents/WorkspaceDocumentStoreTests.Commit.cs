@@ -1,6 +1,7 @@
-using Nickelony.IDEKit.Workspace.Documents;
-using Nickelony.IDEKit.Workspace.Documents.FileSystem;
 using System.Text;
+using Nickelony.IDEKit.Core.Text;
+using Nickelony.IDEKit.Workspace.Documents;
+using Nickelony.IDEKit.Workspace.FileSystem;
 
 namespace Nickelony.IDEKit.Workspace.Tests;
 
@@ -11,14 +12,22 @@ public sealed partial class WorkspaceDocumentStoreTests
 	{
 		var fileSystem = new FakeFileSystem("original", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions)).Snapshot!;
 
-		WorkspaceDocumentCommitResult missing = await store.CommitAsync(new WorkspaceDocumentCommitRequest(
-			new(initial.DocumentKey, TestPath("missing.lua"), 0),
-			initial.OnDiskStamp));
-		WorkspaceDocumentCommitResult staleInstance = await store.CommitAsync(new WorkspaceDocumentCommitRequest(
-			new(new WorkspaceDocumentKey(Guid.NewGuid()), initial.DocumentId, initial.Version),
-			initial.OnDiskStamp));
+		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
+
+		WorkspaceDocumentCommitResult missing = await store.CommitAsync(
+			new WorkspaceDocumentCommitRequest(new(initial.DocumentKey, TestPath("missing.lua"), 0), initial.OnDiskStamp),
+			TestContext.CancellationToken
+		);
+
+		WorkspaceDocumentCommitResult staleInstance = await store.CommitAsync(
+			new WorkspaceDocumentCommitRequest(
+				new(new WorkspaceDocumentKey(Guid.NewGuid()), initial.DocumentId, initial.Version),
+				initial.OnDiskStamp
+			),
+
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(WorkspaceDocumentCommitOutcome.DocumentNotFound, missing.Outcome);
 		Assert.IsNull(missing.Snapshot);
@@ -33,22 +42,22 @@ public sealed partial class WorkspaceDocumentStoreTests
 	[DataRow(WorkspaceFileReplacementOutcome.DestinationExists, WorkspaceDocumentCommitOutcome.WriteFailed, DisplayName = "DestinationExists")]
 	public async Task Commit_ReplacementOutcomes_MapToCommitOutcomes(
 		WorkspaceFileReplacementOutcome replacementOutcome,
-		WorkspaceDocumentCommitOutcome expectedOutcome)
+		WorkspaceDocumentCommitOutcome expectedOutcome
+	)
 	{
-		var fileSystem = new FakeFileSystem("original", s_defaultFormat)
-		{
-			ReplacementOutcome = replacementOutcome
-		};
+		var fileSystem = new FakeFileSystem("original", s_defaultFormat) { ReplacementOutcome = replacementOutcome };
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions)).Snapshot!;
-		WorkspaceDocumentMutationResult edited = store.Replace(new WorkspaceDocumentReplaceRequest(
-			new(initial.DocumentKey, initial.DocumentId, initial.Version),
-			"logical",
-			initial.FileFormat));
 
-		WorkspaceDocumentCommitResult result = await store.CommitAsync(new WorkspaceDocumentCommitRequest(
-			new(initial.DocumentKey, initial.DocumentId, edited.Snapshot!.Version),
-			initial.OnDiskStamp));
+		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
+
+		WorkspaceDocumentMutationResult edited = store.Replace(
+			new WorkspaceDocumentReplaceRequest(new(initial.DocumentKey, initial.DocumentId, initial.Version), "logical", initial.FileFormat)
+		);
+
+		WorkspaceDocumentCommitResult result = await store.CommitAsync(
+			new WorkspaceDocumentCommitRequest(new(initial.DocumentKey, initial.DocumentId, edited.Snapshot!.Version), initial.OnDiskStamp),
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(expectedOutcome, result.Outcome);
 
@@ -62,26 +71,34 @@ public sealed partial class WorkspaceDocumentStoreTests
 	{
 		var fileSystem = new FakeFileSystem("original", s_defaultFormat);
 		var pendingReplacement = new TaskCompletionSource<WorkspaceFileReplacementResult>(TaskCreationOptions.RunContinuationsAsynchronously);
+
 		fileSystem.PendingReplacement = pendingReplacement.Task;
+
 		await using var store = new WorkspaceDocumentStore(fileSystem);
 
-		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions)).Snapshot!;
-		WorkspaceDocumentMutationResult edited = store.Replace(new WorkspaceDocumentReplaceRequest(
-			new(initial.DocumentKey, initial.DocumentId, initial.Version),
-			"first",
-			initial.FileFormat));
-		Task<WorkspaceDocumentCommitResult> commitTask = store.CommitAsync(new WorkspaceDocumentCommitRequest(
-			new(initial.DocumentKey, initial.DocumentId, edited.Snapshot!.Version),
-			initial.OnDiskStamp));
+		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
+
+		WorkspaceDocumentMutationResult edited = store.Replace(
+			new WorkspaceDocumentReplaceRequest(new(initial.DocumentKey, initial.DocumentId, initial.Version), "first", initial.FileFormat)
+		);
+
+		Task<WorkspaceDocumentCommitResult> commitTask = store.CommitAsync(
+			new WorkspaceDocumentCommitRequest(new(initial.DocumentKey, initial.DocumentId, edited.Snapshot!.Version), initial.OnDiskStamp),
+			TestContext.CancellationToken
+		);
+
 		await fileSystem.Replacements.WhenReachedAsync(1);
 
-		WorkspaceDocumentMutationResult laterEdit = store.Replace(new WorkspaceDocumentReplaceRequest(
-			new(initial.DocumentKey, initial.DocumentId, edited.Snapshot.Version),
-			"second",
-			initial.FileFormat));
-		pendingReplacement.SetResult(new WorkspaceFileReplacementResult(
-			WorkspaceFileReplacementOutcome.Replaced,
-			new FileStamp(true, 5, DateTime.UnixEpoch.AddMinutes(1), "committed")));
+		WorkspaceDocumentMutationResult laterEdit = store.Replace(
+			new WorkspaceDocumentReplaceRequest(new(initial.DocumentKey, initial.DocumentId, edited.Snapshot.Version), "second", initial.FileFormat)
+		);
+
+		pendingReplacement.SetResult(
+			new WorkspaceFileReplacementResult(
+				WorkspaceFileReplacementOutcome.Replaced,
+				new FileStamp(Exists: true, Length: 5, LastWriteTimeUtc: DateTime.UnixEpoch.AddMinutes(1), ContentHash: "committed")
+			)
+		);
 
 		WorkspaceDocumentCommitResult result = await commitTask;
 
@@ -99,24 +116,33 @@ public sealed partial class WorkspaceDocumentStoreTests
 		var fileSystem = new FakeFileSystem("original", s_defaultFormat)
 		{
 			ReplacementOutcome = WorkspaceFileReplacementOutcome.ReplacementStateUnknown,
-			ReplacementStamp = new FileStamp(true, 6, DateTime.UnixEpoch.AddMinutes(1), "unknown")
+			ReplacementStamp = new FileStamp(Exists: true, Length: 6, LastWriteTimeUtc: DateTime.UnixEpoch.AddMinutes(1), ContentHash: "unknown"),
 		};
+
 		await using var store = new WorkspaceDocumentStore(fileSystem);
 
-		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions)).Snapshot!;
-		WorkspaceDocumentMutationResult edited = store.Replace(new WorkspaceDocumentReplaceRequest(
-			new(initial.DocumentKey, initial.DocumentId, initial.Version),
-			"logical",
-			initial.FileFormat));
-		WorkspaceDocumentCommitResult unknown = await store.CommitAsync(new WorkspaceDocumentCommitRequest(
-			new(initial.DocumentKey, initial.DocumentId, edited.Snapshot!.Version),
-			initial.OnDiskStamp));
+		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
+
+		WorkspaceDocumentMutationResult edited = store.Replace(
+			new WorkspaceDocumentReplaceRequest(new(initial.DocumentKey, initial.DocumentId, initial.Version), "logical", initial.FileFormat)
+		);
+
+		WorkspaceDocumentCommitResult unknown = await store.CommitAsync(
+			new WorkspaceDocumentCommitRequest(new(initial.DocumentKey, initial.DocumentId, edited.Snapshot!.Version), initial.OnDiskStamp),
+			TestContext.CancellationToken
+		);
 
 		fileSystem.ReplacementOutcome = WorkspaceFileReplacementOutcome.Replaced;
 		fileSystem.CapturedStamps.Enqueue(unknown.Snapshot!.OnDiskStamp);
-		WorkspaceDocumentCommitResult recovered = await store.CommitAsync(new WorkspaceDocumentCommitRequest(
-			new(unknown.Snapshot.DocumentKey, unknown.Snapshot.DocumentId, unknown.Snapshot.Version),
-			unknown.Snapshot.OnDiskStamp));
+
+		WorkspaceDocumentCommitResult recovered = await store.CommitAsync(
+			new WorkspaceDocumentCommitRequest(
+				new(unknown.Snapshot.DocumentKey, unknown.Snapshot.DocumentId, unknown.Snapshot.Version),
+				unknown.Snapshot.OnDiskStamp
+			),
+
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(WorkspaceDocumentCommitOutcome.ReplacementStateUnknown, unknown.Outcome);
 		Assert.AreEqual(fileSystem.ReplacementStamp, unknown.ObservedOnDiskStamp);
@@ -130,18 +156,24 @@ public sealed partial class WorkspaceDocumentStoreTests
 	{
 		var fileSystem = new FakeFileSystem("original", s_defaultFormat);
 		var pendingReplacement = new TaskCompletionSource<WorkspaceFileReplacementResult>(TaskCreationOptions.RunContinuationsAsynchronously);
+
 		fileSystem.PendingReplacement = pendingReplacement.Task;
+
 		await using var store = new WorkspaceDocumentStore(fileSystem);
 
-		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions)).Snapshot!;
-		WorkspaceDocumentMutationResult edited = store.Replace(new WorkspaceDocumentReplaceRequest(
-			new(initial.DocumentKey, initial.DocumentId, initial.Version),
-			"logical",
-			initial.FileFormat));
+		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
+
+		WorkspaceDocumentMutationResult edited = store.Replace(
+			new WorkspaceDocumentReplaceRequest(new(initial.DocumentKey, initial.DocumentId, initial.Version), "logical", initial.FileFormat)
+		);
+
 		using var cancellation = new CancellationTokenSource();
-		Task<WorkspaceDocumentCommitResult> commitTask = store.CommitAsync(new WorkspaceDocumentCommitRequest(
-			new(initial.DocumentKey, initial.DocumentId, edited.Snapshot!.Version),
-			initial.OnDiskStamp), cancellation.Token);
+
+		Task<WorkspaceDocumentCommitResult> commitTask = store.CommitAsync(
+			new WorkspaceDocumentCommitRequest(new(initial.DocumentKey, initial.DocumentId, edited.Snapshot!.Version), initial.OnDiskStamp),
+			cancellation.Token
+		);
+
 		await fileSystem.Replacements.WhenReachedAsync(1);
 		cancellation.Cancel();
 
@@ -156,17 +188,17 @@ public sealed partial class WorkspaceDocumentStoreTests
 	{
 		var fileSystem = new FakeFileSystem("content", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions)).Snapshot!;
+
+		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
 		using var cancellation = new CancellationTokenSource();
 		cancellation.Cancel();
 
 		// The token is observed before the clean no-op short-circuit, so a canceled commit reports
 		// Canceled and performs no write even though the document has nothing to persist.
 		WorkspaceDocumentCommitResult result = await store.CommitAsync(
-			new WorkspaceDocumentCommitRequest(
-				new(initial.DocumentKey, initial.DocumentId, initial.Version),
-				initial.OnDiskStamp),
-			cancellation.Token);
+			new WorkspaceDocumentCommitRequest(new(initial.DocumentKey, initial.DocumentId, initial.Version), initial.OnDiskStamp),
+			cancellation.Token
+		);
 
 		Assert.AreEqual(WorkspaceDocumentCommitOutcome.Canceled, result.Outcome);
 		Assert.AreEqual(0, fileSystem.ReplaceCount);
@@ -177,22 +209,26 @@ public sealed partial class WorkspaceDocumentStoreTests
 	{
 		var fileSystem = new FakeFileSystem("retained", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions)).Snapshot!;
-		WorkspaceDocumentSnapshot dirty = store.Replace(new WorkspaceDocumentReplaceRequest(
-			new(initial.DocumentKey, initial.DocumentId, initial.Version),
-			"changed",
-			initial.FileFormat)).Snapshot!;
+
+		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
+
+		WorkspaceDocumentSnapshot dirty = store
+			.Replace(
+				new WorkspaceDocumentReplaceRequest(new(initial.DocumentKey, initial.DocumentId, initial.Version), "changed", initial.FileFormat)
+			)
+			.Snapshot!;
 
 		// The replacement reports success without the resulting stamp, so the store re-captures it
-		// exactly once; the commit itself no longer pre-captures the destination, which the
+		// exactly once; the commit itself does not pre-capture the destination, which the
 		// conditional replacement validates instead.
-		FileStamp writtenStamp = new(true, 11, DateTime.UnixEpoch.AddMinutes(5), "written");
+		FileStamp writtenStamp = new(Exists: true, Length: 11, LastWriteTimeUtc: DateTime.UnixEpoch.AddMinutes(5), ContentHash: "written");
 		fileSystem.OmitReplacementStamp = true;
 		fileSystem.CapturedStamps.Enqueue(writtenStamp);
 
-		WorkspaceDocumentCommitResult result = await store.CommitAsync(new WorkspaceDocumentCommitRequest(
-			new(dirty.DocumentKey, dirty.DocumentId, dirty.Version),
-			dirty.OnDiskStamp));
+		WorkspaceDocumentCommitResult result = await store.CommitAsync(
+			new WorkspaceDocumentCommitRequest(new(dirty.DocumentKey, dirty.DocumentId, dirty.Version), dirty.OnDiskStamp),
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(WorkspaceDocumentCommitOutcome.Committed, result.Outcome);
 		Assert.AreEqual(writtenStamp, result.Snapshot!.OnDiskStamp);
@@ -205,11 +241,14 @@ public sealed partial class WorkspaceDocumentStoreTests
 	{
 		var fileSystem = new FakeFileSystem("retained", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions)).Snapshot!;
-		WorkspaceDocumentSnapshot dirty = store.Replace(new WorkspaceDocumentReplaceRequest(
-			new(initial.DocumentKey, initial.DocumentId, initial.Version),
-			"changed",
-			initial.FileFormat)).Snapshot!;
+
+		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
+
+		WorkspaceDocumentSnapshot dirty = store
+			.Replace(
+				new WorkspaceDocumentReplaceRequest(new(initial.DocumentKey, initial.DocumentId, initial.Version), "changed", initial.FileFormat)
+			)
+			.Snapshot!;
 
 		// The replacement completed without reporting its stamp and the re-capture fails, so the final
 		// state is indeterminate; the resulting failure carries the capture exception for post-mortems.
@@ -217,15 +256,16 @@ public sealed partial class WorkspaceDocumentStoreTests
 		fileSystem.OmitReplacementStamp = true;
 		fileSystem.CaptureTasks.Enqueue(Task.FromException<FileStamp>(captureFailure));
 
-		WorkspaceDocumentCommitResult result = await store.CommitAsync(new WorkspaceDocumentCommitRequest(
-			new(dirty.DocumentKey, dirty.DocumentId, dirty.Version),
-			dirty.OnDiskStamp));
+		WorkspaceDocumentCommitResult result = await store.CommitAsync(
+			new WorkspaceDocumentCommitRequest(new(dirty.DocumentKey, dirty.DocumentId, dirty.Version), dirty.OnDiskStamp),
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(WorkspaceDocumentCommitOutcome.ReplacementStateUnknown, result.Outcome);
 		Assert.IsNotNull(result.Failure);
 		Assert.AreEqual(WorkspaceOperationFailureCodes.ReplacementStateUnknown, result.Failure.Code);
 		Assert.AreSame(captureFailure, result.Failure.Exception);
-		StringAssert.Contains(result.Failure.Message, "capture failed");
+		Assert.Contains("capture failed", result.Failure.Message);
 		Assert.IsTrue(result.Snapshot!.IsDirty);
 	}
 
@@ -234,17 +274,24 @@ public sealed partial class WorkspaceDocumentStoreTests
 	{
 		var fileSystem = new FakeFileSystem("disk", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions)).Snapshot!;
-		TextFileFormat windows1252Format = new(TextEncodingKind.Windows1252, false, TextNewlineStyle.None);
-		WorkspaceDocumentMutationResult edited = store.Replace(new WorkspaceDocumentReplaceRequest(
-			new(initial.DocumentKey, initial.DocumentId, initial.Version),
-			"\u2603",
-			windows1252Format));
+
+		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
+		TextFileFormat windows1252Format = new(TextEncoding.Windows1252, false, LineTerminatorStyle.None);
+
+		WorkspaceDocumentMutationResult edited = store.Replace(
+			new WorkspaceDocumentReplaceRequest(new(initial.DocumentKey, initial.DocumentId, initial.Version), "\u2603", windows1252Format)
+		);
+
 		Assert.AreEqual(WorkspaceDocumentMutationOutcome.Changed, edited.Outcome);
 
-		WorkspaceDocumentCommitResult result = await store.CommitAsync(new WorkspaceDocumentCommitRequest(
-			new(edited.Snapshot!.DocumentKey, edited.Snapshot.DocumentId, edited.Snapshot.Version),
-			edited.Snapshot.OnDiskStamp));
+		WorkspaceDocumentCommitResult result = await store.CommitAsync(
+			new WorkspaceDocumentCommitRequest(
+				new(edited.Snapshot!.DocumentKey, edited.Snapshot.DocumentId, edited.Snapshot.Version),
+				edited.Snapshot.OnDiskStamp
+			),
+
+			TestContext.CancellationToken
+		);
 
 		// The encoding failure is a property of the content and format, so it is classified as an
 		// invalid-encoding write failure instead of a generic write problem.
@@ -259,16 +306,22 @@ public sealed partial class WorkspaceDocumentStoreTests
 	{
 		var fileSystem = new FakeFileSystem("content", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		string rootPath = Path.GetPathRoot(Path.GetFullPath(Environment.CurrentDirectory))!;
-		WorkspaceDocumentSnapshot opened = (await store.OpenAsync(rootPath, s_openOptions)).Snapshot!;
-		WorkspaceDocumentMutationResult edited = store.Replace(new WorkspaceDocumentReplaceRequest(
-			new(opened.DocumentKey, opened.DocumentId, opened.Version),
-			"edited",
-			opened.FileFormat));
 
-		WorkspaceDocumentCommitResult committed = await store.CommitAsync(new WorkspaceDocumentCommitRequest(
-			new(edited.Snapshot!.DocumentKey, edited.Snapshot.DocumentId, edited.Snapshot.Version),
-			edited.Snapshot.OnDiskStamp));
+		string rootPath = Path.GetPathRoot(Path.GetFullPath(Environment.CurrentDirectory))!;
+		WorkspaceDocumentSnapshot opened = (await store.OpenAsync(rootPath, s_openOptions, TestContext.CancellationToken)).Snapshot!;
+
+		WorkspaceDocumentMutationResult edited = store.Replace(
+			new WorkspaceDocumentReplaceRequest(new(opened.DocumentKey, opened.DocumentId, opened.Version), "edited", opened.FileFormat)
+		);
+
+		WorkspaceDocumentCommitResult committed = await store.CommitAsync(
+			new WorkspaceDocumentCommitRequest(
+				new(edited.Snapshot!.DocumentKey, edited.Snapshot.DocumentId, edited.Snapshot.Version),
+				edited.Snapshot.OnDiskStamp
+			),
+
+			TestContext.CancellationToken
+		);
 
 		// A file id that is itself a volume root has no parent directory; the root is the same-volume
 		// directory, never the process current directory.
@@ -279,11 +332,12 @@ public sealed partial class WorkspaceDocumentStoreTests
 	[TestMethod]
 	public async Task CleanExistingCommit_IsNoOpWithoutCapturingOrWriting()
 	{
-		var fileSystem = new ControllableFileSystem("disk", s_defaultFormat);
+		var fileSystem = new GatedReplacementFileSystem("disk", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot snapshot = (await store.OpenAsync(TestPath("script.lua"), s_openOptions)).Snapshot!;
 
-		WorkspaceDocumentCommitResult result = await store.CommitAsync(CreateCommitRequest(snapshot));
+		WorkspaceDocumentSnapshot snapshot = (await store.OpenAsync(TestPath("script.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
+
+		WorkspaceDocumentCommitResult result = await store.CommitAsync(CreateCommitRequest(snapshot), TestContext.CancellationToken);
 
 		Assert.AreEqual(WorkspaceDocumentCommitOutcome.Committed, result.Outcome);
 
@@ -297,17 +351,19 @@ public sealed partial class WorkspaceDocumentStoreTests
 	[TestMethod]
 	public async Task CleanExistingCommit_WithMismatchedExpectedStamp_ReportsExternalFileConflict()
 	{
-		var fileSystem = new ControllableFileSystem("disk", s_defaultFormat);
+		var fileSystem = new GatedReplacementFileSystem("disk", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot snapshot = (await store.OpenAsync(TestPath("script.lua"), s_openOptions)).Snapshot!;
-		var staleExpectedStamp = new FileStamp(true, 4, DateTime.UnixEpoch.AddDays(-1), "stale");
+
+		WorkspaceDocumentSnapshot snapshot = (await store.OpenAsync(TestPath("script.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
+		var staleExpectedStamp = new FileStamp(Exists: true, Length: 4, LastWriteTimeUtc: DateTime.UnixEpoch.AddDays(-1), ContentHash: "stale");
 
 		// The no-op path cannot verify the file without reading it, so the caller's expectation is
 		// validated against the tracked stamp; an expectation that disagrees with the state the store
 		// last observed reports a conflict instead of claiming a match.
-		WorkspaceDocumentCommitResult result = await store.CommitAsync(new WorkspaceDocumentCommitRequest(
-			new(snapshot.DocumentKey, snapshot.DocumentId, snapshot.Version),
-			staleExpectedStamp));
+		WorkspaceDocumentCommitResult result = await store.CommitAsync(
+			new WorkspaceDocumentCommitRequest(new(snapshot.DocumentKey, snapshot.DocumentId, snapshot.Version), staleExpectedStamp),
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(WorkspaceDocumentCommitOutcome.ExternalFileConflict, result.Outcome);
 		Assert.AreEqual(snapshot.OnDiskStamp, result.ObservedOnDiskStamp);
@@ -318,15 +374,16 @@ public sealed partial class WorkspaceDocumentStoreTests
 	[TestMethod]
 	public async Task StaleCommit_IsRejectedWithoutFilesystemWork()
 	{
-		var fileSystem = new ControllableFileSystem("disk", s_defaultFormat);
+		var fileSystem = new GatedReplacementFileSystem("disk", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions)).Snapshot!;
-		WorkspaceDocumentMutationResult changed = store.Replace(new WorkspaceDocumentReplaceRequest(
-			new(initial.DocumentKey, initial.DocumentId, initial.Version),
-			"changed",
-			initial.FileFormat));
 
-		WorkspaceDocumentCommitResult result = await store.CommitAsync(CreateCommitRequest(initial));
+		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
+
+		WorkspaceDocumentMutationResult changed = store.Replace(
+			new WorkspaceDocumentReplaceRequest(new(initial.DocumentKey, initial.DocumentId, initial.Version), "changed", initial.FileFormat)
+		);
+
+		WorkspaceDocumentCommitResult result = await store.CommitAsync(CreateCommitRequest(initial), TestContext.CancellationToken);
 
 		Assert.AreEqual(WorkspaceDocumentCommitOutcome.StaleDocument, result.Outcome);
 		Assert.AreEqual(changed.Snapshot!.Content, result.Snapshot!.Content);
@@ -337,22 +394,26 @@ public sealed partial class WorkspaceDocumentStoreTests
 	[TestMethod]
 	public async Task ObservedExternalConflict_LeavesBaselineUnchanged()
 	{
-		var fileSystem = new ControllableFileSystem("disk", s_defaultFormat);
+		var fileSystem = new GatedReplacementFileSystem("disk", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot snapshot = (await store.OpenAsync(TestPath("script.lua"), s_openOptions)).Snapshot!;
-		fileSystem.CurrentStamp = new FileStamp(true, 8, DateTime.UnixEpoch.AddDays(1), "external");
-		WorkspaceDocumentMutationResult changed = store.Replace(new WorkspaceDocumentReplaceRequest(
-			new(snapshot.DocumentKey, snapshot.DocumentId, snapshot.Version),
-			"changed",
-			snapshot.FileFormat));
+
+		WorkspaceDocumentSnapshot snapshot = (await store.OpenAsync(TestPath("script.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
+		fileSystem.CurrentStamp = new FileStamp(Exists: true, Length: 8, LastWriteTimeUtc: DateTime.UnixEpoch.AddDays(1), ContentHash: "external");
+
+		WorkspaceDocumentMutationResult changed = store.Replace(
+			new WorkspaceDocumentReplaceRequest(new(snapshot.DocumentKey, snapshot.DocumentId, snapshot.Version), "changed", snapshot.FileFormat)
+		);
+
 		WorkspaceDocumentSnapshot changedSnapshot = RequireSnapshot(changed);
 
 		// The conditional replacement validates the expected stamp, so the conflict surfaces from
 		// the write result.
 		fileSystem.ReplacementResult = new WorkspaceFileReplacementResult(
 			WorkspaceFileReplacementOutcome.ExternalFileConflict,
-			fileSystem.CurrentStamp);
-		WorkspaceDocumentCommitResult result = await store.CommitAsync(CreateCommitRequest(changedSnapshot));
+			fileSystem.CurrentStamp
+		);
+
+		WorkspaceDocumentCommitResult result = await store.CommitAsync(CreateCommitRequest(changedSnapshot), TestContext.CancellationToken);
 
 		Assert.AreEqual(WorkspaceDocumentCommitOutcome.ExternalFileConflict, result.Outcome);
 		Assert.AreEqual(fileSystem.CurrentStamp, result.ObservedOnDiskStamp);
@@ -364,22 +425,27 @@ public sealed partial class WorkspaceDocumentStoreTests
 	[TestMethod]
 	public async Task CancellationBeforeReplacement_PreservesBaseline()
 	{
-		var fileSystem = new ControllableFileSystem("disk", s_defaultFormat)
+		var fileSystem = new GatedReplacementFileSystem("disk", s_defaultFormat)
 		{
-			PendingReplacement = new TaskCompletionSource<WorkspaceFileReplacementResult>(TaskCreationOptions.RunContinuationsAsynchronously)
+			PendingReplacement = new TaskCompletionSource<WorkspaceFileReplacementResult>(TaskCreationOptions.RunContinuationsAsynchronously),
 		};
+
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions)).Snapshot!;
-		WorkspaceDocumentMutationResult changed = store.Replace(new WorkspaceDocumentReplaceRequest(
-			new(initial.DocumentKey, initial.DocumentId, initial.Version),
-			"changed",
-			initial.FileFormat));
+
+		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
+
+		WorkspaceDocumentMutationResult changed = store.Replace(
+			new WorkspaceDocumentReplaceRequest(new(initial.DocumentKey, initial.DocumentId, initial.Version), "changed", initial.FileFormat)
+		);
+
 		WorkspaceDocumentSnapshot changedSnapshot = RequireSnapshot(changed);
+
 		using var cancellation = new CancellationTokenSource();
 		Task<WorkspaceDocumentCommitResult> commit = store.CommitAsync(CreateCommitRequest(changedSnapshot), cancellation.Token);
 		await fileSystem.Replacements.WhenReachedAsync(1);
 
 		cancellation.Cancel();
+
 		WorkspaceDocumentCommitResult result = await commit;
 
 		Assert.AreEqual(WorkspaceDocumentCommitOutcome.Canceled, result.Outcome);
@@ -391,20 +457,23 @@ public sealed partial class WorkspaceDocumentStoreTests
 	[TestMethod]
 	public async Task ReplacementFailure_DoesNotAdvanceBaseline()
 	{
-		var fileSystem = new ControllableFileSystem("disk", s_defaultFormat)
+		var fileSystem = new GatedReplacementFileSystem("disk", s_defaultFormat)
 		{
 			ReplacementResult = new WorkspaceFileReplacementResult(
 				WorkspaceFileReplacementOutcome.Failed,
-				Failure: new WorkspaceOperationFailure(WorkspaceOperationFailureCodes.WriteFailed, "write failed"))
+				Failure: new WorkspaceOperationFailure(WorkspaceOperationFailureCodes.WriteFailed, "write failed")
+			),
 		};
-		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions)).Snapshot!;
-		WorkspaceDocumentMutationResult changed = store.Replace(new WorkspaceDocumentReplaceRequest(
-			new(initial.DocumentKey, initial.DocumentId, initial.Version),
-			"changed",
-			initial.FileFormat));
 
-		WorkspaceDocumentCommitResult result = await store.CommitAsync(CreateCommitRequest(changed.Snapshot!));
+		await using var store = new WorkspaceDocumentStore(fileSystem);
+
+		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
+
+		WorkspaceDocumentMutationResult changed = store.Replace(
+			new WorkspaceDocumentReplaceRequest(new(initial.DocumentKey, initial.DocumentId, initial.Version), "changed", initial.FileFormat)
+		);
+
+		WorkspaceDocumentCommitResult result = await store.CommitAsync(CreateCommitRequest(changed.Snapshot!), TestContext.CancellationToken);
 
 		Assert.AreEqual(WorkspaceDocumentCommitOutcome.WriteFailed, result.Outcome);
 		Assert.IsTrue(result.Snapshot!.IsDirty);
@@ -415,19 +484,18 @@ public sealed partial class WorkspaceDocumentStoreTests
 	[TestMethod]
 	public async Task ThrownWriteFailure_ReturnsWriteFailedAndDoesNotAdvanceBaseline()
 	{
-		var fileSystem = new ControllableFileSystem("disk", s_defaultFormat)
-		{
-			WriteException = new IOException("flush failed")
-		};
+		var fileSystem = new GatedReplacementFileSystem("disk", s_defaultFormat) { WriteException = new IOException("flush failed") };
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions)).Snapshot!;
-		WorkspaceDocumentMutationResult changed = store.Replace(new WorkspaceDocumentReplaceRequest(
-			new(initial.DocumentKey, initial.DocumentId, initial.Version),
-			"changed",
-			initial.FileFormat));
+
+		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
+
+		WorkspaceDocumentMutationResult changed = store.Replace(
+			new WorkspaceDocumentReplaceRequest(new(initial.DocumentKey, initial.DocumentId, initial.Version), "changed", initial.FileFormat)
+		);
+
 		WorkspaceDocumentSnapshot changedSnapshot = RequireSnapshot(changed);
 
-		WorkspaceDocumentCommitResult result = await store.CommitAsync(CreateCommitRequest(changedSnapshot));
+		WorkspaceDocumentCommitResult result = await store.CommitAsync(CreateCommitRequest(changedSnapshot), TestContext.CancellationToken);
 
 		Assert.AreEqual(WorkspaceDocumentCommitOutcome.WriteFailed, result.Outcome);
 		Assert.AreEqual(changedSnapshot.PersistedVersion, result.Snapshot!.PersistedVersion);
@@ -438,21 +506,24 @@ public sealed partial class WorkspaceDocumentStoreTests
 	[TestMethod]
 	public async Task ReplacementStateUnknown_ReturnsObservedStampAndDoesNotAdvanceBaseline()
 	{
-		var fileSystem = new ControllableFileSystem("disk", s_defaultFormat)
+		var fileSystem = new GatedReplacementFileSystem("disk", s_defaultFormat)
 		{
 			ReplacementResult = new WorkspaceFileReplacementResult(
 				WorkspaceFileReplacementOutcome.ReplacementStateUnknown,
-				new FileStamp(true, 9, DateTime.UnixEpoch.AddDays(2), "unknown"),
-				new WorkspaceOperationFailure(WorkspaceOperationFailureCodes.ReplacementStateUnknown, "unknown"))
+				new FileStamp(Exists: true, Length: 9, LastWriteTimeUtc: DateTime.UnixEpoch.AddDays(2), ContentHash: "unknown"),
+				new WorkspaceOperationFailure(WorkspaceOperationFailureCodes.ReplacementStateUnknown, "unknown")
+			),
 		};
-		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions)).Snapshot!;
-		WorkspaceDocumentMutationResult changed = store.Replace(new WorkspaceDocumentReplaceRequest(
-			new(initial.DocumentKey, initial.DocumentId, initial.Version),
-			"changed",
-			initial.FileFormat));
 
-		WorkspaceDocumentCommitResult result = await store.CommitAsync(CreateCommitRequest(changed.Snapshot!));
+		await using var store = new WorkspaceDocumentStore(fileSystem);
+
+		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
+
+		WorkspaceDocumentMutationResult changed = store.Replace(
+			new WorkspaceDocumentReplaceRequest(new(initial.DocumentKey, initial.DocumentId, initial.Version), "changed", initial.FileFormat)
+		);
+
+		WorkspaceDocumentCommitResult result = await store.CommitAsync(CreateCommitRequest(changed.Snapshot!), TestContext.CancellationToken);
 
 		Assert.AreEqual(WorkspaceDocumentCommitOutcome.ReplacementStateUnknown, result.Outcome);
 		Assert.AreEqual(fileSystem.ReplacementResult.ObservedOnDiskStamp, result.ObservedOnDiskStamp);
@@ -464,23 +535,28 @@ public sealed partial class WorkspaceDocumentStoreTests
 	[TestMethod]
 	public async Task EditDuringCommit_InstallsCapturedBaselineAndLeavesLaterEditDirty()
 	{
-		var fileSystem = new ControllableFileSystem("disk", s_defaultFormat)
+		var fileSystem = new GatedReplacementFileSystem("disk", s_defaultFormat)
 		{
-			PendingReplacement = new TaskCompletionSource<WorkspaceFileReplacementResult>(TaskCreationOptions.RunContinuationsAsynchronously)
+			PendingReplacement = new TaskCompletionSource<WorkspaceFileReplacementResult>(TaskCreationOptions.RunContinuationsAsynchronously),
 		};
+
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions)).Snapshot!;
-		WorkspaceDocumentMutationResult captured = store.Replace(new WorkspaceDocumentReplaceRequest(
-			new(initial.DocumentKey, initial.DocumentId, initial.Version),
-			"captured",
-			initial.FileFormat));
+
+		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
+
+		WorkspaceDocumentMutationResult captured = store.Replace(
+			new WorkspaceDocumentReplaceRequest(new(initial.DocumentKey, initial.DocumentId, initial.Version), "captured", initial.FileFormat)
+		);
+
 		WorkspaceDocumentSnapshot capturedSnapshot = RequireSnapshot(captured);
-		Task<WorkspaceDocumentCommitResult> commit = store.CommitAsync(CreateCommitRequest(capturedSnapshot));
+		Task<WorkspaceDocumentCommitResult> commit = store.CommitAsync(CreateCommitRequest(capturedSnapshot), TestContext.CancellationToken);
+
 		await fileSystem.Replacements.WhenReachedAsync(1);
-		WorkspaceDocumentMutationResult later = store.Replace(new WorkspaceDocumentReplaceRequest(
-			new(initial.DocumentKey, initial.DocumentId, capturedSnapshot.Version),
-			"later",
-			initial.FileFormat));
+
+		WorkspaceDocumentMutationResult later = store.Replace(
+			new WorkspaceDocumentReplaceRequest(new(initial.DocumentKey, initial.DocumentId, capturedSnapshot.Version), "later", initial.FileFormat)
+		);
+
 		fileSystem.PendingReplacement!.SetResult(fileSystem.ReplacementResult);
 		WorkspaceDocumentSnapshot laterSnapshot = RequireSnapshot(later);
 
@@ -495,34 +571,42 @@ public sealed partial class WorkspaceDocumentStoreTests
 	}
 
 	[TestMethod]
-	[Timeout(15000)]
+	[Timeout(15000, CooperativeCancellation = true)]
 	public async Task DiscardAndSecondCommit_ReturnOperationInProgressWithoutSecondIo()
 	{
-		var fileSystem = new ControllableFileSystem("disk", s_defaultFormat)
+		var fileSystem = new GatedReplacementFileSystem("disk", s_defaultFormat)
 		{
-			PendingReplacement = new TaskCompletionSource<WorkspaceFileReplacementResult>(TaskCreationOptions.RunContinuationsAsynchronously)
+			PendingReplacement = new TaskCompletionSource<WorkspaceFileReplacementResult>(TaskCreationOptions.RunContinuationsAsynchronously),
 		};
+
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions)).Snapshot!;
-		WorkspaceDocumentMutationResult changed = store.Replace(new WorkspaceDocumentReplaceRequest(
-			new(initial.DocumentKey, initial.DocumentId, initial.Version),
-			"changed",
-			initial.FileFormat));
+
+		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
+
+		WorkspaceDocumentMutationResult changed = store.Replace(
+			new WorkspaceDocumentReplaceRequest(new(initial.DocumentKey, initial.DocumentId, initial.Version), "changed", initial.FileFormat)
+		);
+
 		WorkspaceDocumentSnapshot changedSnapshot = RequireSnapshot(changed);
 		WorkspaceDocumentCommitRequest request = CreateCommitRequest(changedSnapshot);
-		Task<WorkspaceDocumentCommitResult> firstCommit = store.CommitAsync(request);
+		Task<WorkspaceDocumentCommitResult> firstCommit = store.CommitAsync(request, TestContext.CancellationToken);
+
 		await fileSystem.Replacements.WhenReachedAsync(1);
 
-		WorkspaceDocumentMutationResult discard = store.Discard(new WorkspaceDocumentDiscardRequest(
-			new(changedSnapshot.DocumentKey, changedSnapshot.DocumentId, changedSnapshot.Version)));
-		WorkspaceDocumentCommitResult secondCommit = await store.CommitAsync(request);
+		WorkspaceDocumentMutationResult discard = store.Discard(
+			new WorkspaceDocumentDiscardRequest(new(changedSnapshot.DocumentKey, changedSnapshot.DocumentId, changedSnapshot.Version))
+		);
+
+		WorkspaceDocumentCommitResult secondCommit = await store.CommitAsync(request, TestContext.CancellationToken);
+
 		fileSystem.PendingReplacement!.SetResult(fileSystem.ReplacementResult);
+
 		WorkspaceDocumentCommitResult completed = await firstCommit;
 
 		Assert.AreEqual(WorkspaceDocumentMutationOutcome.OperationInProgress, discard.Outcome);
 		Assert.AreEqual(WorkspaceDocumentCommitOutcome.OperationInProgress, secondCommit.Outcome);
 
-		// A commit no longer pre-captures the destination; the replacement reports its resulting
+		// A commit does not pre-capture the destination; the replacement reports its resulting
 		// stamp, so neither commit captures one.
 		Assert.AreEqual(0, fileSystem.CaptureCount);
 		Assert.AreEqual(1, fileSystem.ReplaceCount);
@@ -535,24 +619,29 @@ public sealed partial class WorkspaceDocumentStoreTests
 		// Mirrors the package README quick start: the destination directory is created first because
 		// the commit writes a temporary file next to the target before replacing it.
 		using var temp = new TemporaryDirectory();
+
 		string documentDirectory = Path.Combine(temp.Path, "workspace", "documents");
 		string documentPath = Path.Combine(documentDirectory, "notes.txt");
+
 		Directory.CreateDirectory(documentDirectory);
 
 		IWorkspaceFileSystem fileSystem = new LocalWorkspaceFileSystem();
 		await using var store = new WorkspaceDocumentStore(fileSystem);
+
 		WorkspaceDocumentOpenResult opened = await store.OpenAsync(
 			documentPath,
-			new WorkspaceDocumentOpenOptions(
-				TextEncodingKind.Utf8,
-				new TextFileFormat(TextEncodingKind.Utf8, false, TextNewlineStyle.Lf)));
+			new WorkspaceDocumentOpenOptions([TextEncoding.Utf8], new TextFileFormat(TextEncoding.Utf8, false, LineTerminatorStyle.Lf)),
+			TestContext.CancellationToken
+		);
+
 		Assert.AreEqual(WorkspaceDocumentOpenOutcome.Opened, opened.Outcome);
 
 		WorkspaceDocumentSnapshot snapshot = opened.Snapshot!;
+
 		WorkspaceDocumentCommitResult committed = await store.CommitAsync(
-			new WorkspaceDocumentCommitRequest(
-				new(snapshot.DocumentKey, snapshot.DocumentId, snapshot.Version),
-				snapshot.OnDiskStamp));
+			new WorkspaceDocumentCommitRequest(new(snapshot.DocumentKey, snapshot.DocumentId, snapshot.Version), snapshot.OnDiskStamp),
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(WorkspaceDocumentCommitOutcome.Committed, committed.Outcome);
 		Assert.IsTrue(File.Exists(documentPath));
@@ -561,15 +650,13 @@ public sealed partial class WorkspaceDocumentStoreTests
 	// File-system-only test double that holds the replacement/read rendezvous open while counting
 	// invocations and capturing written content; the store tests use FakeFileSystem instead, which
 	// scripts results through queues and knobs. Keep the two dialects separate.
-	private sealed class ControllableFileSystem : StoreFileSystemDouble
+	private sealed class GatedReplacementFileSystem : FakeStoreFileSystem
 	{
-		public ControllableFileSystem(string content, TextFileFormat fileFormat)
+		public GatedReplacementFileSystem(string content, TextFileFormat fileFormat)
 			: base(content, fileFormat)
 		{
-			CurrentStamp = new FileStamp(true, content.Length, DateTime.UnixEpoch, "disk");
-			ReplacementResult = new WorkspaceFileReplacementResult(
-				WorkspaceFileReplacementOutcome.Replaced,
-				CurrentStamp);
+			CurrentStamp = new FileStamp(Exists: true, Length: content.Length, LastWriteTimeUtc: DateTime.UnixEpoch, ContentHash: "disk");
+			ReplacementResult = new WorkspaceFileReplacementResult(WorkspaceFileReplacementOutcome.Replaced, CurrentStamp);
 		}
 
 		public FileStamp CurrentStamp { get; set; }
@@ -578,9 +665,7 @@ public sealed partial class WorkspaceDocumentStoreTests
 
 		public TaskCompletionSource<WorkspaceFileReplacementResult>? PendingReplacement { get; set; }
 
-		/// <summary>
-		/// Signals that a replacement started; waiters name the one-based ordinal.
-		/// </summary>
+		/// <summary>Signals that a replacement started; waiters name the one-based ordinal.</summary>
 		public TestSignal Replacements { get; } = new();
 
 		public bool ReplacementBegan { get; private set; }
@@ -593,10 +678,8 @@ public sealed partial class WorkspaceDocumentStoreTests
 
 		public Exception? WriteException { get; set; }
 
-		public override Task<WorkspaceFileReadResult> ReadAsync(string path, CancellationToken cancellationToken)
-		{
-			return Task.FromResult(CreateReadResult(CurrentStamp));
-		}
+		public override Task<WorkspaceFileReadResult> ReadAsync(string path, CancellationToken cancellationToken) =>
+			Task.FromResult(CreateReadResult(CurrentStamp));
 
 		public override Task<FileStamp> CaptureStampAsync(string path, CancellationToken cancellationToken)
 		{
@@ -608,9 +691,11 @@ public sealed partial class WorkspaceDocumentStoreTests
 			string destinationPath,
 			ReadOnlyMemory<byte> content,
 			FileStamp expectedStamp,
-			CancellationToken cancellationToken)
+			CancellationToken cancellationToken
+		)
 		{
 			Replacements.Advance();
+
 			if (WriteException is not null)
 				throw WriteException;
 
@@ -623,4 +708,6 @@ public sealed partial class WorkspaceDocumentStoreTests
 			return ReplacementResult;
 		}
 	}
+
+	public TestContext? TestContext { get; set; }
 }

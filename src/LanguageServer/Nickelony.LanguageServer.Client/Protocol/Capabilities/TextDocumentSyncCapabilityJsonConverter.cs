@@ -1,22 +1,17 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Nickelony.LanguageServer.Client;
+namespace Nickelony.LanguageServer.Client.Protocol;
 
-/// <summary>
-/// Converts the LSP text-document sync capability from either numeric or object form.
-/// </summary>
+/// <summary>Converts the LSP text-document sync capability from either numeric or object form.</summary>
 /// <remarks>
-/// Serialization writes the negotiated kind as its numeric form; the object form's additional members
-/// (<c>openClose</c>, <c>save</c>, <c>willSave</c>, <c>willSaveWaitUntil</c>) are not retained by this client.
-/// An unrecognized numeric kind (or a missing <c>change</c> member) maps to <see cref="TextDocumentSyncKind.None"/>,
-/// which makes startup fail with the missing-text-synchronization diagnostic when the client requires
-/// synchronization; the original value is not reported.
+/// Writing emits the negotiated kind as its numeric form; the object form's additional
+/// members (<c>openClose</c>, <c>save</c>, <c>willSave</c>, <c>willSaveWaitUntil</c>) are not retained by this client. An unrecognized numeric kind
+/// (or a missing <c>change</c> member) maps to <see cref="TextDocumentSyncKind.None"/>.
 /// </remarks>
 internal sealed class TextDocumentSyncCapabilityJsonConverter : JsonConverter<TextDocumentSyncCapability>
 {
-	private readonly record struct TextDocumentSyncCapabilityObject(
-		[property: JsonPropertyName("change")] JsonElement Change);
+	private readonly record struct TextDocumentSyncCapabilityObject([property: JsonPropertyName("change")] JsonElement Change);
 
 	/// <inheritdoc/>
 	public override TextDocumentSyncCapability Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
@@ -35,7 +30,7 @@ internal sealed class TextDocumentSyncCapabilityJsonConverter : JsonConverter<Te
 				return default;
 
 			default:
-				using (JsonDocument ignored = JsonDocument.ParseValue(ref reader))
+				using (var ignored = JsonDocument.ParseValue(ref reader))
 				{ }
 
 				return new(TextDocumentSyncKind.None);
@@ -43,27 +38,27 @@ internal sealed class TextDocumentSyncCapabilityJsonConverter : JsonConverter<Te
 	}
 
 	/// <inheritdoc/>
-	public override void Write(Utf8JsonWriter writer, TextDocumentSyncCapability value, JsonSerializerOptions options)
-		=> writer.WriteNumberValue((int)value.Kind);
+	public override void Write(Utf8JsonWriter writer, TextDocumentSyncCapability value, JsonSerializerOptions options) =>
+		writer.WriteNumberValue((int)value.Kind);
 
 	private static TextDocumentSyncCapability ReadObject(ref Utf8JsonReader reader, JsonSerializerOptions options)
 	{
 		TextDocumentSyncCapabilityObject payload = JsonSerializer.Deserialize<TextDocumentSyncCapabilityObject>(ref reader, options);
 
-		if (payload.Change.ValueKind != JsonValueKind.Number
-			|| !payload.Change.TryGetInt32(out int rawSyncKind))
-		{
+		if (payload.Change.ValueKind != JsonValueKind.Number || !payload.Change.TryGetInt32(out int rawSyncKind))
 			return new(TextDocumentSyncKind.None);
-		}
 
 		return new(ParseTextDocumentSyncKind(rawSyncKind));
 	}
 
-	private static TextDocumentSyncKind ParseTextDocumentSyncKind(int rawSyncKind) => rawSyncKind switch
+	private static TextDocumentSyncKind ParseTextDocumentSyncKind(int rawSyncKind)
 	{
-		0 => TextDocumentSyncKind.None,
-		1 => TextDocumentSyncKind.Full,
-		2 => TextDocumentSyncKind.Incremental,
-		_ => TextDocumentSyncKind.None
-	};
+		return rawSyncKind switch
+		{
+			0 => TextDocumentSyncKind.None,
+			1 => TextDocumentSyncKind.Full,
+			2 => TextDocumentSyncKind.Incremental,
+			_ => TextDocumentSyncKind.None,
+		};
+	}
 }

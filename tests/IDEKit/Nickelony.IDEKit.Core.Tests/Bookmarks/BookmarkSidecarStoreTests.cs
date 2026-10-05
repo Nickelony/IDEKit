@@ -6,38 +6,32 @@ public sealed class BookmarkSidecarStoreTests
 	private const string Extension = ".bkmrk";
 
 	[TestMethod]
-	public void Constructor_NullExtension_Throws()
-	{
-		Assert.ThrowsExactly<ArgumentNullException>(() => new BookmarkSidecarStore(null!));
-	}
+	public void Constructor_NullExtension_Throws() => Assert.ThrowsExactly<ArgumentNullException>(() => new BookmarkSidecarStore(null!));
 
 	[TestMethod]
 	[DataRow("", DisplayName = "Empty")]
 	[DataRow("   ", DisplayName = "WhitespaceOnly")]
-	public void Constructor_BlankExtension_Throws(string extension)
-	{
+	public void Constructor_BlankExtension_Throws(string extension) =>
 		Assert.ThrowsExactly<ArgumentException>(() => new BookmarkSidecarStore(extension));
-	}
 
 	[TestMethod]
 	[DataRow(".", DisplayName = "DotOnly")]
 	[DataRow("a/b", DisplayName = "ForwardSlash")]
 	[DataRow("x\\y", DisplayName = "Backslash")]
-	public void Constructor_UnusableExtension_Throws(string extension)
-	{
+	public void Constructor_UnusableExtension_Throws(string extension) =>
 		Assert.ThrowsExactly<ArgumentException>(() => new BookmarkSidecarStore(extension));
-	}
 
 	[TestMethod]
 	public void TrySave_ThenTryLoad_RoundTripsTheStoredLineNumbers()
 	{
 		using var directory = new TemporaryDirectory("bookmark-sidecar-");
 		string documentPath = directory.GetFilePath("script.lua");
+
 		var store = new BookmarkSidecarStore(Extension);
 
 		Assert.IsTrue(store.TrySave(documentPath, [2, 5, 9]));
 		Assert.IsTrue(store.TryLoad(documentPath, out IReadOnlyList<int> restored));
-		CollectionAssert.AreEqual(new[] { 2, 5, 9 }, restored.ToArray());
+		Assert.AreSequenceEqual([2, 5, 9], [.. restored]);
 	}
 
 	[TestMethod]
@@ -45,11 +39,12 @@ public sealed class BookmarkSidecarStoreTests
 	{
 		using var directory = new TemporaryDirectory("bookmark-sidecar-");
 		string documentPath = directory.GetFilePath("script.lua");
+
 		var store = new BookmarkSidecarStore(Extension);
 
 		Assert.IsTrue(store.TrySave(documentPath, [5, 1, 5]));
 		Assert.IsTrue(store.TryLoad(documentPath, out IReadOnlyList<int> restored));
-		CollectionAssert.AreEqual(new[] { 1, 5 }, restored.ToArray());
+		Assert.AreSequenceEqual([1, 5], [.. restored]);
 	}
 
 	[TestMethod]
@@ -57,6 +52,7 @@ public sealed class BookmarkSidecarStoreTests
 	{
 		using var directory = new TemporaryDirectory("bookmark-sidecar-");
 		string documentPath = directory.GetFilePath("script.lua");
+
 		var store = new BookmarkSidecarStore(Extension);
 
 		Assert.IsTrue(store.TrySave(documentPath, [1]));
@@ -68,6 +64,7 @@ public sealed class BookmarkSidecarStoreTests
 	{
 		using var directory = new TemporaryDirectory("bookmark-sidecar-");
 		string documentPath = directory.GetFilePath("script.lua");
+
 		var store = new BookmarkSidecarStore(Extension);
 
 		Assert.IsTrue(store.TrySave(documentPath, [4]));
@@ -76,7 +73,7 @@ public sealed class BookmarkSidecarStoreTests
 		Assert.IsTrue(store.TrySave(documentPath, []));
 		Assert.IsFalse(File.Exists(documentPath + Extension), "An empty set deletes the sidecar.");
 		Assert.IsTrue(store.TryLoad(documentPath, out IReadOnlyList<int> restored));
-		Assert.AreEqual(0, restored.Count);
+		Assert.IsEmpty(restored);
 	}
 
 	[TestMethod]
@@ -93,7 +90,7 @@ public sealed class BookmarkSidecarStoreTests
 		Assert.IsFalse(store.TrySave(documentPath, [0, -3]));
 		Assert.IsTrue(File.Exists(documentPath + Extension), "A rejected set must keep the existing sidecar.");
 		Assert.IsTrue(store.TryLoad(documentPath, out IReadOnlyList<int> restored));
-		CollectionAssert.AreEqual(new[] { 1, 2 }, restored.ToArray());
+		Assert.AreSequenceEqual([1, 2], [.. restored]);
 	}
 
 	[TestMethod]
@@ -125,7 +122,7 @@ public sealed class BookmarkSidecarStoreTests
 
 		// No sidecar exists at the blocked path, so the load reports success with an empty list.
 		Assert.IsTrue(store.TryLoad(blockedDocumentPath, out IReadOnlyList<int> restored));
-		Assert.AreEqual(0, restored.Count);
+		Assert.IsEmpty(restored);
 	}
 
 	[TestMethod]
@@ -133,10 +130,11 @@ public sealed class BookmarkSidecarStoreTests
 	{
 		using var directory = new TemporaryDirectory("bookmark-sidecar-");
 		string documentPath = directory.GetFilePath("missing.lua");
+
 		var store = new BookmarkSidecarStore(Extension);
 
 		Assert.IsTrue(store.TryLoad(documentPath, out IReadOnlyList<int> restored));
-		Assert.AreEqual(0, restored.Count);
+		Assert.IsEmpty(restored);
 	}
 
 	[TestMethod]
@@ -151,7 +149,7 @@ public sealed class BookmarkSidecarStoreTests
 		File.WriteAllLines(documentPath + Extension, ["7", "not-a-number", "3", "3", "1", "0"]);
 
 		Assert.IsTrue(store.TryLoad(documentPath, out IReadOnlyList<int> restored));
-		CollectionAssert.AreEqual(new[] { 1, 3, 7 }, restored.ToArray());
+		Assert.AreSequenceEqual([1, 3, 7], [.. restored]);
 	}
 
 	[TestMethod]
@@ -164,12 +162,12 @@ public sealed class BookmarkSidecarStoreTests
 		File.WriteAllText(documentPath + Extension, string.Empty);
 
 		Assert.IsTrue(store.TryLoad(documentPath, out IReadOnlyList<int> emptyFile));
-		Assert.AreEqual(0, emptyFile.Count);
+		Assert.IsEmpty(emptyFile);
 
 		File.WriteAllLines(documentPath + Extension, ["0", string.Empty, "x"]);
 
 		Assert.IsTrue(store.TryLoad(documentPath, out IReadOnlyList<int> ignoredEntries));
-		Assert.AreEqual(0, ignoredEntries.Count);
+		Assert.IsEmpty(ignoredEntries);
 	}
 
 	[TestMethod]
@@ -183,7 +181,7 @@ public sealed class BookmarkSidecarStoreTests
 		var store = new BookmarkSidecarStore(Extension);
 
 		Assert.IsFalse(store.TryLoad(documentPath, out IReadOnlyList<int> restored));
-		Assert.AreEqual(0, restored.Count);
+		Assert.IsEmpty(restored);
 	}
 
 	[TestMethod]
@@ -199,7 +197,6 @@ public sealed class BookmarkSidecarStoreTests
 	public void TryLoad_NullFilePath_Throws()
 	{
 		var store = new BookmarkSidecarStore(Extension);
-
 		Assert.ThrowsExactly<ArgumentNullException>(() => store.TryLoad(null!, out _));
 	}
 }

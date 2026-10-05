@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net8.0-windows</TargetFramework>
+		<UseWPF>true</UseWPF>
+		<IsPackable>false</IsPackable>
+		<IsTestProject>true</IsTestProject>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="coverlet.collector" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" />
+		<PackageReference Include="MSTest.TestAdapter" />
+		<PackageReference Include="MSTest.TestFramework" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<!-- A command palette host takes the WPF window and, through it, the controller, and the key bindings for its commands; this project references nothing else of the repository. -->
+		<ProjectReference Include="..\..\..\src\QuickPick\Nickelony.QuickPick.Wpf\Nickelony.QuickPick.Wpf.csproj" />
+		<ProjectReference Include="..\..\..\src\KeyBindings\Nickelony.KeyBindings\Nickelony.KeyBindings.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Include="..\TestSupport\WpfTestHost.cs" Link="TestSupport\WpfTestHost.cs" />
+		<Compile Include="..\..\TestSupport\Wpf\WpfToolkitTestHost.cs" Link="TestSupport\WpfToolkitTestHost.cs" />
+		<Compile Include="..\..\TestSupport\Wpf\HostWindow.cs" Link="TestSupport\HostWindow.cs" />
+		<Compile Include="..\..\TestSupport\Wpf\TestWindowActivation.cs" Link="TestSupport\TestWindowActivation.cs" />
+		<Compile Include="..\..\TestSupport\Wpf\DispatcherTestHelpers.cs" Link="TestSupport\DispatcherTestHelpers.cs" />
+		<Compile Include="..\..\TestSupport\TestCategories.cs" Link="TestSupport\TestCategories.cs" />
+		<Compile Include="..\..\TestSupport\FakePumpedUiThread.cs" Link="TestSupport\FakePumpedUiThread.cs" />
+		<Compile Include="..\..\TestSupport\QuickPickTestHost.cs" Link="TestSupport\QuickPickTestHost.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
+		<Using Include="Nickelony.QuickPick.Testing" />
+		<Using Include="Nickelony.Testing" />
+	</ItemGroup>
+</Project>

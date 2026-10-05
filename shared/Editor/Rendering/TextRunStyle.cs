@@ -8,48 +8,44 @@ using Brush = System.Windows.Media.Brush;
 #endif
 
 #if AVALONIAEDIT
+
 namespace Nickelony.IDEKit.AvaloniaEdit.Rendering;
+
 #else
+
 namespace Nickelony.IDEKit.AvalonEdit.Rendering;
+
 #endif
 
-/// <summary>
-/// Describes the resolved visual formatting of a text run: a foreground brush, bold and italic
-/// settings, and text decorations.
-/// </summary>
+/// <summary>Describes the resolved visual formatting of a text run: a foreground brush, bold and italic settings, and text decorations.</summary>
 /// <param name="Foreground">The foreground brush to apply, when one is resolved.</param>
 /// <param name="IsBold">Whether the run is rendered bold. A disabled setting preserves the base typeface's weight.</param>
 /// <param name="IsItalic">Whether the run is rendered italic. A disabled setting preserves the base typeface's style.</param>
 /// <param name="TextDecorations">The text decorations to apply, when any are resolved.</param>
 /// <remarks>
-/// Brushes and decoration collections are applied on every paint pass of a text view, so styles that a
-/// resolver shares between calls should hold instances that are not mutated after they are created. Use
-/// <see cref="TextRunStyleApplier"/> to apply the style to a visual line element.
+/// Brushes and decoration collections are applied on every paint pass of a text view, so styles that a resolver shares between calls should hold
+/// instances that are not mutated after they are created. Use <see cref="TextRunStyleApplier"/> to apply the style to a visual line element.
+/// Equality uses the toolkit types' own equality for <paramref name="Foreground"/> and <paramref name="TextDecorations"/>, so only styles that hold
+/// the same brush and decoration instances are guaranteed to be equal.
 /// </remarks>
-public readonly record struct TextRunStyle(
-	Brush? Foreground,
-	bool IsBold,
-	bool IsItalic,
-	TextDecorationCollection? TextDecorations) : ITextRunStyle
+public readonly record struct TextRunStyle(Brush? Foreground, bool IsBold, bool IsItalic, TextDecorationCollection? TextDecorations)
 {
-	/// <summary>
-	/// Gets a style that requests no formatting.
-	/// </summary>
-	public static TextRunStyle Empty { get; } = new(null, false, false, null);
+	/// <summary>A style that requests no formatting.</summary>
+	public static TextRunStyle Empty { get; } = new(Foreground: null, IsBold: false, IsItalic: false, TextDecorations: null);
 
-	/// <inheritdoc/>
+	/// <summary>
+	/// Whether the style requests any formatting: it has a foreground brush, is bold, is italic, or carries a non-empty text decoration collection.
+	/// </summary>
+	/// <remarks>
+	/// A <see langword="null"/> or empty decoration collection does not count as formatting, so a caller can skip applying an empty style.
+	/// </remarks>
 	public bool HasFormatting => Foreground is not null || IsBold || IsItalic || TextDecorations is { Count: > 0 };
 
-	/// <summary>
-	/// Creates a typeface by applying this style's bold and italic settings to a base typeface.
-	/// A disabled setting preserves the corresponding weight or style from the base typeface.
-	/// </summary>
+	/// <summary>Creates a typeface by applying this style's bold and italic settings to a base typeface.</summary>
 	/// <param name="baseTypeface">The base typeface to derive from.</param>
 	/// <returns>The derived typeface.</returns>
 	/// <exception cref="ArgumentNullException">
-	/// <paramref name="baseTypeface"/> is <see langword="null"/>, where the binding's typeface type is a
-	/// reference type.
+	/// <paramref name="baseTypeface"/> is <see langword="null"/>, where the binding's typeface type is a reference type.
 	/// </exception>
-	public Typeface CreateTypeface(Typeface baseTypeface)
-		=> TextRunStyleApplier.CreateTypeface(baseTypeface, this);
+	public Typeface CreateTypeface(Typeface baseTypeface) => TextRunStyleApplier.CreateTypeface(baseTypeface, this);
 }

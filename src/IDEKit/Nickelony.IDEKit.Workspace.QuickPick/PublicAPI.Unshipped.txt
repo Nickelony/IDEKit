@@ -1,0 +1,52 @@
+#nullable enable
+Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileOpenRequest
+Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileOpenRequest.<Clone>$() -> Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileOpenRequest!
+Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileOpenRequest.Column.get -> int?
+Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileOpenRequest.Equals(Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileOpenRequest? other) -> bool
+Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileOpenRequest.Line.get -> int?
+Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileOpenRequest.Path.get -> string!
+Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileOpenRequest.WorkspaceFileOpenRequest(string! path, int? line = null, int? column = null) -> void
+Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileQuickPickOptions
+Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileQuickPickOptions.<Clone>$() -> Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileQuickPickOptions!
+Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileQuickPickOptions.EmptyText.get -> string!
+Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileQuickPickOptions.EmptyText.init -> void
+Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileQuickPickOptions.Equals(Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileQuickPickOptions? other) -> bool
+Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileQuickPickOptions.ExcludeGlobs.get -> System.Collections.Generic.IReadOnlyList<string!>!
+Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileQuickPickOptions.ExcludeGlobs.init -> void
+Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileQuickPickOptions.FileGroupLabel.get -> string?
+Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileQuickPickOptions.FileGroupLabel.init -> void
+Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileQuickPickOptions.MaxFileCount.get -> int
+Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileQuickPickOptions.MaxFileCount.init -> void
+Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileQuickPickOptions.Name.get -> string!
+Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileQuickPickOptions.Name.init -> void
+Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileQuickPickOptions.Placeholder.get -> string!
+Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileQuickPickOptions.Placeholder.init -> void
+Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileQuickPickOptions.RecentGroupLabel.get -> string?
+Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileQuickPickOptions.RecentGroupLabel.init -> void
+Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileQuickPickOptions.UnsavedText.get -> string?
+Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileQuickPickOptions.UnsavedText.init -> void
+Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileQuickPickOptions.WorkspaceFileQuickPickOptions() -> void
+Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileQuickPickProvider
+Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileQuickPickProvider.AcceptAsync(Nickelony.QuickPick.QuickPickAcceptRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task!
+Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileQuickPickProvider.Dispose() -> void
+Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileQuickPickProvider.EmptyText.get -> string!
+Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileQuickPickProvider.FilesChanged -> System.EventHandler?
+Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileQuickPickProvider.FilterMode.get -> Nickelony.QuickPick.QuickPickFilterMode
+Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileQuickPickProvider.GetFilterText(string! query) -> string!
+Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileQuickPickProvider.GetItemsAsync(Nickelony.QuickPick.QuickPickRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<Nickelony.QuickPick.QuickPickItem!>!>!
+Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileQuickPickProvider.Name.get -> string!
+Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileQuickPickProvider.Placeholder.get -> string!
+Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileQuickPickProvider.Prefix.get -> string!
+Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileQuickPickProvider.RecentGroup.get -> Nickelony.QuickPick.QuickPickGroup?
+Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileQuickPickProvider.WorkspaceFileQuickPickProvider(System.Collections.Generic.IReadOnlyList<string!>! rootPaths, Nickelony.IDEKit.Core.Paths.LocalPathComparisonPolicy pathComparison, System.Func<Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileOpenRequest!, System.Threading.CancellationToken, System.Threading.Tasks.Task!>! openFileAsync, System.Func<System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Core.Navigation.OpenEditorDescriptor!>!>? listOpenEditors = null, Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileQuickPickOptions? options = null, System.Action<System.Exception!>? reportFault = null) -> void
+override Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileOpenRequest.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileOpenRequest.GetHashCode() -> int
+override Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileOpenRequest.ToString() -> string!
+override Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileQuickPickOptions.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileQuickPickOptions.GetHashCode() -> int
+override Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileQuickPickOptions.ToString() -> string!
+static Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileOpenRequest.operator !=(Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileOpenRequest? left, Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileOpenRequest? right) -> bool
+static Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileOpenRequest.operator ==(Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileOpenRequest? left, Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileOpenRequest? right) -> bool
+static Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileQuickPickOptions.Default.get -> Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileQuickPickOptions!
+static Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileQuickPickOptions.operator !=(Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileQuickPickOptions? left, Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileQuickPickOptions? right) -> bool
+static Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileQuickPickOptions.operator ==(Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileQuickPickOptions? left, Nickelony.IDEKit.Workspace.QuickPick.WorkspaceFileQuickPickOptions? right) -> bool

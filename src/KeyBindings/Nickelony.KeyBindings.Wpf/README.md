@@ -1,84 +1,67 @@
 # Nickelony.KeyBindings.Wpf
 
-WPF adapter for [`Nickelony.KeyBindings`](../Nickelony.KeyBindings/README.md).
-It maps WPF input to the host-neutral key model and provides the WPF entry points.
+WPF adapter for
+[`Nickelony.KeyBindings`](https://github.com/Nickelony/LanguageServer/blob/main/src/KeyBindings/Nickelony.KeyBindings/README.md):
+it maps WPF input to the toolkit-neutral key model and provides the WPF entry points. It depends on
+`Nickelony.KeyBindings` and WPF and targets `net8.0-windows`.
 
 ## Getting started
 
 ```sh
-dotnet add package Nickelony.KeyBindings.Wpf
+dotnet add package Nickelony.KeyBindings.Wpf --prerelease
 ```
 
 A WPF host chooses its display-text formatter explicitly and dispatches key events
 through the adapter:
 
 ```csharp
+using Nickelony.KeyBindings;
+using Nickelony.KeyBindings.Wpf;
+
+// The catalog and the overrides store are built as in the Nickelony.KeyBindings readme.
 var options = new KeyBindingServiceOptions
 {
-	DisplayTextFormatter = KeyGestureDisplayTextFormatter.Default
+    DisplayTextFormatter = KeyGestureDisplayTextFormatter.CurrentCulture
 };
+
+var service = new KeyBindingService<AppCommand>(catalog, overridesStore, options);
 ```
 
 ```csharp
+using System.Windows.Input;
+using Nickelony.KeyBindings;
 using Nickelony.KeyBindings.Wpf;
 
-private void OnEditorKeyDown(object sender, KeyEventArgs e)
+// The handler of the key-down event of the element that has the focus.
+void OnEditorKeyDown(IKeyBindingDispatcher dispatcher, KeyEventArgs e)
 {
-	// Both results consume the keystroke: Executed ran a command, Pending buffered a chord.
-	// The second argument is the host's active context token, or null when it has none.
-	if (_shortcutDispatcher.HandleKeyDown(e, _editor.ActiveMode.Token) != KeyChordDispatchResult.NotHandled)
-		e.Handled = true;
+    // Both outcomes consume the stroke: Executed ran a command, Pending buffered a chord.
+    // The second argument is the active context token of the host, or null when it has none.
+    if (dispatcher.HandleKeyDown(e, context: null) != KeyStrokeDispatchOutcome.NotHandled)
+        e.Handled = true;
 }
 ```
 
-## Dependencies
+## Remarks
 
-`Nickelony.KeyBindings` (the host-neutral command and key model the adapter
-maps onto WPF) and WPF itself (the package targets `net8.0-windows`).
+- **Key conversion.** `ToKeyStroke` normalizes `Key.System`, reads modifiers from the event's keyboard
+  device, and returns no stroke for IME or dead-character events.
+- **AltGr.** `IsAltGr` reports an AltGr stroke, which Windows synthesizes as left Ctrl plus right Alt on a key
+  that types a character, so a Ctrl+Alt chord on an F-key is not AltGr.
+- **Dropped strokes.** An event another handler already marked handled is never dispatched, and auto-repeat
+  and AltGr strokes are dropped unless `KeyDownHandlingOptions` opts them back in (pass
+  `new KeyDownHandlingOptions { IgnoreAutoRepeat = false }` for commands meant to repeat while the key is
+  held).
+- **Display text.** `KeyGestureDisplayTextFormatter` renders the text WPF's converter produces: `Meta` as
+  `Windows+`, letters and main-row digits as characters, WPF's key text for the rest (so `Slash` renders as
+  `OemQuestion`), and a chord's strokes joined with a comma.
+- **Unsupported gestures.** WPF rejects a letter or main-row digit without Ctrl, Alt, or Windows, such as
+  `Shift+S`, as a gesture, so the formatter renders the modifier-and-key text instead of throwing.
+- **Not the Windows profile.** A `DesktopKeyDisplayTextFormatter` over `KeyBindingPlatformProfile.Windows` is
+  toolkit-free and renders different text: it labels `Meta` as `Win` and renders `Slash` as `/`.
 
-## What's inside
-
-- `KeyCodeMapper` - converts between `System.Windows.Input.Key` and `KeyCode`, and
-  between `ModifierKeys` and `KeyModifierSet`.
-- `KeyEventArgsExtensions.ToKeyCombo` - creates a `KeyCombo` from a `KeyEventArgs`,
-  normalizing `Key.System` and reading modifiers from the event's keyboard device.
-- `KeyEventArgsExtensions.IsAltGr` - reports whether an event was produced by AltGr, which
-  Windows synthesizes as left Ctrl plus right Alt.
-- `KeyBindingDispatcherExtensions.HandleKeyDown` - dispatches a `KeyEventArgs`
-  through `KeyBindingDispatcher<TCommandId>` and returns `KeyChordDispatchResult`:
-  `Executed` when a command ran, `Pending` when the stroke started or continued a
-  chord, and `NotHandled` otherwise. The caller marks the event `Handled` for both
-  `Executed` and `Pending`, because a buffered chord consumed the keystroke. The active
-  context token is a required argument, so a host whose control has view modes passes the
-  token of its current mode and a host with no contexts passes `null`.
-- `KeyGestureDisplayTextFormatter` - derives from `KeyDisplayTextFormatter` and renders
-  culture-aware WPF gesture text (`Meta` renders as `Windows+`). Letters and main-row
-  digits render as characters; other keys render as their `Key` names (for example
-  `Ctrl+OemQuestion`), combos WPF rejects as gestures fall back to WPF's converter
-  text (`Shift+S`, `5`), and a chord's gestures are joined with a comma (`Ctrl+K,
-  Ctrl+S`).
-
-The Windows desktop conventions (`Ctrl+`, `Win+`, `Enter`, `Esc`, and US-layout glyphs such as `=`
-for `Equals`, with a `Num ` prefix for the numpad keys) come from the `Windows` preset of
-`DesktopKeyDisplayTextFormatter` in the host-neutral `Nickelony.KeyBindings` package; a bare
-`DesktopKeyDisplayConventions` instead renders the neutral labels (`Control`, `Meta`, `Numpad `). That
-formatter depends on no desktop toolkit, so a host does not need this package for the Windows text
-alone; the same formatter ships the Linux (`Ctrl+`, `Super+`) and macOS (`⌃⌥⇧⌘`) conventions as
-`DesktopKeyDisplayTextFormatter.Linux` and `.MacOS`. An Avalonia host uses `Nickelony.KeyBindings.Avalonia` instead, which carries the same key
-mapping, event conversion, and dispatch surface for Avalonia's input model.
-
-`HandleKeyDown` never dispatches an event another handler already marked handled, and it
-drops auto-repeat and AltGr strokes unless `KeyDownHandlingOptions` opts them back in. Pass
-`new KeyDownHandlingOptions { IgnoreAutoRepeat = false }` for commands that are meant to
-repeat while the key is held. IME and dead-character events are never converted to a key
-combo, so they never dispatch.
-
-A `Pending` result means the dispatcher buffered a chord stroke. The adapter contains no
-timer: the host supplies the cancel triggers with `CancelPendingChord` (Escape, focus loss,
-an idle timeout of its own), because the timing policy belongs to the toolkit. A host that
-participates in a context chain should route the stroke with
-`KeyBindingDispatcherChain.DispatchInPriorityOrder` instead of calling the adapter for one
-dispatcher, and it passes the same active token to every dispatcher in the chain.
+The [key bindings guide](https://github.com/Nickelony/LanguageServer/blob/main/docs/KeyBindingsGuide.md) owns
+the dispatch and hosting contracts, the pending-chord cancel triggers, and the display text conventions.
 
 ## License
 

@@ -1,0 +1,4 @@
+is_global = true
+
+# Directory.Build.targets adds this file to a project that sets RequireConfigureAwait (CONVENTIONS.md, rule C13).
+dotnet_diagnostic.CA2007.severity = error

@@ -1,74 +1,73 @@
 namespace Nickelony.KeyBindings.Tests;
 
-/// <summary>
-/// Covers the desktop formatter for the neutral default and the Windows, Linux, and macOS conventions.
-/// </summary>
+/// <summary>Covers the desktop formatter for the neutral default and the Windows, Linux, and macOS profiles.</summary>
 [TestClass]
-public class DesktopKeyDisplayTextFormatterTests
+public sealed class DesktopKeyDisplayTextFormatterTests
 {
-	private static DesktopKeyDisplayTextFormatter FormatterFor(string convention)
-		=> convention switch
-		{
-			"Windows" => DesktopKeyDisplayTextFormatter.Windows,
-			"Linux" => DesktopKeyDisplayTextFormatter.Linux,
-			"MacOS" => DesktopKeyDisplayTextFormatter.MacOS,
-			_ => throw new ArgumentOutOfRangeException(nameof(convention), convention, "Unknown convention.")
-		};
-
-	// The bare convention is the neutral default a host gets before it opts into a preset, so the canonical
-	// labels it renders are pinned here.
-	[TestMethod]
-	public void GetDisplayText_NeutralConventions_RendersTheCanonicalLabels()
+	private static DesktopKeyDisplayTextFormatter FormatterFor(string platform)
 	{
-		var formatter = new DesktopKeyDisplayTextFormatter(new DesktopKeyDisplayConventions());
-
-		Assert.AreEqual("Control+S", formatter.GetDisplayText(new KeyCombo(KeyCode.S, KeyModifierSet.Control)));
-		Assert.AreEqual("Meta+Enter", formatter.GetDisplayText(new KeyCombo(KeyCode.Enter, KeyModifierSet.Meta)));
-		Assert.AreEqual("Numpad 5", formatter.GetDisplayText(new KeyCombo(KeyCode.NumPad5, KeyModifierSet.None)));
+		return platform switch
+		{
+			"Windows" => new DesktopKeyDisplayTextFormatter(KeyBindingPlatformProfile.Windows),
+			"Linux" => new DesktopKeyDisplayTextFormatter(KeyBindingPlatformProfile.Linux),
+			"MacOS" => new DesktopKeyDisplayTextFormatter(KeyBindingPlatformProfile.MacOS),
+			_ => throw new ArgumentOutOfRangeException(nameof(platform), platform, "Unknown platform."),
+		};
 	}
 
-	// The Windows rows are the exhaustive reference for the shared key table. Linux and MacOS render the
-	// same shared table, so they only carry one row per rendering path (an identity key, a shared-table
-	// override, and a numpad key) plus their convention-specific rows further down; repeating every
-	// shared entry per convention would re-assert the same table without covering another path.
+	// The default profile is the neutral one a host gets before it opts into a preset, so the canonical
+	// labels it renders are pinned here.
 	[TestMethod]
-	[DataRow("Windows", KeyCode.D0, KeyModifierSet.None, "0")]
-	[DataRow("Windows", KeyCode.D9, KeyModifierSet.None, "9")]
-	[DataRow("Windows", KeyCode.F9, KeyModifierSet.None, "F9")]
-	[DataRow("Windows", KeyCode.Clear, KeyModifierSet.None, "Clear")]
-	[DataRow("Windows", KeyCode.Tab, KeyModifierSet.None, "Tab")]
-	[DataRow("Windows", KeyCode.Space, KeyModifierSet.None, "Space")]
-	[DataRow("Windows", KeyCode.Home, KeyModifierSet.None, "Home")]
-	[DataRow("Windows", KeyCode.End, KeyModifierSet.None, "End")]
-	[DataRow("Windows", KeyCode.PrintScreen, KeyModifierSet.None, "PrintScreen")]
-	[DataRow("Windows", KeyCode.Escape, KeyModifierSet.None, "Esc")]
-	[DataRow("Windows", KeyCode.Semicolon, KeyModifierSet.None, ";")]
-	[DataRow("Windows", KeyCode.Equals, KeyModifierSet.None, "=")]
-	[DataRow("Windows", KeyCode.Comma, KeyModifierSet.None, ",")]
-	[DataRow("Windows", KeyCode.Minus, KeyModifierSet.None, "-")]
-	[DataRow("Windows", KeyCode.Period, KeyModifierSet.None, ".")]
-	[DataRow("Windows", KeyCode.Slash, KeyModifierSet.None, "/")]
-	[DataRow("Windows", KeyCode.Grave, KeyModifierSet.None, "`")]
-	[DataRow("Windows", KeyCode.LeftBracket, KeyModifierSet.None, "[")]
-	[DataRow("Windows", KeyCode.RightBracket, KeyModifierSet.None, "]")]
-	[DataRow("Windows", KeyCode.Backslash, KeyModifierSet.None, "\\")]
-	[DataRow("Windows", KeyCode.Apostrophe, KeyModifierSet.None, "'")]
-	[DataRow("Windows", KeyCode.IntlBackslash, KeyModifierSet.None, "IntlBackslash")]
-	[DataRow("Windows", KeyCode.Oem8, KeyModifierSet.None, "Oem8")]
-	[DataRow("Windows", KeyCode.NumPad5, KeyModifierSet.None, "Num 5")]
-	[DataRow("Windows", KeyCode.Add, KeyModifierSet.None, "Num +")]
-	[DataRow("Windows", KeyCode.Subtract, KeyModifierSet.None, "Num -")]
-	[DataRow("Windows", KeyCode.Multiply, KeyModifierSet.None, "Num *")]
-	[DataRow("Windows", KeyCode.Divide, KeyModifierSet.None, "Num /")]
-	[DataRow("Windows", KeyCode.Decimal, KeyModifierSet.None, "Num .")]
-	[DataRow("Linux", KeyCode.D5, KeyModifierSet.None, "5")]
-	[DataRow("Linux", KeyCode.Escape, KeyModifierSet.None, "Esc")]
-	[DataRow("Linux", KeyCode.NumPad5, KeyModifierSet.None, "Num 5")]
-	[DataRow("MacOS", KeyCode.D5, KeyModifierSet.None, "5")]
-	[DataRow("MacOS", KeyCode.Escape, KeyModifierSet.None, "Esc")]
-	[DataRow("MacOS", KeyCode.NumPad5, KeyModifierSet.None, "Num 5")]
-	public void GetDisplayText_CommonKey_ReturnsExpectedText(string convention, KeyCode key, KeyModifierSet modifiers, string expected)
-		=> Assert.AreEqual(expected, FormatterFor(convention).GetDisplayText(new KeyCombo(key, modifiers)));
+	public void GetDisplayText_DefaultProfile_RendersTheCanonicalLabels()
+	{
+		var formatter = new DesktopKeyDisplayTextFormatter(KeyBindingPlatformProfile.Default);
+
+		Assert.AreEqual("Control+S", formatter.GetDisplayText(new KeyStroke(KeyCode.S, KeyModifiers.Control)));
+		Assert.AreEqual("Meta+Enter", formatter.GetDisplayText(new KeyStroke(KeyCode.Enter, KeyModifiers.Meta)));
+		Assert.AreEqual("NumPad 5", formatter.GetDisplayText(new KeyStroke(KeyCode.NumPad5, KeyModifiers.None)));
+	}
+
+	// The Windows rows are the exhaustive reference for the shared key table; Linux and MacOS cover one
+	// row per rendering path plus their platform-specific rows.
+	[TestMethod]
+	[DataRow("Windows", KeyCode.D0, KeyModifiers.None, "0")]
+	[DataRow("Windows", KeyCode.D9, KeyModifiers.None, "9")]
+	[DataRow("Windows", KeyCode.F9, KeyModifiers.None, "F9")]
+	[DataRow("Windows", KeyCode.Clear, KeyModifiers.None, "Clear")]
+	[DataRow("Windows", KeyCode.Separator, KeyModifiers.None, "Separator")]
+	[DataRow("Windows", KeyCode.Tab, KeyModifiers.None, "Tab")]
+	[DataRow("Windows", KeyCode.Space, KeyModifiers.None, "Space")]
+	[DataRow("Windows", KeyCode.Home, KeyModifiers.None, "Home")]
+	[DataRow("Windows", KeyCode.End, KeyModifiers.None, "End")]
+	[DataRow("Windows", KeyCode.PrintScreen, KeyModifiers.None, "PrintScreen")]
+	[DataRow("Windows", KeyCode.Escape, KeyModifiers.None, "Esc")]
+	[DataRow("Windows", KeyCode.Semicolon, KeyModifiers.None, ";")]
+	[DataRow("Windows", KeyCode.Equals, KeyModifiers.None, "=")]
+	[DataRow("Windows", KeyCode.Comma, KeyModifiers.None, ",")]
+	[DataRow("Windows", KeyCode.Minus, KeyModifiers.None, "-")]
+	[DataRow("Windows", KeyCode.Period, KeyModifiers.None, ".")]
+	[DataRow("Windows", KeyCode.Slash, KeyModifiers.None, "/")]
+	[DataRow("Windows", KeyCode.Grave, KeyModifiers.None, "`")]
+	[DataRow("Windows", KeyCode.LeftBracket, KeyModifiers.None, "[")]
+	[DataRow("Windows", KeyCode.RightBracket, KeyModifiers.None, "]")]
+	[DataRow("Windows", KeyCode.Backslash, KeyModifiers.None, "\\")]
+	[DataRow("Windows", KeyCode.Apostrophe, KeyModifiers.None, "'")]
+	[DataRow("Windows", KeyCode.IntlBackslash, KeyModifiers.None, "IntlBackslash")]
+	[DataRow("Windows", KeyCode.Oem8, KeyModifiers.None, "Oem8")]
+	[DataRow("Windows", KeyCode.NumPad5, KeyModifiers.None, "Num 5")]
+	[DataRow("Windows", KeyCode.Add, KeyModifiers.None, "Num +")]
+	[DataRow("Windows", KeyCode.Subtract, KeyModifiers.None, "Num -")]
+	[DataRow("Windows", KeyCode.Multiply, KeyModifiers.None, "Num *")]
+	[DataRow("Windows", KeyCode.Divide, KeyModifiers.None, "Num /")]
+	[DataRow("Windows", KeyCode.Decimal, KeyModifiers.None, "Num .")]
+	[DataRow("Linux", KeyCode.D5, KeyModifiers.None, "5")]
+	[DataRow("Linux", KeyCode.Escape, KeyModifiers.None, "Esc")]
+	[DataRow("Linux", KeyCode.NumPad5, KeyModifiers.None, "Num 5")]
+	[DataRow("MacOS", KeyCode.D5, KeyModifiers.None, "5")]
+	[DataRow("MacOS", KeyCode.Escape, KeyModifiers.None, "Esc")]
+	[DataRow("MacOS", KeyCode.NumPad5, KeyModifiers.None, "Num 5")]
+	public void GetDisplayText_CommonKey_ReturnsExpectedText(string platform, KeyCode key, KeyModifiers modifiers, string expected) =>
+		Assert.AreEqual(expected, FormatterFor(platform).GetDisplayText(new KeyStroke(key, modifiers)));
 
 	[TestMethod]
 	[DataRow("Windows", KeyCode.Enter, "Enter")]
@@ -94,70 +93,70 @@ public class DesktopKeyDisplayTextFormatterTests
 	[DataRow("MacOS", KeyCode.Up, "↑")]
 	[DataRow("MacOS", KeyCode.Right, "→")]
 	[DataRow("MacOS", KeyCode.Down, "↓")]
-	public void GetDisplayText_SpecialKey_ReturnsExpectedText(string convention, KeyCode key, string expected)
-		=> Assert.AreEqual(expected, FormatterFor(convention).GetDisplayText(new KeyCombo(key, KeyModifierSet.None)));
+	public void GetDisplayText_SpecialKey_ReturnsExpectedText(string platform, KeyCode key, string expected) =>
+		Assert.AreEqual(expected, FormatterFor(platform).GetDisplayText(new KeyStroke(key, KeyModifiers.None)));
 
 	[TestMethod]
-	[DataRow("Windows", KeyCode.S, KeyModifierSet.Control | KeyModifierSet.Shift | KeyModifierSet.Alt | KeyModifierSet.Meta, "Ctrl+Shift+Alt+Win+S")]
-	[DataRow("Windows", KeyCode.S, KeyModifierSet.Meta, "Win+S")]
-	[DataRow("Windows", KeyCode.Space, KeyModifierSet.Control, "Ctrl+Space")]
-	[DataRow("Linux", KeyCode.S, KeyModifierSet.Control | KeyModifierSet.Shift | KeyModifierSet.Alt | KeyModifierSet.Meta, "Ctrl+Shift+Alt+Super+S")]
-	[DataRow("Linux", KeyCode.S, KeyModifierSet.Meta, "Super+S")]
-	[DataRow("Linux", KeyCode.Space, KeyModifierSet.Meta, "Super+Space")]
-	[DataRow("MacOS", KeyCode.S, KeyModifierSet.Meta, "⌘S")]
-	[DataRow("MacOS", KeyCode.Z, KeyModifierSet.Shift | KeyModifierSet.Meta, "⇧⌘Z")]
-	[DataRow("MacOS", KeyCode.Escape, KeyModifierSet.Alt | KeyModifierSet.Meta, "⌥⌘Esc")]
-	[DataRow("MacOS", KeyCode.Slash, KeyModifierSet.Control, "⌃/")]
-	[DataRow("MacOS", KeyCode.S, KeyModifierSet.Control | KeyModifierSet.Shift | KeyModifierSet.Alt | KeyModifierSet.Meta, "⌃⌥⇧⌘S")]
-	public void GetDisplayText_Modifiers_ReturnExpectedText(string convention, KeyCode key, KeyModifierSet modifiers, string expected)
-		=> Assert.AreEqual(expected, FormatterFor(convention).GetDisplayText(new KeyCombo(key, modifiers)));
+	[DataRow("Windows", KeyCode.S, KeyModifiers.Control | KeyModifiers.Shift | KeyModifiers.Alt | KeyModifiers.Meta, "Ctrl+Shift+Alt+Win+S")]
+	[DataRow("Windows", KeyCode.S, KeyModifiers.Meta, "Win+S")]
+	[DataRow("Windows", KeyCode.Space, KeyModifiers.Control, "Ctrl+Space")]
+	[DataRow("Linux", KeyCode.S, KeyModifiers.Control | KeyModifiers.Shift | KeyModifiers.Alt | KeyModifiers.Meta, "Ctrl+Shift+Alt+Super+S")]
+	[DataRow("Linux", KeyCode.S, KeyModifiers.Meta, "Super+S")]
+	[DataRow("Linux", KeyCode.Space, KeyModifiers.Meta, "Super+Space")]
+	[DataRow("MacOS", KeyCode.S, KeyModifiers.Meta, "⌘S")]
+	[DataRow("MacOS", KeyCode.Z, KeyModifiers.Shift | KeyModifiers.Meta, "⇧⌘Z")]
+	[DataRow("MacOS", KeyCode.Escape, KeyModifiers.Alt | KeyModifiers.Meta, "⌥⌘Esc")]
+	[DataRow("MacOS", KeyCode.Slash, KeyModifiers.Control, "⌃/")]
+	[DataRow("MacOS", KeyCode.S, KeyModifiers.Control | KeyModifiers.Shift | KeyModifiers.Alt | KeyModifiers.Meta, "⌃⌥⇧⌘S")]
+	public void GetDisplayText_Modifiers_ReturnExpectedText(string platform, KeyCode key, KeyModifiers modifiers, string expected) =>
+		Assert.AreEqual(expected, FormatterFor(platform).GetDisplayText(new KeyStroke(key, modifiers)));
 
 	[TestMethod]
 	[DataRow("Windows", "Ctrl+K, Ctrl+S")]
 	[DataRow("Linux", "Ctrl+K, Ctrl+S")]
 	[DataRow("MacOS", "⌘K ⌘S")]
-	public void GetDisplayText_Chord_JoinsStrokesWithTheConventionSeparator(string convention, string expected)
+	public void GetDisplayText_Chord_JoinsStrokesWithThePlatformSeparator(string platform, string expected)
 	{
 		var chord = new KeyChord(
-			new KeyCombo(KeyCode.K, convention == "MacOS" ? KeyModifierSet.Meta : KeyModifierSet.Control),
-			new KeyCombo(KeyCode.S, convention == "MacOS" ? KeyModifierSet.Meta : KeyModifierSet.Control));
+			new KeyStroke(KeyCode.K, platform == "MacOS" ? KeyModifiers.Meta : KeyModifiers.Control),
+			new KeyStroke(KeyCode.S, platform == "MacOS" ? KeyModifiers.Meta : KeyModifiers.Control)
+		);
 
-		Assert.AreEqual(expected, FormatterFor(convention).GetDisplayText(chord));
+		Assert.AreEqual(expected, FormatterFor(platform).GetDisplayText(chord));
 	}
 
 	[TestMethod]
 	[DataRow("Windows")]
 	[DataRow("Linux")]
 	[DataRow("MacOS")]
-	public void GetDisplayText_UninitializedCombo_Throws(string convention)
-		=> Assert.ThrowsExactly<ArgumentException>(() => FormatterFor(convention).GetDisplayText(default));
+	public void GetDisplayText_UninitializedStroke_Throws(string platform) =>
+		Assert.ThrowsExactly<ArgumentException>(() => FormatterFor(platform).GetDisplayText(default));
 
 	[TestMethod]
 	[DataRow("Windows")]
 	[DataRow("Linux")]
 	[DataRow("MacOS")]
-	public void GetDisplayText_UninitializedChord_Throws(string convention)
-		=> Assert.ThrowsExactly<ArgumentException>(() => FormatterFor(convention).GetDisplayText(default(KeyChord)));
+	public void GetDisplayText_UninitializedChord_Throws(string platform) =>
+		Assert.ThrowsExactly<ArgumentException>(() => FormatterFor(platform).GetDisplayText(default(KeyChord)));
 
 	[TestMethod]
-	public void Constructor_NullConventions_Throws()
-		=> Assert.ThrowsExactly<ArgumentNullException>(() => new DesktopKeyDisplayTextFormatter(null!));
+	public void Constructor_NullProfile_Throws() => Assert.ThrowsExactly<ArgumentNullException>(() => new DesktopKeyDisplayTextFormatter(null!));
 
 	[TestMethod]
-	public void Conventions_ReturnsTheSuppliedValue()
+	public void Profile_ReturnsTheSuppliedValue()
 	{
-		DesktopKeyDisplayConventions conventions = DesktopKeyDisplayConventions.Linux;
-
-		Assert.AreSame(conventions, new DesktopKeyDisplayTextFormatter(conventions).Conventions);
+		KeyBindingPlatformProfile profile = KeyBindingPlatformProfile.Linux;
+		Assert.AreSame(profile, new DesktopKeyDisplayTextFormatter(profile).Profile);
 	}
 
 	[TestMethod]
-	public void Conventions_WithConfiguration_ChangesOnlyTheEditedLabel()
+	public void Profile_WithConfiguration_ChangesOnlyTheEditedLabel()
 	{
-		DesktopKeyDisplayConventions custom = DesktopKeyDisplayConventions.Windows with { MetaLabel = "Cmd" };
+		KeyBindingPlatformProfile custom = KeyBindingPlatformProfile.Windows with { MetaLabel = "Cmd" };
+
 		var formatter = new DesktopKeyDisplayTextFormatter(custom);
 
-		Assert.AreEqual("Cmd+S", formatter.GetDisplayText(new KeyCombo(KeyCode.S, KeyModifierSet.Meta)));
-		Assert.AreEqual("Ctrl+S", formatter.GetDisplayText(new KeyCombo(KeyCode.S, KeyModifierSet.Control)));
+		Assert.AreEqual("Cmd+S", formatter.GetDisplayText(new KeyStroke(KeyCode.S, KeyModifiers.Meta)));
+		Assert.AreEqual("Ctrl+S", formatter.GetDisplayText(new KeyStroke(KeyCode.S, KeyModifiers.Control)));
 	}
 }

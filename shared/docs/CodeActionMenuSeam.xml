@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+	<members>
+		<member name="ApplyPlacement">
+			<summary>Places the menu at <paramref name="anchor" /> relative to <paramref name="placementTarget" />.</summary>
+			<param name="menu">The menu to place.</param>
+			<param name="placementTarget">The element the anchor is relative to.</param>
+			<param name="anchor">The menu's top-left position, relative to <paramref name="placementTarget" />.</param>
+		</member>
+
+		<member name="FocusFirstItem">
+			<summary>Makes the first item of the open menu the one that Enter applies and the arrow keys move from.</summary>
+			<param name="menu">The menu that opened.</param>
+		</member>
+
+		<member name="Close">
+			<summary>Closes the menu.</summary>
+			<param name="menu">The menu to close.</param>
+		</member>
+
+		<member name="CanOpenMenu">
+			<summary>Reports whether the text area is connected to a window or top level, so a menu can open against it.</summary>
+			<param name="textArea">The text area the menu belongs to.</param>
+			<returns><see langword="true" /> when the text area is connected; otherwise, <see langword="false" />.</returns>
+		</member>
+
+		<member name="TryTranslatePoint">
+			<summary>Translates a point from one element's coordinate space to another's.</summary>
+			<param name="source">The element that owns <paramref name="point" />.</param>
+			<param name="point">The point in the source's coordinate space.</param>
+			<param name="target">The element whose coordinate space the point is translated to.</param>
+			<param name="translated">Receives the translated point.</param>
+			<returns><see langword="true" /> when the translation succeeded; otherwise, <see langword="false" />.</returns>
+		</member>
+
+		<member name="GetTextViewOrigin">
+			<summary>Returns the origin of the text area's text view in the text area's coordinate space.</summary>
+			<param name="textArea">The text area whose text view is located.</param>
+			<returns>The origin, or the zero point when the text view is not connected to the text area.</returns>
+		</member>
+
+		<member name="TryFocus">
+			<summary>Restores keyboard focus to <paramref name="element" /> when it can receive focus.</summary>
+			<param name="element">The element that held focus before the menu opened, if any.</param>
+			<returns><see langword="true" /> when focus was restored; otherwise, <see langword="false" />.</returns>
+		</member>
+	</members>
+</doc>

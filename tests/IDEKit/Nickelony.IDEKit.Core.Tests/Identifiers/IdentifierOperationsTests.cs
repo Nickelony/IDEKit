@@ -46,28 +46,17 @@ public sealed class IdentifierOperationsTests
 	}
 
 	[TestMethod]
-	public void GetWordEndingAt_PastEnd_ClampsToLastWord()
-	{
-		Assert.AreEqual("Beta", IdentifierOperations.GetWordEndingAt("Beta", 999));
-	}
+	public void GetWordEndingAt_PastEnd_ClampsToLastWord() => Assert.AreEqual("Beta", IdentifierOperations.GetWordEndingAt("Beta", 999));
 
 	[TestMethod]
-	public void GetWordEndingAt_AtStart_ReturnsEmpty()
-	{
-		Assert.AreEqual(string.Empty, IdentifierOperations.GetWordEndingAt("Beta", 0));
-	}
+	public void GetWordEndingAt_AtStart_ReturnsEmpty() => Assert.AreEqual(string.Empty, IdentifierOperations.GetWordEndingAt("Beta", 0));
 
 	[TestMethod]
-	public void GetWordEndingAt_NegativeOffset_ReturnsEmpty()
-	{
-		Assert.AreEqual(string.Empty, IdentifierOperations.GetWordEndingAt("Beta", -1));
-	}
+	public void GetWordEndingAt_NegativeOffset_ReturnsEmpty() => Assert.AreEqual(string.Empty, IdentifierOperations.GetWordEndingAt("Beta", -1));
 
 	[TestMethod]
-	public void GetWordEndingAt_NonAsciiLetters_ArePartOfTheWord()
-	{
+	public void GetWordEndingAt_NonAsciiLetters_ArePartOfTheWord() =>
 		Assert.AreEqual("caf\u00E9", IdentifierOperations.GetWordEndingAt("caf\u00E9", 4));
-	}
 
 	[TestMethod]
 	public void GetWordEndingAt_AstralCharacter_SplitsAtTheSurrogatePair()
@@ -78,10 +67,7 @@ public sealed class IdentifierOperationsTests
 	}
 
 	[TestMethod]
-	public void GetWordEndingAt_EmptyValue_ReturnsEmpty()
-	{
-		Assert.AreEqual(string.Empty, IdentifierOperations.GetWordEndingAt(string.Empty, 0));
-	}
+	public void GetWordEndingAt_EmptyValue_ReturnsEmpty() => Assert.AreEqual(string.Empty, IdentifierOperations.GetWordEndingAt(string.Empty, 0));
 
 	[TestMethod]
 	public void GetWordEndingAt_AgreesWithEndingAtOffsetSpanForEveryInRangeOffset()
@@ -94,8 +80,13 @@ public sealed class IdentifierOperationsTests
 		for (int offset = 0; offset <= text.Length; offset++)
 		{
 			string prefix = IdentifierOperations.GetWordEndingAt(text, offset);
+
 			TextRange? span = IdentifierOperations.FindTokenSpan(
-				snapshot, offset, IdentifierCharacterPolicy.Default, IdentifierSpanMode.EndingAtOffset);
+				snapshot,
+				offset,
+				policy: IdentifierCharacterPolicy.Default,
+				mode: IdentifierSpanMode.EndingAtOffset
+			);
 
 			if (span is null)
 			{

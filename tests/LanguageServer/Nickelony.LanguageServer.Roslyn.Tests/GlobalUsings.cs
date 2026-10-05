@@ -1,4 +1,9 @@
-global using Nickelony.LanguageServer.Abstractions;
+global using Nickelony.IDEKit.Core.Text;
+global using Nickelony.IDEKit.FileWatching;
+global using Nickelony.IDEKit.LanguageFeatures.SemanticTokens;
 global using Nickelony.LanguageServer.Client;
+global using Nickelony.LanguageServer.Client.Protocol;
 global using Nickelony.LanguageServer.Provider;
+global using Nickelony.LanguageServer.Provider.Abstractions;
+global using Nickelony.LanguageServer.Testing;
 global using Nickelony.Testing;

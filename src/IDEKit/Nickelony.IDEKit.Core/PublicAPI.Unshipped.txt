@@ -1,71 +1,287 @@
 #nullable enable
-Nickelony.IDEKit.Core.Editing.TextEditSkipResult
-Nickelony.IDEKit.Core.Editing.TextEditSkipResult.Edits.get -> Nickelony.IDEKit.Core.Editing.PreparedTextEdits!
-Nickelony.IDEKit.Core.Editing.TextEditSkipResult.HasSkippedEntries.get -> bool
-Nickelony.IDEKit.Core.Editing.TextEditSkipResult.SkippedIssues.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Core.Editing.TextEditPreparationIssue!>!
-Nickelony.IDEKit.Core.Text.TextRange.FitsWithin(int textLength) -> bool
-static Nickelony.IDEKit.Core.Text.TextRange.Normalize(int textLength, int startOffset, int endOffset) -> Nickelony.IDEKit.Core.Text.TextRange?
-static Nickelony.IDEKit.Core.Editing.TextEditKernel.PrepareSkippingInvalidEntries(Nickelony.IDEKit.Core.Text.ITextSnapshot! snapshot, System.Collections.Generic.IEnumerable<Nickelony.IDEKit.Core.Editing.TextEditInput?>! edits) -> Nickelony.IDEKit.Core.Editing.TextEditSkipResult!
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingAction
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingAction.AutoClosingAction() -> void
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingAction.AutoClosingAction(Nickelony.IDEKit.Core.AutoClosing.AutoClosingActionKind kind, string? closingText) -> void
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingAction.ClosingText.get -> string?
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingAction.Equals(Nickelony.IDEKit.Core.AutoClosing.AutoClosingAction other) -> bool
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingAction.Kind.get -> Nickelony.IDEKit.Core.AutoClosing.AutoClosingActionKind
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingActionKind
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingActionKind.InsertClosingText = 1 -> Nickelony.IDEKit.Core.AutoClosing.AutoClosingActionKind
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingActionKind.None = 0 -> Nickelony.IDEKit.Core.AutoClosing.AutoClosingActionKind
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingActionKind.SkipExistingClosingText = 2 -> Nickelony.IDEKit.Core.AutoClosing.AutoClosingActionKind
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingDeletionRequest
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingDeletionRequest.AutoClosingDeletionRequest() -> void
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingDeletionRequest.AutoClosingDeletionRequest(Nickelony.IDEKit.Core.Text.ITextSnapshot! Snapshot, int CaretOffset, Nickelony.IDEKit.Core.AutoClosing.AutoClosingOptions! Options, System.Func<int, bool>? IsTrackedClosingText = null) -> void
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingDeletionRequest.CaretOffset.get -> int
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingDeletionRequest.CaretOffset.init -> void
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingDeletionRequest.Deconstruct(out Nickelony.IDEKit.Core.Text.ITextSnapshot! Snapshot, out int CaretOffset, out Nickelony.IDEKit.Core.AutoClosing.AutoClosingOptions! Options, out System.Func<int, bool>? IsTrackedClosingText) -> void
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingDeletionRequest.Equals(Nickelony.IDEKit.Core.AutoClosing.AutoClosingDeletionRequest other) -> bool
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingDeletionRequest.IsTrackedClosingText.get -> System.Func<int, bool>?
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingDeletionRequest.IsTrackedClosingText.init -> void
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingDeletionRequest.Options.get -> Nickelony.IDEKit.Core.AutoClosing.AutoClosingOptions!
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingDeletionRequest.Options.init -> void
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingDeletionRequest.Snapshot.get -> Nickelony.IDEKit.Core.Text.ITextSnapshot!
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingDeletionRequest.Snapshot.init -> void
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingOptions
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingOptions.<Clone>$() -> Nickelony.IDEKit.Core.AutoClosing.AutoClosingOptions!
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingOptions.AutoCloseBefore.get -> string?
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingOptions.AutoCloseBefore.init -> void
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingOptions.AutoCloseUnconditionally.get -> bool
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingOptions.AutoCloseUnconditionally.init -> void
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingOptions.AutoClosingOptions() -> void
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingOptions.ClosingTextSkipTracking.get -> Nickelony.IDEKit.Core.AutoClosing.AutoClosingTrackingMode
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingOptions.ClosingTextSkipTracking.init -> void
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingOptions.Equals(Nickelony.IDEKit.Core.AutoClosing.AutoClosingOptions? other) -> bool
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingOptions.EscapeCharacter.get -> char?
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingOptions.EscapeCharacter.init -> void
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingOptions.IdentifierPolicy.get -> Nickelony.IDEKit.Core.Identifiers.IdentifierCharacterPolicy!
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingOptions.IdentifierPolicy.init -> void
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingOptions.PairDeletionTracking.get -> Nickelony.IDEKit.Core.AutoClosing.AutoClosingTrackingMode
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingOptions.PairDeletionTracking.init -> void
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingOptions.Pairs.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Core.AutoClosing.AutoClosingPair!>!
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingOptions.Pairs.init -> void
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingPair
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingPair.<Clone>$() -> Nickelony.IDEKit.Core.AutoClosing.AutoClosingPair!
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingPair.AutoClosingPair(string! open, string! close) -> void
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingPair.CheckUnmatchedClosingText.get -> bool
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingPair.CheckUnmatchedClosingText.init -> void
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingPair.Close.get -> string!
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingPair.Close.init -> void
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingPair.Equals(Nickelony.IDEKit.Core.AutoClosing.AutoClosingPair? other) -> bool
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingPair.Kind.get -> Nickelony.IDEKit.Core.AutoClosing.AutoClosingPairKind
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingPair.Kind.init -> void
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingPair.Open.get -> string!
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingPair.Open.init -> void
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingPair.SuppressAfterWordCharacter.get -> bool
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingPair.SuppressAfterWordCharacter.init -> void
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingPair.WrapSelection.get -> bool
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingPair.WrapSelection.init -> void
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingPairKind
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingPairKind.Bracket = 0 -> Nickelony.IDEKit.Core.AutoClosing.AutoClosingPairKind
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingPairKind.Quote = 1 -> Nickelony.IDEKit.Core.AutoClosing.AutoClosingPairKind
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingPlanner
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingRequest
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingRequest.AutoClosingRequest() -> void
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingRequest.AutoClosingRequest(Nickelony.IDEKit.Core.Text.ITextSnapshot! Snapshot, int CaretOffset, string! InputText, Nickelony.IDEKit.Core.AutoClosing.AutoClosingOptions! Options, bool IsWrappingSelection = false, System.Func<int, bool>? IsTrackedClosingText = null) -> void
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingRequest.CaretOffset.get -> int
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingRequest.CaretOffset.init -> void
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingRequest.Deconstruct(out Nickelony.IDEKit.Core.Text.ITextSnapshot! Snapshot, out int CaretOffset, out string! InputText, out Nickelony.IDEKit.Core.AutoClosing.AutoClosingOptions! Options, out bool IsWrappingSelection, out System.Func<int, bool>? IsTrackedClosingText) -> void
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingRequest.Equals(Nickelony.IDEKit.Core.AutoClosing.AutoClosingRequest other) -> bool
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingRequest.InputText.get -> string!
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingRequest.InputText.init -> void
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingRequest.IsTrackedClosingText.get -> System.Func<int, bool>?
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingRequest.IsTrackedClosingText.init -> void
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingRequest.IsWrappingSelection.get -> bool
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingRequest.IsWrappingSelection.init -> void
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingRequest.Options.get -> Nickelony.IDEKit.Core.AutoClosing.AutoClosingOptions!
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingRequest.Options.init -> void
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingRequest.Snapshot.get -> Nickelony.IDEKit.Core.Text.ITextSnapshot!
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingRequest.Snapshot.init -> void
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingResult
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingResult.Action.get -> Nickelony.IDEKit.Core.AutoClosing.AutoClosingAction
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingResult.Action.init -> void
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingResult.AutoClosingResult() -> void
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingResult.AutoClosingResult(Nickelony.IDEKit.Core.AutoClosing.AutoClosingAction Action, bool DidWrapSelection) -> void
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingResult.Deconstruct(out Nickelony.IDEKit.Core.AutoClosing.AutoClosingAction Action, out bool DidWrapSelection) -> void
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingResult.DidWrapSelection.get -> bool
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingResult.DidWrapSelection.init -> void
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingResult.Equals(Nickelony.IDEKit.Core.AutoClosing.AutoClosingResult other) -> bool
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingTrackingMode
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingTrackingMode.Always = 1 -> Nickelony.IDEKit.Core.AutoClosing.AutoClosingTrackingMode
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingTrackingMode.Never = 2 -> Nickelony.IDEKit.Core.AutoClosing.AutoClosingTrackingMode
+Nickelony.IDEKit.Core.AutoClosing.AutoClosingTrackingMode.TrackedOnly = 0 -> Nickelony.IDEKit.Core.AutoClosing.AutoClosingTrackingMode
+Nickelony.IDEKit.Core.Bookmarks.AdjacentBookmarkLineResolver
+Nickelony.IDEKit.Core.Bookmarks.BookmarkSidecarStore
+Nickelony.IDEKit.Core.Bookmarks.BookmarkSidecarStore.BookmarkSidecarStore(string! sidecarExtension) -> void
+Nickelony.IDEKit.Core.Bookmarks.BookmarkSidecarStore.TryLoad(string! documentId, out System.Collections.Generic.IReadOnlyList<int>! bookmarkLineNumbers) -> bool
+Nickelony.IDEKit.Core.Bookmarks.BookmarkSidecarStore.TrySave(string! documentId, System.Collections.Generic.IReadOnlyList<int>! bookmarkLineNumbers) -> bool
+Nickelony.IDEKit.Core.Bookmarks.IBookmarkSource
+Nickelony.IDEKit.Core.Bookmarks.IBookmarkSource.ToggleBookmark(int documentOffset) -> void
+Nickelony.IDEKit.Core.Bookmarks.IBookmarkStore
+Nickelony.IDEKit.Core.Bookmarks.IBookmarkStore.TryLoad(string! documentId, out System.Collections.Generic.IReadOnlyList<int>! bookmarkLineNumbers) -> bool
+Nickelony.IDEKit.Core.Bookmarks.IBookmarkStore.TrySave(string! documentId, System.Collections.Generic.IReadOnlyList<int>! bookmarkLineNumbers) -> bool
+Nickelony.IDEKit.Core.Callbacks.CallbackContainment
+Nickelony.IDEKit.Core.Comments.LineCommentActionKind
+Nickelony.IDEKit.Core.Comments.LineCommentActionKind.Comment = 0 -> Nickelony.IDEKit.Core.Comments.LineCommentActionKind
+Nickelony.IDEKit.Core.Comments.LineCommentActionKind.Toggle = 2 -> Nickelony.IDEKit.Core.Comments.LineCommentActionKind
+Nickelony.IDEKit.Core.Comments.LineCommentActionKind.Uncomment = 1 -> Nickelony.IDEKit.Core.Comments.LineCommentActionKind
+Nickelony.IDEKit.Core.Comments.LineCommentEdit
+Nickelony.IDEKit.Core.Comments.LineCommentEdit.Deconstruct(out Nickelony.IDEKit.Core.Text.TextRange ReplaceRange, out string! NewText, out Nickelony.IDEKit.Core.Text.TextRange Selection) -> void
+Nickelony.IDEKit.Core.Comments.LineCommentEdit.Equals(Nickelony.IDEKit.Core.Comments.LineCommentEdit other) -> bool
+Nickelony.IDEKit.Core.Comments.LineCommentEdit.LineCommentEdit() -> void
+Nickelony.IDEKit.Core.Comments.LineCommentEdit.LineCommentEdit(Nickelony.IDEKit.Core.Text.TextRange ReplaceRange, string! NewText, Nickelony.IDEKit.Core.Text.TextRange Selection) -> void
+Nickelony.IDEKit.Core.Comments.LineCommentEdit.NewText.get -> string!
+Nickelony.IDEKit.Core.Comments.LineCommentEdit.NewText.init -> void
+Nickelony.IDEKit.Core.Comments.LineCommentEdit.ReplaceRange.get -> Nickelony.IDEKit.Core.Text.TextRange
+Nickelony.IDEKit.Core.Comments.LineCommentEdit.ReplaceRange.init -> void
+Nickelony.IDEKit.Core.Comments.LineCommentEdit.Selection.get -> Nickelony.IDEKit.Core.Text.TextRange
+Nickelony.IDEKit.Core.Comments.LineCommentEdit.Selection.init -> void
+Nickelony.IDEKit.Core.Comments.LineCommentPlanner
+Nickelony.IDEKit.Core.Comments.LineCommentRequest
+Nickelony.IDEKit.Core.Comments.LineCommentRequest.Action.get -> Nickelony.IDEKit.Core.Comments.LineCommentActionKind
+Nickelony.IDEKit.Core.Comments.LineCommentRequest.Action.init -> void
+Nickelony.IDEKit.Core.Comments.LineCommentRequest.Deconstruct(out Nickelony.IDEKit.Core.Text.ITextSnapshot! Snapshot, out Nickelony.IDEKit.Core.Text.TextRange Selection, out Nickelony.IDEKit.Core.Scanning.CommentSyntax Syntax, out Nickelony.IDEKit.Core.Comments.LineCommentActionKind Action, out Nickelony.IDEKit.Core.Comments.LineCommentSpacingStyle Spacing) -> void
+Nickelony.IDEKit.Core.Comments.LineCommentRequest.Equals(Nickelony.IDEKit.Core.Comments.LineCommentRequest other) -> bool
+Nickelony.IDEKit.Core.Comments.LineCommentRequest.LineCommentRequest() -> void
+Nickelony.IDEKit.Core.Comments.LineCommentRequest.LineCommentRequest(Nickelony.IDEKit.Core.Text.ITextSnapshot! Snapshot, Nickelony.IDEKit.Core.Text.TextRange Selection, Nickelony.IDEKit.Core.Scanning.CommentSyntax Syntax, Nickelony.IDEKit.Core.Comments.LineCommentActionKind Action, Nickelony.IDEKit.Core.Comments.LineCommentSpacingStyle Spacing) -> void
+Nickelony.IDEKit.Core.Comments.LineCommentRequest.Selection.get -> Nickelony.IDEKit.Core.Text.TextRange
+Nickelony.IDEKit.Core.Comments.LineCommentRequest.Selection.init -> void
+Nickelony.IDEKit.Core.Comments.LineCommentRequest.Snapshot.get -> Nickelony.IDEKit.Core.Text.ITextSnapshot!
+Nickelony.IDEKit.Core.Comments.LineCommentRequest.Snapshot.init -> void
+Nickelony.IDEKit.Core.Comments.LineCommentRequest.Spacing.get -> Nickelony.IDEKit.Core.Comments.LineCommentSpacingStyle
+Nickelony.IDEKit.Core.Comments.LineCommentRequest.Spacing.init -> void
+Nickelony.IDEKit.Core.Comments.LineCommentRequest.Syntax.get -> Nickelony.IDEKit.Core.Scanning.CommentSyntax
+Nickelony.IDEKit.Core.Comments.LineCommentRequest.Syntax.init -> void
+Nickelony.IDEKit.Core.Comments.LineCommentSpacingStyle
+Nickelony.IDEKit.Core.Comments.LineCommentSpacingStyle.DelimiterOnly = 1 -> Nickelony.IDEKit.Core.Comments.LineCommentSpacingStyle
+Nickelony.IDEKit.Core.Comments.LineCommentSpacingStyle.SpaceAfterDelimiter = 0 -> Nickelony.IDEKit.Core.Comments.LineCommentSpacingStyle
+Nickelony.IDEKit.Core.Diagnostics.DiagnosticAnchorResolver
+Nickelony.IDEKit.Core.Diagnostics.DiagnosticSegment
+Nickelony.IDEKit.Core.Diagnostics.DiagnosticSegment.Deconstruct(out Nickelony.IDEKit.Core.Text.TextRange Range, out Nickelony.IDEKit.Core.Diagnostics.DiagnosticSeverity Severity) -> void
+Nickelony.IDEKit.Core.Diagnostics.DiagnosticSegment.DiagnosticSegment() -> void
+Nickelony.IDEKit.Core.Diagnostics.DiagnosticSegment.DiagnosticSegment(Nickelony.IDEKit.Core.Text.TextRange Range, Nickelony.IDEKit.Core.Diagnostics.DiagnosticSeverity Severity) -> void
+Nickelony.IDEKit.Core.Diagnostics.DiagnosticSegment.Equals(Nickelony.IDEKit.Core.Diagnostics.DiagnosticSegment other) -> bool
+Nickelony.IDEKit.Core.Diagnostics.DiagnosticSegment.Range.get -> Nickelony.IDEKit.Core.Text.TextRange
+Nickelony.IDEKit.Core.Diagnostics.DiagnosticSegment.Range.init -> void
+Nickelony.IDEKit.Core.Diagnostics.DiagnosticSegment.Severity.get -> Nickelony.IDEKit.Core.Diagnostics.DiagnosticSeverity
+Nickelony.IDEKit.Core.Diagnostics.DiagnosticSegment.Severity.init -> void
+Nickelony.IDEKit.Core.Diagnostics.DiagnosticSeverity
+Nickelony.IDEKit.Core.Diagnostics.DiagnosticSeverity.Error = 1 -> Nickelony.IDEKit.Core.Diagnostics.DiagnosticSeverity
+Nickelony.IDEKit.Core.Diagnostics.DiagnosticSeverity.Hint = 4 -> Nickelony.IDEKit.Core.Diagnostics.DiagnosticSeverity
+Nickelony.IDEKit.Core.Diagnostics.DiagnosticSeverity.Information = 3 -> Nickelony.IDEKit.Core.Diagnostics.DiagnosticSeverity
+Nickelony.IDEKit.Core.Diagnostics.DiagnosticSeverity.None = 0 -> Nickelony.IDEKit.Core.Diagnostics.DiagnosticSeverity
+Nickelony.IDEKit.Core.Diagnostics.DiagnosticSeverity.Warning = 2 -> Nickelony.IDEKit.Core.Diagnostics.DiagnosticSeverity
+Nickelony.IDEKit.Core.Diffing.LineDiffHunk
+Nickelony.IDEKit.Core.Diffing.LineDiffHunk.BaselineCount.get -> int
+Nickelony.IDEKit.Core.Diffing.LineDiffHunk.BaselineCount.init -> void
+Nickelony.IDEKit.Core.Diffing.LineDiffHunk.BaselineStart.get -> int
+Nickelony.IDEKit.Core.Diffing.LineDiffHunk.BaselineStart.init -> void
+Nickelony.IDEKit.Core.Diffing.LineDiffHunk.CurrentCount.get -> int
+Nickelony.IDEKit.Core.Diffing.LineDiffHunk.CurrentCount.init -> void
+Nickelony.IDEKit.Core.Diffing.LineDiffHunk.CurrentStart.get -> int
+Nickelony.IDEKit.Core.Diffing.LineDiffHunk.CurrentStart.init -> void
+Nickelony.IDEKit.Core.Diffing.LineDiffHunk.Deconstruct(out int BaselineStart, out int BaselineCount, out int CurrentStart, out int CurrentCount) -> void
+Nickelony.IDEKit.Core.Diffing.LineDiffHunk.Equals(Nickelony.IDEKit.Core.Diffing.LineDiffHunk other) -> bool
+Nickelony.IDEKit.Core.Diffing.LineDiffHunk.LineDiffHunk() -> void
+Nickelony.IDEKit.Core.Diffing.LineDiffHunk.LineDiffHunk(int BaselineStart, int BaselineCount, int CurrentStart, int CurrentCount) -> void
+Nickelony.IDEKit.Core.Diffing.LineDiffResult
+Nickelony.IDEKit.Core.Diffing.LineDiffResult.<Clone>$() -> Nickelony.IDEKit.Core.Diffing.LineDiffResult!
+Nickelony.IDEKit.Core.Diffing.LineDiffResult.ChangedLineNumbers.get -> System.Collections.Generic.IReadOnlySet<int>!
+Nickelony.IDEKit.Core.Diffing.LineDiffResult.Equals(Nickelony.IDEKit.Core.Diffing.LineDiffResult? other) -> bool
+Nickelony.IDEKit.Core.Diffing.LineDiffResult.IsApproximate.get -> bool
+Nickelony.IDEKit.Core.Diffing.LineDiffer
+Nickelony.IDEKit.Core.Editing.EditorSelection
+Nickelony.IDEKit.Core.Editing.EditorSelection.CaretOffset.get -> int
+Nickelony.IDEKit.Core.Editing.EditorSelection.CaretOffset.init -> void
+Nickelony.IDEKit.Core.Editing.EditorSelection.Deconstruct(out int CaretOffset, out Nickelony.IDEKit.Core.Text.TextRange Selection) -> void
+Nickelony.IDEKit.Core.Editing.EditorSelection.EditorSelection() -> void
+Nickelony.IDEKit.Core.Editing.EditorSelection.EditorSelection(int CaretOffset, Nickelony.IDEKit.Core.Text.TextRange Selection) -> void
+Nickelony.IDEKit.Core.Editing.EditorSelection.Equals(Nickelony.IDEKit.Core.Editing.EditorSelection other) -> bool
+Nickelony.IDEKit.Core.Editing.EditorSelection.Selection.get -> Nickelony.IDEKit.Core.Text.TextRange
+Nickelony.IDEKit.Core.Editing.EditorSelection.Selection.init -> void
+Nickelony.IDEKit.Core.Editing.EditorSelectionMapper
+Nickelony.IDEKit.Core.Editing.ITextEditTarget
+Nickelony.IDEKit.Core.Editing.ITextEditTarget.Apply(Nickelony.IDEKit.Core.Editing.PreparedTextEdits! edits) -> void
+Nickelony.IDEKit.Core.Editing.ITextEditTarget.Text.get -> string!
+Nickelony.IDEKit.Core.Editing.ITextEditVersionSource
+Nickelony.IDEKit.Core.Editing.ITextEditVersionSource.CaptureVersion() -> long
+Nickelony.IDEKit.Core.Editing.ITextEditVersionSource.Version.get -> long
+Nickelony.IDEKit.Core.Editing.ITextEditVersionTarget
+Nickelony.IDEKit.Core.Editing.ITextEditVersionTarget.TryApply(Nickelony.IDEKit.Core.Editing.PreparedTextEdits! edits, long expectedVersion) -> bool
+Nickelony.IDEKit.Core.Editing.LineReplacementSelectionMode
+Nickelony.IDEKit.Core.Editing.LineReplacementSelectionMode.Collapse = 0 -> Nickelony.IDEKit.Core.Editing.LineReplacementSelectionMode
+Nickelony.IDEKit.Core.Editing.LineReplacementSelectionMode.Select = 1 -> Nickelony.IDEKit.Core.Editing.LineReplacementSelectionMode
+Nickelony.IDEKit.Core.Editing.LineScrollingMode
+Nickelony.IDEKit.Core.Editing.LineScrollingMode.LeaveUnchanged = 1 -> Nickelony.IDEKit.Core.Editing.LineScrollingMode
+Nickelony.IDEKit.Core.Editing.LineScrollingMode.ScrollToLine = 0 -> Nickelony.IDEKit.Core.Editing.LineScrollingMode
+Nickelony.IDEKit.Core.Editing.LineTerminatorPlanner
+Nickelony.IDEKit.Core.Editing.PreparedTextEdits
+Nickelony.IDEKit.Core.Editing.PreparedTextEdits.ApplyTo(string! text) -> string!
+Nickelony.IDEKit.Core.Editing.PreparedTextEdits.MapOffset(int offset) -> int
+Nickelony.IDEKit.Core.Editing.PreparedTextEdits.MapOffsets(System.ReadOnlySpan<int> offsets) -> int[]!
+Nickelony.IDEKit.Core.Editing.PreparedTextEdits.Operations.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Core.Editing.TextEditOperation!>!
+Nickelony.IDEKit.Core.Editing.TextEditKernel
+Nickelony.IDEKit.Core.Editing.TextEditOperation
+Nickelony.IDEKit.Core.Editing.TextEditOperation.<Clone>$() -> Nickelony.IDEKit.Core.Editing.TextEditOperation!
+Nickelony.IDEKit.Core.Editing.TextEditOperation.Deconstruct(out Nickelony.IDEKit.Core.Text.TextRange range, out string! newText, out int editIndex) -> void
+Nickelony.IDEKit.Core.Editing.TextEditOperation.EditIndex.get -> int
+Nickelony.IDEKit.Core.Editing.TextEditOperation.Equals(Nickelony.IDEKit.Core.Editing.TextEditOperation? other) -> bool
+Nickelony.IDEKit.Core.Editing.TextEditOperation.IsNoOp.get -> bool
+Nickelony.IDEKit.Core.Editing.TextEditOperation.NewText.get -> string!
+Nickelony.IDEKit.Core.Editing.TextEditOperation.Range.get -> Nickelony.IDEKit.Core.Text.TextRange
+Nickelony.IDEKit.Core.Editing.TextEditOperation.TextEditOperation(Nickelony.IDEKit.Core.Text.TextRange range, string! newText, int editIndex) -> void
+Nickelony.IDEKit.Core.Editing.TextEditPreparationIssue
+Nickelony.IDEKit.Core.Editing.TextEditPreparationIssue.<Clone>$() -> Nickelony.IDEKit.Core.Editing.TextEditPreparationIssue!
+Nickelony.IDEKit.Core.Editing.TextEditPreparationIssue.EditIndex.get -> int
+Nickelony.IDEKit.Core.Editing.TextEditPreparationIssue.Equals(Nickelony.IDEKit.Core.Editing.TextEditPreparationIssue? other) -> bool
+Nickelony.IDEKit.Core.Editing.TextEditPreparationIssue.Kind.get -> Nickelony.IDEKit.Core.Editing.TextEditPreparationIssueKind
+Nickelony.IDEKit.Core.Editing.TextEditPreparationIssue.Message.get -> string!
+Nickelony.IDEKit.Core.Editing.TextEditPreparationIssue.RelatedEditIndex.get -> int?
+Nickelony.IDEKit.Core.Editing.TextEditPreparationIssue.TextEditPreparationIssue(Nickelony.IDEKit.Core.Editing.TextEditPreparationIssueKind kind, int editIndex, int? relatedEditIndex, string! message) -> void
+Nickelony.IDEKit.Core.Editing.TextEditPreparationIssueKind
+Nickelony.IDEKit.Core.Editing.TextEditPreparationIssueKind.InsertionInsideReplacement = 3 -> Nickelony.IDEKit.Core.Editing.TextEditPreparationIssueKind
+Nickelony.IDEKit.Core.Editing.TextEditPreparationIssueKind.NullEdit = 0 -> Nickelony.IDEKit.Core.Editing.TextEditPreparationIssueKind
+Nickelony.IDEKit.Core.Editing.TextEditPreparationIssueKind.NullReplacementText = 1 -> Nickelony.IDEKit.Core.Editing.TextEditPreparationIssueKind
+Nickelony.IDEKit.Core.Editing.TextEditPreparationIssueKind.RangeOutOfBounds = 2 -> Nickelony.IDEKit.Core.Editing.TextEditPreparationIssueKind
+Nickelony.IDEKit.Core.Editing.TextEditPreparationIssueKind.ReplacementOverlap = 4 -> Nickelony.IDEKit.Core.Editing.TextEditPreparationIssueKind
+Nickelony.IDEKit.Core.Editing.TextEditPreparationResult
+Nickelony.IDEKit.Core.Editing.TextEditPreparationResult.Edits.get -> Nickelony.IDEKit.Core.Editing.PreparedTextEdits!
+Nickelony.IDEKit.Core.Editing.TextEditPreparationResult.Issues.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Core.Editing.TextEditPreparationIssue!>!
+Nickelony.IDEKit.Core.Editing.TextEditPreparationResult.Succeeded.get -> bool
 Nickelony.IDEKit.Core.Editing.TextEditRequest
 Nickelony.IDEKit.Core.Editing.TextEditRequest.CaretOffsetAfterEdit.get -> int?
 Nickelony.IDEKit.Core.Editing.TextEditRequest.CaretOffsetAfterEdit.init -> void
 Nickelony.IDEKit.Core.Editing.TextEditRequest.Equals(Nickelony.IDEKit.Core.Editing.TextEditRequest other) -> bool
-Nickelony.IDEKit.Core.Editing.TextEditRequest.Length.get -> int
 Nickelony.IDEKit.Core.Editing.TextEditRequest.NewText.get -> string!
-Nickelony.IDEKit.Core.Editing.TextEditRequest.StartOffset.get -> int
+Nickelony.IDEKit.Core.Editing.TextEditRequest.Range.get -> Nickelony.IDEKit.Core.Text.TextRange
 Nickelony.IDEKit.Core.Editing.TextEditRequest.TextEditRequest() -> void
-Nickelony.IDEKit.Core.Editing.TextEditRequest.TextEditRequest(int startOffset, int length, string! newText) -> void
-override Nickelony.IDEKit.Core.Editing.TextEditRequest.GetHashCode() -> int
-static Nickelony.IDEKit.Core.Editing.TextEditRequest.operator !=(Nickelony.IDEKit.Core.Editing.TextEditRequest left, Nickelony.IDEKit.Core.Editing.TextEditRequest right) -> bool
-static Nickelony.IDEKit.Core.Editing.TextEditRequest.operator ==(Nickelony.IDEKit.Core.Editing.TextEditRequest left, Nickelony.IDEKit.Core.Editing.TextEditRequest right) -> bool
-~override Nickelony.IDEKit.Core.Editing.TextEditRequest.Equals(object obj) -> bool
-~override Nickelony.IDEKit.Core.Editing.TextEditRequest.ToString() -> string
-static Nickelony.IDEKit.Core.Editing.TextEditSkipResult.Create(Nickelony.IDEKit.Core.Editing.PreparedTextEdits! edits, System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Core.Editing.TextEditPreparationIssue!>! skippedIssues) -> Nickelony.IDEKit.Core.Editing.TextEditSkipResult!
-static Nickelony.IDEKit.Core.Editing.TextEditKernel.Prepare(System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Core.Text.TextEditOperation!>! operations) -> Nickelony.IDEKit.Core.Editing.TextEditPreparationResult!
-*REMOVED*Nickelony.IDEKit.Core.Editing.PreparedTextEdits.PreparedTextEdits(System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Core.Text.TextEditOperation!>! operations) -> void
-*REMOVED*Nickelony.IDEKit.Core.Comments.TextLineCommentRequest.CommentSyntax.get -> Nickelony.IDEKit.Core.Comments.CommentSyntax
-*REMOVED*Nickelony.IDEKit.Core.Comments.TextLineCommentRequest.CommentSyntax.init -> void
-*REMOVED*Nickelony.IDEKit.Core.Comments.TextLineCommentRequest.Deconstruct(out Nickelony.IDEKit.Core.Text.ITextSnapshot! Snapshot, out Nickelony.IDEKit.Core.Text.TextRange Selection, out Nickelony.IDEKit.Core.Comments.CommentSyntax CommentSyntax, out Nickelony.IDEKit.Core.Comments.TextLineCommentAction Action, out bool InsertSpaceAfterDelimiter) -> void
-*REMOVED*Nickelony.IDEKit.Core.Comments.TextLineCommentRequest.TextLineCommentRequest(Nickelony.IDEKit.Core.Text.ITextSnapshot! Snapshot, Nickelony.IDEKit.Core.Text.TextRange Selection, Nickelony.IDEKit.Core.Comments.CommentSyntax CommentSyntax, Nickelony.IDEKit.Core.Comments.TextLineCommentAction Action, bool InsertSpaceAfterDelimiter) -> void
-Nickelony.IDEKit.Core.Comments.TextLineCommentRequest.Syntax.get -> Nickelony.IDEKit.Core.Comments.CommentSyntax
-Nickelony.IDEKit.Core.Comments.TextLineCommentRequest.Syntax.init -> void
-Nickelony.IDEKit.Core.Comments.TextLineCommentRequest.Deconstruct(out Nickelony.IDEKit.Core.Text.ITextSnapshot! Snapshot, out Nickelony.IDEKit.Core.Text.TextRange Selection, out Nickelony.IDEKit.Core.Comments.CommentSyntax Syntax, out Nickelony.IDEKit.Core.Comments.TextLineCommentAction Action, out bool InsertSpaceAfterDelimiter) -> void
-Nickelony.IDEKit.Core.Comments.TextLineCommentRequest.TextLineCommentRequest(Nickelony.IDEKit.Core.Text.ITextSnapshot! Snapshot, Nickelony.IDEKit.Core.Text.TextRange Selection, Nickelony.IDEKit.Core.Comments.CommentSyntax Syntax, Nickelony.IDEKit.Core.Comments.TextLineCommentAction Action, bool InsertSpaceAfterDelimiter) -> void
-Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingResult
-Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingResult.Action.get -> Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingAction
-Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingResult.Action.init -> void
-Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingResult.Deconstruct(out Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingAction Action, out bool DidWrapSelection) -> void
-Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingResult.DidWrapSelection.get -> bool
-Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingResult.DidWrapSelection.init -> void
-Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingResult.Equals(Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingResult other) -> bool
-Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingResult.TextAutoClosingResult() -> void
-Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingResult.TextAutoClosingResult(Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingAction Action, bool DidWrapSelection) -> void
-override Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingResult.GetHashCode() -> int
-static Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingResult.None.get -> Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingResult
-static Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingResult.operator !=(Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingResult left, Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingResult right) -> bool
-static Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingResult.operator ==(Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingResult left, Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingResult right) -> bool
-~override Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingResult.Equals(object obj) -> bool
-~override Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingResult.ToString() -> string
-Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle
-Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle.<Clone>$() -> Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle!
-Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle.ColorValue.get -> string?
-Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle.ColorValue.init -> void
-Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle.Deconstruct(out string? ColorValue, out bool IsBold, out bool IsItalic) -> void
-Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle.Equals(Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle? other) -> bool
-Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle.IsBold.get -> bool
-Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle.IsBold.init -> void
-Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle.IsItalic.get -> bool
-Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle.IsItalic.init -> void
-Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle.RegexHighlightingStyle(string? ColorValue = null, bool IsBold = false, bool IsItalic = false) -> void
-override Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle.Equals(object? obj) -> bool
-override Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle.GetHashCode() -> int
-override Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle.ToString() -> string!
-static Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle.operator !=(Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle? left, Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle? right) -> bool
-static Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle.operator ==(Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle? left, Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle? right) -> bool
+Nickelony.IDEKit.Core.Editing.TextEditRequest.TextEditRequest(Nickelony.IDEKit.Core.Text.TextRange range, string! newText) -> void
+Nickelony.IDEKit.Core.Editing.TextEditSkipResult
+Nickelony.IDEKit.Core.Editing.TextEditSkipResult.Edits.get -> Nickelony.IDEKit.Core.Editing.PreparedTextEdits!
+Nickelony.IDEKit.Core.Editing.TextEditSkipResult.HasSkippedEntries.get -> bool
+Nickelony.IDEKit.Core.Editing.TextEditSkipResult.SkippedIssues.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Core.Editing.TextEditPreparationIssue!>!
+Nickelony.IDEKit.Core.Editing.TextIncrementalEdit
+Nickelony.IDEKit.Core.Editing.TextIncrementalEdit.Deconstruct(out Nickelony.IDEKit.Core.Text.TextRange Range, out string! NewText) -> void
+Nickelony.IDEKit.Core.Editing.TextIncrementalEdit.Equals(Nickelony.IDEKit.Core.Editing.TextIncrementalEdit other) -> bool
+Nickelony.IDEKit.Core.Editing.TextIncrementalEdit.IsNoOp.get -> bool
+Nickelony.IDEKit.Core.Editing.TextIncrementalEdit.NewText.get -> string!
+Nickelony.IDEKit.Core.Editing.TextIncrementalEdit.NewText.init -> void
+Nickelony.IDEKit.Core.Editing.TextIncrementalEdit.Range.get -> Nickelony.IDEKit.Core.Text.TextRange
+Nickelony.IDEKit.Core.Editing.TextIncrementalEdit.Range.init -> void
+Nickelony.IDEKit.Core.Editing.TextIncrementalEdit.TextIncrementalEdit() -> void
+Nickelony.IDEKit.Core.Editing.TextIncrementalEdit.TextIncrementalEdit(Nickelony.IDEKit.Core.Text.TextRange Range, string! NewText) -> void
+Nickelony.IDEKit.Core.Editing.TextIncrementalEditCalculator
+Nickelony.IDEKit.Core.FindReplace.FindReplaceOperations
+Nickelony.IDEKit.Core.FindReplace.SearchQuery
+Nickelony.IDEKit.Core.FindReplace.SearchQuery.Deconstruct(out string! Pattern, out System.Text.RegularExpressions.RegexOptions Options, out System.TimeSpan MatchTimeout) -> void
+Nickelony.IDEKit.Core.FindReplace.SearchQuery.Equals(Nickelony.IDEKit.Core.FindReplace.SearchQuery other) -> bool
+Nickelony.IDEKit.Core.FindReplace.SearchQuery.MatchTimeout.get -> System.TimeSpan
+Nickelony.IDEKit.Core.FindReplace.SearchQuery.MatchTimeout.init -> void
+Nickelony.IDEKit.Core.FindReplace.SearchQuery.Options.get -> System.Text.RegularExpressions.RegexOptions
+Nickelony.IDEKit.Core.FindReplace.SearchQuery.Options.init -> void
+Nickelony.IDEKit.Core.FindReplace.SearchQuery.Pattern.get -> string!
+Nickelony.IDEKit.Core.FindReplace.SearchQuery.Pattern.init -> void
+Nickelony.IDEKit.Core.FindReplace.SearchQuery.SearchQuery() -> void
+Nickelony.IDEKit.Core.FindReplace.SearchQuery.SearchQuery(string! Pattern, System.Text.RegularExpressions.RegexOptions Options, System.TimeSpan MatchTimeout = default(System.TimeSpan)) -> void
+Nickelony.IDEKit.Core.Formatting.IDocumentFormatter
+Nickelony.IDEKit.Core.Formatting.IDocumentFormatter.FormatDocument(string! content) -> string?
+Nickelony.IDEKit.Core.Formatting.TrimTrailingWhitespaceFormatter
+Nickelony.IDEKit.Core.Formatting.TrimTrailingWhitespaceFormatter.FormatDocument(string! content) -> string!
+Nickelony.IDEKit.Core.Highlighting.RegexHighlightingDefinitionOptions
+Nickelony.IDEKit.Core.Highlighting.RegexHighlightingDefinitionOptions.<Clone>$() -> Nickelony.IDEKit.Core.Highlighting.RegexHighlightingDefinitionOptions!
+Nickelony.IDEKit.Core.Highlighting.RegexHighlightingDefinitionOptions.CacheVersion.get -> System.Func<int>?
+Nickelony.IDEKit.Core.Highlighting.RegexHighlightingDefinitionOptions.CacheVersion.init -> void
+Nickelony.IDEKit.Core.Highlighting.RegexHighlightingDefinitionOptions.Deconstruct(out System.Func<int>? CacheVersion) -> void
+Nickelony.IDEKit.Core.Highlighting.RegexHighlightingDefinitionOptions.Equals(Nickelony.IDEKit.Core.Highlighting.RegexHighlightingDefinitionOptions? other) -> bool
+Nickelony.IDEKit.Core.Highlighting.RegexHighlightingDefinitionOptions.RegexHighlightingDefinitionOptions(System.Func<int>? CacheVersion = null) -> void
 Nickelony.IDEKit.Core.Highlighting.RegexHighlightingRule
 Nickelony.IDEKit.Core.Highlighting.RegexHighlightingRule.Pattern.get -> System.Text.RegularExpressions.Regex!
 Nickelony.IDEKit.Core.Highlighting.RegexHighlightingRule.RegexHighlightingRule(System.Text.RegularExpressions.Regex! pattern, Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle! style) -> void
 Nickelony.IDEKit.Core.Highlighting.RegexHighlightingRule.Style.get -> Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle!
+Nickelony.IDEKit.Core.Highlighting.RegexHighlightingRuleSet
+Nickelony.IDEKit.Core.Highlighting.RegexHighlightingRuleSet.Name.get -> string!
+Nickelony.IDEKit.Core.Highlighting.RegexHighlightingRuleSet.Rules.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Core.Highlighting.RegexHighlightingRule!>!
+Nickelony.IDEKit.Core.Highlighting.RegexHighlightingRuleSet.Spans.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Core.Highlighting.RegexHighlightingSpan!>!
 Nickelony.IDEKit.Core.Highlighting.RegexHighlightingSpan
 Nickelony.IDEKit.Core.Highlighting.RegexHighlightingSpan.Begin.get -> System.Text.RegularExpressions.Regex!
 Nickelony.IDEKit.Core.Highlighting.RegexHighlightingSpan.BeginStyle.get -> Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle?
@@ -77,8 +293,689 @@ Nickelony.IDEKit.Core.Highlighting.RegexHighlightingSpan.RegexHighlightingSpan(S
 Nickelony.IDEKit.Core.Highlighting.RegexHighlightingSpan.Rules.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Core.Highlighting.RegexHighlightingRule!>?
 Nickelony.IDEKit.Core.Highlighting.RegexHighlightingSpan.Rules.init -> void
 Nickelony.IDEKit.Core.Highlighting.RegexHighlightingSpan.SpanStyle.get -> Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle!
-Nickelony.IDEKit.Core.Highlighting.RegexHighlightingRuleSet
-Nickelony.IDEKit.Core.Highlighting.RegexHighlightingRuleSet.Name.get -> string!
-Nickelony.IDEKit.Core.Highlighting.RegexHighlightingRuleSet.Rules.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Core.Highlighting.RegexHighlightingRule!>!
-Nickelony.IDEKit.Core.Highlighting.RegexHighlightingRuleSet.Spans.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Core.Highlighting.RegexHighlightingSpan!>!
+Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle
+Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle.<Clone>$() -> Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle!
+Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle.Deconstruct(out Nickelony.IDEKit.Core.Media.ArgbColor? Foreground, out bool IsBold, out bool IsItalic) -> void
+Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle.Equals(Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle? other) -> bool
+Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle.Foreground.get -> Nickelony.IDEKit.Core.Media.ArgbColor?
+Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle.Foreground.init -> void
+Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle.IsBold.get -> bool
+Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle.IsBold.init -> void
+Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle.IsItalic.get -> bool
+Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle.IsItalic.init -> void
+Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle.RegexHighlightingStyle(Nickelony.IDEKit.Core.Media.ArgbColor? Foreground = null, bool IsBold = false, bool IsItalic = false) -> void
+Nickelony.IDEKit.Core.Highlighting.RuleSetCache<TRuleSet>
+Nickelony.IDEKit.Core.Highlighting.RuleSetCache<TRuleSet>.Changed -> System.EventHandler?
+Nickelony.IDEKit.Core.Highlighting.RuleSetCache<TRuleSet>.RuleSetCache(System.Func<TRuleSet!>! build, System.Func<int>? cacheVersion = null) -> void
+Nickelony.IDEKit.Core.Highlighting.RuleSetCache<TRuleSet>.Value.get -> TRuleSet!
+Nickelony.IDEKit.Core.Identifiers.IdentifierCharacterPolicy
+Nickelony.IDEKit.Core.Identifiers.IdentifierCharacterPolicy.IsPartCharacter(char character) -> bool
+Nickelony.IDEKit.Core.Identifiers.IdentifierCharacterPolicy.IsStartCharacter(char character) -> bool
+Nickelony.IDEKit.Core.Identifiers.IdentifierOperations
+Nickelony.IDEKit.Core.Identifiers.IdentifierSpanMode
+Nickelony.IDEKit.Core.Identifiers.IdentifierSpanMode.AtOffset = 2 -> Nickelony.IDEKit.Core.Identifiers.IdentifierSpanMode
+Nickelony.IDEKit.Core.Identifiers.IdentifierSpanMode.Containing = 0 -> Nickelony.IDEKit.Core.Identifiers.IdentifierSpanMode
+Nickelony.IDEKit.Core.Identifiers.IdentifierSpanMode.EndingAtOffset = 1 -> Nickelony.IDEKit.Core.Identifiers.IdentifierSpanMode
+Nickelony.IDEKit.Core.Indentation.IIndentationPolicy
+Nickelony.IDEKit.Core.Indentation.IIndentationPolicy.GetDesiredIndentation(in Nickelony.IDEKit.Core.Indentation.IndentationRequest request) -> string!
+Nickelony.IDEKit.Core.Indentation.IndentationDetection
+Nickelony.IDEKit.Core.Indentation.IndentationDetection.Deconstruct(out bool InsertSpaces, out int Size, out bool InsertSpacesDetected, out bool SizeDetected) -> void
+Nickelony.IDEKit.Core.Indentation.IndentationDetection.Equals(Nickelony.IDEKit.Core.Indentation.IndentationDetection other) -> bool
+Nickelony.IDEKit.Core.Indentation.IndentationDetection.IndentationDetection() -> void
+Nickelony.IDEKit.Core.Indentation.IndentationDetection.IndentationDetection(bool InsertSpaces, int Size, bool InsertSpacesDetected, bool SizeDetected) -> void
+Nickelony.IDEKit.Core.Indentation.IndentationDetection.InsertSpaces.get -> bool
+Nickelony.IDEKit.Core.Indentation.IndentationDetection.InsertSpaces.init -> void
+Nickelony.IDEKit.Core.Indentation.IndentationDetection.InsertSpacesDetected.get -> bool
+Nickelony.IDEKit.Core.Indentation.IndentationDetection.InsertSpacesDetected.init -> void
+Nickelony.IDEKit.Core.Indentation.IndentationDetection.Size.get -> int
+Nickelony.IDEKit.Core.Indentation.IndentationDetection.Size.init -> void
+Nickelony.IDEKit.Core.Indentation.IndentationDetection.SizeDetected.get -> bool
+Nickelony.IDEKit.Core.Indentation.IndentationDetection.SizeDetected.init -> void
+Nickelony.IDEKit.Core.Indentation.IndentationDetector
+Nickelony.IDEKit.Core.Indentation.IndentationOperations
+Nickelony.IDEKit.Core.Indentation.IndentationPlanner
+Nickelony.IDEKit.Core.Indentation.IndentationRequest
+Nickelony.IDEKit.Core.Indentation.IndentationRequest.CurrentLineText.get -> string!
+Nickelony.IDEKit.Core.Indentation.IndentationRequest.CurrentLineText.init -> void
+Nickelony.IDEKit.Core.Indentation.IndentationRequest.Deconstruct(out string! PreviousLineText, out string! CurrentLineText, out string! IndentationUnit, out bool UseSmartIndent) -> void
+Nickelony.IDEKit.Core.Indentation.IndentationRequest.Equals(Nickelony.IDEKit.Core.Indentation.IndentationRequest other) -> bool
+Nickelony.IDEKit.Core.Indentation.IndentationRequest.IndentationRequest() -> void
+Nickelony.IDEKit.Core.Indentation.IndentationRequest.IndentationRequest(string! PreviousLineText, string! CurrentLineText, string! IndentationUnit, bool UseSmartIndent) -> void
+Nickelony.IDEKit.Core.Indentation.IndentationRequest.IndentationUnit.get -> string!
+Nickelony.IDEKit.Core.Indentation.IndentationRequest.IndentationUnit.init -> void
+Nickelony.IDEKit.Core.Indentation.IndentationRequest.PreviousLineText.get -> string!
+Nickelony.IDEKit.Core.Indentation.IndentationRequest.PreviousLineText.init -> void
+Nickelony.IDEKit.Core.Indentation.IndentationRequest.UseSmartIndent.get -> bool
+Nickelony.IDEKit.Core.Indentation.IndentationRequest.UseSmartIndent.init -> void
+Nickelony.IDEKit.Core.Indentation.WhitespaceOperations
+Nickelony.IDEKit.Core.LineStatus.ILineStatusSource
+Nickelony.IDEKit.Core.LineStatus.ILineStatusSource.GetMarkedLineNumbers() -> System.Collections.Generic.IReadOnlyList<int>!
+Nickelony.IDEKit.Core.LineStatus.LineStatusIconOperations
+Nickelony.IDEKit.Core.LineStatus.LineStatusIconPlacement
+Nickelony.IDEKit.Core.LineStatus.LineStatusIconPlacement.Deconstruct(out double Scale, out double IconHeight, out double OffsetX, out double OffsetY) -> void
+Nickelony.IDEKit.Core.LineStatus.LineStatusIconPlacement.Equals(Nickelony.IDEKit.Core.LineStatus.LineStatusIconPlacement other) -> bool
+Nickelony.IDEKit.Core.LineStatus.LineStatusIconPlacement.IconHeight.get -> double
+Nickelony.IDEKit.Core.LineStatus.LineStatusIconPlacement.IconHeight.init -> void
+Nickelony.IDEKit.Core.LineStatus.LineStatusIconPlacement.LineStatusIconPlacement() -> void
+Nickelony.IDEKit.Core.LineStatus.LineStatusIconPlacement.LineStatusIconPlacement(double Scale, double IconHeight, double OffsetX, double OffsetY) -> void
+Nickelony.IDEKit.Core.LineStatus.LineStatusIconPlacement.OffsetX.get -> double
+Nickelony.IDEKit.Core.LineStatus.LineStatusIconPlacement.OffsetX.init -> void
+Nickelony.IDEKit.Core.LineStatus.LineStatusIconPlacement.OffsetY.get -> double
+Nickelony.IDEKit.Core.LineStatus.LineStatusIconPlacement.OffsetY.init -> void
+Nickelony.IDEKit.Core.LineStatus.LineStatusIconPlacement.Scale.get -> double
+Nickelony.IDEKit.Core.LineStatus.LineStatusIconPlacement.Scale.init -> void
+Nickelony.IDEKit.Core.LineStatus.LineStatusInvalidationGate
+Nickelony.IDEKit.Core.LineStatus.LineStatusInvalidationGate.BumpConnectionVersion() -> void
+Nickelony.IDEKit.Core.LineStatus.LineStatusInvalidationGate.IsInvalidationQueued.get -> bool
+Nickelony.IDEKit.Core.LineStatus.LineStatusInvalidationGate.IsSourceSubscribed.get -> bool
+Nickelony.IDEKit.Core.LineStatus.LineStatusInvalidationGate.LineStatusInvalidationGate(System.Func<bool>! isConnected, System.Action! invalidate, System.Action<System.Action!>! post, System.Func<bool>? canPost = null) -> void
+Nickelony.IDEKit.Core.LineStatus.LineStatusInvalidationGate.QueueInvalidation() -> void
+Nickelony.IDEKit.Core.LineStatus.LineStatusInvalidationGate.SetSource(Nickelony.IDEKit.Core.Notifications.IChangeNotificationSource! source) -> void
+Nickelony.IDEKit.Core.LineStatus.LineStatusInvalidationGate.UpdateSubscription(bool connected) -> void
+Nickelony.IDEKit.Core.Media.ArgbColor
+Nickelony.IDEKit.Core.Media.ArgbColor.A.get -> byte
+Nickelony.IDEKit.Core.Media.ArgbColor.A.init -> void
+Nickelony.IDEKit.Core.Media.ArgbColor.ArgbColor() -> void
+Nickelony.IDEKit.Core.Media.ArgbColor.ArgbColor(byte A, byte R, byte G, byte B) -> void
+Nickelony.IDEKit.Core.Media.ArgbColor.B.get -> byte
+Nickelony.IDEKit.Core.Media.ArgbColor.B.init -> void
+Nickelony.IDEKit.Core.Media.ArgbColor.Deconstruct(out byte A, out byte R, out byte G, out byte B) -> void
+Nickelony.IDEKit.Core.Media.ArgbColor.Equals(Nickelony.IDEKit.Core.Media.ArgbColor other) -> bool
+Nickelony.IDEKit.Core.Media.ArgbColor.G.get -> byte
+Nickelony.IDEKit.Core.Media.ArgbColor.G.init -> void
+Nickelony.IDEKit.Core.Media.ArgbColor.GetLuma() -> double
+Nickelony.IDEKit.Core.Media.ArgbColor.R.get -> byte
+Nickelony.IDEKit.Core.Media.ArgbColor.R.init -> void
+Nickelony.IDEKit.Core.Navigation.EditorFocusMode
+Nickelony.IDEKit.Core.Navigation.EditorFocusMode.Focus = 0 -> Nickelony.IDEKit.Core.Navigation.EditorFocusMode
+Nickelony.IDEKit.Core.Navigation.EditorFocusMode.LeaveUnchanged = 1 -> Nickelony.IDEKit.Core.Navigation.EditorFocusMode
+Nickelony.IDEKit.Core.Navigation.IEditorNavigationTarget
+Nickelony.IDEKit.Core.Navigation.IEditorNavigationTarget.CaretColumn.get -> int
+Nickelony.IDEKit.Core.Navigation.IEditorNavigationTarget.CaretLineNumber.get -> int
+Nickelony.IDEKit.Core.Navigation.IEditorNavigationTarget.GetLineLength(int lineNumber) -> int
+Nickelony.IDEKit.Core.Navigation.IEditorNavigationTarget.LineCount.get -> int
+Nickelony.IDEKit.Core.Navigation.IEditorNavigationTarget.MoveCaret(int lineNumber, int column) -> void
+Nickelony.IDEKit.Core.Navigation.IEditorNavigationTarget.RestoreView() -> void
+Nickelony.IDEKit.Core.Navigation.IEditorNavigationTarget.SaveView() -> void
+Nickelony.IDEKit.Core.Navigation.IEditorNavigationTarget.SelectRange(Nickelony.IDEKit.Core.Text.TextPositionRange range) -> void
+Nickelony.IDEKit.Core.Navigation.LineColumnQuery
+Nickelony.IDEKit.Core.Navigation.LineColumnQuery.Column.get -> int?
+Nickelony.IDEKit.Core.Navigation.LineColumnQuery.Column.init -> void
+Nickelony.IDEKit.Core.Navigation.LineColumnQuery.Deconstruct(out int Line, out int? Column) -> void
+Nickelony.IDEKit.Core.Navigation.LineColumnQuery.Equals(Nickelony.IDEKit.Core.Navigation.LineColumnQuery other) -> bool
+Nickelony.IDEKit.Core.Navigation.LineColumnQuery.Line.get -> int
+Nickelony.IDEKit.Core.Navigation.LineColumnQuery.Line.init -> void
+Nickelony.IDEKit.Core.Navigation.LineColumnQuery.LineColumnQuery() -> void
+Nickelony.IDEKit.Core.Navigation.LineColumnQuery.LineColumnQuery(int Line, int? Column) -> void
+Nickelony.IDEKit.Core.Navigation.NavigationLocation
+Nickelony.IDEKit.Core.Navigation.NavigationLocation.CaretOffset.get -> int
+Nickelony.IDEKit.Core.Navigation.NavigationLocation.CaretOffset.init -> void
+Nickelony.IDEKit.Core.Navigation.NavigationLocation.Deconstruct(out string? DocumentId, out int CaretOffset, out Nickelony.IDEKit.Core.Text.TextRange Selection, out int? PreferredDocumentLine) -> void
+Nickelony.IDEKit.Core.Navigation.NavigationLocation.DocumentId.get -> string?
+Nickelony.IDEKit.Core.Navigation.NavigationLocation.DocumentId.init -> void
+Nickelony.IDEKit.Core.Navigation.NavigationLocation.Equals(Nickelony.IDEKit.Core.Navigation.NavigationLocation other) -> bool
+Nickelony.IDEKit.Core.Navigation.NavigationLocation.IsEquivalentTo(Nickelony.IDEKit.Core.Navigation.NavigationLocation other, System.StringComparison idComparison = System.StringComparison.Ordinal) -> bool
+Nickelony.IDEKit.Core.Navigation.NavigationLocation.NavigationLocation() -> void
+Nickelony.IDEKit.Core.Navigation.NavigationLocation.NavigationLocation(string? DocumentId, int CaretOffset, Nickelony.IDEKit.Core.Text.TextRange Selection, int? PreferredDocumentLine) -> void
+Nickelony.IDEKit.Core.Navigation.NavigationLocation.PreferredDocumentLine.get -> int?
+Nickelony.IDEKit.Core.Navigation.NavigationLocation.PreferredDocumentLine.init -> void
+Nickelony.IDEKit.Core.Navigation.NavigationLocation.Selection.get -> Nickelony.IDEKit.Core.Text.TextRange
+Nickelony.IDEKit.Core.Navigation.NavigationLocation.Selection.init -> void
+Nickelony.IDEKit.Core.Navigation.NavigationLocationPlan
+Nickelony.IDEKit.Core.Navigation.NavigationLocationPlan.CaretOffset.get -> int
+Nickelony.IDEKit.Core.Navigation.NavigationLocationPlan.CaretOffset.init -> void
+Nickelony.IDEKit.Core.Navigation.NavigationLocationPlan.Deconstruct(out Nickelony.IDEKit.Core.Text.TextRange Selection, out int CaretOffset, out int? ScrollLine) -> void
+Nickelony.IDEKit.Core.Navigation.NavigationLocationPlan.Equals(Nickelony.IDEKit.Core.Navigation.NavigationLocationPlan other) -> bool
+Nickelony.IDEKit.Core.Navigation.NavigationLocationPlan.NavigationLocationPlan() -> void
+Nickelony.IDEKit.Core.Navigation.NavigationLocationPlan.NavigationLocationPlan(Nickelony.IDEKit.Core.Text.TextRange Selection, int CaretOffset, int? ScrollLine) -> void
+Nickelony.IDEKit.Core.Navigation.NavigationLocationPlan.ScrollLine.get -> int?
+Nickelony.IDEKit.Core.Navigation.NavigationLocationPlan.ScrollLine.init -> void
+Nickelony.IDEKit.Core.Navigation.NavigationLocationPlan.Selection.get -> Nickelony.IDEKit.Core.Text.TextRange
+Nickelony.IDEKit.Core.Navigation.NavigationLocationPlan.Selection.init -> void
+Nickelony.IDEKit.Core.Navigation.NavigationLocationPlanner
+Nickelony.IDEKit.Core.Navigation.OpenEditorDescriptor
+Nickelony.IDEKit.Core.Navigation.OpenEditorDescriptor.<Clone>$() -> Nickelony.IDEKit.Core.Navigation.OpenEditorDescriptor!
+Nickelony.IDEKit.Core.Navigation.OpenEditorDescriptor.DocumentId.get -> string!
+Nickelony.IDEKit.Core.Navigation.OpenEditorDescriptor.Equals(Nickelony.IDEKit.Core.Navigation.OpenEditorDescriptor? other) -> bool
+Nickelony.IDEKit.Core.Navigation.OpenEditorDescriptor.IsUnsaved.get -> bool
+Nickelony.IDEKit.Core.Navigation.OpenEditorDescriptor.OpenEditorDescriptor(string! title, string! documentId, bool isUnsaved) -> void
+Nickelony.IDEKit.Core.Navigation.OpenEditorDescriptor.Tag.get -> object?
+Nickelony.IDEKit.Core.Navigation.OpenEditorDescriptor.Tag.init -> void
+Nickelony.IDEKit.Core.Navigation.OpenEditorDescriptor.Title.get -> string!
+Nickelony.IDEKit.Core.Notifications.ActionSubscription
+Nickelony.IDEKit.Core.Notifications.ActionSubscription.ActionSubscription(System.Action! unsubscribe) -> void
+Nickelony.IDEKit.Core.Notifications.ActionSubscription.Dispose() -> void
+Nickelony.IDEKit.Core.Notifications.IChangeNotificationSource
+Nickelony.IDEKit.Core.Notifications.IChangeNotificationSource.Changed -> System.EventHandler?
+Nickelony.IDEKit.Core.Paths.LocalPath
+Nickelony.IDEKit.Core.Paths.LocalPathComparisonPolicy
+Nickelony.IDEKit.Core.Paths.LocalPathComparisonPolicy.Comparer.get -> System.StringComparer!
+Nickelony.IDEKit.Core.Paths.LocalPathComparisonPolicy.Comparison.get -> System.StringComparison
+Nickelony.IDEKit.Core.Paths.LocalPathComparisonPolicy.Deconstruct(out bool IgnoreCase) -> void
+Nickelony.IDEKit.Core.Paths.LocalPathComparisonPolicy.Equals(Nickelony.IDEKit.Core.Paths.LocalPathComparisonPolicy other) -> bool
+Nickelony.IDEKit.Core.Paths.LocalPathComparisonPolicy.IgnoreCase.get -> bool
+Nickelony.IDEKit.Core.Paths.LocalPathComparisonPolicy.IgnoreCase.init -> void
+Nickelony.IDEKit.Core.Paths.LocalPathComparisonPolicy.LocalPathComparisonPolicy() -> void
+Nickelony.IDEKit.Core.Paths.LocalPathComparisonPolicy.LocalPathComparisonPolicy(bool IgnoreCase) -> void
+Nickelony.IDEKit.Core.Requests.KeyedLatestRequestGate<TKey>
+Nickelony.IDEKit.Core.Requests.KeyedLatestRequestGate<TKey>.Begin(TKey key, System.Threading.CancellationToken cancellationToken) -> Nickelony.IDEKit.Core.Requests.KeyedRequestLease<TKey>
+Nickelony.IDEKit.Core.Requests.KeyedLatestRequestGate<TKey>.Cancel(TKey key) -> void
+Nickelony.IDEKit.Core.Requests.KeyedLatestRequestGate<TKey>.CancelAll() -> void
+Nickelony.IDEKit.Core.Requests.KeyedLatestRequestGate<TKey>.KeyedLatestRequestGate(System.Collections.Generic.IEqualityComparer<TKey>! comparer) -> void
+Nickelony.IDEKit.Core.Requests.KeyedRequestLease<TKey>
+Nickelony.IDEKit.Core.Requests.KeyedRequestLease<TKey>.CancellationToken.get -> System.Threading.CancellationToken
+Nickelony.IDEKit.Core.Requests.KeyedRequestLease<TKey>.Dispose() -> void
+Nickelony.IDEKit.Core.Requests.KeyedRequestLease<TKey>.KeyedRequestLease() -> void
+Nickelony.IDEKit.Core.Requests.LatestRequestGate
+Nickelony.IDEKit.Core.Requests.LatestRequestGate.BeginRequest() -> Nickelony.IDEKit.Core.Requests.RequestHandle
+Nickelony.IDEKit.Core.Requests.LatestRequestGate.CanPublish(Nickelony.IDEKit.Core.Requests.RequestHandle request) -> bool
+Nickelony.IDEKit.Core.Requests.LatestRequestGate.CancelPendingRequest() -> void
+Nickelony.IDEKit.Core.Requests.LatestRequestGate.Invalidate() -> void
+Nickelony.IDEKit.Core.Requests.LatestRequestGate.InvalidateIf(System.Func<bool>! canInvalidate) -> void
+Nickelony.IDEKit.Core.Requests.LatestRequestGate.IsCurrent(Nickelony.IDEKit.Core.Requests.RequestHandle request) -> bool
+Nickelony.IDEKit.Core.Requests.LatestRequestGate.LatestRequestGate() -> void
+Nickelony.IDEKit.Core.Requests.LatestRequestGate.RunAsync<TState, TResult>(TState state, System.Func<TState, System.Threading.CancellationToken, System.Threading.Tasks.Task<TResult>!>! computeAsync, System.Func<TState, TResult, bool>! canApply, System.Action<TResult>! apply, bool continueOnCapturedContext = true, System.Action<System.Exception!>? onFailure = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.Core.Requests.RequestOutcome>!
+Nickelony.IDEKit.Core.Requests.LatestRequestGate.RunIfAsync<TState, TResult>(System.Func<bool>! canAdmit, TState state, System.Func<TState, System.Threading.CancellationToken, System.Threading.Tasks.Task<TResult>!>! computeAsync, System.Func<TState, TResult, bool>! canApply, System.Action<TResult>! apply, bool continueOnCapturedContext = true, System.Action<System.Exception!>? onFailure = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.Core.Requests.RequestOutcome>!
+Nickelony.IDEKit.Core.Requests.RequestHandle
+Nickelony.IDEKit.Core.Requests.RequestHandle.CancellationToken.get -> System.Threading.CancellationToken
+Nickelony.IDEKit.Core.Requests.RequestHandle.Equals(Nickelony.IDEKit.Core.Requests.RequestHandle other) -> bool
+Nickelony.IDEKit.Core.Requests.RequestHandle.RequestHandle() -> void
+Nickelony.IDEKit.Core.Requests.RequestHandle.RequestId.get -> long
+Nickelony.IDEKit.Core.Requests.RequestLifetime
+Nickelony.IDEKit.Core.Requests.RequestLifetime.AdvanceGeneration() -> int
+Nickelony.IDEKit.Core.Requests.RequestLifetime.CancelAndInvalidate() -> void
+Nickelony.IDEKit.Core.Requests.RequestLifetime.CancelInFlightRequest() -> void
+Nickelony.IDEKit.Core.Requests.RequestLifetime.Dispose() -> void
+Nickelony.IDEKit.Core.Requests.RequestLifetime.InvalidateRequests() -> void
+Nickelony.IDEKit.Core.Requests.RequestLifetime.IsCurrent(int generation) -> bool
+Nickelony.IDEKit.Core.Requests.RequestLifetime.IsDisposed.get -> bool
+Nickelony.IDEKit.Core.Requests.RequestLifetime.LifetimeToken.get -> System.Threading.CancellationToken
+Nickelony.IDEKit.Core.Requests.RequestLifetime.RequestLifetime() -> void
+Nickelony.IDEKit.Core.Requests.RequestLifetime.RunAsync<TState, TResult>(TState state, System.Func<TState, System.Threading.CancellationToken, System.Threading.Tasks.Task<TResult>!>! computeAsync, System.Action<TResult>! apply, System.Action<System.Exception!>? onFailure = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.Core.Requests.RequestOutcome>!
+Nickelony.IDEKit.Core.Requests.RequestOutcome
+Nickelony.IDEKit.Core.Requests.RequestOutcome.Canceled = 2 -> Nickelony.IDEKit.Core.Requests.RequestOutcome
+Nickelony.IDEKit.Core.Requests.RequestOutcome.Completed = 1 -> Nickelony.IDEKit.Core.Requests.RequestOutcome
+Nickelony.IDEKit.Core.Requests.RequestOutcome.RejectedByCurrentState = 4 -> Nickelony.IDEKit.Core.Requests.RequestOutcome
+Nickelony.IDEKit.Core.Requests.RequestOutcome.Superseded = 3 -> Nickelony.IDEKit.Core.Requests.RequestOutcome
+Nickelony.IDEKit.Core.Requests.RequestOutcome.Unknown = 0 -> Nickelony.IDEKit.Core.Requests.RequestOutcome
+Nickelony.IDEKit.Core.Scanning.BlockCommentSyntax
+Nickelony.IDEKit.Core.Scanning.BlockCommentSyntax.AllowNesting.get -> bool
+Nickelony.IDEKit.Core.Scanning.BlockCommentSyntax.BlockCommentSyntax() -> void
+Nickelony.IDEKit.Core.Scanning.BlockCommentSyntax.BlockCommentSyntax(string! open, string! close, bool allowNesting = false) -> void
+Nickelony.IDEKit.Core.Scanning.BlockCommentSyntax.Close.get -> string!
+Nickelony.IDEKit.Core.Scanning.BlockCommentSyntax.Equals(Nickelony.IDEKit.Core.Scanning.BlockCommentSyntax other) -> bool
+Nickelony.IDEKit.Core.Scanning.BlockCommentSyntax.Open.get -> string!
+Nickelony.IDEKit.Core.Scanning.CommentKind
+Nickelony.IDEKit.Core.Scanning.CommentKind.Block = 1 -> Nickelony.IDEKit.Core.Scanning.CommentKind
+Nickelony.IDEKit.Core.Scanning.CommentKind.Line = 0 -> Nickelony.IDEKit.Core.Scanning.CommentKind
+Nickelony.IDEKit.Core.Scanning.CommentOperations
+Nickelony.IDEKit.Core.Scanning.CommentSpan
+Nickelony.IDEKit.Core.Scanning.CommentSpan.CommentSpan() -> void
+Nickelony.IDEKit.Core.Scanning.CommentSpan.CommentSpan(Nickelony.IDEKit.Core.Text.TextRange range, int delimiterStart, Nickelony.IDEKit.Core.Scanning.CommentKind kind) -> void
+Nickelony.IDEKit.Core.Scanning.CommentSpan.DelimiterStart.get -> int
+Nickelony.IDEKit.Core.Scanning.CommentSpan.Equals(Nickelony.IDEKit.Core.Scanning.CommentSpan other) -> bool
+Nickelony.IDEKit.Core.Scanning.CommentSpan.IsBlockComment.get -> bool
+Nickelony.IDEKit.Core.Scanning.CommentSpan.IsLineComment.get -> bool
+Nickelony.IDEKit.Core.Scanning.CommentSpan.Kind.get -> Nickelony.IDEKit.Core.Scanning.CommentKind
+Nickelony.IDEKit.Core.Scanning.CommentSpan.Range.get -> Nickelony.IDEKit.Core.Text.TextRange
+Nickelony.IDEKit.Core.Scanning.CommentSpanEnumerator
+Nickelony.IDEKit.Core.Scanning.CommentSpanEnumerator.CommentSpanEnumerator() -> void
+Nickelony.IDEKit.Core.Scanning.CommentSpanEnumerator.Current.get -> Nickelony.IDEKit.Core.Scanning.CommentSpan
+Nickelony.IDEKit.Core.Scanning.CommentSpanEnumerator.GetEnumerator() -> Nickelony.IDEKit.Core.Scanning.CommentSpanEnumerator
+Nickelony.IDEKit.Core.Scanning.CommentSpanEnumerator.MoveNext() -> bool
+Nickelony.IDEKit.Core.Scanning.CommentSyntax
+Nickelony.IDEKit.Core.Scanning.CommentSyntax.BlockComments.get -> Nickelony.IDEKit.Core.Scanning.BlockCommentSyntax?
+Nickelony.IDEKit.Core.Scanning.CommentSyntax.CommentSyntax() -> void
+Nickelony.IDEKit.Core.Scanning.CommentSyntax.CommentSyntax(string? lineCommentDelimiter, Nickelony.IDEKit.Core.Scanning.BlockCommentSyntax? blockComments, Nickelony.IDEKit.Core.Scanning.StringLiteralStyles stringStyle) -> void
+Nickelony.IDEKit.Core.Scanning.CommentSyntax.Equals(Nickelony.IDEKit.Core.Scanning.CommentSyntax other) -> bool
+Nickelony.IDEKit.Core.Scanning.CommentSyntax.LineCommentDelimiter.get -> string?
+Nickelony.IDEKit.Core.Scanning.CommentSyntax.StringStyle.get -> Nickelony.IDEKit.Core.Scanning.StringLiteralStyles
+Nickelony.IDEKit.Core.Scanning.ContinuationMarkerProbe
+Nickelony.IDEKit.Core.Scanning.StringLiteralStyles
+Nickelony.IDEKit.Core.Scanning.StringLiteralStyles.BacktickQuoted = 4 -> Nickelony.IDEKit.Core.Scanning.StringLiteralStyles
+Nickelony.IDEKit.Core.Scanning.StringLiteralStyles.DoubleQuoted = 1 -> Nickelony.IDEKit.Core.Scanning.StringLiteralStyles
+Nickelony.IDEKit.Core.Scanning.StringLiteralStyles.LongBracketQuoted = 32 -> Nickelony.IDEKit.Core.Scanning.StringLiteralStyles
+Nickelony.IDEKit.Core.Scanning.StringLiteralStyles.None = 0 -> Nickelony.IDEKit.Core.Scanning.StringLiteralStyles
+Nickelony.IDEKit.Core.Scanning.StringLiteralStyles.SingleQuoted = 2 -> Nickelony.IDEKit.Core.Scanning.StringLiteralStyles
+Nickelony.IDEKit.Core.Scanning.StringLiteralStyles.TripleDoubleQuoted = 8 -> Nickelony.IDEKit.Core.Scanning.StringLiteralStyles
+Nickelony.IDEKit.Core.Scanning.StringLiteralStyles.TripleSingleQuoted = 16 -> Nickelony.IDEKit.Core.Scanning.StringLiteralStyles
+Nickelony.IDEKit.Core.Scanning.StringLiteralStyles.VerbatimDoubleQuoted = 64 -> Nickelony.IDEKit.Core.Scanning.StringLiteralStyles
+Nickelony.IDEKit.Core.Text.ITextCharSource
+Nickelony.IDEKit.Core.Text.ITextCharSource.GetCharAt(int offset) -> char
+Nickelony.IDEKit.Core.Text.ITextCharSource.TextLength.get -> int
+Nickelony.IDEKit.Core.Text.ITextLine
+Nickelony.IDEKit.Core.Text.ITextLine.EndOffset.get -> int
+Nickelony.IDEKit.Core.Text.ITextLine.Length.get -> int
+Nickelony.IDEKit.Core.Text.ITextLine.LineNumber.get -> int
+Nickelony.IDEKit.Core.Text.ITextLine.Offset.get -> int
+Nickelony.IDEKit.Core.Text.ITextSnapshot
+Nickelony.IDEKit.Core.Text.ITextSnapshot.DocumentId.get -> string?
+Nickelony.IDEKit.Core.Text.ITextSnapshot.GetLineByNumber(int lineNumber) -> Nickelony.IDEKit.Core.Text.ITextLine!
+Nickelony.IDEKit.Core.Text.ITextSnapshot.GetLineByOffset(int offset) -> Nickelony.IDEKit.Core.Text.ITextLine!
+Nickelony.IDEKit.Core.Text.ITextSnapshot.GetText(int offset, int length) -> string!
+Nickelony.IDEKit.Core.Text.ITextSnapshot.LineCount.get -> int
+Nickelony.IDEKit.Core.Text.ITextSnapshot.Lines.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Core.Text.ITextLine!>!
+Nickelony.IDEKit.Core.Text.IncrementalLineStateCache<TState>
+Nickelony.IDEKit.Core.Text.IncrementalLineStateCache<TState>.ApplyEdit(Nickelony.IDEKit.Core.Text.ITextSnapshot! newSnapshot, int firstChangedOffset) -> void
+Nickelony.IDEKit.Core.Text.IncrementalLineStateCache<TState>.GetLineStartState(int lineNumber) -> TState
+Nickelony.IDEKit.Core.Text.IncrementalLineStateCache<TState>.IncrementalLineStateCache(Nickelony.IDEKit.Core.Text.ITextSnapshot! snapshot, System.Func<string!, TState, TState>! transition) -> void
+Nickelony.IDEKit.Core.Text.LineTerminatorDetector
+Nickelony.IDEKit.Core.Text.LineTerminatorNormalizer
+Nickelony.IDEKit.Core.Text.LineTerminatorStyle
+Nickelony.IDEKit.Core.Text.LineTerminatorStyle.Cr = 2 -> Nickelony.IDEKit.Core.Text.LineTerminatorStyle
+Nickelony.IDEKit.Core.Text.LineTerminatorStyle.CrLf = 0 -> Nickelony.IDEKit.Core.Text.LineTerminatorStyle
+Nickelony.IDEKit.Core.Text.LineTerminatorStyle.Lf = 1 -> Nickelony.IDEKit.Core.Text.LineTerminatorStyle
+Nickelony.IDEKit.Core.Text.LineTerminatorStyle.Mixed = 3 -> Nickelony.IDEKit.Core.Text.LineTerminatorStyle
+Nickelony.IDEKit.Core.Text.LineTerminatorStyle.None = 4 -> Nickelony.IDEKit.Core.Text.LineTerminatorStyle
+Nickelony.IDEKit.Core.Text.LineTerminatorStyleExtensions
+Nickelony.IDEKit.Core.Text.LineTextOperations
+Nickelony.IDEKit.Core.Text.OptionalTextNormalizer
+Nickelony.IDEKit.Core.Text.StringTextSnapshot
+Nickelony.IDEKit.Core.Text.StringTextSnapshot.DocumentId.get -> string?
+Nickelony.IDEKit.Core.Text.StringTextSnapshot.GetCharAt(int offset) -> char
+Nickelony.IDEKit.Core.Text.StringTextSnapshot.GetLineByNumber(int lineNumber) -> Nickelony.IDEKit.Core.Text.ITextLine!
+Nickelony.IDEKit.Core.Text.StringTextSnapshot.GetLineByOffset(int offset) -> Nickelony.IDEKit.Core.Text.ITextLine!
+Nickelony.IDEKit.Core.Text.StringTextSnapshot.GetText(int offset, int length) -> string!
+Nickelony.IDEKit.Core.Text.StringTextSnapshot.LineCount.get -> int
+Nickelony.IDEKit.Core.Text.StringTextSnapshot.Lines.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Core.Text.ITextLine!>!
+Nickelony.IDEKit.Core.Text.StringTextSnapshot.StringTextSnapshot(string? text, string? documentId = null) -> void
+Nickelony.IDEKit.Core.Text.StringTextSnapshot.TextLength.get -> int
+Nickelony.IDEKit.Core.Text.TextLineMap
+Nickelony.IDEKit.Core.Text.TextLineMap.GetLineLength(int lineIndex) -> int
+Nickelony.IDEKit.Core.Text.TextLineMap.GetLineStartOffset(int lineIndex) -> int
+Nickelony.IDEKit.Core.Text.TextLineMap.GetLineText(int lineIndex) -> string!
+Nickelony.IDEKit.Core.Text.TextLineMap.GetOffset(Nickelony.IDEKit.Core.Text.TextPosition position) -> int
+Nickelony.IDEKit.Core.Text.TextLineMap.GetOffset(int lineIndex, int character) -> int
+Nickelony.IDEKit.Core.Text.TextLineMap.GetPosition(int offset) -> Nickelony.IDEKit.Core.Text.TextPosition
+Nickelony.IDEKit.Core.Text.TextLineMap.GetPositionRange(Nickelony.IDEKit.Core.Text.TextRange range) -> Nickelony.IDEKit.Core.Text.TextPositionRange
+Nickelony.IDEKit.Core.Text.TextLineMap.LineCount.get -> int
+Nickelony.IDEKit.Core.Text.TextLineMap.TextLength.get -> int
+Nickelony.IDEKit.Core.Text.TextLineMap.TryGetOffsets(Nickelony.IDEKit.Core.Text.TextPositionRange range, out Nickelony.IDEKit.Core.Text.TextRange offsetRange) -> bool
+Nickelony.IDEKit.Core.Text.TextLineSplitter
+Nickelony.IDEKit.Core.Text.TextMatchProbe
+Nickelony.IDEKit.Core.Text.TextOffsetValidation
+Nickelony.IDEKit.Core.Text.TextPosition
+Nickelony.IDEKit.Core.Text.TextPosition.Character.get -> int
+Nickelony.IDEKit.Core.Text.TextPosition.Character.init -> void
+Nickelony.IDEKit.Core.Text.TextPosition.ClampNegativeToZero() -> Nickelony.IDEKit.Core.Text.TextPosition
+Nickelony.IDEKit.Core.Text.TextPosition.CompareTo(Nickelony.IDEKit.Core.Text.TextPosition other) -> int
+Nickelony.IDEKit.Core.Text.TextPosition.Deconstruct(out int Line, out int Character) -> void
+Nickelony.IDEKit.Core.Text.TextPosition.Equals(Nickelony.IDEKit.Core.Text.TextPosition other) -> bool
+Nickelony.IDEKit.Core.Text.TextPosition.Line.get -> int
+Nickelony.IDEKit.Core.Text.TextPosition.Line.init -> void
+Nickelony.IDEKit.Core.Text.TextPosition.TextPosition() -> void
+Nickelony.IDEKit.Core.Text.TextPosition.TextPosition(int Line, int Character) -> void
+Nickelony.IDEKit.Core.Text.TextPositionRange
+Nickelony.IDEKit.Core.Text.TextPositionRange.Contains(Nickelony.IDEKit.Core.Text.TextPosition position) -> bool
+Nickelony.IDEKit.Core.Text.TextPositionRange.Deconstruct(out Nickelony.IDEKit.Core.Text.TextPosition Start, out Nickelony.IDEKit.Core.Text.TextPosition End) -> void
+Nickelony.IDEKit.Core.Text.TextPositionRange.End.get -> Nickelony.IDEKit.Core.Text.TextPosition
+Nickelony.IDEKit.Core.Text.TextPositionRange.End.init -> void
+Nickelony.IDEKit.Core.Text.TextPositionRange.Equals(Nickelony.IDEKit.Core.Text.TextPositionRange other) -> bool
+Nickelony.IDEKit.Core.Text.TextPositionRange.IsEmpty.get -> bool
+Nickelony.IDEKit.Core.Text.TextPositionRange.IsReversed.get -> bool
+Nickelony.IDEKit.Core.Text.TextPositionRange.Start.get -> Nickelony.IDEKit.Core.Text.TextPosition
+Nickelony.IDEKit.Core.Text.TextPositionRange.Start.init -> void
+Nickelony.IDEKit.Core.Text.TextPositionRange.TextPositionRange() -> void
+Nickelony.IDEKit.Core.Text.TextPositionRange.TextPositionRange(Nickelony.IDEKit.Core.Text.TextPosition Start, Nickelony.IDEKit.Core.Text.TextPosition End) -> void
+Nickelony.IDEKit.Core.Text.TextRange
+Nickelony.IDEKit.Core.Text.TextRange.EndOffset.get -> int
+Nickelony.IDEKit.Core.Text.TextRange.Equals(Nickelony.IDEKit.Core.Text.TextRange other) -> bool
+Nickelony.IDEKit.Core.Text.TextRange.FitsWithin(int textLength) -> bool
+Nickelony.IDEKit.Core.Text.TextRange.GetText(string! text) -> string!
+Nickelony.IDEKit.Core.Text.TextRange.GetTextFrom(Nickelony.IDEKit.Core.Text.ITextSnapshot! snapshot) -> string!
+Nickelony.IDEKit.Core.Text.TextRange.Intersects(Nickelony.IDEKit.Core.Text.TextRange other) -> bool
+Nickelony.IDEKit.Core.Text.TextRange.IsEmpty.get -> bool
+Nickelony.IDEKit.Core.Text.TextRange.Length.get -> int
+Nickelony.IDEKit.Core.Text.TextRange.Offset.get -> int
+Nickelony.IDEKit.Core.Text.TextRange.TextRange() -> void
+Nickelony.IDEKit.Core.Text.TextRange.TextRange(int offset, int length) -> void
+Nickelony.IDEKit.Core.Themes.ThemeCatalog<TTheme>
+Nickelony.IDEKit.Core.Themes.ThemeCatalog<TTheme>.DefaultTheme.get -> TTheme!
+Nickelony.IDEKit.Core.Themes.ThemeCatalog<TTheme>.GetTheme(string? nameOrAlias) -> TTheme!
+Nickelony.IDEKit.Core.Themes.ThemeCatalog<TTheme>.ThemeCatalog(System.Collections.Generic.IEnumerable<TTheme!>! themes, string! defaultThemeName, Nickelony.IDEKit.Core.Themes.ThemeCatalogHooks<TTheme!> hooks) -> void
+Nickelony.IDEKit.Core.Themes.ThemeCatalog<TTheme>.Themes.get -> System.Collections.Generic.IReadOnlyList<TTheme!>!
+Nickelony.IDEKit.Core.Themes.ThemeCatalog<TTheme>.TryGetTheme(string? nameOrAlias, out TTheme? theme) -> bool
+Nickelony.IDEKit.Core.Themes.ThemeCatalogHooks<TTheme>
+Nickelony.IDEKit.Core.Themes.ThemeCatalogHooks<TTheme>.Deconstruct(out System.Func<TTheme!, string!>! GetName, out System.Func<TTheme!, System.Collections.Generic.IReadOnlyList<string!>?>? GetAliases) -> void
+Nickelony.IDEKit.Core.Themes.ThemeCatalogHooks<TTheme>.GetAliases.get -> System.Func<TTheme!, System.Collections.Generic.IReadOnlyList<string!>?>?
+Nickelony.IDEKit.Core.Themes.ThemeCatalogHooks<TTheme>.GetAliases.init -> void
+Nickelony.IDEKit.Core.Themes.ThemeCatalogHooks<TTheme>.GetName.get -> System.Func<TTheme!, string!>!
+Nickelony.IDEKit.Core.Themes.ThemeCatalogHooks<TTheme>.GetName.init -> void
+Nickelony.IDEKit.Core.Themes.ThemeCatalogHooks<TTheme>.ThemeCatalogHooks() -> void
+Nickelony.IDEKit.Core.Themes.ThemeCatalogHooks<TTheme>.ThemeCatalogHooks(System.Func<TTheme!, string!>! GetName, System.Func<TTheme!, System.Collections.Generic.IReadOnlyList<string!>?>? GetAliases = null) -> void
+Nickelony.IDEKit.Core.Threading.DispatcherDebouncer
+Nickelony.IDEKit.Core.Threading.DispatcherDebouncer.Arm(System.Action! callback) -> void
+Nickelony.IDEKit.Core.Threading.DispatcherDebouncer.Arm(System.Action! callback, System.TimeSpan delay) -> void
+Nickelony.IDEKit.Core.Threading.DispatcherDebouncer.Cancel() -> void
+Nickelony.IDEKit.Core.Threading.DispatcherDebouncer.DispatcherDebouncer(System.TimeSpan delay, Nickelony.IDEKit.Core.Threading.IUiDispatcher! dispatcher) -> void
+Nickelony.IDEKit.Core.Threading.DispatcherDebouncer.Dispose() -> void
+Nickelony.IDEKit.Core.Threading.DispatcherDebouncer.IsPending.get -> bool
+Nickelony.IDEKit.Core.Threading.IUiDispatcher
+Nickelony.IDEKit.Core.Threading.IUiDispatcher.CheckAccess() -> bool
+Nickelony.IDEKit.Core.Threading.IUiDispatcher.Invoke(System.Action! callback) -> void
+Nickelony.IDEKit.Core.Threading.IUiDispatcher.Invoke<TResult>(System.Func<TResult>! callback) -> TResult
+Nickelony.IDEKit.Core.Threading.IUiDispatcher.InvokeAsync(System.Action! callback) -> System.Threading.Tasks.Task!
+Nickelony.IDEKit.Core.Threading.IUiDispatcher.Post(System.Action! callback, Nickelony.IDEKit.Core.Threading.UiDispatcherPriority priority = Nickelony.IDEKit.Core.Threading.UiDispatcherPriority.Normal) -> void
+Nickelony.IDEKit.Core.Threading.IUiDispatcher.Schedule(System.TimeSpan delay, System.Action! callback) -> System.IDisposable!
+Nickelony.IDEKit.Core.Threading.IUiDispatcher.VerifyAccess() -> void
+Nickelony.IDEKit.Core.Threading.StopGate<TOperation>
+Nickelony.IDEKit.Core.Threading.StopGate<TOperation>.Admit(TOperation! operation, object! owner) -> void
+Nickelony.IDEKit.Core.Threading.StopGate<TOperation>.Carry(System.Action! action) -> System.Action!
+Nickelony.IDEKit.Core.Threading.StopGate<TOperation>.Complete(TOperation! operation) -> void
+Nickelony.IDEKit.Core.Threading.StopGate<TOperation>.IsStopping.get -> bool
+Nickelony.IDEKit.Core.Threading.StopGate<TOperation>.RecordStopTask(System.Threading.Tasks.Task! stopTask) -> void
+Nickelony.IDEKit.Core.Threading.StopGate<TOperation>.StopGate(object! syncRoot) -> void
+Nickelony.IDEKit.Core.Threading.StopGate<TOperation>.StopGate(object! syncRoot, bool stopWaitsForOperations) -> void
+Nickelony.IDEKit.Core.Threading.StopGate<TOperation>.ThrowIfStopping(object! owner) -> void
+Nickelony.IDEKit.Core.Threading.StopGate<TOperation>.TryBeginStop(out System.Threading.Tasks.Task? stopTask, out System.Collections.Generic.IReadOnlyList<TOperation!>! operations) -> bool
+Nickelony.IDEKit.Core.Threading.UiDispatcherPriority
+Nickelony.IDEKit.Core.Threading.UiDispatcherPriority.Background = 0 -> Nickelony.IDEKit.Core.Threading.UiDispatcherPriority
+Nickelony.IDEKit.Core.Threading.UiDispatcherPriority.ContextIdle = 1 -> Nickelony.IDEKit.Core.Threading.UiDispatcherPriority
+Nickelony.IDEKit.Core.Threading.UiDispatcherPriority.Normal = 2 -> Nickelony.IDEKit.Core.Threading.UiDispatcherPriority
+Nickelony.IDEKit.Core.Threading.UiDispatcherPriority.Render = 3 -> Nickelony.IDEKit.Core.Threading.UiDispatcherPriority
+Nickelony.IDEKit.Core.Validation.NumericValidation
+const Nickelony.IDEKit.Core.AutoClosing.AutoClosingOptions.DefaultBracketAutoCloseBefore = "\"'`;:.,=}])>" -> string!
+const Nickelony.IDEKit.Core.AutoClosing.AutoClosingOptions.DefaultQuoteAutoCloseBefore = ";:.,=}])>" -> string!
+const Nickelony.IDEKit.Core.Editing.TextIncrementalEditCalculator.MaximumDiffLineCount = 100000 -> int
+const Nickelony.IDEKit.Core.Indentation.IndentationDetector.MaximumScannedLineCount = 10000 -> int
+const Nickelony.IDEKit.Core.Indentation.IndentationOperations.MaximumSize = 1000 -> int
+const Nickelony.IDEKit.Core.Navigation.OpenEditorDescriptor.UnsavedIconKey = "unsaved" -> string!
+override Nickelony.IDEKit.Core.AutoClosing.AutoClosingAction.GetHashCode() -> int
+override Nickelony.IDEKit.Core.AutoClosing.AutoClosingDeletionRequest.GetHashCode() -> int
+override Nickelony.IDEKit.Core.AutoClosing.AutoClosingOptions.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Core.AutoClosing.AutoClosingOptions.GetHashCode() -> int
+override Nickelony.IDEKit.Core.AutoClosing.AutoClosingOptions.ToString() -> string!
+override Nickelony.IDEKit.Core.AutoClosing.AutoClosingPair.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Core.AutoClosing.AutoClosingPair.GetHashCode() -> int
+override Nickelony.IDEKit.Core.AutoClosing.AutoClosingPair.ToString() -> string!
+override Nickelony.IDEKit.Core.AutoClosing.AutoClosingRequest.GetHashCode() -> int
+override Nickelony.IDEKit.Core.AutoClosing.AutoClosingResult.GetHashCode() -> int
+override Nickelony.IDEKit.Core.Comments.LineCommentEdit.GetHashCode() -> int
+override Nickelony.IDEKit.Core.Comments.LineCommentRequest.GetHashCode() -> int
+override Nickelony.IDEKit.Core.Diagnostics.DiagnosticSegment.GetHashCode() -> int
+override Nickelony.IDEKit.Core.Diffing.LineDiffHunk.GetHashCode() -> int
+override Nickelony.IDEKit.Core.Diffing.LineDiffResult.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Core.Diffing.LineDiffResult.GetHashCode() -> int
+override Nickelony.IDEKit.Core.Diffing.LineDiffResult.ToString() -> string!
+override Nickelony.IDEKit.Core.Editing.EditorSelection.GetHashCode() -> int
+override Nickelony.IDEKit.Core.Editing.TextEditOperation.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Core.Editing.TextEditOperation.GetHashCode() -> int
+override Nickelony.IDEKit.Core.Editing.TextEditOperation.ToString() -> string!
+override Nickelony.IDEKit.Core.Editing.TextEditPreparationIssue.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Core.Editing.TextEditPreparationIssue.GetHashCode() -> int
+override Nickelony.IDEKit.Core.Editing.TextEditPreparationIssue.ToString() -> string!
+override Nickelony.IDEKit.Core.Editing.TextEditRequest.GetHashCode() -> int
+override Nickelony.IDEKit.Core.Editing.TextIncrementalEdit.GetHashCode() -> int
+override Nickelony.IDEKit.Core.FindReplace.SearchQuery.GetHashCode() -> int
+override Nickelony.IDEKit.Core.Highlighting.RegexHighlightingDefinitionOptions.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Core.Highlighting.RegexHighlightingDefinitionOptions.GetHashCode() -> int
+override Nickelony.IDEKit.Core.Highlighting.RegexHighlightingDefinitionOptions.ToString() -> string!
+override Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle.GetHashCode() -> int
+override Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle.ToString() -> string!
+override Nickelony.IDEKit.Core.Indentation.IndentationDetection.GetHashCode() -> int
+override Nickelony.IDEKit.Core.Indentation.IndentationRequest.GetHashCode() -> int
+override Nickelony.IDEKit.Core.LineStatus.LineStatusIconPlacement.GetHashCode() -> int
+override Nickelony.IDEKit.Core.Media.ArgbColor.GetHashCode() -> int
+override Nickelony.IDEKit.Core.Navigation.LineColumnQuery.GetHashCode() -> int
+override Nickelony.IDEKit.Core.Navigation.NavigationLocation.GetHashCode() -> int
+override Nickelony.IDEKit.Core.Navigation.NavigationLocationPlan.GetHashCode() -> int
+override Nickelony.IDEKit.Core.Navigation.OpenEditorDescriptor.Equals(object? obj) -> bool
+override Nickelony.IDEKit.Core.Navigation.OpenEditorDescriptor.GetHashCode() -> int
+override Nickelony.IDEKit.Core.Navigation.OpenEditorDescriptor.ToString() -> string!
+override Nickelony.IDEKit.Core.Paths.LocalPathComparisonPolicy.GetHashCode() -> int
+override Nickelony.IDEKit.Core.Requests.RequestHandle.GetHashCode() -> int
+override Nickelony.IDEKit.Core.Scanning.BlockCommentSyntax.GetHashCode() -> int
+override Nickelony.IDEKit.Core.Scanning.CommentSpan.GetHashCode() -> int
+override Nickelony.IDEKit.Core.Scanning.CommentSpan.ToString() -> string!
+override Nickelony.IDEKit.Core.Scanning.CommentSyntax.GetHashCode() -> int
+override Nickelony.IDEKit.Core.Text.TextPosition.GetHashCode() -> int
+override Nickelony.IDEKit.Core.Text.TextPositionRange.GetHashCode() -> int
+override Nickelony.IDEKit.Core.Text.TextRange.GetHashCode() -> int
+override Nickelony.IDEKit.Core.Text.TextRange.ToString() -> string!
+override Nickelony.IDEKit.Core.Themes.ThemeCatalogHooks<TTheme>.GetHashCode() -> int
+static Nickelony.IDEKit.Core.AutoClosing.AutoClosingAction.CreateInsert(string! closingText) -> Nickelony.IDEKit.Core.AutoClosing.AutoClosingAction
+static Nickelony.IDEKit.Core.AutoClosing.AutoClosingAction.CreateSkip(string! closingText) -> Nickelony.IDEKit.Core.AutoClosing.AutoClosingAction
+static Nickelony.IDEKit.Core.AutoClosing.AutoClosingAction.operator !=(Nickelony.IDEKit.Core.AutoClosing.AutoClosingAction left, Nickelony.IDEKit.Core.AutoClosing.AutoClosingAction right) -> bool
+static Nickelony.IDEKit.Core.AutoClosing.AutoClosingAction.operator ==(Nickelony.IDEKit.Core.AutoClosing.AutoClosingAction left, Nickelony.IDEKit.Core.AutoClosing.AutoClosingAction right) -> bool
+static Nickelony.IDEKit.Core.AutoClosing.AutoClosingDeletionRequest.operator !=(Nickelony.IDEKit.Core.AutoClosing.AutoClosingDeletionRequest left, Nickelony.IDEKit.Core.AutoClosing.AutoClosingDeletionRequest right) -> bool
+static Nickelony.IDEKit.Core.AutoClosing.AutoClosingDeletionRequest.operator ==(Nickelony.IDEKit.Core.AutoClosing.AutoClosingDeletionRequest left, Nickelony.IDEKit.Core.AutoClosing.AutoClosingDeletionRequest right) -> bool
+static Nickelony.IDEKit.Core.AutoClosing.AutoClosingOptions.Default.get -> Nickelony.IDEKit.Core.AutoClosing.AutoClosingOptions!
+static Nickelony.IDEKit.Core.AutoClosing.AutoClosingOptions.operator !=(Nickelony.IDEKit.Core.AutoClosing.AutoClosingOptions? left, Nickelony.IDEKit.Core.AutoClosing.AutoClosingOptions? right) -> bool
+static Nickelony.IDEKit.Core.AutoClosing.AutoClosingOptions.operator ==(Nickelony.IDEKit.Core.AutoClosing.AutoClosingOptions? left, Nickelony.IDEKit.Core.AutoClosing.AutoClosingOptions? right) -> bool
+static Nickelony.IDEKit.Core.AutoClosing.AutoClosingPair.AngleBrackets.get -> Nickelony.IDEKit.Core.AutoClosing.AutoClosingPair!
+static Nickelony.IDEKit.Core.AutoClosing.AutoClosingPair.Backticks.get -> Nickelony.IDEKit.Core.AutoClosing.AutoClosingPair!
+static Nickelony.IDEKit.Core.AutoClosing.AutoClosingPair.Braces.get -> Nickelony.IDEKit.Core.AutoClosing.AutoClosingPair!
+static Nickelony.IDEKit.Core.AutoClosing.AutoClosingPair.Brackets.get -> Nickelony.IDEKit.Core.AutoClosing.AutoClosingPair!
+static Nickelony.IDEKit.Core.AutoClosing.AutoClosingPair.DoubleQuotes.get -> Nickelony.IDEKit.Core.AutoClosing.AutoClosingPair!
+static Nickelony.IDEKit.Core.AutoClosing.AutoClosingPair.Parentheses.get -> Nickelony.IDEKit.Core.AutoClosing.AutoClosingPair!
+static Nickelony.IDEKit.Core.AutoClosing.AutoClosingPair.SingleQuotes.get -> Nickelony.IDEKit.Core.AutoClosing.AutoClosingPair!
+static Nickelony.IDEKit.Core.AutoClosing.AutoClosingPair.operator !=(Nickelony.IDEKit.Core.AutoClosing.AutoClosingPair? left, Nickelony.IDEKit.Core.AutoClosing.AutoClosingPair? right) -> bool
+static Nickelony.IDEKit.Core.AutoClosing.AutoClosingPair.operator ==(Nickelony.IDEKit.Core.AutoClosing.AutoClosingPair? left, Nickelony.IDEKit.Core.AutoClosing.AutoClosingPair? right) -> bool
+static Nickelony.IDEKit.Core.AutoClosing.AutoClosingPlanner.TryPlanAction(in Nickelony.IDEKit.Core.AutoClosing.AutoClosingRequest request, out Nickelony.IDEKit.Core.AutoClosing.AutoClosingAction action) -> bool
+static Nickelony.IDEKit.Core.AutoClosing.AutoClosingPlanner.TryPlanPairDeletion(in Nickelony.IDEKit.Core.AutoClosing.AutoClosingDeletionRequest request, out Nickelony.IDEKit.Core.AutoClosing.AutoClosingPair? pair) -> bool
+static Nickelony.IDEKit.Core.AutoClosing.AutoClosingRequest.operator !=(Nickelony.IDEKit.Core.AutoClosing.AutoClosingRequest left, Nickelony.IDEKit.Core.AutoClosing.AutoClosingRequest right) -> bool
+static Nickelony.IDEKit.Core.AutoClosing.AutoClosingRequest.operator ==(Nickelony.IDEKit.Core.AutoClosing.AutoClosingRequest left, Nickelony.IDEKit.Core.AutoClosing.AutoClosingRequest right) -> bool
+static Nickelony.IDEKit.Core.AutoClosing.AutoClosingResult.None.get -> Nickelony.IDEKit.Core.AutoClosing.AutoClosingResult
+static Nickelony.IDEKit.Core.AutoClosing.AutoClosingResult.operator !=(Nickelony.IDEKit.Core.AutoClosing.AutoClosingResult left, Nickelony.IDEKit.Core.AutoClosing.AutoClosingResult right) -> bool
+static Nickelony.IDEKit.Core.AutoClosing.AutoClosingResult.operator ==(Nickelony.IDEKit.Core.AutoClosing.AutoClosingResult left, Nickelony.IDEKit.Core.AutoClosing.AutoClosingResult right) -> bool
+static Nickelony.IDEKit.Core.Bookmarks.AdjacentBookmarkLineResolver.Resolve(System.Collections.Generic.IReadOnlyList<int>! bookmarkedLineNumbers, int currentLineNumber, bool searchForward) -> int?
+static Nickelony.IDEKit.Core.Callbacks.CallbackContainment.Invoke<TResult>(System.Func<TResult>! callback, TResult fallbackValue, System.Action<System.Exception!>! reportFault) -> TResult
+static Nickelony.IDEKit.Core.Callbacks.CallbackContainment.TryRun(System.Action! callback, System.Action<System.Exception!>! reportFault) -> bool
+static Nickelony.IDEKit.Core.Callbacks.CallbackContainment.TryRun<TResult>(System.Func<TResult>! callback, System.Action<System.Exception!>! reportFault, out TResult result) -> bool
+static Nickelony.IDEKit.Core.Comments.LineCommentEdit.operator !=(Nickelony.IDEKit.Core.Comments.LineCommentEdit left, Nickelony.IDEKit.Core.Comments.LineCommentEdit right) -> bool
+static Nickelony.IDEKit.Core.Comments.LineCommentEdit.operator ==(Nickelony.IDEKit.Core.Comments.LineCommentEdit left, Nickelony.IDEKit.Core.Comments.LineCommentEdit right) -> bool
+static Nickelony.IDEKit.Core.Comments.LineCommentPlanner.TryCreateEdit(in Nickelony.IDEKit.Core.Comments.LineCommentRequest request, out Nickelony.IDEKit.Core.Comments.LineCommentEdit edit) -> bool
+static Nickelony.IDEKit.Core.Comments.LineCommentRequest.operator !=(Nickelony.IDEKit.Core.Comments.LineCommentRequest left, Nickelony.IDEKit.Core.Comments.LineCommentRequest right) -> bool
+static Nickelony.IDEKit.Core.Comments.LineCommentRequest.operator ==(Nickelony.IDEKit.Core.Comments.LineCommentRequest left, Nickelony.IDEKit.Core.Comments.LineCommentRequest right) -> bool
+static Nickelony.IDEKit.Core.Diagnostics.DiagnosticAnchorResolver.TryResolveOffsets(Nickelony.IDEKit.Core.Text.TextLineMap! lineMap, Nickelony.IDEKit.Core.Text.TextPositionRange range, Nickelony.IDEKit.Core.Identifiers.IdentifierCharacterPolicy! wordCharacters, out Nickelony.IDEKit.Core.Text.TextRange resolvedRange) -> bool
+static Nickelony.IDEKit.Core.Diagnostics.DiagnosticSegment.operator !=(Nickelony.IDEKit.Core.Diagnostics.DiagnosticSegment left, Nickelony.IDEKit.Core.Diagnostics.DiagnosticSegment right) -> bool
+static Nickelony.IDEKit.Core.Diagnostics.DiagnosticSegment.operator ==(Nickelony.IDEKit.Core.Diagnostics.DiagnosticSegment left, Nickelony.IDEKit.Core.Diagnostics.DiagnosticSegment right) -> bool
+static Nickelony.IDEKit.Core.Diffing.LineDiffHunk.operator !=(Nickelony.IDEKit.Core.Diffing.LineDiffHunk left, Nickelony.IDEKit.Core.Diffing.LineDiffHunk right) -> bool
+static Nickelony.IDEKit.Core.Diffing.LineDiffHunk.operator ==(Nickelony.IDEKit.Core.Diffing.LineDiffHunk left, Nickelony.IDEKit.Core.Diffing.LineDiffHunk right) -> bool
+static Nickelony.IDEKit.Core.Diffing.LineDiffResult.Create(System.Collections.Generic.IReadOnlySet<int>! changedLineNumbers, bool isApproximate) -> Nickelony.IDEKit.Core.Diffing.LineDiffResult!
+static Nickelony.IDEKit.Core.Diffing.LineDiffResult.operator !=(Nickelony.IDEKit.Core.Diffing.LineDiffResult? left, Nickelony.IDEKit.Core.Diffing.LineDiffResult? right) -> bool
+static Nickelony.IDEKit.Core.Diffing.LineDiffResult.operator ==(Nickelony.IDEKit.Core.Diffing.LineDiffResult? left, Nickelony.IDEKit.Core.Diffing.LineDiffResult? right) -> bool
+static Nickelony.IDEKit.Core.Diffing.LineDiffer.GetChangedLineNumbers(System.Collections.Generic.IReadOnlyList<string!>! baseline, System.Collections.Generic.IReadOnlyList<string!>! current) -> Nickelony.IDEKit.Core.Diffing.LineDiffResult!
+static Nickelony.IDEKit.Core.Diffing.LineDiffer.GetHunks(System.Collections.Generic.IReadOnlyList<string!>! baseline, System.Collections.Generic.IReadOnlyList<string!>! current) -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Core.Diffing.LineDiffHunk>!
+static Nickelony.IDEKit.Core.Editing.EditorSelection.operator !=(Nickelony.IDEKit.Core.Editing.EditorSelection left, Nickelony.IDEKit.Core.Editing.EditorSelection right) -> bool
+static Nickelony.IDEKit.Core.Editing.EditorSelection.operator ==(Nickelony.IDEKit.Core.Editing.EditorSelection left, Nickelony.IDEKit.Core.Editing.EditorSelection right) -> bool
+static Nickelony.IDEKit.Core.Editing.EditorSelectionMapper.Map(Nickelony.IDEKit.Core.Editing.PreparedTextEdits! edits, Nickelony.IDEKit.Core.Editing.EditorSelection before, int caretLineNumber, Nickelony.IDEKit.Core.Text.ITextSnapshot! editedText) -> Nickelony.IDEKit.Core.Editing.EditorSelection
+static Nickelony.IDEKit.Core.Editing.LineTerminatorPlanner.PlanConversion(Nickelony.IDEKit.Core.Text.ITextSnapshot! snapshot, Nickelony.IDEKit.Core.Text.LineTerminatorStyle style) -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Core.Editing.TextIncrementalEdit>!
+static Nickelony.IDEKit.Core.Editing.TextEditKernel.Prepare(Nickelony.IDEKit.Core.Text.ITextSnapshot! snapshot, System.Collections.Generic.IEnumerable<Nickelony.IDEKit.Core.Editing.TextIncrementalEdit>! edits) -> Nickelony.IDEKit.Core.Editing.TextEditPreparationResult!
+static Nickelony.IDEKit.Core.Editing.TextEditKernel.Prepare(System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Core.Editing.TextEditOperation!>! operations) -> Nickelony.IDEKit.Core.Editing.TextEditPreparationResult!
+static Nickelony.IDEKit.Core.Editing.TextEditKernel.PrepareSkippingInvalidEntries(Nickelony.IDEKit.Core.Text.ITextSnapshot! snapshot, System.Collections.Generic.IEnumerable<Nickelony.IDEKit.Core.Editing.TextIncrementalEdit>! edits) -> Nickelony.IDEKit.Core.Editing.TextEditSkipResult!
+static Nickelony.IDEKit.Core.Editing.TextEditOperation.operator !=(Nickelony.IDEKit.Core.Editing.TextEditOperation? left, Nickelony.IDEKit.Core.Editing.TextEditOperation? right) -> bool
+static Nickelony.IDEKit.Core.Editing.TextEditOperation.operator ==(Nickelony.IDEKit.Core.Editing.TextEditOperation? left, Nickelony.IDEKit.Core.Editing.TextEditOperation? right) -> bool
+static Nickelony.IDEKit.Core.Editing.TextEditPreparationIssue.operator !=(Nickelony.IDEKit.Core.Editing.TextEditPreparationIssue? left, Nickelony.IDEKit.Core.Editing.TextEditPreparationIssue? right) -> bool
+static Nickelony.IDEKit.Core.Editing.TextEditPreparationIssue.operator ==(Nickelony.IDEKit.Core.Editing.TextEditPreparationIssue? left, Nickelony.IDEKit.Core.Editing.TextEditPreparationIssue? right) -> bool
+static Nickelony.IDEKit.Core.Editing.TextEditPreparationResult.Failure(System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Core.Editing.TextEditPreparationIssue!>! issues) -> Nickelony.IDEKit.Core.Editing.TextEditPreparationResult!
+static Nickelony.IDEKit.Core.Editing.TextEditPreparationResult.Success(Nickelony.IDEKit.Core.Editing.PreparedTextEdits! edits) -> Nickelony.IDEKit.Core.Editing.TextEditPreparationResult!
+static Nickelony.IDEKit.Core.Editing.TextEditRequest.operator !=(Nickelony.IDEKit.Core.Editing.TextEditRequest left, Nickelony.IDEKit.Core.Editing.TextEditRequest right) -> bool
+static Nickelony.IDEKit.Core.Editing.TextEditRequest.operator ==(Nickelony.IDEKit.Core.Editing.TextEditRequest left, Nickelony.IDEKit.Core.Editing.TextEditRequest right) -> bool
+static Nickelony.IDEKit.Core.Editing.TextEditSkipResult.Success(Nickelony.IDEKit.Core.Editing.PreparedTextEdits! edits, System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Core.Editing.TextEditPreparationIssue!>! skippedIssues) -> Nickelony.IDEKit.Core.Editing.TextEditSkipResult!
+static Nickelony.IDEKit.Core.Editing.TextIncrementalEdit.operator !=(Nickelony.IDEKit.Core.Editing.TextIncrementalEdit left, Nickelony.IDEKit.Core.Editing.TextIncrementalEdit right) -> bool
+static Nickelony.IDEKit.Core.Editing.TextIncrementalEdit.operator ==(Nickelony.IDEKit.Core.Editing.TextIncrementalEdit left, Nickelony.IDEKit.Core.Editing.TextIncrementalEdit right) -> bool
+static Nickelony.IDEKit.Core.Editing.TextIncrementalEditCalculator.Compute(string? oldText, string? newText) -> Nickelony.IDEKit.Core.Editing.TextIncrementalEdit
+static Nickelony.IDEKit.Core.Editing.TextIncrementalEditCalculator.ComputeHunkEdits(string? oldText, string? newText) -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Core.Editing.TextIncrementalEdit>!
+static Nickelony.IDEKit.Core.FindReplace.FindReplaceOperations.BuildPattern(string! findText, bool useRegex, bool matchWholeWord) -> string!
+static Nickelony.IDEKit.Core.FindReplace.FindReplaceOperations.BuildRegexOptions(bool caseSensitive) -> System.Text.RegularExpressions.RegexOptions
+static Nickelony.IDEKit.Core.FindReplace.FindReplaceOperations.CountMatches(string! text, Nickelony.IDEKit.Core.FindReplace.SearchQuery query) -> int
+static Nickelony.IDEKit.Core.FindReplace.FindReplaceOperations.FindAllMatches(string! text, Nickelony.IDEKit.Core.FindReplace.SearchQuery query) -> System.Text.RegularExpressions.MatchCollection!
+static Nickelony.IDEKit.Core.FindReplace.FindReplaceOperations.FindNextMatch(string! text, int startOffset, Nickelony.IDEKit.Core.FindReplace.SearchQuery query) -> System.Text.RegularExpressions.Match?
+static Nickelony.IDEKit.Core.FindReplace.FindReplaceOperations.FindPreviousMatch(string! text, int endOffset, Nickelony.IDEKit.Core.FindReplace.SearchQuery query) -> System.Text.RegularExpressions.Match?
+static Nickelony.IDEKit.Core.FindReplace.FindReplaceOperations.ReplaceAll(string! text, Nickelony.IDEKit.Core.FindReplace.SearchQuery query, string! replacement) -> string!
+static Nickelony.IDEKit.Core.FindReplace.SearchQuery.operator !=(Nickelony.IDEKit.Core.FindReplace.SearchQuery left, Nickelony.IDEKit.Core.FindReplace.SearchQuery right) -> bool
+static Nickelony.IDEKit.Core.FindReplace.SearchQuery.operator ==(Nickelony.IDEKit.Core.FindReplace.SearchQuery left, Nickelony.IDEKit.Core.FindReplace.SearchQuery right) -> bool
+static Nickelony.IDEKit.Core.Formatting.TrimTrailingWhitespaceFormatter.Instance.get -> Nickelony.IDEKit.Core.Formatting.TrimTrailingWhitespaceFormatter!
+static Nickelony.IDEKit.Core.Highlighting.RegexHighlightingDefinitionOptions.Default.get -> Nickelony.IDEKit.Core.Highlighting.RegexHighlightingDefinitionOptions!
+static Nickelony.IDEKit.Core.Highlighting.RegexHighlightingDefinitionOptions.operator !=(Nickelony.IDEKit.Core.Highlighting.RegexHighlightingDefinitionOptions? left, Nickelony.IDEKit.Core.Highlighting.RegexHighlightingDefinitionOptions? right) -> bool
+static Nickelony.IDEKit.Core.Highlighting.RegexHighlightingDefinitionOptions.operator ==(Nickelony.IDEKit.Core.Highlighting.RegexHighlightingDefinitionOptions? left, Nickelony.IDEKit.Core.Highlighting.RegexHighlightingDefinitionOptions? right) -> bool
 static Nickelony.IDEKit.Core.Highlighting.RegexHighlightingRuleSet.Create(string! name, System.Collections.Generic.IEnumerable<Nickelony.IDEKit.Core.Highlighting.RegexHighlightingRule!>! rules, System.Collections.Generic.IEnumerable<Nickelony.IDEKit.Core.Highlighting.RegexHighlightingSpan!>! spans) -> Nickelony.IDEKit.Core.Highlighting.RegexHighlightingRuleSet!
+static Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle.operator !=(Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle? left, Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle? right) -> bool
+static Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle.operator ==(Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle? left, Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle? right) -> bool
+static Nickelony.IDEKit.Core.Identifiers.IdentifierCharacterPolicy.Create(System.Func<char, bool>! isPartCharacter, System.Func<char, bool>? isStartCharacter = null) -> Nickelony.IDEKit.Core.Identifiers.IdentifierCharacterPolicy!
+static Nickelony.IDEKit.Core.Identifiers.IdentifierCharacterPolicy.Default.get -> Nickelony.IDEKit.Core.Identifiers.IdentifierCharacterPolicy!
+static Nickelony.IDEKit.Core.Identifiers.IdentifierOperations.FindTokenSpan(Nickelony.IDEKit.Core.Text.ITextSnapshot! snapshot, int offset, Nickelony.IDEKit.Core.Identifiers.IdentifierCharacterPolicy! policy, Nickelony.IDEKit.Core.Identifiers.IdentifierSpanMode mode = Nickelony.IDEKit.Core.Identifiers.IdentifierSpanMode.Containing) -> Nickelony.IDEKit.Core.Text.TextRange?
+static Nickelony.IDEKit.Core.Identifiers.IdentifierOperations.GetWordEndingAt(string! text, int offset) -> string!
+static Nickelony.IDEKit.Core.Identifiers.IdentifierOperations.GetWordEndingAt(string! text, int offset, Nickelony.IDEKit.Core.Identifiers.IdentifierCharacterPolicy! policy) -> string!
+static Nickelony.IDEKit.Core.Indentation.IndentationDetection.operator !=(Nickelony.IDEKit.Core.Indentation.IndentationDetection left, Nickelony.IDEKit.Core.Indentation.IndentationDetection right) -> bool
+static Nickelony.IDEKit.Core.Indentation.IndentationDetection.operator ==(Nickelony.IDEKit.Core.Indentation.IndentationDetection left, Nickelony.IDEKit.Core.Indentation.IndentationDetection right) -> bool
+static Nickelony.IDEKit.Core.Indentation.IndentationDetector.Detect(System.ReadOnlySpan<char> text, bool defaultInsertSpaces, int defaultSize) -> Nickelony.IDEKit.Core.Indentation.IndentationDetection
+static Nickelony.IDEKit.Core.Indentation.IndentationOperations.BuildIndentation(string! currentLineIndentation, string! indentationUnit, int indentLevel) -> string!
+static Nickelony.IDEKit.Core.Indentation.IndentationOperations.CreateIndentationUnit(bool convertTabsToSpaces, int indentationSize) -> string!
+static Nickelony.IDEKit.Core.Indentation.IndentationOperations.TruncateIndentationByUnitLength(string! indentation, string! indentationUnit) -> string!
+static Nickelony.IDEKit.Core.Indentation.IndentationPlanner.PlanResize(Nickelony.IDEKit.Core.Text.ITextSnapshot! snapshot, int currentSize, int newSize) -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Core.Editing.TextIncrementalEdit>!
+static Nickelony.IDEKit.Core.Indentation.IndentationPlanner.PlanToSpaces(Nickelony.IDEKit.Core.Text.ITextSnapshot! snapshot, int tabSize) -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Core.Editing.TextIncrementalEdit>!
+static Nickelony.IDEKit.Core.Indentation.IndentationPlanner.PlanToTabs(Nickelony.IDEKit.Core.Text.ITextSnapshot! snapshot, int tabSize) -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Core.Editing.TextIncrementalEdit>!
+static Nickelony.IDEKit.Core.Indentation.IndentationRequest.operator !=(Nickelony.IDEKit.Core.Indentation.IndentationRequest left, Nickelony.IDEKit.Core.Indentation.IndentationRequest right) -> bool
+static Nickelony.IDEKit.Core.Indentation.IndentationRequest.operator ==(Nickelony.IDEKit.Core.Indentation.IndentationRequest left, Nickelony.IDEKit.Core.Indentation.IndentationRequest right) -> bool
+static Nickelony.IDEKit.Core.Indentation.WhitespaceOperations.ConvertIndentationToSpaces(string! text, int tabSize) -> string!
+static Nickelony.IDEKit.Core.Indentation.WhitespaceOperations.ConvertIndentationToTabs(string! text, int tabSize) -> string!
+static Nickelony.IDEKit.Core.Indentation.WhitespaceOperations.ExpandTabs(string! text, int tabSize) -> string!
+static Nickelony.IDEKit.Core.Indentation.WhitespaceOperations.ResizeIndentation(string! text, int currentSize, int newSize) -> string!
+static Nickelony.IDEKit.Core.LineStatus.LineStatusIconOperations.GetTopWithinLine(double lineHeight, double firstRowHeight, double iconHeight) -> double
+static Nickelony.IDEKit.Core.LineStatus.LineStatusIconOperations.Place(double boundsLeft, double boundsTop, double boundsWidth, double boundsHeight, double fontScale, double marginWidth) -> Nickelony.IDEKit.Core.LineStatus.LineStatusIconPlacement
+static Nickelony.IDEKit.Core.LineStatus.LineStatusIconPlacement.operator !=(Nickelony.IDEKit.Core.LineStatus.LineStatusIconPlacement left, Nickelony.IDEKit.Core.LineStatus.LineStatusIconPlacement right) -> bool
+static Nickelony.IDEKit.Core.LineStatus.LineStatusIconPlacement.operator ==(Nickelony.IDEKit.Core.LineStatus.LineStatusIconPlacement left, Nickelony.IDEKit.Core.LineStatus.LineStatusIconPlacement right) -> bool
+static Nickelony.IDEKit.Core.Media.ArgbColor.Black.get -> Nickelony.IDEKit.Core.Media.ArgbColor
+static Nickelony.IDEKit.Core.Media.ArgbColor.Blend(Nickelony.IDEKit.Core.Media.ArgbColor first, Nickelony.IDEKit.Core.Media.ArgbColor second, double ratio) -> Nickelony.IDEKit.Core.Media.ArgbColor
+static Nickelony.IDEKit.Core.Media.ArgbColor.FromRgb(byte r, byte g, byte b) -> Nickelony.IDEKit.Core.Media.ArgbColor
+static Nickelony.IDEKit.Core.Media.ArgbColor.TryParse(string? text, out Nickelony.IDEKit.Core.Media.ArgbColor color) -> bool
+static Nickelony.IDEKit.Core.Media.ArgbColor.White.get -> Nickelony.IDEKit.Core.Media.ArgbColor
+static Nickelony.IDEKit.Core.Media.ArgbColor.operator !=(Nickelony.IDEKit.Core.Media.ArgbColor left, Nickelony.IDEKit.Core.Media.ArgbColor right) -> bool
+static Nickelony.IDEKit.Core.Media.ArgbColor.operator ==(Nickelony.IDEKit.Core.Media.ArgbColor left, Nickelony.IDEKit.Core.Media.ArgbColor right) -> bool
+static Nickelony.IDEKit.Core.Navigation.LineColumnQuery.TryParse(string? text, out Nickelony.IDEKit.Core.Navigation.LineColumnQuery query) -> bool
+static Nickelony.IDEKit.Core.Navigation.LineColumnQuery.operator !=(Nickelony.IDEKit.Core.Navigation.LineColumnQuery left, Nickelony.IDEKit.Core.Navigation.LineColumnQuery right) -> bool
+static Nickelony.IDEKit.Core.Navigation.LineColumnQuery.operator ==(Nickelony.IDEKit.Core.Navigation.LineColumnQuery left, Nickelony.IDEKit.Core.Navigation.LineColumnQuery right) -> bool
+static Nickelony.IDEKit.Core.Navigation.NavigationLocation.operator !=(Nickelony.IDEKit.Core.Navigation.NavigationLocation left, Nickelony.IDEKit.Core.Navigation.NavigationLocation right) -> bool
+static Nickelony.IDEKit.Core.Navigation.NavigationLocation.operator ==(Nickelony.IDEKit.Core.Navigation.NavigationLocation left, Nickelony.IDEKit.Core.Navigation.NavigationLocation right) -> bool
+static Nickelony.IDEKit.Core.Navigation.NavigationLocationPlan.operator !=(Nickelony.IDEKit.Core.Navigation.NavigationLocationPlan left, Nickelony.IDEKit.Core.Navigation.NavigationLocationPlan right) -> bool
+static Nickelony.IDEKit.Core.Navigation.NavigationLocationPlan.operator ==(Nickelony.IDEKit.Core.Navigation.NavigationLocationPlan left, Nickelony.IDEKit.Core.Navigation.NavigationLocationPlan right) -> bool
+static Nickelony.IDEKit.Core.Navigation.NavigationLocationPlanner.Plan<TSource>(TSource text, int lineCount, Nickelony.IDEKit.Core.Navigation.NavigationLocation location) -> Nickelony.IDEKit.Core.Navigation.NavigationLocationPlan
+static Nickelony.IDEKit.Core.Navigation.OpenEditorDescriptor.operator !=(Nickelony.IDEKit.Core.Navigation.OpenEditorDescriptor? left, Nickelony.IDEKit.Core.Navigation.OpenEditorDescriptor? right) -> bool
+static Nickelony.IDEKit.Core.Navigation.OpenEditorDescriptor.operator ==(Nickelony.IDEKit.Core.Navigation.OpenEditorDescriptor? left, Nickelony.IDEKit.Core.Navigation.OpenEditorDescriptor? right) -> bool
+static Nickelony.IDEKit.Core.Paths.LocalPath.DescribeFolder(System.Collections.Generic.IReadOnlyList<string!>! normalizedRoots, string! normalizedFolder, Nickelony.IDEKit.Core.Paths.LocalPathComparisonPolicy comparison) -> string?
+static Nickelony.IDEKit.Core.Paths.LocalPath.IsDirectoryOrDescendant(string! normalizedPath, string! normalizedDirectory, Nickelony.IDEKit.Core.Paths.LocalPathComparisonPolicy comparison) -> bool
+static Nickelony.IDEKit.Core.Paths.LocalPath.Normalize(string! path) -> string!
+static Nickelony.IDEKit.Core.Paths.LocalPath.NormalizeRoots(System.Collections.Generic.IReadOnlyList<string!>! rootPaths, Nickelony.IDEKit.Core.Paths.LocalPathComparisonPolicy comparison, string? rootPathsExpression = null) -> System.Collections.Generic.IReadOnlyList<string!>!
+static Nickelony.IDEKit.Core.Paths.LocalPath.TryNormalize(string? path, out string! normalizedPath) -> bool
+static Nickelony.IDEKit.Core.Paths.LocalPathComparisonPolicy.CaseInsensitive.get -> Nickelony.IDEKit.Core.Paths.LocalPathComparisonPolicy
+static Nickelony.IDEKit.Core.Paths.LocalPathComparisonPolicy.CaseSensitive.get -> Nickelony.IDEKit.Core.Paths.LocalPathComparisonPolicy
+static Nickelony.IDEKit.Core.Paths.LocalPathComparisonPolicy.ForCurrentPlatform.get -> Nickelony.IDEKit.Core.Paths.LocalPathComparisonPolicy
+static Nickelony.IDEKit.Core.Paths.LocalPathComparisonPolicy.operator !=(Nickelony.IDEKit.Core.Paths.LocalPathComparisonPolicy left, Nickelony.IDEKit.Core.Paths.LocalPathComparisonPolicy right) -> bool
+static Nickelony.IDEKit.Core.Paths.LocalPathComparisonPolicy.operator ==(Nickelony.IDEKit.Core.Paths.LocalPathComparisonPolicy left, Nickelony.IDEKit.Core.Paths.LocalPathComparisonPolicy right) -> bool
+static Nickelony.IDEKit.Core.Requests.RequestHandle.None.get -> Nickelony.IDEKit.Core.Requests.RequestHandle
+static Nickelony.IDEKit.Core.Requests.RequestHandle.operator !=(Nickelony.IDEKit.Core.Requests.RequestHandle left, Nickelony.IDEKit.Core.Requests.RequestHandle right) -> bool
+static Nickelony.IDEKit.Core.Requests.RequestHandle.operator ==(Nickelony.IDEKit.Core.Requests.RequestHandle left, Nickelony.IDEKit.Core.Requests.RequestHandle right) -> bool
+static Nickelony.IDEKit.Core.Scanning.BlockCommentSyntax.operator !=(Nickelony.IDEKit.Core.Scanning.BlockCommentSyntax left, Nickelony.IDEKit.Core.Scanning.BlockCommentSyntax right) -> bool
+static Nickelony.IDEKit.Core.Scanning.BlockCommentSyntax.operator ==(Nickelony.IDEKit.Core.Scanning.BlockCommentSyntax left, Nickelony.IDEKit.Core.Scanning.BlockCommentSyntax right) -> bool
+static Nickelony.IDEKit.Core.Scanning.CommentOperations.EnumerateComments(System.ReadOnlySpan<char> text, Nickelony.IDEKit.Core.Scanning.CommentSyntax syntax) -> Nickelony.IDEKit.Core.Scanning.CommentSpanEnumerator
+static Nickelony.IDEKit.Core.Scanning.CommentOperations.FindComment(System.ReadOnlySpan<char> text, Nickelony.IDEKit.Core.Scanning.CommentSyntax syntax) -> Nickelony.IDEKit.Core.Scanning.CommentSpan?
+static Nickelony.IDEKit.Core.Scanning.CommentOperations.GetCodeEnd(System.ReadOnlySpan<char> text, Nickelony.IDEKit.Core.Scanning.CommentSyntax syntax) -> int
+static Nickelony.IDEKit.Core.Scanning.CommentOperations.GetCodeRange(System.ReadOnlySpan<char> text, Nickelony.IDEKit.Core.Scanning.CommentSyntax syntax) -> Nickelony.IDEKit.Core.Text.TextRange
+static Nickelony.IDEKit.Core.Scanning.CommentOperations.IsBlankOrStartsWithLineComment(string? lineText, Nickelony.IDEKit.Core.Scanning.CommentSyntax syntax) -> bool
+static Nickelony.IDEKit.Core.Scanning.CommentOperations.MaskBlockComments(System.ReadOnlySpan<char> text, Nickelony.IDEKit.Core.Scanning.CommentSyntax syntax) -> string!
+static Nickelony.IDEKit.Core.Scanning.CommentOperations.MaskBlockComments(string! text, Nickelony.IDEKit.Core.Scanning.CommentSyntax syntax) -> string!
+static Nickelony.IDEKit.Core.Scanning.CommentOperations.MaskComments(System.ReadOnlySpan<char> text, Nickelony.IDEKit.Core.Scanning.CommentSyntax syntax) -> string!
+static Nickelony.IDEKit.Core.Scanning.CommentOperations.MaskComments(string! text, Nickelony.IDEKit.Core.Scanning.CommentSyntax syntax) -> string!
+static Nickelony.IDEKit.Core.Scanning.CommentOperations.RemoveBlockComments(System.ReadOnlySpan<char> text, Nickelony.IDEKit.Core.Scanning.CommentSyntax syntax) -> string!
+static Nickelony.IDEKit.Core.Scanning.CommentOperations.RemoveBlockComments(string! text, Nickelony.IDEKit.Core.Scanning.CommentSyntax syntax) -> string!
+static Nickelony.IDEKit.Core.Scanning.CommentOperations.RemoveComments(System.ReadOnlySpan<char> text, Nickelony.IDEKit.Core.Scanning.CommentSyntax syntax) -> string!
+static Nickelony.IDEKit.Core.Scanning.CommentOperations.RemoveComments(string! text, Nickelony.IDEKit.Core.Scanning.CommentSyntax syntax) -> string!
+static Nickelony.IDEKit.Core.Scanning.CommentSpan.operator !=(Nickelony.IDEKit.Core.Scanning.CommentSpan left, Nickelony.IDEKit.Core.Scanning.CommentSpan right) -> bool
+static Nickelony.IDEKit.Core.Scanning.CommentSpan.operator ==(Nickelony.IDEKit.Core.Scanning.CommentSpan left, Nickelony.IDEKit.Core.Scanning.CommentSpan right) -> bool
+static Nickelony.IDEKit.Core.Scanning.CommentSyntax.operator !=(Nickelony.IDEKit.Core.Scanning.CommentSyntax left, Nickelony.IDEKit.Core.Scanning.CommentSyntax right) -> bool
+static Nickelony.IDEKit.Core.Scanning.CommentSyntax.operator ==(Nickelony.IDEKit.Core.Scanning.CommentSyntax left, Nickelony.IDEKit.Core.Scanning.CommentSyntax right) -> bool
+static Nickelony.IDEKit.Core.Scanning.ContinuationMarkerProbe.EndsWithContinuationMarker(System.ReadOnlySpan<char> text, Nickelony.IDEKit.Core.Scanning.CommentSyntax syntax, System.ReadOnlySpan<char> continuationMarker, bool markerMustBePrecededByWhitespace = false) -> bool
+static Nickelony.IDEKit.Core.Scanning.ContinuationMarkerProbe.EndsWithContinuationMarker(System.ReadOnlySpan<char> text, Nickelony.IDEKit.Core.Scanning.CommentSyntax syntax, char continuationMarker) -> bool
+static Nickelony.IDEKit.Core.Text.LineTerminatorDetector.Detect(string! text) -> Nickelony.IDEKit.Core.Text.LineTerminatorStyle
+static Nickelony.IDEKit.Core.Text.LineTerminatorNormalizer.NormalizeToLineFeeds(string! text) -> string!
+static Nickelony.IDEKit.Core.Text.LineTerminatorStyleExtensions.GetDisplayName(this Nickelony.IDEKit.Core.Text.LineTerminatorStyle style) -> string!
+static Nickelony.IDEKit.Core.Text.LineTextOperations.GetLeadingWhitespace(string! lineText) -> string!
+static Nickelony.IDEKit.Core.Text.LineTextOperations.GetLeadingWhitespaceLength(string! lineText) -> int
+static Nickelony.IDEKit.Core.Text.OptionalTextNormalizer.Normalize(string? text) -> string?
+static Nickelony.IDEKit.Core.Text.TextLineMap.Build(string? text) -> Nickelony.IDEKit.Core.Text.TextLineMap!
+static Nickelony.IDEKit.Core.Text.TextLineMap.GetPositionRange(System.ReadOnlySpan<char> text, Nickelony.IDEKit.Core.Text.TextRange range) -> Nickelony.IDEKit.Core.Text.TextPositionRange
+static Nickelony.IDEKit.Core.Text.TextLineSplitter.Split(string? text) -> string![]!
+static Nickelony.IDEKit.Core.Text.TextLineSplitter.SplitIncludingTerminators(string? text) -> string![]!
+static Nickelony.IDEKit.Core.Text.TextMatchProbe.MatchesAt<TCharSource>(TCharSource source, int offset, string! expectedText) -> bool
+static Nickelony.IDEKit.Core.Text.TextOffsetValidation.ValidateOffset(int textLength, int offset, string! parameterName, string! offsetDescription) -> void
+static Nickelony.IDEKit.Core.Text.TextOffsetValidation.ValidateOffset(string! documentText, int offset, string! parameterName, string! offsetDescription) -> void
+static Nickelony.IDEKit.Core.Text.TextOffsetValidation.ValidateRange(int textLength, Nickelony.IDEKit.Core.Text.TextRange range, string! parameterName, string! rangeDescription) -> void
+static Nickelony.IDEKit.Core.Text.TextPosition.operator !=(Nickelony.IDEKit.Core.Text.TextPosition left, Nickelony.IDEKit.Core.Text.TextPosition right) -> bool
+static Nickelony.IDEKit.Core.Text.TextPosition.operator <(Nickelony.IDEKit.Core.Text.TextPosition left, Nickelony.IDEKit.Core.Text.TextPosition right) -> bool
+static Nickelony.IDEKit.Core.Text.TextPosition.operator <=(Nickelony.IDEKit.Core.Text.TextPosition left, Nickelony.IDEKit.Core.Text.TextPosition right) -> bool
+static Nickelony.IDEKit.Core.Text.TextPosition.operator ==(Nickelony.IDEKit.Core.Text.TextPosition left, Nickelony.IDEKit.Core.Text.TextPosition right) -> bool
+static Nickelony.IDEKit.Core.Text.TextPosition.operator >(Nickelony.IDEKit.Core.Text.TextPosition left, Nickelony.IDEKit.Core.Text.TextPosition right) -> bool
+static Nickelony.IDEKit.Core.Text.TextPosition.operator >=(Nickelony.IDEKit.Core.Text.TextPosition left, Nickelony.IDEKit.Core.Text.TextPosition right) -> bool
+static Nickelony.IDEKit.Core.Text.TextPositionRange.operator !=(Nickelony.IDEKit.Core.Text.TextPositionRange left, Nickelony.IDEKit.Core.Text.TextPositionRange right) -> bool
+static Nickelony.IDEKit.Core.Text.TextPositionRange.operator ==(Nickelony.IDEKit.Core.Text.TextPositionRange left, Nickelony.IDEKit.Core.Text.TextPositionRange right) -> bool
+static Nickelony.IDEKit.Core.Text.TextRange.FromBounds(int startOffset, int endOffset) -> Nickelony.IDEKit.Core.Text.TextRange
+static Nickelony.IDEKit.Core.Text.TextRange.Normalize(Nickelony.IDEKit.Core.Text.TextRange range, int textLength) -> Nickelony.IDEKit.Core.Text.TextRange?
+static Nickelony.IDEKit.Core.Text.TextRange.operator !=(Nickelony.IDEKit.Core.Text.TextRange left, Nickelony.IDEKit.Core.Text.TextRange right) -> bool
+static Nickelony.IDEKit.Core.Text.TextRange.operator ==(Nickelony.IDEKit.Core.Text.TextRange left, Nickelony.IDEKit.Core.Text.TextRange right) -> bool
+static Nickelony.IDEKit.Core.Validation.NumericValidation.Finite(double value, string! parameterName) -> double
+static Nickelony.IDEKit.Core.Validation.NumericValidation.FiniteNonNegative(double value, string! parameterName) -> double
+static Nickelony.IDEKit.Core.Validation.NumericValidation.FinitePositive(double value, string! parameterName) -> double
+static Nickelony.IDEKit.Core.Validation.NumericValidation.IsFiniteNonNegative(double value) -> bool
+static Nickelony.IDEKit.Core.Validation.NumericValidation.IsFinitePositive(double value) -> bool
+static Nickelony.IDEKit.Core.Validation.NumericValidation.NonNegative(System.TimeSpan delay, string! parameterName) -> System.TimeSpan
+static Nickelony.IDEKit.Core.Validation.NumericValidation.Positive(double value, string! parameterName) -> double
+~Nickelony.IDEKit.Core.Themes.ThemeCatalogHooks<TTheme>.Equals(Nickelony.IDEKit.Core.Themes.ThemeCatalogHooks<TTheme> other) -> bool
+~override Nickelony.IDEKit.Core.AutoClosing.AutoClosingAction.Equals(object obj) -> bool
+~override Nickelony.IDEKit.Core.AutoClosing.AutoClosingAction.ToString() -> string
+~override Nickelony.IDEKit.Core.AutoClosing.AutoClosingDeletionRequest.Equals(object obj) -> bool
+~override Nickelony.IDEKit.Core.AutoClosing.AutoClosingDeletionRequest.ToString() -> string
+~override Nickelony.IDEKit.Core.AutoClosing.AutoClosingRequest.Equals(object obj) -> bool
+~override Nickelony.IDEKit.Core.AutoClosing.AutoClosingRequest.ToString() -> string
+~override Nickelony.IDEKit.Core.AutoClosing.AutoClosingResult.Equals(object obj) -> bool
+~override Nickelony.IDEKit.Core.AutoClosing.AutoClosingResult.ToString() -> string
+~override Nickelony.IDEKit.Core.Comments.LineCommentEdit.Equals(object obj) -> bool
+~override Nickelony.IDEKit.Core.Comments.LineCommentEdit.ToString() -> string
+~override Nickelony.IDEKit.Core.Comments.LineCommentRequest.Equals(object obj) -> bool
+~override Nickelony.IDEKit.Core.Comments.LineCommentRequest.ToString() -> string
+~override Nickelony.IDEKit.Core.Diagnostics.DiagnosticSegment.Equals(object obj) -> bool
+~override Nickelony.IDEKit.Core.Diagnostics.DiagnosticSegment.ToString() -> string
+~override Nickelony.IDEKit.Core.Diffing.LineDiffHunk.Equals(object obj) -> bool
+~override Nickelony.IDEKit.Core.Diffing.LineDiffHunk.ToString() -> string
+~override Nickelony.IDEKit.Core.Editing.EditorSelection.Equals(object obj) -> bool
+~override Nickelony.IDEKit.Core.Editing.EditorSelection.ToString() -> string
+~override Nickelony.IDEKit.Core.Editing.TextEditRequest.Equals(object obj) -> bool
+~override Nickelony.IDEKit.Core.Editing.TextEditRequest.ToString() -> string
+~override Nickelony.IDEKit.Core.Editing.TextIncrementalEdit.Equals(object obj) -> bool
+~override Nickelony.IDEKit.Core.Editing.TextIncrementalEdit.ToString() -> string
+~override Nickelony.IDEKit.Core.FindReplace.SearchQuery.Equals(object obj) -> bool
+~override Nickelony.IDEKit.Core.FindReplace.SearchQuery.ToString() -> string
+~override Nickelony.IDEKit.Core.Indentation.IndentationDetection.Equals(object obj) -> bool
+~override Nickelony.IDEKit.Core.Indentation.IndentationDetection.ToString() -> string
+~override Nickelony.IDEKit.Core.Indentation.IndentationRequest.Equals(object obj) -> bool
+~override Nickelony.IDEKit.Core.Indentation.IndentationRequest.ToString() -> string
+~override Nickelony.IDEKit.Core.LineStatus.LineStatusIconPlacement.Equals(object obj) -> bool
+~override Nickelony.IDEKit.Core.LineStatus.LineStatusIconPlacement.ToString() -> string
+~override Nickelony.IDEKit.Core.Media.ArgbColor.Equals(object obj) -> bool
+~override Nickelony.IDEKit.Core.Media.ArgbColor.ToString() -> string
+~override Nickelony.IDEKit.Core.Navigation.LineColumnQuery.Equals(object obj) -> bool
+~override Nickelony.IDEKit.Core.Navigation.LineColumnQuery.ToString() -> string
+~override Nickelony.IDEKit.Core.Navigation.NavigationLocation.Equals(object obj) -> bool
+~override Nickelony.IDEKit.Core.Navigation.NavigationLocation.ToString() -> string
+~override Nickelony.IDEKit.Core.Navigation.NavigationLocationPlan.Equals(object obj) -> bool
+~override Nickelony.IDEKit.Core.Navigation.NavigationLocationPlan.ToString() -> string
+~override Nickelony.IDEKit.Core.Paths.LocalPathComparisonPolicy.Equals(object obj) -> bool
+~override Nickelony.IDEKit.Core.Paths.LocalPathComparisonPolicy.ToString() -> string
+~override Nickelony.IDEKit.Core.Requests.RequestHandle.Equals(object obj) -> bool
+~override Nickelony.IDEKit.Core.Requests.RequestHandle.ToString() -> string
+~override Nickelony.IDEKit.Core.Scanning.BlockCommentSyntax.Equals(object obj) -> bool
+~override Nickelony.IDEKit.Core.Scanning.BlockCommentSyntax.ToString() -> string
+~override Nickelony.IDEKit.Core.Scanning.CommentSpan.Equals(object obj) -> bool
+~override Nickelony.IDEKit.Core.Scanning.CommentSyntax.Equals(object obj) -> bool
+~override Nickelony.IDEKit.Core.Scanning.CommentSyntax.ToString() -> string
+~override Nickelony.IDEKit.Core.Text.TextPosition.Equals(object obj) -> bool
+~override Nickelony.IDEKit.Core.Text.TextPosition.ToString() -> string
+~override Nickelony.IDEKit.Core.Text.TextPositionRange.Equals(object obj) -> bool
+~override Nickelony.IDEKit.Core.Text.TextPositionRange.ToString() -> string
+~override Nickelony.IDEKit.Core.Text.TextRange.Equals(object obj) -> bool
+~override Nickelony.IDEKit.Core.Themes.ThemeCatalogHooks<TTheme>.Equals(object obj) -> bool
+~override Nickelony.IDEKit.Core.Themes.ThemeCatalogHooks<TTheme>.ToString() -> string
+~static Nickelony.IDEKit.Core.Themes.ThemeCatalogHooks<TTheme>.operator !=(Nickelony.IDEKit.Core.Themes.ThemeCatalogHooks<TTheme> left, Nickelony.IDEKit.Core.Themes.ThemeCatalogHooks<TTheme> right) -> bool
+~static Nickelony.IDEKit.Core.Themes.ThemeCatalogHooks<TTheme>.operator ==(Nickelony.IDEKit.Core.Themes.ThemeCatalogHooks<TTheme> left, Nickelony.IDEKit.Core.Themes.ThemeCatalogHooks<TTheme> right) -> bool

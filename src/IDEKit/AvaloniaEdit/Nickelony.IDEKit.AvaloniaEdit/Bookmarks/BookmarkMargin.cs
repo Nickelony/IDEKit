@@ -1,22 +1,19 @@
 using Avalonia;
-using Avalonia.Input;
 using Avalonia.Media;
 using Avalonia.Media.Immutable;
-using AvaloniaEdit.Rendering;
-using Nickelony.IDEKit.AvaloniaEdit.Rendering;
-using Nickelony.IDEKit.Core.Notifications;
-using Nickelony.IDEKit.Infrastructure;
+using Nickelony.IDEKit.AvaloniaEdit.LineStatus;
+using Nickelony.IDEKit.AvaloniaEdit.Media;
 
 namespace Nickelony.IDEKit.AvaloniaEdit.Bookmarks;
 
 /// <include file="../../../../../shared/docs/BookmarkMargin.xml" path="doc/members/member[@name='BookmarkMargin.Class']/*"/>
-public class BookmarkMargin : LineStatusIconMarginBase
+public partial class BookmarkMargin : LineStatusIconMarginBase
 {
-	private const double IconWidth = 10.0;
-	private const double IconHeight = 9.0;
-
 	private static readonly Geometry s_sampleIconGeometry = CreateIconGeometry();
-	private static readonly ImmutableSolidColorBrush s_sampleIconBrush = BrushHelpers.CreateFrozenBrush(Color.FromRgb(0xE6, 0xA2, 0x3C));
+
+	private static readonly ImmutableSolidColorBrush s_sampleIconBrush = BrushAndPenFactory.CreateBrush(
+		Color.FromRgb(SampleIconRed, SampleIconGreen, SampleIconBlue)
+	);
 
 	static BookmarkMargin()
 	{
@@ -28,54 +25,10 @@ public class BookmarkMargin : LineStatusIconMarginBase
 	public static IBrush SampleIconBrush => s_sampleIconBrush;
 
 	/// <include file="../../../../../shared/docs/BookmarkMargin.xml" path="doc/members/member[@name='SampleIconGeometry']/*"/>
-	public static Geometry SampleIconGeometry => s_sampleIconGeometry;
-
-	private readonly IBookmarkSource _bookmarkSource;
-
-	/// <include file="../../../../../shared/docs/BookmarkMargin.xml" path="doc/members/member[@name='BookmarkMargin']/*"/>
-	public BookmarkMargin(IBookmarkSource bookmarkSource)
-	{
-		ArgumentNullException.ThrowIfNull(bookmarkSource);
-		_bookmarkSource = bookmarkSource;
-
-		FollowSourceNotifications(bookmarkSource);
-	}
-
-	/// <inheritdoc/>
-	protected override IReadOnlyList<int> GetMarkedLineNumbers()
-		=> _bookmarkSource.GetMarkedLineNumbers();
-
-	/// <inheritdoc/>
-	protected override bool OnIconClicked(VisualLine visualLine, Point position)
-	{
-		if (!OnBookmarkToggleRequested(visualLine.FirstDocumentLine.Offset))
-			return false;
-
-		// The toggle changed the marked lines, so the margin repaints itself.
-		InvalidateVisual();
-		return true;
-	}
-
-	/// <include file="../../../../../shared/docs/BookmarkMargin.xml" path="doc/members/member[@name='TestHooks']/*"/>
-	internal BookmarkMarginTestHooks TestHooks { get; } = new();
-
-	/// <inheritdoc/>
-	protected override Point ResolveClickPosition(PointerPressedEventArgs e)
-		=> TestHooks.ClickPositionResolver is Func<PointerPressedEventArgs, Point> resolver
-			? resolver(e)
-			: base.ResolveClickPosition(e);
-
-	/// <include file="../../../../../shared/docs/BookmarkMargin.xml" path="doc/members/member[@name='TryToggleBookmarkAt']/*"/>
-	internal bool TryToggleBookmarkAt(Point position)
-		=> TryGetVisualLineAt(position, out VisualLine? visualLine)
-			&& OnIconClicked(visualLine, position);
-
-	/// <include file="../../../../../shared/docs/BookmarkMargin.xml" path="doc/members/member[@name='OnBookmarkToggleRequested']/*"/>
-	protected virtual bool OnBookmarkToggleRequested(int lineOffset)
-	{
-		_bookmarkSource.ToggleBookmark(lineOffset);
-		return true;
-	}
+	/// <remarks>
+	/// Avalonia cannot freeze a geometry, so the member returns a copy and the shared default cannot be mutated in place.
+	/// </remarks>
+	public static Geometry SampleIconGeometry => s_sampleIconGeometry.Clone();
 
 	private static StreamGeometry CreateIconGeometry()
 	{
@@ -83,13 +36,13 @@ public class BookmarkMargin : LineStatusIconMarginBase
 
 		using (StreamGeometryContext context = geometry.Open())
 		{
-			context.BeginFigure(new Point(0.0, 0.0), true);
-			context.LineTo(new Point(IconWidth, 0.0), true);
-			context.LineTo(new Point(IconWidth, IconHeight), true);
+			Point[] outline = GetIconOutline();
 
-			// The notch vertex sits 2.5 DIP above the icon's bottom edge.
-			context.LineTo(new Point(IconWidth / 2.0, 6.5), true);
-			context.LineTo(new Point(0.0, IconHeight), true);
+			context.BeginFigure(outline[0], true);
+
+			foreach (Point vertex in outline.AsSpan(1))
+				context.LineTo(vertex, true);
+
 			context.EndFigure(true);
 		}
 

@@ -1,30 +1,30 @@
 <Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net8.0-windows</TargetFramework>
+		<UseWPF>true</UseWPF>
+		<IsPackable>false</IsPackable>
+		<IsTestProject>true</IsTestProject>
+	</PropertyGroup>
 
-  <PropertyGroup>
-    <TargetFramework>net8.0-windows</TargetFramework>
-    <UseWPF>true</UseWPF>
-    <IsPackable>false</IsPackable>
-    <RunSettingsFilePath>test.runsettings</RunSettingsFilePath>
-    <IsTestProject>true</IsTestProject>
-  </PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="coverlet.collector" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" />
+		<PackageReference Include="MSTest.TestAdapter" />
+		<PackageReference Include="MSTest.TestFramework" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="coverlet.collector" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" />
-    <PackageReference Include="MSTest.TestAdapter" />
-    <PackageReference Include="MSTest.TestFramework" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\src\KeyBindings\Nickelony.KeyBindings.Wpf\Nickelony.KeyBindings.Wpf.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\src\KeyBindings\Nickelony.KeyBindings.Wpf\Nickelony.KeyBindings.Wpf.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Include="..\TestSupport\KeyBindingTestHelpers.cs" Link="TestSupport\KeyBindingTestHelpers.cs" />
+		<Compile Include="..\TestSupport\TestCommand.cs" Link="TestSupport\TestCommand.cs" />
+		<Compile Include="..\TestSupport\RecordingOverrideStore.cs" Link="TestSupport\RecordingOverrideStore.cs" />
+		<Compile Include="..\..\TestSupport\Wpf\FakeKeyboardDevice.cs" Link="TestSupport\FakeKeyboardDevice.cs" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Compile Include="..\TestHelpers\KeyBindingTestFixtures.cs" Link="TestHelpers\KeyBindingTestFixtures.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
-  </ItemGroup>
-
+	<ItemGroup>
+		<Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
+	</ItemGroup>
 </Project>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+	<members>
+		<member name="SubscribeTunnelingTextInput">
+			<summary>
+			  Subscribes the handler that carries the commit-character policy on the tunneling text-input stage, which runs before the text
+			  area raises <c>TextEntering</c>, so the policy does not depend on the subscription order of the host's own input services.
+			</summary>
+			<param name="textArea">The text area to subscribe.</param>
+			<param name="handler">The handler that receives the typed text.</param>
+			<returns>A subscription that removes the handler when it is disposed.</returns>
+			<remarks>
+			  The stage is <c>PreviewTextInput</c> in WPF and the tunnel pass of <c>TextInput</c> in Avalonia.
+			  Programmatic input through <c>PerformTextInput</c> bypasses it.
+			</remarks>
+		</member>
+
+		<member name="SubscribeItemClick">
+			<summary>Subscribes the handler that selects the clicked completion-list item.</summary>
+			<param name="listBox">The completion-list list box to subscribe.</param>
+			<param name="handler">The handler that receives the list box and the click event.</param>
+			<returns>A subscription that removes the handler when it is disposed.</returns>
+		</member>
+
+		<member name="FindClickedItem">
+			<summary>Resolves the completion-list item that a click landed on.</summary>
+			<param name="listBox">The completion-list list box that received the click.</param>
+			<param name="e">The click event.</param>
+			<returns>
+			  The clicked item, or <see langword="null" /> when the event is already handled, is not a primary-button click, or did not land
+			  on an item.
+			</returns>
+		</member>
+
+		<member name="SetContentWidth">
+			<summary>Sets the width of the completion window's content.</summary>
+			<param name="window">The completion window to size.</param>
+			<param name="width">The content width, already clamped by the caller.</param>
+		</member>
+
+		<member name="CreateWindow">
+			<summary>Creates a completion window that carries the theme's frame and the height cap.</summary>
+			<param name="textArea">The text area the window completes in.</param>
+			<param name="theme">The theme whose brushes and border thickness frame the window.</param>
+			<param name="maxHeight">The maximum window height.</param>
+			<returns>The created window, which is not shown yet.</returns>
+		</member>
+
+		<member name="EnsureNonActivatable">
+			<summary>Keeps a click on the completion window from taking focus from the editor.</summary>
+			<param name="window">The completion window to keep non-activatable.</param>
+		</member>
+
+		<member name="GetPixelsPerDip">
+			<summary>Returns the pixels-per-DIP factor that the text measurement of a text area depends on.</summary>
+			<param name="textArea">The text area whose measurement context is read.</param>
+			<returns>The factor, which is 1 for a binding whose text measurement takes no DPI input.</returns>
+		</member>
+
+		<member name="CreateFormattedText">
+			<summary>
+			  Creates the formatted text that measures a string in the UI culture with the text area's flow direction, font size, and foreground.
+			</summary>
+			<param name="textArea">The text area that supplies the flow direction, the font size, and the foreground.</param>
+			<param name="text">The text to format.</param>
+			<param name="typeface">The typeface to measure with.</param>
+			<param name="pixelsPerDip">
+			  The factor from <see cref="GetPixelsPerDip" />; a binding whose formatted text takes no DPI input does not read it.
+			</param>
+			<returns>The formatted text.</returns>
+		</member>
+	</members>
+</doc>

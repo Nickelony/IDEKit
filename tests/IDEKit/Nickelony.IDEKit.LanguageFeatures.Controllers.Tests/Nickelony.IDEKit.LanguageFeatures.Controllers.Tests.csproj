@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<IsPackable>false</IsPackable>
+		<IsTestProject>true</IsTestProject>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="coverlet.collector" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" />
+		<PackageReference Include="MSTest.TestAdapter" />
+		<PackageReference Include="MSTest.TestFramework" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\src\IDEKit\Nickelony.IDEKit.LanguageFeatures.Controllers\Nickelony.IDEKit.LanguageFeatures.Controllers.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Include="..\..\TestSupport\RecordingLogger.cs" Link="TestSupport\RecordingLogger.cs" />
+		<Compile Include="..\TestSupport\TestDiscriminator.cs" Link="TestSupport\TestDiscriminator.cs" />
+		<Compile Include="..\TestSupport\ScriptedCompletionProvider.cs" Link="TestSupport\ScriptedCompletionProvider.cs" />
+		<Compile Include="..\..\TestSupport\FakePumpedUiThread.cs" Link="TestSupport\FakePumpedUiThread.cs" />
+		<Compile Include="..\..\TestSupport\QuickPickTestHost.cs" Link="TestSupport\QuickPickTestHost.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
+		<Using Include="Nickelony.IDEKit.Testing" />
+		<Using Include="Nickelony.Testing" />
+	</ItemGroup>
+</Project>

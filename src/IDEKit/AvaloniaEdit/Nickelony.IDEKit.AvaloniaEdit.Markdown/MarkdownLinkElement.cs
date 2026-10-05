@@ -2,54 +2,48 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Layout;
 using Avalonia.Media;
+using Nickelony.IDEKit.Markdown;
+using Nickelony.IDEKit.Markdown.Planning;
 
 namespace Nickelony.IDEKit.AvaloniaEdit.Markdown;
 
-/// <summary>
-/// The inline element a rendered hyperlink is shown as.
-/// </summary>
+/// <summary>The inline element a rendered hyperlink is shown as.</summary>
 /// <remarks>
-/// The toolkit has no inline hyperlink, so a link is an <c>InlineUIContainer</c> hosting this text block. It
-/// exposes the target it can open so a host or test can inspect it, and it opens through the renderer's
-/// opener chain on a pointer press or the Enter or Space key; the renderer never opens a link on its own.
+/// The toolkit has no inline hyperlink, so a link is an <c>InlineUIContainer</c> hosting this text block. It opens through the renderer's opener
+/// chain on a pointer press or the Enter or Space key; the renderer never opens a link on its own.
 /// </remarks>
 internal sealed class MarkdownLinkElement : TextBlock
 {
-	/// <summary>
-	/// Gets the absolute target this link can open, or <see langword="null"/> when the renderer cannot open it.
+	// The hand cursor is shared by every openable link instead of being recreated for each rendered link.
+	private static readonly Cursor s_handCursor = new(StandardCursorType.Hand);
+
+	/// <summary>The absolute target this link can open, or <see langword="null"/> when the renderer cannot open it.</summary>
+	/// <remarks>
 	/// The link keeps its link affordances either way and is only activatable when the target is present.
-	/// </summary>
-	public Uri? OpenableUri { get; private init; }
+	/// </remarks>
+	internal Uri? OpenableUri { get; private init; }
 
-	/// <summary>
-	/// Gets the callback that opens this link's target through the renderer's opener chain.
-	/// </summary>
-	public Action<Uri>? Open { get; private init; }
+	/// <summary>The callback that opens this link's target through the renderer's opener chain.</summary>
+	internal Action<Uri>? OpenLink { get; private init; }
 
-	/// <summary>
-	/// Creates a rendered link element.
-	/// </summary>
-	/// <param name="theme">The theme that supplies the link foreground.</param>
-	/// <param name="link">The link node being rendered.</param>
-	/// <param name="options">The rendering options that decide keyboard reachability.</param>
+	/// <summary>Creates the element for a link plan, which is activatable only when the link has an openable target.</summary>
+	/// <param name="resources">The resolved theme resources that supply the link foreground.</param>
+	/// <param name="plan">The link plan being rendered.</param>
 	/// <param name="open">The callback that opens an openable target through the opener chain.</param>
-	/// <returns>The link element.</returns>
-	internal static MarkdownLinkElement Create(MarkdownRenderTheme theme, MarkdownLink link, MarkdownRenderOptions options, Action<Uri> open)
+	internal static MarkdownLinkElement Create(MarkdownThemeResources resources, MarkdownLinkPlan plan, Action<Uri> open)
 	{
-		bool canOpen = link.OpenableUri is not null;
+		bool canOpen = plan.OpenableUri is not null;
 
 		return new MarkdownLinkElement
 		{
-			OpenableUri = link.OpenableUri,
-			Open = canOpen ? open : null,
-			Foreground = theme.LinkForeground,
+			OpenableUri = plan.OpenableUri,
+			OpenLink = canOpen ? open : null,
+			Foreground = resources.LinkForeground,
 			TextDecorations = Avalonia.Media.TextDecorations.Underline,
-			Cursor = canOpen ? new Cursor(StandardCursorType.Hand) : Cursor.Default,
-			// Only an openable link becomes a keyboard stop when interaction is enabled; a link the
-			// renderer cannot open must not add a dead stop.
-			Focusable = canOpen && options.AllowContentInteraction,
+			Cursor = canOpen ? s_handCursor : Cursor.Default,
+			Focusable = plan.IsFocusable,
 			TextWrapping = TextWrapping.Wrap,
-			VerticalAlignment = VerticalAlignment.Center
+			VerticalAlignment = VerticalAlignment.Center,
 		};
 	}
 
@@ -58,10 +52,12 @@ internal sealed class MarkdownLinkElement : TextBlock
 	{
 		base.OnPointerPressed(e);
 
-		if (OpenableUri is null)
+		// A press the host already handled is left alone; otherwise only the left button activates the link,
+		// matching MarkdownCodeBlockFactory.HandlePointerPressed, so a right or middle press reaches the host's context gesture.
+		if (e.Handled || OpenableUri is null || !e.GetCurrentPoint(this).Properties.IsLeftButtonPressed)
 			return;
 
-		TryOpen();
+		Open();
 		e.Handled = true;
 	}
 
@@ -70,16 +66,17 @@ internal sealed class MarkdownLinkElement : TextBlock
 	{
 		base.OnKeyDown(e);
 
-		if (OpenableUri is null || e.Key is not (Key.Enter or Key.Space))
+		// A key the host already handled is left alone, so the activation is skipped.
+		if (e.Handled || OpenableUri is null || e.Key is not (Key.Enter or Key.Space))
 			return;
 
-		TryOpen();
+		Open();
 		e.Handled = true;
 	}
 
-	private void TryOpen()
+	private void Open()
 	{
-		if (Open is not null && OpenableUri is not null)
-			Open(OpenableUri);
+		if (OpenLink is not null && OpenableUri is not null)
+			OpenLink(OpenableUri);
 	}
 }

@@ -1,0 +1,6 @@
+/* The IDEKit logo is a square mark, so cap it to the navbar height and space it from the title. */
+#logo {
+	height: 1.75rem;
+	width: auto;
+	margin-right: 0.5rem;
+}

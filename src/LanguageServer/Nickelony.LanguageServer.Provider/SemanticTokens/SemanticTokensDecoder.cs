@@ -1,52 +1,47 @@
+using Nickelony.IDEKit.Core.Text;
+using Nickelony.IDEKit.LanguageFeatures.SemanticTokens;
+
 namespace Nickelony.LanguageServer.Provider;
 
 /// <summary>
-/// Decodes a raw LSP semantic token integer stream from a server response into the typed
-/// <see cref="SemanticToken"/> list expected by editor hosts.
+/// Decodes a raw LSP semantic token integer stream from a server response into the offset-based <see cref="SemanticToken"/> list expected
+/// by editor hosts.
 /// </summary>
 /// <remarks>
-/// <para>
-/// Character positions and token lengths are interpreted as UTF-16 code units. The client advertises
-/// <c>general.positionEncodings = ["utf-16"]</c> exclusively and rejects a server that selects another encoding, so
-/// the coordinate contract is pinned for the whole session. The client also forces <c>multilineTokenSupport</c>
-/// and <c>overlappingTokenSupport</c> to <see langword="false"/> in its advertised capabilities, so a token that
-/// would cross its line end is clamped to that line (the specification's unsupported-multi-line-token rule) and
-/// overlapping tokens are not representable. Modifier lists are frozen once per modifier mask: tokens that decode
-/// with the same mask share that list instance instead of copying it per token.
-/// </para>
-/// <para>
-/// Tolerance policy, so a consumer does not have to re-derive it per response family: a null argument fails with
-/// <see cref="ArgumentNullException"/>; an empty stream, or a missing or empty type legend, degrades to an empty
-/// result; a tuple whose line or type index is out of range, or whose legend entry is null or blank, is skipped; a
-/// token that would cross its line end is clamped to that line, and one clamped to zero length is skipped; modifier
-/// bits with no advertised modifier are dropped. A skipped tuple still advances the delta cursor, so one malformed
-/// tuple cannot desynchronize the tuples that follow it, and a skip is silent because this decoder has no logger.
-/// </para>
+/// Malformed tuples and out-of-content tokens are skipped or clamped instead of throwing, and a skipped tuple still advances the delta cursor
+/// so the following tuples stay synchronized.
 /// </remarks>
-public static class SemanticTokensDecoder
+internal static class SemanticTokensDecoder
 {
 	private static readonly IReadOnlyList<string> s_emptyModifiers = [];
 
-	/// <summary>
-	/// Decodes a raw semantic token integer stream against document content directly.
-	/// </summary>
+	/// <summary>Decodes a raw semantic token integer stream against document content.</summary>
 	/// <param name="data">The raw LSP semantic token integer stream.</param>
 	/// <param name="content">The document content the token positions refer to.</param>
 	/// <param name="tokenTypes">The semantic token types advertised by the server.</param>
 	/// <param name="tokenModifiers">The semantic token modifiers advertised by the server.</param>
-	/// <returns>The decoded tokens; malformed tuples and tokens outside the content are ignored or clamped, while every tuple still advances the delta cursor.</returns>
-	/// <exception cref="ArgumentNullException"><paramref name="data"/> or <paramref name="content"/> is <see langword="null"/>.</exception>
-	public static IReadOnlyList<SemanticToken> Decode(IReadOnlyList<int> data, string content,
-		IReadOnlyList<string>? tokenTypes, IReadOnlyList<string>? tokenModifiers)
+	/// <returns>
+	/// The decoded offset-based tokens; malformed tuples and tokens outside the content are ignored or clamped, while every tuple still advances
+	/// the delta cursor.
+	/// </returns>
+	/// <remarks>
+	/// An empty stream, or a missing or empty type legend, degrades to an empty result. A tuple whose line or type index is out of range,
+	/// or whose legend entry is <see langword="null"/> or blank, is skipped; a token clamped to zero length is skipped; and modifier bits
+	/// with no advertised modifier are dropped. A skip is silent because this decoder has no logger.
+	/// </remarks>
+	internal static IReadOnlyList<SemanticToken> Decode(
+		IReadOnlyList<int> data,
+		string content,
+		IReadOnlyList<string>? tokenTypes,
+		IReadOnlyList<string>? tokenModifiers
+	)
 	{
-		ArgumentNullException.ThrowIfNull(data);
-		ArgumentNullException.ThrowIfNull(content);
-
 		if (data.Count == 0 || tokenTypes is null || tokenTypes.Count == 0)
 			return [];
 
-		int[] lineLengths = GetLineLengths(content);
+		var lineMap = TextLineMap.Build(content);
 		var semanticTokens = new List<SemanticToken>(data.Count / 5);
+
 		Dictionary<int, IReadOnlyList<string>>? modifierCache = null;
 
 		// The delta cursor accumulates in 64-bit arithmetic: malformed deltas near int.MaxValue must not wrap
@@ -66,7 +61,7 @@ public static class SemanticTokensDecoder
 			line += deltaLine;
 			character = deltaLine == 0 ? character + deltaCharacter : deltaCharacter;
 
-			if (line < 0 || line >= lineLengths.Length || tokenTypeIndex < 0 || tokenTypeIndex >= tokenTypes.Count)
+			if (line < 0 || line >= lineMap.LineCount || tokenTypeIndex < 0 || tokenTypeIndex >= tokenTypes.Count)
 				continue;
 
 			// A malformed legend can contain a null or blank entry; such tuples are skipped instead of throwing.
@@ -75,69 +70,29 @@ public static class SemanticTokensDecoder
 			if (string.IsNullOrWhiteSpace(tokenType))
 				continue;
 
-			int lineLength = lineLengths[line];
+			int safeLine = (int)line;
+			int lineLength = lineMap.GetLineLength(safeLine);
 			int safeCharacter = (int)Math.Max(0, Math.Min(character, lineLength));
 			int safeLength = Math.Max(0, Math.Min(length, lineLength - safeCharacter));
 
 			if (safeLength == 0)
 				continue;
 
-			semanticTokens.Add(SemanticToken.CreateWithFrozenModifiers(
-				(int)line,
-				safeCharacter,
-				safeLength,
-				tokenType,
-				GetOrAddModifiers(ref modifierCache, modifierMask, tokenModifiers)));
+			int offset = lineMap.GetLineStartOffset(safeLine) + safeCharacter;
+
+			semanticTokens.Add(
+				new SemanticToken(new TextRange(offset, safeLength), tokenType, GetOrAddModifiers(ref modifierCache, modifierMask, tokenModifiers))
+			);
 		}
 
 		return semanticTokens;
 	}
 
-	/// <summary>
-	/// Measures every line of the document without its terminator, so a token can be clamped to its line end.
-	/// </summary>
-	/// <remarks>
-	/// The decoder needs line lengths only, not a general line map, and this package carries no editor dependency,
-	/// so the scan is local. Line terminators follow the family convention: LF, CRLF, and lone CR, with a final empty
-	/// line after a trailing terminator and a single empty line for empty content.
-	/// </remarks>
-	/// <param name="content">The document content.</param>
-	/// <returns>The length of each line in UTF-16 code units, in document order.</returns>
-	private static int[] GetLineLengths(string content)
-	{
-		var lineLengths = new List<int>();
-		int lineStart = 0;
-		int index = 0;
-
-		while (index < content.Length)
-		{
-			// Scan to the next terminator instead of inspecting every character: the span search is vectorized on
-			// the runtime and the per-character loop only won the dense-terminator case.
-			int terminatorIndex = content.AsSpan(index).IndexOfAny('\r', '\n');
-
-			if (terminatorIndex < 0)
-				break;
-
-			terminatorIndex += index;
-
-			lineLengths.Add(terminatorIndex - lineStart);
-			index = terminatorIndex + 1;
-
-			// A CRLF pair is one terminator; the LF of the pair must not open a second, empty line.
-			if (content[terminatorIndex] == '\r' && index < content.Length && content[index] == '\n')
-				index++;
-
-			lineStart = index;
-		}
-
-		lineLengths.Add(content.Length - lineStart);
-		return [.. lineLengths];
-	}
-
 	private static IReadOnlyList<string> GetOrAddModifiers(
 		ref Dictionary<int, IReadOnlyList<string>>? cache,
 		int modifierMask,
-		IReadOnlyList<string>? tokenModifiers)
+		IReadOnlyList<string>? tokenModifiers
+	)
 	{
 		if (modifierMask == 0 || tokenModifiers is null || tokenModifiers.Count == 0)
 			return s_emptyModifiers;
@@ -161,10 +116,10 @@ public static class SemanticTokensDecoder
 				modifiers.Add(tokenModifiers[bitIndex]);
 		}
 
-		// Freeze the mask's list once: every token that decodes with this mask adopts this instance through
-		// SemanticToken.CreateWithFrozenModifiers instead of copying the list per token.
-		IReadOnlyList<string> frozenModifiers = Array.AsReadOnly([.. modifiers]);
-		cache[modifierMask] = frozenModifiers;
-		return frozenModifiers;
+		// Cache the mask's resolved list once: a mask that repeats across tokens rebuilds nothing, and every
+		// token captures its own owned snapshot from the shared template.
+		IReadOnlyList<string> resolvedModifiers = Array.AsReadOnly([.. modifiers]);
+		cache[modifierMask] = resolvedModifiers;
+		return resolvedModifiers;
 	}
 }

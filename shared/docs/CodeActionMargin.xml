@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+	<members>
+		<member name="CodeActionMargin.Class">
+			<summary>
+			  Renders the code-action indicator (a light-bulb icon) for the visible indicator line and opens the actions menu when a left-button press
+			  lands on that line.
+			</summary>
+			<remarks>
+			  <para>
+			    A <see cref="CodeActionPresenter" /> creates the margin over its <see cref="CodeActionController" />: the controller reports
+			    the indicator's line and raises a change notification when the available actions change, so a connected margin invalidates
+			    itself without further host calls.
+			  </para>
+			  <para>
+			    A left-button press on the indicator's line opens the actions menu below the click, aligned with the text view's left edge;
+			    a press on a row without the indicator does nothing. The margin reserves the base class's standard width and the icon scales
+			    with the margin's font size, so the margin width stays proportional to the text when the editor font changes.
+			  </para>
+			  <para>
+			    The icon's brush and geometry are replaceable through the inherited properties (the defaults are a theme-neutral
+			    gray and the library's light-bulb icon), and hosts are expected to set the brush to their theme's hint or accent color.
+			    The left-press gesture is the library default and can be turned off with <see cref="OpensOnLeftClick" />.
+			  </para>
+			  <para>
+			    The default brush is a fixed theme-neutral gray rather than a dynamic resource, because a dynamic resource reference would outrank
+			    a host's style setters. The fixed brush stays visible at design time and a style setter can still override it, so a host that wants
+			    the icon to follow theme changes assigns its own theme brush.
+			  </para>
+			</remarks>
+		</member>
+
+		<member name="OpensOnLeftClickProperty">
+			<summary>Identifies the <see cref="OpensOnLeftClick" /> property.</summary>
+		</member>
+
+		<member name="OpensOnLeftClick">
+			<summary>Whether a left-button press on the indicator's line opens the actions menu, <see langword="true" /> by default.</summary>
+			<remarks>
+			  Set this to <see langword="false" /> when the host owns the open gesture: the margin then leaves the press untouched, and the host opens
+			  the same menu through <see cref="CodeActionPresenter.TryOpenMenu(int, Point)" /> with its own anchor.
+			</remarks>
+		</member>
+	</members>
+</doc>

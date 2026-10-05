@@ -1,29 +1,29 @@
 <Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<IsPackable>false</IsPackable>
+		<IsTestProject>true</IsTestProject>
+	</PropertyGroup>
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <IsPackable>false</IsPackable>
-    <IsTestProject>true</IsTestProject>
-  </PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="coverlet.collector" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" />
+		<PackageReference Include="MSTest.TestAdapter" />
+		<PackageReference Include="MSTest.TestFramework" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="coverlet.collector" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" />
-    <PackageReference Include="MSTest.TestAdapter" />
-    <PackageReference Include="MSTest.TestFramework" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\src\KeyBindings\Nickelony.KeyBindings\Nickelony.KeyBindings.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\src\KeyBindings\Nickelony.KeyBindings\Nickelony.KeyBindings.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Include="..\TestSupport\KeyBindingTestHelpers.cs" Link="TestSupport\KeyBindingTestHelpers.cs" />
+		<Compile Include="..\TestSupport\TestCommand.cs" Link="TestSupport\TestCommand.cs" />
+		<Compile Include="..\TestSupport\RecordingOverrideStore.cs" Link="TestSupport\RecordingOverrideStore.cs" />
+		<Compile Include="..\..\TestSupport\RecordingLogger.cs" Link="TestSupport\RecordingLogger.cs" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Compile Include="..\TestHelpers\KeyBindingTestFixtures.cs" Link="TestHelpers\KeyBindingTestFixtures.cs" />
-    <Compile Include="..\..\..\shared\TestHelpers\CapturingLogger.cs" Link="shared\CapturingLogger.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
-  </ItemGroup>
-
+	<ItemGroup>
+		<Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
+	</ItemGroup>
 </Project>

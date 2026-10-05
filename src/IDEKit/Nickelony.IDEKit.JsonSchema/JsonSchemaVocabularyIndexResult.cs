@@ -1,35 +1,33 @@
 namespace Nickelony.IDEKit.JsonSchema;
 
-/// <summary>
-/// Represents the outcome of building a <see cref="JsonSchemaVocabularyIndex"/> from a schema.
-/// Failed builds expose diagnostics; successful builds may also contain diagnostics for skipped
-/// entries.
-/// </summary>
+/// <summary>Represents the outcome of building a <see cref="JsonSchemaVocabularyIndex"/> from a schema.</summary>
+/// <remarks>
+/// A build either produces an index, which may carry warnings, or fails with a <see cref="Failure"/>; the two are never combined.
+/// </remarks>
 public sealed class JsonSchemaVocabularyIndexResult
 {
-	/// <summary>
-	/// Gets a value indicating whether an index is available. A successful build may still have diagnostics for
-	/// individual entries that were skipped.
-	/// </summary>
+	/// <summary>Indicates whether an index is available.</summary>
 	public bool Succeeded { get; }
 
-	/// <summary>
-	/// Gets the built vocabulary index, or <see langword="null"/> when no index was produced.
-	/// </summary>
+	/// <summary>The built vocabulary index, or <see langword="null"/> when the build failed.</summary>
 	public JsonSchemaVocabularyIndex? Index { get; }
 
-	/// <summary>
-	/// Gets the diagnostics produced while building the vocabulary index. Failed builds contain an
-	/// error message; successful builds may contain messages about skipped definitions.
-	/// </summary>
-	public IReadOnlyList<string> Diagnostics { get; }
+	/// <summary>The messages about schema values the build skipped, such as a value that is not a schema or a <c>$ref</c> that does not resolve; empty when nothing was skipped and when the build failed.</summary>
+	public IReadOnlyList<string> Warnings { get; }
 
-	internal JsonSchemaVocabularyIndexResult(JsonSchemaVocabularyIndex? index, IReadOnlyList<string> diagnostics)
+	/// <summary>The reason the build failed, or <see langword="null"/> when an index is available.</summary>
+	public JsonSchemaVocabularyIndexFailure? Failure { get; }
+
+	internal JsonSchemaVocabularyIndexResult(JsonSchemaVocabularyIndex index, IReadOnlyList<string> warnings)
 	{
-		ArgumentNullException.ThrowIfNull(diagnostics);
-
-		Succeeded = index is not null;
+		Succeeded = true;
 		Index = index;
-		Diagnostics = Array.AsReadOnly([.. diagnostics]);
+		Warnings = Array.AsReadOnly([.. warnings]);
+	}
+
+	internal JsonSchemaVocabularyIndexResult(JsonSchemaVocabularyIndexFailure failure)
+	{
+		Failure = failure;
+		Warnings = [];
 	}
 }

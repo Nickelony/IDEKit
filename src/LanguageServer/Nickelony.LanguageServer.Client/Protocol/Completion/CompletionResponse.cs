@@ -1,21 +1,16 @@
 using System.Text.Json.Serialization;
 
-namespace Nickelony.LanguageServer.Client;
+namespace Nickelony.LanguageServer.Client.Protocol;
 
-/// <summary>
-/// Represents a completion response that may arrive either as an item array or as an LSP completion list.
-/// </summary>
+/// <summary>Represents a completion response that may arrive either as an item array or as an LSP completion list.</summary>
 /// <remarks>
-/// The wire distinctions are preserved: an absent or JSON <see langword="null"/> <c>items</c> property leaves <see cref="Items"/> as
-/// <see langword="null"/>, an empty list yields an empty collection, and a JSON <see langword="null"/> response deserializes to a
-/// <see langword="null"/> response.
+/// The wire distinctions are preserved: an absent or JSON <see langword="null"/> <c>items</c> property leaves
+/// <see cref="Items"/> as <see langword="null"/>, an empty list yields an empty collection, and a JSON <see langword="null"/> response deserializes
+/// to a <see langword="null"/> response.
 /// </remarks>
 [JsonConverter(typeof(CompletionResponseJsonConverter))]
 public sealed class CompletionResponse
 {
-	/// <summary>
-	/// Initializes a new instance of the <see cref="CompletionResponse"/> class.
-	/// </summary>
 	/// <param name="items">The completion items returned by the server, when any were provided.</param>
 	/// <param name="isIncomplete">Whether the server marked the completion list as incomplete.</param>
 	public CompletionResponse(IReadOnlyList<CompletionItemPayload>? items, bool isIncomplete = false)
@@ -24,14 +19,11 @@ public sealed class CompletionResponse
 		IsIncomplete = isIncomplete;
 	}
 
-	/// <summary>
-	/// Gets the completion items returned by the server, when any were provided.
+	/// <summary>The completion items returned by the server, or <see langword="null"/> when the response carried no items array.</summary>
+	/// <remarks>
 	/// The returned list is a defensive read-only snapshot.
-	/// </summary>
+	/// </remarks>
 	public IReadOnlyList<CompletionItemPayload>? Items { get; }
 
-	/// <summary>
-	/// Gets a value indicating whether the server marked the completion list as incomplete.
-	/// </summary>
 	public bool IsIncomplete { get; }
 }

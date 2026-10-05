@@ -1,0 +1,720 @@
+#nullable enable
+Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionController
+Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionController.Actions.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeAction!>!
+Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionController.CancelInFlightRequest() -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionController.CancelScheduledRequest() -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionController.Changed -> System.EventHandler?
+Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionController.CodeActionController(Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.ICodeActionSelectionSource! selectionSource, Nickelony.IDEKit.LanguageFeatures.CodeActions.ICodeActionProvider! provider, Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionControllerHooks hooks, Nickelony.IDEKit.Core.Threading.IUiDispatcher! dispatcher, Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionControllerOptions? options = null, Microsoft.Extensions.Logging.ILogger? logger = null) -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionController.Dispose() -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionController.ExecuteActionAsync(Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeAction! action) -> System.Threading.Tasks.Task<Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionExecutionOutcome>!
+Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionController.GetMarkedLineNumbers() -> System.Collections.Generic.IReadOnlyList<int>!
+Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionController.HasActions.get -> bool
+Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionController.InvalidateRequests() -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionController.RequestAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task!
+Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionControllerHooks
+Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionControllerHooks.BuildRequest.get -> System.Func<Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionSelection!, Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeActionRequest?>!
+Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionControllerHooks.BuildRequest.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionControllerHooks.CodeActionControllerHooks() -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionControllerHooks.CodeActionControllerHooks(System.Func<Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionSelection!, Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeActionRequest?>! BuildRequest, System.Func<Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeAction!, System.Threading.CancellationToken, System.Threading.Tasks.Task!>! ExecuteActionAsync) -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionControllerHooks.Deconstruct(out System.Func<Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionSelection!, Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeActionRequest?>! BuildRequest, out System.Func<Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeAction!, System.Threading.CancellationToken, System.Threading.Tasks.Task!>! ExecuteActionAsync) -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionControllerHooks.Equals(Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionControllerHooks other) -> bool
+Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionControllerHooks.ExecuteActionAsync.get -> System.Func<Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeAction!, System.Threading.CancellationToken, System.Threading.Tasks.Task!>!
+Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionControllerHooks.ExecuteActionAsync.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionControllerOptions
+Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionControllerOptions.<Clone>$() -> Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionControllerOptions!
+Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionControllerOptions.CodeActionControllerOptions() -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionControllerOptions.Equals(Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionControllerOptions? other) -> bool
+Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionControllerOptions.RequestDebounceDelay.get -> System.TimeSpan
+Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionControllerOptions.RequestDebounceDelay.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionExecutionOutcome
+Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionExecutionOutcome.AlreadyRunning = 3 -> Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionExecutionOutcome
+Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionExecutionOutcome.CommandFailed = 5 -> Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionExecutionOutcome
+Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionExecutionOutcome.Completed = 0 -> Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionExecutionOutcome
+Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionExecutionOutcome.Disposed = 6 -> Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionExecutionOutcome
+Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionExecutionOutcome.HookFailed = 4 -> Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionExecutionOutcome
+Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionExecutionOutcome.NotResolved = 2 -> Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionExecutionOutcome
+Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionExecutionOutcome.Stale = 1 -> Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionExecutionOutcome
+Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionMenuOptions
+Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionMenuOptions.<Clone>$() -> Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionMenuOptions!
+Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionMenuOptions.AnchorXOffset.get -> double
+Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionMenuOptions.AnchorXOffset.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionMenuOptions.CaretAnchorYOffset.get -> double
+Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionMenuOptions.CaretAnchorYOffset.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionMenuOptions.CodeActionMenuOptions() -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionMenuOptions.Equals(Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionMenuOptions? other) -> bool
+Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionMenuOptions.MarginAnchorYOffset.get -> double
+Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionMenuOptions.MarginAnchorYOffset.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionMenuOptions.MaxHeight.get -> double
+Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionMenuOptions.MaxHeight.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionSelection
+Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionSelection.CaretOffset.get -> int
+Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionSelection.CodeActionSelection(Nickelony.IDEKit.Core.Text.ITextSnapshot! snapshot, int caretOffset, Nickelony.IDEKit.Core.Text.TextRange range) -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionSelection.Equals(Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionSelection? other) -> bool
+Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionSelection.GetText() -> string!
+Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionSelection.Range.get -> Nickelony.IDEKit.Core.Text.TextRange
+Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionSelection.Snapshot.get -> Nickelony.IDEKit.Core.Text.ITextSnapshot!
+Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.ICodeActionSelectionSource
+Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.ICodeActionSelectionSource.Capture() -> Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionSelection?
+Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.ICodeActionSelectionSource.CaretLineNumber.get -> int?
+Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.ICodeActionSelectionSource.DocumentReplaced -> System.EventHandler?
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionCommitPlan
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionCommitPlan.<Clone>$() -> Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionCommitPlan!
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionCommitPlan.CaretOffset.get -> int?
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionCommitPlan.CaretOffset.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionCommitPlan.CompletionCommitPlan(System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Core.Editing.TextEditOperation!>! Operations, int? CaretOffset) -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionCommitPlan.Deconstruct(out System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Core.Editing.TextEditOperation!>! Operations, out int? CaretOffset) -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionCommitPlan.Equals(Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionCommitPlan? other) -> bool
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionCommitPlan.Operations.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Core.Editing.TextEditOperation!>!
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionCommitPlan.Operations.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionCommitPlanRequest
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionCommitPlanRequest.AdditionalTextEdits.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.LanguageFeatures.Completion.CompletionTextEdit>!
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionCommitPlanRequest.AdditionalTextEdits.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionCommitPlanRequest.CaretOffset.get -> int?
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionCommitPlanRequest.CaretOffset.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionCommitPlanRequest.CaretOffsetInInsertText.get -> int?
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionCommitPlanRequest.CaretOffsetInInsertText.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionCommitPlanRequest.CompletionCommitPlanRequest() -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionCommitPlanRequest.CompletionCommitPlanRequest(Nickelony.IDEKit.Core.Text.ITextSnapshot! Snapshot, Nickelony.IDEKit.Core.Text.TextRange CompletionSegment, string! InsertText, int? CaretOffsetInInsertText, System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.LanguageFeatures.Completion.CompletionTextEdit>! AdditionalTextEdits, Nickelony.IDEKit.LanguageFeatures.Completion.CompletionTextEdit? PrimaryEdit, bool IsOverstrikeMode, int? CaretOffset = null) -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionCommitPlanRequest.CompletionSegment.get -> Nickelony.IDEKit.Core.Text.TextRange
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionCommitPlanRequest.CompletionSegment.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionCommitPlanRequest.Deconstruct(out Nickelony.IDEKit.Core.Text.ITextSnapshot! Snapshot, out Nickelony.IDEKit.Core.Text.TextRange CompletionSegment, out string! InsertText, out int? CaretOffsetInInsertText, out System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.LanguageFeatures.Completion.CompletionTextEdit>! AdditionalTextEdits, out Nickelony.IDEKit.LanguageFeatures.Completion.CompletionTextEdit? PrimaryEdit, out bool IsOverstrikeMode, out int? CaretOffset) -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionCommitPlanRequest.Equals(Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionCommitPlanRequest other) -> bool
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionCommitPlanRequest.InsertText.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionCommitPlanRequest.InsertText.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionCommitPlanRequest.IsOverstrikeMode.get -> bool
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionCommitPlanRequest.IsOverstrikeMode.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionCommitPlanRequest.PrimaryEdit.get -> Nickelony.IDEKit.LanguageFeatures.Completion.CompletionTextEdit?
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionCommitPlanRequest.PrimaryEdit.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionCommitPlanRequest.Snapshot.get -> Nickelony.IDEKit.Core.Text.ITextSnapshot!
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionCommitPlanRequest.Snapshot.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionCommitPlanner
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionCommitPolicy
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionInsertion
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionInsertion.CaretOffset.get -> int?
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionInsertion.CaretOffset.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionInsertion.CompletionInsertion() -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionInsertion.CompletionInsertion(string! Text, int? CaretOffset) -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionInsertion.Deconstruct(out string! Text, out int? CaretOffset) -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionInsertion.Equals(Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionInsertion other) -> bool
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionInsertion.Text.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionInsertion.Text.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionInsertionResolver
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionController
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionController.CancelInFlightRequest() -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionController.CancelScheduledRequest() -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionController.CompletionController(System.Func<Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionEditorContext?>! captureContext, string! documentId, Nickelony.IDEKit.LanguageFeatures.Completion.ICompletionProvider! provider, Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.ICompletionPresenter! presenter, Nickelony.IDEKit.Core.Threading.IUiDispatcher! dispatcher, Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionControllerHooks? hooks = null, Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionControllerOptions? options = null, Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionSessionKernel? kernel = null, Microsoft.Extensions.Logging.ILogger? logger = null) -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionController.CurrentPresentation.get -> Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionPresentationState
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionController.Dispose() -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionController.HandleCharacterTyped(char typed, int caretOffset) -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionController.HandleDocumentReplaced() -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionController.InvalidateRequests() -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionController.IsDisposed.get -> bool
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionController.RequestAsync(Nickelony.IDEKit.LanguageFeatures.Completion.CompletionContext? context = null) -> System.Threading.Tasks.Task<bool>!
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionController.ScheduleRequest() -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionControllerHooks
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionControllerHooks.CompletionControllerHooks() -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionControllerHooks.ContextVersionProvider.get -> System.Func<int>?
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionControllerHooks.ContextVersionProvider.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionControllerHooks.ScopeAt.get -> System.Func<int, Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionScopes>?
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionControllerHooks.ScopeAt.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionControllerOptions
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionControllerOptions.<Clone>$() -> Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionControllerOptions!
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionControllerOptions.CompletionControllerOptions() -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionControllerOptions.Equals(Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionControllerOptions? other) -> bool
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionControllerOptions.RequestDebounceDelay.get -> System.TimeSpan
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionControllerOptions.RequestDebounceDelay.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionControllerOptions.Triggers.get -> Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionTriggerPolicy!
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionControllerOptions.Triggers.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionEditorContext
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionEditorContext.CaretOffset.get -> int
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionEditorContext.CaretOffset.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionEditorContext.CompletionEditorContext() -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionEditorContext.CompletionEditorContext(Nickelony.IDEKit.Core.Text.ITextSnapshot! Snapshot, int CaretOffset) -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionEditorContext.Deconstruct(out Nickelony.IDEKit.Core.Text.ITextSnapshot! Snapshot, out int CaretOffset) -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionEditorContext.Equals(Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionEditorContext other) -> bool
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionEditorContext.Snapshot.get -> Nickelony.IDEKit.Core.Text.ITextSnapshot!
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionEditorContext.Snapshot.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionFilter
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionItemFilter
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionPresentationState
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionPresentationState.CompletionPresentationState() -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionPresentationState.CompletionPresentationState(bool IsListVisible, bool IsRequestScheduled, bool IsTooltipVisible, Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionTooltipContent? TooltipContent) -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionPresentationState.Deconstruct(out bool IsListVisible, out bool IsRequestScheduled, out bool IsTooltipVisible, out Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionTooltipContent? TooltipContent) -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionPresentationState.Equals(Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionPresentationState other) -> bool
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionPresentationState.IsListVisible.get -> bool
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionPresentationState.IsListVisible.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionPresentationState.IsPresentationVisibleOrRequestScheduled.get -> bool
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionPresentationState.IsRequestScheduled.get -> bool
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionPresentationState.IsRequestScheduled.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionPresentationState.IsTooltipVisible.get -> bool
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionPresentationState.IsTooltipVisible.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionPresentationState.TooltipContent.get -> Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionTooltipContent?
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionPresentationState.TooltipContent.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionScopes
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionScopes.Code = 1 -> Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionScopes
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionScopes.Comment = 2 -> Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionScopes
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionScopes.None = 0 -> Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionScopes
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionScopes.StringLiteral = 4 -> Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionScopes
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionSessionDirective
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionSessionDirective.AllItemsFilteredOut.get -> bool
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionSessionDirective.CompletionSessionDirective() -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionSessionDirective.CompletionSessionDirective(bool shouldClose, System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem!>? items, Nickelony.IDEKit.Core.Text.TextRange? replacementRange = null) -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionSessionDirective.Deconstruct(out bool shouldClose, out System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem!>? items, out Nickelony.IDEKit.Core.Text.TextRange? replacementRange, out bool allItemsFilteredOut) -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionSessionDirective.Equals(Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionSessionDirective other) -> bool
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionSessionDirective.Items.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem!>?
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionSessionDirective.ReplacementRange.get -> Nickelony.IDEKit.Core.Text.TextRange?
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionSessionDirective.ShouldClose.get -> bool
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionSessionDirective.ShouldClose.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionSessionKernel
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionSessionKernel.CompletionSessionKernel(Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionWordLocator? wordLocator = null, Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionItemFilter? filter = null) -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionSessionKernel.GetDirectiveAsync(string! documentId, Nickelony.IDEKit.LanguageFeatures.Completion.ICompletionProvider! provider, Nickelony.IDEKit.Core.Text.ITextSnapshot! snapshot, int caretOffset, Nickelony.IDEKit.LanguageFeatures.Completion.CompletionContext? context = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionSessionDirective>!
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionSessionKernel.GetDirectiveForWordSpanAsync(string! documentId, Nickelony.IDEKit.LanguageFeatures.Completion.ICompletionProvider! provider, Nickelony.IDEKit.Core.Text.ITextSnapshot! snapshot, int caretOffset, Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionWordSpan wordSpan, Nickelony.IDEKit.LanguageFeatures.Completion.CompletionContext? context = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionSessionDirective>!
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionSessionKernel.TryRetarget(Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionSessionDirective directive, Nickelony.IDEKit.Core.Text.ITextSnapshot! requestSnapshot, Nickelony.IDEKit.Core.Text.ITextSnapshot! snapshot, int caretOffset, out Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionSessionDirective retargeted) -> bool
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionTooltipContent
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionTooltipContent.CompletionTooltipContent() -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionTooltipContent.CompletionTooltipContent(object? Content) -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionTooltipContent.Content.get -> object?
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionTooltipContent.Content.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionTooltipContent.Deconstruct(out object? Content) -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionTooltipContent.Equals(Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionTooltipContent other) -> bool
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionTriggerPolicy
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionTriggerPolicy.<Clone>$() -> Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionTriggerPolicy!
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionTriggerPolicy.CompletionTriggerPolicy() -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionTriggerPolicy.Equals(Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionTriggerPolicy? other) -> bool
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionTriggerPolicy.TriggerCharactersInEveryScope.get -> bool
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionTriggerPolicy.TriggerCharactersInEveryScope.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionTriggerPolicy.WordScopes.get -> Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionScopes
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionTriggerPolicy.WordScopes.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionTriggerPolicy.WordStart.get -> System.Func<char, bool>!
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionTriggerPolicy.WordStart.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionWindowOptions
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionWindowOptions.<Clone>$() -> Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionWindowOptions!
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionWindowOptions.CompletionWindowOptions() -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionWindowOptions.DismissWhenEmpty.get -> bool
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionWindowOptions.DismissWhenEmpty.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionWindowOptions.Equals(Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionWindowOptions? other) -> bool
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionWindowOptions.GetWindowWidth(double contentWidth) -> double
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionWindowOptions.HorizontalChrome.get -> double
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionWindowOptions.HorizontalChrome.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionWindowOptions.ItemDetailSpacing.get -> double
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionWindowOptions.ItemDetailSpacing.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionWindowOptions.ItemIconWidth.get -> double
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionWindowOptions.ItemIconWidth.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionWindowOptions.MaxContentWidth.get -> double
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionWindowOptions.MaxHeight.get -> double
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionWindowOptions.MaxHeight.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionWindowOptions.MaxWidth.get -> double
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionWindowOptions.MaxWidth.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionWindowOptions.MinContentWidth.get -> double
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionWindowOptions.MinContentWidth.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionWindowOptions.PreventActivation.get -> bool
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionWindowOptions.PreventActivation.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionWindowOptions.Validate(string! parameterName) -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionWordLocator
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionWordSpan
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionWordSpan.CompletionWordSpan() -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionWordSpan.CompletionWordSpan(string? word, Nickelony.IDEKit.Core.Text.TextRange range) -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionWordSpan.Deconstruct(out string! word, out Nickelony.IDEKit.Core.Text.TextRange range) -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionWordSpan.Equals(Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionWordSpan other) -> bool
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionWordSpan.Range.get -> Nickelony.IDEKit.Core.Text.TextRange
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionWordSpan.Word.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.ICompletionCommitCharacters
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.ICompletionCommitCharacters.CommitCharacters.get -> System.Collections.Generic.IReadOnlyList<string!>!
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.ICompletionPreselection
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.ICompletionPreselection.IsPreselected.get -> bool
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.ICompletionPresenter
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.ICompletionPresenter.ApplyDirective(Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionSessionDirective directive) -> bool
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.ICompletionPresenter.Dismiss() -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.ICompletionPresenter.IsListVisible.get -> bool
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.ICompletionPresenter.IsTooltipVisible.get -> bool
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.ICompletionPresenter.TooltipContent.get -> Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionTooltipContent?
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Snippets.SnippetExpander
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Snippets.SnippetExpansion
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Snippets.SnippetExpansion.Deconstruct(out string! text, out System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Snippets.SnippetPlaceholder>! placeholders) -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Snippets.SnippetExpansion.Equals(Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Snippets.SnippetExpansion other) -> bool
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Snippets.SnippetExpansion.Placeholders.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Snippets.SnippetPlaceholder>!
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Snippets.SnippetExpansion.SnippetExpansion() -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Snippets.SnippetExpansion.SnippetExpansion(string! text, System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Snippets.SnippetPlaceholder>! placeholders) -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Snippets.SnippetExpansion.Text.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Snippets.SnippetPlaceholder
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Snippets.SnippetPlaceholder.Choices.get -> System.Collections.Generic.IReadOnlyList<string!>?
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Snippets.SnippetPlaceholder.Choices.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Snippets.SnippetPlaceholder.Deconstruct(out int Index, out Nickelony.IDEKit.Core.Text.TextRange Range, out System.Collections.Generic.IReadOnlyList<string!>? Choices) -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Snippets.SnippetPlaceholder.Equals(Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Snippets.SnippetPlaceholder other) -> bool
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Snippets.SnippetPlaceholder.Index.get -> int
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Snippets.SnippetPlaceholder.Index.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Snippets.SnippetPlaceholder.Range.get -> Nickelony.IDEKit.Core.Text.TextRange
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Snippets.SnippetPlaceholder.Range.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Snippets.SnippetPlaceholder.SnippetPlaceholder() -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Snippets.SnippetPlaceholder.SnippetPlaceholder(int Index, Nickelony.IDEKit.Core.Text.TextRange Range, System.Collections.Generic.IReadOnlyList<string!>? Choices) -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.DiagnosticsController
+Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.DiagnosticsController.Changed -> System.EventHandler?
+Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.DiagnosticsController.Current.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.LanguageFeatures.Diagnostics.Diagnostic!>!
+Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.DiagnosticsController.DiagnosticsController(string! documentId, Nickelony.IDEKit.LanguageFeatures.Diagnostics.IDiagnosticsProvider? provider, Nickelony.IDEKit.LanguageFeatures.Diagnostics.IDiagnosticsSource? source, Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.DiagnosticsControllerHooks! hooks, Nickelony.IDEKit.Core.Threading.IUiDispatcher! dispatcher, Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.DiagnosticsControllerOptions? options = null, Microsoft.Extensions.Logging.ILogger? logger = null) -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.DiagnosticsController.Dispose() -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.DiagnosticsController.FindAt(int offset) -> Nickelony.IDEKit.LanguageFeatures.Diagnostics.Diagnostic?
+Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.DiagnosticsController.HandleDocumentReplaced() -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.DiagnosticsController.HandleTextChanged() -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.DiagnosticsController.TryGetShownRange(int index, out Nickelony.IDEKit.Core.Text.TextRange range) -> bool
+Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.DiagnosticsControllerHooks
+Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.DiagnosticsControllerHooks.Detach.get -> System.Action?
+Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.DiagnosticsControllerHooks.Detach.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.DiagnosticsControllerHooks.DiagnosticsControllerHooks() -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.DiagnosticsControllerHooks.FindShownIndexAt.get -> System.Func<int, int?>?
+Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.DiagnosticsControllerHooks.FindShownIndexAt.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.DiagnosticsControllerHooks.GetShownRange.get -> System.Func<int, Nickelony.IDEKit.Core.Text.TextRange?>?
+Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.DiagnosticsControllerHooks.GetShownRange.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.DiagnosticsControllerHooks.GetText.get -> System.Func<string!>!
+Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.DiagnosticsControllerHooks.GetText.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.DiagnosticsControllerHooks.ShowDiagnostics.get -> System.Action<System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.LanguageFeatures.Diagnostics.Diagnostic!>!>!
+Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.DiagnosticsControllerHooks.ShowDiagnostics.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.DiagnosticsControllerOptions
+Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.DiagnosticsControllerOptions.<Clone>$() -> Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.DiagnosticsControllerOptions!
+Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.DiagnosticsControllerOptions.DiagnosticsControllerOptions() -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.DiagnosticsControllerOptions.DocumentIdComparer.get -> System.Collections.Generic.IEqualityComparer<string!>?
+Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.DiagnosticsControllerOptions.DocumentIdComparer.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.DiagnosticsControllerOptions.Equals(Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.DiagnosticsControllerOptions? other) -> bool
+Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.DiagnosticsControllerOptions.SettleDelay.get -> System.TimeSpan
+Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.DiagnosticsControllerOptions.SettleDelay.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.DiagnosticsSourceExtensions
+Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.ProjectDiagnosticsSource
+Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.ProjectDiagnosticsSource.DiagnosticsUpdated -> System.EventHandler<Nickelony.IDEKit.LanguageFeatures.Diagnostics.DiagnosticsUpdatedEventArgs!>?
+Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.ProjectDiagnosticsSource.Dispose() -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.ProjectDiagnosticsSource.GetDiagnostics(string! documentId) -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.LanguageFeatures.Diagnostics.Diagnostic!>!
+Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.ProjectDiagnosticsSource.HandleProjectChanged() -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.ProjectDiagnosticsSource.ProjectDiagnosticsSource(Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.ProjectDiagnosticsSourceHooks hooks, Nickelony.IDEKit.Core.Threading.IUiDispatcher! dispatcher, Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.ProjectDiagnosticsSourceOptions? options = null, Microsoft.Extensions.Logging.ILogger? logger = null) -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.ProjectDiagnosticsSourceHooks
+Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.ProjectDiagnosticsSourceHooks.AnalyzeAsync.get -> System.Func<System.Threading.CancellationToken, System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyDictionary<string!, System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.LanguageFeatures.Diagnostics.Diagnostic!>!>!>!>!
+Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.ProjectDiagnosticsSourceHooks.AnalyzeAsync.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.ProjectDiagnosticsSourceHooks.Deconstruct(out System.Func<System.Threading.CancellationToken, System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyDictionary<string!, System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.LanguageFeatures.Diagnostics.Diagnostic!>!>!>!>! AnalyzeAsync) -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.ProjectDiagnosticsSourceHooks.Equals(Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.ProjectDiagnosticsSourceHooks other) -> bool
+Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.ProjectDiagnosticsSourceHooks.ProjectDiagnosticsSourceHooks() -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.ProjectDiagnosticsSourceHooks.ProjectDiagnosticsSourceHooks(System.Func<System.Threading.CancellationToken, System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyDictionary<string!, System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.LanguageFeatures.Diagnostics.Diagnostic!>!>!>!>! AnalyzeAsync) -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.ProjectDiagnosticsSourceOptions
+Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.ProjectDiagnosticsSourceOptions.<Clone>$() -> Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.ProjectDiagnosticsSourceOptions!
+Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.ProjectDiagnosticsSourceOptions.DocumentIdComparer.get -> System.Collections.Generic.IEqualityComparer<string!>?
+Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.ProjectDiagnosticsSourceOptions.DocumentIdComparer.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.ProjectDiagnosticsSourceOptions.Equals(Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.ProjectDiagnosticsSourceOptions? other) -> bool
+Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.ProjectDiagnosticsSourceOptions.ProjectDiagnosticsSourceOptions() -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.ProjectDiagnosticsSourceOptions.SettleDelay.get -> System.TimeSpan
+Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.ProjectDiagnosticsSourceOptions.SettleDelay.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolKindExtensions
+Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolOutlineBuilder
+Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolOutlineHooks<TItem>
+Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolOutlineHooks<TItem>.DataSelector.get -> System.Func<TItem, object?>?
+Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolOutlineHooks<TItem>.DataSelector.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolOutlineHooks<TItem>.DetailSelector.get -> System.Func<TItem, string?>?
+Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolOutlineHooks<TItem>.DetailSelector.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolOutlineHooks<TItem>.DocumentSymbolOutlineHooks() -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolOutlineHooks<TItem>.KindSelector.get -> System.Func<TItem, Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind>!
+Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolOutlineHooks<TItem>.KindSelector.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolOutlineHooks<TItem>.NameSelector.get -> System.Func<TItem, string!>!
+Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolOutlineHooks<TItem>.NameSelector.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolOutlineHooks<TItem>.RangeSelector.get -> System.Func<TItem, Nickelony.IDEKit.Core.Text.TextRange?>?
+Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolOutlineHooks<TItem>.RangeSelector.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolOutlineHooks<TItem>.SelectionRangeSelector.get -> System.Func<TItem, Nickelony.IDEKit.Core.Text.TextRange?>?
+Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolOutlineHooks<TItem>.SelectionRangeSelector.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolQuickPickOptions
+Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolQuickPickOptions.<Clone>$() -> Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolQuickPickOptions!
+Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolQuickPickOptions.DocumentSymbolQuickPickOptions() -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolQuickPickOptions.EmptyText.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolQuickPickOptions.EmptyText.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolQuickPickOptions.Equals(Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolQuickPickOptions? other) -> bool
+Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolQuickPickOptions.GroupByKind.get -> bool
+Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolQuickPickOptions.GroupByKind.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolQuickPickOptions.GroupLabel.get -> System.Func<Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind, string?>!
+Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolQuickPickOptions.GroupLabel.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolQuickPickOptions.GroupedName.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolQuickPickOptions.GroupedName.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolQuickPickOptions.Name.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolQuickPickOptions.Name.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolQuickPickOptions.NoDocumentText.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolQuickPickOptions.NoDocumentText.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolQuickPickOptions.NoSymbolsText.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolQuickPickOptions.NoSymbolsText.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolQuickPickOptions.Placeholder.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolQuickPickOptions.Placeholder.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolQuickPickOptions.SymbolsLabel.get -> string?
+Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolQuickPickOptions.SymbolsLabel.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolQuickPickProvider
+Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolQuickPickProvider.AcceptAsync(Nickelony.QuickPick.QuickPickAcceptRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task!
+Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolQuickPickProvider.CancelPreview() -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolQuickPickProvider.DocumentSymbolQuickPickProvider(System.Func<Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.SymbolDocumentDescriptor?>! getDocument, Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolQuickPickOptions? options = null, System.Action<System.Exception!>? reportFault = null) -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolQuickPickProvider.EmptyText.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolQuickPickProvider.FilterMode.get -> Nickelony.QuickPick.QuickPickFilterMode
+Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolQuickPickProvider.GetItemsAsync(Nickelony.QuickPick.QuickPickRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<Nickelony.QuickPick.QuickPickItem!>!>!
+Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolQuickPickProvider.Name.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolQuickPickProvider.OnDeactivated() -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolQuickPickProvider.Placeholder.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolQuickPickProvider.Prefix.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolQuickPickProvider.Preview(Nickelony.QuickPick.QuickPickItem! item) -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.SymbolDocumentDescriptor
+Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.SymbolDocumentDescriptor.DocumentId.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.SymbolDocumentDescriptor.DocumentText.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.SymbolDocumentDescriptor.Provider.get -> Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.IDocumentSymbolProvider!
+Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.SymbolDocumentDescriptor.SymbolDocumentDescriptor(Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.IDocumentSymbolProvider! provider, string! documentId, string! documentText, Nickelony.IDEKit.Core.Navigation.IEditorNavigationTarget! target) -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.SymbolDocumentDescriptor.Target.get -> Nickelony.IDEKit.Core.Navigation.IEditorNavigationTarget!
+Nickelony.IDEKit.LanguageFeatures.Controllers.Formatting.FormattingPlanner
+Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverController
+Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverController.CancelInFlightRequest() -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverController.Dispose() -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverController.HoverController(Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.IHoverPointerSource! pointerSource, Nickelony.IDEKit.LanguageFeatures.Hover.IHoverProvider? provider, Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverControllerHooks! hooks, Nickelony.IDEKit.Core.Threading.IUiDispatcher! dispatcher, Microsoft.Extensions.Logging.ILogger? logger = null) -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverController.InvalidateRequests() -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverController.RequestAsync() -> System.Threading.Tasks.Task!
+Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverControllerHooks
+Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverControllerHooks.BuildDecision.get -> System.Func<int, Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverDecision>?
+Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverControllerHooks.BuildDecision.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverControllerHooks.BuildRequest.get -> System.Func<int, Nickelony.IDEKit.LanguageFeatures.Hover.HoverRequest?>?
+Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverControllerHooks.BuildRequest.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverControllerHooks.ContextVersionProvider.get -> System.Func<int>?
+Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverControllerHooks.ContextVersionProvider.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverControllerHooks.HoverControllerHooks() -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverControllerHooks.ResolveRequestOffset.get -> System.Func<int, int?>?
+Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverControllerHooks.ResolveRequestOffset.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverControllerHooks.ShowHover.get -> System.Action<Nickelony.IDEKit.LanguageFeatures.Hover.HoverInformation?, Nickelony.IDEKit.LanguageFeatures.Diagnostics.Diagnostic?, int?>!
+Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverControllerHooks.ShowHover.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverDecision
+Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverDecision.CanShowDiagnosticFallback.get -> bool
+Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverDecision.CanShowDiagnosticFallback.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverDecision.CanShowHoverContent.get -> bool
+Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverDecision.CanShowHoverContent.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverDecision.Diagnostic.get -> Nickelony.IDEKit.LanguageFeatures.Diagnostics.Diagnostic?
+Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverDecision.Diagnostic.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverDecision.Equals(Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverDecision other) -> bool
+Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverDecision.HoverDecision() -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverDecision.RequestOffset.get -> int
+Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverDecision.RequestOffset.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverDecision.ShouldRequestHover.get -> bool
+Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverDecision.ShouldRequestHover.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverDefinitionResolver
+Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverPointerOptions
+Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverPointerOptions.<Clone>$() -> Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverPointerOptions!
+Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverPointerOptions.Equals(Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverPointerOptions? other) -> bool
+Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverPointerOptions.HoverPointerOptions() -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverPointerOptions.RestDelay.get -> System.TimeSpan?
+Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverPointerOptions.RestDelay.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.IHoverPointerSource
+Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.IHoverPointerSource.GetHoveredOffset() -> int?
+Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.DefinitionNavigationTarget
+Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.DefinitionNavigationTarget.<Clone>$() -> Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.DefinitionNavigationTarget!
+Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.DefinitionNavigationTarget.DefinitionNavigationTarget(Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionLocation! location, Nickelony.IDEKit.Core.Text.TextPosition? documentStart = null) -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.DefinitionNavigationTarget.DocumentStart.get -> Nickelony.IDEKit.Core.Text.TextPosition?
+Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.DefinitionNavigationTarget.Equals(Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.DefinitionNavigationTarget? other) -> bool
+Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.DefinitionNavigationTarget.Location.get -> Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionLocation!
+Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.DefinitionResolver
+Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.GoToLineQuickPickOptions
+Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.GoToLineQuickPickOptions.<Clone>$() -> Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.GoToLineQuickPickOptions!
+Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.GoToLineQuickPickOptions.Equals(Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.GoToLineQuickPickOptions? other) -> bool
+Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.GoToLineQuickPickOptions.GoToLineQuickPickOptions() -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.GoToLineQuickPickOptions.HintText.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.GoToLineQuickPickOptions.HintText.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.GoToLineQuickPickOptions.LineColumnText.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.GoToLineQuickPickOptions.LineColumnText.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.GoToLineQuickPickOptions.LineText.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.GoToLineQuickPickOptions.LineText.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.GoToLineQuickPickOptions.Name.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.GoToLineQuickPickOptions.Name.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.GoToLineQuickPickOptions.NoEditorText.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.GoToLineQuickPickOptions.NoEditorText.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.GoToLineQuickPickOptions.Placeholder.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.GoToLineQuickPickOptions.Placeholder.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.GoToLineQuickPickProvider
+Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.GoToLineQuickPickProvider.AcceptAsync(Nickelony.QuickPick.QuickPickAcceptRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task!
+Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.GoToLineQuickPickProvider.CancelPreview() -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.GoToLineQuickPickProvider.FilterMode.get -> Nickelony.QuickPick.QuickPickFilterMode
+Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.GoToLineQuickPickProvider.GetItemsAsync(Nickelony.QuickPick.QuickPickRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<Nickelony.QuickPick.QuickPickItem!>!>!
+Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.GoToLineQuickPickProvider.GoToLineQuickPickProvider(System.Func<Nickelony.IDEKit.Core.Navigation.IEditorNavigationTarget?>! getTarget, Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.GoToLineQuickPickOptions? options = null) -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.GoToLineQuickPickProvider.Name.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.GoToLineQuickPickProvider.Placeholder.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.GoToLineQuickPickProvider.Prefix.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.GoToLineQuickPickProvider.Preview(Nickelony.QuickPick.QuickPickItem! item) -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.OpenEditorsQuickPickOptions
+Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.OpenEditorsQuickPickOptions.<Clone>$() -> Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.OpenEditorsQuickPickOptions!
+Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.OpenEditorsQuickPickOptions.EmptyText.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.OpenEditorsQuickPickOptions.EmptyText.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.OpenEditorsQuickPickOptions.Equals(Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.OpenEditorsQuickPickOptions? other) -> bool
+Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.OpenEditorsQuickPickOptions.Name.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.OpenEditorsQuickPickOptions.Name.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.OpenEditorsQuickPickOptions.OpenEditorsQuickPickOptions() -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.OpenEditorsQuickPickOptions.PathComparison.get -> Nickelony.IDEKit.Core.Paths.LocalPathComparisonPolicy
+Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.OpenEditorsQuickPickOptions.PathComparison.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.OpenEditorsQuickPickOptions.Placeholder.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.OpenEditorsQuickPickOptions.Placeholder.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.OpenEditorsQuickPickOptions.RootPaths.get -> System.Collections.Generic.IReadOnlyList<string!>!
+Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.OpenEditorsQuickPickOptions.RootPaths.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.OpenEditorsQuickPickOptions.UnsavedText.get -> string?
+Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.OpenEditorsQuickPickOptions.UnsavedText.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.OpenEditorsQuickPickProvider
+Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.OpenEditorsQuickPickProvider.AcceptAsync(Nickelony.QuickPick.QuickPickAcceptRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task!
+Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.OpenEditorsQuickPickProvider.EmptyText.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.OpenEditorsQuickPickProvider.FilterMode.get -> Nickelony.QuickPick.QuickPickFilterMode
+Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.OpenEditorsQuickPickProvider.GetItemsAsync(Nickelony.QuickPick.QuickPickRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<Nickelony.QuickPick.QuickPickItem!>!>!
+Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.OpenEditorsQuickPickProvider.Name.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.OpenEditorsQuickPickProvider.OpenEditorsQuickPickProvider(System.Func<System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Core.Navigation.OpenEditorDescriptor!>!>! listOpenEditors, System.Action<Nickelony.IDEKit.Core.Navigation.OpenEditorDescriptor!>! activate, Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.OpenEditorsQuickPickOptions? options = null) -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.OpenEditorsQuickPickProvider.Placeholder.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.OpenEditorsQuickPickProvider.Prefix.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Controllers.SemanticTokens.SemanticTokensSourceExtensions
+Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpController
+Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpController.CancelInFlightRequest() -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpController.CancelScheduledRequest() -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpController.CurrentPresentation.get -> Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpPresentationState
+Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpController.Dismiss() -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpController.Dispose() -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpController.InvalidateRequests() -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpController.RequestAsync(int offset, Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpTriggerKind triggerKind = Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpTriggerKind.Invoked, string? triggerCharacter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<bool>!
+Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpController.ScheduleRequest(Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpTriggerKind triggerKind = Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpTriggerKind.ContentChange, string? triggerCharacter = null) -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpController.SelectNextSignature() -> bool
+Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpController.SelectPreviousSignature() -> bool
+Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpController.SignatureHelpController(System.Func<int?>! getCaretOffset, Nickelony.IDEKit.LanguageFeatures.SignatureHelp.ISignatureHelpProvider! provider, Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpControllerHooks hooks, Nickelony.IDEKit.Core.Threading.IUiDispatcher! dispatcher, Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpControllerOptions? options = null, Microsoft.Extensions.Logging.ILogger? logger = null) -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpControllerHooks
+Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpControllerHooks.BuildRequest.get -> System.Func<int, Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpContext!, Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpRequest?>!
+Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpControllerHooks.BuildRequest.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpControllerHooks.Deconstruct(out System.Func<int, Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpContext!, Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpRequest?>! BuildRequest, out System.Action<Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpInformation!, int>! ShowSignatureHelp, out System.Action! DismissSignatureHelp) -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpControllerHooks.DismissSignatureHelp.get -> System.Action!
+Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpControllerHooks.DismissSignatureHelp.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpControllerHooks.Equals(Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpControllerHooks other) -> bool
+Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpControllerHooks.ShowSignatureHelp.get -> System.Action<Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpInformation!, int>!
+Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpControllerHooks.ShowSignatureHelp.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpControllerHooks.SignatureHelpControllerHooks() -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpControllerHooks.SignatureHelpControllerHooks(System.Func<int, Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpContext!, Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpRequest?>! BuildRequest, System.Action<Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpInformation!, int>! ShowSignatureHelp, System.Action! DismissSignatureHelp) -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpControllerOptions
+Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpControllerOptions.<Clone>$() -> Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpControllerOptions!
+Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpControllerOptions.Cycle.get -> bool
+Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpControllerOptions.Cycle.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpControllerOptions.Equals(Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpControllerOptions? other) -> bool
+Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpControllerOptions.RequestDebounceDelay.get -> System.TimeSpan
+Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpControllerOptions.RequestDebounceDelay.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpControllerOptions.SignatureHelpControllerOptions() -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpPresentationState
+Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpPresentationState.Deconstruct(out Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpInformation? SignatureHelp, out bool IsVisible, out bool IsRequestInFlight, out bool IsRequestScheduled) -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpPresentationState.Equals(Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpPresentationState other) -> bool
+Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpPresentationState.IsPresentationVisibleOrRequestScheduled.get -> bool
+Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpPresentationState.IsRequestInFlight.get -> bool
+Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpPresentationState.IsRequestInFlight.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpPresentationState.IsRequestScheduled.get -> bool
+Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpPresentationState.IsRequestScheduled.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpPresentationState.IsVisible.get -> bool
+Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpPresentationState.IsVisible.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpPresentationState.SignatureHelp.get -> Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpInformation?
+Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpPresentationState.SignatureHelp.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpPresentationState.SignatureHelpPresentationState() -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpPresentationState.SignatureHelpPresentationState(Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpInformation? SignatureHelp, bool IsVisible, bool IsRequestInFlight, bool IsRequestScheduled) -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.WorkspaceSymbols.WorkspaceSymbolQuickPickOptions
+Nickelony.IDEKit.LanguageFeatures.Controllers.WorkspaceSymbols.WorkspaceSymbolQuickPickOptions.<Clone>$() -> Nickelony.IDEKit.LanguageFeatures.Controllers.WorkspaceSymbols.WorkspaceSymbolQuickPickOptions!
+Nickelony.IDEKit.LanguageFeatures.Controllers.WorkspaceSymbols.WorkspaceSymbolQuickPickOptions.ContainerSeparator.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Controllers.WorkspaceSymbols.WorkspaceSymbolQuickPickOptions.ContainerSeparator.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.WorkspaceSymbols.WorkspaceSymbolQuickPickOptions.EmptyText.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Controllers.WorkspaceSymbols.WorkspaceSymbolQuickPickOptions.EmptyText.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.WorkspaceSymbols.WorkspaceSymbolQuickPickOptions.Equals(Nickelony.IDEKit.LanguageFeatures.Controllers.WorkspaceSymbols.WorkspaceSymbolQuickPickOptions? other) -> bool
+Nickelony.IDEKit.LanguageFeatures.Controllers.WorkspaceSymbols.WorkspaceSymbolQuickPickOptions.Name.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Controllers.WorkspaceSymbols.WorkspaceSymbolQuickPickOptions.Name.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.WorkspaceSymbols.WorkspaceSymbolQuickPickOptions.PathComparison.get -> Nickelony.IDEKit.Core.Paths.LocalPathComparisonPolicy
+Nickelony.IDEKit.LanguageFeatures.Controllers.WorkspaceSymbols.WorkspaceSymbolQuickPickOptions.PathComparison.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.WorkspaceSymbols.WorkspaceSymbolQuickPickOptions.Placeholder.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Controllers.WorkspaceSymbols.WorkspaceSymbolQuickPickOptions.Placeholder.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.WorkspaceSymbols.WorkspaceSymbolQuickPickOptions.QueryDebounceDelay.get -> System.TimeSpan
+Nickelony.IDEKit.LanguageFeatures.Controllers.WorkspaceSymbols.WorkspaceSymbolQuickPickOptions.QueryDebounceDelay.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.WorkspaceSymbols.WorkspaceSymbolQuickPickOptions.RootPaths.get -> System.Collections.Generic.IReadOnlyList<string!>!
+Nickelony.IDEKit.LanguageFeatures.Controllers.WorkspaceSymbols.WorkspaceSymbolQuickPickOptions.RootPaths.init -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.WorkspaceSymbols.WorkspaceSymbolQuickPickOptions.WorkspaceSymbolQuickPickOptions() -> void
+Nickelony.IDEKit.LanguageFeatures.Controllers.WorkspaceSymbols.WorkspaceSymbolQuickPickProvider
+Nickelony.IDEKit.LanguageFeatures.Controllers.WorkspaceSymbols.WorkspaceSymbolQuickPickProvider.AcceptAsync(Nickelony.QuickPick.QuickPickAcceptRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task!
+Nickelony.IDEKit.LanguageFeatures.Controllers.WorkspaceSymbols.WorkspaceSymbolQuickPickProvider.EmptyText.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Controllers.WorkspaceSymbols.WorkspaceSymbolQuickPickProvider.FilterMode.get -> Nickelony.QuickPick.QuickPickFilterMode
+Nickelony.IDEKit.LanguageFeatures.Controllers.WorkspaceSymbols.WorkspaceSymbolQuickPickProvider.GetFilterText(string! query) -> string!
+Nickelony.IDEKit.LanguageFeatures.Controllers.WorkspaceSymbols.WorkspaceSymbolQuickPickProvider.GetItemsAsync(Nickelony.QuickPick.QuickPickRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<Nickelony.QuickPick.QuickPickItem!>!>!
+Nickelony.IDEKit.LanguageFeatures.Controllers.WorkspaceSymbols.WorkspaceSymbolQuickPickProvider.Name.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Controllers.WorkspaceSymbols.WorkspaceSymbolQuickPickProvider.Placeholder.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Controllers.WorkspaceSymbols.WorkspaceSymbolQuickPickProvider.Prefix.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Controllers.WorkspaceSymbols.WorkspaceSymbolQuickPickProvider.QueryDebounceDelay.get -> System.TimeSpan?
+Nickelony.IDEKit.LanguageFeatures.Controllers.WorkspaceSymbols.WorkspaceSymbolQuickPickProvider.WorkspaceSymbolQuickPickProvider(System.Func<System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.LanguageFeatures.WorkspaceSymbols.IWorkspaceSymbolProvider!>!>! getProviders, System.Func<Nickelony.IDEKit.LanguageFeatures.WorkspaceSymbols.WorkspaceSymbol!, System.Threading.CancellationToken, System.Threading.Tasks.Task!>! openAsync, Nickelony.IDEKit.LanguageFeatures.Controllers.WorkspaceSymbols.WorkspaceSymbolQuickPickOptions? options = null, System.Action<System.Exception!>? reportFault = null) -> void
+override Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionControllerHooks.GetHashCode() -> int
+override Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionControllerOptions.Equals(object? obj) -> bool
+override Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionControllerOptions.GetHashCode() -> int
+override Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionControllerOptions.ToString() -> string!
+override Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionMenuOptions.Equals(object? obj) -> bool
+override Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionMenuOptions.GetHashCode() -> int
+override Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionMenuOptions.ToString() -> string!
+override Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionSelection.Equals(object? obj) -> bool
+override Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionSelection.GetHashCode() -> int
+override Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionSelection.ToString() -> string!
+override Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionCommitPlan.Equals(object? obj) -> bool
+override Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionCommitPlan.GetHashCode() -> int
+override Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionCommitPlan.ToString() -> string!
+override Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionCommitPlanRequest.GetHashCode() -> int
+override Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionInsertion.GetHashCode() -> int
+override Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionControllerOptions.Equals(object? obj) -> bool
+override Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionControllerOptions.GetHashCode() -> int
+override Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionControllerOptions.ToString() -> string!
+override Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionEditorContext.GetHashCode() -> int
+override Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionPresentationState.GetHashCode() -> int
+override Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionSessionDirective.GetHashCode() -> int
+override Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionTooltipContent.GetHashCode() -> int
+override Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionTriggerPolicy.Equals(object? obj) -> bool
+override Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionTriggerPolicy.GetHashCode() -> int
+override Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionTriggerPolicy.ToString() -> string!
+override Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionWindowOptions.Equals(object? obj) -> bool
+override Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionWindowOptions.GetHashCode() -> int
+override Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionWindowOptions.ToString() -> string!
+override Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionWordSpan.GetHashCode() -> int
+override Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Snippets.SnippetExpansion.GetHashCode() -> int
+override Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Snippets.SnippetPlaceholder.GetHashCode() -> int
+override Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.DiagnosticsControllerOptions.Equals(object? obj) -> bool
+override Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.DiagnosticsControllerOptions.GetHashCode() -> int
+override Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.DiagnosticsControllerOptions.ToString() -> string!
+override Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.ProjectDiagnosticsSourceHooks.GetHashCode() -> int
+override Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.ProjectDiagnosticsSourceOptions.Equals(object? obj) -> bool
+override Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.ProjectDiagnosticsSourceOptions.GetHashCode() -> int
+override Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.ProjectDiagnosticsSourceOptions.ToString() -> string!
+override Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolQuickPickOptions.Equals(object? obj) -> bool
+override Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolQuickPickOptions.GetHashCode() -> int
+override Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolQuickPickOptions.ToString() -> string!
+override Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverDecision.GetHashCode() -> int
+override Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverPointerOptions.Equals(object? obj) -> bool
+override Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverPointerOptions.GetHashCode() -> int
+override Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverPointerOptions.ToString() -> string!
+override Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.DefinitionNavigationTarget.Equals(object? obj) -> bool
+override Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.DefinitionNavigationTarget.GetHashCode() -> int
+override Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.DefinitionNavigationTarget.ToString() -> string!
+override Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.GoToLineQuickPickOptions.Equals(object? obj) -> bool
+override Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.GoToLineQuickPickOptions.GetHashCode() -> int
+override Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.GoToLineQuickPickOptions.ToString() -> string!
+override Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.OpenEditorsQuickPickOptions.Equals(object? obj) -> bool
+override Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.OpenEditorsQuickPickOptions.GetHashCode() -> int
+override Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.OpenEditorsQuickPickOptions.ToString() -> string!
+override Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpControllerHooks.GetHashCode() -> int
+override Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpControllerOptions.Equals(object? obj) -> bool
+override Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpControllerOptions.GetHashCode() -> int
+override Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpControllerOptions.ToString() -> string!
+override Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpPresentationState.GetHashCode() -> int
+override Nickelony.IDEKit.LanguageFeatures.Controllers.WorkspaceSymbols.WorkspaceSymbolQuickPickOptions.Equals(object? obj) -> bool
+override Nickelony.IDEKit.LanguageFeatures.Controllers.WorkspaceSymbols.WorkspaceSymbolQuickPickOptions.GetHashCode() -> int
+override Nickelony.IDEKit.LanguageFeatures.Controllers.WorkspaceSymbols.WorkspaceSymbolQuickPickOptions.ToString() -> string!
+static Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionControllerHooks.operator !=(Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionControllerHooks left, Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionControllerHooks right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionControllerHooks.operator ==(Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionControllerHooks left, Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionControllerHooks right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionControllerOptions.Default.get -> Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionControllerOptions!
+static Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionControllerOptions.operator !=(Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionControllerOptions? left, Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionControllerOptions? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionControllerOptions.operator ==(Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionControllerOptions? left, Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionControllerOptions? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionMenuOptions.Default.get -> Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionMenuOptions!
+static Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionMenuOptions.operator !=(Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionMenuOptions? left, Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionMenuOptions? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionMenuOptions.operator ==(Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionMenuOptions? left, Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionMenuOptions? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionSelection.operator !=(Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionSelection? left, Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionSelection? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionSelection.operator ==(Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionSelection? left, Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionSelection? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionCommitPlan.operator !=(Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionCommitPlan? left, Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionCommitPlan? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionCommitPlan.operator ==(Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionCommitPlan? left, Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionCommitPlan? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionCommitPlanRequest.operator !=(Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionCommitPlanRequest left, Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionCommitPlanRequest right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionCommitPlanRequest.operator ==(Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionCommitPlanRequest left, Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionCommitPlanRequest right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionCommitPlanner.Plan(in Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionCommitPlanRequest request) -> Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionCommitPlan!
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionCommitPlanner.ResolvePrimaryRange(in Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionCommitPlanRequest request) -> Nickelony.IDEKit.Core.Text.TextRange
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionCommitPolicy.ShouldCommit(bool acceptOnCommitCharacters, bool isHandled, string? typedText, Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.ICompletionCommitCharacters? selected) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionInsertion.operator !=(Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionInsertion left, Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionInsertion right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionInsertion.operator ==(Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionInsertion left, Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionInsertion right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionInsertionResolver.Resolve(Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem! item) -> Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionInsertion
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionInsertionResolver.Resolve(Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Snippets.SnippetExpansion expansion) -> Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionInsertion
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionInsertionResolver.ResolveSnippet(Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem! item) -> Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Snippets.SnippetExpansion?
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionControllerOptions.Default.get -> Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionControllerOptions!
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionControllerOptions.operator !=(Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionControllerOptions? left, Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionControllerOptions? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionControllerOptions.operator ==(Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionControllerOptions? left, Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionControllerOptions? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionEditorContext.operator !=(Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionEditorContext left, Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionEditorContext right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionEditorContext.operator ==(Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionEditorContext left, Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionEditorContext right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionFilter.FilterByWord(System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem!>! items, string! word) -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem!>!
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionPresentationState.Empty.get -> Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionPresentationState
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionPresentationState.operator !=(Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionPresentationState left, Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionPresentationState right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionPresentationState.operator ==(Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionPresentationState left, Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionPresentationState right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionSessionDirective.Close.get -> Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionSessionDirective
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionSessionDirective.NoMatches.get -> Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionSessionDirective
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionSessionDirective.None.get -> Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionSessionDirective
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionSessionDirective.Open(System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem!>! items, Nickelony.IDEKit.Core.Text.TextRange replacementRange) -> Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionSessionDirective
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionSessionDirective.operator !=(Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionSessionDirective left, Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionSessionDirective right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionSessionDirective.operator ==(Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionSessionDirective left, Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionSessionDirective right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionTooltipContent.operator !=(Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionTooltipContent left, Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionTooltipContent right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionTooltipContent.operator ==(Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionTooltipContent left, Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionTooltipContent right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionTriggerPolicy.Default.get -> Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionTriggerPolicy!
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionTriggerPolicy.Manual.get -> Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionTriggerPolicy!
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionTriggerPolicy.operator !=(Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionTriggerPolicy? left, Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionTriggerPolicy? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionTriggerPolicy.operator ==(Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionTriggerPolicy? left, Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionTriggerPolicy? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionWindowOptions.Default.get -> Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionWindowOptions!
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionWindowOptions.operator !=(Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionWindowOptions? left, Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionWindowOptions? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionWindowOptions.operator ==(Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionWindowOptions? left, Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionWindowOptions? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionWordSpan.operator !=(Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionWordSpan left, Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionWordSpan right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionWordSpan.operator ==(Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionWordSpan left, Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionWordSpan right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Snippets.SnippetExpander.Expand(string! snippet) -> Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Snippets.SnippetExpansion
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Snippets.SnippetExpansion.operator !=(Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Snippets.SnippetExpansion left, Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Snippets.SnippetExpansion right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Snippets.SnippetExpansion.operator ==(Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Snippets.SnippetExpansion left, Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Snippets.SnippetExpansion right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Snippets.SnippetPlaceholder.operator !=(Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Snippets.SnippetPlaceholder left, Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Snippets.SnippetPlaceholder right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Snippets.SnippetPlaceholder.operator ==(Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Snippets.SnippetPlaceholder left, Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Snippets.SnippetPlaceholder right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.DiagnosticsControllerOptions.Default.get -> Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.DiagnosticsControllerOptions!
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.DiagnosticsControllerOptions.operator !=(Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.DiagnosticsControllerOptions? left, Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.DiagnosticsControllerOptions? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.DiagnosticsControllerOptions.operator ==(Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.DiagnosticsControllerOptions? left, Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.DiagnosticsControllerOptions? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.DiagnosticsSourceExtensions.Subscribe(this Nickelony.IDEKit.LanguageFeatures.Diagnostics.IDiagnosticsSource! source, string! documentId, Nickelony.IDEKit.Core.Threading.IUiDispatcher! dispatcher, System.Action<System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.LanguageFeatures.Diagnostics.Diagnostic!>!>! onChanged, System.Collections.Generic.IEqualityComparer<string!>? documentIdComparer = null) -> System.IDisposable!
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.ProjectDiagnosticsSourceHooks.operator !=(Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.ProjectDiagnosticsSourceHooks left, Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.ProjectDiagnosticsSourceHooks right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.ProjectDiagnosticsSourceHooks.operator ==(Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.ProjectDiagnosticsSourceHooks left, Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.ProjectDiagnosticsSourceHooks right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.ProjectDiagnosticsSourceOptions.Default.get -> Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.ProjectDiagnosticsSourceOptions!
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.ProjectDiagnosticsSourceOptions.operator !=(Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.ProjectDiagnosticsSourceOptions? left, Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.ProjectDiagnosticsSourceOptions? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.ProjectDiagnosticsSourceOptions.operator ==(Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.ProjectDiagnosticsSourceOptions? left, Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.ProjectDiagnosticsSourceOptions? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolKindExtensions.ToIconKey(this Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind kind) -> string!
+static Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolOutlineBuilder.Build<TGroup, TItem>(System.Collections.Generic.IReadOnlyList<TGroup>! groups, Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolOutlineHooks<TGroup>! groupHooks, System.Func<TGroup, System.Collections.Generic.IReadOnlyList<TItem>!>! groupItemsSelector, Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolOutlineHooks<TItem>! itemHooks) -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbol!>!
+static Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolOutlineBuilder.Build<TItem>(System.Collections.Generic.IReadOnlyList<TItem>! items, Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolOutlineHooks<TItem>! hooks) -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbol!>!
+static Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolQuickPickOptions.Default.get -> Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolQuickPickOptions!
+static Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolQuickPickOptions.DefaultGroupLabel(Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind kind) -> string!
+static Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolQuickPickOptions.operator !=(Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolQuickPickOptions? left, Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolQuickPickOptions? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolQuickPickOptions.operator ==(Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolQuickPickOptions? left, Nickelony.IDEKit.LanguageFeatures.Controllers.DocumentSymbols.DocumentSymbolQuickPickOptions? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Formatting.FormattingPlanner.TryPlan(string! documentText, string! documentId, Nickelony.IDEKit.LanguageFeatures.Editing.WorkspaceEdit? response, out Nickelony.IDEKit.Core.Editing.PreparedTextEdits! edits, out Nickelony.IDEKit.LanguageFeatures.Formatting.FormattingOutcome failure) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverDecision.operator !=(Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverDecision left, Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverDecision right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverDecision.operator ==(Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverDecision left, Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverDecision right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverDefinitionResolver.ResolveAsync(System.Func<Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionRequest!, System.Threading.CancellationToken, System.Threading.Tasks.Task<Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionLocation?>!>! definitionResolverAsync, System.Func<Nickelony.IDEKit.LanguageFeatures.Hover.HoverRequest!, System.Threading.CancellationToken, System.Threading.Tasks.Task<Nickelony.IDEKit.LanguageFeatures.Hover.HoverInformation?>!>! hoverResolverAsync, string! documentId, Nickelony.IDEKit.Core.Text.ITextSnapshot! snapshot, int offset, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.DefinitionNavigationTarget?>!
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverPointerOptions.Default.get -> Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverPointerOptions!
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverPointerOptions.operator !=(Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverPointerOptions? left, Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverPointerOptions? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverPointerOptions.operator ==(Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverPointerOptions? left, Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverPointerOptions? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.DefinitionNavigationTarget.operator !=(Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.DefinitionNavigationTarget? left, Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.DefinitionNavigationTarget? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.DefinitionNavigationTarget.operator ==(Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.DefinitionNavigationTarget? left, Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.DefinitionNavigationTarget? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.DefinitionResolver.ResolveAtOffsetAsync(System.Func<Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionRequest!, System.Threading.CancellationToken, System.Threading.Tasks.Task<Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionLocation?>!>! definitionResolverAsync, string! documentId, Nickelony.IDEKit.Core.Text.ITextSnapshot! snapshot, int offset, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.DefinitionNavigationTarget?>!
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.DefinitionResolver.ResolveFromSymbolAsync(System.Func<Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionRequest!, System.Threading.CancellationToken, System.Threading.Tasks.Task<Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionLocation?>!>! definitionResolverAsync, string! documentId, Nickelony.IDEKit.Core.Text.ITextSnapshot! snapshot, string? symbolName, Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionDiscriminator? discriminator = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.DefinitionNavigationTarget?>!
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.GoToLineQuickPickOptions.Default.get -> Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.GoToLineQuickPickOptions!
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.GoToLineQuickPickOptions.operator !=(Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.GoToLineQuickPickOptions? left, Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.GoToLineQuickPickOptions? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.GoToLineQuickPickOptions.operator ==(Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.GoToLineQuickPickOptions? left, Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.GoToLineQuickPickOptions? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.OpenEditorsQuickPickOptions.Default.get -> Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.OpenEditorsQuickPickOptions!
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.OpenEditorsQuickPickOptions.operator !=(Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.OpenEditorsQuickPickOptions? left, Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.OpenEditorsQuickPickOptions? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.OpenEditorsQuickPickOptions.operator ==(Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.OpenEditorsQuickPickOptions? left, Nickelony.IDEKit.LanguageFeatures.Controllers.Navigation.OpenEditorsQuickPickOptions? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.SemanticTokens.SemanticTokensSourceExtensions.Subscribe(this Nickelony.IDEKit.LanguageFeatures.SemanticTokens.ISemanticTokensSource! source, string! documentId, Nickelony.IDEKit.Core.Threading.IUiDispatcher! dispatcher, System.Action<System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticToken!>!>! onChanged, System.Collections.Generic.IEqualityComparer<string!>? documentIdComparer = null) -> System.IDisposable!
+static Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpControllerHooks.operator !=(Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpControllerHooks left, Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpControllerHooks right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpControllerHooks.operator ==(Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpControllerHooks left, Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpControllerHooks right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpControllerOptions.Default.get -> Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpControllerOptions!
+static Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpControllerOptions.operator !=(Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpControllerOptions? left, Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpControllerOptions? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpControllerOptions.operator ==(Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpControllerOptions? left, Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpControllerOptions? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpPresentationState.Empty.get -> Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpPresentationState
+static Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpPresentationState.operator !=(Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpPresentationState left, Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpPresentationState right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpPresentationState.operator ==(Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpPresentationState left, Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpPresentationState right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.WorkspaceSymbols.WorkspaceSymbolQuickPickOptions.Default.get -> Nickelony.IDEKit.LanguageFeatures.Controllers.WorkspaceSymbols.WorkspaceSymbolQuickPickOptions!
+static Nickelony.IDEKit.LanguageFeatures.Controllers.WorkspaceSymbols.WorkspaceSymbolQuickPickOptions.operator !=(Nickelony.IDEKit.LanguageFeatures.Controllers.WorkspaceSymbols.WorkspaceSymbolQuickPickOptions? left, Nickelony.IDEKit.LanguageFeatures.Controllers.WorkspaceSymbols.WorkspaceSymbolQuickPickOptions? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Controllers.WorkspaceSymbols.WorkspaceSymbolQuickPickOptions.operator ==(Nickelony.IDEKit.LanguageFeatures.Controllers.WorkspaceSymbols.WorkspaceSymbolQuickPickOptions? left, Nickelony.IDEKit.LanguageFeatures.Controllers.WorkspaceSymbols.WorkspaceSymbolQuickPickOptions? right) -> bool
+virtual Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionItemFilter.Invoke(System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem!>! items, string! word) -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem!>!
+virtual Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionWordLocator.Invoke(Nickelony.IDEKit.Core.Text.ITextSnapshot! snapshot, int caretOffset) -> Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionWordSpan
+~override Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionControllerHooks.Equals(object obj) -> bool
+~override Nickelony.IDEKit.LanguageFeatures.Controllers.CodeActions.CodeActionControllerHooks.ToString() -> string
+~override Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionCommitPlanRequest.Equals(object obj) -> bool
+~override Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionCommitPlanRequest.ToString() -> string
+~override Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionInsertion.Equals(object obj) -> bool
+~override Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Commit.CompletionInsertion.ToString() -> string
+~override Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionEditorContext.Equals(object obj) -> bool
+~override Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionEditorContext.ToString() -> string
+~override Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionPresentationState.Equals(object obj) -> bool
+~override Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionPresentationState.ToString() -> string
+~override Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionSessionDirective.Equals(object obj) -> bool
+~override Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionSessionDirective.ToString() -> string
+~override Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionTooltipContent.Equals(object obj) -> bool
+~override Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionTooltipContent.ToString() -> string
+~override Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionWordSpan.Equals(object obj) -> bool
+~override Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.CompletionWordSpan.ToString() -> string
+~override Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Snippets.SnippetExpansion.Equals(object obj) -> bool
+~override Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Snippets.SnippetExpansion.ToString() -> string
+~override Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Snippets.SnippetPlaceholder.Equals(object obj) -> bool
+~override Nickelony.IDEKit.LanguageFeatures.Controllers.Completion.Snippets.SnippetPlaceholder.ToString() -> string
+~override Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.ProjectDiagnosticsSourceHooks.Equals(object obj) -> bool
+~override Nickelony.IDEKit.LanguageFeatures.Controllers.Diagnostics.ProjectDiagnosticsSourceHooks.ToString() -> string
+~override Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverDecision.Equals(object obj) -> bool
+~override Nickelony.IDEKit.LanguageFeatures.Controllers.Hover.HoverDecision.ToString() -> string
+~override Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpControllerHooks.Equals(object obj) -> bool
+~override Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpControllerHooks.ToString() -> string
+~override Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpPresentationState.Equals(object obj) -> bool
+~override Nickelony.IDEKit.LanguageFeatures.Controllers.SignatureHelp.SignatureHelpPresentationState.ToString() -> string

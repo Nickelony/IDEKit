@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<RootNamespace>Nickelony.IDEKit.LanguageFeatures.Controllers</RootNamespace>
+		<AssemblyName>Nickelony.IDEKit.LanguageFeatures.Controllers</AssemblyName>
+		<PackageId>Nickelony.IDEKit.LanguageFeatures.Controllers</PackageId>
+		<Description>Editor-side language-feature behavior that is independent of any editor engine, built on Nickelony.IDEKit.Core, Nickelony.IDEKit.LanguageFeatures, Nickelony.QuickPick, Nickelony.Matching, and Microsoft.Extensions.Logging.Abstractions: the completion, hover, signature-help, code-action, and diagnostics controllers that drive each feature for one editor, and the engine-free machinery they drive, such as the completion session kernel and commit planner, the snippet expander, and the definition resolvers.</Description>
+		<PackageTags>text-editor;editor;intellisense;completion;hover;signature-help;code-actions;snippets;nickelony</PackageTags>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<WarningsAsErrors>RS0016;RS0017</WarningsAsErrors>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.CodeAnalysis.PublicApiAnalyzers" PrivateAssets="all" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Nickelony.IDEKit.Core\Nickelony.IDEKit.Core.csproj" />
+		<ProjectReference Include="..\Nickelony.IDEKit.LanguageFeatures\Nickelony.IDEKit.LanguageFeatures.csproj" />
+		<ProjectReference Include="..\..\Matching\Nickelony.Matching\Nickelony.Matching.csproj" />
+		<ProjectReference Include="..\..\QuickPick\Nickelony.QuickPick\Nickelony.QuickPick.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<InternalsVisibleTo Include="Nickelony.IDEKit.LanguageFeatures.Controllers.Tests" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="README.md" Pack="true" PackagePath="\" />
+		<None Include="..\..\..\icons\$(PackageIcon)" Pack="true" PackagePath="\" />
+	</ItemGroup>
+</Project>

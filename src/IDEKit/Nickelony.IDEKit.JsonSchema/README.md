@@ -5,13 +5,15 @@
 > family's normal preview cadence. It is not a JSON Schema validator and not a
 > context-aware completion engine.
 
-Isolated JSON Schema vocabulary indexing for schema-driven completion, hover,
-and highlighting in text editors.
+Isolated JSON Schema vocabulary indexing for schema-driven completion, hover, and highlighting in text
+editors. It references no other package and parses with `System.Text.Json`. It stays out of
+`Nickelony.IDEKit.Core` and `Nickelony.IDEKit.LanguageFeatures`, so a host opts into schema support without
+coupling its core text primitives to the JSON Schema framework.
 
 ## Getting started
 
 ```sh
-dotnet add package Nickelony.IDEKit.JsonSchema
+dotnet add package Nickelony.IDEKit.JsonSchema --prerelease
 ```
 
 Build an index from a schema document and read the flattened vocabulary from the
@@ -20,8 +22,9 @@ result:
 ```csharp
 using Nickelony.IDEKit.JsonSchema;
 
-var builder = new JsonSchemaVocabularyIndexBuilder();
-JsonSchemaVocabularyIndexResult result = builder.Build(new StringReader(schemaText));
+const string schemaText = """{ "type": "object", "properties": { "name": { "type": "string" } } }""";
+
+JsonSchemaVocabularyIndexResult result = JsonSchemaVocabularyIndexBuilder.Build(new StringReader(schemaText));
 
 if (result.Index is { } index)
 {
@@ -30,47 +33,29 @@ if (result.Index is { } index)
 }
 ```
 
-## Dependencies
+## Remarks
 
-The package depends only on `Newtonsoft.Json.Schema` and deliberately stays out
-of `Nickelony.IDEKit.Core` and `Nickelony.IDEKit.IntelliSense`, so a host can opt into
-schema support without coupling its core text primitives to the JSON Schema
-framework.
-
-## What's inside
-
-The package builds an immutable **vocabulary index** from a JSON Schema document
-(`JSchema` objects, `JToken` schema tokens, or schema text readers). The index
-**flattens the reachable schema into one global vocabulary**: property names
-and constant keywords are collected across the root, schemas reachable through
-properties, array items, combinators (`oneOf` / `anyOf` / `allOf`), and
-resolved `$ref` targets, plus the root's `definitions` / `$defs` sections, then
-**deduplicated so the first deterministic occurrence wins**. Validation-only
-keywords that carry nested schemas (for example `additionalProperties`,
-`patternProperties`, `not`, and `if` / `then` / `else`) are not traversed. The
-public result is deliberately context-free: descriptors carry a property name,
-its declared JSON types, and its description only, with no schema path or
-location information. The package owns cycle-safe schema traversal and the
-property/constant extraction that schema-aware editor features consume, and it
-returns an explicit load result with diagnostics instead of logging or touching
-file paths.
-
-- `JsonSchemaVocabularyIndexBuilder` - builds `JsonSchemaVocabularyIndex` values
-  from schema objects, tokens, and readers, with optional
-  `JSchemaReaderSettings` for external-reference resolution.
-- `JsonSchemaVocabularyIndex` - the flattened, deduplicated global vocabulary:
-  schema-wide property descriptors and constant keywords reachable from the
-  root, including `definitions` and `$defs` sections.
-- `JsonSchemaVocabularyIndexResult` - explicit load outcome with diagnostics;
-  parse and definition failures are reported here rather than thrown or logged.
-- `JsonSchemaVocabularyPropertyDescriptor` / `JsonSchemaPropertyType` -
-  context-free property descriptors (name, JSON types, description, array
-  classification). Duplicate property names are deduplicated and the first
-  deterministic occurrence wins.
-
-Hosts keep their file loading, resource paths, logging, and language-specific
-keyword categorization (for example the collection/property/constant
-classification hosts derive from the descriptors).
+- **One global vocabulary.** The index flattens the reachable schema into one list of property names and one list
+  of string constants, taken from `const` and `enum` values.
+- **Reachable schemas.** The walk covers the root, properties, array items, the `oneOf` / `anyOf` / `allOf`
+  combinators, resolved `$ref` targets, and the root's `definitions` / `$defs` sections. It is cycle-safe.
+- **Same-document references.** A `$ref` resolves when it is `#` or a JSON Pointer fragment into the same
+  document, such as `#/$defs/name` or `#/properties/a/items`, with `~0` / `~1` escapes and percent-encoding. A
+  reference to another document, to a `$anchor` name, or to a location that does not exist adds a `Warnings`
+  entry and is skipped; it is not a failure.
+- **A referencing property keeps its own keywords.** A property that is a `$ref` takes its `type` and
+  `description` from beside the `$ref` when they are there, and from the schema the reference names when not.
+- **First occurrence wins.** A property name or constant that occurs more than once keeps its first occurrence
+  in traversal order.
+- **Validation-only keywords are not traversed.** Nested schemas under `additionalProperties`,
+  `patternProperties`, `not`, and `if` / `then` / `else` are skipped.
+- **The result is context-free.** A descriptor carries a property name, its declared JSON types, its
+  description, and its array classification only, with no schema path or location.
+- **Failures are values.** `JsonSchemaVocabularyIndexResult` carries a `Failure` with the caught exception when
+  no index was built, and `Warnings` for the values a successful build skipped; neither is thrown or logged.
+- **Inputs.** `JsonSchemaVocabularyIndexBuilder.Build` accepts a schema text reader or a parsed `JsonElement`.
+  The text may contain comments and trailing commas. The builder reads no files itself, so hosts keep their
+  file loading, resource paths, logging, and language-specific keyword categorization.
 
 ## License
 

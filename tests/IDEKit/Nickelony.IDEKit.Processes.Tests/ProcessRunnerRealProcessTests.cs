@@ -4,15 +4,10 @@ using System.Text;
 
 namespace Nickelony.IDEKit.Processes.Tests;
 
-/// <summary>
-/// Verifies the runner against real child processes: a complete run with captured output, the terminal outcomes
-/// for timeouts and cancellation, encoded output, the drain regression for output larger than the operating-system
-/// pipe buffer, the bounded drain when a detached descendant holds the redirected pipe, and the process-tree
-/// termination that reaps a background descendant.
-/// </summary>
+/// <summary>Verifies the runner against real child processes: output, outcomes, encoding, pipe draining and process-tree termination.</summary>
 [TestClass]
 [TestCategory(TestCategories.Integration)]
-public class ProcessRunnerRealProcessTests
+public sealed class ProcessRunnerRealProcessTests
 {
 	// The descendant's work delay doubles as the absence window's lower bound; the start deadline is generous
 	// because a cold descendant shell takes a moment to launch on a loaded machine.
@@ -21,18 +16,22 @@ public class ProcessRunnerRealProcessTests
 	private static readonly TimeSpan DescendantAbsenceMargin = TimeSpan.FromSeconds(2);
 
 	[TestMethod]
-	[Timeout(30_000)]
+	[Timeout(30_000, CooperativeCancellation = true)]
 	public async Task RunAsync_RealProcess_CompletesAndCapturesOutput()
 	{
 		var runner = new ProcessRunner();
 
-		ProcessRunResult result = await runner.RunAsync(TestRequests.Default with
-		{
-			FileName = TestCommands.ShellFileName,
-			RawArguments = TestCommands.Echo("hello from a real process"),
-			RedirectStandardOutput = true,
-			Timeout = TimeSpan.FromSeconds(30),
-		});
+		ProcessRunResult result = await runner.RunAsync(
+			TestRequests.Default with
+			{
+				FileName = TestCommands.ShellFileName,
+				RawArguments = TestCommands.Echo("hello from a real process"),
+				RedirectStandardOutput = true,
+				Timeout = TimeSpan.FromSeconds(30),
+			},
+
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(ProcessRunOutcome.Exited, result.Outcome);
 		Assert.AreEqual(0, result.ExitCode);
@@ -41,18 +40,22 @@ public class ProcessRunnerRealProcessTests
 	}
 
 	[TestMethod]
-	[Timeout(30_000)]
+	[Timeout(30_000, CooperativeCancellation = true)]
 	public void Run_RealProcessOutputBeyondTheCaptureBound_ReportsBoundedTruncatedOutput()
 	{
 		var runner = new ProcessRunner(new ProcessRunnerOptions { MaxCapturedCharactersPerStream = 8 });
 
-		ProcessRunResult result = runner.Run(TestRequests.Default with
-		{
-			FileName = TestCommands.ShellFileName,
-			RawArguments = TestCommands.Echo("0123456789"),
-			RedirectStandardOutput = true,
-			Timeout = TimeSpan.FromSeconds(30),
-		});
+		ProcessRunResult result = runner.Run(
+			TestRequests.Default with
+			{
+				FileName = TestCommands.ShellFileName,
+				RawArguments = TestCommands.Echo("0123456789"),
+				RedirectStandardOutput = true,
+				Timeout = TimeSpan.FromSeconds(30),
+			},
+
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(ProcessRunOutcome.Exited, result.Outcome);
 		Assert.AreEqual("01234567", result.StandardOutput);
@@ -61,27 +64,31 @@ public class ProcessRunnerRealProcessTests
 	}
 
 	[TestMethod]
-	[Timeout(30_000)]
+	[Timeout(30_000, CooperativeCancellation = true)]
 	public void Run_RealProcessTimeout_TerminatesAndConfirmsTheExit()
 	{
 		var runner = new ProcessRunner();
 
-		ProcessRunResult result = runner.Run(TestRequests.Default with
-		{
-			FileName = TestCommands.ShellFileName,
-			RawArguments = TestCommands.Sleep(TimeSpan.FromSeconds(30)),
-			Timeout = TimeSpan.FromMilliseconds(300),
-		});
+		ProcessRunResult result = runner.Run(
+			TestRequests.Default with
+			{
+				FileName = TestCommands.ShellFileName,
+				RawArguments = TestCommands.Sleep(TimeSpan.FromSeconds(30)),
+				Timeout = TimeSpan.FromMilliseconds(300),
+			},
+
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(ProcessRunOutcome.TimedOut, result.Outcome);
 
 		// The termination confirmation observes the killed child and reports the failure exit code of the
 		// forced termination instead of leaving the exit unobserved.
-		Assert.AreNotEqual(0, RequireObservedExitCode(result), "A stored process must report a failure exit code.");
+		Assert.AreNotEqual(0, RequireObservedExitCode(result), "A forcibly terminated process must report a failure exit code.");
 	}
 
 	[TestMethod]
-	[Timeout(30_000)]
+	[Timeout(30_000, CooperativeCancellation = true)]
 	public async Task RunAsync_RealProcessCancellation_TerminatesAndConfirmsTheExit()
 	{
 		var runner = new ProcessRunner();
@@ -93,36 +100,40 @@ public class ProcessRunnerRealProcessTests
 				FileName = TestCommands.ShellFileName,
 				RawArguments = TestCommands.Sleep(TimeSpan.FromSeconds(30)),
 			},
-			cancellation.Token);
+
+			cancellation.Token
+		);
 
 		Assert.AreEqual(ProcessRunOutcome.Canceled, result.Outcome);
-		Assert.AreNotEqual(0, RequireObservedExitCode(result), "A stored process must report a failure exit code.");
+		Assert.AreNotEqual(0, RequireObservedExitCode(result), "A forcibly terminated process must report a failure exit code.");
 	}
 
 	[TestMethod]
-	[Timeout(30_000)]
+	[Timeout(30_000, CooperativeCancellation = true)]
 	public void Run_ExplicitStandardOutputEncoding_DecodesNonAsciiOutput()
 	{
 		// The child copies raw UTF-8 bytes, so the decoding under test is the runner's explicit encoding and not a
 		// code-page side effect of the shell.
 		const string Text = "compilation caf\u00E9";
-		string payloadFile = Path.Combine(
-			Path.GetTempPath(),
-			"NickelonyProcessesEncoding_" + Guid.NewGuid().ToString("N") + ".txt");
+		string payloadFile = Path.Combine(Path.GetTempPath(), "NickelonyProcessesEncoding_" + Guid.NewGuid().ToString("N") + ".txt");
 		File.WriteAllBytes(payloadFile, new UTF8Encoding(encoderShouldEmitUTF8Identifier: false).GetBytes(Text));
 
 		try
 		{
 			var runner = new ProcessRunner();
 
-			ProcessRunResult result = runner.Run(TestRequests.Default with
-			{
-				FileName = TestCommands.ShellFileName,
-				RawArguments = TestCommands.PrintFile(payloadFile),
-				RedirectStandardOutput = true,
-				StandardOutputEncoding = Encoding.UTF8,
-				Timeout = TimeSpan.FromSeconds(30),
-			});
+			ProcessRunResult result = runner.Run(
+				TestRequests.Default with
+				{
+					FileName = TestCommands.ShellFileName,
+					RawArguments = TestCommands.PrintFile(payloadFile),
+					RedirectStandardOutput = true,
+					StandardOutputEncoding = Encoding.UTF8,
+					Timeout = TimeSpan.FromSeconds(30),
+				},
+
+				TestContext.CancellationToken
+			);
 
 			Assert.AreEqual(ProcessRunOutcome.Exited, result.Outcome);
 			Assert.IsNotNull(result.StandardOutput);
@@ -135,7 +146,25 @@ public class ProcessRunnerRealProcessTests
 	}
 
 	[TestMethod]
-	[Timeout(60_000)]
+	[Timeout(30_000, CooperativeCancellation = true)]
+	[DataRow(null, DisplayName = "WithTheRuntimeDefaultEncoding")]
+	[DataRow("utf-8", DisplayName = "WithAnExplicitUtf8Encoding")]
+	[DataRow("iso-8859-1", DisplayName = "WithAnEncodingTheMarkOverrides")]
+	public void Run_LeadingUtf8ByteOrderMark_IsConsumedAndSelectsUtf8Decoding(string? encodingName)
+	{
+		const string Text = "compilation caf\u00E9";
+		byte[] payload = [.. Encoding.UTF8.GetPreamble(), .. new UTF8Encoding(encoderShouldEmitUTF8Identifier: false).GetBytes(Text)];
+
+		ProcessRunResult result = RunPrintingPayload(payload, encodingName is null ? null : Encoding.GetEncoding(encodingName));
+
+		// The captured text starts after the mark, so a host that compares or parses it never meets U+FEFF, and the mark decides the decoding:
+		// read as Latin-1, the same bytes would give mojibake.
+		Assert.AreEqual(ProcessRunOutcome.Exited, result.Outcome);
+		Assert.AreEqual(Text, result.StandardOutput?.Trim());
+	}
+
+	[TestMethod]
+	[Timeout(60_000, CooperativeCancellation = true)]
 	public void Run_RedirectedOutputExceedingPipeBuffer_DrainsWhileRunningAndReturnsFullOutput()
 	{
 		// A child writing more than the operating-system pipe buffer (4-64 KB) deadlocks when the
@@ -149,69 +178,113 @@ public class ProcessRunnerRealProcessTests
 
 		var runner = new ProcessRunner();
 
-		ProcessRunResult result = runner.Run(TestRequests.Default with
-		{
-			FileName = TestCommands.ShellFileName,
-			RawArguments = rawArguments,
-			RedirectStandardOutput = true,
-			Timeout = TimeSpan.FromSeconds(30),
-		});
+		ProcessRunResult result = runner.Run(
+			TestRequests.Default with
+			{
+				FileName = TestCommands.ShellFileName,
+				RawArguments = rawArguments,
+				RedirectStandardOutput = true,
+				Timeout = TimeSpan.FromSeconds(30),
+			},
+
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(ProcessRunOutcome.Exited, result.Outcome, "The run did not exit; the child most likely blocked on a full output pipe.");
 		Assert.AreEqual(0, result.ExitCode);
 		Assert.IsNotNull(result.StandardOutput);
-		Assert.IsTrue(result.StandardOutput.Length > 100_000, $"Expected more than 100,000 captured characters but got {result.StandardOutput.Length}.");
+
+		Assert.IsGreaterThan(
+			100_000,
+			result.StandardOutput.Length,
+			$"Expected more than 100,000 captured characters but got {result.StandardOutput.Length}."
+		);
 	}
 
 	[TestMethod]
-	[Timeout(30_000)]
+	[Timeout(30_000, CooperativeCancellation = true)]
 	public void Run_DescendantHoldsRedirectedPipe_CompletesWithinDrainGraceAndReportsOutputUnavailable()
 	{
 		// The shell exits immediately, but the detached child inherits the redirected pipe and keeps it open
 		// for several seconds. The run must not wait for the pipe to close; the output is reported as unavailable.
 		var runner = new ProcessRunner(
-			new ProcessLauncher(),
-			new ProcessRunnerOptions { OutputDrainGracePeriod = TimeSpan.FromMilliseconds(500) });
+			new ProcessHandleFactory(),
+			new ProcessRunnerOptions { OutputDrainGracePeriod = TimeSpan.FromMilliseconds(500) }
+		);
+
 		var stopwatch = Stopwatch.StartNew();
 
-		ProcessRunResult result = runner.Run(TestRequests.Default with
-		{
-			FileName = TestCommands.ShellFileName,
-			RawArguments = TestCommands.StartAndDetachBackgroundChild(TimeSpan.FromSeconds(5)),
-			RedirectStandardOutput = true,
-		});
+		ProcessRunResult result = runner.Run(
+			TestRequests.Default with
+			{
+				FileName = TestCommands.ShellFileName,
+				RawArguments = TestCommands.StartAndDetachBackgroundChild(TimeSpan.FromSeconds(5)),
+				RedirectStandardOutput = true,
+			},
+
+			TestContext.CancellationToken
+		);
 
 		stopwatch.Stop();
 
 		Assert.AreEqual(ProcessRunOutcome.Exited, result.Outcome);
 		Assert.AreEqual(0, result.ExitCode);
 		Assert.IsNull(result.StandardOutput);
-		Assert.IsTrue(stopwatch.Elapsed < TimeSpan.FromSeconds(4), $"The run outlived the drain grace period: {stopwatch.Elapsed}.");
+		Assert.IsLessThan(TimeSpan.FromSeconds(4), stopwatch.Elapsed, $"The run outlived the drain grace period: {stopwatch.Elapsed}.");
+	}
+
+	// The child copies the payload to standard output byte for byte, so the decoding under test is the runner's and not a shell's.
+	private ProcessRunResult RunPrintingPayload(byte[] payload, Encoding? standardOutputEncoding)
+	{
+		string payloadFile = Path.Combine(Path.GetTempPath(), "NickelonyProcessesPayload_" + Guid.NewGuid().ToString("N") + ".bin");
+		File.WriteAllBytes(payloadFile, payload);
+
+		try
+		{
+			return new ProcessRunner().Run(
+				TestRequests.Default with
+				{
+					FileName = TestCommands.ShellFileName,
+					RawArguments = TestCommands.PrintFile(payloadFile),
+					RedirectStandardOutput = true,
+					StandardOutputEncoding = standardOutputEncoding,
+					Timeout = TimeSpan.FromSeconds(30),
+				},
+
+				TestContext.CancellationToken
+			);
+		}
+		finally
+		{
+			File.Delete(payloadFile);
+		}
 	}
 
 	[TestMethod]
-	[Timeout(30_000)]
+	[Timeout(30_000, CooperativeCancellation = true)]
 	public void Run_StrictEncodingRejectsCapturedBytes_ReportsOutputUnavailable()
 	{
 		// The child copies a raw byte that a strict UTF-8 decoder rejects, so the completed run must report the
 		// capture as unavailable instead of failing with the decoder exception.
-		string payloadFile = Path.Combine(
-			Path.GetTempPath(),
-			"NickelonyProcessesStrictEncoding_" + Guid.NewGuid().ToString("N") + ".bin");
+		string payloadFile = Path.Combine(Path.GetTempPath(), "NickelonyProcessesStrictEncoding_" + Guid.NewGuid().ToString("N") + ".bin");
 		File.WriteAllBytes(payloadFile, [0x41, 0xFF, 0x42]);
 
 		try
 		{
 			var runner = new ProcessRunner();
 
-			ProcessRunResult result = runner.Run(TestRequests.Default with
-			{
-				FileName = TestCommands.ShellFileName,
-				RawArguments = TestCommands.PrintFile(payloadFile),
-				RedirectStandardOutput = true,
-				StandardOutputEncoding = new UTF8Encoding(encoderShouldEmitUTF8Identifier: false, throwOnInvalidBytes: true),
-				Timeout = TimeSpan.FromSeconds(30),
-			});
+			ProcessRunResult result = runner.Run(
+				TestRequests.Default with
+				{
+					FileName = TestCommands.ShellFileName,
+					RawArguments = TestCommands.PrintFile(payloadFile),
+					RedirectStandardOutput = true,
+					StandardOutputEncoding = new UTF8Encoding(encoderShouldEmitUTF8Identifier: false, throwOnInvalidBytes: true),
+					Timeout = TimeSpan.FromSeconds(30),
+				},
+
+				TestContext.CancellationToken
+			);
 
 			Assert.AreEqual(ProcessRunOutcome.Exited, result.Outcome);
 			Assert.AreEqual(0, result.ExitCode);
@@ -224,7 +297,7 @@ public class ProcessRunnerRealProcessTests
 	}
 
 	[TestMethod]
-	[Timeout(30_000)]
+	[Timeout(30_000, CooperativeCancellation = true)]
 	public void Run_SubMillisecondTimeout_RealProcess_TerminatesInsteadOfWaiting()
 	{
 		// A timeout shorter than one millisecond never waits: the runner probes once and terminates the running
@@ -232,19 +305,23 @@ public class ProcessRunnerRealProcessTests
 		// pinned by a fake whose ordering may differ from the operating system's wait.
 		var runner = new ProcessRunner();
 
-		ProcessRunResult result = runner.Run(TestRequests.Default with
-		{
-			FileName = TestCommands.ShellFileName,
-			RawArguments = TestCommands.Sleep(TimeSpan.FromSeconds(30)),
-			Timeout = TimeSpan.FromTicks(10),
-		});
+		ProcessRunResult result = runner.Run(
+			TestRequests.Default with
+			{
+				FileName = TestCommands.ShellFileName,
+				RawArguments = TestCommands.Sleep(TimeSpan.FromSeconds(30)),
+				Timeout = TimeSpan.FromTicks(10),
+			},
+
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(ProcessRunOutcome.TimedOut, result.Outcome);
-		Assert.AreNotEqual(0, RequireObservedExitCode(result), "A stored process must report a failure exit code.");
+		Assert.AreNotEqual(0, RequireObservedExitCode(result), "A forcibly terminated process must report a failure exit code.");
 	}
 
 	[TestMethod]
-	[Timeout(30_000)]
+	[Timeout(30_000, CooperativeCancellation = true)]
 	public void Run_RealProcessFloodingBothStreams_DrainsBothWithoutDeadlock()
 	{
 		// Both redirected streams carry more than the operating-system pipe buffer. A runner that drained the
@@ -260,21 +337,35 @@ public class ProcessRunnerRealProcessTests
 		{
 			var runner = new ProcessRunner();
 
-			ProcessRunResult result = runner.Run(TestRequests.Default with
-			{
-				FileName = TestCommands.ShellFileName,
-				RawArguments = TestCommands.PrintFilesToBothStreams(standardOutputFile, standardErrorFile),
-				RedirectStandardOutput = true,
-				RedirectStandardError = true,
-				Timeout = TimeSpan.FromSeconds(30),
-			});
+			ProcessRunResult result = runner.Run(
+				TestRequests.Default with
+				{
+					FileName = TestCommands.ShellFileName,
+					RawArguments = TestCommands.PrintFilesToBothStreams(standardOutputFile, standardErrorFile),
+					RedirectStandardOutput = true,
+					RedirectStandardError = true,
+					Timeout = TimeSpan.FromSeconds(30),
+				},
+
+				TestContext.CancellationToken
+			);
 
 			Assert.AreEqual(ProcessRunOutcome.Exited, result.Outcome, "The run did not exit; the child most likely blocked on a full output pipe.");
 			Assert.AreEqual(0, result.ExitCode);
 			Assert.IsNotNull(result.StandardOutput);
 			Assert.IsNotNull(result.StandardError);
-			Assert.IsTrue(result.StandardOutput.Length > 100_000, $"Expected a flooded standard output but got {result.StandardOutput.Length} characters.");
-			Assert.IsTrue(result.StandardError.Length > 100_000, $"Expected a flooded standard error but got {result.StandardError.Length} characters.");
+
+			Assert.IsGreaterThan(
+				100_000,
+				result.StandardOutput.Length,
+				$"Expected a flooded standard output but got {result.StandardOutput.Length} characters."
+			);
+
+			Assert.IsGreaterThan(
+				100_000,
+				result.StandardError.Length,
+				$"Expected a flooded standard error but got {result.StandardError.Length} characters."
+			);
 		}
 		finally
 		{
@@ -284,7 +375,7 @@ public class ProcessRunnerRealProcessTests
 	}
 
 	[TestMethod]
-	[Timeout(60_000)]
+	[Timeout(60_000, CooperativeCancellation = true)]
 	public async Task KillEntireProcessTree_RealGrandchild_IsTerminatedWithTheTree()
 	{
 		// The launched shell starts a background descendant that records its start, sleeps for the work delay,
@@ -294,26 +385,28 @@ public class ProcessRunnerRealProcessTests
 		string finishedMarkerPath = CreateMarkerPath("finished");
 
 		var runner = new ProcessRunner();
-		IProcessHandle handle = runner.Start(TestRequests.Default with
-		{
-			FileName = TestCommands.ShellFileName,
-			RawArguments = TestCommands.StartAndHoldBackgroundGrandchild(DescendantWorkDelay, startedMarkerPath, finishedMarkerPath),
-		});
+
+		IProcessHandle handle = runner.Start(
+			TestRequests.Default with
+			{
+				FileName = TestCommands.ShellFileName,
+				RawArguments = TestCommands.StartAndHoldBackgroundGrandchild(DescendantWorkDelay, startedMarkerPath, finishedMarkerPath),
+			}
+		);
 
 		try
 		{
 			await TestPolling.UntilAsync(
 				() => File.Exists(startedMarkerPath),
 				DescendantStartDeadline,
-				"The descendant process did not start within the deadline.");
+				"The descendant process did not start within the deadline."
+			);
 
 			handle.KillEntireProcessTree();
 
 			// The work delay is the absence window's lower bound: a descendant that survived the tree
 			// termination records its completion within the window, so an absence proves it was reaped.
-			bool survived = await TestPolling.ForConditionAsync(
-				() => File.Exists(finishedMarkerPath),
-				DescendantWorkDelay + DescendantAbsenceMargin);
+			bool survived = await TestPolling.ForConditionAsync(() => File.Exists(finishedMarkerPath), DescendantWorkDelay + DescendantAbsenceMargin);
 
 			Assert.IsFalse(survived, "The descendant survived the process-tree termination.");
 		}
@@ -321,31 +414,25 @@ public class ProcessRunnerRealProcessTests
 		{
 			TerminateQuietly(handle);
 			handle.Dispose();
+
 			DeleteMarkerQuietly(startedMarkerPath);
 			DeleteMarkerQuietly(finishedMarkerPath);
 		}
 	}
 
-	/// <summary>
-	/// Requires an observed exit code and returns it.
-	/// </summary>
+	/// <summary>Requires an observed exit code and returns it.</summary>
 	/// <param name="result">The run result.</param>
 	/// <returns>The observed exit code.</returns>
 	/// <exception cref="AssertFailedException">The run did not observe an exit code.</exception>
-	private static int RequireObservedExitCode(ProcessRunResult result)
-		=> result.ExitCode ?? throw new AssertFailedException("The run must report the observed exit code of the terminated child.");
+	private static int RequireObservedExitCode(ProcessRunResult result) =>
+		result.ExitCode ?? throw new AssertFailedException("The run must report the observed exit code of the terminated child.");
 
-	/// <summary>
-	/// Creates a temporary marker path with the given role in its name.
-	/// </summary>
+	/// <summary>Creates a temporary marker path with the given role in its name.</summary>
 	/// <param name="role">The role used in the file name.</param>
 	/// <returns>The marker file path.</returns>
-	private static string CreateMarkerPath(string role)
-		=> Path.Combine(Path.GetTempPath(), $"NickelonyProcessesTree_{role}_{Guid.NewGuid():N}.txt");
+	private static string CreateMarkerPath(string role) => Path.Combine(Path.GetTempPath(), $"NickelonyProcessesTree_{role}_{Guid.NewGuid():N}.txt");
 
-	/// <summary>
-	/// Terminates the handle's process tree as best-effort cleanup.
-	/// </summary>
+	/// <summary>Terminates the handle's process tree as best-effort cleanup.</summary>
 	/// <param name="handle">The handle to terminate.</param>
 	private static void TerminateQuietly(IProcessHandle handle)
 	{
@@ -359,9 +446,7 @@ public class ProcessRunnerRealProcessTests
 		}
 	}
 
-	/// <summary>
-	/// Deletes a temporary marker file as best-effort cleanup.
-	/// </summary>
+	/// <summary>Deletes a temporary marker file as best-effort cleanup.</summary>
 	/// <param name="markerPath">The marker file to delete.</param>
 	private static void DeleteMarkerQuietly(string markerPath)
 	{
@@ -375,18 +460,14 @@ public class ProcessRunnerRealProcessTests
 		}
 	}
 
-	/// <summary>
-	/// Writes a payload file of the given line count and returns its path.
-	/// </summary>
+	/// <summary>Writes a payload file of the given line count and returns its path.</summary>
 	/// <param name="name">The role used in the file name.</param>
 	/// <param name="line">The repeated line.</param>
 	/// <param name="lineCount">The number of repetitions.</param>
 	/// <returns>The payload file path.</returns>
 	private static string WritePayloadFile(string name, string line, int lineCount)
 	{
-		string filePath = Path.Combine(
-			Path.GetTempPath(),
-			$"NickelonyProcessesPayload_{name}_{Guid.NewGuid():N}.txt");
+		string filePath = Path.Combine(Path.GetTempPath(), $"NickelonyProcessesPayload_{name}_{Guid.NewGuid():N}.txt");
 
 		var builder = new StringBuilder(lineCount * (line.Length + Environment.NewLine.Length));
 
@@ -396,4 +477,6 @@ public class ProcessRunnerRealProcessTests
 		File.WriteAllText(filePath, builder.ToString());
 		return filePath;
 	}
+
+	public TestContext? TestContext { get; set; }
 }

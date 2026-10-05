@@ -1,0 +1,52 @@
+#nullable enable
+Nickelony.IDEKit.TextMate.TextMateScopeResolver
+Nickelony.IDEKit.TextMate.TextMateScopeResolver.Resolve(System.Collections.Generic.IReadOnlyList<string!>? scopes) -> Nickelony.IDEKit.TextMate.TextMateTokenStyle
+Nickelony.IDEKit.TextMate.TextMateScopeResolver.TextMateScopeResolver(Nickelony.IDEKit.TextMate.TextMateTokenTheme! theme, Microsoft.Extensions.Logging.ILogger? logger = null) -> void
+Nickelony.IDEKit.TextMate.TextMateTokenStyle
+Nickelony.IDEKit.TextMate.TextMateTokenStyle.Deconstruct(out Nickelony.IDEKit.Core.Media.ArgbColor? Foreground, out bool IsBold, out bool IsItalic, out bool IsUnderline, out bool IsStrikethrough) -> void
+Nickelony.IDEKit.TextMate.TextMateTokenStyle.Equals(Nickelony.IDEKit.TextMate.TextMateTokenStyle other) -> bool
+Nickelony.IDEKit.TextMate.TextMateTokenStyle.Foreground.get -> Nickelony.IDEKit.Core.Media.ArgbColor?
+Nickelony.IDEKit.TextMate.TextMateTokenStyle.Foreground.init -> void
+Nickelony.IDEKit.TextMate.TextMateTokenStyle.HasFormatting.get -> bool
+Nickelony.IDEKit.TextMate.TextMateTokenStyle.IsBold.get -> bool
+Nickelony.IDEKit.TextMate.TextMateTokenStyle.IsBold.init -> void
+Nickelony.IDEKit.TextMate.TextMateTokenStyle.IsItalic.get -> bool
+Nickelony.IDEKit.TextMate.TextMateTokenStyle.IsItalic.init -> void
+Nickelony.IDEKit.TextMate.TextMateTokenStyle.IsStrikethrough.get -> bool
+Nickelony.IDEKit.TextMate.TextMateTokenStyle.IsStrikethrough.init -> void
+Nickelony.IDEKit.TextMate.TextMateTokenStyle.IsUnderline.get -> bool
+Nickelony.IDEKit.TextMate.TextMateTokenStyle.IsUnderline.init -> void
+Nickelony.IDEKit.TextMate.TextMateTokenStyle.TextMateTokenStyle() -> void
+Nickelony.IDEKit.TextMate.TextMateTokenStyle.TextMateTokenStyle(Nickelony.IDEKit.Core.Media.ArgbColor? Foreground, bool IsBold, bool IsItalic, bool IsUnderline, bool IsStrikethrough) -> void
+Nickelony.IDEKit.TextMate.TextMateTokenTheme
+Nickelony.IDEKit.TextMate.TextMateTokenTheme.<Clone>$() -> Nickelony.IDEKit.TextMate.TextMateTokenTheme!
+Nickelony.IDEKit.TextMate.TextMateTokenTheme.Equals(Nickelony.IDEKit.TextMate.TextMateTokenTheme? other) -> bool
+Nickelony.IDEKit.TextMate.TextMateTokenTheme.Rules.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.TextMate.TextMateTokenThemeRule!>!
+Nickelony.IDEKit.TextMate.TextMateTokenTheme.Rules.init -> void
+Nickelony.IDEKit.TextMate.TextMateTokenTheme.TextMateTokenTheme() -> void
+Nickelony.IDEKit.TextMate.TextMateTokenThemeRule
+Nickelony.IDEKit.TextMate.TextMateTokenThemeRule.<Clone>$() -> Nickelony.IDEKit.TextMate.TextMateTokenThemeRule!
+Nickelony.IDEKit.TextMate.TextMateTokenThemeRule.Equals(Nickelony.IDEKit.TextMate.TextMateTokenThemeRule? other) -> bool
+Nickelony.IDEKit.TextMate.TextMateTokenThemeRule.FontStyle.get -> string?
+Nickelony.IDEKit.TextMate.TextMateTokenThemeRule.FontStyle.init -> void
+Nickelony.IDEKit.TextMate.TextMateTokenThemeRule.Foreground.get -> string!
+Nickelony.IDEKit.TextMate.TextMateTokenThemeRule.Foreground.init -> void
+Nickelony.IDEKit.TextMate.TextMateTokenThemeRule.Scope.get -> string?
+Nickelony.IDEKit.TextMate.TextMateTokenThemeRule.Scope.init -> void
+Nickelony.IDEKit.TextMate.TextMateTokenThemeRule.TextMateTokenThemeRule() -> void
+override Nickelony.IDEKit.TextMate.TextMateTokenStyle.GetHashCode() -> int
+override Nickelony.IDEKit.TextMate.TextMateTokenTheme.Equals(object? obj) -> bool
+override Nickelony.IDEKit.TextMate.TextMateTokenTheme.GetHashCode() -> int
+override Nickelony.IDEKit.TextMate.TextMateTokenTheme.ToString() -> string!
+override Nickelony.IDEKit.TextMate.TextMateTokenThemeRule.Equals(object? obj) -> bool
+override Nickelony.IDEKit.TextMate.TextMateTokenThemeRule.GetHashCode() -> int
+override Nickelony.IDEKit.TextMate.TextMateTokenThemeRule.ToString() -> string!
+static Nickelony.IDEKit.TextMate.TextMateTokenStyle.Empty.get -> Nickelony.IDEKit.TextMate.TextMateTokenStyle
+static Nickelony.IDEKit.TextMate.TextMateTokenStyle.operator !=(Nickelony.IDEKit.TextMate.TextMateTokenStyle left, Nickelony.IDEKit.TextMate.TextMateTokenStyle right) -> bool
+static Nickelony.IDEKit.TextMate.TextMateTokenStyle.operator ==(Nickelony.IDEKit.TextMate.TextMateTokenStyle left, Nickelony.IDEKit.TextMate.TextMateTokenStyle right) -> bool
+static Nickelony.IDEKit.TextMate.TextMateTokenTheme.operator !=(Nickelony.IDEKit.TextMate.TextMateTokenTheme? left, Nickelony.IDEKit.TextMate.TextMateTokenTheme? right) -> bool
+static Nickelony.IDEKit.TextMate.TextMateTokenTheme.operator ==(Nickelony.IDEKit.TextMate.TextMateTokenTheme? left, Nickelony.IDEKit.TextMate.TextMateTokenTheme? right) -> bool
+static Nickelony.IDEKit.TextMate.TextMateTokenThemeRule.operator !=(Nickelony.IDEKit.TextMate.TextMateTokenThemeRule? left, Nickelony.IDEKit.TextMate.TextMateTokenThemeRule? right) -> bool
+static Nickelony.IDEKit.TextMate.TextMateTokenThemeRule.operator ==(Nickelony.IDEKit.TextMate.TextMateTokenThemeRule? left, Nickelony.IDEKit.TextMate.TextMateTokenThemeRule? right) -> bool
+~override Nickelony.IDEKit.TextMate.TextMateTokenStyle.Equals(object obj) -> bool
+~override Nickelony.IDEKit.TextMate.TextMateTokenStyle.ToString() -> string

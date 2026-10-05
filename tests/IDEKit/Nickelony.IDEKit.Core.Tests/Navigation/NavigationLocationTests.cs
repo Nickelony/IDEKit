@@ -3,15 +3,15 @@ namespace Nickelony.IDEKit.Core.Tests;
 [TestClass]
 public sealed class NavigationLocationTests
 {
-	private static NavigationLocation CreateLocation(string filePath, int caretOffset)
-		=> new(filePath, caretOffset, caretOffset, 0, null);
+	private static NavigationLocation CreateLocation(string documentId, int caretOffset) =>
+		new(documentId, caretOffset, Selection: new TextRange(caretOffset, 0), PreferredDocumentLine: null);
 
 	[TestMethod]
 	public void IsEquivalentTo_DefaultComparison_IsOrdinalAndIgnoresPreferredDocumentLine()
 	{
-		var first = new NavigationLocation("Path.lua", 5, 5, 3, 2);
-		var second = new NavigationLocation("path.lua", 5, 5, 3, 9);
-		var samePath = new NavigationLocation("Path.lua", 5, 5, 3, 9);
+		var first = new NavigationLocation(DocumentId: "Path.lua", CaretOffset: 5, Selection: new TextRange(5, 3), PreferredDocumentLine: 2);
+		var second = new NavigationLocation(DocumentId: "path.lua", CaretOffset: 5, Selection: new TextRange(5, 3), PreferredDocumentLine: 9);
+		var samePath = new NavigationLocation(DocumentId: "Path.lua", CaretOffset: 5, Selection: new TextRange(5, 3), PreferredDocumentLine: 9);
 
 		Assert.IsFalse(first.IsEquivalentTo(second));
 		Assert.IsTrue(first.IsEquivalentTo(second, StringComparison.OrdinalIgnoreCase));
@@ -21,8 +21,8 @@ public sealed class NavigationLocationTests
 	[TestMethod]
 	public void IsEquivalentTo_OrdinalComparison_DistinguishesPathCase()
 	{
-		var first = CreateLocation("Path.lua", 5);
-		var second = CreateLocation("path.lua", 5);
+		NavigationLocation first = CreateLocation("Path.lua", 5);
+		NavigationLocation second = CreateLocation("path.lua", 5);
 
 		Assert.IsFalse(first.IsEquivalentTo(second, StringComparison.Ordinal));
 		Assert.IsTrue(first.IsEquivalentTo(second, StringComparison.OrdinalIgnoreCase));
@@ -31,12 +31,31 @@ public sealed class NavigationLocationTests
 	[TestMethod]
 	public void IsEquivalentTo_ComparesCaretAndSelection()
 	{
-		var location = new NavigationLocation("a.lua", 5, 5, 3, null);
+		var location = new NavigationLocation(DocumentId: "a.lua", CaretOffset: 5, Selection: new TextRange(5, 3), PreferredDocumentLine: null);
 
-		Assert.IsFalse(location.IsEquivalentTo(new NavigationLocation("a.lua", 6, 5, 3, null)));
-		Assert.IsFalse(location.IsEquivalentTo(new NavigationLocation("a.lua", 5, 4, 3, null)));
-		Assert.IsFalse(location.IsEquivalentTo(new NavigationLocation("a.lua", 5, 5, 4, null)));
-		Assert.IsTrue(location.IsEquivalentTo(new NavigationLocation("a.lua", 5, 5, 3, 42)));
+		Assert.IsFalse(
+			location.IsEquivalentTo(
+				new NavigationLocation(DocumentId: "a.lua", CaretOffset: 6, Selection: new TextRange(5, 3), PreferredDocumentLine: null)
+			)
+		);
+
+		Assert.IsFalse(
+			location.IsEquivalentTo(
+				new NavigationLocation(DocumentId: "a.lua", CaretOffset: 5, Selection: new TextRange(4, 3), PreferredDocumentLine: null)
+			)
+		);
+
+		Assert.IsFalse(
+			location.IsEquivalentTo(
+				new NavigationLocation(DocumentId: "a.lua", CaretOffset: 5, Selection: new TextRange(5, 4), PreferredDocumentLine: null)
+			)
+		);
+
+		Assert.IsTrue(
+			location.IsEquivalentTo(
+				new NavigationLocation(DocumentId: "a.lua", CaretOffset: 5, Selection: new TextRange(5, 3), PreferredDocumentLine: 42)
+			)
+		);
 	}
 
 	[TestMethod]
@@ -44,8 +63,8 @@ public sealed class NavigationLocationTests
 	{
 		// Equality is the navigation identity; the preferred line is scroll restoration state carried
 		// alongside it. Untitled documents carry a null file path.
-		var first = new NavigationLocation(null, 5, 5, 3, 1);
-		var second = new NavigationLocation(null, 5, 5, 3, 2);
+		var first = new NavigationLocation(DocumentId: null, CaretOffset: 5, Selection: new TextRange(5, 3), PreferredDocumentLine: 1);
+		var second = new NavigationLocation(DocumentId: null, CaretOffset: 5, Selection: new TextRange(5, 3), PreferredDocumentLine: 2);
 
 		Assert.IsTrue(first.Equals(second));
 		Assert.IsTrue(first == second);
@@ -56,20 +75,31 @@ public sealed class NavigationLocationTests
 	[TestMethod]
 	public void Equals_DistinguishesIdentityFields()
 	{
-		var location = new NavigationLocation("a.lua", 5, 5, 3, null);
+		var location = new NavigationLocation(DocumentId: "a.lua", CaretOffset: 5, Selection: new TextRange(5, 3), PreferredDocumentLine: null);
 
-		Assert.IsFalse(location.Equals(new NavigationLocation("b.lua", 5, 5, 3, null)));
-		Assert.IsFalse(location.Equals(new NavigationLocation("a.lua", 6, 5, 3, null)));
-		Assert.IsFalse(location.Equals(new NavigationLocation("a.lua", 5, 4, 3, null)));
-		Assert.IsFalse(location.Equals(new NavigationLocation("a.lua", 5, 5, 4, null)));
+		Assert.IsFalse(
+			location.Equals(new NavigationLocation(DocumentId: "b.lua", CaretOffset: 5, Selection: new TextRange(5, 3), PreferredDocumentLine: null))
+		);
+
+		Assert.IsFalse(
+			location.Equals(new NavigationLocation(DocumentId: "a.lua", CaretOffset: 6, Selection: new TextRange(5, 3), PreferredDocumentLine: null))
+		);
+
+		Assert.IsFalse(
+			location.Equals(new NavigationLocation(DocumentId: "a.lua", CaretOffset: 5, Selection: new TextRange(4, 3), PreferredDocumentLine: null))
+		);
+
+		Assert.IsFalse(
+			location.Equals(new NavigationLocation(DocumentId: "a.lua", CaretOffset: 5, Selection: new TextRange(5, 4), PreferredDocumentLine: null))
+		);
 	}
 
 	[TestMethod]
 	public void Equals_FilePathCase_IsOrdinal()
 	{
 		// Hosts with case-insensitive document identities compare with IsEquivalentTo instead.
-		var first = new NavigationLocation("Path.lua", 5, 5, 3, null);
-		var second = new NavigationLocation("path.lua", 5, 5, 3, null);
+		var first = new NavigationLocation(DocumentId: "Path.lua", CaretOffset: 5, Selection: new TextRange(5, 3), PreferredDocumentLine: null);
+		var second = new NavigationLocation(DocumentId: "path.lua", CaretOffset: 5, Selection: new TextRange(5, 3), PreferredDocumentLine: null);
 
 		Assert.IsFalse(first.Equals(second));
 		Assert.IsTrue(first.IsEquivalentTo(second, StringComparison.OrdinalIgnoreCase));

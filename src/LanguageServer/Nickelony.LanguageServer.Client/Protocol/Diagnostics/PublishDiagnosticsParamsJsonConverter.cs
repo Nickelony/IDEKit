@@ -1,81 +1,45 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Nickelony.LanguageServer.Client;
+namespace Nickelony.LanguageServer.Client.Protocol;
 
 /// <summary>
-/// Reads and writes <see cref="PublishDiagnosticsParams"/> values, skipping malformed diagnostic
-/// entries with a warning instead of failing the whole notification.
+/// Reads and writes <see cref="PublishDiagnosticsParams"/> values, skipping malformed diagnostic entries with a warning instead of failing
+/// the whole notification.
 /// </summary>
 /// <remarks>
-/// <para>
-/// A diagnostics notification has no error channel back to the server, so one malformed entry must
-/// not discard the remaining diagnostics for the document. Entries whose singular members do not bind (an
-/// incomplete range, a non-integer severity, a non-string message) are dropped individually, while a malformed
-/// element of a nested collection (<c>tags</c>, <c>relatedInformation</c>) is skipped on its own so the rest of
-/// the entry survives; a payload whose root is not an object degrades to an empty payload. The transport
-/// registers this converter with its logger; standalone deserialization falls back to no logging.
-/// </para>
-/// <para>
-/// Serialization writes the standard protocol shape: an absent required member (<c>uri</c>, <c>diagnostics</c>)
-/// is omitted rather than written as a JSON <see langword="null"/>, because the protocol marks <c>uri</c> as a
-/// required string and <c>diagnostics</c> as a required array and null is not a valid value for either. Absent
-/// optional members (<c>version</c> and the optional diagnostic members) are omitted as well. A missing, null,
-/// or malformed required member reads to a degraded payload, so a payload that cannot be delivered round-trips
-/// to a payload that cannot be delivered while a valid payload stays valid. All modeled members (including
-/// <c>tags</c>, <c>codeDescription</c>, <c>relatedInformation</c>, and <c>data</c>) round-trip; unmodeled
-/// protocol members are not preserved. Member lookups accept any casing, mirroring the transport's
-/// case-insensitive member binding.
-/// </para>
-/// <para>
-/// A payload that is not a JSON object, or whose required <c>uri</c> or <c>diagnostics</c> member is missing,
-/// null, or malformed, is flagged through <see cref="PublishDiagnosticsParams.IsDegraded"/>; the transport drops
-/// degraded notifications instead of raising them, so a malformed payload can never surface as an empty
-/// diagnostics list that consumers would apply as "clear".
-/// </para>
+/// Malformed diagnostic entries are skipped with a warning; a payload whose root is not an object degrades to an empty payload. Writing omits absent
+/// required members rather than writing JSON <see langword="null"/>.
 /// </remarks>
-public sealed class PublishDiagnosticsParamsJsonConverter : JsonConverter<PublishDiagnosticsParams>
+internal sealed class PublishDiagnosticsParamsJsonConverter : TolerantPayloadJsonConverter<PublishDiagnosticsParams>
 {
-	private readonly ILogger _logger;
+	public PublishDiagnosticsParamsJsonConverter() { }
 
-	/// <summary>
-	/// Initializes a new instance of the <see cref="PublishDiagnosticsParamsJsonConverter"/> class.
-	/// </summary>
-	public PublishDiagnosticsParamsJsonConverter()
-		: this(NullLogger.Instance)
-	{ }
-
-	/// <summary>
-	/// Initializes a new instance of the <see cref="PublishDiagnosticsParamsJsonConverter"/> class.
-	/// </summary>
 	/// <param name="logger">The logger used for malformed-payload diagnostics.</param>
 	public PublishDiagnosticsParamsJsonConverter(ILogger? logger)
-		=> _logger = logger ?? NullLogger.Instance;
+		: base(logger) { }
 
 	/// <inheritdoc/>
 	public override PublishDiagnosticsParams Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
 	{
-		using JsonDocument document = JsonDocument.ParseValue(ref reader);
+		using var document = JsonDocument.ParseValue(ref reader);
 		JsonElement root = document.RootElement;
 
 		if (root.ValueKind != JsonValueKind.Object)
 		{
-			_logger.LogWarning(
-				"Ignoring malformed publish-diagnostics payload because its JSON kind {Kind} is not an object.",
-				root.ValueKind);
-
+			Logger.LogWarning("Ignoring malformed publish-diagnostics payload because its JSON kind {Kind} is not an object.", root.ValueKind);
 			return new PublishDiagnosticsParams(null, null, null) { IsDegraded = true };
 		}
 
 		bool isDegraded = false;
 		string? uri = null;
 
-		if (JsonElementReadHelpers.TryGetProperty(root, "uri", out JsonElement uriElement))
+		if (JsonElementReader.TryGetProperty(root, "uri", out JsonElement uriElement))
 		{
 			if (uriElement.ValueKind == JsonValueKind.String)
 				uri = uriElement.GetString();
 			else if (uriElement.ValueKind != JsonValueKind.Null)
-				_logger.LogWarning("Ignoring malformed publish-diagnostics 'uri' property with JSON kind {Kind}.", uriElement.ValueKind);
+				Logger.LogWarning("Ignoring malformed publish-diagnostics 'uri' property with JSON kind {Kind}.", uriElement.ValueKind);
 		}
 
 		if (string.IsNullOrWhiteSpace(uri))
@@ -86,22 +50,24 @@ public sealed class PublishDiagnosticsParamsJsonConverter : JsonConverter<Publis
 
 		int? version = null;
 
-		if (JsonElementReadHelpers.TryGetProperty(root, "version", out JsonElement versionElement))
+		if (JsonElementReader.TryGetProperty(root, "version", out JsonElement versionElement))
 		{
 			if (versionElement.ValueKind == JsonValueKind.Number && versionElement.TryGetInt32(out int parsedVersion))
+			{
 				version = parsedVersion;
+			}
 			else if (versionElement.ValueKind != JsonValueKind.Null)
 			{
 				// The version is optional staleness information, not payload data: a malformed value is
 				// ignored like an absent one so the valid diagnostics are still delivered. Degraded stays
 				// reserved for payloads that cannot replace the document's diagnostics (see IsDegraded).
-				_logger.LogWarning("Ignoring malformed publish-diagnostics 'version' property with JSON kind {Kind}.", versionElement.ValueKind);
+				Logger.LogWarning("Ignoring malformed publish-diagnostics 'version' property with JSON kind {Kind}.", versionElement.ValueKind);
 			}
 		}
 
 		IReadOnlyList<DiagnosticPayload>? diagnostics = null;
 
-		if (JsonElementReadHelpers.TryGetProperty(root, "diagnostics", out JsonElement diagnosticsElement))
+		if (JsonElementReader.TryGetProperty(root, "diagnostics", out JsonElement diagnosticsElement))
 		{
 			if (diagnosticsElement.ValueKind == JsonValueKind.Array)
 			{
@@ -109,9 +75,10 @@ public sealed class PublishDiagnosticsParamsJsonConverter : JsonConverter<Publis
 			}
 			else
 			{
-				_logger.LogWarning(
+				Logger.LogWarning(
 					"Ignoring malformed publish-diagnostics 'diagnostics' property with JSON kind {Kind}.",
-					diagnosticsElement.ValueKind);
+					diagnosticsElement.ValueKind
+				);
 
 				isDegraded = true;
 			}
@@ -131,7 +98,7 @@ public sealed class PublishDiagnosticsParamsJsonConverter : JsonConverter<Publis
 	{
 		writer.WriteStartObject();
 
-		// An absent required member is omitted rather than written as an explicit JSON null: the protocol marks
+		// An absent required member is omitted rather than written as an explicit JSON null. The protocol marks
 		// 'uri' as a required string and 'diagnostics' as a required array, so null is not a valid value for either,
 		// and the reader treats a missing, null, or malformed member as degraded alike.
 		if (value.Uri is not null)
@@ -157,40 +124,21 @@ public sealed class PublishDiagnosticsParamsJsonConverter : JsonConverter<Publis
 		writer.WriteEndObject();
 	}
 
-	/// <summary>
-	/// Deserializes the diagnostic entries, dropping entries that cannot be bound.
-	/// </summary>
+	/// <summary>Deserializes the diagnostic entries, dropping entries that cannot be bound.</summary>
 	/// <param name="diagnosticsElement">The diagnostics array element.</param>
 	/// <param name="options">The serializer options that carry the typed member converters.</param>
-	/// <returns>The entries that could be bound.</returns>
-	private List<DiagnosticPayload> DeserializeDiagnostics(JsonElement diagnosticsElement, JsonSerializerOptions options)
+	private IReadOnlyList<DiagnosticPayload> DeserializeDiagnostics(JsonElement diagnosticsElement, JsonSerializerOptions options)
 	{
-		var diagnostics = new List<DiagnosticPayload>();
+		var diagnostics = new List<DiagnosticPayload>(diagnosticsElement.GetArrayLength());
 
 		foreach (JsonElement diagnosticElement in diagnosticsElement.EnumerateArray())
 		{
-			try
-			{
-				// A JSON null element binds to a null reference for the record class; it carries no diagnostic
-				// data, so it is dropped like a malformed entry instead of being added as a null list entry.
-				DiagnosticPayload? diagnostic = diagnosticElement.Deserialize<DiagnosticPayload>(options);
-
-				if (diagnostic is null)
-				{
-					_logger.LogWarning("Skipping malformed diagnostic because its JSON value is null.");
-
-					continue;
-				}
-
+			// A JSON null element is dropped like a malformed entry instead of being added as a null list entry.
+			if (TryReadElement(element: diagnosticElement, options, elementDescription: "diagnostic", value: out DiagnosticPayload? diagnostic))
 				diagnostics.Add(diagnostic);
-			}
-			catch (Exception exception) when (exception is JsonException or InvalidOperationException)
-			{
-				_logger.LogWarning(exception,
-					"Skipping malformed diagnostic because its payload could not be deserialized.");
-			}
 		}
 
-		return diagnostics;
+		// Publish a read-only view so a subscriber cannot mutate the payload the router shares across handlers.
+		return diagnostics.Count == 0 ? Array.Empty<DiagnosticPayload>() : diagnostics.AsReadOnly();
 	}
 }

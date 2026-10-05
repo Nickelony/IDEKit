@@ -4,38 +4,38 @@ using AvaloniaKeyModifiers = Avalonia.Input.KeyModifiers;
 namespace Nickelony.KeyBindings.Avalonia.Tests;
 
 [TestClass]
-public class KeyEventArgsExtensionsTests
+public sealed class KeyEventArgsExtensionsTests
 {
 	[TestMethod]
-	public void ToKeyCombo_Modifiers_ReturnsCombo()
+	public void ToKeyStroke_Modifiers_ReturnsStroke()
 	{
-		KeyCombo? combo = TestKeyEvents.CreateKeyDown(Key.S, AvaloniaKeyModifiers.Control | AvaloniaKeyModifiers.Shift).ToKeyCombo();
+		var stroke = TestKeyEvents.CreateKeyDown(Key.S, AvaloniaKeyModifiers.Control | AvaloniaKeyModifiers.Shift).ToKeyStroke();
 
-		Assert.IsNotNull(combo);
-		Assert.AreEqual(KeyCode.S, combo.Value.Key);
-		Assert.AreEqual(KeyModifierSet.Control | KeyModifierSet.Shift, combo.Value.Modifiers);
+		Assert.IsNotNull(stroke);
+		Assert.AreEqual(KeyCode.S, stroke.Value.Key);
+		Assert.AreEqual(KeyModifiers.Control | KeyModifiers.Shift, stroke.Value.Modifiers);
 	}
 
 	[TestMethod]
-	public void ToKeyCombo_AllModifiers_AreRecognized()
+	public void ToKeyStroke_AllModifiers_AreRecognized()
 	{
-		KeyCombo? combo = TestKeyEvents
+		var stroke = TestKeyEvents
 			.CreateKeyDown(Key.F9, AvaloniaKeyModifiers.Control | AvaloniaKeyModifiers.Shift | AvaloniaKeyModifiers.Alt | AvaloniaKeyModifiers.Meta)
-			.ToKeyCombo();
+			.ToKeyStroke();
 
-		Assert.IsNotNull(combo);
-		Assert.AreEqual(KeyCode.F9, combo.Value.Key);
-		Assert.AreEqual(KeyModifierSet.Control | KeyModifierSet.Shift | KeyModifierSet.Alt | KeyModifierSet.Meta, combo.Value.Modifiers);
+		Assert.IsNotNull(stroke);
+		Assert.AreEqual(KeyCode.F9, stroke.Value.Key);
+		Assert.AreEqual(KeyModifiers.Control | KeyModifiers.Shift | KeyModifiers.Alt | KeyModifiers.Meta, stroke.Value.Modifiers);
 	}
 
 	[TestMethod]
-	public void ToKeyCombo_WithoutModifiers_ReturnsCombo()
+	public void ToKeyStroke_WithoutModifiers_ReturnsStroke()
 	{
-		KeyCombo? combo = TestKeyEvents.CreateKeyDown(Key.F9).ToKeyCombo();
+		var stroke = TestKeyEvents.CreateKeyDown(Key.F9).ToKeyStroke();
 
-		Assert.IsNotNull(combo);
-		Assert.AreEqual(KeyCode.F9, combo.Value.Key);
-		Assert.AreEqual(KeyModifierSet.None, combo.Value.Modifiers);
+		Assert.IsNotNull(stroke);
+		Assert.AreEqual(KeyCode.F9, stroke.Value.Key);
+		Assert.AreEqual(KeyModifiers.None, stroke.Value.Modifiers);
 	}
 
 	[TestMethod]
@@ -45,14 +45,12 @@ public class KeyEventArgsExtensionsTests
 	[DataRow(Key.ImeProcessed)]
 	[DataRow(Key.DeadCharProcessed)]
 	[DataRow(Key.LineFeed)]
-	public void ToKeyCombo_UnbindableKeys_ReturnNull(Key key)
-		=> Assert.IsNull(TestKeyEvents.CreateKeyDown(key).ToKeyCombo());
+	public void ToKeyStroke_UnbindableKeys_ReturnNull(Key key) => Assert.IsNull(TestKeyEvents.CreateKeyDown(key).ToKeyStroke());
 
 	[TestMethod]
-	public void ToKeyCombo_NullEvent_Throws()
+	public void ToKeyStroke_NullEvent_Throws()
 	{
 		KeyEventArgs? args = null;
-
-		Assert.ThrowsExactly<ArgumentNullException>(() => args!.ToKeyCombo());
+		Assert.ThrowsExactly<ArgumentNullException>(() => args!.ToKeyStroke());
 	}
 }

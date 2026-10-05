@@ -1,5 +1,5 @@
 using Nickelony.IDEKit.Workspace.Documents;
-using Nickelony.IDEKit.Workspace.Documents.FileSystem;
+using Nickelony.IDEKit.Workspace.FileSystem;
 
 namespace Nickelony.IDEKit.Workspace.Tests;
 
@@ -15,7 +15,7 @@ public sealed partial class WorkspaceDocumentStoreTests
 
 		// A directory is not a document: the open is rejected instead of being tracked as a new
 		// empty document whose writes and deletes could never succeed.
-		WorkspaceDocumentOpenResult result = await store.OpenAsync(directoryPath, s_openOptions);
+		WorkspaceDocumentOpenResult result = await store.OpenAsync(directoryPath, s_openOptions, TestContext.CancellationToken);
 
 		Assert.AreEqual(WorkspaceDocumentOpenOutcome.IsDirectory, result.Outcome);
 		Assert.IsNull(result.Snapshot);

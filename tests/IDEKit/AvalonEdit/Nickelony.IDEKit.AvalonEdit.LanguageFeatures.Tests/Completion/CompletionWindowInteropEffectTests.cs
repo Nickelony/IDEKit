@@ -1,12 +1,15 @@
+using System.Runtime.InteropServices;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Interop;
+using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.CodeCompletion;
 using Nickelony.IDEKit.AvalonEdit.LanguageFeatures.Completion;
-using System.Runtime.InteropServices;
-using System.Windows.Interop;
 
 namespace Nickelony.IDEKit.AvalonEdit.LanguageFeatures.Tests;
 
 /// <summary>
-/// Covers the effect of the completion window interop, not just its message switch: a window made
+/// Covers the effect of the completion window interop, reached through the seam the controller calls, not merely its message switch: a window made
 /// non-activatable answers the Win32 mouse-activate message with "no activate" once it is shown.
 /// </summary>
 [STATestClass]
@@ -17,24 +20,39 @@ public sealed class CompletionWindowInteropEffectTests
 	private const int MouseActivateNoActivate = 3;
 
 	[TestMethod]
-	public void MakeNonActivatable_ShownWindow_AnswersMouseActivateWithNoActivate()
+	public void EnsureNonActivatable_ShownWindow_AnswersMouseActivateWithNoActivate()
 	{
-		var editor = WPFTestHost.CreateEditor("sample");
-		using var hostWindow = WPFTestHost.ShowInHostWindow(editor);
+		TextEditor editor = WpfTestHost.CreateEditor("sample");
+		using HostWindow hostWindow = WpfTestHost.ShowInHostWindow(editor);
+
 		var completionWindow = new CompletionWindow(editor.TextArea);
+
+		ListBox listBox = completionWindow.CompletionList.ListBox;
+		Style? originalItemStyle = listBox.ItemContainerStyle;
 
 		// Installing twice must stay harmless (idempotent installation), and the hook must be in place
 		// before the window's source is initialized.
-		CompletionWindowInterop.MakeNonActivatable(completionWindow);
-		CompletionWindowInterop.MakeNonActivatable(completionWindow);
+		CompletionSeam.EnsureNonActivatable(completionWindow);
+
+		Style? installedItemStyle = listBox.ItemContainerStyle;
+
+		CompletionSeam.EnsureNonActivatable(completionWindow);
+
 		completionWindow.Show();
 
 		try
 		{
 			IntPtr handle = new WindowInteropHelper(completionWindow).Handle;
-			IntPtr result = SendMessage(handle, WindowMessageMouseActivate, IntPtr.Zero, IntPtr.Zero);
+			IntPtr result = SendMessage(hWnd: handle, msg: WindowMessageMouseActivate, wParam: IntPtr.Zero, lParam: IntPtr.Zero);
 
 			Assert.AreEqual((IntPtr)MouseActivateNoActivate, result);
+
+			// The first call wrapped the list's own item style once; the repeat returned through the hooked-window guard that also
+			// guards the hook registration, so it neither wrapped the style again nor registered a second SourceInitialized handler.
+			Assert.IsNotNull(installedItemStyle);
+			Assert.AreNotSame(originalItemStyle, installedItemStyle);
+			Assert.AreSame(originalItemStyle, installedItemStyle.BasedOn);
+			Assert.AreSame(installedItemStyle, listBox.ItemContainerStyle);
 		}
 		finally
 		{

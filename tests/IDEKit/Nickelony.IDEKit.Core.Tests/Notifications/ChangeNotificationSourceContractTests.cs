@@ -1,9 +1,8 @@
 namespace Nickelony.IDEKit.Core.Tests;
 
 /// <summary>
-/// Pins the <see cref="IChangeNotificationSource"/> contract with a reference implementation:
-/// subscribers are invoked once per raise, detaching stops the notifications, and the event may be
-/// raised from any thread, so the subscriber runs on the raising thread.
+/// Pins the <see cref="IChangeNotificationSource"/> contract with a reference implementation: subscribers are invoked once per raise,
+/// detaching stops the notifications, and the event may be raised from any thread, so the subscriber runs on the raising thread.
 /// </summary>
 [TestClass]
 public sealed class ChangeNotificationSourceContractTests
@@ -12,8 +11,10 @@ public sealed class ChangeNotificationSourceContractTests
 	public void Changed_Raised_InvokesEverySubscriberOnce()
 	{
 		var source = new ReferenceChangeNotificationSource();
+
 		int firstCalls = 0;
 		int secondCalls = 0;
+
 		source.Changed += (_, _) => firstCalls++;
 		source.Changed += (_, _) => secondCalls++;
 
@@ -28,11 +29,11 @@ public sealed class ChangeNotificationSourceContractTests
 	{
 		var source = new ReferenceChangeNotificationSource();
 		int calls = 0;
-		EventHandler handler = (_, _) => calls++;
+		void handler(object? _1, EventArgs _2) => calls++;
 		source.Changed += handler;
 		source.RaiseChanged();
 
-		// A consumer detaches when it is no longer attached, so it must not be notified afterwards.
+		// After the consumer detaches, it must not be notified afterwards.
 		source.Changed -= handler;
 		source.RaiseChanged();
 
@@ -43,8 +44,10 @@ public sealed class ChangeNotificationSourceContractTests
 	public void Changed_RaisedFromAnotherThread_InvokesTheSubscriberOnThatThread()
 	{
 		var source = new ReferenceChangeNotificationSource();
+
 		int raiserThread = Environment.CurrentManagedThreadId;
 		int? subscriberThread = null;
+
 		source.Changed += (_, _) => subscriberThread = Environment.CurrentManagedThreadId;
 
 		// The contract permits a raise from any thread, so the subscriber runs on the raising thread;
@@ -54,6 +57,7 @@ public sealed class ChangeNotificationSourceContractTests
 		Assert.IsTrue(thread.Join(TimeSpan.FromSeconds(10)), "The raising thread did not finish.");
 
 		int observedThread = subscriberThread ?? -1;
+
 		Assert.AreNotEqual(-1, observedThread, "The subscriber did not observe the event.");
 		Assert.AreNotEqual(raiserThread, observedThread);
 	}
@@ -62,7 +66,6 @@ public sealed class ChangeNotificationSourceContractTests
 	public void RaiseChanged_NoSubscribers_DoesNotThrow()
 	{
 		var source = new ReferenceChangeNotificationSource();
-
 		source.RaiseChanged();
 	}
 
@@ -71,7 +74,6 @@ public sealed class ChangeNotificationSourceContractTests
 	private sealed class ReferenceChangeNotificationSource : IChangeNotificationSource
 	{
 		public event EventHandler? Changed;
-
 		public void RaiseChanged() => Changed?.Invoke(this, EventArgs.Empty);
 	}
 }

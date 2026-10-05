@@ -1,22 +1,27 @@
 #nullable enable
-*REMOVED*Nickelony.LanguageServer.Lua.LuaDocumentState
-*REMOVED*Nickelony.LanguageServer.Lua.ILuaLanguageServerIntelliSenseProvider
-*REMOVED*Nickelony.LanguageServer.Lua.ILuaLanguageServerIntelliSenseProvider.GetSemanticTokens(string! filePath) -> System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.SemanticToken!>!
-*REMOVED*Nickelony.LanguageServer.Lua.ILuaLanguageServerIntelliSenseProvider.SemanticTokensUpdated -> System.EventHandler<Nickelony.LanguageServer.Lua.SemanticTokensUpdatedEventArgs!>?
-*REMOVED*Nickelony.LanguageServer.Lua.LuaLanguageServerIntelliSenseProvider.GetSemanticTokens(string! filePath) -> System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.SemanticToken!>!
-*REMOVED*Nickelony.LanguageServer.Lua.LuaLanguageServerIntelliSenseProvider.LuaLanguageServerIntelliSenseProvider(System.Collections.Generic.IReadOnlyList<string!>! workspaceRootDirectoryPaths, string? serverExecutablePath, Nickelony.LanguageServer.Lua.LuaLanguageServerOptions? options = null, Microsoft.Extensions.Logging.ILogger? logger = null) -> void
-*REMOVED*Nickelony.LanguageServer.Lua.LuaLanguageServerIntelliSenseProvider.SemanticTokensUpdated -> System.EventHandler<Nickelony.LanguageServer.Lua.SemanticTokensUpdatedEventArgs!>?
-*REMOVED*Nickelony.LanguageServer.Lua.SemanticTokensUpdatedEventArgs
-*REMOVED*Nickelony.LanguageServer.Lua.SemanticTokensUpdatedEventArgs.FilePath.get -> string!
-*REMOVED*Nickelony.LanguageServer.Lua.SemanticTokensUpdatedEventArgs.SemanticTokens.get -> System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.SemanticToken!>!
-*REMOVED*Nickelony.LanguageServer.Lua.SemanticTokensUpdatedEventArgs.SemanticTokensUpdatedEventArgs(string! filePath, System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Client.SemanticToken!>! semanticTokens) -> void
-*REMOVED*override Nickelony.LanguageServer.Lua.LuaLanguageServerIntelliSenseProvider.FormatDocumentAsync(Nickelony.LanguageServer.Abstractions.TextFormatRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.LanguageServer.Abstractions.TextWorkspaceEdit?>!
-*REMOVED*override Nickelony.LanguageServer.Lua.LuaLanguageServerIntelliSenseProvider.GetReferencesAsync(Nickelony.LanguageServer.Abstractions.TextReferenceRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Abstractions.TextReferenceLocation!>!>!
-*REMOVED*override Nickelony.LanguageServer.Lua.LuaLanguageServerIntelliSenseProvider.RenameSymbolAsync(Nickelony.LanguageServer.Abstractions.TextRenameRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.LanguageServer.Abstractions.TextWorkspaceEdit?>!
-*REMOVED*override Nickelony.LanguageServer.Lua.LuaLanguageServerIntelliSenseProvider.GetDefinitionAsync(string! filePath, string! documentText, Nickelony.IDEKit.Core.Text.TextPosition position, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.IntelliSense.Navigation.TextDefinitionLocation?>!
-*REMOVED*override Nickelony.LanguageServer.Lua.LuaLanguageServerIntelliSenseProvider.GetDocumentSymbolsAsync(string! filePath, string! documentText, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.DocumentSymbols.TextDocumentSymbol!>!>!
-*REMOVED*override Nickelony.LanguageServer.Lua.LuaLanguageServerIntelliSenseProvider.GetHoverAsync(string! filePath, string! documentText, Nickelony.IDEKit.Core.Text.TextPosition position, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.IntelliSense.Hover.TextHoverInfo?>!
-*REMOVED*override Nickelony.LanguageServer.Lua.LuaLanguageServerIntelliSenseProvider.GetCodeActionsAsync(Nickelony.LanguageServer.Abstractions.LanguageServerCodeActionRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<Nickelony.LanguageServer.Abstractions.TextCodeAction!>!>!
-*REMOVED*override Nickelony.LanguageServer.Lua.LuaLanguageServerIntelliSenseProvider.GetCompletionItemsAsync(Nickelony.LanguageServer.Abstractions.LanguageServerCompletionRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.IntelliSense.Completion.TextCompletionItem!>!>!
-*REMOVED*override Nickelony.LanguageServer.Lua.LuaLanguageServerIntelliSenseProvider.GetSignatureHelpAsync(Nickelony.LanguageServer.Abstractions.LanguageServerSignatureHelpRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.IntelliSense.Signatures.TextSignatureHelp?>!
-Nickelony.LanguageServer.Lua.LuaLanguageServerIntelliSenseProvider.LuaLanguageServerIntelliSenseProvider(System.Collections.Generic.IReadOnlyList<string!>! workspaceRootDirectoryPaths, string? serverExecutablePath, Nickelony.LanguageServer.Lua.LuaLanguageServerOptions? options = null, Nickelony.LanguageServer.Provider.LanguageServerProviderOptions? providerOptions = null, Microsoft.Extensions.Logging.ILogger? logger = null) -> void
+Nickelony.LanguageServer.Lua.LuaLanguageServerOptions
+Nickelony.LanguageServer.Lua.LuaLanguageServerOptions.<Clone>$() -> Nickelony.LanguageServer.Lua.LuaLanguageServerOptions!
+Nickelony.LanguageServer.Lua.LuaLanguageServerOptions.AdditionalLibraryDirectories.get -> System.Collections.Generic.IReadOnlyList<string!>!
+Nickelony.LanguageServer.Lua.LuaLanguageServerOptions.AdditionalLibraryDirectories.init -> void
+Nickelony.LanguageServer.Lua.LuaLanguageServerOptions.DisabledDiagnostics.get -> System.Collections.Generic.IReadOnlyList<string!>!
+Nickelony.LanguageServer.Lua.LuaLanguageServerOptions.DisabledDiagnostics.init -> void
+Nickelony.LanguageServer.Lua.LuaLanguageServerOptions.EnableSemanticAnnotationHighlighting.get -> bool
+Nickelony.LanguageServer.Lua.LuaLanguageServerOptions.EnableSemanticAnnotationHighlighting.init -> void
+Nickelony.LanguageServer.Lua.LuaLanguageServerOptions.EnableSemanticHighlighting.get -> bool
+Nickelony.LanguageServer.Lua.LuaLanguageServerOptions.EnableSemanticHighlighting.init -> void
+Nickelony.LanguageServer.Lua.LuaLanguageServerOptions.EnableSemanticKeywordHighlighting.get -> bool
+Nickelony.LanguageServer.Lua.LuaLanguageServerOptions.EnableSemanticKeywordHighlighting.init -> void
+Nickelony.LanguageServer.Lua.LuaLanguageServerOptions.EnableSemanticVariableHighlighting.get -> bool
+Nickelony.LanguageServer.Lua.LuaLanguageServerOptions.EnableSemanticVariableHighlighting.init -> void
+Nickelony.LanguageServer.Lua.LuaLanguageServerOptions.Equals(Nickelony.LanguageServer.Lua.LuaLanguageServerOptions? other) -> bool
+Nickelony.LanguageServer.Lua.LuaLanguageServerOptions.LuaLanguageServerOptions() -> void
+Nickelony.LanguageServer.Lua.LuaLanguageServerOptions.RuntimeVersion.get -> string!
+Nickelony.LanguageServer.Lua.LuaLanguageServerOptions.RuntimeVersion.init -> void
+Nickelony.LanguageServer.Lua.LuaLanguageServerProfileFactory
+override Nickelony.LanguageServer.Lua.LuaLanguageServerOptions.Equals(object? obj) -> bool
+override Nickelony.LanguageServer.Lua.LuaLanguageServerOptions.GetHashCode() -> int
+override Nickelony.LanguageServer.Lua.LuaLanguageServerOptions.ToString() -> string!
+static Nickelony.LanguageServer.Lua.LuaLanguageServerOptions.Default.get -> Nickelony.LanguageServer.Lua.LuaLanguageServerOptions!
+static Nickelony.LanguageServer.Lua.LuaLanguageServerOptions.operator !=(Nickelony.LanguageServer.Lua.LuaLanguageServerOptions? left, Nickelony.LanguageServer.Lua.LuaLanguageServerOptions? right) -> bool
+static Nickelony.LanguageServer.Lua.LuaLanguageServerOptions.operator ==(Nickelony.LanguageServer.Lua.LuaLanguageServerOptions? left, Nickelony.LanguageServer.Lua.LuaLanguageServerOptions? right) -> bool
+static Nickelony.LanguageServer.Lua.LuaLanguageServerProfileFactory.Create(Nickelony.LanguageServer.Lua.LuaLanguageServerOptions? options = null) -> Nickelony.LanguageServer.Provider.LanguageServerProfile!

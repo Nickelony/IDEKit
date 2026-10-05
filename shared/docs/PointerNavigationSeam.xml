@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+	<members>
+		<member name="SubscribePress">
+			<summary>Subscribes a handler to the single left presses on a text area, ahead of the editor's own press handler.</summary>
+			<param name="textArea">The text area whose presses are delivered.</param>
+			<param name="pressed">
+			  The handler that receives the press position in the text area's coordinate space and the modifier keys the press holds,
+			  and returns whether it takes the press, which then counts as handled.
+			</param>
+			<param name="heldModifiers">
+			  Reads the held modifier keys in place of the input, or <see langword="null" /> to read them from the input.
+			</param>
+			<returns>A subscription that removes the handler when it is disposed.</returns>
+		</member>
+	</members>
+</doc>

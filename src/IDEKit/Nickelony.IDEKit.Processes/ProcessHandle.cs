@@ -4,20 +4,15 @@ using System.Text;
 
 namespace Nickelony.IDEKit.Processes;
 
-/// <summary>
-/// Adapts <see cref="Process"/> to <see cref="IProcessHandle"/>.
-/// </summary>
+/// <summary>Adapts <see cref="Process"/> to <see cref="IProcessHandle"/>.</summary>
 /// <remarks>
-/// Redirected standard output and error are drained asynchronously from the moment the handle is created, so a
-/// process that writes more than the operating-system pipe buffer cannot deadlock a caller that waits for it to
-/// exit. The capture accessors return the drained text and block (or wait asynchronously) until the stream closes.
-/// A configured capture bound is applied while the drain runs: the excess is discarded, the pipe keeps being
-/// drained, and the capture reports the truncation.
-/// Disposal releases the captured pipes, which unblocks a drain a quiet descendant would otherwise keep parked,
-/// and cancels the drain token so an incomplete drain ends by faulting instead of buffering output after the run.
-/// A <see cref="DisposalGuard"/> makes disposal a one-time claim and reports the torn-down <see cref="Process"/>
-/// failure as <see cref="ObjectDisposedException"/>, while a different failure the race produces keeps its own
-/// type.
+/// Redirected standard output and error are drained asynchronously from the moment the handle is created, so a process that writes
+/// more than the operating-system pipe buffer cannot deadlock a caller that waits for it to exit. The capture accessors return the drained text
+/// and block (or wait asynchronously) until the stream closes. A configured capture bound is applied while the drain runs: the excess is discarded,
+/// the pipe keeps being drained, and the capture reports the truncation. Disposal releases the captured pipes, which unblocks a drain
+/// a quiet descendant would otherwise keep parked, and cancels the drain token so an incomplete drain ends by faulting instead of buffering
+/// output after the run. A <see cref="DisposalGate"/> makes disposal a one-time claim and reports the torn-down <see cref="Process"/>
+/// failure as <see cref="ObjectDisposedException"/>, while a different failure the race produces keeps its own type.
 /// </remarks>
 internal sealed class ProcessHandle : IProcessHandle
 {
@@ -26,19 +21,18 @@ internal sealed class ProcessHandle : IProcessHandle
 	private readonly Process _process;
 	private readonly int _processId;
 	private readonly CancellationTokenSource _drainCancellation = new();
-	private readonly DisposalGuard _guard = new();
+	private readonly DisposalGate _gate = new();
+
 	private readonly Stream? _standardOutputPipe;
 	private readonly Stream? _standardErrorPipe;
+
 	private readonly Task<string>? _standardOutputTask;
 	private readonly Task<string>? _standardErrorTask;
+
 	private readonly CaptureTruncation _standardOutputTruncation = new();
 	private readonly CaptureTruncation _standardErrorTruncation = new();
 
-	public ProcessHandle(
-		Process process,
-		bool redirectStandardOutput,
-		bool redirectStandardError,
-		int? maxCapturedCharactersPerStream = null)
+	internal ProcessHandle(Process process, bool redirectStandardOutput, bool redirectStandardError, int? maxCapturedCharactersPerStream = null)
 	{
 		_process = process;
 
@@ -49,21 +43,25 @@ internal sealed class ProcessHandle : IProcessHandle
 		if (redirectStandardOutput)
 		{
 			_standardOutputPipe = process.StandardOutput.BaseStream;
+
 			_standardOutputTask = DrainAsync(
-				process.StandardOutput,
+				reader: process.StandardOutput,
 				maxCapturedCharactersPerStream,
-				_standardOutputTruncation,
-				_drainCancellation.Token);
+				truncation: _standardOutputTruncation,
+				cancellationToken: _drainCancellation.Token
+			);
 		}
 
 		if (redirectStandardError)
 		{
 			_standardErrorPipe = process.StandardError.BaseStream;
+
 			_standardErrorTask = DrainAsync(
-				process.StandardError,
+				reader: process.StandardError,
 				maxCapturedCharactersPerStream,
-				_standardErrorTruncation,
-				_drainCancellation.Token);
+				truncation: _standardErrorTruncation,
+				cancellationToken: _drainCancellation.Token
+			);
 		}
 	}
 
@@ -71,58 +69,49 @@ internal sealed class ProcessHandle : IProcessHandle
 	{
 		get
 		{
-			_guard.ThrowIfDisposed(this);
+			_gate.ThrowIfDisposed(this);
 			return _processId;
 		}
 	}
 
 	// The genuine failure of an exit read - the process has not exited - is meaningful before disposal and is
 	// indistinguishable from the released-process shape, so it must not be reported as the disposal result.
-	public int ExitCode
-		=> _guard.ExecuteUnmasked(this, () => _process.ExitCode);
+	public int ExitCode => _gate.ExecuteUnmasked(this, () => _process.ExitCode);
 
-	public string StandardOutput
-		=> _guard.Execute(this, () => RequireStandardOutput(_standardOutputTask).GetAwaiter().GetResult());
+	public string StandardOutput => _gate.Execute(this, () => RequireStandardOutput(_standardOutputTask).GetAwaiter().GetResult());
 
-	public string StandardError
-		=> _guard.Execute(this, () => RequireStandardError(_standardErrorTask).GetAwaiter().GetResult());
+	public string StandardError => _gate.Execute(this, () => RequireStandardError(_standardErrorTask).GetAwaiter().GetResult());
 
-	public bool StandardOutputTruncated
-		=> _guard.Execute(this, () => _standardOutputTask is not null && _standardOutputTruncation.Truncated);
+	public bool StandardOutputTruncated => _gate.Execute(this, () => _standardOutputTask is not null && _standardOutputTruncation.Truncated);
 
-	public bool StandardErrorTruncated
-		=> _guard.Execute(this, () => _standardErrorTask is not null && _standardErrorTruncation.Truncated);
+	public bool StandardErrorTruncated => _gate.Execute(this, () => _standardErrorTask is not null && _standardErrorTruncation.Truncated);
 
-	public void WaitForExit()
-		=> _guard.Execute(this, () => _process.WaitForExit());
+	public void WaitForExit() => _gate.Execute(this, _process.WaitForExit);
 
 	public bool WaitForExit(int timeoutMilliseconds)
 	{
 		// The argument is validated before the disposal guard so an invalid timeout is reported as a range
 		// error even when the handle was already disposed.
 		ArgumentOutOfRangeException.ThrowIfLessThan(timeoutMilliseconds, Timeout.Infinite);
-
-		return _guard.Execute(this, () => _process.WaitForExit(timeoutMilliseconds));
+		return _gate.Execute(this, () => _process.WaitForExit(timeoutMilliseconds));
 	}
 
-	public Task WaitForExitAsync(CancellationToken cancellationToken = default)
-		=> _guard.Execute(this, () => _process.WaitForExitAsync(cancellationToken));
+	public Task WaitForExitAsync(CancellationToken cancellationToken = default) =>
+		_gate.Execute(this, () => _process.WaitForExitAsync(cancellationToken));
 
-	public Task<string> ReadStandardOutputAsync(CancellationToken cancellationToken = default)
-		=> _guard.Execute(this, () => RequireStandardOutput(_standardOutputTask).WaitAsync(cancellationToken));
+	public Task<string> ReadStandardOutputAsync(CancellationToken cancellationToken = default) =>
+		_gate.Execute(this, () => RequireStandardOutput(_standardOutputTask).WaitAsync(cancellationToken));
 
-	public Task<string> ReadStandardErrorAsync(CancellationToken cancellationToken = default)
-		=> _guard.Execute(this, () => RequireStandardError(_standardErrorTask).WaitAsync(cancellationToken));
+	public Task<string> ReadStandardErrorAsync(CancellationToken cancellationToken = default) =>
+		_gate.Execute(this, () => RequireStandardError(_standardErrorTask).WaitAsync(cancellationToken));
 
-	public void Kill()
-		=> _guard.Execute(this, () => _process.Kill());
+	public void Kill() => _gate.Execute(this, _process.Kill);
 
-	public void KillEntireProcessTree()
-		=> _guard.Execute(this, () => _process.Kill(entireProcessTree: true));
+	public void KillEntireProcessTree() => _gate.Execute(this, () => _process.Kill(entireProcessTree: true));
 
 	public void Dispose()
 	{
-		if (!_guard.TryBeginDispose())
+		if (!_gate.TryBeginDispose())
 			return;
 
 		try
@@ -131,6 +120,7 @@ internal sealed class ProcessHandle : IProcessHandle
 			// descendant would otherwise keep parked for an unbounded time; the drain token is canceled so a
 			// drain that has not completed ends by faulting.
 			_drainCancellation.Cancel();
+
 			_process.Dispose();
 			_standardOutputPipe?.Dispose();
 			_standardErrorPipe?.Dispose();
@@ -152,7 +142,8 @@ internal sealed class ProcessHandle : IProcessHandle
 		StreamReader reader,
 		int? maxCapturedCharactersPerStream,
 		CaptureTruncation truncation,
-		CancellationToken cancellationToken)
+		CancellationToken cancellationToken
+	)
 	{
 		var builder = new StringBuilder();
 		char[] buffer = ArrayPool<char>.Shared.Rent(DrainBufferSize);
@@ -182,7 +173,8 @@ internal sealed class ProcessHandle : IProcessHandle
 		char[] buffer,
 		int read,
 		int? maxCapturedCharactersPerStream,
-		CaptureTruncation truncation)
+		CaptureTruncation truncation
+	)
 	{
 		if (maxCapturedCharactersPerStream is not { } maximum)
 		{
@@ -207,11 +199,11 @@ internal sealed class ProcessHandle : IProcessHandle
 		builder.Append(buffer, 0, read);
 	}
 
-	private static Task<string> RequireStandardOutput(Task<string>? captureTask)
-		=> captureTask ?? throw new InvalidOperationException("The process was started without standard-output redirection.");
+	private static Task<string> RequireStandardOutput(Task<string>? captureTask) =>
+		captureTask ?? throw new InvalidOperationException("The process was started without standard-output redirection.");
 
-	private static Task<string> RequireStandardError(Task<string>? captureTask)
-		=> captureTask ?? throw new InvalidOperationException("The process was started without standard-error redirection.");
+	private static Task<string> RequireStandardError(Task<string>? captureTask) =>
+		captureTask ?? throw new InvalidOperationException("The process was started without standard-error redirection.");
 
 	private static void ObserveDrainFault(Task<string>? drainTask)
 	{
@@ -227,9 +219,7 @@ internal sealed class ProcessHandle : IProcessHandle
 		_ = drainTask.ContinueWith(static task => _ = task.Exception, TaskScheduler.Default);
 	}
 
-	/// <summary>
-	/// Records whether a drain discarded output beyond the configured capture bound.
-	/// </summary>
+	/// <summary>Records whether a drain discarded output beyond the configured capture bound.</summary>
 	private sealed class CaptureTruncation
 	{
 		private int _truncated;

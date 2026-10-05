@@ -1,0 +1,9 @@
+<Project>
+	<!-- MSBuild reads only the nearest Directory.Build.props, so this file imports the repository one first. -->
+	<Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
+
+	<PropertyGroup>
+		<!-- Every test project runs under the session timeout of test.runsettings; a project that needs more sets VSTestCLIRunSettings. -->
+		<RunSettingsFilePath>$(MSBuildThisFileDirectory)test.runsettings</RunSettingsFilePath>
+	</PropertyGroup>
+</Project>

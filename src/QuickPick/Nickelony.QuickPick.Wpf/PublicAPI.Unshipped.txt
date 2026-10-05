@@ -1,0 +1,47 @@
+#nullable enable
+Nickelony.QuickPick.Wpf.QuickPickPresenter
+Nickelony.QuickPick.Wpf.QuickPickPresenter.Dispose() -> void
+Nickelony.QuickPick.Wpf.QuickPickPresenter.IsOpen.get -> bool
+Nickelony.QuickPick.Wpf.QuickPickPresenter.QuickPickPresenter(System.Windows.UIElement! host, Nickelony.QuickPick.QuickPickController! controller, Nickelony.QuickPick.Wpf.QuickPickTheme? theme = null, Nickelony.QuickPick.Wpf.QuickPickPresenterHooks? hooks = null) -> void
+Nickelony.QuickPick.Wpf.QuickPickPresenter.Theme.get -> Nickelony.QuickPick.Wpf.QuickPickTheme!
+Nickelony.QuickPick.Wpf.QuickPickPresenter.Theme.set -> void
+Nickelony.QuickPick.Wpf.QuickPickPresenterHooks
+Nickelony.QuickPick.Wpf.QuickPickPresenterHooks.QuickPickPresenterHooks() -> void
+Nickelony.QuickPick.Wpf.QuickPickPresenterHooks.ResolveIcon.get -> System.Func<string!, System.Windows.Media.ImageSource?>?
+Nickelony.QuickPick.Wpf.QuickPickPresenterHooks.ResolveIcon.init -> void
+Nickelony.QuickPick.Wpf.QuickPickTheme
+Nickelony.QuickPick.Wpf.QuickPickTheme.<Clone>$() -> Nickelony.QuickPick.Wpf.QuickPickTheme!
+Nickelony.QuickPick.Wpf.QuickPickTheme.ActiveBackground.get -> System.Windows.Media.Brush!
+Nickelony.QuickPick.Wpf.QuickPickTheme.ActiveBackground.init -> void
+Nickelony.QuickPick.Wpf.QuickPickTheme.ActiveForeground.get -> System.Windows.Media.Brush!
+Nickelony.QuickPick.Wpf.QuickPickTheme.ActiveForeground.init -> void
+Nickelony.QuickPick.Wpf.QuickPickTheme.Background.get -> System.Windows.Media.Brush!
+Nickelony.QuickPick.Wpf.QuickPickTheme.Background.init -> void
+Nickelony.QuickPick.Wpf.QuickPickTheme.BorderBrush.get -> System.Windows.Media.Brush!
+Nickelony.QuickPick.Wpf.QuickPickTheme.BorderBrush.init -> void
+Nickelony.QuickPick.Wpf.QuickPickTheme.BorderThickness.get -> double
+Nickelony.QuickPick.Wpf.QuickPickTheme.BorderThickness.init -> void
+Nickelony.QuickPick.Wpf.QuickPickTheme.CornerRadius.get -> double
+Nickelony.QuickPick.Wpf.QuickPickTheme.CornerRadius.init -> void
+Nickelony.QuickPick.Wpf.QuickPickTheme.Equals(Nickelony.QuickPick.Wpf.QuickPickTheme? other) -> bool
+Nickelony.QuickPick.Wpf.QuickPickTheme.Foreground.get -> System.Windows.Media.Brush!
+Nickelony.QuickPick.Wpf.QuickPickTheme.Foreground.init -> void
+Nickelony.QuickPick.Wpf.QuickPickTheme.ItemTemplate.get -> System.Windows.DataTemplate?
+Nickelony.QuickPick.Wpf.QuickPickTheme.ItemTemplate.init -> void
+Nickelony.QuickPick.Wpf.QuickPickTheme.MaxVisibleRows.get -> int
+Nickelony.QuickPick.Wpf.QuickPickTheme.MaxVisibleRows.init -> void
+Nickelony.QuickPick.Wpf.QuickPickTheme.Padding.get -> System.Windows.Thickness
+Nickelony.QuickPick.Wpf.QuickPickTheme.Padding.init -> void
+Nickelony.QuickPick.Wpf.QuickPickTheme.QuickPickTheme() -> void
+Nickelony.QuickPick.Wpf.QuickPickTheme.RowHeight.get -> double
+Nickelony.QuickPick.Wpf.QuickPickTheme.RowHeight.init -> void
+Nickelony.QuickPick.Wpf.QuickPickTheme.TopOffset.get -> double
+Nickelony.QuickPick.Wpf.QuickPickTheme.TopOffset.init -> void
+Nickelony.QuickPick.Wpf.QuickPickTheme.Width.get -> double
+Nickelony.QuickPick.Wpf.QuickPickTheme.Width.init -> void
+override Nickelony.QuickPick.Wpf.QuickPickTheme.Equals(object? obj) -> bool
+override Nickelony.QuickPick.Wpf.QuickPickTheme.GetHashCode() -> int
+override Nickelony.QuickPick.Wpf.QuickPickTheme.ToString() -> string!
+static Nickelony.QuickPick.Wpf.QuickPickTheme.Default.get -> Nickelony.QuickPick.Wpf.QuickPickTheme!
+static Nickelony.QuickPick.Wpf.QuickPickTheme.operator !=(Nickelony.QuickPick.Wpf.QuickPickTheme? left, Nickelony.QuickPick.Wpf.QuickPickTheme? right) -> bool
+static Nickelony.QuickPick.Wpf.QuickPickTheme.operator ==(Nickelony.QuickPick.Wpf.QuickPickTheme? left, Nickelony.QuickPick.Wpf.QuickPickTheme? right) -> bool

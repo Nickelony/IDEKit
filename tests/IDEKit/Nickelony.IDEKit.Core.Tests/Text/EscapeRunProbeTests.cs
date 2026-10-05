@@ -34,8 +34,7 @@ public sealed class EscapeRunProbeTests
 		var probe = new EscapeRunProbe(escapeCharacter);
 
 		for (int index = precedingText.Length - 1; index >= 0 && probe.Consume(precedingText[index]); index--)
-		{
-		}
+		{ }
 
 		return probe.IsEscaped;
 	}

@@ -1,0 +1,82 @@
+name: build
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: windows-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      # The WPF projects target net8.0-windows, so the job runs on Windows. The 10.x SDK builds the solution, because the
+      # .slnx format needs SDK 9.0.200 or later, and the 8.x install provides the runtime the test projects run on.
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+            10.0.x
+
+      # The runner has no sibling Stanza checkout, so Directory.Build.props drops the analyzer reference and the ZA rules do not run. The build
+      # still runs the compiler, the .NET analyzers and the PublicAPI baselines.
+      - name: Build
+        run: dotnet build .\Nickelony.IDEKit.slnx
+
+      # The filter leaves out the tiers that need an external dependency, an interactive desktop or a quiet machine
+      # (tests/TestSupport/README.md). The repository guards run.
+      - name: Test
+        run: dotnet test .\Nickelony.IDEKit.slnx --no-build --filter "TestCategory!=Integration&TestCategory!=InteractiveWindow&TestCategory!=Performance"
+
+  # The platform-neutral packages target net8.0 and run on Linux. This job builds the Client, Lua and provider projects with their test
+  # projects, and runs the suites whose path, file-URI and process rules differ by operating system. The WPF and AvalonEdit projects target
+  # net8.0-windows, so they stay on the Windows job.
+  linux:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      # The Windows job's filter: the tiers that need an external dependency, an interactive desktop or a quiet machine stay out
+      # (tests/TestSupport/README.md).
+      TEST_FILTER: TestCategory!=Integration&TestCategory!=InteractiveWindow&TestCategory!=Performance
+    steps:
+      - uses: actions/checkout@v4
+
+      # The Windows job's SDK pair: the 10.x SDK builds, and the 8.x install provides the runtime the test projects run on.
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+            10.0.x
+
+      # A test project builds the product projects it references, so these lines cover the Client, Lua, Roslyn, Provider and Provider.Abstractions
+      # packages. The provider test projects compile here, and their suites run on the Windows job. The runner has no sibling Stanza checkout,
+      # so the ZA rules do not run, as on the Windows job.
+      - name: Build
+        run: |
+          dotnet build tests/LanguageServer/Nickelony.LanguageServer.Client.Tests
+          dotnet build tests/LanguageServer/Nickelony.LanguageServer.Lua.Tests
+          dotnet build tests/LanguageServer/Nickelony.LanguageServer.Provider.Abstractions.Tests
+          dotnet build tests/LanguageServer/Nickelony.LanguageServer.Provider.Tests
+          dotnet build tests/LanguageServer/Nickelony.LanguageServer.Roslyn.Tests
+          dotnet build tests/IDEKit/Nickelony.IDEKit.Core.Tests
+
+      # A test that needs Windows carries [OSCondition], so this run excludes it (tests/TestSupport/README.md, "Windows-only coverage").
+      - name: Test Client
+        run: dotnet test tests/LanguageServer/Nickelony.LanguageServer.Client.Tests --no-build --filter "$TEST_FILTER"
+
+      - name: Test Lua
+        if: success() || failure()
+        run: dotnet test tests/LanguageServer/Nickelony.LanguageServer.Lua.Tests --no-build --filter "$TEST_FILTER"
+
+      # The pathing suite is the LocalPath classes of the Core tests; the rest of that project runs on the Windows job.
+      - name: Test pathing
+        if: success() || failure()
+        run: dotnet test tests/IDEKit/Nickelony.IDEKit.Core.Tests --no-build --filter "$TEST_FILTER&FullyQualifiedName~LocalPath"

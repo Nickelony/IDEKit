@@ -1,41 +1,54 @@
 <Project>
+	<!--
+		Central Package Management: every PackageReference declares only the package id, and the single
+		version for each package lives here. Use VersionOverride with a comment for a deliberate exception.
+	-->
+	<PropertyGroup>
+		<ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+		<!--
+			A version listed here also pins the package where it arrives transitively, so a fixed release of a
+			dependency's dependency reaches every consumer of the packages.
+		-->
+		<CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
+	</PropertyGroup>
 
-  <!--
-    Central Package Management: every PackageReference declares only the package id, and the single
-    version for each package lives here. A project that genuinely needs a different version must use
-    VersionOverride with a comment explaining why, so version drift stays visible in one file.
-  -->
-  <PropertyGroup>
-    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
-  </PropertyGroup>
+	<ItemGroup>
+		<PackageVersion Include="AvalonEdit" Version="6.3.1.120" />
+		<PackageVersion Include="Avalonia" Version="12.1.3" />
+		<PackageVersion Include="Avalonia.AvaloniaEdit" Version="12.0.0" />
+		<PackageVersion Include="Avalonia.Desktop" Version="12.1.3" />
+		<PackageVersion Include="Avalonia.Headless" Version="12.1.3" />
+		<PackageVersion Include="Avalonia.Skia" Version="12.1.3" />
+		<PackageVersion Include="Avalonia.Themes.Fluent" Version="12.1.3" />
+		<!--
+			Re-run the Markdown renderer tests before a Markdig bump, because the renderer's behavior is pinned to this version.
+		-->
+		<PackageVersion Include="Markdig" Version="1.4.0" />
+		<!-- StreamJsonRpc brings MessagePack transitively; the pin holds a release that fixes GHSA-qhrr-8q5h-9q3h. -->
+		<PackageVersion Include="MessagePack" Version="2.5.307" />
+		<PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.3" />
+		<PackageVersion Include="StreamJsonRpc" Version="2.25.29" />
+		<!--
+			Re-run the TextMate contract tests before a TextMateSharp bump. The read order, listener attach and detach,
+			invalidation and disposal depend on the pinned version's behavior, so a consumer on another TextMateSharp
+			version does not get the behavior those tests pin.
+		-->
+		<PackageVersion Include="TextMateSharp" Version="2.0.4" />
+		<PackageVersion Include="TextMateSharp.Grammars" Version="2.0.4" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageVersion Include="AvalonEdit" Version="6.3.1.120" />
-    <PackageVersion Include="Avalonia" Version="12.1.3" />
-    <PackageVersion Include="Avalonia.AvaloniaEdit" Version="12.0.0" />
-    <PackageVersion Include="Avalonia.Headless" Version="12.1.3" />
-    <PackageVersion Include="Avalonia.Themes.Fluent" Version="12.1.3" />
-    <PackageVersion Include="Markdig" Version="1.4.0" />
-    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.3" />
-    <PackageVersion Include="Newtonsoft.Json.Schema" Version="4.0.1" />
-    <PackageVersion Include="StreamJsonRpc" Version="2.25.29" />
-    <PackageVersion Include="TextMateSharp" Version="2.0.4" />
-    <PackageVersion Include="TextMateSharp.Grammars" Version="2.0.4" />
-  </ItemGroup>
+	<!-- Build-time analyzers, never shipped. -->
+	<ItemGroup>
+		<PackageVersion Include="Microsoft.CodeAnalysis.PublicApiAnalyzers" Version="5.6.0" />
+	</ItemGroup>
 
-  <!-- Build-time analyzers (never shipped): they enforce the declared public-API baseline, so a public
-       member missing from PublicAPI.Shipped.txt / PublicAPI.Unshipped.txt fails the build (RS0016/RS0017). -->
-  <ItemGroup>
-    <PackageVersion Include="Microsoft.CodeAnalysis.PublicApiAnalyzers" Version="5.6.0" />
-  </ItemGroup>
-
-  <!-- Test-only dependencies. -->
-  <ItemGroup>
-    <PackageVersion Include="coverlet.collector" Version="10.0.1" />
-    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.8.1" />
-    <PackageVersion Include="MSTest.TestAdapter" Version="4.3.3" />
-    <PackageVersion Include="MSTest.TestFramework" Version="4.3.3" />
-    <PackageVersion Include="System.Diagnostics.DiagnosticSource" Version="8.0.1" />
-  </ItemGroup>
-
+	<!-- Test-only dependencies. -->
+	<ItemGroup>
+		<PackageVersion Include="coverlet.collector" Version="10.0.1" />
+		<PackageVersion Include="Microsoft.CodeAnalysis.CSharp" Version="4.11.0" />
+		<PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.8.1" />
+		<PackageVersion Include="MSTest.TestAdapter" Version="4.3.3" />
+		<PackageVersion Include="MSTest.TestFramework" Version="4.3.3" />
+		<PackageVersion Include="System.Diagnostics.DiagnosticSource" Version="8.0.1" />
+	</ItemGroup>
 </Project>

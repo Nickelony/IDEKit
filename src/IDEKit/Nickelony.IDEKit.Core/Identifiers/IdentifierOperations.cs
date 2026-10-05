@@ -2,14 +2,11 @@ using Nickelony.IDEKit.Core.Text;
 
 namespace Nickelony.IDEKit.Core.Identifiers;
 
-/// <summary>
-/// Provides identifier-extraction utilities for editor features such as completion, hover, and
-/// definition navigation.
-/// </summary>
+/// <summary>Provides identifier-extraction utilities for editor features such as completion, hover, and definition navigation.</summary>
 public static class IdentifierOperations
 {
 	/// <summary>
-	/// Gets the word that ends at the specified offset, using the default identifier rule.
+	/// Returns the word that ends at the specified offset, using the default identifier rule.
 	/// </summary>
 	/// <param name="text">The text to inspect.</param>
 	/// <param name="offset">The zero-based offset the word ends at. Values outside the text are clamped.</param>
@@ -24,11 +21,10 @@ public static class IdentifierOperations
 	/// string word = IdentifierOperations.GetWordEndingAt(text, text.Length); // "CONST_"
 	/// </code>
 	/// </example>
-	public static string GetWordEndingAt(string text, int offset)
-		=> GetWordEndingAt(text, offset, IdentifierCharacterPolicy.Default);
+	public static string GetWordEndingAt(string text, int offset) => GetWordEndingAt(text, offset, IdentifierCharacterPolicy.Default);
 
 	/// <summary>
-	/// Gets the word that ends at the specified offset, using the supplied token-character policy.
+	/// Returns the word that ends at the specified offset, using the supplied token-character policy.
 	/// </summary>
 	/// <param name="text">The text to inspect.</param>
 	/// <param name="offset">The zero-based offset the word ends at. Values outside the text are clamped.</param>
@@ -37,17 +33,14 @@ public static class IdentifierOperations
 	/// The contiguous sequence of characters accepted by the policy's part-character rule ending at
 	/// the offset, or an empty string when no such characters immediately precede it.
 	/// </returns>
-	/// <remarks>
-	/// The offset is clamped to the text bounds and the returned string is the text of the word that
-	/// <see cref="FindTokenSpan"/> reports with <see cref="IdentifierSpanMode.EndingAtOffset"/> for
-	/// the same policy, because both primitives share one boundary walk. When no word ends at the
-	/// offset, this method returns an empty string while <see cref="FindTokenSpan"/> reports no
-	/// token. Use this overload when the caller has plain text and only needs the word text; use
-	/// <see cref="FindTokenSpan"/> when the caller needs the span itself.
-	/// </remarks>
 	/// <exception cref="ArgumentNullException">
 	/// <paramref name="text"/> or <paramref name="policy"/> is <see langword="null"/>.
 	/// </exception>
+	/// <remarks>
+	/// The offset is clamped to the text bounds, and the result is the word text of the span <see cref="FindTokenSpan"/> reports with
+	/// <see cref="IdentifierSpanMode.EndingAtOffset"/> for the same policy, because both share one boundary walk. When no word ends at the offset,
+	/// this method returns an empty string while <see cref="FindTokenSpan"/> reports no token.
+	/// </remarks>
 	/// <example>
 	/// JavaScript allows <c>$</c> within identifiers:
 	/// <code>
@@ -77,46 +70,27 @@ public static class IdentifierOperations
 		return text[start..clampedOffset];
 	}
 
-	/// <summary>
-	/// Tries to locate an identifier or token span using the specified offset as a probe.
-	/// </summary>
-	/// <remarks>
-	/// <para>
-	/// The offset is clamped to the document bounds. With <see cref="IdentifierSpanMode.Containing"/>
-	/// (the default), the span is the token run around the clamped offset; for a probe that is not a
-	/// token character, the immediately preceding token is preferred when it starts with a
-	/// token-start character.
-	/// </para>
-	/// <para>
-	/// The span covers the maximal run of characters accepted by the part-character rule, so a policy
-	/// whose start-character rule is narrower than its part-character rule resolves a continuation
-	/// character as part of its containing token.
-	/// </para>
-	/// <para>
-	/// With <see cref="IdentifierSpanMode.EndingAtOffset"/>, the returned span ends exactly at the offset
-	/// and never includes text after it, matching the word-being-typed semantics used by completion
-	/// filtering. The character before the offset must be accepted by the part-character rule, so an
-	/// offset that follows a delimiter or whitespace resolves no span, while a token that ends in a
-	/// continuation character resolves its full run. When only the word text is needed and the text
-	/// is a string, <see cref="GetWordEndingAt(string, int, IdentifierCharacterPolicy)"/> returns it
-	/// without constructing a snapshot.
-	/// </para>
-	/// </remarks>
+	/// <summary>Tries to locate an identifier or token span using the specified offset as a probe.</summary>
 	/// <param name="snapshot">The text to inspect.</param>
 	/// <param name="offset">The zero-based offset to probe.</param>
 	/// <param name="policy">The character rules that define token membership.</param>
 	/// <param name="mode">How the span is located relative to <paramref name="offset"/>.</param>
-	/// <returns>
-	/// The resolved token span, or <see langword="null"/> when the probe does not identify a token.
-	/// </returns>
-	/// <exception cref="ArgumentNullException">
-	/// <paramref name="snapshot"/> or <paramref name="policy"/> is <see langword="null"/>.
-	/// </exception>
+	/// <returns>The resolved token span, or <see langword="null"/> when the probe does not identify a token.</returns>
+	/// <exception cref="ArgumentNullException"><paramref name="snapshot"/> or <paramref name="policy"/> is <see langword="null"/>.</exception>
+	/// <remarks>
+	/// The offset is clamped to the document bounds. <see cref="IdentifierSpanMode.Containing"/> takes the maximal
+	/// run of part-character-rule characters around the clamped offset - so a narrower start rule still resolves a continuation
+	/// character into its token. When the probe is not a token character, it prefers the immediately preceding token, provided that token
+	/// begins with a start character; otherwise, the result is <see langword="null"/>. <see cref="IdentifierSpanMode.AtOffset"/> takes the same run
+	/// but reports no token when the probe is not a part character. <see cref="IdentifierSpanMode.EndingAtOffset"/> ends the span exactly
+	/// at the offset and reports no token unless the character before the offset is a part character.
+	/// </remarks>
 	public static TextRange? FindTokenSpan(
 		ITextSnapshot snapshot,
 		int offset,
 		IdentifierCharacterPolicy policy,
-		IdentifierSpanMode mode = IdentifierSpanMode.Containing)
+		IdentifierSpanMode mode = IdentifierSpanMode.Containing
+	)
 	{
 		ArgumentNullException.ThrowIfNull(snapshot);
 		ArgumentNullException.ThrowIfNull(policy);
@@ -126,7 +100,6 @@ public static class IdentifierOperations
 
 		int clampedOffset = Math.Clamp(offset, 0, snapshot.TextLength);
 
-		var source = new IdentifierBoundaryWalker.SnapshotSource(snapshot);
 		Func<char, bool> isPartCharacter = policy.PartCharacterPredicate;
 
 		if (mode == IdentifierSpanMode.EndingAtOffset)
@@ -141,9 +114,9 @@ public static class IdentifierOperations
 			if (!isPartCharacter(snapshot.GetCharAt(probe)))
 				return null;
 
-			int start = IdentifierBoundaryWalker.FindPrecedingRunStart(source, probe, isPartCharacter);
+			int start = IdentifierBoundaryWalker.FindPrecedingRunStart(snapshot, probe, isPartCharacter);
 
-			return new TextRange(start, clampedOffset - start);
+			return TextRange.FromBounds(start, clampedOffset);
 		}
 
 		int containingProbe = clampedOffset;
@@ -153,9 +126,12 @@ public static class IdentifierOperations
 
 		if (!isPartCharacter(snapshot.GetCharAt(containingProbe)))
 		{
+			if (mode == IdentifierSpanMode.AtOffset)
+				return null;
+
 			// A probe outside a token prefers the immediately preceding token, but only when that
 			// token starts with a start character.
-			int precedingProbe = IdentifierBoundaryWalker.FindPrecedingRunStart(source, containingProbe, isPartCharacter);
+			int precedingProbe = IdentifierBoundaryWalker.FindPrecedingRunStart(snapshot, containingProbe, isPartCharacter);
 
 			if (precedingProbe == containingProbe || !policy.IsStartCharacter(snapshot.GetCharAt(precedingProbe)))
 				return null;
@@ -163,9 +139,19 @@ public static class IdentifierOperations
 			containingProbe = precedingProbe;
 		}
 
-		if (!IdentifierBoundaryWalker.TryExpandRun(source, containingProbe, isPartCharacter, out int wordStart, out int wordEnd))
+		if (
+			!IdentifierBoundaryWalker.TryExpandRun(
+				source: snapshot,
+				seedIndex: containingProbe,
+				isPartCharacter,
+				start: out int wordStart,
+				end: out int wordEnd
+			)
+		)
+		{
 			return null;
+		}
 
-		return new TextRange(wordStart, wordEnd - wordStart);
+		return TextRange.FromBounds(wordStart, wordEnd);
 	}
 }

@@ -1,32 +1,35 @@
 <Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<IsPackable>false</IsPackable>
+		<IsTestProject>true</IsTestProject>
+	</PropertyGroup>
 
-  <PropertyGroup>
-    <IsPackable>false</IsPackable>
-    <IsTestProject>true</IsTestProject>
-    <RunSettingsFilePath>test.runsettings</RunSettingsFilePath>
-  </PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="coverlet.collector" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" />
+		<PackageReference Include="MSTest.TestAdapter" />
+		<PackageReference Include="MSTest.TestFramework" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="coverlet.collector" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" />
-    <PackageReference Include="MSTest.TestAdapter" />
-    <PackageReference Include="MSTest.TestFramework" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\src\IDEKit\Nickelony.IDEKit.Core\Nickelony.IDEKit.Core.csproj" />
+		<ProjectReference Include="..\..\..\src\IDEKit\Nickelony.IDEKit.LanguageFeatures\Nickelony.IDEKit.LanguageFeatures.csproj" />
+		<ProjectReference Include="..\..\..\src\IDEKit\Nickelony.IDEKit.Workspace\Nickelony.IDEKit.Workspace.csproj" />
+		<ProjectReference Include="..\..\..\src\IDEKit\Nickelony.IDEKit.Workspace.Views\Nickelony.IDEKit.Workspace.Views.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\src\IDEKit\Nickelony.IDEKit.Core\Nickelony.IDEKit.Core.csproj" />
-    <ProjectReference Include="..\..\..\src\IDEKit\Nickelony.IDEKit.Workspace\Nickelony.IDEKit.Workspace.csproj" />
-    <ProjectReference Include="..\..\..\src\IDEKit\Nickelony.IDEKit.Workspace.Views\Nickelony.IDEKit.Workspace.Views.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Include="..\TestSupport\FakeUiDispatcher.cs" Link="TestSupport\FakeUiDispatcher.cs" />
+		<Compile Include="..\TestSupport\RecordingSoakLog.cs" Link="TestSupport\RecordingSoakLog.cs" />
+		<Compile Include="..\TestSupport\TestSnapshots.cs" Link="TestSupport\TestSnapshots.cs" />
+		<Compile Include="..\TestSupport\TestSoak.cs" Link="TestSupport\TestSoak.cs" />
+		<Compile Include="..\..\TestSupport\TemporaryDirectory.cs" Link="TestSupport\TemporaryDirectory.cs" />
+		<Compile Include="..\..\TestSupport\TestPolling.cs" Link="TestSupport\TestPolling.cs" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Compile Include="..\Nickelony.IDEKit.Workspace.Tests\TestSupport\TestSnapshots.cs" Link="TestSupport\TestSnapshots.cs" />
-    <Compile Include="..\..\TestSupport\TemporaryDirectory.cs" Link="TestSupport\TemporaryDirectory.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
-    <Using Include="Nickelony.Testing" />
-  </ItemGroup>
-
+	<ItemGroup>
+		<Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
+		<Using Include="Nickelony.IDEKit.Testing" />
+		<Using Include="Nickelony.Testing" />
+	</ItemGroup>
 </Project>

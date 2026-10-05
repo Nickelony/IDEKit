@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<RootNamespace>Nickelony.QuickPick</RootNamespace>
+		<AssemblyName>Nickelony.QuickPick</AssemblyName>
+		<PackageId>Nickelony.QuickPick</PackageId>
+		<Description>Toolkit-neutral quick pick for a command palette or a quick open: the controller that picks a mode by the prefix of the typed text, queries its provider, filters, ranks and previews the items and accepts one, with the contracts a provider implements.</Description>
+		<PackageTags>quick-pick;command-palette;quick-open;fuzzy-matching;nickelony</PackageTags>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<WarningsAsErrors>RS0016;RS0017</WarningsAsErrors>
+		<DefineConstants>$(DefineConstants);QUICKPICKFAMILY</DefineConstants>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.CodeAnalysis.PublicApiAnalyzers" PrivateAssets="all" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\Matching\Nickelony.Matching\Nickelony.Matching.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<!-- QUICKPICKFAMILY makes these files declare the family's namespace and internal types, because the family references no Core package. -->
+		<Compile Include="..\..\..\shared\Primitives\**\*.cs" LinkBase="." />
+	</ItemGroup>
+
+	<ItemGroup>
+		<!-- The test suite reaches the internal collaborators of the controller: the router, the ranker, the trackers and the dispatcher. -->
+		<InternalsVisibleTo Include="Nickelony.QuickPick.Tests" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="README.md" Pack="true" PackagePath="\" />
+		<None Include="..\..\..\icons\$(PackageIcon)" Pack="true" PackagePath="\" />
+	</ItemGroup>
+</Project>

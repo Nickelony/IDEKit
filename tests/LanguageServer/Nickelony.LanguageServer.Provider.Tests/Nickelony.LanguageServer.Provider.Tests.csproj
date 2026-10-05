@@ -1,34 +1,40 @@
 <Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<IsPackable>false</IsPackable>
+		<IsTestProject>true</IsTestProject>
+	</PropertyGroup>
 
-  <PropertyGroup>
-    <IsPackable>false</IsPackable>
-    <IsTestProject>true</IsTestProject>
-    <RunSettingsFilePath>test.runsettings</RunSettingsFilePath>
-  </PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="coverlet.collector" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" />
+		<PackageReference Include="MSTest.TestAdapter" />
+		<PackageReference Include="MSTest.TestFramework" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="coverlet.collector" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" />
-    <PackageReference Include="MSTest.TestAdapter" />
-    <PackageReference Include="MSTest.TestFramework" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\src\LanguageServer\Nickelony.LanguageServer.Provider.Abstractions\Nickelony.LanguageServer.Provider.Abstractions.csproj" />
+		<ProjectReference Include="..\..\..\src\LanguageServer\Nickelony.LanguageServer.Client\Nickelony.LanguageServer.Client.csproj" />
+		<ProjectReference Include="..\..\..\src\LanguageServer\Nickelony.LanguageServer.Provider\Nickelony.LanguageServer.Provider.csproj" />
+		<ProjectReference Include="..\..\..\src\IDEKit\Nickelony.IDEKit.FileWatching\Nickelony.IDEKit.FileWatching.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\src\LanguageServer\Nickelony.LanguageServer.Abstractions\Nickelony.LanguageServer.Abstractions.csproj" />
-    <ProjectReference Include="..\..\..\src\LanguageServer\Nickelony.LanguageServer.Client\Nickelony.LanguageServer.Client.csproj" />
-    <ProjectReference Include="..\..\..\src\LanguageServer\Nickelony.LanguageServer.Provider\Nickelony.LanguageServer.Provider.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Include="..\..\TestSupport\TestCategories.cs" Link="TestSupport\TestCategories.cs" />
+		<Compile Include="..\..\TestSupport\RecordingLogger.cs" Link="TestSupport\RecordingLogger.cs" />
+		<Compile Include="..\..\TestSupport\TemporaryDirectory.cs" Link="TestSupport\TemporaryDirectory.cs" />
+		<Compile Include="..\..\TestSupport\TestPolling.cs" Link="TestSupport\TestPolling.cs" />
+		<Compile Include="..\..\TestSupport\FakeTimeProvider.cs" Link="TestSupport\FakeTimeProvider.cs" />
+		<Compile Include="..\..\TestSupport\StubFileWatcher.cs" Link="TestSupport\StubFileWatcher.cs" />
+		<Compile Include="..\..\TestSupport\RecordingFileWatcherFactory.cs" Link="TestSupport\RecordingFileWatcherFactory.cs" />
+		<Compile Include="..\..\TestSupport\RecordingFileSnapshotTracker.cs" Link="TestSupport\RecordingFileSnapshotTracker.cs" />
+		<Compile Include="..\TestSupport\ProviderRequestTestExtensions.cs" Link="TestSupport\ProviderRequestTestExtensions.cs" />
+		<Compile Include="..\TestSupport\TestPaths.cs" Link="TestSupport\TestPaths.cs" />
+		<Compile Include="..\TestSupport\FakeLanguageServerClient.cs" Link="TestSupport\FakeLanguageServerClient.cs" />
+		<Compile Include="..\TestSupport\FakeStatefulLanguageServerClient.cs" Link="TestSupport\FakeStatefulLanguageServerClient.cs" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Compile Include="..\..\TestSupport\TestCategories.cs" Link="Support\TestCategories.cs" />
-    <Compile Include="..\..\TestSupport\TestLoggerScope.cs" Link="Support\TestLoggerScope.cs" />
-    <Compile Include="..\..\TestSupport\TemporaryDirectory.cs" Link="Support\TemporaryDirectory.cs" />
-    <Compile Include="..\..\TestSupport\TestPolling.cs" Link="Support\TestPolling.cs" />
-    <Compile Include="..\..\TestSupport\ProviderRequestTestExtensions.cs" Link="Support\ProviderRequestTestExtensions.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
-  </ItemGroup>
-
+	<ItemGroup>
+		<Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
+		<Using Include="Nickelony.IDEKit.FileWatching" />
+	</ItemGroup>
 </Project>

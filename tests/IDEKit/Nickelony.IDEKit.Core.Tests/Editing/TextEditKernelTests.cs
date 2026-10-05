@@ -1,4 +1,4 @@
-using static Nickelony.IDEKit.Core.Tests.TextEditInputs;
+using static Nickelony.IDEKit.Core.Tests.TextIncrementalEditTestHelpers;
 
 namespace Nickelony.IDEKit.Core.Tests;
 
@@ -8,48 +8,36 @@ public sealed class TextEditKernelTests
 	[TestMethod]
 	public void Prepare_NonOverlappingEdits_ReturnsDescendingOperations()
 	{
-		TextEditPreparationResult result = TextEditKernel.Prepare(
-			new StringTextSnapshot("abcdef"),
-			[
-				CreateEdit(1, 1, "B"),
-				CreateEdit(4, 1, "E")
-			]);
+		TextEditPreparationResult result = TextEditKernel.Prepare(new StringTextSnapshot("abcdef"), [CreateEdit(1, 1, "B"), CreateEdit(4, 1, "E")]);
 
-		Assert.IsTrue(result.IsValid);
-		CollectionAssert.AreEqual(new[] { 4, 1 }, result.Edits.Operations.Select(operation => operation.StartOffset).ToArray());
+		Assert.IsTrue(result.Succeeded);
+		Assert.AreSequenceEqual([4, 1], [.. result.Edits.Operations.Select(operation => operation.Range.Offset)]);
 		Assert.AreEqual("B", result.Edits.Operations[1].NewText);
-		Assert.AreEqual(1, result.Edits.Operations[1].Length);
+		Assert.AreEqual(1, result.Edits.Operations[1].Range.Length);
 	}
 
 	[TestMethod]
 	public void Prepare_AdjacentInsertions_AreValid()
 	{
-		TextEditPreparationResult result = TextEditKernel.Prepare(
-			new StringTextSnapshot("abcd"),
-			[
-				CreateEdit(1, 0, "x"),
-				CreateEdit(2, 0, "y")
-			]);
+		TextEditPreparationResult result = TextEditKernel.Prepare(new StringTextSnapshot("abcd"), [CreateEdit(1, 0, "x"), CreateEdit(2, 0, "y")]);
 
-		Assert.IsTrue(result.IsValid);
-		Assert.AreEqual(2, result.Edits.Operations.Count);
-		Assert.AreEqual(2, result.Edits.Operations[0].StartOffset);
-		Assert.AreEqual(1, result.Edits.Operations[1].StartOffset);
+		Assert.IsTrue(result.Succeeded);
+		Assert.HasCount(2, result.Edits.Operations);
+		Assert.AreEqual(2, result.Edits.Operations[0].Range.Offset);
+		Assert.AreEqual(1, result.Edits.Operations[1].Range.Offset);
 	}
 
 	[TestMethod]
 	public void Prepare_SameOffsetInsertions_AreAcceptedInEditOrder()
 	{
-		TextEditPreparationResult result = TextEditKernel.Prepare(
-			new StringTextSnapshot("abcd"),
-			[CreateEdit(1, 0, "x"), CreateEdit(1, 0, "y")]);
+		TextEditPreparationResult result = TextEditKernel.Prepare(new StringTextSnapshot("abcd"), [CreateEdit(1, 0, "x"), CreateEdit(1, 0, "y")]);
 
-		Assert.IsTrue(result.IsValid);
-		Assert.AreEqual(2, result.Edits.Operations.Count);
+		Assert.IsTrue(result.Succeeded);
+		Assert.HasCount(2, result.Edits.Operations);
 
 		// Operations apply in list order (highest source offset first, and at one offset the highest
 		// edit index first), so applying the list inserts the texts in edit order: "x" then "y".
-		Assert.AreEqual(1, result.Edits.Operations[0].StartOffset);
+		Assert.AreEqual(1, result.Edits.Operations[0].Range.Offset);
 		Assert.AreEqual(1, result.Edits.Operations[0].EditIndex);
 		Assert.AreEqual("y", result.Edits.Operations[0].NewText);
 		Assert.AreEqual(0, result.Edits.Operations[1].EditIndex);
@@ -59,12 +47,10 @@ public sealed class TextEditKernelTests
 	[TestMethod]
 	public void Prepare_InsertionInsideReplacement_IsRejected()
 	{
-		TextEditPreparationResult result = TextEditKernel.Prepare(
-			new StringTextSnapshot("abcdef"),
-			[CreateEdit(1, 3, "x"), CreateEdit(2, 0, "y")]);
+		TextEditPreparationResult result = TextEditKernel.Prepare(new StringTextSnapshot("abcdef"), [CreateEdit(1, 3, "x"), CreateEdit(2, 0, "y")]);
 
-		Assert.IsFalse(result.IsValid);
-		Assert.AreEqual(1, result.Issues.Count);
+		Assert.IsFalse(result.Succeeded);
+		Assert.HasCount(1, result.Issues);
 		Assert.AreEqual(TextEditPreparationIssueKind.InsertionInsideReplacement, result.Issues[0].Kind);
 		Assert.AreEqual(1, result.Issues[0].EditIndex);
 		Assert.AreEqual(0, result.Issues[0].RelatedEditIndex);
@@ -73,12 +59,10 @@ public sealed class TextEditKernelTests
 	[TestMethod]
 	public void Prepare_OverlappingReplacements_AreRejected()
 	{
-		TextEditPreparationResult result = TextEditKernel.Prepare(
-			new StringTextSnapshot("abcdef"),
-			[CreateEdit(1, 3, "x"), CreateEdit(3, 2, "y")]);
+		TextEditPreparationResult result = TextEditKernel.Prepare(new StringTextSnapshot("abcdef"), [CreateEdit(1, 3, "x"), CreateEdit(3, 2, "y")]);
 
-		Assert.IsFalse(result.IsValid);
-		Assert.AreEqual(1, result.Issues.Count);
+		Assert.IsFalse(result.Succeeded);
+		Assert.HasCount(1, result.Issues);
 		Assert.AreEqual(TextEditPreparationIssueKind.ReplacementOverlap, result.Issues[0].Kind);
 		Assert.AreEqual(1, result.Issues[0].EditIndex);
 		Assert.AreEqual(0, result.Issues[0].RelatedEditIndex);
@@ -88,31 +72,28 @@ public sealed class TextEditKernelTests
 	public void Prepare_InvalidRange_ReturnsIssueWithoutOperations()
 	{
 		var snapshot = new StringTextSnapshot("text");
-		TextEditPreparationResult result = TextEditKernel.Prepare(
-			snapshot,
-			[CreateEdit(4, 1, "invalid")]);
 
-		Assert.IsFalse(result.IsValid);
-		Assert.AreEqual(1, result.Issues.Count);
+		TextEditPreparationResult result = TextEditKernel.Prepare(snapshot, [CreateEdit(4, 1, "invalid")]);
+
+		Assert.IsFalse(result.Succeeded);
+		Assert.HasCount(1, result.Issues);
 		Assert.AreEqual(TextEditPreparationIssueKind.RangeOutOfBounds, result.Issues[0].Kind);
 		Assert.AreEqual(0, result.Issues[0].EditIndex);
-		Assert.AreEqual(0, result.Edits.Operations.Count);
+		Assert.IsEmpty(result.Edits.Operations);
 		Assert.AreEqual("text", snapshot.GetText(0, snapshot.TextLength));
 	}
 
 	[TestMethod]
-	public void Prepare_NullEdit_IsReportedAsNullEdit()
+	public void Prepare_NullOperation_IsReportedAsNullEdit()
 	{
-		TextEditPreparationResult result = TextEditKernel.Prepare(
-			new StringTextSnapshot("abcd"),
-			[null, CreateEdit(0, 1, "A")]);
+		TextEditPreparationResult result = TextEditKernel.Prepare([null!, new TextEditOperation(new TextRange(0, 1), "A", editIndex: 1)]);
 
-		Assert.IsFalse(result.IsValid);
-		Assert.AreEqual(1, result.Issues.Count);
+		Assert.IsFalse(result.Succeeded);
+		Assert.HasCount(1, result.Issues);
 		Assert.AreEqual(TextEditPreparationIssueKind.NullEdit, result.Issues[0].Kind);
 		Assert.AreEqual(0, result.Issues[0].EditIndex);
 		Assert.IsNull(result.Issues[0].RelatedEditIndex);
-		Assert.AreEqual(0, result.Edits.Operations.Count);
+		Assert.IsEmpty(result.Edits.Operations);
 	}
 
 	[TestMethod]
@@ -120,25 +101,24 @@ public sealed class TextEditKernelTests
 	{
 		TextEditPreparationResult result = TextEditKernel.Prepare(
 			new StringTextSnapshot("abcd"),
-			[new TextEditInput(new TextRange(0, 1), null!)]);
+			[new TextIncrementalEdit(new TextRange(0, 1), null!)]
+		);
 
-		Assert.IsFalse(result.IsValid);
-		Assert.AreEqual(1, result.Issues.Count);
+		Assert.IsFalse(result.Succeeded);
+		Assert.HasCount(1, result.Issues);
 		Assert.AreEqual(TextEditPreparationIssueKind.NullReplacementText, result.Issues[0].Kind);
 		Assert.AreEqual(0, result.Issues[0].EditIndex);
-		Assert.AreEqual(0, result.Edits.Operations.Count);
+		Assert.IsEmpty(result.Edits.Operations);
 	}
 
 	[TestMethod]
 	public void Prepare_UsesUtf16OffsetsForSupplementaryCharacters()
 	{
-		TextEditPreparationResult result = TextEditKernel.Prepare(
-			new StringTextSnapshot("A\U0001F600B"),
-			[CreateEdit(3, 1, "C")]);
+		TextEditPreparationResult result = TextEditKernel.Prepare(new StringTextSnapshot("A\U0001F600B"), [CreateEdit(3, 1, "C")]);
 
-		Assert.IsTrue(result.IsValid);
-		Assert.AreEqual(3, result.Edits.Operations[0].StartOffset);
-		Assert.AreEqual(4, result.Edits.Operations[0].EndOffset);
+		Assert.IsTrue(result.Succeeded);
+		Assert.AreEqual(3, result.Edits.Operations[0].Range.Offset);
+		Assert.AreEqual(4, result.Edits.Operations[0].Range.EndOffset);
 	}
 
 	[TestMethod]
@@ -146,9 +126,9 @@ public sealed class TextEditKernelTests
 	{
 		TextEditPreparationResult result = TextEditKernel.Prepare(new StringTextSnapshot("abc"), []);
 
-		Assert.IsTrue(result.IsValid);
-		Assert.AreEqual(0, result.Edits.Operations.Count);
-		Assert.AreEqual(0, result.Issues.Count);
+		Assert.IsTrue(result.Succeeded);
+		Assert.IsEmpty(result.Edits.Operations);
+		Assert.IsEmpty(result.Issues);
 	}
 
 	[TestMethod]
@@ -156,10 +136,11 @@ public sealed class TextEditKernelTests
 	{
 		TextEditPreparationResult result = TextEditKernel.Prepare(
 			new StringTextSnapshot("abcd"),
-			[CreateEdit(1, 0, "x"), CreateEdit(1, 0, "y"), CreateEdit(1, 0, "z")]);
+			[CreateEdit(1, 0, "x"), CreateEdit(1, 0, "y"), CreateEdit(1, 0, "z")]
+		);
 
-		Assert.IsTrue(result.IsValid);
-		Assert.AreEqual(3, result.Edits.Operations.Count);
+		Assert.IsTrue(result.Succeeded);
+		Assert.HasCount(3, result.Edits.Operations);
 
 		// The application list reverses the ascending candidate order, so the last edit applies first
 		// and its text lands last in the resulting text.
@@ -172,7 +153,7 @@ public sealed class TextEditKernelTests
 	public void Prepare_ManySameOffsetInsertions_StayLinearAndValid()
 	{
 		const int insertionCount = 5000;
-		var edits = new TextEditInput[insertionCount];
+		var edits = new TextIncrementalEdit[insertionCount];
 
 		for (int index = 0; index < insertionCount; index++)
 			edits[index] = CreateEdit(2, 0, index.ToString());
@@ -181,8 +162,8 @@ public sealed class TextEditKernelTests
 
 		// The conflict pass skips insertion-to-insertion pairs, so a batch of same-offset insertions
 		// stays linear and valid; the application order places the lowest edit index first.
-		Assert.IsTrue(result.IsValid);
-		Assert.AreEqual(insertionCount, result.Edits.Operations.Count);
+		Assert.IsTrue(result.Succeeded);
+		Assert.HasCount(insertionCount, result.Edits.Operations);
 		Assert.AreEqual(insertionCount - 1, result.Edits.Operations[0].EditIndex);
 		Assert.AreEqual(0, result.Edits.Operations[insertionCount - 1].EditIndex);
 	}
@@ -191,7 +172,7 @@ public sealed class TextEditKernelTests
 	public void Prepare_PathologicalOverlap_ReportsCappedConflictIssues()
 	{
 		const int replacementCount = 600;
-		var edits = new TextEditInput[replacementCount];
+		var edits = new TextIncrementalEdit[replacementCount];
 
 		for (int index = 0; index < replacementCount; index++)
 			edits[index] = CreateEdit(index, 2, "x");
@@ -201,8 +182,8 @@ public sealed class TextEditKernelTests
 		// Every replacement overlaps its later neighbor, so the full pairwise report would grow
 		// quadratically; the kernel caps the reported issues while the batch stays rejected
 		// either way.
-		Assert.IsFalse(result.IsValid);
-		Assert.AreEqual(512, result.Issues.Count);
+		Assert.IsFalse(result.Succeeded);
+		Assert.HasCount(512, result.Issues);
 		Assert.AreEqual(TextEditPreparationIssueKind.ReplacementOverlap, result.Issues[0].Kind);
 	}
 
@@ -210,14 +191,12 @@ public sealed class TextEditKernelTests
 	public void Prepare_InsertionAtReplacementEnd_IsAccepted()
 	{
 		// The insertion touches the replacement end rather than its interior, so the batch stays valid.
-		TextEditPreparationResult result = TextEditKernel.Prepare(
-			new StringTextSnapshot("abcdef"),
-			[CreateEdit(1, 2, "x"), CreateEdit(3, 0, "y")]);
+		TextEditPreparationResult result = TextEditKernel.Prepare(new StringTextSnapshot("abcdef"), [CreateEdit(1, 2, "x"), CreateEdit(3, 0, "y")]);
 
-		Assert.IsTrue(result.IsValid);
-		Assert.AreEqual(2, result.Edits.Operations.Count);
-		Assert.AreEqual(3, result.Edits.Operations[0].StartOffset);
-		Assert.AreEqual(1, result.Edits.Operations[1].StartOffset);
+		Assert.IsTrue(result.Succeeded);
+		Assert.HasCount(2, result.Edits.Operations);
+		Assert.AreEqual(3, result.Edits.Operations[0].Range.Offset);
+		Assert.AreEqual(1, result.Edits.Operations[1].Range.Offset);
 	}
 
 	[TestMethod]
@@ -225,25 +204,21 @@ public sealed class TextEditKernelTests
 	{
 		// The insertion touches the replacement start rather than its interior, so the batch stays
 		// valid; the replacement applies before the insertion at the shared offset.
-		TextEditPreparationResult result = TextEditKernel.Prepare(
-			new StringTextSnapshot("abcdef"),
-			[CreateEdit(1, 2, "x"), CreateEdit(1, 0, "y")]);
+		TextEditPreparationResult result = TextEditKernel.Prepare(new StringTextSnapshot("abcdef"), [CreateEdit(1, 2, "x"), CreateEdit(1, 0, "y")]);
 
-		Assert.IsTrue(result.IsValid);
-		Assert.AreEqual(2, result.Edits.Operations.Count);
-		Assert.AreEqual(3, result.Edits.Operations[0].EndOffset);
-		Assert.AreEqual(1, result.Edits.Operations[1].StartOffset);
+		Assert.IsTrue(result.Succeeded);
+		Assert.HasCount(2, result.Edits.Operations);
+		Assert.AreEqual(3, result.Edits.Operations[0].Range.EndOffset);
+		Assert.AreEqual(1, result.Edits.Operations[1].Range.Offset);
 		Assert.AreEqual(1, result.Edits.MapOffset(1));
 	}
 
 	[TestMethod]
 	public void Prepare_PropagatesEditIndexIntoOperations()
 	{
-		TextEditPreparationResult result = TextEditKernel.Prepare(
-			new StringTextSnapshot("abcdef"),
-			[CreateEdit(1, 1, "B"), CreateEdit(4, 1, "E")]);
+		TextEditPreparationResult result = TextEditKernel.Prepare(new StringTextSnapshot("abcdef"), [CreateEdit(1, 1, "B"), CreateEdit(4, 1, "E")]);
 
-		Assert.IsTrue(result.IsValid);
+		Assert.IsTrue(result.Succeeded);
 
 		// The descending order reverses the candidate list, so each operation must keep the source
 		// index of the edit it was created from instead of the reversed position.
@@ -256,19 +231,24 @@ public sealed class TextEditKernelTests
 	[TestMethod]
 	public void Prepare_ReportsDocumentedIssueMessages()
 	{
-		TextEditPreparationResult nullEdit = TextEditKernel.Prepare(new StringTextSnapshot("abcd"), [null]);
+		TextEditPreparationResult nullEdit = TextEditKernel.Prepare([null!]);
+
 		TextEditPreparationResult nullText = TextEditKernel.Prepare(
 			new StringTextSnapshot("abcd"),
-			[new TextEditInput(new TextRange(0, 1), null!)]);
-		TextEditPreparationResult invalidRange = TextEditKernel.Prepare(
-			new StringTextSnapshot("abcd"),
-			[CreateEdit(4, 1, "x")]);
+			[new TextIncrementalEdit(new TextRange(0, 1), null!)]
+		);
+
+		TextEditPreparationResult invalidRange = TextEditKernel.Prepare(new StringTextSnapshot("abcd"), [CreateEdit(4, 1, "x")]);
+
 		TextEditPreparationResult insertionInsideReplacement = TextEditKernel.Prepare(
 			new StringTextSnapshot("abcd"),
-			[CreateEdit(1, 2, "x"), CreateEdit(2, 0, "y")]);
+			[CreateEdit(1, 2, "x"), CreateEdit(2, 0, "y")]
+		);
+
 		TextEditPreparationResult overlappingReplacements = TextEditKernel.Prepare(
 			new StringTextSnapshot("abcd"),
-			[CreateEdit(1, 2, "x"), CreateEdit(2, 2, "y")]);
+			[CreateEdit(1, 2, "x"), CreateEdit(2, 2, "y")]
+		);
 
 		// The issues carry human-readable messages so hosts can surface them without wording
 		// their own text; the category is the branch-on value.
@@ -279,9 +259,7 @@ public sealed class TextEditKernelTests
 		Assert.AreEqual("The edit range is outside the document.", invalidRange.Issues[0].Message);
 		Assert.AreEqual(TextEditPreparationIssueKind.RangeOutOfBounds, invalidRange.Issues[0].Kind);
 		Assert.AreEqual("An insertion starts inside a replacement range.", insertionInsideReplacement.Issues[0].Message);
-		Assert.AreEqual(
-			TextEditPreparationIssueKind.InsertionInsideReplacement,
-			insertionInsideReplacement.Issues[0].Kind);
+		Assert.AreEqual(TextEditPreparationIssueKind.InsertionInsideReplacement, insertionInsideReplacement.Issues[0].Kind);
 		Assert.AreEqual("The edit ranges overlap.", overlappingReplacements.Issues[0].Message);
 		Assert.AreEqual(TextEditPreparationIssueKind.ReplacementOverlap, overlappingReplacements.Issues[0].Kind);
 	}
@@ -291,19 +269,15 @@ public sealed class TextEditKernelTests
 	{
 		TextEditPreparationResult result = TextEditKernel.Prepare(
 			new StringTextSnapshot("abcdef"),
-			[
-				CreateEdit(1, 3, "X"),
-				CreateEdit(1, 0, "a"),
-				CreateEdit(1, 0, "b"),
-				CreateEdit(3, 2, "Y")
-			]);
+			[CreateEdit(1, 3, "X"), CreateEdit(1, 0, "a"), CreateEdit(1, 0, "b"), CreateEdit(3, 2, "Y")]
+		);
 
-		Assert.IsFalse(result.IsValid);
-		Assert.AreEqual(0, result.Edits.Operations.Count);
+		Assert.IsFalse(result.Succeeded);
+		Assert.IsEmpty(result.Edits.Operations);
 
 		// The same-offset insertions are valid; the overlapping replacement is reported against the
 		// replacement that precedes it.
-		Assert.AreEqual(1, result.Issues.Count);
+		Assert.HasCount(1, result.Issues);
 		Assert.AreEqual(3, result.Issues[0].EditIndex);
 		Assert.AreEqual(0, result.Issues[0].RelatedEditIndex);
 		Assert.AreEqual(TextEditPreparationIssueKind.ReplacementOverlap, result.Issues[0].Kind);
@@ -312,12 +286,10 @@ public sealed class TextEditKernelTests
 	[TestMethod]
 	public void Prepare_InsertionInsideReplacement_NamesTheTriggeringEditAndTheReplacement()
 	{
-		TextEditPreparationResult result = TextEditKernel.Prepare(
-			new StringTextSnapshot("abcd"),
-			[CreateEdit(1, 2, "x"), CreateEdit(2, 0, "y")]);
+		TextEditPreparationResult result = TextEditKernel.Prepare(new StringTextSnapshot("abcd"), [CreateEdit(1, 2, "x"), CreateEdit(2, 0, "y")]);
 
-		Assert.IsFalse(result.IsValid);
-		Assert.AreEqual(1, result.Issues.Count);
+		Assert.IsFalse(result.Succeeded);
+		Assert.HasCount(1, result.Issues);
 
 		// The issue names the triggering edit and its counterpart: the insertion inside the
 		// replacement range names the replacement as related.
@@ -330,12 +302,13 @@ public sealed class TextEditKernelTests
 	{
 		TextEditPreparationResult result = TextEditKernel.Prepare(
 			new StringTextSnapshot("abcdef"),
-			[CreateEdit(1, 1, "B"), CreateEdit(99, 1, "bad")]);
+			[CreateEdit(1, 1, "B"), CreateEdit(99, 1, "bad")]
+		);
 
-		Assert.IsFalse(result.IsValid);
-		Assert.AreEqual(1, result.Issues.Count);
+		Assert.IsFalse(result.Succeeded);
+		Assert.HasCount(1, result.Issues);
 		Assert.AreEqual(1, result.Issues[0].EditIndex);
-		Assert.AreEqual(0, result.Edits.Operations.Count);
+		Assert.IsEmpty(result.Edits.Operations);
 	}
 
 	[TestMethod]
@@ -345,21 +318,18 @@ public sealed class TextEditKernelTests
 		// ordering contract covers mixed batches, so hosts can present invalid edits first.
 		TextEditPreparationResult result = TextEditKernel.Prepare(
 			new StringTextSnapshot("abcdef"),
-			[
-				CreateEdit(99, 1, "bad"),
-				CreateEdit(1, 2, "x"),
-				CreateEdit(2, 2, "y")
-			]);
+			[CreateEdit(99, 1, "bad"), CreateEdit(1, 2, "x"), CreateEdit(2, 2, "y")]
+		);
 
-		Assert.IsFalse(result.IsValid);
-		Assert.AreEqual(2, result.Issues.Count);
+		Assert.IsFalse(result.Succeeded);
+		Assert.HasCount(2, result.Issues);
 		Assert.AreEqual(TextEditPreparationIssueKind.RangeOutOfBounds, result.Issues[0].Kind);
 		Assert.AreEqual(0, result.Issues[0].EditIndex);
 		Assert.AreEqual("The edit range is outside the document.", result.Issues[0].Message);
 		Assert.AreEqual(TextEditPreparationIssueKind.ReplacementOverlap, result.Issues[1].Kind);
 		Assert.AreEqual(2, result.Issues[1].EditIndex);
 		Assert.AreEqual("The edit ranges overlap.", result.Issues[1].Message);
-		Assert.AreEqual(0, result.Edits.Operations.Count);
+		Assert.IsEmpty(result.Edits.Operations);
 	}
 
 	[TestMethod]
@@ -369,10 +339,11 @@ public sealed class TextEditKernelTests
 		// an insertion.
 		TextEditPreparationResult result = TextEditKernel.Prepare(
 			new StringTextSnapshot("abc"),
-			[CreateEdit(1, 0, string.Empty), CreateEdit(1, 0, string.Empty)]);
+			[CreateEdit(1, 0, string.Empty), CreateEdit(1, 0, string.Empty)]
+		);
 
-		Assert.IsTrue(result.IsValid);
-		Assert.AreEqual(0, result.Edits.Operations.Count);
+		Assert.IsTrue(result.Succeeded);
+		Assert.IsEmpty(result.Edits.Operations);
 	}
 
 	[TestMethod]
@@ -380,12 +351,10 @@ public sealed class TextEditKernelTests
 	{
 		// Ranges are validated before the no-op check, so an out-of-range no-op reports the range
 		// issue instead of being silently ignored.
-		TextEditPreparationResult result = TextEditKernel.Prepare(
-			new StringTextSnapshot("abc"),
-			[CreateEdit(4, 0, string.Empty)]);
+		TextEditPreparationResult result = TextEditKernel.Prepare(new StringTextSnapshot("abc"), [CreateEdit(4, 0, string.Empty)]);
 
-		Assert.IsFalse(result.IsValid);
-		Assert.AreEqual(1, result.Issues.Count);
+		Assert.IsFalse(result.Succeeded);
+		Assert.HasCount(1, result.Issues);
 		Assert.AreEqual("The edit range is outside the document.", result.Issues[0].Message);
 	}
 
@@ -394,11 +363,12 @@ public sealed class TextEditKernelTests
 	{
 		TextEditPreparationResult result = TextEditKernel.Prepare(
 			new StringTextSnapshot("abcdef"),
-			[CreateEdit(1, 3, string.Empty), CreateEdit(2, 0, string.Empty)]);
+			[CreateEdit(1, 3, string.Empty), CreateEdit(2, 0, string.Empty)]
+		);
 
-		Assert.IsTrue(result.IsValid);
-		Assert.AreEqual(1, result.Edits.Operations.Count);
-		Assert.AreEqual(1, result.Edits.Operations[0].StartOffset);
+		Assert.IsTrue(result.Succeeded);
+		Assert.HasCount(1, result.Edits.Operations);
+		Assert.AreEqual(1, result.Edits.Operations[0].Range.Offset);
 	}
 
 	[TestMethod]
@@ -409,24 +379,32 @@ public sealed class TextEditKernelTests
 		// same-offset insertions are accepted by both.
 		TextEditPreparationResult duplicateResult = TextEditKernel.Prepare(
 			new StringTextSnapshot("abc"),
-			[CreateEdit(1, 0, "x"), CreateEdit(1, 0, "y")]);
+			[CreateEdit(1, 0, "x"), CreateEdit(1, 0, "y")]
+		);
 
-		Assert.IsTrue(duplicateResult.IsValid);
-		Assert.AreEqual(2, new PreparedTextEdits(duplicateResult.Edits.Operations).Operations.Count);
+		Assert.IsTrue(duplicateResult.Succeeded);
+		Assert.HasCount(2, new PreparedTextEdits(duplicateResult.Edits.Operations).Operations);
 
 		TextEditPreparationResult intersectionResult = TextEditKernel.Prepare(
 			new StringTextSnapshot("abc"),
-			[CreateEdit(0, 2, "x"), CreateEdit(1, 0, "y")]);
+			[CreateEdit(0, 2, "x"), CreateEdit(1, 0, "y")]
+		);
 
-		Assert.IsFalse(intersectionResult.IsValid);
-		Assert.ThrowsExactly<ArgumentException>(() => new PreparedTextEdits(
-			[new TextEditOperation(0, 2, "x", 0), new TextEditOperation(1, 1, "y", 1)]));
+		Assert.IsFalse(intersectionResult.Succeeded);
+
+		Assert.ThrowsExactly<ArgumentException>(() =>
+			new PreparedTextEdits([
+				new TextEditOperation(range: TextRange.FromBounds(0, 2), newText: "x", editIndex: 0),
+				new TextEditOperation(range: TextRange.FromBounds(1, 1), newText: "y", editIndex: 1),
+			])
+		);
 
 		TextEditPreparationResult acceptedResult = TextEditKernel.Prepare(
 			new StringTextSnapshot("abc"),
-			[CreateEdit(1, 2, "x"), CreateEdit(1, 0, "y"), CreateEdit(3, 0, "z")]);
+			[CreateEdit(1, 2, "x"), CreateEdit(1, 0, "y"), CreateEdit(3, 0, "z")]
+		);
 
-		Assert.IsTrue(acceptedResult.IsValid);
-		Assert.AreEqual(3, new PreparedTextEdits(acceptedResult.Edits.Operations).Operations.Count);
+		Assert.IsTrue(acceptedResult.Succeeded);
+		Assert.HasCount(3, new PreparedTextEdits(acceptedResult.Edits.Operations).Operations);
 	}
 }

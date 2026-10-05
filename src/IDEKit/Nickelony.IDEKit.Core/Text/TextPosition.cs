@@ -1,40 +1,54 @@
 namespace Nickelony.IDEKit.Core.Text;
 
-/// <summary>
-/// Represents a zero-based line and character position in text.
-/// </summary>
-/// <remarks>
-/// <para>
-/// This is a plain coordinate pair: no bounds check is performed, and conversions on
-/// <see cref="TextLineMap"/> clamp values that fall outside the document. The line and character are
-/// zero-based indexes; a line index counts line breaks, and a character index counts UTF-16 code
-/// units within its line. A tab counts as one code unit and is not expanded to a tab stop. This is
-/// the normative statement of the unit model shared by <see cref="TextPositionRange"/> and the
-/// line/character payloads that reference it. One-based line numbers are exposed as
-/// <see cref="ITextLine.LineNumber"/>.
-/// </para>
-/// <para>
-/// The type is deliberately lenient where <see cref="TextRange"/> validates. An offset range is the
-/// canonical, always-well-formed address of this assembly, so <see cref="TextRange"/> rejects a
-/// negative offset or length up front; a line/character position instead arrives from an untrusted
-/// protocol boundary and may carry negative or out-of-document coordinates, so validation is deferred
-/// to the point where the position becomes an offset: <see cref="ClampNegativeToZero"/> zeroes negative
-/// coordinates, and the conversions on <see cref="TextLineMap"/> clamp a position outside the document.
-/// </para>
-/// </remarks>
+/// <summary>Represents a zero-based line and character position in text.</summary>
 /// <param name="Line">The zero-based line index.</param>
 /// <param name="Character">The zero-based character index within the line.</param>
-public readonly record struct TextPosition(int Line, int Character)
+/// <remarks>
+/// No bounds check is performed; a position can arrive from an untrusted protocol boundary with negative or out-of-document coordinates,
+/// so the conversions on <see cref="TextLineMap"/> clamp out-of-document values, and <see cref="ClampNegativeToZero"/> zeroes a negative coordinate.
+/// A line index counts line breaks and a character index counts UTF-16 code units within its line; a tab is one code unit and is not expanded
+/// to a tab stop. Positions order by line and then by character, whatever their values.
+/// </remarks>
+public readonly record struct TextPosition(int Line, int Character) : IComparable<TextPosition>
 {
-	/// <summary>
-	/// Gets this position with a negative line or character value changed to zero.
-	/// </summary>
+	/// <summary>Determines whether the left position is before the right position.</summary>
+	/// <param name="left">The first position.</param>
+	/// <param name="right">The second position.</param>
+	/// <returns><see langword="true"/> when <paramref name="left"/> is on an earlier line, or on the same line at an earlier character.</returns>
+	public static bool operator <(TextPosition left, TextPosition right) => left.CompareTo(right) < 0;
+
+	/// <summary>Determines whether the left position is after the right position.</summary>
+	/// <param name="left">The first position.</param>
+	/// <param name="right">The second position.</param>
+	/// <returns><see langword="true"/> when <paramref name="left"/> is on a later line, or on the same line at a later character.</returns>
+	public static bool operator >(TextPosition left, TextPosition right) => left.CompareTo(right) > 0;
+
+	/// <summary>Determines whether the left position is before the right position or equal to it.</summary>
+	/// <param name="left">The first position.</param>
+	/// <param name="right">The second position.</param>
+	/// <returns><see langword="true"/> when <paramref name="left"/> is not after <paramref name="right"/>.</returns>
+	public static bool operator <=(TextPosition left, TextPosition right) => left.CompareTo(right) <= 0;
+
+	/// <summary>Determines whether the left position is after the right position or equal to it.</summary>
+	/// <param name="left">The first position.</param>
+	/// <param name="right">The second position.</param>
+	/// <returns><see langword="true"/> when <paramref name="left"/> is not before <paramref name="right"/>.</returns>
+	public static bool operator >=(TextPosition left, TextPosition right) => left.CompareTo(right) >= 0;
+
+	/// <summary>Compares this position with another by line and then by character.</summary>
+	/// <param name="other">The position to compare with.</param>
+	/// <returns>
+	/// A negative value when this position is before <paramref name="other"/>, zero when they are equal, and a positive value otherwise.
+	/// </returns>
+	public int CompareTo(TextPosition other)
+	{
+		int byLine = Line.CompareTo(other.Line);
+		return byLine != 0 ? byLine : Character.CompareTo(other.Character);
+	}
+
+	/// <summary>Returns this position with a negative line or character value changed to zero.</summary>
 	/// <remarks>
-	/// Coordinates supplied by a caller (for example a request payload) can carry negative values
-	/// when they were not validated; the clamped pair is the position every consumer accepts.
-	/// Non-negative values are returned unchanged.
+	/// A coordinate supplied by a caller can be negative when it was not validated; a non-negative value is returned unchanged.
 	/// </remarks>
-	/// <returns>The position with negative coordinates clamped to zero.</returns>
-	public TextPosition ClampNegativeToZero()
-		=> new(Math.Max(0, Line), Math.Max(0, Character));
+	public TextPosition ClampNegativeToZero() => new(Math.Max(0, Line), Math.Max(0, Character));
 }

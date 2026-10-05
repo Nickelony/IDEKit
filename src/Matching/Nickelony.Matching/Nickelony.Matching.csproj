@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<RootNamespace>Nickelony.Matching</RootNamespace>
+		<AssemblyName>Nickelony.Matching</AssemblyName>
+		<PackageId>Nickelony.Matching</PackageId>
+		<Description>Dependency-free fuzzy matching and scoring of text for any caller: a subsequence matcher with the scoring of the VS Code quick open, and the word matcher of its command palette.</Description>
+		<PackageTags>fuzzy-matching;fuzzy-search;scoring;text;nickelony</PackageTags>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<WarningsAsErrors>RS0016;RS0017</WarningsAsErrors>
+		<RequireConfigureAwait>true</RequireConfigureAwait>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.CodeAnalysis.PublicApiAnalyzers" PrivateAssets="all" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="README.md" Pack="true" PackagePath="\" />
+		<None Include="..\..\..\icons\$(PackageIcon)" Pack="true" PackagePath="\" />
+	</ItemGroup>
+</Project>

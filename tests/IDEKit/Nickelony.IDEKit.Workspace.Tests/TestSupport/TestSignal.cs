@@ -1,28 +1,21 @@
 namespace Nickelony.IDEKit.Workspace.Tests;
 
-/// <summary>
-/// A stale-proof "operation started" signal for test file-system doubles.
-/// </summary>
+/// <summary>A stale-proof "operation started" signal for test file-system doubles.</summary>
 /// <remarks>
-/// A one-shot <see cref="TaskCompletionSource{TResult}"/> cannot distinguish "the operation has not
-/// started yet" from "an earlier operation completed the source": awaiting a stale completed source
-/// passes immediately and can mask a race. Waiters instead name the ordinal of the occurrence they
-/// need, so an earlier <see cref="Advance"/> can never complete a later wait.
+/// A one-shot <see cref="TaskCompletionSource{TResult}"/> cannot distinguish "the operation has not started yet" from "an earlier
+/// operation completed the source": awaiting a stale completed source passes immediately and can mask a race. Waiters instead name the ordinal
+/// of the occurrence they need, so an earlier <see cref="Advance"/> can never complete a later wait.
 /// </remarks>
 internal sealed class TestSignal
 {
-	/// <summary>
-	/// The time a test waits for an awaited ordinal before the wait fails.
-	/// </summary>
+	/// <summary>The time a test waits for an awaited ordinal before the wait fails.</summary>
 	private static readonly TimeSpan s_waitTimeout = TimeSpan.FromSeconds(10);
 
 	private readonly object _sync = new();
 	private readonly List<(int Ordinal, TaskCompletionSource<object?> Source)> _waiters = [];
+
 	private int _count;
 
-	/// <summary>
-	/// Gets the number of operations that have started.
-	/// </summary>
 	public int Count
 	{
 		get
@@ -32,9 +25,7 @@ internal sealed class TestSignal
 		}
 	}
 
-	/// <summary>
-	/// Records that one operation started and releases every waiter whose ordinal is reached.
-	/// </summary>
+	/// <summary>Records that one operation started and releases every waiter whose ordinal is reached.</summary>
 	public void Advance()
 	{
 		List<TaskCompletionSource<object?>>? completed = null;
@@ -61,9 +52,8 @@ internal sealed class TestSignal
 	}
 
 	/// <summary>
-	/// Returns a task that completes when the operation with the given ordinal has started, or
-	/// immediately when that ordinal is already reached. The wait fails the test instead of hanging
-	/// the suite when the ordinal does not arrive within the timeout.
+	/// Returns a task that completes when the operation with the given ordinal has started, or immediately when that ordinal is already reached.
+	/// The wait fails the test instead of hanging the suite when the ordinal does not arrive within the timeout.
 	/// </summary>
 	/// <param name="ordinal">The one-based ordinal of the awaited occurrence.</param>
 	public async Task WhenReachedAsync(int ordinal)
@@ -86,6 +76,7 @@ internal sealed class TestSignal
 		// framework times out without pointing at the signal; the timeout turns that into a failure
 		// message that names the ordinal and the elapsed budget.
 		Task completed = await Task.WhenAny(wait, Task.Delay(s_waitTimeout)).ConfigureAwait(false);
+
 		if (completed != wait)
 			Assert.Fail($"The operation signal did not reach ordinal {ordinal} within {s_waitTimeout.TotalSeconds:0} seconds.");
 	}

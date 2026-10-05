@@ -1,0 +1,62 @@
+- name: Home
+  href: index.md
+- name: Guides
+  items:
+    - name: Consumer integration
+      href: ConsumerIntegration.md
+    - name: Client
+      href: ClientGuide.md
+    - name: Lua provider
+      href: LuaGuide.md
+    - name: Core
+      href: CoreGuide.md
+    - name: Workspace
+      href: WorkspaceGuide.md
+    - name: Workspace views
+      href: WorkspaceViewsGuide.md
+    - name: Language features
+      href: LanguageFeaturesGuide.md
+    - name: File watching
+      href: FileWatchingGuide.md
+    - name: Processes
+      href: ProcessesGuide.md
+    - name: Key bindings
+      href: KeyBindingsGuide.md
+    - name: Quick pick and command palette
+      href: QuickPickGuide.md
+    - name: Fuzzy matching
+      href: MatchingGuide.md
+    - name: Editor usage
+      href: EditorUsageGuide.md
+    - name: Editor language features
+      href: EditorLanguageFeaturesGuide.md
+    - name: Markdown
+      href: MarkdownGuide.md
+    - name: TextMate
+      href: TextMateGuide.md
+    - name: Provider authoring
+      href: ProviderAuthoring.md
+    - name: Provider framework
+      href: ProviderGuide.md
+    - name: Roslyn provider
+      href: RoslynGuide.md
+- name: Architecture
+  items:
+    - name: Overview
+      href: ArchitectureGuide.md
+    - name: Editor bindings
+      href: EditorBindingGuide.md
+    - name: Editor sharing
+      href: EditorSharingGuide.md
+    - name: LanguageServer internals
+      href: LanguageServerInternals.md
+    - name: Key-binding context tokens
+      href: KeyBindingContextDesign.md
+    - name: Roslyn-backed providers
+      href: RoslynProviderDesign.md
+- name: Contributing
+  items:
+    - name: Documentation style
+      href: DocStyleGuide.md
+- name: API reference
+  href: api/

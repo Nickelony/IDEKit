@@ -12,11 +12,12 @@ public sealed class CompletionWindowInteropTests
 		bool handled = false;
 
 		IntPtr result = CompletionWindowInterop.CompletionWindowWndProc(
-			IntPtr.Zero,
-			WindowMessageMouseActivate,
-			IntPtr.Zero,
-			IntPtr.Zero,
-			ref handled);
+			hwnd: IntPtr.Zero,
+			msg: WindowMessageMouseActivate,
+			wParam: IntPtr.Zero,
+			lParam: IntPtr.Zero,
+			ref handled
+		);
 
 		// The mouse-activate message is answered with "no activate" so clicking the popup cannot steal focus.
 		Assert.IsTrue(handled);
@@ -30,11 +31,12 @@ public sealed class CompletionWindowInteropTests
 		bool handled = false;
 
 		IntPtr result = CompletionWindowInterop.CompletionWindowWndProc(
-			IntPtr.Zero,
-			WindowMessageNull,
-			IntPtr.Zero,
-			IntPtr.Zero,
-			ref handled);
+			hwnd: IntPtr.Zero,
+			msg: WindowMessageNull,
+			wParam: IntPtr.Zero,
+			lParam: IntPtr.Zero,
+			ref handled
+		);
 
 		Assert.IsFalse(handled);
 		Assert.AreEqual(IntPtr.Zero, result);

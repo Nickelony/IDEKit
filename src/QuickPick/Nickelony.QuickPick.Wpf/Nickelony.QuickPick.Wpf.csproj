@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net8.0-windows</TargetFramework>
+		<UseWPF>true</UseWPF>
+		<RootNamespace>Nickelony.QuickPick.Wpf</RootNamespace>
+		<AssemblyName>Nickelony.QuickPick.Wpf</AssemblyName>
+		<PackageId>Nickelony.QuickPick.Wpf</PackageId>
+		<Description>WPF window for the toolkit-neutral Nickelony.QuickPick controller: a popup with an input over a virtualized list, placed against any element of a WPF host, for a command palette or a quick open.</Description>
+		<PackageTags>wpf;quick-pick;command-palette;quick-open;nickelony</PackageTags>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<WarningsAsErrors>RS0016;RS0017</WarningsAsErrors>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.CodeAnalysis.PublicApiAnalyzers" PrivateAssets="all" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\Matching\Nickelony.Matching\Nickelony.Matching.csproj" />
+		<ProjectReference Include="..\Nickelony.QuickPick\Nickelony.QuickPick.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<!-- The window is one source with the Avalonia adapter; the AVALONIAQUICKPICK define of that project picks the Avalonia branch (see https://github.com/Nickelony/LanguageServer/blob/main/docs/EditorSharingGuide.md). -->
+		<Compile Include="..\..\..\shared\QuickPick\**\*.cs" LinkBase="." />
+	</ItemGroup>
+
+	<ItemGroup>
+		<!-- The presenter tests reach the parts of the window that no host needs: the popup, the input, the list and the busy bar. -->
+		<InternalsVisibleTo Include="Nickelony.QuickPick.Wpf.Tests" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="README.md" Pack="true" PackagePath="\" />
+		<None Include="..\..\..\icons\$(PackageIcon)" Pack="true" PackagePath="\" />
+	</ItemGroup>
+</Project>

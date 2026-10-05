@@ -1,74 +1,68 @@
-using System.Reflection;
 using System.Windows.Input;
 
 namespace Nickelony.KeyBindings.Wpf.Tests;
 
 [STATestClass]
-public class KeyEventArgsExtensionsTests
+public sealed class KeyEventArgsExtensionsTests
 {
 	[TestMethod]
-	public void ToKeyCombo_LeftHandModifiers_ReturnsCombo()
+	public void ToKeyStroke_LeftHandModifiers_ReturnsStroke()
 	{
-		KeyCombo? combo = TestKeyEvents.CreateKeyDown(Key.S, Key.LeftCtrl, Key.LeftShift).ToKeyCombo();
+		var stroke = TestKeyEvents.CreateKeyDown(Key.S, Key.LeftCtrl, Key.LeftShift).ToKeyStroke();
 
-		Assert.IsNotNull(combo);
-		Assert.AreEqual(KeyCode.S, combo.Value.Key);
-		Assert.AreEqual(KeyModifierSet.Control | KeyModifierSet.Shift, combo.Value.Modifiers);
+		Assert.IsNotNull(stroke);
+		Assert.AreEqual(KeyCode.S, stroke.Value.Key);
+		Assert.AreEqual(KeyModifiers.Control | KeyModifiers.Shift, stroke.Value.Modifiers);
 	}
 
 	[TestMethod]
-	public void ToKeyCombo_RightHandAndOsModifiers_AreRecognized()
+	public void ToKeyStroke_RightHandAndOsModifiers_AreRecognized()
 	{
-		KeyCombo? combo = TestKeyEvents.CreateKeyDown(Key.F9, Key.RightCtrl, Key.RightShift, Key.RightAlt, Key.RWin).ToKeyCombo();
+		var stroke = TestKeyEvents.CreateKeyDown(Key.F9, Key.RightCtrl, Key.RightShift, Key.RightAlt, Key.RWin).ToKeyStroke();
 
-		Assert.IsNotNull(combo);
-		Assert.AreEqual(KeyModifierSet.Control | KeyModifierSet.Shift | KeyModifierSet.Alt | KeyModifierSet.Meta, combo.Value.Modifiers);
+		Assert.IsNotNull(stroke);
+		Assert.AreEqual(KeyModifiers.Control | KeyModifiers.Shift | KeyModifiers.Alt | KeyModifiers.Meta, stroke.Value.Modifiers);
 	}
 
 	[TestMethod]
-	public void ToKeyCombo_WithoutModifiers_ReturnsCombo()
+	public void ToKeyStroke_WithoutModifiers_ReturnsStroke()
 	{
-		KeyCombo? combo = TestKeyEvents.CreateKeyDown(Key.F9).ToKeyCombo();
+		var stroke = TestKeyEvents.CreateKeyDown(Key.F9).ToKeyStroke();
 
-		Assert.IsNotNull(combo);
-		Assert.AreEqual(KeyCode.F9, combo.Value.Key);
-		Assert.AreEqual(KeyModifierSet.None, combo.Value.Modifiers);
+		Assert.IsNotNull(stroke);
+		Assert.AreEqual(KeyCode.F9, stroke.Value.Key);
+		Assert.AreEqual(KeyModifiers.None, stroke.Value.Modifiers);
 	}
 
 	[TestMethod]
-	public void ToKeyCombo_ModifierOnlyKey_ReturnsNull()
-		=> Assert.IsNull(TestKeyEvents.CreateKeyDown(Key.LeftCtrl).ToKeyCombo());
+	public void ToKeyStroke_ModifierOnlyKey_ReturnsNull() => Assert.IsNull(TestKeyEvents.CreateKeyDown(Key.LeftCtrl).ToKeyStroke());
 
 	[TestMethod]
-	public void ToKeyCombo_ImeProcessedKey_ReturnsNull()
+	public void ToKeyStroke_ImeProcessedKey_ReturnsNull()
 	{
 		// WPF's KeyEventArgs constructor rejects Key.DeadCharProcessed, so only the IME pseudo-key is
 		// simulatable through the public API.
-		Assert.IsNull(TestKeyEvents.CreateKeyDown(Key.ImeProcessed).ToKeyCombo());
+		Assert.IsNull(TestKeyEvents.CreateKeyDown(Key.ImeProcessed).ToKeyStroke());
 	}
 
 	[TestMethod]
-	public void ToKeyCombo_SystemKeyEvent_NormalizesToTheUnderlyingKey()
+	public void ToKeyStroke_SystemKeyEvent_NormalizesToTheUnderlyingKey()
 	{
 		KeyEventArgs args = TestKeyEvents.CreateKeyDown(Key.Q);
 
-		MethodInfo? markSystem = typeof(KeyEventArgs).GetMethod("MarkSystem", BindingFlags.Instance | BindingFlags.NonPublic);
+		WpfInternalsTestHelpers.MarkSystem(args);
 
-		Assert.IsNotNull(markSystem, "WPF's KeyEventArgs.MarkSystem internals changed.");
-		markSystem.Invoke(args, null);
+		var stroke = args.ToKeyStroke();
 
-		KeyCombo? combo = args.ToKeyCombo();
-
-		Assert.IsNotNull(combo);
-		Assert.AreEqual(KeyCode.Q, combo.Value.Key);
+		Assert.IsNotNull(stroke);
+		Assert.AreEqual(KeyCode.Q, stroke.Value.Key);
 	}
 
 	[TestMethod]
-	public void ToKeyCombo_NullEvent_Throws()
+	public void ToKeyStroke_NullEvent_Throws()
 	{
 		KeyEventArgs? args = null;
-
-		Assert.ThrowsExactly<ArgumentNullException>(() => args!.ToKeyCombo());
+		Assert.ThrowsExactly<ArgumentNullException>(() => args!.ToKeyStroke());
 	}
 
 	[TestMethod]
@@ -90,11 +84,18 @@ public class KeyEventArgsExtensionsTests
 	}
 
 	[TestMethod]
+	public void IsAltGr_NonCharacterKeyUnderLeftCtrlAndRightAlt_ReturnsFalse()
+	{
+		// A Ctrl+RightAlt chord on a key that types no character is a genuine binding, not AltGr, so the
+		// default filter must leave it for the dispatcher.
+		Assert.IsFalse(TestKeyEvents.CreateKeyDown(Key.F5, Key.LeftCtrl, Key.RightAlt).IsAltGr());
+		Assert.IsFalse(TestKeyEvents.CreateKeyDown(Key.Left, Key.LeftCtrl, Key.RightAlt).IsAltGr());
+	}
+
+	[TestMethod]
 	public void IsAltGr_NullEvent_Throws()
 	{
 		KeyEventArgs? args = null;
-
 		Assert.ThrowsExactly<ArgumentNullException>(() => args!.IsAltGr());
 	}
-
 }

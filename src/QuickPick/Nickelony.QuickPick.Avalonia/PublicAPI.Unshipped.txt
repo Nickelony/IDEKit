@@ -1,0 +1,47 @@
+#nullable enable
+Nickelony.QuickPick.Avalonia.QuickPickPresenter
+Nickelony.QuickPick.Avalonia.QuickPickPresenter.Dispose() -> void
+Nickelony.QuickPick.Avalonia.QuickPickPresenter.IsOpen.get -> bool
+Nickelony.QuickPick.Avalonia.QuickPickPresenter.QuickPickPresenter(Avalonia.Controls.Control! host, Nickelony.QuickPick.QuickPickController! controller, Nickelony.QuickPick.Avalonia.QuickPickTheme? theme = null, Nickelony.QuickPick.Avalonia.QuickPickPresenterHooks? hooks = null) -> void
+Nickelony.QuickPick.Avalonia.QuickPickPresenter.Theme.get -> Nickelony.QuickPick.Avalonia.QuickPickTheme!
+Nickelony.QuickPick.Avalonia.QuickPickPresenter.Theme.set -> void
+Nickelony.QuickPick.Avalonia.QuickPickPresenterHooks
+Nickelony.QuickPick.Avalonia.QuickPickPresenterHooks.QuickPickPresenterHooks() -> void
+Nickelony.QuickPick.Avalonia.QuickPickPresenterHooks.ResolveIcon.get -> System.Func<string!, Avalonia.Media.IImage?>?
+Nickelony.QuickPick.Avalonia.QuickPickPresenterHooks.ResolveIcon.init -> void
+Nickelony.QuickPick.Avalonia.QuickPickTheme
+Nickelony.QuickPick.Avalonia.QuickPickTheme.<Clone>$() -> Nickelony.QuickPick.Avalonia.QuickPickTheme!
+Nickelony.QuickPick.Avalonia.QuickPickTheme.ActiveBackground.get -> Avalonia.Media.IBrush!
+Nickelony.QuickPick.Avalonia.QuickPickTheme.ActiveBackground.init -> void
+Nickelony.QuickPick.Avalonia.QuickPickTheme.ActiveForeground.get -> Avalonia.Media.IBrush!
+Nickelony.QuickPick.Avalonia.QuickPickTheme.ActiveForeground.init -> void
+Nickelony.QuickPick.Avalonia.QuickPickTheme.Background.get -> Avalonia.Media.IBrush!
+Nickelony.QuickPick.Avalonia.QuickPickTheme.Background.init -> void
+Nickelony.QuickPick.Avalonia.QuickPickTheme.BorderBrush.get -> Avalonia.Media.IBrush!
+Nickelony.QuickPick.Avalonia.QuickPickTheme.BorderBrush.init -> void
+Nickelony.QuickPick.Avalonia.QuickPickTheme.BorderThickness.get -> double
+Nickelony.QuickPick.Avalonia.QuickPickTheme.BorderThickness.init -> void
+Nickelony.QuickPick.Avalonia.QuickPickTheme.CornerRadius.get -> double
+Nickelony.QuickPick.Avalonia.QuickPickTheme.CornerRadius.init -> void
+Nickelony.QuickPick.Avalonia.QuickPickTheme.Equals(Nickelony.QuickPick.Avalonia.QuickPickTheme? other) -> bool
+Nickelony.QuickPick.Avalonia.QuickPickTheme.Foreground.get -> Avalonia.Media.IBrush!
+Nickelony.QuickPick.Avalonia.QuickPickTheme.Foreground.init -> void
+Nickelony.QuickPick.Avalonia.QuickPickTheme.ItemTemplate.get -> Avalonia.Controls.Templates.IDataTemplate?
+Nickelony.QuickPick.Avalonia.QuickPickTheme.ItemTemplate.init -> void
+Nickelony.QuickPick.Avalonia.QuickPickTheme.MaxVisibleRows.get -> int
+Nickelony.QuickPick.Avalonia.QuickPickTheme.MaxVisibleRows.init -> void
+Nickelony.QuickPick.Avalonia.QuickPickTheme.Padding.get -> Avalonia.Thickness
+Nickelony.QuickPick.Avalonia.QuickPickTheme.Padding.init -> void
+Nickelony.QuickPick.Avalonia.QuickPickTheme.QuickPickTheme() -> void
+Nickelony.QuickPick.Avalonia.QuickPickTheme.RowHeight.get -> double
+Nickelony.QuickPick.Avalonia.QuickPickTheme.RowHeight.init -> void
+Nickelony.QuickPick.Avalonia.QuickPickTheme.TopOffset.get -> double
+Nickelony.QuickPick.Avalonia.QuickPickTheme.TopOffset.init -> void
+Nickelony.QuickPick.Avalonia.QuickPickTheme.Width.get -> double
+Nickelony.QuickPick.Avalonia.QuickPickTheme.Width.init -> void
+override Nickelony.QuickPick.Avalonia.QuickPickTheme.Equals(object? obj) -> bool
+override Nickelony.QuickPick.Avalonia.QuickPickTheme.GetHashCode() -> int
+override Nickelony.QuickPick.Avalonia.QuickPickTheme.ToString() -> string!
+static Nickelony.QuickPick.Avalonia.QuickPickTheme.Default.get -> Nickelony.QuickPick.Avalonia.QuickPickTheme!
+static Nickelony.QuickPick.Avalonia.QuickPickTheme.operator !=(Nickelony.QuickPick.Avalonia.QuickPickTheme? left, Nickelony.QuickPick.Avalonia.QuickPickTheme? right) -> bool
+static Nickelony.QuickPick.Avalonia.QuickPickTheme.operator ==(Nickelony.QuickPick.Avalonia.QuickPickTheme? left, Nickelony.QuickPick.Avalonia.QuickPickTheme? right) -> bool

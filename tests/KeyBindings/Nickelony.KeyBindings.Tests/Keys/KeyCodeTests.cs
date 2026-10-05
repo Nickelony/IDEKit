@@ -1,11 +1,11 @@
 namespace Nickelony.KeyBindings.Tests;
 
 [TestClass]
-public class KeyCodeTests
+public sealed class KeyCodeTests
 {
 	/// <summary>
-	/// Pins the canonical serialized names and their values, so a rename or a renumbering fails
-	/// loudly instead of silently changing the persisted override format.
+	/// Pins a sample of the canonical members' dense values, so a renumbering fails loudly, and names each sampled member, so a rename or removal
+	/// of one breaks the build.
 	/// </summary>
 	[TestMethod]
 	[DataRow(KeyCode.Backspace, 2)]
@@ -27,8 +27,7 @@ public class KeyCodeTests
 	[DataRow(KeyCode.Apostrophe, 140)]
 	[DataRow(KeyCode.Oem8, 141)]
 	[DataRow(KeyCode.IntlBackslash, 142)]
-	public void CanonicalMembers_KeepTheirSerializedNameAndValue(KeyCode keyCode, int expectedValue)
-		=> Assert.AreEqual(expectedValue, (int)keyCode);
+	public void CanonicalMembers_KeepTheirSerializedNameAndValue(KeyCode keyCode, int expectedValue) => Assert.AreEqual(expectedValue, (int)keyCode);
 
 	[TestMethod]
 	public void ExcludedValues_AreNotDefined()
@@ -40,9 +39,8 @@ public class KeyCodeTests
 	}
 
 	/// <summary>
-	/// Pins the serialized-name contract for every member neutrally, without a framework adapter: the
-	/// name of a defined value parses back to that same value, so a persisted override never resolves to
-	/// a different key after a rename.
+	/// Pins the serialized-name contract for every member neutrally, without a framework adapter: the name of a defined value parses
+	/// back to that same value, so a persisted override never resolves to a different key after a rename.
 	/// </summary>
 	[TestMethod]
 	public void EveryDefinedMember_RoundTripsThroughItsSerializedName()
@@ -52,7 +50,7 @@ public class KeyCodeTests
 			string? name = Enum.GetName(keyCode);
 
 			Assert.IsNotNull(name, $"KeyCode.{keyCode} has no name.");
-			Assert.IsTrue((int)keyCode > 0, $"KeyCode.{name} must be positive to stay a distinct value.");
+			Assert.IsGreaterThan(0, (int)keyCode, $"KeyCode.{name} must be positive to stay a distinct value.");
 
 			Assert.IsTrue(Enum.TryParse(name, out KeyCode parsed), $"'{name}' does not parse back to a KeyCode.");
 			Assert.AreEqual(keyCode, parsed, $"'{name}' does not round-trip to its own member.");
@@ -61,8 +59,8 @@ public class KeyCodeTests
 	}
 
 	/// <summary>
-	/// Pins that no two members share a value or a name, so a serialized name identifies exactly one key
-	/// and <see cref="Enum.GetName"/> can never be ambiguous.
+	/// Pins that no two members share a value or a name, so a serialized name identifies exactly one key and <see cref="Enum.GetName"/>
+	/// can never be ambiguous.
 	/// </summary>
 	[TestMethod]
 	public void Members_HaveDistinctNamesAndValues()

@@ -1,5 +1,5 @@
-using Microsoft.Extensions.Logging;
 using System.Text.Json;
+using Microsoft.Extensions.Logging;
 
 namespace Nickelony.LanguageServer.Client.Tests;
 
@@ -7,7 +7,7 @@ namespace Nickelony.LanguageServer.Client.Tests;
 public sealed class CompletionResponseJsonConverterTests
 {
 	[TestMethod]
-	public void DeserializeCompletionResponse_AppliesItemDefaultsToItems()
+	public void Deserialize_AppliesItemDefaultsToItems()
 	{
 		CompletionResponse? response = JsonSerializer.Deserialize<CompletionResponse>(
 			"""
@@ -39,14 +39,16 @@ public sealed class CompletionResponseJsonConverterTests
 			    }
 			  ]
 			}
-			""");
+			"""
+		);
 
 		Assert.IsNotNull(response);
 		Assert.IsTrue(response.IsIncomplete);
 		Assert.IsNotNull(response.Items);
-		Assert.AreEqual(2, response.Items.Count);
+		Assert.HasCount(2, response.Items);
 
 		CompletionItemPayload firstItem = response.Items[0];
+
 		Assert.AreEqual(InsertTextFormat.Snippet, firstItem.InsertTextFormat);
 		Assert.IsInstanceOfType<CompletionInsertReplaceTextEditPayload>(firstItem.TextEdit);
 
@@ -61,6 +63,7 @@ public sealed class CompletionResponseJsonConverterTests
 		Assert.AreEqual("defaults", firstItemData.GetProperty("origin").GetString());
 
 		CompletionItemPayload secondItem = response.Items[1];
+
 		Assert.AreEqual(InsertTextFormat.Snippet, secondItem.InsertTextFormat);
 		Assert.IsInstanceOfType<CompletionInsertReplaceTextEditPayload>(secondItem.TextEdit);
 		Assert.AreEqual("warn", secondItem.TextEdit.NewText);
@@ -70,7 +73,7 @@ public sealed class CompletionResponseJsonConverterTests
 	}
 
 	[TestMethod]
-	public void DeserializeCompletionResponse_DefaultEditRangeUsesLabelInsteadOfInsertText()
+	public void Deserialize_DefaultEditRangeUsesLabelInsteadOfInsertText()
 	{
 		CompletionResponse? response = JsonSerializer.Deserialize<CompletionResponse>(
 			"""
@@ -88,11 +91,12 @@ public sealed class CompletionResponseJsonConverterTests
 			    }
 			  ]
 			}
-			""");
+			"""
+		);
 
 		Assert.IsNotNull(response);
 		Assert.IsNotNull(response.Items);
-		Assert.AreEqual(1, response.Items.Count);
+		Assert.HasCount(1, response.Items);
 
 		CompletionItemPayload item = response.Items[0];
 
@@ -102,23 +106,23 @@ public sealed class CompletionResponseJsonConverterTests
 	}
 
 	[TestMethod]
-	public void DeserializeCompletionResponse_WhenRootIsNotAnArrayOrObject_LogsWarningAndReturnsEmptyResponse()
+	public void Deserialize_WhenRootIsNotAnArrayOrObject_LogsWarningAndReturnsEmptyResponse()
 	{
-		using var logScope = new TestLoggerScope(LogLevel.Warning);
+		using var logger = new RecordingLogger(LogLevel.Warning);
 
 		var options = new JsonSerializerOptions();
-		options.Converters.Add(new CompletionResponseJsonConverter(logScope));
+		options.Converters.Add(new CompletionResponseJsonConverter(logger));
 
 		CompletionResponse? response = JsonSerializer.Deserialize<CompletionResponse>("5", options);
 
 		Assert.IsNotNull(response);
 		Assert.IsNull(response.Items);
 		Assert.IsFalse(response.IsIncomplete);
-		Assert.IsTrue(logScope.HasEntryAtLeast(LogLevel.Warning), string.Join(Environment.NewLine, logScope.Logs));
+		Assert.IsTrue(logger.HasEntryAtLeast(LogLevel.Warning), string.Join(Environment.NewLine, logger.Logs));
 	}
 
 	[TestMethod]
-	public void DeserializeCompletionResponse_ParsesSortTextAndPreselectAsTypedFields()
+	public void Deserialize_ParsesSortTextAndPreselectAsTypedFields()
 	{
 		CompletionResponse? response = JsonSerializer.Deserialize<CompletionResponse>(
 			"""
@@ -133,12 +137,14 @@ public sealed class CompletionResponseJsonConverterTests
 			    }
 			  ]
 			}
-			""");
+			"""
+		);
 
 		Assert.IsNotNull(response);
 		Assert.IsNotNull(response.Items);
 
 		CompletionItemPayload item = response.Items[0];
+
 		Assert.AreEqual("0002", item.SortText);
 		Assert.AreEqual(CompletionItemKind.Function, item.Kind);
 		Assert.IsTrue(item.Preselect);
@@ -152,39 +158,38 @@ public sealed class CompletionResponseJsonConverterTests
 	}
 
 	[TestMethod]
-	public void DeserializeCompletionResponse_UsesConverterInstanceLogger()
+	public void Deserialize_UsesConverterInstanceLogger()
 	{
-		using var firstLogScope = new TestLoggerScope(LogLevel.Warning);
-		using var secondLogScope = new TestLoggerScope(LogLevel.Warning);
+		using var firstLogger = new RecordingLogger(LogLevel.Warning);
+		using var secondLogger = new RecordingLogger(LogLevel.Warning);
 
 		var firstOptions = new JsonSerializerOptions();
-		firstOptions.Converters.Add(new CompletionResponseJsonConverter(firstLogScope));
+		firstOptions.Converters.Add(new CompletionResponseJsonConverter(firstLogger));
 
 		var secondOptions = new JsonSerializerOptions();
-		secondOptions.Converters.Add(new CompletionResponseJsonConverter(secondLogScope));
+		secondOptions.Converters.Add(new CompletionResponseJsonConverter(secondLogger));
 
 		JsonSerializer.Deserialize<CompletionResponse>("{}", firstOptions);
 		JsonSerializer.Deserialize<CompletionResponse>("{}", secondOptions);
 		JsonSerializer.Deserialize<CompletionResponse>("{}", firstOptions);
 
-		Assert.AreEqual(2, firstLogScope.Logs.Count);
-		Assert.AreEqual(1, secondLogScope.Logs.Count);
+		Assert.HasCount(2, firstLogger.Logs);
+		Assert.HasCount(1, secondLogger.Logs);
 	}
 
 	[TestMethod]
-	public void DeserializeCompletionResponse_SkipsNonObjectItemsInArrayPayload()
+	public void Deserialize_SkipsNonObjectItemsInArrayPayload()
 	{
-		CompletionResponse? response = JsonSerializer.Deserialize<CompletionResponse>(
-			"""["unexpected", 5, null, { "label": "call" }]""");
+		CompletionResponse? response = JsonSerializer.Deserialize<CompletionResponse>("""["unexpected", 5, null, { "label": "call" }]""");
 
 		Assert.IsNotNull(response);
 		Assert.IsNotNull(response.Items);
-		Assert.AreEqual(1, response.Items.Count);
+		Assert.HasCount(1, response.Items);
 		Assert.AreEqual("call", response.Items[0].Label);
 	}
 
 	[TestMethod]
-	public void DeserializeCompletionResponse_SkipsNonObjectItemsInCompletionListPayload()
+	public void Deserialize_SkipsNonObjectItemsInCompletionListPayload()
 	{
 		CompletionResponse? response = JsonSerializer.Deserialize<CompletionResponse>(
 			"""
@@ -192,21 +197,22 @@ public sealed class CompletionResponseJsonConverterTests
 			  "itemDefaults": { "insertTextFormat": 2 },
 			  "items": [ 7, { "label": "call" } ]
 			}
-			""");
+			"""
+		);
 
 		Assert.IsNotNull(response);
 		Assert.IsNotNull(response.Items);
-		Assert.AreEqual(1, response.Items.Count);
+		Assert.HasCount(1, response.Items);
 		Assert.AreEqual(InsertTextFormat.Snippet, response.Items[0].InsertTextFormat);
 	}
 
 	[TestMethod]
-	public void DeserializeCompletionResponse_SkipsItemWithIllegalTextEditUnionAndKeepsValidItems()
+	public void Deserialize_SkipsItemWithIllegalTextEditUnionAndKeepsValidItems()
 	{
-		using var logScope = new TestLoggerScope(LogLevel.Warning);
+		using var logger = new RecordingLogger(LogLevel.Warning);
 
 		var options = new JsonSerializerOptions();
-		options.Converters.Add(new CompletionResponseJsonConverter(logScope));
+		options.Converters.Add(new CompletionResponseJsonConverter(logger));
 
 		CompletionResponse? response = JsonSerializer.Deserialize<CompletionResponse>(
 			"""
@@ -229,18 +235,21 @@ public sealed class CompletionResponseJsonConverterTests
 			    { "label": "call", "kind": 3 }
 			]
 			}
-			""", options);
+			""",
+
+			options
+		);
 
 		Assert.IsNotNull(response);
 		Assert.IsNotNull(response.Items);
-		Assert.AreEqual(1, response.Items.Count);
+		Assert.HasCount(1, response.Items);
 		Assert.AreEqual("call", response.Items[0].Label);
 		Assert.AreEqual(CompletionItemKind.Function, response.Items[0].Kind);
-		Assert.IsTrue(logScope.HasEntryAtLeast(LogLevel.Warning), string.Join(Environment.NewLine, logScope.Logs));
+		Assert.IsTrue(logger.HasEntryAtLeast(LogLevel.Warning), string.Join(Environment.NewLine, logger.Logs));
 	}
 
 	[TestMethod]
-	public void DeserializeCompletionResponse_PreservesCompletionListMetadata()
+	public void Deserialize_PreservesCompletionListMetadata()
 	{
 		CompletionResponse? response = JsonSerializer.Deserialize<CompletionResponse>(
 			"""
@@ -255,17 +264,18 @@ public sealed class CompletionResponseJsonConverterTests
 			    }
 			  ]
 			}
-			""");
+			"""
+		);
 
 		Assert.IsNotNull(response);
 		Assert.IsTrue(response.IsIncomplete);
 		Assert.IsNotNull(response.Items);
-		Assert.AreEqual(1, response.Items.Count);
+		Assert.HasCount(1, response.Items);
 		Assert.AreEqual("spawn", response.Items[0].Label);
 	}
 
 	[TestMethod]
-	public void DeserializeCompletionResponse_ParsesArrayPayload()
+	public void Deserialize_ParsesArrayPayload()
 	{
 		CompletionResponse? response = JsonSerializer.Deserialize<CompletionResponse>(
 			"""
@@ -277,17 +287,18 @@ public sealed class CompletionResponseJsonConverterTests
 			    "filterText": "spawn"
 			  }
 			]
-			""");
+			"""
+		);
 
 		Assert.IsNotNull(response);
 		Assert.IsFalse(response.IsIncomplete);
 		Assert.IsNotNull(response.Items);
-		Assert.AreEqual(1, response.Items.Count);
+		Assert.HasCount(1, response.Items);
 		Assert.AreEqual("spawn", response.Items[0].Label);
 	}
 
 	[TestMethod]
-	public void DeserializeCompletionResponse_IgnoresNonBooleanIncompleteFlag()
+	public void Deserialize_IgnoresNonBooleanIncompleteFlag()
 	{
 		CompletionResponse? response = JsonSerializer.Deserialize<CompletionResponse>(
 			"""
@@ -302,21 +313,22 @@ public sealed class CompletionResponseJsonConverterTests
 			    }
 			  ]
 			}
-			""");
+			"""
+		);
 
 		Assert.IsNotNull(response);
 		Assert.IsFalse(response.IsIncomplete);
 		Assert.IsNotNull(response.Items);
-		Assert.AreEqual(1, response.Items.Count);
+		Assert.HasCount(1, response.Items);
 	}
 
 	[TestMethod]
-	public void DeserializeCompletionResponse_IgnoresMalformedCompletionListItemsShape()
+	public void Deserialize_IgnoresMalformedCompletionListItemsShape()
 	{
-		using var logScope = new TestLoggerScope(LogLevel.Warning);
+		using var logger = new RecordingLogger(LogLevel.Warning);
 
 		var options = new JsonSerializerOptions();
-		options.Converters.Add(new CompletionResponseJsonConverter(logScope));
+		options.Converters.Add(new CompletionResponseJsonConverter(logger));
 
 		CompletionResponse? response = JsonSerializer.Deserialize<CompletionResponse>(
 			"""
@@ -326,35 +338,41 @@ public sealed class CompletionResponseJsonConverterTests
 			    "label": "spawn"
 			  }
 			}
-			""", options);
+			""",
+
+			options
+		);
 
 		Assert.IsNotNull(response);
 		Assert.IsNull(response.Items);
 		Assert.IsFalse(response.IsIncomplete);
 
-		Assert.IsTrue(logScope.HasEntryAtLeast(LogLevel.Warning), string.Join(Environment.NewLine, logScope.Logs));
+		Assert.IsTrue(logger.HasEntryAtLeast(LogLevel.Warning), string.Join(Environment.NewLine, logger.Logs));
 	}
 
 	[TestMethod]
-	public void DeserializeCompletionResponse_LogsWhenCompletionListItemsPropertyIsMissing()
+	public void Deserialize_LogsWhenCompletionListItemsPropertyIsMissing()
 	{
-		using var logScope = new TestLoggerScope(LogLevel.Warning);
+		using var logger = new RecordingLogger(LogLevel.Warning);
 
 		var options = new JsonSerializerOptions();
-		options.Converters.Add(new CompletionResponseJsonConverter(logScope));
+		options.Converters.Add(new CompletionResponseJsonConverter(logger));
 
 		CompletionResponse? response = JsonSerializer.Deserialize<CompletionResponse>(
 			"""
 			{
 			  "isIncomplete": true
 			}
-			""", options);
+			""",
+
+			options
+		);
 
 		Assert.IsNotNull(response);
 		Assert.IsNull(response.Items);
 		Assert.IsFalse(response.IsIncomplete);
 
-		Assert.IsTrue(logScope.HasEntryAtLeast(LogLevel.Warning), string.Join(Environment.NewLine, logScope.Logs));
+		Assert.IsTrue(logger.HasEntryAtLeast(LogLevel.Warning), string.Join(Environment.NewLine, logger.Logs));
 	}
 
 	[TestMethod]
@@ -366,10 +384,12 @@ public sealed class CompletionResponseJsonConverterTests
 				{
 					Label = "spawn",
 					Kind = CompletionItemKind.Function,
-					InsertText = "spawn"
-				}
+					InsertText = "spawn",
+				},
 			],
-			isIncomplete: true);
+
+			isIncomplete: true
+		);
 
 		string json = JsonSerializer.Serialize(response);
 		CompletionResponse? roundTripped = JsonSerializer.Deserialize<CompletionResponse>(json);
@@ -378,12 +398,12 @@ public sealed class CompletionResponseJsonConverterTests
 		Assert.IsNotNull(roundTripped);
 		Assert.IsTrue(roundTripped.IsIncomplete);
 		Assert.IsNotNull(roundTripped.Items);
-		Assert.AreEqual(1, roundTripped.Items.Count);
+		Assert.HasCount(1, roundTripped.Items);
 		Assert.AreEqual("spawn", roundTripped.Items[0].Label);
 	}
 
 	[TestMethod]
-	public void DeserializeCompletionResponse_ParsesCompletionProtocolDepthFieldsAsTypedMembers()
+	public void Deserialize_ParsesCompletionProtocolDepthFieldsAsTypedMembers()
 	{
 		CompletionResponse? response = JsonSerializer.Deserialize<CompletionResponse>(
 			"""
@@ -406,7 +426,8 @@ public sealed class CompletionResponseJsonConverterTests
 			    }
 			  ]
 			}
-			""");
+			"""
+		);
 
 		Assert.IsNotNull(response);
 		Assert.IsNotNull(response.Items);
@@ -414,14 +435,14 @@ public sealed class CompletionResponseJsonConverterTests
 		CompletionItemPayload item = response.Items[0];
 
 		Assert.IsNotNull(item.Tags);
-		Assert.AreEqual(1, item.Tags.Count);
+		Assert.HasCount(1, item.Tags);
 		Assert.AreEqual(CompletionItemTag.Deprecated, item.Tags[0]);
 
 		Assert.IsNotNull(item.CommitCharacters);
-		CollectionAssert.AreEqual(new[] { "(", "," }, item.CommitCharacters.ToArray());
+		Assert.AreSequenceEqual(["(", ","], [.. item.CommitCharacters]);
 
 		Assert.IsNotNull(item.AdditionalTextEdits);
-		Assert.AreEqual(1, item.AdditionalTextEdits.Count);
+		Assert.HasCount(1, item.AdditionalTextEdits);
 
 		TextEditPayload additionalEdit = item.AdditionalTextEdits[0];
 
@@ -439,7 +460,7 @@ public sealed class CompletionResponseJsonConverterTests
 	}
 
 	[TestMethod]
-	public void DeserializeCompletionResponse_AppliesCommitCharacterDefaultsOnlyWhenItemLacksThem()
+	public void Deserialize_AppliesCommitCharacterDefaultsOnlyWhenItemLacksThem()
 	{
 		CompletionResponse? response = JsonSerializer.Deserialize<CompletionResponse>(
 			"""
@@ -453,7 +474,8 @@ public sealed class CompletionResponseJsonConverterTests
 			    { "label": "second", "commitCharacters": ["("] }
 			  ]
 			}
-			""");
+			"""
+		);
 
 		Assert.IsNotNull(response);
 		Assert.IsNotNull(response.Items);
@@ -462,20 +484,17 @@ public sealed class CompletionResponseJsonConverterTests
 		CompletionItemPayload second = response.Items[1];
 
 		Assert.IsNotNull(first.CommitCharacters);
-		CollectionAssert.AreEqual(new[] { ".", ":" }, first.CommitCharacters.ToArray());
+		Assert.AreSequenceEqual([".", ":"], [.. first.CommitCharacters]);
 		Assert.IsNotNull(second.CommitCharacters);
-		CollectionAssert.AreEqual(new[] { "(" }, second.CommitCharacters.ToArray());
+		Assert.AreSequenceEqual(["("], [.. second.CommitCharacters]);
 	}
 
 	[TestMethod]
-	public void DeserializeCompletionResponse_CasingVariantItemMemberWinsOverTheDefault()
+	public void Deserialize_CasingVariantItemMemberWinsOverTheDefault()
 	{
-		// The transport binds members case-insensitively, so the default merge must detect a casing variant;
+		// The protocol serializer binds members case-insensitively, so the default merge must detect a casing variant;
 		// otherwise it appends the canonical default after the item member and the default wins.
-		var options = new JsonSerializerOptions
-		{
-			PropertyNameCaseInsensitive = true
-		};
+		var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 
 		CompletionResponse? response = JsonSerializer.Deserialize<CompletionResponse>(
 			"""
@@ -488,26 +507,25 @@ public sealed class CompletionResponseJsonConverterTests
 			  ]
 			}
 			""",
-			options);
+
+			options
+		);
 
 		Assert.IsNotNull(response);
 		Assert.IsNotNull(response.Items);
-		Assert.AreEqual(1, response.Items.Count);
+		Assert.HasCount(1, response.Items);
 
 		CompletionItemPayload item = response.Items[0];
 
 		Assert.AreEqual("variant", item.Label);
 		Assert.IsNotNull(item.CommitCharacters);
-		CollectionAssert.AreEqual(new[] { "(" }, item.CommitCharacters.ToArray());
+		Assert.AreSequenceEqual(["("], [.. item.CommitCharacters]);
 	}
 
 	[TestMethod]
-	public void DeserializeCompletionResponse_CasingVariantLabelSynthesizesTheDefaultTextEdit()
+	public void Deserialize_CasingVariantLabelSynthesizesTheDefaultTextEdit()
 	{
-		var options = new JsonSerializerOptions
-		{
-			PropertyNameCaseInsensitive = true
-		};
+		var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 
 		CompletionResponse? response = JsonSerializer.Deserialize<CompletionResponse>(
 			"""
@@ -523,11 +541,13 @@ public sealed class CompletionResponseJsonConverterTests
 			  ]
 			}
 			""",
-			options);
+
+			options
+		);
 
 		Assert.IsNotNull(response);
 		Assert.IsNotNull(response.Items);
-		Assert.AreEqual(1, response.Items.Count);
+		Assert.HasCount(1, response.Items);
 
 		CompletionItemPayload item = response.Items[0];
 
@@ -555,7 +575,8 @@ public sealed class CompletionResponseJsonConverterTests
 			    }
 			  ]
 			}
-			""");
+			"""
+		);
 
 		Assert.IsNotNull(payload);
 

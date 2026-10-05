@@ -1,0 +1,52 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<!-- The Fluent light and dark themes that follow the editor theme need WPF from .NET 9 on; the libraries stay on net8.0-windows. -->
+		<TargetFramework>net10.0-windows</TargetFramework>
+		<UseWPF>true</UseWPF>
+		<EditorEngine>Wpf</EditorEngine>
+		<!-- WPF marks ThemeMode experimental (WPF0001); the sample uses it on purpose, to switch the Fluent theme with the editor theme. -->
+		<NoWarn>$(NoWarn);WPF0001</NoWarn>
+		<IsPackable>false</IsPackable>
+		<RootNamespace>Nickelony.Samples.Wpf</RootNamespace>
+		<AssemblyName>Nickelony.Samples.Wpf</AssemblyName>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="TextMateSharp.Grammars" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\src\IDEKit\Nickelony.IDEKit.Core\Nickelony.IDEKit.Core.csproj" />
+		<ProjectReference Include="..\..\src\IDEKit\Nickelony.IDEKit.FileWatching\Nickelony.IDEKit.FileWatching.csproj" />
+		<ProjectReference Include="..\..\src\IDEKit\Nickelony.IDEKit.LanguageFeatures\Nickelony.IDEKit.LanguageFeatures.csproj" />
+		<ProjectReference Include="..\..\src\IDEKit\Nickelony.IDEKit.LanguageFeatures.Controllers\Nickelony.IDEKit.LanguageFeatures.Controllers.csproj" />
+		<ProjectReference Include="..\..\src\IDEKit\Nickelony.IDEKit.Markdown\Nickelony.IDEKit.Markdown.csproj" />
+		<ProjectReference Include="..\..\src\IDEKit\Nickelony.IDEKit.TextMate\Nickelony.IDEKit.TextMate.csproj" />
+		<ProjectReference Include="..\..\src\IDEKit\Nickelony.IDEKit.Workspace\Nickelony.IDEKit.Workspace.csproj" />
+		<ProjectReference Include="..\..\src\IDEKit\Nickelony.IDEKit.Workspace.QuickPick\Nickelony.IDEKit.Workspace.QuickPick.csproj" />
+		<ProjectReference Include="..\..\src\IDEKit\Nickelony.IDEKit.Workspace.Views\Nickelony.IDEKit.Workspace.Views.csproj" />
+		<ProjectReference Include="..\..\src\IDEKit\Nickelony.IDEKit.Processes\Nickelony.IDEKit.Processes.csproj" />
+		<ProjectReference Include="..\..\src\IDEKit\Nickelony.IDEKit.JsonSchema\Nickelony.IDEKit.JsonSchema.csproj" />
+		<ProjectReference Include="..\..\src\KeyBindings\Nickelony.KeyBindings\Nickelony.KeyBindings.csproj" />
+		<ProjectReference Include="..\..\src\QuickPick\Nickelony.QuickPick\Nickelony.QuickPick.csproj" />
+		<ProjectReference Include="..\..\src\QuickPick\Nickelony.QuickPick.Wpf\Nickelony.QuickPick.Wpf.csproj" />
+		<ProjectReference Include="..\..\src\LanguageServer\Nickelony.LanguageServer.Provider.Abstractions\Nickelony.LanguageServer.Provider.Abstractions.csproj" />
+		<ProjectReference Include="..\..\src\LanguageServer\Nickelony.LanguageServer.Lua\Nickelony.LanguageServer.Lua.csproj" />
+		<ProjectReference Include="..\..\src\LanguageServer\Nickelony.LanguageServer.Roslyn\Nickelony.LanguageServer.Roslyn.csproj" />
+		<ProjectReference Include="..\..\src\IDEKit\AvalonEdit\Nickelony.IDEKit.AvalonEdit\Nickelony.IDEKit.AvalonEdit.csproj" />
+		<ProjectReference Include="..\..\src\IDEKit\AvalonEdit\Nickelony.IDEKit.AvalonEdit.LanguageFeatures\Nickelony.IDEKit.AvalonEdit.LanguageFeatures.csproj" />
+		<ProjectReference Include="..\..\src\IDEKit\AvalonEdit\Nickelony.IDEKit.AvalonEdit.Markdown\Nickelony.IDEKit.AvalonEdit.Markdown.csproj" />
+		<ProjectReference Include="..\..\src\IDEKit\AvalonEdit\Nickelony.IDEKit.AvalonEdit.TextMate\Nickelony.IDEKit.AvalonEdit.TextMate.csproj" />
+		<ProjectReference Include="..\..\src\KeyBindings\Nickelony.KeyBindings.Wpf\Nickelony.KeyBindings.Wpf.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<InternalsVisibleTo Include="Nickelony.Samples.Wpf.Tests" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<!-- The sample body is shared with the Avalonia head; the AVALONIAEDIT define that Directory.Build.targets sets for it selects the other engine. -->
+		<Compile Include="..\..\shared\Samples\**\*.cs" LinkBase="." />
+	</ItemGroup>
+</Project>

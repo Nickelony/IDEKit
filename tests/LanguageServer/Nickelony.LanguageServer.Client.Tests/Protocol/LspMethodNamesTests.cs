@@ -1,12 +1,6 @@
-using Nickelony.LanguageServer.Protocol;
-
 namespace Nickelony.LanguageServer.Client.Tests;
 
-/// <summary>
-/// Pins every centralized LSP method name to its exact wire spelling. The constants exist so a typo is a compile
-/// error at the call site, but a misspelled value still compiles and only degrades at runtime, so this guard keeps
-/// each string authoritative even for a method no other test drives.
-/// </summary>
+/// <summary>Pins every centralized LSP method name to its exact wire spelling.</summary>
 [TestClass]
 public sealed class LspMethodNamesTests
 {
@@ -28,11 +22,14 @@ public sealed class LspMethodNamesTests
 			(LspMethodNames.Configuration, "workspace/configuration"),
 			(LspMethodNames.WorkspaceFolders, "workspace/workspaceFolders"),
 			(LspMethodNames.SemanticTokensRefresh, "workspace/semanticTokens/refresh"),
+			(LspMethodNames.DiagnosticRefresh, "workspace/diagnostic/refresh"),
 			(LspMethodNames.RegisterCapability, "client/registerCapability"),
 			(LspMethodNames.UnregisterCapability, "client/unregisterCapability"),
 			(LspMethodNames.WorkDoneProgressCreate, "window/workDoneProgress/create"),
 			(LspMethodNames.LogMessage, "window/logMessage"),
 			(LspMethodNames.ShowMessage, "window/showMessage"),
+			(LspMethodNames.ShowMessageRequest, "window/showMessageRequest"),
+			(LspMethodNames.ApplyEdit, "workspace/applyEdit"),
 			(LspMethodNames.TelemetryEvent, "telemetry/event"),
 			(LspMethodNames.Progress, "$/progress"),
 			(LspMethodNames.Hello, "$/hello"),
@@ -48,14 +45,19 @@ public sealed class LspMethodNamesTests
 			(LspMethodNames.Completion, "textDocument/completion"),
 			(LspMethodNames.CompletionResolve, "completionItem/resolve"),
 			(LspMethodNames.CodeAction, "textDocument/codeAction"),
+			(LspMethodNames.CodeActionResolve, "codeAction/resolve"),
+			(LspMethodNames.ExecuteCommand, "workspace/executeCommand"),
 			(LspMethodNames.DocumentSymbol, "textDocument/documentSymbol"),
+			(LspMethodNames.WorkspaceSymbol, "workspace/symbol"),
+			(LspMethodNames.WorkspaceSymbolResolve, "workspaceSymbol/resolve"),
 			(LspMethodNames.Formatting, "textDocument/formatting"),
 			(LspMethodNames.Hover, "textDocument/hover"),
 			(LspMethodNames.Definition, "textDocument/definition"),
 			(LspMethodNames.References, "textDocument/references"),
 			(LspMethodNames.Rename, "textDocument/rename"),
 			(LspMethodNames.SignatureHelp, "textDocument/signatureHelp"),
-			(LspMethodNames.SemanticTokensFull, "textDocument/semanticTokens/full")
+			(LspMethodNames.SemanticTokensFull, "textDocument/semanticTokens/full"),
+			(LspMethodNames.DocumentDiagnostic, "textDocument/diagnostic"),
 		};
 
 		foreach ((string constant, string expected) in expectations)

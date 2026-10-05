@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<!-- Avalonia is cross-platform, so this adapter targets net8.0 (not net8.0-windows). -->
+		<TargetFramework>net8.0</TargetFramework>
+		<RootNamespace>Nickelony.QuickPick.Avalonia</RootNamespace>
+		<AssemblyName>Nickelony.QuickPick.Avalonia</AssemblyName>
+		<PackageId>Nickelony.QuickPick.Avalonia</PackageId>
+		<Description>Avalonia window for the toolkit-neutral Nickelony.QuickPick controller: a popup with an input over a virtualized list, placed against any control of an Avalonia host, for a command palette or a quick open.</Description>
+		<PackageTags>avalonia;quick-pick;command-palette;quick-open;nickelony</PackageTags>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<WarningsAsErrors>RS0016;RS0017</WarningsAsErrors>
+		<DefineConstants>$(DefineConstants);AVALONIAQUICKPICK</DefineConstants>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.CodeAnalysis.PublicApiAnalyzers" PrivateAssets="all" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Avalonia" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\Matching\Nickelony.Matching\Nickelony.Matching.csproj" />
+		<ProjectReference Include="..\Nickelony.QuickPick\Nickelony.QuickPick.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<!-- Shared with the WPF adapter; the AVALONIAQUICKPICK define (set above) picks the Avalonia branch of each file (see https://github.com/Nickelony/LanguageServer/blob/main/docs/EditorSharingGuide.md). -->
+		<Compile Include="..\..\..\shared\QuickPick\**\*.cs" LinkBase="." />
+	</ItemGroup>
+
+	<ItemGroup>
+		<!-- The presenter tests reach the parts of the window that no host needs: the popup, the input, the list and the busy bar. -->
+		<InternalsVisibleTo Include="Nickelony.QuickPick.Avalonia.Tests" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="README.md" Pack="true" PackagePath="\" />
+		<None Include="..\..\..\icons\$(PackageIcon)" Pack="true" PackagePath="\" />
+	</ItemGroup>
+</Project>

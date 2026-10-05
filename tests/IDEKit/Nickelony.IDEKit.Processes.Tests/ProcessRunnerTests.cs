@@ -5,19 +5,15 @@ using System.Text;
 namespace Nickelony.IDEKit.Processes.Tests;
 
 /// <summary>
-/// Verifies the run orchestration of <see cref="ProcessRunner"/>: completion, the outcome values, the timeout and
-/// cancellation paths, the zero-timeout probe, termination fallback and unobserved exits, bounded output capture,
-/// and request pass-through. Real-process behavior is verified in <see cref="ProcessRunnerRealProcessTests"/>.
+/// Verifies the run orchestration of <see cref="ProcessRunner"/>: completion, the outcome values, the timeout and cancellation paths,
+/// the zero-timeout probe, termination fallback and unobserved exits, bounded output capture, and request pass-through.
+/// Real-process behavior is verified in <see cref="ProcessRunnerRealProcessTests"/>.
 /// </summary>
 [TestClass]
-public class ProcessRunnerTests
+public sealed class ProcessRunnerTests
 {
 	private static readonly TimeSpan s_grace = TimeSpan.FromMilliseconds(250);
-	private static readonly ProcessRunnerOptions s_graceOptions = new()
-	{
-		TerminationGracePeriod = s_grace,
-		OutputDrainGracePeriod = s_grace,
-	};
+	private static readonly ProcessRunnerOptions s_graceOptions = new() { TerminationGracePeriod = s_grace, OutputDrainGracePeriod = s_grace };
 
 	// The delayed-exit probe proves the runner awaits a slow kill confirmation instead of assuming the exit.
 	// Its simulated confirmation delay (100 ms) must stay far below the grace cap, so a loaded machine, where
@@ -32,9 +28,9 @@ public class ProcessRunnerTests
 	public void Run_WithoutTimeoutOrCancellation_WaitsUntilExitAndReturnsResult()
 	{
 		var handle = new FakeProcessHandle { ExitCodeValue = 7 };
-		var runner = new ProcessRunner(new FakeProcessLauncher(_ => handle));
+		var runner = new ProcessRunner(new FakeProcessHandleFactory(_ => handle));
 
-		ProcessRunResult result = runner.Run(TestRequests.Default);
+		ProcessRunResult result = runner.Run(TestRequests.Default, TestContext.CancellationToken);
 
 		Assert.AreEqual(ProcessRunOutcome.Exited, result.Outcome);
 		Assert.AreEqual(7, result.ExitCode);
@@ -47,9 +43,9 @@ public class ProcessRunnerTests
 	public async Task RunAsync_ExitObserved_ReturnsResult()
 	{
 		var handle = new FakeProcessHandle { ExitCodeValue = 7 };
-		var runner = new ProcessRunner(new FakeProcessLauncher(_ => handle));
+		var runner = new ProcessRunner(new FakeProcessHandleFactory(_ => handle));
 
-		ProcessRunResult result = await runner.RunAsync(TestRequests.Default);
+		ProcessRunResult result = await runner.RunAsync(TestRequests.Default, TestContext.CancellationToken);
 
 		Assert.AreEqual(ProcessRunOutcome.Exited, result.Outcome);
 		Assert.AreEqual(7, result.ExitCode);
@@ -60,9 +56,9 @@ public class ProcessRunnerTests
 	public void Run_ExitObserved_ReportsTheProcessIdAndSucceeded()
 	{
 		var handle = new FakeProcessHandle { ExitCodeValue = 0, ProcessId = 4242 };
-		var runner = new ProcessRunner(new FakeProcessLauncher(_ => handle));
+		var runner = new ProcessRunner(new FakeProcessHandleFactory(_ => handle));
 
-		ProcessRunResult result = runner.Run(TestRequests.Default);
+		ProcessRunResult result = runner.Run(TestRequests.Default, TestContext.CancellationToken);
 
 		Assert.AreEqual(4242, result.ProcessId);
 		Assert.IsTrue(result.Succeeded);
@@ -72,9 +68,9 @@ public class ProcessRunnerTests
 	public void Run_FailureExitCode_IsNotSucceeded()
 	{
 		var handle = new FakeProcessHandle { ExitCodeValue = 3 };
-		var runner = new ProcessRunner(new FakeProcessLauncher(_ => handle));
+		var runner = new ProcessRunner(new FakeProcessHandleFactory(_ => handle));
 
-		ProcessRunResult result = runner.Run(TestRequests.Default);
+		ProcessRunResult result = runner.Run(TestRequests.Default, TestContext.CancellationToken);
 
 		Assert.AreEqual(3, result.ExitCode);
 		Assert.IsFalse(result.Succeeded);
@@ -84,9 +80,9 @@ public class ProcessRunnerTests
 	public void Run_UnobservedExit_StillReportsTheProcessId()
 	{
 		var handle = new FakeProcessHandle { ExitsImmediately = false, CompletesExitOnKill = false };
-		var runner = new ProcessRunner(new FakeProcessLauncher(_ => handle), s_graceOptions);
+		var runner = new ProcessRunner(new FakeProcessHandleFactory(_ => handle), s_graceOptions);
 
-		ProcessRunResult result = runner.Run(TestRequests.Default with { Timeout = TimeSpan.FromMilliseconds(50) });
+		ProcessRunResult result = runner.Run(TestRequests.Default with { Timeout = TimeSpan.FromMilliseconds(50) }, TestContext.CancellationToken);
 
 		Assert.AreEqual(ProcessRunOutcome.TimedOut, result.Outcome);
 		Assert.IsNull(result.ExitCode);
@@ -98,9 +94,9 @@ public class ProcessRunnerTests
 	public void Run_Timeout_ProcessExitsInTime_DoesNotTerminate()
 	{
 		var handle = new FakeProcessHandle();
-		var runner = new ProcessRunner(new FakeProcessLauncher(_ => handle), s_graceOptions);
+		var runner = new ProcessRunner(new FakeProcessHandleFactory(_ => handle), s_graceOptions);
 
-		ProcessRunResult result = runner.Run(TestRequests.Default with { Timeout = TimeSpan.FromSeconds(1) });
+		ProcessRunResult result = runner.Run(TestRequests.Default with { Timeout = TimeSpan.FromSeconds(1) }, TestContext.CancellationToken);
 
 		Assert.AreEqual(ProcessRunOutcome.Exited, result.Outcome);
 		Assert.AreEqual(0, handle.KillEntireProcessTreeCalls);
@@ -112,9 +108,9 @@ public class ProcessRunnerTests
 	public void Run_TimeoutExceeded_TerminatesProcessTreeAndReportsTimedOut()
 	{
 		var handle = new FakeProcessHandle { ExitsImmediately = false };
-		var runner = new ProcessRunner(new FakeProcessLauncher(_ => handle), s_graceOptions);
+		var runner = new ProcessRunner(new FakeProcessHandleFactory(_ => handle), s_graceOptions);
 
-		ProcessRunResult result = runner.Run(TestRequests.Default with { Timeout = TimeSpan.FromMilliseconds(50) });
+		ProcessRunResult result = runner.Run(TestRequests.Default with { Timeout = TimeSpan.FromMilliseconds(50) }, TestContext.CancellationToken);
 
 		Assert.AreEqual(ProcessRunOutcome.TimedOut, result.Outcome);
 		Assert.AreEqual(0, result.ExitCode);
@@ -134,9 +130,10 @@ public class ProcessRunnerTests
 			ExitCodeValue = 7,
 			KillExitDelay = TimeSpan.FromMilliseconds(100),
 		};
-		var runner = new ProcessRunner(new FakeProcessLauncher(_ => handle), s_delayedExitOptions);
 
-		ProcessRunResult result = runner.Run(TestRequests.Default with { Timeout = TimeSpan.FromMilliseconds(50) });
+		var runner = new ProcessRunner(new FakeProcessHandleFactory(_ => handle), s_delayedExitOptions);
+
+		ProcessRunResult result = runner.Run(TestRequests.Default with { Timeout = TimeSpan.FromMilliseconds(50) }, TestContext.CancellationToken);
 
 		Assert.AreEqual(ProcessRunOutcome.TimedOut, result.Outcome);
 		Assert.AreEqual(7, result.ExitCode);
@@ -146,18 +143,18 @@ public class ProcessRunnerTests
 	[TestMethod]
 	public void Run_TimeoutExceeded_CapturesOutputWhenTheExitIsConfirmed()
 	{
-		var handle = new FakeProcessHandle
-		{
-			ExitsImmediately = false,
-			StandardOutputText = "late output",
-		};
-		var runner = new ProcessRunner(new FakeProcessLauncher(_ => handle), s_graceOptions);
+		var handle = new FakeProcessHandle { ExitsImmediately = false, StandardOutputText = "late output" };
+		var runner = new ProcessRunner(new FakeProcessHandleFactory(_ => handle), s_graceOptions);
 
-		ProcessRunResult result = runner.Run(TestRequests.Default with
-		{
-			Timeout = TimeSpan.FromMilliseconds(50),
-			RedirectStandardOutput = true,
-		});
+		ProcessRunResult result = runner.Run(
+			TestRequests.Default with
+			{
+				Timeout = TimeSpan.FromMilliseconds(50),
+				RedirectStandardOutput = true,
+			},
+
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(ProcessRunOutcome.TimedOut, result.Outcome);
 		Assert.AreEqual(0, result.ExitCode);
@@ -168,14 +165,10 @@ public class ProcessRunnerTests
 	[DynamicData(nameof(TreeKillFailures), DynamicDataDisplayName = nameof(FaultDisplayName))]
 	public void Run_TreeKillFails_FallsBackToSingleKill(Exception treeKillFailure)
 	{
-		var handle = new FakeProcessHandle
-		{
-			ExitsImmediately = false,
-			OnKillEntireProcessTree = () => throw treeKillFailure,
-		};
-		var runner = new ProcessRunner(new FakeProcessLauncher(_ => handle), s_graceOptions);
+		var handle = new FakeProcessHandle { ExitsImmediately = false, OnKillEntireProcessTree = () => throw treeKillFailure };
+		var runner = new ProcessRunner(new FakeProcessHandleFactory(_ => handle), s_graceOptions);
 
-		ProcessRunResult result = runner.Run(TestRequests.Default with { Timeout = TimeSpan.FromMilliseconds(50) });
+		ProcessRunResult result = runner.Run(TestRequests.Default with { Timeout = TimeSpan.FromMilliseconds(50) }, TestContext.CancellationToken);
 
 		Assert.AreEqual(ProcessRunOutcome.TimedOut, result.Outcome);
 		Assert.AreEqual(1, handle.KillEntireProcessTreeCalls);
@@ -193,14 +186,19 @@ public class ProcessRunnerTests
 			OnKillEntireProcessTree = () => throw new InvalidOperationException("tree kill failed"),
 			OnKill = () => throw new InvalidOperationException("kill failed"),
 		};
-		var runner = new ProcessRunner(new FakeProcessLauncher(_ => handle), s_graceOptions);
 
-		ProcessRunResult result = runner.Run(TestRequests.Default with
-		{
-			Timeout = TimeSpan.FromMilliseconds(50),
-			RedirectStandardOutput = true,
-			RedirectStandardError = true,
-		});
+		var runner = new ProcessRunner(new FakeProcessHandleFactory(_ => handle), s_graceOptions);
+
+		ProcessRunResult result = runner.Run(
+			TestRequests.Default with
+			{
+				Timeout = TimeSpan.FromMilliseconds(50),
+				RedirectStandardOutput = true,
+				RedirectStandardError = true,
+			},
+
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(ProcessRunOutcome.TimedOut, result.Outcome);
 		Assert.IsNull(result.ExitCode);
@@ -214,16 +212,17 @@ public class ProcessRunnerTests
 	[TestMethod]
 	public async Task RunAsync_PreCanceledToken_DoesNotStartProcessAndReportsCanceled()
 	{
-		var launcher = new FakeProcessLauncher(_ => new FakeProcessHandle());
-		var runner = new ProcessRunner(launcher);
+		var handleFactory = new FakeProcessHandleFactory(_ => new FakeProcessHandle());
+		var runner = new ProcessRunner(handleFactory);
 		using var cancellation = new CancellationTokenSource();
+
 		cancellation.Cancel();
 
 		ProcessRunResult result = await runner.RunAsync(TestRequests.Default, cancellation.Token);
 
 		Assert.AreEqual(ProcessRunOutcome.CanceledBeforeStart, result.Outcome);
 		Assert.IsNull(result.ExitCode);
-		Assert.AreEqual(0, launcher.StartCalls);
+		Assert.AreEqual(0, handleFactory.CreateCalls);
 	}
 
 	[TestMethod]
@@ -231,12 +230,8 @@ public class ProcessRunnerTests
 	{
 		FakeProcessHandle handle = null!;
 		using var cancellation = new CancellationTokenSource();
-		handle = new FakeProcessHandle
-		{
-			ExitsImmediately = false,
-			OnWaitForExitAsync = cancellation.Cancel,
-		};
-		var runner = new ProcessRunner(new FakeProcessLauncher(_ => handle), s_graceOptions);
+		handle = new FakeProcessHandle { ExitsImmediately = false, OnWaitForExitAsync = cancellation.Cancel };
+		var runner = new ProcessRunner(new FakeProcessHandleFactory(_ => handle), s_graceOptions);
 
 		ProcessRunResult result = await runner.RunAsync(TestRequests.Default, cancellation.Token);
 
@@ -249,9 +244,9 @@ public class ProcessRunnerTests
 	public void Run_ZeroTimeout_ProcessAlreadyExited_ReportsExitWithoutTermination()
 	{
 		var handle = new FakeProcessHandle { ExitCodeValue = 3 };
-		var runner = new ProcessRunner(new FakeProcessLauncher(_ => handle), s_graceOptions);
+		var runner = new ProcessRunner(new FakeProcessHandleFactory(_ => handle), s_graceOptions);
 
-		ProcessRunResult result = runner.Run(TestRequests.Default with { Timeout = TimeSpan.Zero });
+		ProcessRunResult result = runner.Run(TestRequests.Default with { Timeout = TimeSpan.Zero }, TestContext.CancellationToken);
 
 		Assert.AreEqual(ProcessRunOutcome.Exited, result.Outcome);
 		Assert.AreEqual(3, result.ExitCode);
@@ -264,9 +259,9 @@ public class ProcessRunnerTests
 	public void Run_ZeroTimeout_ProcessStillRunning_TerminatesAndReportsTimedOut()
 	{
 		var handle = new FakeProcessHandle { ExitsImmediately = false };
-		var runner = new ProcessRunner(new FakeProcessLauncher(_ => handle), s_graceOptions);
+		var runner = new ProcessRunner(new FakeProcessHandleFactory(_ => handle), s_graceOptions);
 
-		ProcessRunResult result = runner.Run(TestRequests.Default with { Timeout = TimeSpan.Zero });
+		ProcessRunResult result = runner.Run(TestRequests.Default with { Timeout = TimeSpan.Zero }, TestContext.CancellationToken);
 
 		Assert.AreEqual(ProcessRunOutcome.TimedOut, result.Outcome);
 		Assert.AreEqual(0, result.ExitCode);
@@ -275,11 +270,11 @@ public class ProcessRunnerTests
 	}
 
 	[TestMethod]
-	public void Run_LauncherWithoutHandle_ReportsNoProcessHandle()
+	public void Run_HandleFactoryWithoutHandle_ReportsNoProcessHandle()
 	{
-		var runner = new ProcessRunner(new FakeProcessLauncher(_ => null));
+		var runner = new ProcessRunner(new FakeProcessHandleFactory(_ => null));
 
-		ProcessRunResult result = runner.Run(TestRequests.Default);
+		ProcessRunResult result = runner.Run(TestRequests.Default, TestContext.CancellationToken);
 
 		Assert.AreEqual(ProcessRunOutcome.NoProcessHandle, result.Outcome);
 		Assert.IsNull(result.ExitCode);
@@ -290,9 +285,8 @@ public class ProcessRunnerTests
 	[TestMethod]
 	public void Run_StartException_Propagates()
 	{
-		var runner = new ProcessRunner(new FakeProcessLauncher(_ => throw new InvalidOperationException("process start failed")));
-
-		Assert.ThrowsExactly<InvalidOperationException>(() => runner.Run(TestRequests.Default));
+		var runner = new ProcessRunner(new FakeProcessHandleFactory(_ => throw new InvalidOperationException("process start failed")));
+		Assert.ThrowsExactly<InvalidOperationException>(() => runner.Run(TestRequests.Default, TestContext.CancellationToken));
 	}
 
 	[TestMethod]
@@ -303,9 +297,10 @@ public class ProcessRunnerTests
 			ExitsImmediately = false,
 			OnWaitForExitAsync = () => throw new InvalidOperationException("process wait failed"),
 		};
-		var runner = new ProcessRunner(new FakeProcessLauncher(_ => handle), s_graceOptions);
 
-		Assert.ThrowsExactly<InvalidOperationException>(() => runner.Run(TestRequests.Default));
+		var runner = new ProcessRunner(new FakeProcessHandleFactory(_ => handle), s_graceOptions);
+
+		Assert.ThrowsExactly<InvalidOperationException>(() => runner.Run(TestRequests.Default, TestContext.CancellationToken));
 
 		Assert.AreEqual(1, handle.KillEntireProcessTreeCalls);
 		Assert.IsTrue(handle.Disposed);
@@ -315,13 +310,17 @@ public class ProcessRunnerTests
 	public void Run_CapturesStandardOutputAndError()
 	{
 		var handle = new FakeProcessHandle { StandardOutputText = "output", StandardErrorText = "error" };
-		var runner = new ProcessRunner(new FakeProcessLauncher(_ => handle));
+		var runner = new ProcessRunner(new FakeProcessHandleFactory(_ => handle));
 
-		ProcessRunResult result = runner.Run(TestRequests.Default with
-		{
-			RedirectStandardOutput = true,
-			RedirectStandardError = true,
-		});
+		ProcessRunResult result = runner.Run(
+			TestRequests.Default with
+			{
+				RedirectStandardOutput = true,
+				RedirectStandardError = true,
+			},
+
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual("output", result.StandardOutput);
 		Assert.AreEqual("error", result.StandardError);
@@ -333,9 +332,9 @@ public class ProcessRunnerTests
 	public void Run_OutputNotRequested_DoesNotReadCapturedStreams()
 	{
 		var handle = new FakeProcessHandle { StandardOutputText = "output", StandardErrorText = "error" };
-		var runner = new ProcessRunner(new FakeProcessLauncher(_ => handle));
+		var runner = new ProcessRunner(new FakeProcessHandleFactory(_ => handle));
 
-		ProcessRunResult result = runner.Run(TestRequests.Default);
+		ProcessRunResult result = runner.Run(TestRequests.Default, TestContext.CancellationToken);
 
 		Assert.IsNull(result.StandardOutput);
 		Assert.IsNull(result.StandardError);
@@ -348,16 +347,15 @@ public class ProcessRunnerTests
 	public void Run_OutputDrainStaysPending_ReportsOutputUnavailableWithinGrace()
 	{
 		var handle = new FakeProcessHandle { HoldsCapturedOutput = true };
+
 		var runner = new ProcessRunner(
-			new FakeProcessLauncher(_ => handle),
-			new ProcessRunnerOptions
-			{
-				TerminationGracePeriod = s_grace,
-				OutputDrainGracePeriod = TimeSpan.FromMilliseconds(50),
-			});
+			new FakeProcessHandleFactory(_ => handle),
+			new ProcessRunnerOptions { TerminationGracePeriod = s_grace, OutputDrainGracePeriod = TimeSpan.FromMilliseconds(50) }
+		);
+
 		var stopwatch = Stopwatch.StartNew();
 
-		ProcessRunResult result = runner.Run(TestRequests.Default with { RedirectStandardOutput = true });
+		ProcessRunResult result = runner.Run(TestRequests.Default with { RedirectStandardOutput = true }, TestContext.CancellationToken);
 
 		stopwatch.Stop();
 
@@ -365,8 +363,14 @@ public class ProcessRunnerTests
 		Assert.AreEqual(0, result.ExitCode);
 		Assert.IsNull(result.StandardOutput);
 		Assert.AreEqual(1, handle.StandardOutputReadCalls);
-		Assert.IsTrue(stopwatch.Elapsed >= TimeSpan.FromMilliseconds(40), $"The capture ended before the drain grace period: {stopwatch.Elapsed}.");
-		Assert.IsTrue(stopwatch.Elapsed < TimeSpan.FromSeconds(1), $"The capture was not bounded by the drain grace period: {stopwatch.Elapsed}.");
+
+		Assert.IsGreaterThanOrEqualTo(
+			TimeSpan.FromMilliseconds(40),
+			stopwatch.Elapsed,
+			$"The capture ended before the drain grace period: {stopwatch.Elapsed}."
+		);
+
+		Assert.IsLessThan(TimeSpan.FromSeconds(1), stopwatch.Elapsed, $"The capture was not bounded by the drain grace period: {stopwatch.Elapsed}.");
 	}
 
 	[TestMethod]
@@ -374,35 +378,48 @@ public class ProcessRunnerTests
 	public void Run_BothStreamsHeld_BoundsTheCaptureByASingleDrainPeriod()
 	{
 		var handle = new FakeProcessHandle { HoldsCapturedOutput = true };
+
 		var runner = new ProcessRunner(
-			new FakeProcessLauncher(_ => handle),
-			new ProcessRunnerOptions
-			{
-				TerminationGracePeriod = s_grace,
-				OutputDrainGracePeriod = TimeSpan.FromMilliseconds(300),
-			});
+			new FakeProcessHandleFactory(_ => handle),
+			new ProcessRunnerOptions { TerminationGracePeriod = s_grace, OutputDrainGracePeriod = TimeSpan.FromMilliseconds(300) }
+		);
+
 		var stopwatch = Stopwatch.StartNew();
 
-		ProcessRunResult result = runner.Run(TestRequests.Default with
-		{
-			RedirectStandardOutput = true,
-			RedirectStandardError = true,
-		});
+		ProcessRunResult result = runner.Run(
+			TestRequests.Default with
+			{
+				RedirectStandardOutput = true,
+				RedirectStandardError = true,
+			},
+
+			TestContext.CancellationToken
+		);
 
 		stopwatch.Stop();
 
 		Assert.AreEqual(ProcessRunOutcome.Exited, result.Outcome);
 		Assert.IsNull(result.StandardOutput);
 		Assert.IsNull(result.StandardError);
-		Assert.IsTrue(stopwatch.Elapsed >= TimeSpan.FromMilliseconds(250), $"The capture ended before the drain grace period: {stopwatch.Elapsed}.");
-		Assert.IsTrue(stopwatch.Elapsed < TimeSpan.FromMilliseconds(550), $"The captures did not share one drain grace period: {stopwatch.Elapsed}.");
+
+		Assert.IsGreaterThanOrEqualTo(
+			TimeSpan.FromMilliseconds(250),
+			stopwatch.Elapsed,
+			$"The capture ended before the drain grace period: {stopwatch.Elapsed}."
+		);
+
+		Assert.IsLessThan(
+			TimeSpan.FromMilliseconds(550),
+			stopwatch.Elapsed,
+			$"The captures did not share one drain grace period: {stopwatch.Elapsed}."
+		);
 	}
 
 	[TestMethod]
-	public void Run_RequestPassedToLauncherUnchanged()
+	public void Run_RequestPassedToHandleFactoryUnchanged()
 	{
-		var launcher = new FakeProcessLauncher(_ => new FakeProcessHandle());
-		var runner = new ProcessRunner(launcher);
+		var handleFactory = new FakeProcessHandleFactory(_ => new FakeProcessHandle());
+		var runner = new ProcessRunner(handleFactory);
 
 		ProcessRunRequest request = TestRequests.Default with
 		{
@@ -413,22 +430,22 @@ public class ProcessRunnerTests
 			Timeout = TimeSpan.FromSeconds(5),
 		};
 
-		runner.Run(request);
+		runner.Run(request, TestContext.CancellationToken);
 
-		Assert.AreSame(request, launcher.LastRequest);
-		Assert.IsNotNull(launcher.LastRequest);
-		Assert.AreEqual("work-dir", launcher.LastRequest.WorkingDirectory);
-		Assert.AreEqual("value", launcher.LastRequest.EnvironmentVariables["KEY"]);
-		Assert.AreEqual(Encoding.UTF8, launcher.LastRequest.StandardOutputEncoding);
-		Assert.IsTrue(launcher.LastRequest.RedirectStandardOutput);
-		Assert.AreEqual(TimeSpan.FromSeconds(5), launcher.LastRequest.Timeout);
+		Assert.AreSame(request, handleFactory.LastRequest);
+		Assert.IsNotNull(handleFactory.LastRequest);
+		Assert.AreEqual("work-dir", handleFactory.LastRequest.WorkingDirectory);
+		Assert.AreEqual("value", handleFactory.LastRequest.EnvironmentVariables["KEY"]);
+		Assert.AreEqual(Encoding.UTF8, handleFactory.LastRequest.StandardOutputEncoding);
+		Assert.IsTrue(handleFactory.LastRequest.RedirectStandardOutput);
+		Assert.AreEqual(TimeSpan.FromSeconds(5), handleFactory.LastRequest.Timeout);
 	}
 
 	[TestMethod]
-	public void Start_ReturnsHandleFromLauncher()
+	public void Start_ReturnsHandleFromHandleFactory()
 	{
 		var handle = new FakeProcessHandle();
-		var runner = new ProcessRunner(new FakeProcessLauncher(_ => handle));
+		var runner = new ProcessRunner(new FakeProcessHandleFactory(_ => handle));
 
 		IProcessHandle started = runner.Start(TestRequests.Default);
 
@@ -436,10 +453,9 @@ public class ProcessRunnerTests
 	}
 
 	[TestMethod]
-	public void Start_LauncherReturnsNull_ThrowsInvalidOperationException()
+	public void Start_HandleFactoryReturnsNull_ThrowsInvalidOperationException()
 	{
-		var runner = new ProcessRunner(new FakeProcessLauncher(_ => null));
-
+		var runner = new ProcessRunner(new FakeProcessHandleFactory(_ => null));
 		Assert.ThrowsExactly<InvalidOperationException>(() => runner.Start(TestRequests.Default));
 	}
 
@@ -448,17 +464,18 @@ public class ProcessRunnerTests
 	{
 		using var cancellation = new CancellationTokenSource();
 		var handle = new FakeProcessHandle { ExitsImmediately = false };
+
 		var runner = new ProcessRunner(
-			new FakeProcessLauncher(_ =>
+			new FakeProcessHandleFactory(_ =>
 			{
 				cancellation.Cancel();
 				return handle;
 			}),
-			s_graceOptions);
 
-		ProcessRunResult result = runner.Run(
-			TestRequests.Default with { Timeout = TimeSpan.Zero },
-			cancellation.Token);
+			s_graceOptions
+		);
+
+		ProcessRunResult result = runner.Run(TestRequests.Default with { Timeout = TimeSpan.Zero }, cancellation.Token);
 
 		Assert.AreEqual(ProcessRunOutcome.Canceled, result.Outcome);
 		Assert.AreEqual(1, handle.KillEntireProcessTreeCalls);
@@ -469,16 +486,10 @@ public class ProcessRunnerTests
 	{
 		FakeProcessHandle handle = null!;
 		using var cancellation = new CancellationTokenSource();
-		handle = new FakeProcessHandle
-		{
-			ExitsImmediately = false,
-			OnWaitForExitAsync = cancellation.Cancel,
-		};
-		var runner = new ProcessRunner(new FakeProcessLauncher(_ => handle), s_graceOptions);
+		handle = new FakeProcessHandle { ExitsImmediately = false, OnWaitForExitAsync = cancellation.Cancel };
+		var runner = new ProcessRunner(new FakeProcessHandleFactory(_ => handle), s_graceOptions);
 
-		ProcessRunResult result = await runner.RunAsync(
-			TestRequests.Default with { Timeout = TimeSpan.FromSeconds(30) },
-			cancellation.Token);
+		ProcessRunResult result = await runner.RunAsync(TestRequests.Default with { Timeout = TimeSpan.FromSeconds(30) }, cancellation.Token);
 
 		Assert.AreEqual(ProcessRunOutcome.Canceled, result.Outcome);
 		Assert.AreEqual(1, handle.KillEntireProcessTreeCalls);
@@ -488,9 +499,9 @@ public class ProcessRunnerTests
 	public void Run_InfiniteTimeout_WaitsUntilExit()
 	{
 		var handle = new FakeProcessHandle { ExitCodeValue = 4 };
-		var runner = new ProcessRunner(new FakeProcessLauncher(_ => handle));
+		var runner = new ProcessRunner(new FakeProcessHandleFactory(_ => handle));
 
-		ProcessRunResult result = runner.Run(TestRequests.Default with { Timeout = Timeout.InfiniteTimeSpan });
+		ProcessRunResult result = runner.Run(TestRequests.Default with { Timeout = Timeout.InfiniteTimeSpan }, TestContext.CancellationToken);
 
 		Assert.AreEqual(ProcessRunOutcome.Exited, result.Outcome);
 		Assert.AreEqual(4, result.ExitCode);
@@ -504,15 +515,14 @@ public class ProcessRunnerTests
 		var handle = new FakeProcessHandle
 		{
 			ExitsImmediately = false,
-			OnKillEntireProcessTree = () => throw new AggregateException(
-				new InvalidOperationException("tree kill failed")),
-			OnKill = () => throw new AggregateException(
-				new InvalidOperationException("kill failed")),
+			OnKillEntireProcessTree = () => throw new AggregateException(new InvalidOperationException("tree kill failed")),
+			OnKill = () => throw new AggregateException(new InvalidOperationException("kill failed")),
 			OnWaitForExitAsync = () => throw new InvalidOperationException("process wait failed"),
 		};
-		var runner = new ProcessRunner(new FakeProcessLauncher(_ => handle), s_graceOptions);
 
-		Assert.ThrowsExactly<InvalidOperationException>(() => runner.Run(TestRequests.Default));
+		var runner = new ProcessRunner(new FakeProcessHandleFactory(_ => handle), s_graceOptions);
+
+		Assert.ThrowsExactly<InvalidOperationException>(() => runner.Run(TestRequests.Default, TestContext.CancellationToken));
 
 		Assert.AreEqual(1, handle.KillEntireProcessTreeCalls);
 		Assert.AreEqual(1, handle.KillCalls);
@@ -528,13 +538,18 @@ public class ProcessRunnerTests
 			CompletesExitOnKill = false,
 			HoldsCapturedOutput = true,
 		};
-		var runner = new ProcessRunner(new FakeProcessLauncher(_ => handle), s_graceOptions);
 
-		ProcessRunResult result = runner.Run(TestRequests.Default with
-		{
-			Timeout = TimeSpan.FromMilliseconds(50),
-			RedirectStandardOutput = true,
-		});
+		var runner = new ProcessRunner(new FakeProcessHandleFactory(_ => handle), s_graceOptions);
+
+		ProcessRunResult result = runner.Run(
+			TestRequests.Default with
+			{
+				Timeout = TimeSpan.FromMilliseconds(50),
+				RedirectStandardOutput = true,
+			},
+
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(ProcessRunOutcome.TimedOut, result.Outcome);
 		Assert.IsNull(result.ExitCode);
@@ -549,23 +564,21 @@ public class ProcessRunnerTests
 	public async Task RunAsync_TokenCanceledDuringOutputDrain_OutcomeStaysExited()
 	{
 		using var cancellation = new CancellationTokenSource();
+
 		var handle = new FakeProcessHandle
 		{
 			HoldsCapturedOutput = true,
 			OnWaitForExitAsync = () => cancellation.CancelAfter(TimeSpan.FromMilliseconds(100)),
 		};
+
 		var runner = new ProcessRunner(
-			new FakeProcessLauncher(_ => handle),
-			new ProcessRunnerOptions
-			{
-				TerminationGracePeriod = s_grace,
-				OutputDrainGracePeriod = TimeSpan.FromMilliseconds(400),
-			});
+			new FakeProcessHandleFactory(_ => handle),
+			new ProcessRunnerOptions { TerminationGracePeriod = s_grace, OutputDrainGracePeriod = TimeSpan.FromMilliseconds(400) }
+		);
+
 		var stopwatch = Stopwatch.StartNew();
 
-		ProcessRunResult result = await runner.RunAsync(
-			TestRequests.Default with { RedirectStandardOutput = true },
-			cancellation.Token);
+		ProcessRunResult result = await runner.RunAsync(TestRequests.Default with { RedirectStandardOutput = true }, cancellation.Token);
 
 		stopwatch.Stop();
 
@@ -577,7 +590,11 @@ public class ProcessRunnerTests
 
 		// The capture keeps its own drain grace period instead of the caller's token, so the run must outlive the
 		// cancellation before it reports the output as unavailable.
-		Assert.IsTrue(stopwatch.Elapsed >= TimeSpan.FromMilliseconds(300), $"The capture ended before the drain grace period: {stopwatch.Elapsed}.");
+		Assert.IsGreaterThanOrEqualTo(
+			TimeSpan.FromMilliseconds(300),
+			stopwatch.Elapsed,
+			$"The capture ended before the drain grace period: {stopwatch.Elapsed}."
+		);
 	}
 
 	[TestMethod]
@@ -585,9 +602,9 @@ public class ProcessRunnerTests
 	public void Run_OutputDrainFails_ReportsOutputUnavailable(Exception captureFault)
 	{
 		var handle = new FakeProcessHandle { StandardOutputFault = captureFault };
-		var runner = new ProcessRunner(new FakeProcessLauncher(_ => handle), s_graceOptions);
+		var runner = new ProcessRunner(new FakeProcessHandleFactory(_ => handle), s_graceOptions);
 
-		ProcessRunResult result = runner.Run(TestRequests.Default with { RedirectStandardOutput = true });
+		ProcessRunResult result = runner.Run(TestRequests.Default with { RedirectStandardOutput = true }, TestContext.CancellationToken);
 
 		Assert.AreEqual(ProcessRunOutcome.Exited, result.Outcome);
 		Assert.AreEqual(0, result.ExitCode);
@@ -599,10 +616,11 @@ public class ProcessRunnerTests
 	public void Run_OutputDrainFailsWithOutOfMemory_Propagates()
 	{
 		var handle = new FakeProcessHandle { StandardOutputFault = new OutOfMemoryException() };
-		var runner = new ProcessRunner(new FakeProcessLauncher(_ => handle), s_graceOptions);
+		var runner = new ProcessRunner(new FakeProcessHandleFactory(_ => handle), s_graceOptions);
 
-		Assert.ThrowsExactly<OutOfMemoryException>(
-			() => runner.Run(TestRequests.Default with { RedirectStandardOutput = true }));
+		Assert.ThrowsExactly<OutOfMemoryException>(() =>
+			runner.Run(TestRequests.Default with { RedirectStandardOutput = true }, TestContext.CancellationToken)
+		);
 	}
 
 	[TestMethod]
@@ -615,12 +633,14 @@ public class ProcessRunnerTests
 			ExitsImmediately = false,
 			OnKillEntireProcessTree = () => throw new AggregateException("tree kill failed"),
 		};
-		var runner = new ProcessRunner(new FakeProcessLauncher(_ => handle), s_graceOptions);
 
-		Assert.ThrowsExactly<AggregateException>(
-			() => runner.Run(TestRequests.Default with { Timeout = TimeSpan.FromMilliseconds(50) }));
+		var runner = new ProcessRunner(new FakeProcessHandleFactory(_ => handle), s_graceOptions);
 
-		Assert.IsTrue(handle.KillEntireProcessTreeCalls > 0, "The tree kill must have been attempted.");
+		Assert.ThrowsExactly<AggregateException>(() =>
+			runner.Run(TestRequests.Default with { Timeout = TimeSpan.FromMilliseconds(50) }, TestContext.CancellationToken)
+		);
+
+		Assert.IsGreaterThan(0, handle.KillEntireProcessTreeCalls, "The tree kill must have been attempted.");
 		Assert.AreEqual(0, handle.KillCalls, "The single-kill fallback must not run for an unrecognized failure.");
 		Assert.IsTrue(handle.Disposed);
 	}
@@ -630,17 +650,14 @@ public class ProcessRunnerTests
 	{
 		// A disposed handle is a disposal signal, not a termination failure: it must not be swallowed as "the
 		// process could not be terminated" and must not fall back to a second kill.
-		var handle = new FakeProcessHandle
-		{
-			ExitsImmediately = false,
-			OnKillEntireProcessTree = () => throw new ObjectDisposedException("handle"),
-		};
-		var runner = new ProcessRunner(new FakeProcessLauncher(_ => handle), s_graceOptions);
+		var handle = new FakeProcessHandle { ExitsImmediately = false, OnKillEntireProcessTree = () => throw new ObjectDisposedException("handle") };
+		var runner = new ProcessRunner(new FakeProcessHandleFactory(_ => handle), s_graceOptions);
 
-		Assert.ThrowsExactly<ObjectDisposedException>(
-			() => runner.Run(TestRequests.Default with { Timeout = TimeSpan.FromMilliseconds(50) }));
+		Assert.ThrowsExactly<ObjectDisposedException>(() =>
+			runner.Run(TestRequests.Default with { Timeout = TimeSpan.FromMilliseconds(50) }, TestContext.CancellationToken)
+		);
 
-		Assert.IsTrue(handle.KillEntireProcessTreeCalls > 0, "The tree kill must have been attempted.");
+		Assert.IsGreaterThan(0, handle.KillEntireProcessTreeCalls, "The tree kill must have been attempted.");
 		Assert.AreEqual(0, handle.KillCalls, "The single-kill fallback must not run for a disposal signal.");
 	}
 
@@ -653,13 +670,18 @@ public class ProcessRunnerTests
 			StandardErrorText = "err",
 			StandardOutputTruncated = true,
 		};
-		var runner = new ProcessRunner(new FakeProcessLauncher(_ => handle));
 
-		ProcessRunResult result = runner.Run(TestRequests.Default with
-		{
-			RedirectStandardOutput = true,
-			RedirectStandardError = true,
-		});
+		var runner = new ProcessRunner(new FakeProcessHandleFactory(_ => handle));
+
+		ProcessRunResult result = runner.Run(
+			TestRequests.Default with
+			{
+				RedirectStandardOutput = true,
+				RedirectStandardError = true,
+			},
+
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual("out", result.StandardOutput);
 		Assert.IsTrue(result.StandardOutputTruncated);
@@ -674,32 +696,39 @@ public class ProcessRunnerTests
 		// A capture that did not finish within its grace period reports no output, so it has nothing to
 		// describe as truncated even though the drain already hit the bound.
 		var handle = new FakeProcessHandle { HoldsCapturedOutput = true, StandardOutputTruncated = true };
-		var runner = new ProcessRunner(
-			new FakeProcessLauncher(_ => handle),
-			new ProcessRunnerOptions { OutputDrainGracePeriod = TimeSpan.FromMilliseconds(50) });
 
-		ProcessRunResult result = runner.Run(TestRequests.Default with { RedirectStandardOutput = true });
+		var runner = new ProcessRunner(
+			new FakeProcessHandleFactory(_ => handle),
+			new ProcessRunnerOptions { OutputDrainGracePeriod = TimeSpan.FromMilliseconds(50) }
+		);
+
+		ProcessRunResult result = runner.Run(TestRequests.Default with { RedirectStandardOutput = true }, TestContext.CancellationToken);
 
 		Assert.IsNull(result.StandardOutput);
 		Assert.IsFalse(result.StandardOutputTruncated);
 	}
 
 	[TestMethod]
-	public void Run_PassesTheConfiguredOptionsToTheLauncher()
+	public void Run_PassesTheConfiguredOptionsToTheHandleFactory()
 	{
-		var launcher = new FakeProcessLauncher(_ => new FakeProcessHandle());
+		var handleFactory = new FakeProcessHandleFactory(_ => new FakeProcessHandle());
 		var options = new ProcessRunnerOptions { MaxCapturedCharactersPerStream = 128 };
-		var runner = new ProcessRunner(launcher, options);
+		var runner = new ProcessRunner(handleFactory, options);
 
-		runner.Run(TestRequests.Default);
+		runner.Run(TestRequests.Default, TestContext.CancellationToken);
 
-		Assert.AreSame(options, launcher.LastOptions);
+		Assert.AreSame(options, handleFactory.LastOptions);
 	}
 
 	[TestMethod]
-	public void ProcessRunner_NullOptions_ThrowsArgumentNullException()
+	public void Run_WithoutOptions_PassesTheDefaultOptionsToTheHandleFactory()
 	{
-		Assert.ThrowsExactly<ArgumentNullException>(() => new ProcessRunner((ProcessRunnerOptions)null!));
+		var handleFactory = new FakeProcessHandleFactory(_ => new FakeProcessHandle());
+		var runner = new ProcessRunner(handleFactory, options: null);
+
+		runner.Run(TestRequests.Default, TestContext.CancellationToken);
+
+		Assert.AreSame(ProcessRunnerOptions.Default, handleFactory.LastOptions);
 	}
 
 	private static IEnumerable<object[]> CaptureFaults()
@@ -716,6 +745,7 @@ public class ProcessRunnerTests
 		yield return [new AggregateException("tree kill failed", new InvalidOperationException("tree kill failed"))];
 	}
 
-	public static string FaultDisplayName(MethodInfo methodInfo, object[] values)
-		=> $"{methodInfo.Name} ({values[0].GetType().Name})";
+	public static string FaultDisplayName(MethodInfo methodInfo, object[] values) => $"{methodInfo.Name} ({values[0].GetType().Name})";
+
+	public TestContext? TestContext { get; set; }
 }

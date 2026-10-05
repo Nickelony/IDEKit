@@ -1,0 +1,35 @@
+#nullable enable
+Nickelony.Matching.FuzzyMatch
+Nickelony.Matching.FuzzyMatch.DescriptionRanges.get -> System.Collections.Generic.IReadOnlyList<Nickelony.Matching.MatchRange>!
+Nickelony.Matching.FuzzyMatch.Equals(Nickelony.Matching.FuzzyMatch other) -> bool
+Nickelony.Matching.FuzzyMatch.FuzzyMatch() -> void
+Nickelony.Matching.FuzzyMatch.FuzzyMatch(int score, System.Collections.Generic.IReadOnlyList<Nickelony.Matching.MatchRange>! labelRanges, System.Collections.Generic.IReadOnlyList<Nickelony.Matching.MatchRange>! descriptionRanges) -> void
+Nickelony.Matching.FuzzyMatch.LabelRanges.get -> System.Collections.Generic.IReadOnlyList<Nickelony.Matching.MatchRange>!
+Nickelony.Matching.FuzzyMatch.Score.get -> int
+Nickelony.Matching.FuzzyMatchMode
+Nickelony.Matching.FuzzyMatchMode.Path = 1 -> Nickelony.Matching.FuzzyMatchMode
+Nickelony.Matching.FuzzyMatchMode.Text = 0 -> Nickelony.Matching.FuzzyMatchMode
+Nickelony.Matching.FuzzyMatcher
+Nickelony.Matching.FuzzyMatcher.FuzzyMatcher(string! query, Nickelony.Matching.FuzzyMatchMode mode = Nickelony.Matching.FuzzyMatchMode.Text) -> void
+Nickelony.Matching.FuzzyMatcher.IsEmpty.get -> bool
+Nickelony.Matching.FuzzyMatcher.Score(string! label, string? description = null) -> int
+Nickelony.Matching.FuzzyMatcher.TryMatch(string! label, string? description, out Nickelony.Matching.FuzzyMatch match) -> bool
+Nickelony.Matching.MatchRange
+Nickelony.Matching.MatchRange.EndOffset.get -> int
+Nickelony.Matching.MatchRange.Equals(Nickelony.Matching.MatchRange other) -> bool
+Nickelony.Matching.MatchRange.Length.get -> int
+Nickelony.Matching.MatchRange.MatchRange() -> void
+Nickelony.Matching.MatchRange.MatchRange(int offset, int length) -> void
+Nickelony.Matching.MatchRange.Offset.get -> int
+Nickelony.Matching.WordMatcher
+override Nickelony.Matching.FuzzyMatch.GetHashCode() -> int
+override Nickelony.Matching.MatchRange.GetHashCode() -> int
+static Nickelony.Matching.FuzzyMatch.operator !=(Nickelony.Matching.FuzzyMatch left, Nickelony.Matching.FuzzyMatch right) -> bool
+static Nickelony.Matching.FuzzyMatch.operator ==(Nickelony.Matching.FuzzyMatch left, Nickelony.Matching.FuzzyMatch right) -> bool
+static Nickelony.Matching.MatchRange.operator !=(Nickelony.Matching.MatchRange left, Nickelony.Matching.MatchRange right) -> bool
+static Nickelony.Matching.MatchRange.operator ==(Nickelony.Matching.MatchRange left, Nickelony.Matching.MatchRange right) -> bool
+static Nickelony.Matching.WordMatcher.TryMatch(string! query, string! text, out System.Collections.Generic.IReadOnlyList<Nickelony.Matching.MatchRange>! ranges) -> bool
+~override Nickelony.Matching.FuzzyMatch.Equals(object obj) -> bool
+~override Nickelony.Matching.FuzzyMatch.ToString() -> string
+~override Nickelony.Matching.MatchRange.Equals(object obj) -> bool
+~override Nickelony.Matching.MatchRange.ToString() -> string

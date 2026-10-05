@@ -1,5 +1,16 @@
+global using Nickelony.IDEKit.Core.Diagnostics;
+global using Nickelony.IDEKit.Core.Identifiers;
+global using Nickelony.IDEKit.Core.Paths;
 global using Nickelony.IDEKit.Core.Text;
-global using Nickelony.LanguageServer.Abstractions;
+global using Nickelony.IDEKit.LanguageFeatures.CodeActions;
+global using Nickelony.IDEKit.LanguageFeatures.Completion;
+global using Nickelony.IDEKit.LanguageFeatures.Editing;
+global using Nickelony.IDEKit.LanguageFeatures.Formatting;
+global using Nickelony.IDEKit.LanguageFeatures.Markup;
+global using Nickelony.IDEKit.LanguageFeatures.SemanticTokens;
+global using Nickelony.IDEKit.LanguageFeatures.SignatureHelp;
 global using Nickelony.LanguageServer.Client;
+global using Nickelony.LanguageServer.Provider.Abstractions;
 global using Nickelony.LanguageServer.Testing;
 global using Nickelony.Testing;
+global using Lsp = Nickelony.LanguageServer.Client.Protocol;

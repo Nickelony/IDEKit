@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <RunConfiguration>
+    <!--
+      A wedged test fails the run after this session timeout instead of hanging it. The budget is generous because
+      the suites hold long-running characterization tests and concurrency tests that park work on gates, and a loaded
+      machine must not abort a healthy session.
+    -->
+    <TestSessionTimeout>300000</TestSessionTimeout>
+  </RunConfiguration>
+</RunSettings>

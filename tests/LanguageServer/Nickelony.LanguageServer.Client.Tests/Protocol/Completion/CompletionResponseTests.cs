@@ -12,8 +12,8 @@ public sealed class CompletionResponseTests
 			{
 				Label = "spawn",
 				Kind = CompletionItemKind.Function,
-				InsertText = "spawn"
-			}
+				InsertText = "spawn",
+			},
 		];
 
 		var response = new CompletionResponse(items);
@@ -22,11 +22,11 @@ public sealed class CompletionResponseTests
 		{
 			Label = "changed",
 			Kind = CompletionItemKind.Keyword,
-			InsertText = "changed"
+			InsertText = "changed",
 		};
 
 		Assert.IsNotNull(response.Items);
-		Assert.AreEqual(1, response.Items.Count);
+		Assert.HasCount(1, response.Items);
 		Assert.AreEqual("spawn", response.Items[0].Label);
 	}
 }

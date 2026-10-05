@@ -57,16 +57,32 @@ public sealed class TextPositionRangeTests
 	}
 
 	[TestMethod]
+	public void IsReversed_EndBeforeStart_IsTrue()
+	{
+		Assert.IsTrue(new TextPositionRange(new TextPosition(3, 0), new TextPosition(1, 0)).IsReversed); // an earlier end line
+		Assert.IsTrue(new TextPositionRange(new TextPosition(2, 5), new TextPosition(2, 4)).IsReversed); // an earlier end character on one line
+	}
+
+	[TestMethod]
+	public void IsReversed_OrderedOrEmptyRange_IsFalse()
+	{
+		Assert.IsFalse(new TextPositionRange(new TextPosition(1, 9), new TextPosition(2, 0)).IsReversed);
+		Assert.IsFalse(new TextPositionRange(new TextPosition(2, 4), new TextPosition(2, 5)).IsReversed);
+		Assert.IsFalse(new TextPositionRange(new TextPosition(2, 4), new TextPosition(2, 4)).IsReversed);
+		Assert.IsFalse(default(TextPositionRange).IsReversed);
+	}
+
+	[TestMethod]
 	public void Contains_IsHalfOpenAndLexicographic()
 	{
 		var range = new TextPositionRange(new TextPosition(1, 2), new TextPosition(3, 4));
 
-		Assert.IsTrue(range.Contains(new TextPosition(1, 2)));    // the start is inclusive
-		Assert.IsTrue(range.Contains(new TextPosition(2, 0)));    // inside, on a middle line
-		Assert.IsFalse(range.Contains(new TextPosition(3, 4)));   // the end is exclusive
-		Assert.IsFalse(range.Contains(new TextPosition(1, 1)));   // before the start on the start line
-		Assert.IsFalse(range.Contains(new TextPosition(3, 5)));   // after the end on the end line
-		Assert.IsFalse(range.Contains(new TextPosition(0, 0)));   // before the start line
+		Assert.IsTrue(range.Contains(new TextPosition(1, 2))); // the start is inclusive
+		Assert.IsTrue(range.Contains(new TextPosition(2, 0))); // inside, on a middle line
+		Assert.IsFalse(range.Contains(new TextPosition(3, 4))); // the end is exclusive
+		Assert.IsFalse(range.Contains(new TextPosition(1, 1))); // before the start on the start line
+		Assert.IsFalse(range.Contains(new TextPosition(3, 5))); // after the end on the end line
+		Assert.IsFalse(range.Contains(new TextPosition(0, 0))); // before the start line
 	}
 
 	[TestMethod]

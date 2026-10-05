@@ -1,6 +1,6 @@
-using Nickelony.IDEKit.Core.Pathing;
+using Nickelony.IDEKit.Core.Paths;
 using Nickelony.IDEKit.Workspace.Documents;
-using Nickelony.IDEKit.Workspace.Documents.FileSystem;
+using Nickelony.IDEKit.Workspace.FileSystem;
 
 namespace Nickelony.IDEKit.Workspace.Tests;
 
@@ -11,43 +11,49 @@ public sealed partial class WorkspaceDocumentStoreTests
 	{
 		var fileSystem = new FakeFileSystem("content", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(
-			TestPath("folder", "file.lua"),
-			s_openOptions)).Snapshot!;
+
+		WorkspaceDocumentSnapshot initial = (
+			await store.OpenAsync(TestPath("folder", "file.lua"), s_openOptions, TestContext.CancellationToken)
+		).Snapshot!;
+
 		string destinationPath = TestPath("folder", "renamed.lua");
 
 		fileSystem.MoveResult = new WorkspaceFileMoveResult(WorkspaceFileMoveOutcome.DestinationExists);
-		WorkspaceDocumentRenameResult exists = await store.RenameAsync(new WorkspaceDocumentRenameRequest(
-			new(initial.DocumentKey, initial.DocumentId, initial.Version),
-			initial.OnDiskStamp,
-			destinationPath));
+
+		WorkspaceDocumentRenameResult exists = await store.RenameAsync(
+			new WorkspaceDocumentRenameRequest(new(initial.DocumentKey, initial.DocumentId, initial.Version), initial.OnDiskStamp, destinationPath),
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(WorkspaceDocumentRenameOutcome.DestinationExists, exists.Outcome);
 		Assert.IsTrue(store.TryGetSnapshot(initial.DocumentId, out _));
 
 		fileSystem.MoveResult = new WorkspaceFileMoveResult(WorkspaceFileMoveOutcome.MoveFailed);
-		WorkspaceDocumentRenameResult failed = await store.RenameAsync(new WorkspaceDocumentRenameRequest(
-			new(initial.DocumentKey, initial.DocumentId, initial.Version),
-			initial.OnDiskStamp,
-			destinationPath));
+
+		WorkspaceDocumentRenameResult failed = await store.RenameAsync(
+			new WorkspaceDocumentRenameRequest(new(initial.DocumentKey, initial.DocumentId, initial.Version), initial.OnDiskStamp, destinationPath),
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(WorkspaceDocumentRenameOutcome.MoveFailed, failed.Outcome);
 		Assert.IsTrue(store.TryGetSnapshot(initial.DocumentId, out _));
 
 		fileSystem.MoveResult = new WorkspaceFileMoveResult(WorkspaceFileMoveOutcome.MoveStateUnknown);
-		WorkspaceDocumentRenameResult unknown = await store.RenameAsync(new WorkspaceDocumentRenameRequest(
-			new(initial.DocumentKey, initial.DocumentId, initial.Version),
-			initial.OnDiskStamp,
-			destinationPath));
+
+		WorkspaceDocumentRenameResult unknown = await store.RenameAsync(
+			new WorkspaceDocumentRenameRequest(new(initial.DocumentKey, initial.DocumentId, initial.Version), initial.OnDiskStamp, destinationPath),
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(WorkspaceDocumentRenameOutcome.MoveStateUnknown, unknown.Outcome);
 		Assert.IsTrue(store.TryGetSnapshot(initial.DocumentId, out _));
 
 		fileSystem.MoveResult = new WorkspaceFileMoveResult(WorkspaceFileMoveOutcome.Canceled);
-		WorkspaceDocumentRenameResult canceled = await store.RenameAsync(new WorkspaceDocumentRenameRequest(
-			new(initial.DocumentKey, initial.DocumentId, initial.Version),
-			initial.OnDiskStamp,
-			destinationPath));
+
+		WorkspaceDocumentRenameResult canceled = await store.RenameAsync(
+			new WorkspaceDocumentRenameRequest(new(initial.DocumentKey, initial.DocumentId, initial.Version), initial.OnDiskStamp, destinationPath),
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(WorkspaceDocumentRenameOutcome.Canceled, canceled.Outcome);
 		Assert.IsTrue(store.TryGetSnapshot(initial.DocumentId, out _));
@@ -58,28 +64,31 @@ public sealed partial class WorkspaceDocumentStoreTests
 	{
 		var fileSystem = new FakeFileSystem("retained", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot first = (await store.OpenAsync(
-			TestPath("folder", "one.lua"),
-			s_openOptions)).Snapshot!;
 
-		foreach ((WorkspaceFileMoveOutcome moveOutcome, WorkspaceDocumentDirectoryRenameOutcome expectedOutcome) in new[]
-		{
-			(WorkspaceFileMoveOutcome.DestinationExists, WorkspaceDocumentDirectoryRenameOutcome.DestinationExists),
-			(WorkspaceFileMoveOutcome.MoveFailed, WorkspaceDocumentDirectoryRenameOutcome.MoveFailed),
-			(WorkspaceFileMoveOutcome.MoveStateUnknown, WorkspaceDocumentDirectoryRenameOutcome.MoveStateUnknown),
-			(WorkspaceFileMoveOutcome.Canceled, WorkspaceDocumentDirectoryRenameOutcome.Canceled)
-		})
+		WorkspaceDocumentSnapshot first = (
+			await store.OpenAsync(TestPath("folder", "one.lua"), s_openOptions, TestContext.CancellationToken)
+		).Snapshot!;
+
+		foreach (
+			(WorkspaceFileMoveOutcome moveOutcome, WorkspaceDocumentDirectoryRenameOutcome expectedOutcome) in new[]
+			{
+				(WorkspaceFileMoveOutcome.DestinationExists, WorkspaceDocumentDirectoryRenameOutcome.DestinationExists),
+				(WorkspaceFileMoveOutcome.MoveFailed, WorkspaceDocumentDirectoryRenameOutcome.MoveFailed),
+				(WorkspaceFileMoveOutcome.MoveStateUnknown, WorkspaceDocumentDirectoryRenameOutcome.MoveStateUnknown),
+				(WorkspaceFileMoveOutcome.Canceled, WorkspaceDocumentDirectoryRenameOutcome.Canceled),
+			}
+		)
 		{
 			fileSystem.MoveDirectoryResult = new WorkspaceFileMoveResult(moveOutcome);
 
 			WorkspaceDocumentDirectoryRenameResult result = await store.RenameDirectoryAsync(
-				new WorkspaceDocumentDirectoryRenameRequest(
-					TestPath("folder"),
-					TestPath("moved")));
+				new WorkspaceDocumentDirectoryRenameRequest(TestPath("folder"), TestPath("moved")),
+				TestContext.CancellationToken
+			);
 
 			Assert.AreEqual(expectedOutcome, result.Outcome);
 			Assert.IsTrue(store.TryGetSnapshot(first.DocumentId, out _));
-			Assert.AreEqual(0, store.GetSnapshotsUnderDirectory(TestPath("moved")).Count);
+			Assert.IsEmpty(store.GetSnapshotsUnderDirectory(TestPath("moved")));
 		}
 	}
 
@@ -88,24 +97,26 @@ public sealed partial class WorkspaceDocumentStoreTests
 	{
 		var fileSystem = new FakeFileSystem("retained", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot source = (await store.OpenAsync(
-			TestPath("folder", "one.lua"),
-			s_openOptions)).Snapshot!;
-		WorkspaceDocumentSnapshot collision = (await store.OpenAsync(
-			TestPath("moved", "one.lua"),
-			s_openOptions)).Snapshot!;
+
+		WorkspaceDocumentSnapshot source = (
+			await store.OpenAsync(TestPath("folder", "one.lua"), s_openOptions, TestContext.CancellationToken)
+		).Snapshot!;
+
+		WorkspaceDocumentSnapshot collision = (
+			await store.OpenAsync(TestPath("moved", "one.lua"), s_openOptions, TestContext.CancellationToken)
+		).Snapshot!;
 
 		// The rebased destination "moved/one.lua" is already tracked by an unrelated document, so the
 		// directory rename must fail without touching that document or the source descendants.
 		WorkspaceDocumentDirectoryRenameResult result = await store.RenameDirectoryAsync(
-			new WorkspaceDocumentDirectoryRenameRequest(
-				TestPath("folder"),
-				TestPath("moved")));
+			new WorkspaceDocumentDirectoryRenameRequest(TestPath("folder"), TestPath("moved")),
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(WorkspaceDocumentDirectoryRenameOutcome.DestinationInUse, result.Outcome);
 		Assert.IsTrue(store.TryGetSnapshot(source.DocumentId, out _));
 		Assert.IsTrue(store.TryGetSnapshot(collision.DocumentId, out _));
-		Assert.AreEqual(1, store.GetSnapshotsUnderDirectory(TestPath("moved")).Count);
+		Assert.HasCount(1, store.GetSnapshotsUnderDirectory(TestPath("moved")));
 	}
 
 	[TestMethod]
@@ -113,21 +124,21 @@ public sealed partial class WorkspaceDocumentStoreTests
 	{
 		var fileSystem = new FakeFileSystem("content", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot source = (await store.OpenAsync(
-			TestPath("folder", "one.lua"),
-			s_openOptions)).Snapshot!;
-		WorkspaceDocumentSnapshot occupant = (await store.OpenAsync(
-			TestPath("moved"),
-			s_openOptions)).Snapshot!;
+
+		WorkspaceDocumentSnapshot source = (
+			await store.OpenAsync(TestPath("folder", "one.lua"), s_openOptions, TestContext.CancellationToken)
+		).Snapshot!;
+
+		WorkspaceDocumentSnapshot occupant = (await store.OpenAsync(TestPath("moved"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
 
 		// The destination directory path itself is a tracked document, so the move would turn that path
 		// into a directory while the tracked file identity still points at it. No rebased descendant
 		// targets that exact path, so the collision is only visible when the destination is scoped as a
 		// subtree; the rename is rejected without touching the file system.
 		WorkspaceDocumentDirectoryRenameResult result = await store.RenameDirectoryAsync(
-			new WorkspaceDocumentDirectoryRenameRequest(
-				TestPath("folder"),
-				TestPath("moved")));
+			new WorkspaceDocumentDirectoryRenameRequest(TestPath("folder"), TestPath("moved")),
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(WorkspaceDocumentDirectoryRenameOutcome.DestinationInUse, result.Outcome);
 		Assert.AreEqual(0, fileSystem.MoveDirectoryCount);
@@ -140,20 +151,22 @@ public sealed partial class WorkspaceDocumentStoreTests
 	{
 		var fileSystem = new FakeFileSystem("content", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot source = (await store.OpenAsync(
-			TestPath("folder", "one.lua"),
-			s_openOptions)).Snapshot!;
-		WorkspaceDocumentSnapshot deeper = (await store.OpenAsync(
-			TestPath("moved", "nested", "other.lua"),
-			s_openOptions)).Snapshot!;
+
+		WorkspaceDocumentSnapshot source = (
+			await store.OpenAsync(TestPath("folder", "one.lua"), s_openOptions, TestContext.CancellationToken)
+		).Snapshot!;
+
+		WorkspaceDocumentSnapshot deeper = (
+			await store.OpenAsync(TestPath("moved", "nested", "other.lua"), s_openOptions, TestContext.CancellationToken)
+		).Snapshot!;
 
 		// A tracked document anywhere inside the destination subtree collides with the incoming subtree
 		// even though the rebase never targets its exact path: the store already tracks a location inside
 		// the destination, so the move cannot prove the destination empty and is rejected before any gate.
 		WorkspaceDocumentDirectoryRenameResult result = await store.RenameDirectoryAsync(
-			new WorkspaceDocumentDirectoryRenameRequest(
-				TestPath("folder"),
-				TestPath("moved")));
+			new WorkspaceDocumentDirectoryRenameRequest(TestPath("folder"), TestPath("moved")),
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(WorkspaceDocumentDirectoryRenameOutcome.DestinationInUse, result.Outcome);
 		Assert.AreEqual(0, fileSystem.MoveDirectoryCount);
@@ -166,34 +179,49 @@ public sealed partial class WorkspaceDocumentStoreTests
 	{
 		var fileSystem = new FakeFileSystem("content", s_defaultFormat);
 		var pendingReplacement = new TaskCompletionSource<WorkspaceFileReplacementResult>(TaskCreationOptions.RunContinuationsAsynchronously);
+
 		fileSystem.PendingReplacement = pendingReplacement.Task;
+
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot source = (await store.OpenAsync(
-			TestPath("folder", "one.lua"),
-			s_openOptions)).Snapshot!;
-		WorkspaceDocumentSnapshot mover = (await store.OpenAsync(TestPath("other.lua"), s_openOptions)).Snapshot!;
+
+		WorkspaceDocumentSnapshot source = (
+			await store.OpenAsync(TestPath("folder", "one.lua"), s_openOptions, TestContext.CancellationToken)
+		).Snapshot!;
+
+		WorkspaceDocumentSnapshot mover = (await store.OpenAsync(TestPath("other.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
 
 		// Hold an in-flight Save As that has reserved "moved/one.lua"; the directory rename must see
 		// the reservation as DestinationBusy because its rebased descendant targets the same destination.
 		fileSystem.CapturedStamps.Enqueue(mover.OnDiskStamp);
 		fileSystem.CapturedStamps.Enqueue(FileStamp.Missing);
-		Task<WorkspaceDocumentSaveAsResult> saveAs = store.SaveAsAsync(new WorkspaceDocumentSaveAsRequest(
-			new(mover.DocumentKey, mover.DocumentId, mover.Version),
-			mover.OnDiskStamp,
-			TestPath("moved", "one.lua")));
+
+		Task<WorkspaceDocumentSaveAsResult> saveAs = store.SaveAsAsync(
+			new WorkspaceDocumentSaveAsRequest(
+				new(mover.DocumentKey, mover.DocumentId, mover.Version),
+				mover.OnDiskStamp,
+				TestPath("moved", "one.lua")
+			),
+
+			TestContext.CancellationToken
+		);
+
 		await fileSystem.Replacements.WhenReachedAsync(1);
 
 		WorkspaceDocumentDirectoryRenameResult result = await store.RenameDirectoryAsync(
-			new WorkspaceDocumentDirectoryRenameRequest(
-				TestPath("folder"),
-				TestPath("moved")));
+			new WorkspaceDocumentDirectoryRenameRequest(TestPath("folder"), TestPath("moved")),
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(WorkspaceDocumentDirectoryRenameOutcome.DestinationBusy, result.Outcome);
 		Assert.IsTrue(store.TryGetSnapshot(source.DocumentId, out _));
 
-		pendingReplacement.SetResult(new WorkspaceFileReplacementResult(
-			WorkspaceFileReplacementOutcome.Replaced,
-			new FileStamp(true, 7, DateTime.UnixEpoch.AddMinutes(1), "saved")));
+		pendingReplacement.SetResult(
+			new WorkspaceFileReplacementResult(
+				WorkspaceFileReplacementOutcome.Replaced,
+				new FileStamp(Exists: true, Length: 7, LastWriteTimeUtc: DateTime.UnixEpoch.AddMinutes(1), ContentHash: "saved")
+			)
+		);
+
 		WorkspaceDocumentSaveAsResult saved = await saveAs;
 
 		Assert.AreEqual(WorkspaceDocumentSaveAsOutcome.SavedAs, saved.Outcome);
@@ -205,18 +233,24 @@ public sealed partial class WorkspaceDocumentStoreTests
 	{
 		var fileSystem = new FakeFileSystem("content", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("source.lua"), s_openOptions)).Snapshot!;
+
+		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("source.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
 		var pendingRead = new TaskCompletionSource<WorkspaceFileReadResult>(TaskCreationOptions.RunContinuationsAsynchronously);
 		fileSystem.PendingRead = pendingRead.Task;
 
 		// The open holds a reservation for the destination path while it loads.
-		Task<WorkspaceDocumentOpenResult> open = store.OpenAsync(TestPath("destination.lua"), s_openOptions);
+		Task<WorkspaceDocumentOpenResult> open = store.OpenAsync(TestPath("destination.lua"), s_openOptions, TestContext.CancellationToken);
 		await fileSystem.Reads.WhenReachedAsync(2);
 
-		WorkspaceDocumentRenameResult result = await store.RenameAsync(new WorkspaceDocumentRenameRequest(
-			new(initial.DocumentKey, initial.DocumentId, initial.Version),
-			initial.OnDiskStamp,
-			TestPath("destination.lua")));
+		WorkspaceDocumentRenameResult result = await store.RenameAsync(
+			new WorkspaceDocumentRenameRequest(
+				new(initial.DocumentKey, initial.DocumentId, initial.Version),
+				initial.OnDiskStamp,
+				TestPath("destination.lua")
+			),
+
+			TestContext.CancellationToken
+		);
 
 		// The destination checks include the in-flight open reservation, so the file is never moved and
 		// the tracked instance is never dropped by a colliding identity update.
@@ -234,27 +268,29 @@ public sealed partial class WorkspaceDocumentStoreTests
 	{
 		var fileSystem = new FakeFileSystem("retained", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot first = (await store.OpenAsync(
-			TestPath("folder", "one.lua"),
-			s_openOptions)).Snapshot!;
-		WorkspaceDocumentSnapshot second = (await store.OpenAsync(
-			TestPath("folder", "two.lua"),
-			s_openOptions)).Snapshot!;
+
+		WorkspaceDocumentSnapshot first = (
+			await store.OpenAsync(TestPath("folder", "one.lua"), s_openOptions, TestContext.CancellationToken)
+		).Snapshot!;
+
+		WorkspaceDocumentSnapshot second = (
+			await store.OpenAsync(TestPath("folder", "two.lua"), s_openOptions, TestContext.CancellationToken)
+		).Snapshot!;
 
 		WorkspaceDocumentDirectoryRenameResult result = await store.RenameDirectoryAsync(
-			new WorkspaceDocumentDirectoryRenameRequest(
-				TestPath("folder"),
-				TestPath("moved")));
+			new WorkspaceDocumentDirectoryRenameRequest(TestPath("folder"), TestPath("moved")),
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(WorkspaceDocumentDirectoryRenameOutcome.Renamed, result.Outcome);
-		Assert.AreEqual(2, result.Snapshots.Count);
+		Assert.HasCount(2, result.Snapshots);
 		Assert.AreEqual(first.DocumentKey, result.Snapshots[0].DocumentKey);
 		Assert.AreEqual(second.DocumentKey, result.Snapshots[1].DocumentKey);
 		Assert.AreEqual(Path.GetFullPath(TestPath("moved", "one.lua")), result.Snapshots[0].DocumentId);
 		Assert.AreEqual(Path.GetFullPath(TestPath("moved", "two.lua")), result.Snapshots[1].DocumentId);
 		Assert.IsFalse(store.TryGetSnapshot(first.DocumentId, out _));
 		Assert.IsFalse(store.TryGetSnapshot(second.DocumentId, out _));
-		Assert.AreEqual(2, store.GetSnapshotsUnderDirectory(TestPath("moved")).Count);
+		Assert.HasCount(2, store.GetSnapshotsUnderDirectory(TestPath("moved")));
 	}
 
 	[TestMethod]
@@ -262,20 +298,21 @@ public sealed partial class WorkspaceDocumentStoreTests
 	{
 		var fileSystem = new FakeFileSystem("retained", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot first = (await store.OpenAsync(
-			TestPath("folder", "one.lua"),
-			s_openOptions)).Snapshot!;
+
+		WorkspaceDocumentSnapshot first = (
+			await store.OpenAsync(TestPath("folder", "one.lua"), s_openOptions, TestContext.CancellationToken)
+		).Snapshot!;
 
 		// A destination that normalizes to the source directory is a no-op: the directory already is
 		// where the caller wants it, so the result mirrors the file rename NoChange outcome instead of
 		// reporting InvalidPath.
 		WorkspaceDocumentDirectoryRenameResult result = await store.RenameDirectoryAsync(
-			new WorkspaceDocumentDirectoryRenameRequest(
-				TestPath("folder"),
-				TestPath("folder")));
+			new WorkspaceDocumentDirectoryRenameRequest(TestPath("folder"), TestPath("folder")),
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(WorkspaceDocumentDirectoryRenameOutcome.NoChange, result.Outcome);
-		Assert.AreEqual(1, result.Snapshots.Count);
+		Assert.HasCount(1, result.Snapshots);
 		Assert.AreEqual(first.DocumentKey, result.Snapshots[0].DocumentKey);
 		Assert.IsTrue(store.TryGetSnapshot(first.DocumentId, out _));
 		Assert.AreEqual(0, fileSystem.MoveDirectoryCount);
@@ -286,29 +323,30 @@ public sealed partial class WorkspaceDocumentStoreTests
 	{
 		var fileSystem = new FakeFileSystem("retained", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot first = (await store.OpenAsync(
-			TestPath("folder", "one.lua"),
-			s_openOptions)).Snapshot!;
+
+		WorkspaceDocumentSnapshot first = (
+			await store.OpenAsync(TestPath("folder", "one.lua"), s_openOptions, TestContext.CancellationToken)
+		).Snapshot!;
 
 		// A trailing separator or a "." segment normalizes to the same directory identity, so the
 		// request is the same no-op as an exactly repeated spelling.
 		WorkspaceDocumentDirectoryRenameResult result = await store.RenameDirectoryAsync(
-			new WorkspaceDocumentDirectoryRenameRequest(
-				TestPath("folder"),
-				TestPath("folder", ".")));
+			new WorkspaceDocumentDirectoryRenameRequest(TestPath("folder"), TestPath("folder", ".")),
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(WorkspaceDocumentDirectoryRenameOutcome.NoChange, result.Outcome);
-		Assert.AreEqual(1, result.Snapshots.Count);
+		Assert.HasCount(1, result.Snapshots);
 		Assert.IsTrue(store.TryGetSnapshot(first.DocumentId, out _));
 		Assert.AreEqual(0, fileSystem.MoveDirectoryCount);
 
 		WorkspaceDocumentDirectoryRenameResult trailingSeparator = await store.RenameDirectoryAsync(
-			new WorkspaceDocumentDirectoryRenameRequest(
-				TestPath("folder"),
-				TestPath("folder") + Path.DirectorySeparatorChar));
+			new WorkspaceDocumentDirectoryRenameRequest(TestPath("folder"), TestPath("folder") + Path.DirectorySeparatorChar),
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(WorkspaceDocumentDirectoryRenameOutcome.NoChange, trailingSeparator.Outcome);
-		Assert.AreEqual(1, trailingSeparator.Snapshots.Count);
+		Assert.HasCount(1, trailingSeparator.Snapshots);
 		Assert.AreEqual(0, fileSystem.MoveDirectoryCount);
 	}
 
@@ -317,16 +355,17 @@ public sealed partial class WorkspaceDocumentStoreTests
 	{
 		var fileSystem = new FakeFileSystem("retained", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot first = (await store.OpenAsync(
-			TestPath("folder", "one.lua"),
-			s_openOptions)).Snapshot!;
 
-		// The caller brings a relative spelling with a redundant segment; the file system must receive
+		WorkspaceDocumentSnapshot first = (
+			await store.OpenAsync(TestPath("folder", "one.lua"), s_openOptions, TestContext.CancellationToken)
+		).Snapshot!;
+
+		// The caller brings an absolute spelling with a redundant segment; the file system must receive
 		// the normalized ids so a case-sensitive file system is not at the mercy of that spelling.
 		WorkspaceDocumentDirectoryRenameResult result = await store.RenameDirectoryAsync(
-			new WorkspaceDocumentDirectoryRenameRequest(
-				TestPath("folder", "."),
-				TestPath("moved")));
+			new WorkspaceDocumentDirectoryRenameRequest(TestPath("folder", "."), TestPath("moved")),
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(WorkspaceDocumentDirectoryRenameOutcome.Renamed, result.Outcome);
 		Assert.AreEqual(TestPath("folder"), fileSystem.LastMoveDirectorySource);
@@ -338,15 +377,17 @@ public sealed partial class WorkspaceDocumentStoreTests
 	{
 		var fileSystem = new FakeFileSystem("content", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(
-			TestPath("folder", "file.lua"),
-			s_openOptions)).Snapshot!;
+
+		WorkspaceDocumentSnapshot initial = (
+			await store.OpenAsync(TestPath("folder", "file.lua"), s_openOptions, TestContext.CancellationToken)
+		).Snapshot!;
+
 		string destinationPath = TestPath("folder", ".", "file.lua");
 
-		WorkspaceDocumentRenameResult result = await store.RenameAsync(new WorkspaceDocumentRenameRequest(
-			new(initial.DocumentKey, initial.DocumentId, initial.Version),
-			initial.OnDiskStamp,
-			destinationPath));
+		WorkspaceDocumentRenameResult result = await store.RenameAsync(
+			new WorkspaceDocumentRenameRequest(new(initial.DocumentKey, initial.DocumentId, initial.Version), initial.OnDiskStamp, destinationPath),
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(WorkspaceDocumentRenameOutcome.NoChange, result.Outcome);
 		Assert.IsTrue(store.TryGetSnapshot(initial.DocumentId, out _));
@@ -358,12 +399,18 @@ public sealed partial class WorkspaceDocumentStoreTests
 	{
 		var fileSystem = new FakeFileSystem("content", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions)).Snapshot!;
 
-		WorkspaceDocumentRenameResult result = await store.RenameAsync(new WorkspaceDocumentRenameRequest(
-			new(initial.DocumentKey, initial.DocumentId, initial.Version),
-			initial.OnDiskStamp,
-			TestPath("renamed.lua")));
+		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
+
+		WorkspaceDocumentRenameResult result = await store.RenameAsync(
+			new WorkspaceDocumentRenameRequest(
+				new(initial.DocumentKey, initial.DocumentId, initial.Version),
+				initial.OnDiskStamp,
+				TestPath("renamed.lua")
+			),
+
+			TestContext.CancellationToken
+		);
 
 		// The caller's stamp is the move precondition; the file system must receive exactly that value
 		// so a source file that changed since the snapshot is never moved silently.
@@ -376,24 +423,31 @@ public sealed partial class WorkspaceDocumentStoreTests
 	{
 		var fileSystem = new FakeFileSystem("original", s_defaultFormat);
 		var pendingMove = new TaskCompletionSource<WorkspaceFileMoveResult>(TaskCreationOptions.RunContinuationsAsynchronously);
+
 		fileSystem.PendingMove = pendingMove.Task;
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions)).Snapshot!;
+		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
 
-		Task<WorkspaceDocumentRenameResult> rename = store.RenameAsync(new WorkspaceDocumentRenameRequest(
-			new(initial.DocumentKey, initial.DocumentId, initial.Version),
-			initial.OnDiskStamp,
-			TestPath("renamed.lua")));
+		Task<WorkspaceDocumentRenameResult> rename = store.RenameAsync(
+			new WorkspaceDocumentRenameRequest(
+				new(initial.DocumentKey, initial.DocumentId, initial.Version),
+				initial.OnDiskStamp,
+				TestPath("renamed.lua")
+			),
+
+			TestContext.CancellationToken
+		);
+
 		await fileSystem.Moves.WhenReachedAsync(1);
 
 		// A logical replacement does not take the disk gate, so it interleaves with the in-flight move
 		// by design; the renamed document must keep the edit.
-		WorkspaceDocumentMutationResult edited = store.Replace(new WorkspaceDocumentReplaceRequest(
-			new(initial.DocumentKey, initial.DocumentId, initial.Version),
-			"edited",
-			initial.FileFormat));
+		WorkspaceDocumentMutationResult edited = store.Replace(
+			new WorkspaceDocumentReplaceRequest(new(initial.DocumentKey, initial.DocumentId, initial.Version), "edited", initial.FileFormat)
+		);
 
 		pendingMove.SetResult(new WorkspaceFileMoveResult(WorkspaceFileMoveOutcome.Moved));
+
 		WorkspaceDocumentRenameResult result = await rename;
 
 		Assert.AreEqual(WorkspaceDocumentMutationOutcome.Changed, edited.Outcome);
@@ -409,12 +463,14 @@ public sealed partial class WorkspaceDocumentStoreTests
 		await using var store = new WorkspaceDocumentStore(fileSystem);
 
 		WorkspaceDocumentDirectoryRenameResult result = await store.RenameDirectoryAsync(
-			new WorkspaceDocumentDirectoryRenameRequest(TestPath("empty"), TestPath("moved")));
+			new WorkspaceDocumentDirectoryRenameRequest(TestPath("empty"), TestPath("moved")),
+			TestContext.CancellationToken
+		);
 
 		// A folder without tracked documents is still a file-system rename; only the identity rebase has
 		// nothing to do.
 		Assert.AreEqual(WorkspaceDocumentDirectoryRenameOutcome.Renamed, result.Outcome);
-		Assert.AreEqual(0, result.Snapshots.Count);
+		Assert.IsEmpty(result.Snapshots);
 		Assert.AreEqual(1, fileSystem.MoveDirectoryCount);
 	}
 
@@ -423,15 +479,19 @@ public sealed partial class WorkspaceDocumentStoreTests
 	{
 		var fileSystem = new FakeFileSystem("retained", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot first = (await store.OpenAsync(
-			TestPath("folder", "one.lua"),
-			s_openOptions)).Snapshot!;
-		fileSystem.CapturedStamps.Enqueue(new FileStamp(true, 7, DateTime.UnixEpoch.AddMinutes(1), "changed"));
+
+		WorkspaceDocumentSnapshot first = (
+			await store.OpenAsync(TestPath("folder", "one.lua"), s_openOptions, TestContext.CancellationToken)
+		).Snapshot!;
+
+		fileSystem.CapturedStamps.Enqueue(
+			new FileStamp(Exists: true, Length: 7, LastWriteTimeUtc: DateTime.UnixEpoch.AddMinutes(1), ContentHash: "changed")
+		);
 
 		WorkspaceDocumentDirectoryRenameResult result = await store.RenameDirectoryAsync(
-			new WorkspaceDocumentDirectoryRenameRequest(
-				TestPath("folder"),
-				TestPath("moved")));
+			new WorkspaceDocumentDirectoryRenameRequest(TestPath("folder"), TestPath("moved")),
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(WorkspaceDocumentDirectoryRenameOutcome.ExternalFileConflict, result.Outcome);
 		Assert.IsTrue(store.TryGetSnapshot(first.DocumentId, out _));
@@ -443,12 +503,13 @@ public sealed partial class WorkspaceDocumentStoreTests
 	{
 		var fileSystem = new FakeFileSystem("content", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions)).Snapshot!;
 
-		WorkspaceDocumentRenameResult result = await store.RenameAsync(new WorkspaceDocumentRenameRequest(
-			new(initial.DocumentKey, initial.DocumentId, initial.Version),
-			initial.OnDiskStamp,
-			"   "));
+		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
+
+		WorkspaceDocumentRenameResult result = await store.RenameAsync(
+			new WorkspaceDocumentRenameRequest(new(initial.DocumentKey, initial.DocumentId, initial.Version), initial.OnDiskStamp, "   "),
+			TestContext.CancellationToken
+		);
 
 		// The destination is validated before the operation gate, so the document keeps its identity.
 		Assert.AreEqual(WorkspaceDocumentRenameOutcome.InvalidPath, result.Outcome);
@@ -461,14 +522,15 @@ public sealed partial class WorkspaceDocumentStoreTests
 	{
 		var fileSystem = new FakeFileSystem("content", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(
-			TestPath("folder", "one.lua"),
-			s_openOptions)).Snapshot!;
+
+		WorkspaceDocumentSnapshot initial = (
+			await store.OpenAsync(TestPath("folder", "one.lua"), s_openOptions, TestContext.CancellationToken)
+		).Snapshot!;
 
 		WorkspaceDocumentDirectoryRenameResult result = await store.RenameDirectoryAsync(
-			new WorkspaceDocumentDirectoryRenameRequest(
-				TestPath("folder"),
-				"   "));
+			new WorkspaceDocumentDirectoryRenameRequest(TestPath("folder"), "   "),
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(WorkspaceDocumentDirectoryRenameOutcome.InvalidPath, result.Outcome);
 		Assert.AreEqual(0, fileSystem.MoveDirectoryCount);
@@ -479,28 +541,35 @@ public sealed partial class WorkspaceDocumentStoreTests
 	public async Task RenameAndSaveAs_PreserveDocumentKeyAndRetargetPath()
 	{
 		using var temp = new TemporaryDirectory();
+
 		string directory = temp.Path;
 		string sourcePath = Path.Combine(directory, "source.lua");
 		string renamedPath = Path.Combine(directory, "renamed.lua");
 		string savedAsPath = Path.Combine(directory, "saved-as.lua");
+
 		File.WriteAllText(sourcePath, "content");
 		await using var store = new WorkspaceDocumentStore(new LocalWorkspaceFileSystem());
-		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(sourcePath, s_openOptions)).Snapshot!;
+		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(sourcePath, s_openOptions, TestContext.CancellationToken)).Snapshot!;
 
-		WorkspaceDocumentRenameResult renamed = await store.RenameAsync(new WorkspaceDocumentRenameRequest(
-			new(initial.DocumentKey, initial.DocumentId, initial.Version),
-			initial.OnDiskStamp,
-			renamedPath));
+		WorkspaceDocumentRenameResult renamed = await store.RenameAsync(
+			new WorkspaceDocumentRenameRequest(new(initial.DocumentKey, initial.DocumentId, initial.Version), initial.OnDiskStamp, renamedPath),
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(WorkspaceDocumentRenameOutcome.Renamed, renamed.Outcome);
 		Assert.IsFalse(store.TryGetSnapshot(sourcePath, out _));
 		Assert.IsTrue(store.TryGetSnapshot(renamedPath, out WorkspaceDocumentSnapshot? renamedSnapshot));
 		Assert.AreEqual(initial.DocumentKey, renamedSnapshot!.DocumentKey);
 
-		WorkspaceDocumentSaveAsResult savedAs = await store.SaveAsAsync(new WorkspaceDocumentSaveAsRequest(
-			new(renamedSnapshot.DocumentKey, renamedSnapshot.DocumentId, renamedSnapshot.Version),
-			renamedSnapshot.OnDiskStamp,
-			savedAsPath));
+		WorkspaceDocumentSaveAsResult savedAs = await store.SaveAsAsync(
+			new WorkspaceDocumentSaveAsRequest(
+				new(renamedSnapshot.DocumentKey, renamedSnapshot.DocumentId, renamedSnapshot.Version),
+				renamedSnapshot.OnDiskStamp,
+				savedAsPath
+			),
+
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(WorkspaceDocumentSaveAsOutcome.SavedAs, savedAs.Outcome);
 		Assert.IsFalse(store.TryGetSnapshot(renamedPath, out _));
@@ -513,9 +582,14 @@ public sealed partial class WorkspaceDocumentStoreTests
 		Assert.AreEqual(renamedSnapshot.Version, savedAsSnapshot.PersistedVersion);
 		Assert.IsFalse(savedAsSnapshot.IsDirty);
 
-		WorkspaceDocumentDeleteResult deleted = await store.DeleteAsync(new WorkspaceDocumentDeleteRequest(
-			new(savedAsSnapshot.DocumentKey, savedAsSnapshot.DocumentId, savedAsSnapshot.Version),
-			savedAsSnapshot.OnDiskStamp));
+		WorkspaceDocumentDeleteResult deleted = await store.DeleteAsync(
+			new WorkspaceDocumentDeleteRequest(
+				new(savedAsSnapshot.DocumentKey, savedAsSnapshot.DocumentId, savedAsSnapshot.Version),
+				savedAsSnapshot.OnDiskStamp
+			),
+
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(WorkspaceDocumentDeleteOutcome.Deleted, deleted.Outcome);
 		Assert.IsFalse(store.TryGetSnapshot(savedAsPath, out _));
@@ -526,23 +600,27 @@ public sealed partial class WorkspaceDocumentStoreTests
 	public async Task Rename_CaseOnly_PreservesDocumentKeyAndUpdatesDisplayPath()
 	{
 		using var temp = new TemporaryDirectory();
+
 		string directory = temp.Path;
 		string sourcePath = Path.Combine(directory, "Script.lua");
 		string destinationPath = Path.Combine(directory, "script.lua");
+
 		File.WriteAllText(sourcePath, "content");
 		await using var store = new WorkspaceDocumentStore(new LocalWorkspaceFileSystem());
-		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(sourcePath, s_openOptions)).Snapshot!;
+		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(sourcePath, s_openOptions, TestContext.CancellationToken)).Snapshot!;
 
-		WorkspaceDocumentRenameResult result = await store.RenameAsync(new WorkspaceDocumentRenameRequest(
-			new(initial.DocumentKey, initial.DocumentId, initial.Version),
-			initial.OnDiskStamp,
-			destinationPath));
+		WorkspaceDocumentRenameResult result = await store.RenameAsync(
+			new WorkspaceDocumentRenameRequest(new(initial.DocumentKey, initial.DocumentId, initial.Version), initial.OnDiskStamp, destinationPath),
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(WorkspaceDocumentRenameOutcome.Renamed, result.Outcome);
 		Assert.AreEqual(initial.DocumentKey, result.Snapshot!.DocumentKey);
 		Assert.AreEqual(destinationPath, result.Snapshot.DisplayPath);
+
 		string[] files = Directory.GetFiles(directory);
-		Assert.AreEqual(1, files.Length);
+
+		Assert.HasCount(1, files);
 		Assert.AreEqual("script.lua", Path.GetFileName(files[0]));
 	}
 
@@ -550,23 +628,25 @@ public sealed partial class WorkspaceDocumentStoreTests
 	public async Task RenameDirectory_EquivalentSpellingWithFullPaths_ReportsNoChange()
 	{
 		using var temp = new TemporaryDirectory();
+
 		string directory = temp.Path;
 		string sourcePath = Path.Combine(directory, "folder");
+
 		Directory.CreateDirectory(sourcePath);
 		string filePath = Path.Combine(sourcePath, "one.lua");
 		File.WriteAllText(filePath, "content");
 		await using var store = new WorkspaceDocumentStore(new LocalWorkspaceFileSystem());
-		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(filePath, s_openOptions)).Snapshot!;
+		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(filePath, s_openOptions, TestContext.CancellationToken)).Snapshot!;
 
 		// A "." segment normalizes to the same directory identity, so the request is a no-op that
 		// never reaches the file system.
 		WorkspaceDocumentDirectoryRenameResult result = await store.RenameDirectoryAsync(
-			new WorkspaceDocumentDirectoryRenameRequest(
-				sourcePath,
-				Path.Combine(sourcePath, ".")));
+			new WorkspaceDocumentDirectoryRenameRequest(sourcePath, Path.Combine(sourcePath, ".")),
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(WorkspaceDocumentDirectoryRenameOutcome.NoChange, result.Outcome);
-		Assert.AreEqual(1, result.Snapshots.Count);
+		Assert.HasCount(1, result.Snapshots);
 		Assert.IsTrue(Directory.Exists(sourcePath));
 		Assert.IsTrue(File.Exists(filePath));
 		Assert.IsTrue(store.TryGetSnapshot(filePath, out WorkspaceDocumentSnapshot? retained));
@@ -578,19 +658,26 @@ public sealed partial class WorkspaceDocumentStoreTests
 	{
 		var fileSystem = new FakeFileSystem("retained", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot source = (await store.OpenAsync(
-			TestPath("folder", "one.lua"),
-			s_openOptions)).Snapshot!;
-		WorkspaceDocumentSnapshot collision = (await store.OpenAsync(
-			TestPath("folder", "two.lua"),
-			s_openOptions)).Snapshot!;
+
+		WorkspaceDocumentSnapshot source = (
+			await store.OpenAsync(TestPath("folder", "one.lua"), s_openOptions, TestContext.CancellationToken)
+		).Snapshot!;
+
+		WorkspaceDocumentSnapshot collision = (
+			await store.OpenAsync(TestPath("folder", "two.lua"), s_openOptions, TestContext.CancellationToken)
+		).Snapshot!;
 
 		// The destination is tracked by an unrelated document instance, so the rename is rejected
 		// before the file system is asked to move anything.
-		WorkspaceDocumentRenameResult result = await store.RenameAsync(new WorkspaceDocumentRenameRequest(
-			new(source.DocumentKey, source.DocumentId, source.Version),
-			source.OnDiskStamp,
-			TestPath("folder", "two.lua")));
+		WorkspaceDocumentRenameResult result = await store.RenameAsync(
+			new WorkspaceDocumentRenameRequest(
+				new(source.DocumentKey, source.DocumentId, source.Version),
+				source.OnDiskStamp,
+				TestPath("folder", "two.lua")
+			),
+
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(WorkspaceDocumentRenameOutcome.DestinationInUse, result.Outcome);
 		Assert.AreEqual(0, fileSystem.Moves.Count);
@@ -603,16 +690,23 @@ public sealed partial class WorkspaceDocumentStoreTests
 	{
 		using var cancellation = new CancellationTokenSource();
 		cancellation.Cancel();
+
 		var fileSystem = new FakeFileSystem("retained", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("folder", "one.lua"), s_openOptions)).Snapshot!;
+
+		WorkspaceDocumentSnapshot initial = (
+			await store.OpenAsync(TestPath("folder", "one.lua"), s_openOptions, TestContext.CancellationToken)
+		).Snapshot!;
 
 		WorkspaceDocumentRenameResult result = await store.RenameAsync(
 			new WorkspaceDocumentRenameRequest(
 				new(initial.DocumentKey, initial.DocumentId, initial.Version),
 				initial.OnDiskStamp,
-				TestPath("folder", "renamed.lua")),
-			cancellation.Token);
+				TestPath("folder", "renamed.lua")
+			),
+
+			cancellation.Token
+		);
 
 		Assert.AreEqual(WorkspaceDocumentRenameOutcome.Canceled, result.Outcome);
 		Assert.IsTrue(store.TryGetSnapshot(initial.DocumentId, out _));
@@ -623,12 +717,20 @@ public sealed partial class WorkspaceDocumentStoreTests
 	{
 		var fileSystem = new FakeFileSystem("retained", s_defaultFormat) { ThrowOnMove = true };
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("folder", "one.lua"), s_openOptions)).Snapshot!;
 
-		WorkspaceDocumentRenameResult result = await store.RenameAsync(new WorkspaceDocumentRenameRequest(
-			new(initial.DocumentKey, initial.DocumentId, initial.Version),
-			initial.OnDiskStamp,
-			TestPath("folder", "renamed.lua")));
+		WorkspaceDocumentSnapshot initial = (
+			await store.OpenAsync(TestPath("folder", "one.lua"), s_openOptions, TestContext.CancellationToken)
+		).Snapshot!;
+
+		WorkspaceDocumentRenameResult result = await store.RenameAsync(
+			new WorkspaceDocumentRenameRequest(
+				new(initial.DocumentKey, initial.DocumentId, initial.Version),
+				initial.OnDiskStamp,
+				TestPath("folder", "renamed.lua")
+			),
+
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(WorkspaceDocumentRenameOutcome.MoveFailed, result.Outcome);
 		Assert.AreEqual(WorkspaceOperationFailureCodes.MoveFailed, result.Failure?.Code);
@@ -640,17 +742,22 @@ public sealed partial class WorkspaceDocumentStoreTests
 	{
 		using var cancellation = new CancellationTokenSource();
 		cancellation.Cancel();
+
 		var fileSystem = new FakeFileSystem("retained", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot first = (await store.OpenAsync(TestPath("folder", "one.lua"), s_openOptions)).Snapshot!;
+
+		WorkspaceDocumentSnapshot first = (
+			await store.OpenAsync(TestPath("folder", "one.lua"), s_openOptions, TestContext.CancellationToken)
+		).Snapshot!;
 
 		WorkspaceDocumentDirectoryRenameResult result = await store.RenameDirectoryAsync(
 			new WorkspaceDocumentDirectoryRenameRequest(TestPath("folder"), TestPath("moved")),
-			cancellation.Token);
+			cancellation.Token
+		);
 
 		Assert.AreEqual(WorkspaceDocumentDirectoryRenameOutcome.Canceled, result.Outcome);
 		Assert.IsTrue(store.TryGetSnapshot(first.DocumentId, out _));
-		Assert.AreEqual(0, store.GetSnapshotsUnderDirectory(TestPath("moved")).Count);
+		Assert.IsEmpty(store.GetSnapshotsUnderDirectory(TestPath("moved")));
 	}
 
 	[TestMethod]
@@ -658,10 +765,15 @@ public sealed partial class WorkspaceDocumentStoreTests
 	{
 		var fileSystem = new FakeFileSystem("retained", s_defaultFormat) { ThrowOnMoveDirectory = true };
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot first = (await store.OpenAsync(TestPath("folder", "one.lua"), s_openOptions)).Snapshot!;
+
+		WorkspaceDocumentSnapshot first = (
+			await store.OpenAsync(TestPath("folder", "one.lua"), s_openOptions, TestContext.CancellationToken)
+		).Snapshot!;
 
 		WorkspaceDocumentDirectoryRenameResult result = await store.RenameDirectoryAsync(
-			new WorkspaceDocumentDirectoryRenameRequest(TestPath("folder"), TestPath("moved")));
+			new WorkspaceDocumentDirectoryRenameRequest(TestPath("folder"), TestPath("moved")),
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(WorkspaceDocumentDirectoryRenameOutcome.MoveFailed, result.Outcome);
 		Assert.AreEqual(WorkspaceOperationFailureCodes.MoveFailed, result.Failure?.Code);
@@ -673,17 +785,25 @@ public sealed partial class WorkspaceDocumentStoreTests
 	{
 		var fileSystem = new FakeFileSystem("content", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
+
 		fileSystem.ReadResults.Enqueue(Task.FromResult(WorkspaceFileReadResult.Missing));
-		WorkspaceDocumentSnapshot unsaved = (await store.OpenAsync(TestPath("unsaved.lua"), s_openOptions)).Snapshot!;
+
+		WorkspaceDocumentSnapshot unsaved = (await store.OpenAsync(TestPath("unsaved.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
 
 		// A rename whose expected source stamp is missing has no bytes to move: the document identity
 		// is retargeted, the destination keeps the missing stamp, and no file-system move runs.
 		fileSystem.CapturedStamps.Enqueue(FileStamp.Missing);
 		fileSystem.CapturedStamps.Enqueue(FileStamp.Missing);
-		WorkspaceDocumentRenameResult result = await store.RenameAsync(new WorkspaceDocumentRenameRequest(
-			new(unsaved.DocumentKey, unsaved.DocumentId, unsaved.Version),
-			unsaved.OnDiskStamp,
-			TestPath("renamed.lua")));
+
+		WorkspaceDocumentRenameResult result = await store.RenameAsync(
+			new WorkspaceDocumentRenameRequest(
+				new(unsaved.DocumentKey, unsaved.DocumentId, unsaved.Version),
+				unsaved.OnDiskStamp,
+				TestPath("renamed.lua")
+			),
+
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(WorkspaceDocumentRenameOutcome.Renamed, result.Outcome);
 		Assert.AreEqual(0, fileSystem.Moves.Count);
@@ -699,12 +819,18 @@ public sealed partial class WorkspaceDocumentStoreTests
 	{
 		var fileSystem = new FakeFileSystem("content", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot snapshot = (await store.OpenAsync(TestPath("source.lua"), s_openOptions)).Snapshot!;
 
-		WorkspaceDocumentRenameResult result = await store.RenameAsync(new WorkspaceDocumentRenameRequest(
-			new(snapshot.DocumentKey, snapshot.DocumentId, snapshot.Version),
-			snapshot.OnDiskStamp,
-			TestPath("renamed.lua") + Path.DirectorySeparatorChar));
+		WorkspaceDocumentSnapshot snapshot = (await store.OpenAsync(TestPath("source.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
+
+		WorkspaceDocumentRenameResult result = await store.RenameAsync(
+			new WorkspaceDocumentRenameRequest(
+				new(snapshot.DocumentKey, snapshot.DocumentId, snapshot.Version),
+				snapshot.OnDiskStamp,
+				TestPath("renamed.lua") + Path.DirectorySeparatorChar
+			),
+
+			TestContext.CancellationToken
+		);
 
 		// The destination is normalized for identity and for the file-system move, so the caller's
 		// trailing separator cannot reach the move as a directory-shaped path.
@@ -717,17 +843,24 @@ public sealed partial class WorkspaceDocumentStoreTests
 	{
 		var fileSystem = new FakeFileSystem("content", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
+
 		fileSystem.ReadResults.Enqueue(Task.FromResult(WorkspaceFileReadResult.Missing));
-		WorkspaceDocumentSnapshot unsaved = (await store.OpenAsync(TestPath("unsaved.lua"), s_openOptions)).Snapshot!;
+		WorkspaceDocumentSnapshot unsaved = (await store.OpenAsync(TestPath("unsaved.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
 
 		// The source is re-checked before the retarget: a file that appeared since the caller's
 		// snapshot means the rename has real bytes to move.
-		var appearedStamp = new FileStamp(true, 5, DateTime.UnixEpoch.AddMinutes(1), "appeared");
+		var appearedStamp = new FileStamp(Exists: true, Length: 5, LastWriteTimeUtc: DateTime.UnixEpoch.AddMinutes(1), ContentHash: "appeared");
 		fileSystem.CapturedStamps.Enqueue(appearedStamp);
-		WorkspaceDocumentRenameResult result = await store.RenameAsync(new WorkspaceDocumentRenameRequest(
-			new(unsaved.DocumentKey, unsaved.DocumentId, unsaved.Version),
-			unsaved.OnDiskStamp,
-			TestPath("renamed.lua")));
+
+		WorkspaceDocumentRenameResult result = await store.RenameAsync(
+			new WorkspaceDocumentRenameRequest(
+				new(unsaved.DocumentKey, unsaved.DocumentId, unsaved.Version),
+				unsaved.OnDiskStamp,
+				TestPath("renamed.lua")
+			),
+
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(WorkspaceDocumentRenameOutcome.ExternalFileConflict, result.Outcome);
 		Assert.AreEqual(appearedStamp, result.ObservedOnDiskStamp);
@@ -740,18 +873,26 @@ public sealed partial class WorkspaceDocumentStoreTests
 	{
 		var fileSystem = new FakeFileSystem("content", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
+
 		fileSystem.ReadResults.Enqueue(Task.FromResult(WorkspaceFileReadResult.Missing));
-		WorkspaceDocumentSnapshot unsaved = (await store.OpenAsync(TestPath("unsaved.lua"), s_openOptions)).Snapshot!;
+		WorkspaceDocumentSnapshot unsaved = (await store.OpenAsync(TestPath("unsaved.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
 
 		// The destination must be as free as a file-system move would require it to be: an existing
 		// file is a collision rather than a retarget onto an occupied path.
-		var occupiedStamp = new FileStamp(true, 2, DateTime.UnixEpoch.AddMinutes(1), "occupied");
+		var occupiedStamp = new FileStamp(Exists: true, Length: 2, LastWriteTimeUtc: DateTime.UnixEpoch.AddMinutes(1), ContentHash: "occupied");
+
 		fileSystem.CapturedStamps.Enqueue(FileStamp.Missing);
 		fileSystem.CapturedStamps.Enqueue(occupiedStamp);
-		WorkspaceDocumentRenameResult result = await store.RenameAsync(new WorkspaceDocumentRenameRequest(
-			new(unsaved.DocumentKey, unsaved.DocumentId, unsaved.Version),
-			unsaved.OnDiskStamp,
-			TestPath("renamed.lua")));
+
+		WorkspaceDocumentRenameResult result = await store.RenameAsync(
+			new WorkspaceDocumentRenameRequest(
+				new(unsaved.DocumentKey, unsaved.DocumentId, unsaved.Version),
+				unsaved.OnDiskStamp,
+				TestPath("renamed.lua")
+			),
+
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(WorkspaceDocumentRenameOutcome.DestinationExists, result.Outcome);
 		Assert.AreEqual(occupiedStamp, result.ObservedOnDiskStamp);
@@ -764,16 +905,23 @@ public sealed partial class WorkspaceDocumentStoreTests
 	{
 		var fileSystem = new FakeFileSystem("content", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
+
 		fileSystem.ReadResults.Enqueue(Task.FromResult(WorkspaceFileReadResult.Missing));
-		WorkspaceDocumentSnapshot unsaved = (await store.OpenAsync(TestPath("unsaved.lua"), s_openOptions)).Snapshot!;
+		WorkspaceDocumentSnapshot unsaved = (await store.OpenAsync(TestPath("unsaved.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
 
 		// A directory now occupies the source path: it is not the missing file the retarget expects, so
 		// the rename reports a conflict instead of retargeting the document onto the destination.
 		fileSystem.CapturedStamps.Enqueue(FileStamp.Directory);
-		WorkspaceDocumentRenameResult result = await store.RenameAsync(new WorkspaceDocumentRenameRequest(
-			new(unsaved.DocumentKey, unsaved.DocumentId, unsaved.Version),
-			unsaved.OnDiskStamp,
-			TestPath("renamed.lua")));
+
+		WorkspaceDocumentRenameResult result = await store.RenameAsync(
+			new WorkspaceDocumentRenameRequest(
+				new(unsaved.DocumentKey, unsaved.DocumentId, unsaved.Version),
+				unsaved.OnDiskStamp,
+				TestPath("renamed.lua")
+			),
+
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(WorkspaceDocumentRenameOutcome.ExternalFileConflict, result.Outcome);
 		Assert.AreEqual(FileStamp.Directory, result.ObservedOnDiskStamp);
@@ -787,17 +935,25 @@ public sealed partial class WorkspaceDocumentStoreTests
 	{
 		var fileSystem = new FakeFileSystem("content", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
+
 		fileSystem.ReadResults.Enqueue(Task.FromResult(WorkspaceFileReadResult.Missing));
-		WorkspaceDocumentSnapshot unsaved = (await store.OpenAsync(TestPath("unsaved.lua"), s_openOptions)).Snapshot!;
+
+		WorkspaceDocumentSnapshot unsaved = (await store.OpenAsync(TestPath("unsaved.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
 
 		// A directory occupying the destination is not a free path: the retarget is rejected like any
 		// other occupation rather than moving the document identity onto a directory.
 		fileSystem.CapturedStamps.Enqueue(FileStamp.Missing);
 		fileSystem.CapturedStamps.Enqueue(FileStamp.Directory);
-		WorkspaceDocumentRenameResult result = await store.RenameAsync(new WorkspaceDocumentRenameRequest(
-			new(unsaved.DocumentKey, unsaved.DocumentId, unsaved.Version),
-			unsaved.OnDiskStamp,
-			TestPath("renamed.lua")));
+
+		WorkspaceDocumentRenameResult result = await store.RenameAsync(
+			new WorkspaceDocumentRenameRequest(
+				new(unsaved.DocumentKey, unsaved.DocumentId, unsaved.Version),
+				unsaved.OnDiskStamp,
+				TestPath("renamed.lua")
+			),
+
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(WorkspaceDocumentRenameOutcome.DestinationExists, result.Outcome);
 		Assert.AreEqual(FileStamp.Directory, result.ObservedOnDiskStamp);
@@ -810,19 +966,29 @@ public sealed partial class WorkspaceDocumentStoreTests
 	{
 		var fileSystem = new FakeFileSystem("content", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
+
 		fileSystem.ReadResults.Enqueue(Task.FromResult(WorkspaceFileReadResult.Missing));
-		WorkspaceDocumentSnapshot unsaved = (await store.OpenAsync(TestPath("unsaved.lua"), s_openOptions)).Snapshot!;
+
+		WorkspaceDocumentSnapshot unsaved = (await store.OpenAsync(TestPath("unsaved.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
 
 		fileSystem.CapturedStamps.Enqueue(FileStamp.Missing);
 		fileSystem.CapturedStamps.Enqueue(FileStamp.Missing);
-		WorkspaceDocumentSnapshot retargeted = (await store.RenameAsync(new WorkspaceDocumentRenameRequest(
-			new(unsaved.DocumentKey, unsaved.DocumentId, unsaved.Version),
-			unsaved.OnDiskStamp,
-			TestPath("renamed.lua")))).Snapshot!;
+
+		WorkspaceDocumentSnapshot retargeted = (
+			await store.RenameAsync(
+				new WorkspaceDocumentRenameRequest(
+					new(unsaved.DocumentKey, unsaved.DocumentId, unsaved.Version),
+					unsaved.OnDiskStamp,
+					TestPath("renamed.lua")
+				),
+
+				TestContext.CancellationToken
+			)
+		).Snapshot!;
 
 		// The retargeted document composes with the save flow: a commit against the missing stamp
 		// creates the file at the new path like any other not-yet-written document.
-		WorkspaceDocumentCommitResult committed = await store.CommitAsync(CreateCommitRequest(retargeted));
+		WorkspaceDocumentCommitResult committed = await store.CommitAsync(CreateCommitRequest(retargeted), TestContext.CancellationToken);
 
 		Assert.AreEqual(WorkspaceDocumentCommitOutcome.Committed, committed.Outcome);
 		Assert.AreEqual(TestPath("renamed.lua"), committed.Snapshot!.DocumentId);
@@ -831,36 +997,45 @@ public sealed partial class WorkspaceDocumentStoreTests
 	}
 
 	[TestMethod]
-	[Timeout(15000)]
+	[Timeout(15000, CooperativeCancellation = true)]
 	public async Task Rename_DestinationReservedByAnInFlightSaveAs_ReportsDestinationBusy()
 	{
 		var fileSystem = new FakeFileSystem("content", s_defaultFormat);
 		var pendingReplacement = new TaskCompletionSource<WorkspaceFileReplacementResult>(TaskCreationOptions.RunContinuationsAsynchronously);
+
 		fileSystem.PendingReplacement = pendingReplacement.Task;
+
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot saved = (await store.OpenAsync(TestPath("one.lua"), s_openOptions)).Snapshot!;
-		WorkspaceDocumentSnapshot source = (await store.OpenAsync(TestPath("two.lua"), s_openOptions)).Snapshot!;
+
+		WorkspaceDocumentSnapshot saved = (await store.OpenAsync(TestPath("one.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
+		WorkspaceDocumentSnapshot source = (await store.OpenAsync(TestPath("two.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
+
 		string destinationPath = TestPath("shared.lua");
 
 		// The save-as holds the destination reservation while its write is in flight.
 		fileSystem.CapturedStamps.Enqueue(saved.OnDiskStamp);
 		fileSystem.CapturedStamps.Enqueue(FileStamp.Missing);
-		Task<WorkspaceDocumentSaveAsResult> held = store.SaveAsAsync(new WorkspaceDocumentSaveAsRequest(
-			new(saved.DocumentKey, saved.DocumentId, saved.Version),
-			saved.OnDiskStamp,
-			destinationPath));
+
+		Task<WorkspaceDocumentSaveAsResult> held = store.SaveAsAsync(
+			new WorkspaceDocumentSaveAsRequest(new(saved.DocumentKey, saved.DocumentId, saved.Version), saved.OnDiskStamp, destinationPath),
+			TestContext.CancellationToken
+		);
+
 		await fileSystem.Replacements.WhenReachedAsync(1);
 
 		// A rename onto the same destination is rejected with the destination-reservation outcome rather
 		// than colliding with the file the save-as is publishing.
-		WorkspaceDocumentRenameResult result = await store.RenameAsync(new WorkspaceDocumentRenameRequest(
-			new(source.DocumentKey, source.DocumentId, source.Version),
-			source.OnDiskStamp,
-			destinationPath));
+		WorkspaceDocumentRenameResult result = await store.RenameAsync(
+			new WorkspaceDocumentRenameRequest(new(source.DocumentKey, source.DocumentId, source.Version), source.OnDiskStamp, destinationPath),
+			TestContext.CancellationToken
+		);
 
-		pendingReplacement.SetResult(new WorkspaceFileReplacementResult(
-			WorkspaceFileReplacementOutcome.Replaced,
-			new FileStamp(true, 7, DateTime.UnixEpoch.AddMinutes(1), "written")));
+		pendingReplacement.SetResult(
+			new WorkspaceFileReplacementResult(
+				WorkspaceFileReplacementOutcome.Replaced,
+				new FileStamp(Exists: true, Length: 7, LastWriteTimeUtc: DateTime.UnixEpoch.AddMinutes(1), ContentHash: "written")
+			)
+		);
 
 		Assert.AreEqual(WorkspaceDocumentRenameOutcome.DestinationBusy, result.Outcome);
 		Assert.AreEqual(0, fileSystem.Moves.Count);
@@ -875,35 +1050,52 @@ public sealed partial class WorkspaceDocumentStoreTests
 		string sourcePath = Path.Combine(temp.Path, "Script.lua");
 		File.WriteAllText(sourcePath, "content");
 
-		// The real local file system runs the case-only rename through its intermediate path; the
+		// The real local file system runs the case-only move through its intermediate path; the
 		// substituted move fails the move to the destination and the rollback, so the file is left at
 		// the intermediate path and the store must report the state it cannot establish. The comparison
 		// policy is supplied for both the file system and the store so the rename is case-only on every
 		// platform.
-		var options = new WorkspaceDocumentOptions { PathComparison = LocalPathComparisonPolicy.CaseInsensitive };
+		var options = new WorkspaceOptions { PathComparison = LocalPathComparisonPolicy.CaseInsensitive };
 		var moveFailure = new IOException("The move to the destination failed.");
 		var rollbackFailure = new IOException("The rollback failed.");
+
 		int moveCount = 0;
-		var fileSystem = new LocalWorkspaceFileSystem(options, new WorkspaceFileOperations(
-			Replace: static (_, _) => throw new InvalidOperationException("A rename never replaces a file."),
-			MoveFile: (source, destination) =>
-			{
-				if (moveCount++ == 0)
+
+		var fileSystem = new LocalWorkspaceFileSystem(
+			options,
+
+			new WorkspaceFileSystemPrimitives(
+				Replace: static (_, _) => throw new InvalidOperationException("A rename never replaces a file."),
+
+				MoveFile: (source, destination) =>
 				{
-					File.Move(source, destination, overwrite: false);
-					return;
-				}
+					if (moveCount++ == 0)
+					{
+						File.Move(source, destination, overwrite: false);
+						return;
+					}
 
-				throw moveCount == 2 ? moveFailure : rollbackFailure;
-			},
-			MoveDirectory: static (_, _) => throw new InvalidOperationException("A file rename never moves a directory.")));
+					throw moveCount == 2 ? moveFailure : rollbackFailure;
+				},
+
+				MoveDirectory: static (_, _) => throw new InvalidOperationException("A file rename never moves a directory."),
+				DeleteFile: File.Delete
+			)
+		);
+
 		await using var store = new WorkspaceDocumentStore(fileSystem, options);
-		WorkspaceDocumentSnapshot opened = (await store.OpenAsync(sourcePath, s_openOptions)).Snapshot!;
 
-		WorkspaceDocumentRenameResult result = await store.RenameAsync(new WorkspaceDocumentRenameRequest(
-			new(opened.DocumentKey, opened.DocumentId, opened.Version),
-			opened.OnDiskStamp,
-			Path.Combine(temp.Path, "script.lua")));
+		WorkspaceDocumentSnapshot opened = (await store.OpenAsync(sourcePath, s_openOptions, TestContext.CancellationToken)).Snapshot!;
+
+		WorkspaceDocumentRenameResult result = await store.RenameAsync(
+			new WorkspaceDocumentRenameRequest(
+				new(opened.DocumentKey, opened.DocumentId, opened.Version),
+				opened.OnDiskStamp,
+				Path.Combine(temp.Path, "script.lua")
+			),
+
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(WorkspaceDocumentRenameOutcome.MoveStateUnknown, result.Outcome);
 		Assert.AreEqual(WorkspaceOperationFailureCodes.MoveStateUnknown, result.Failure?.Code);
@@ -920,25 +1112,24 @@ public sealed partial class WorkspaceDocumentStoreTests
 	{
 		var fileSystem = new FakeFileSystem("content", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(
-			TestPath("folder", "file.lua"),
-			s_openOptions)).Snapshot!;
+
+		WorkspaceDocumentSnapshot initial = (
+			await store.OpenAsync(TestPath("folder", "file.lua"), s_openOptions, TestContext.CancellationToken)
+		).Snapshot!;
+
 		string destinationPath = TestPath("folder", "renamed.lua");
 
 		// The file system moves the file but reports no resulting stamp, which a cross-volume move leaves
 		// with a new last-write time; the store must re-capture the destination stamp instead of installing
 		// the pre-move stamp, which the next write would report as a spurious conflict.
 		fileSystem.MoveResult = new WorkspaceFileMoveResult(WorkspaceFileMoveOutcome.Moved);
-		FileStamp movedStamp = initial.OnDiskStamp with
-		{
-			LastWriteTimeUtc = initial.OnDiskStamp.LastWriteTimeUtc!.Value.AddMinutes(5),
-		};
+		FileStamp movedStamp = initial.OnDiskStamp with { LastWriteTimeUtc = initial.OnDiskStamp.LastWriteTimeUtc!.Value.AddMinutes(5) };
 		fileSystem.CapturedStamps.Enqueue(movedStamp);
 
-		WorkspaceDocumentRenameResult result = await store.RenameAsync(new WorkspaceDocumentRenameRequest(
-			new(initial.DocumentKey, initial.DocumentId, initial.Version),
-			initial.OnDiskStamp,
-			destinationPath));
+		WorkspaceDocumentRenameResult result = await store.RenameAsync(
+			new WorkspaceDocumentRenameRequest(new(initial.DocumentKey, initial.DocumentId, initial.Version), initial.OnDiskStamp, destinationPath),
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(WorkspaceDocumentRenameOutcome.Renamed, result.Outcome);
 		Assert.AreEqual(movedStamp, result.Snapshot!.OnDiskStamp, "The resulting destination stamp is installed, not the pre-move stamp.");
@@ -949,25 +1140,23 @@ public sealed partial class WorkspaceDocumentStoreTests
 	{
 		var fileSystem = new FakeFileSystem("content", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(
-			TestPath("folder", "one.lua"),
-			s_openOptions)).Snapshot!;
+
+		WorkspaceDocumentSnapshot initial = (
+			await store.OpenAsync(TestPath("folder", "one.lua"), s_openOptions, TestContext.CancellationToken)
+		).Snapshot!;
 
 		// The directory move reports no resulting stamp per file, so the store re-captures each
 		// descendant's destination stamp for the rebase. The pre-gate re-captures the source stamp first
 		// (it must still match the tracked stamp), then the rebase captures the destination stamp.
 		fileSystem.MoveDirectoryResult = new WorkspaceFileMoveResult(WorkspaceFileMoveOutcome.Moved);
 		fileSystem.CapturedStamps.Enqueue(initial.OnDiskStamp);
-		FileStamp movedStamp = initial.OnDiskStamp with
-		{
-			LastWriteTimeUtc = initial.OnDiskStamp.LastWriteTimeUtc!.Value.AddMinutes(5),
-		};
+		FileStamp movedStamp = initial.OnDiskStamp with { LastWriteTimeUtc = initial.OnDiskStamp.LastWriteTimeUtc!.Value.AddMinutes(5) };
 		fileSystem.CapturedStamps.Enqueue(movedStamp);
 
 		WorkspaceDocumentDirectoryRenameResult result = await store.RenameDirectoryAsync(
-			new WorkspaceDocumentDirectoryRenameRequest(
-				TestPath("folder"),
-				TestPath("moved")));
+			new WorkspaceDocumentDirectoryRenameRequest(TestPath("folder"), TestPath("moved")),
+			TestContext.CancellationToken
+		);
 
 		Assert.AreEqual(WorkspaceDocumentDirectoryRenameOutcome.Renamed, result.Outcome);
 		WorkspaceDocumentSnapshot rebased = result.Snapshots.Single();

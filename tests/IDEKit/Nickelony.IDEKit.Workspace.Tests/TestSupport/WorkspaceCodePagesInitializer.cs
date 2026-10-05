@@ -1,19 +1,16 @@
 using System.Text;
+using Nickelony.IDEKit.Workspace.FileSystem;
 
 namespace Nickelony.IDEKit.Workspace.Tests;
 
-/// <summary>
-/// Enables the code-pages provider once for the test process.
-/// </summary>
+/// <summary>Enables the code-pages provider once for the test process.</summary>
 /// <remarks>
-/// <see cref="WorkspaceTextCodec"/> no longer registers the provider itself, so the Windows-1252
-/// coverage in this assembly performs the same startup step a host does before its first
-/// Windows-1252 document.
+/// The library does not register the provider itself, so the code-page coverage in this assembly (Windows-1252, Windows-1250, Shift-JIS)
+/// performs the same startup step a host does before its first code-page document.
 /// </remarks>
 [TestClass]
 public sealed class WorkspaceCodePagesInitializer
 {
 	[AssemblyInitialize]
-	public static void Initialize(TestContext _) =>
-		Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+	public static void Initialize(TestContext _) => Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 }

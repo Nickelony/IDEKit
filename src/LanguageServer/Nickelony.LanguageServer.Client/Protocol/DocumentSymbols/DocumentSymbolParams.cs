@@ -1,10 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace Nickelony.LanguageServer.Client;
+namespace Nickelony.LanguageServer.Client.Protocol;
 
-/// <summary>
-/// Represents a document-symbol request payload.
-/// </summary>
-/// <param name="TextDocument">The targeted document.</param>
-public readonly record struct DocumentSymbolParams(
-	[property: JsonPropertyName("textDocument")] TextDocumentIdentifier TextDocument);
+/// <summary>The parameters of a <c>textDocument/documentSymbol</c> request.</summary>
+public readonly record struct DocumentSymbolParams([property: JsonPropertyName("textDocument")] TextDocumentIdentifier TextDocument);

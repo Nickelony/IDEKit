@@ -1,42 +1,26 @@
 namespace Nickelony.KeyBindings;
 
-/// <summary>
-/// Renders a key combo or a key chord as display text for menus, toolbars, and shortcut editors.
-/// </summary>
+/// <summary>Renders a key stroke or a key chord as display text for menus, toolbars, and shortcut editors.</summary>
 /// <remarks>
-/// <para>
-/// The package default is <see cref="KeyDisplayTextFormatter"/>, which renders the canonical
-/// <see cref="KeyCode"/> and <see cref="KeyModifierSet"/> names and carries no platform conventions.
-/// A host that wants platform-convention or localized text supplies its own formatter through
-/// <see cref="KeyBindingServiceOptions.DisplayTextFormatter"/>; the toolkit-free
-/// <see cref="DesktopKeyDisplayTextFormatter"/> ships the desktop conventions as opt-in formatters.
-/// </para>
-/// <para>
-/// A formatter that only relabels the keys and modifiers, or that changes the modifier order or the
-/// separators, derives from <see cref="KeyDisplayTextFormatter"/> and overrides its text hooks, so the
-/// stroke sequencing and the uninitialized-combo contract stay in one place.
-/// </para>
+/// <see cref="KeyDisplayTextFormatter"/> is the package default and carries no desktop conventions, so its text
+/// is identical on every host; a host selects a formatter through <c>KeyBindingServiceOptions.DisplayTextFormatter</c>. A formatter that changes
+/// only the labels, the modifier order, or the separators derives from that default and overrides its text hooks, keeping the stroke sequencing
+/// and the uninitialized-stroke contract in one place.
 /// </remarks>
 public interface IKeyDisplayTextFormatter
 {
-	/// <summary>
-	/// Returns the display text for a single key combo.
-	/// </summary>
-	/// <param name="keyCombo">The key combo to render.</param>
+	/// <summary>Returns the display text for a single key stroke.</summary>
+	/// <param name="keyStroke">The key stroke to render.</param>
 	/// <returns>The display text, for example <c>Control+Shift+S</c>.</returns>
-	/// <exception cref="ArgumentException"><paramref name="keyCombo"/> is uninitialized.</exception>
-	string GetDisplayText(KeyCombo keyCombo);
+	/// <exception cref="ArgumentException"><paramref name="keyStroke"/> is uninitialized.</exception>
+	string GetDisplayText(KeyStroke keyStroke);
 
-	/// <summary>
-	/// Returns the display text for a key chord.
-	/// </summary>
-	/// <remarks>
-	/// An implementation decides how the stroke texts are separated. The package default joins them
-	/// with <c>, </c>, so <c>Control+K</c> followed by <c>S</c> renders as <c>Control+K, S</c>; a host
-	/// that follows another convention, such as a space or an arrow, supplies its own formatter.
-	/// </remarks>
-	/// <param name="keyChord">The key chord to render. A one-stroke chord renders as its single combo.</param>
+	/// <summary>Returns the display text for a key chord.</summary>
+	/// <param name="keyChord">The key chord to render. A one-stroke chord renders as its single stroke.</param>
 	/// <returns>The display text, for example <c>Control+K, S</c>.</returns>
 	/// <exception cref="ArgumentException"><paramref name="keyChord"/> is uninitialized.</exception>
+	/// <remarks>
+	/// An implementation decides how the stroke texts are separated; the package default joins them with <c>, </c>.
+	/// </remarks>
 	string GetDisplayText(KeyChord keyChord);
 }

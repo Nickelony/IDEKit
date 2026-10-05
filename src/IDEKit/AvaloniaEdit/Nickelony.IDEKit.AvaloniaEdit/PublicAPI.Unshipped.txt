@@ -1,44 +1,38 @@
 #nullable enable
-~override Nickelony.IDEKit.AvaloniaEdit.Rendering.TextRunStyle.Equals(object obj) -> bool
-~override Nickelony.IDEKit.AvaloniaEdit.Rendering.TextRunStyle.ToString() -> string
-abstract Nickelony.IDEKit.AvaloniaEdit.Highlighting.RegexHighlightingDefinition.BuildRules() -> System.Collections.Generic.IEnumerable<Nickelony.IDEKit.Core.Highlighting.RegexHighlightingRule!>!
-abstract Nickelony.IDEKit.AvaloniaEdit.Rendering.LineStatusMarginBase.DrawMarker(Avalonia.Media.DrawingContext! drawingContext, AvaloniaEdit.Rendering.VisualLine! visualLine, double visualTop) -> void
-abstract Nickelony.IDEKit.AvaloniaEdit.Rendering.LineStatusMarginBase.GetMarkedLineNumbers() -> System.Collections.Generic.IReadOnlyList<int>!
-const Nickelony.IDEKit.AvaloniaEdit.Rendering.LineStatusMarginBase.DesignFontSize = 12 -> double
-Nickelony.IDEKit.AvaloniaEdit.Bookmarks.BookmarkCoordinator
-Nickelony.IDEKit.AvaloniaEdit.Bookmarks.BookmarkCoordinator.BookmarkCoordinator(System.Func<AvaloniaEdit.Document.TextDocument?>! documentProvider) -> void
-Nickelony.IDEKit.AvaloniaEdit.Bookmarks.BookmarkCoordinator.Changed -> System.EventHandler?
-Nickelony.IDEKit.AvaloniaEdit.Bookmarks.BookmarkCoordinator.ClearBookmarks() -> void
-Nickelony.IDEKit.AvaloniaEdit.Bookmarks.BookmarkCoordinator.GetMarkedLineNumbers() -> System.Collections.Generic.IReadOnlyList<int>!
-Nickelony.IDEKit.AvaloniaEdit.Bookmarks.BookmarkCoordinator.GetNextBookmarkLine(int offset) -> AvaloniaEdit.Document.DocumentLine?
-Nickelony.IDEKit.AvaloniaEdit.Bookmarks.BookmarkCoordinator.GetPreviousBookmarkLine(int offset) -> AvaloniaEdit.Document.DocumentLine?
-Nickelony.IDEKit.AvaloniaEdit.Bookmarks.BookmarkCoordinator.IsBoundToCurrentDocument.get -> bool
-Nickelony.IDEKit.AvaloniaEdit.Bookmarks.BookmarkCoordinator.RestoreBookmarks(System.Collections.Generic.IEnumerable<int>! lineNumbers) -> void
-Nickelony.IDEKit.AvaloniaEdit.Bookmarks.BookmarkCoordinator.ToggleBookmark(int offset) -> void
+Nickelony.IDEKit.AvaloniaEdit.AutoClosing.AutoClosingService
+Nickelony.IDEKit.AvaloniaEdit.AutoClosing.AutoClosingService.ApplyTextEntering(AvaloniaEdit.TextEditor! editor, Avalonia.Input.TextInputEventArgs! e, Nickelony.IDEKit.Core.AutoClosing.AutoClosingOptions! options, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> Nickelony.IDEKit.Core.AutoClosing.AutoClosingResult
+Nickelony.IDEKit.AvaloniaEdit.AutoClosing.AutoClosingService.AutoClosingService() -> void
+Nickelony.IDEKit.AvaloniaEdit.AutoClosing.AutoClosingService.TryDeletePair(AvaloniaEdit.TextEditor! editor, Avalonia.Input.KeyEventArgs! e, Nickelony.IDEKit.Core.AutoClosing.AutoClosingOptions! options, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> bool
+Nickelony.IDEKit.AvaloniaEdit.AutoClosing.AutoClosingService.TryPlanAction(Nickelony.IDEKit.Core.Text.ITextSnapshot! snapshot, int caretOffset, string! inputText, Nickelony.IDEKit.Core.AutoClosing.AutoClosingOptions! options, out Nickelony.IDEKit.Core.AutoClosing.AutoClosingAction action) -> bool
+Nickelony.IDEKit.AvaloniaEdit.AutoClosing.IAutoClosingService
+Nickelony.IDEKit.AvaloniaEdit.AutoClosing.IAutoClosingService.ApplyTextEntering(AvaloniaEdit.TextEditor! editor, Avalonia.Input.TextInputEventArgs! e, Nickelony.IDEKit.Core.AutoClosing.AutoClosingOptions! options, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> Nickelony.IDEKit.Core.AutoClosing.AutoClosingResult
+Nickelony.IDEKit.AvaloniaEdit.AutoClosing.IAutoClosingService.TryDeletePair(AvaloniaEdit.TextEditor! editor, Avalonia.Input.KeyEventArgs! e, Nickelony.IDEKit.Core.AutoClosing.AutoClosingOptions! options, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> bool
+Nickelony.IDEKit.AvaloniaEdit.AutoClosing.IAutoClosingService.TryPlanAction(Nickelony.IDEKit.Core.Text.ITextSnapshot! snapshot, int caretOffset, string! inputText, Nickelony.IDEKit.Core.AutoClosing.AutoClosingOptions! options, out Nickelony.IDEKit.Core.AutoClosing.AutoClosingAction action) -> bool
 Nickelony.IDEKit.AvaloniaEdit.Bookmarks.BookmarkMargin
-Nickelony.IDEKit.AvaloniaEdit.Bookmarks.BookmarkMargin.BookmarkMargin(Nickelony.IDEKit.AvaloniaEdit.Bookmarks.IBookmarkSource! bookmarkSource) -> void
-Nickelony.IDEKit.AvaloniaEdit.Bookmarks.BookmarkStoreExtensions
-Nickelony.IDEKit.AvaloniaEdit.Bookmarks.IBookmarkSource
-Nickelony.IDEKit.AvaloniaEdit.Bookmarks.IBookmarkSource.ToggleBookmark(int offset) -> void
-Nickelony.IDEKit.AvaloniaEdit.ChangeMarkers.ChangeMarkerMargin
-Nickelony.IDEKit.AvaloniaEdit.ChangeMarkers.ChangeMarkerMargin.ChangeMarkerMargin(Nickelony.IDEKit.Core.LineStatus.ILineStatusSource! markerSource) -> void
-Nickelony.IDEKit.AvaloniaEdit.ChangeMarkers.ChangeMarkerMargin.MarkerBrush.get -> Avalonia.Media.IBrush!
-Nickelony.IDEKit.AvaloniaEdit.ChangeMarkers.ChangeMarkerMargin.MarkerBrush.set -> void
-Nickelony.IDEKit.AvaloniaEdit.ChangeMarkers.UnsavedChangesTracker
-Nickelony.IDEKit.AvaloniaEdit.ChangeMarkers.UnsavedChangesTracker.Changed -> System.EventHandler?
-Nickelony.IDEKit.AvaloniaEdit.ChangeMarkers.UnsavedChangesTracker.Dispose() -> void
-Nickelony.IDEKit.AvaloniaEdit.ChangeMarkers.UnsavedChangesTracker.GetMarkedLineNumbers() -> System.Collections.Generic.IReadOnlyList<int>!
-Nickelony.IDEKit.AvaloniaEdit.ChangeMarkers.UnsavedChangesTracker.SetBaseline(string! content) -> void
-Nickelony.IDEKit.AvaloniaEdit.ChangeMarkers.UnsavedChangesTracker.UnsavedChangesTracker(System.Func<AvaloniaEdit.Document.TextDocument?>! documentProvider) -> void
-Nickelony.IDEKit.AvaloniaEdit.Comments.ITextLineCommentService
-Nickelony.IDEKit.AvaloniaEdit.Comments.ITextLineCommentService.ApplyEdit(AvaloniaEdit.TextEditor! editor, Nickelony.IDEKit.Core.Comments.CommentSyntax commentSyntax, Nickelony.IDEKit.Core.Comments.TextLineCommentAction action, bool insertSpaceAfterDelimiter = true, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> void
-Nickelony.IDEKit.AvaloniaEdit.Comments.ITextLineCommentService.TryCreateEdit(AvaloniaEdit.Document.TextDocument! document, Nickelony.IDEKit.Core.Text.TextRange selection, Nickelony.IDEKit.Core.Comments.CommentSyntax commentSyntax, Nickelony.IDEKit.Core.Comments.TextLineCommentAction action, bool insertSpaceAfterDelimiter, out Nickelony.IDEKit.Core.Comments.TextLineCommentEdit edit) -> bool
-Nickelony.IDEKit.AvaloniaEdit.Comments.TextLineCommentService
-Nickelony.IDEKit.AvaloniaEdit.Comments.TextLineCommentService.ApplyEdit(AvaloniaEdit.TextEditor! editor, Nickelony.IDEKit.Core.Comments.CommentSyntax commentSyntax, Nickelony.IDEKit.Core.Comments.TextLineCommentAction action, bool insertSpaceAfterDelimiter = true, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> void
-Nickelony.IDEKit.AvaloniaEdit.Comments.TextLineCommentService.TextLineCommentService() -> void
-Nickelony.IDEKit.AvaloniaEdit.Comments.TextLineCommentService.TryCreateEdit(AvaloniaEdit.Document.TextDocument! document, Nickelony.IDEKit.Core.Text.TextRange selection, Nickelony.IDEKit.Core.Comments.CommentSyntax commentSyntax, Nickelony.IDEKit.Core.Comments.TextLineCommentAction action, bool insertSpaceAfterDelimiter, out Nickelony.IDEKit.Core.Comments.TextLineCommentEdit edit) -> bool
+Nickelony.IDEKit.AvaloniaEdit.Bookmarks.BookmarkMargin.BookmarkMargin(Nickelony.IDEKit.Core.Bookmarks.IBookmarkSource! bookmarkSource) -> void
+Nickelony.IDEKit.AvaloniaEdit.Bookmarks.BookmarkTracker
+Nickelony.IDEKit.AvaloniaEdit.Bookmarks.BookmarkTracker.BookmarkTracker(System.Func<AvaloniaEdit.Document.TextDocument?>! documentProvider) -> void
+Nickelony.IDEKit.AvaloniaEdit.Bookmarks.BookmarkTracker.Changed -> System.EventHandler?
+Nickelony.IDEKit.AvaloniaEdit.Bookmarks.BookmarkTracker.ClearBookmarks() -> void
+Nickelony.IDEKit.AvaloniaEdit.Bookmarks.BookmarkTracker.GetMarkedLineNumbers() -> System.Collections.Generic.IReadOnlyList<int>!
+Nickelony.IDEKit.AvaloniaEdit.Bookmarks.BookmarkTracker.GetNextBookmarkLine(int offset) -> AvaloniaEdit.Document.DocumentLine?
+Nickelony.IDEKit.AvaloniaEdit.Bookmarks.BookmarkTracker.GetPreviousBookmarkLine(int offset) -> AvaloniaEdit.Document.DocumentLine?
+Nickelony.IDEKit.AvaloniaEdit.Bookmarks.BookmarkTracker.IsBoundToCurrentDocument.get -> bool
+Nickelony.IDEKit.AvaloniaEdit.Bookmarks.BookmarkTracker.RestoreBookmarks(System.Collections.Generic.IEnumerable<int>! lineNumbers) -> void
+Nickelony.IDEKit.AvaloniaEdit.Bookmarks.BookmarkTracker.RestoreFrom(Nickelony.IDEKit.Core.Bookmarks.IBookmarkStore! store, string! documentId) -> bool
+Nickelony.IDEKit.AvaloniaEdit.Bookmarks.BookmarkTracker.SaveTo(Nickelony.IDEKit.Core.Bookmarks.IBookmarkStore! store, string! documentId) -> bool
+Nickelony.IDEKit.AvaloniaEdit.Bookmarks.BookmarkTracker.ToggleBookmark(int documentOffset) -> void
+Nickelony.IDEKit.AvaloniaEdit.Comments.ILineCommentService
+Nickelony.IDEKit.AvaloniaEdit.Comments.ILineCommentService.ApplyEdit(AvaloniaEdit.TextEditor! editor, Nickelony.IDEKit.Core.Scanning.CommentSyntax commentSyntax, Nickelony.IDEKit.Core.Comments.LineCommentActionKind action, Nickelony.IDEKit.Core.Comments.LineCommentSpacingStyle spacing = Nickelony.IDEKit.Core.Comments.LineCommentSpacingStyle.SpaceAfterDelimiter, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> void
+Nickelony.IDEKit.AvaloniaEdit.Comments.ILineCommentService.TryCreateEdit(AvaloniaEdit.Document.TextDocument! document, Nickelony.IDEKit.Core.Text.TextRange selection, Nickelony.IDEKit.Core.Scanning.CommentSyntax commentSyntax, Nickelony.IDEKit.Core.Comments.LineCommentActionKind action, Nickelony.IDEKit.Core.Comments.LineCommentSpacingStyle spacing, out Nickelony.IDEKit.Core.Comments.LineCommentEdit edit) -> bool
+Nickelony.IDEKit.AvaloniaEdit.Comments.LineCommentService
+Nickelony.IDEKit.AvaloniaEdit.Comments.LineCommentService.ApplyEdit(AvaloniaEdit.TextEditor! editor, Nickelony.IDEKit.Core.Scanning.CommentSyntax commentSyntax, Nickelony.IDEKit.Core.Comments.LineCommentActionKind action, Nickelony.IDEKit.Core.Comments.LineCommentSpacingStyle spacing = Nickelony.IDEKit.Core.Comments.LineCommentSpacingStyle.SpaceAfterDelimiter, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> void
+Nickelony.IDEKit.AvaloniaEdit.Comments.LineCommentService.LineCommentService() -> void
+Nickelony.IDEKit.AvaloniaEdit.Comments.LineCommentService.TryCreateEdit(AvaloniaEdit.Document.TextDocument! document, Nickelony.IDEKit.Core.Text.TextRange selection, Nickelony.IDEKit.Core.Scanning.CommentSyntax commentSyntax, Nickelony.IDEKit.Core.Comments.LineCommentActionKind action, Nickelony.IDEKit.Core.Comments.LineCommentSpacingStyle spacing, out Nickelony.IDEKit.Core.Comments.LineCommentEdit edit) -> bool
 Nickelony.IDEKit.AvaloniaEdit.Diagnostics.DiagnosticsRenderer
-Nickelony.IDEKit.AvaloniaEdit.Diagnostics.DiagnosticsRenderer.DiagnosticsRenderer(System.Func<System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Core.Diagnostics.TextDiagnosticSegment>?>! segmentsProvider) -> void
+Nickelony.IDEKit.AvaloniaEdit.Diagnostics.DiagnosticsRenderer.ApplySegments(System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Core.Diagnostics.DiagnosticSegment>! segments) -> void
+Nickelony.IDEKit.AvaloniaEdit.Diagnostics.DiagnosticsRenderer.ClearSegments() -> void
+Nickelony.IDEKit.AvaloniaEdit.Diagnostics.DiagnosticsRenderer.DiagnosticsRenderer(AvaloniaEdit.Rendering.TextView! textView) -> void
 Nickelony.IDEKit.AvaloniaEdit.Diagnostics.DiagnosticsRenderer.Draw(AvaloniaEdit.Rendering.TextView! textView, Avalonia.Media.DrawingContext! drawingContext) -> void
 Nickelony.IDEKit.AvaloniaEdit.Diagnostics.DiagnosticsRenderer.ErrorPen.get -> Avalonia.Media.IPen!
 Nickelony.IDEKit.AvaloniaEdit.Diagnostics.DiagnosticsRenderer.ErrorPen.set -> void
@@ -48,45 +42,26 @@ Nickelony.IDEKit.AvaloniaEdit.Diagnostics.DiagnosticsRenderer.InformationPen.get
 Nickelony.IDEKit.AvaloniaEdit.Diagnostics.DiagnosticsRenderer.InformationPen.set -> void
 Nickelony.IDEKit.AvaloniaEdit.Diagnostics.DiagnosticsRenderer.Layer.get -> AvaloniaEdit.Rendering.KnownLayer
 Nickelony.IDEKit.AvaloniaEdit.Diagnostics.DiagnosticsRenderer.Layer.set -> void
+Nickelony.IDEKit.AvaloniaEdit.Diagnostics.DiagnosticsRenderer.TryFindSegmentAt(int offset, out int index) -> bool
+Nickelony.IDEKit.AvaloniaEdit.Diagnostics.DiagnosticsRenderer.TryGetSegmentRange(int index, out Nickelony.IDEKit.Core.Text.TextRange range) -> bool
 Nickelony.IDEKit.AvaloniaEdit.Diagnostics.DiagnosticsRenderer.WarningPen.get -> Avalonia.Media.IPen!
 Nickelony.IDEKit.AvaloniaEdit.Diagnostics.DiagnosticsRenderer.WarningPen.set -> void
-Nickelony.IDEKit.AvaloniaEdit.Documents.DocumentLineStateCache<TState>
-Nickelony.IDEKit.AvaloniaEdit.Documents.DocumentLineStateCache<TState>.Dispose() -> void
-Nickelony.IDEKit.AvaloniaEdit.Documents.DocumentLineStateCache<TState>.DocumentLineStateCache(AvaloniaEdit.Document.TextDocument! document, System.Func<string!, TState, TState>! transition) -> void
-Nickelony.IDEKit.AvaloniaEdit.Documents.DocumentLineStateCache<TState>.GetLineStartState(int lineNumber) -> TState
-Nickelony.IDEKit.AvaloniaEdit.Documents.TextDocumentExtensions
-Nickelony.IDEKit.AvaloniaEdit.Documents.TextDocumentSnapshot
-Nickelony.IDEKit.AvaloniaEdit.Documents.TextDocumentSnapshot.FileName.get -> string?
-Nickelony.IDEKit.AvaloniaEdit.Documents.TextDocumentSnapshot.GetCharAt(int offset) -> char
-Nickelony.IDEKit.AvaloniaEdit.Documents.TextDocumentSnapshot.GetLineByNumber(int lineNumber) -> Nickelony.IDEKit.Core.Text.ITextLine!
-Nickelony.IDEKit.AvaloniaEdit.Documents.TextDocumentSnapshot.GetLineByOffset(int offset) -> Nickelony.IDEKit.Core.Text.ITextLine!
-Nickelony.IDEKit.AvaloniaEdit.Documents.TextDocumentSnapshot.GetText(int offset, int length) -> string!
-Nickelony.IDEKit.AvaloniaEdit.Documents.TextDocumentSnapshot.LineCount.get -> int
-Nickelony.IDEKit.AvaloniaEdit.Documents.TextDocumentSnapshot.Lines.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Core.Text.ITextLine!>!
-Nickelony.IDEKit.AvaloniaEdit.Documents.TextDocumentSnapshot.TextDocumentSnapshot(AvaloniaEdit.Document.TextDocument! document) -> void
-Nickelony.IDEKit.AvaloniaEdit.Documents.TextDocumentSnapshot.TextLength.get -> int
 Nickelony.IDEKit.AvaloniaEdit.Editing.TextEditorEditTarget
 Nickelony.IDEKit.AvaloniaEdit.Editing.TextEditorEditTarget.Apply(Nickelony.IDEKit.Core.Editing.PreparedTextEdits! edits) -> void
+Nickelony.IDEKit.AvaloniaEdit.Editing.TextEditorEditTarget.CaptureVersion() -> long
 Nickelony.IDEKit.AvaloniaEdit.Editing.TextEditorEditTarget.Text.get -> string!
 Nickelony.IDEKit.AvaloniaEdit.Editing.TextEditorEditTarget.TextEditorEditTarget(AvaloniaEdit.TextEditor! editor) -> void
 Nickelony.IDEKit.AvaloniaEdit.Editing.TextEditorEditTarget.TryApply(Nickelony.IDEKit.Core.Editing.PreparedTextEdits! edits, long expectedVersion) -> bool
 Nickelony.IDEKit.AvaloniaEdit.Editing.TextEditorEditTarget.Version.get -> long
-Nickelony.IDEKit.AvaloniaEdit.Editing.ITextAutoClosingService
-Nickelony.IDEKit.AvaloniaEdit.Editing.ITextAutoClosingService.HandleBackspace(AvaloniaEdit.TextEditor! editor, Avalonia.Input.KeyEventArgs! e, Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingOptions! options, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> bool
-Nickelony.IDEKit.AvaloniaEdit.Editing.ITextAutoClosingService.HandleTextEntering(AvaloniaEdit.TextEditor! editor, Avalonia.Input.TextInputEventArgs! e, Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingOptions! options, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingResult
-Nickelony.IDEKit.AvaloniaEdit.Editing.ITextAutoClosingService.TryResolveAction(Nickelony.IDEKit.Core.Text.ITextSnapshot! snapshot, int caretOffset, string! inputText, Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingOptions! options, out Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingAction action) -> bool
-Nickelony.IDEKit.AvaloniaEdit.Editing.ITextDocumentFormattingService
-Nickelony.IDEKit.AvaloniaEdit.Editing.ITextDocumentFormattingService.FormatDocument(AvaloniaEdit.TextEditor! editor, Nickelony.IDEKit.Core.Formatting.ITextDocumentFormatter! formatter, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> void
-Nickelony.IDEKit.AvaloniaEdit.Editing.TextAutoClosingService
-Nickelony.IDEKit.AvaloniaEdit.Editing.TextAutoClosingService.HandleBackspace(AvaloniaEdit.TextEditor! editor, Avalonia.Input.KeyEventArgs! e, Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingOptions! options, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> bool
-Nickelony.IDEKit.AvaloniaEdit.Editing.TextAutoClosingService.HandleTextEntering(AvaloniaEdit.TextEditor! editor, Avalonia.Input.TextInputEventArgs! e, Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingOptions! options, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingResult
-Nickelony.IDEKit.AvaloniaEdit.Editing.TextAutoClosingService.TextAutoClosingService() -> void
-Nickelony.IDEKit.AvaloniaEdit.Editing.TextAutoClosingService.TryResolveAction(Nickelony.IDEKit.Core.Text.ITextSnapshot! snapshot, int caretOffset, string! inputText, Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingOptions! options, out Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingAction action) -> bool
-Nickelony.IDEKit.AvaloniaEdit.Editing.TextDocumentFormattingService
-Nickelony.IDEKit.AvaloniaEdit.Editing.TextDocumentFormattingService.FormatDocument(AvaloniaEdit.TextEditor! editor, Nickelony.IDEKit.Core.Formatting.ITextDocumentFormatter! formatter, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> void
-Nickelony.IDEKit.AvaloniaEdit.Editing.TextDocumentFormattingService.TextDocumentFormattingService() -> void
-Nickelony.IDEKit.AvaloniaEdit.Editing.TextEditorEditOperations
-Nickelony.IDEKit.AvaloniaEdit.Editing.TextEditorLineOperations
+Nickelony.IDEKit.AvaloniaEdit.Editing.TextEditorEditingExtensions
+Nickelony.IDEKit.AvaloniaEdit.Editing.TextEditorLineTerminatorExtensions
+Nickelony.IDEKit.AvaloniaEdit.Formatting.DocumentFormatterService
+Nickelony.IDEKit.AvaloniaEdit.Formatting.DocumentFormatterService.ApplyEdits(AvaloniaEdit.TextEditor! editor, Nickelony.IDEKit.Core.Editing.PreparedTextEdits! edits, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> void
+Nickelony.IDEKit.AvaloniaEdit.Formatting.DocumentFormatterService.DocumentFormatterService() -> void
+Nickelony.IDEKit.AvaloniaEdit.Formatting.DocumentFormatterService.FormatDocument(AvaloniaEdit.TextEditor! editor, Nickelony.IDEKit.Core.Formatting.IDocumentFormatter! formatter, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> void
+Nickelony.IDEKit.AvaloniaEdit.Formatting.IDocumentFormatterService
+Nickelony.IDEKit.AvaloniaEdit.Formatting.IDocumentFormatterService.ApplyEdits(AvaloniaEdit.TextEditor! editor, Nickelony.IDEKit.Core.Editing.PreparedTextEdits! edits, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> void
+Nickelony.IDEKit.AvaloniaEdit.Formatting.IDocumentFormatterService.FormatDocument(AvaloniaEdit.TextEditor! editor, Nickelony.IDEKit.Core.Formatting.IDocumentFormatter! formatter, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> void
 Nickelony.IDEKit.AvaloniaEdit.Highlighting.RegexHighlightingDefinition
 Nickelony.IDEKit.AvaloniaEdit.Highlighting.RegexHighlightingDefinition.GetNamedColor(string! name) -> AvaloniaEdit.Highlighting.HighlightingColor?
 Nickelony.IDEKit.AvaloniaEdit.Highlighting.RegexHighlightingDefinition.GetNamedRuleSet(string! name) -> AvaloniaEdit.Highlighting.HighlightingRuleSet?
@@ -94,46 +69,53 @@ Nickelony.IDEKit.AvaloniaEdit.Highlighting.RegexHighlightingDefinition.MainRuleS
 Nickelony.IDEKit.AvaloniaEdit.Highlighting.RegexHighlightingDefinition.Name.get -> string!
 Nickelony.IDEKit.AvaloniaEdit.Highlighting.RegexHighlightingDefinition.NamedHighlightingColors.get -> System.Collections.Generic.IEnumerable<AvaloniaEdit.Highlighting.HighlightingColor!>!
 Nickelony.IDEKit.AvaloniaEdit.Highlighting.RegexHighlightingDefinition.Properties.get -> System.Collections.Generic.IDictionary<string!, string!>!
-Nickelony.IDEKit.AvaloniaEdit.Highlighting.RegexHighlightingDefinition.RegexHighlightingDefinition(string! name, Nickelony.IDEKit.AvaloniaEdit.Highlighting.RegexHighlightingDefinitionOptions? options = null) -> void
+Nickelony.IDEKit.AvaloniaEdit.Highlighting.RegexHighlightingDefinition.RegexHighlightingDefinition(string! name, Nickelony.IDEKit.Core.Highlighting.RegexHighlightingDefinitionOptions? options = null) -> void
 Nickelony.IDEKit.AvaloniaEdit.Highlighting.RegexHighlightingDefinition.RuleSetChanged -> System.EventHandler?
-Nickelony.IDEKit.AvaloniaEdit.Highlighting.RegexHighlightingDefinitionOptions
-Nickelony.IDEKit.AvaloniaEdit.Highlighting.RegexHighlightingDefinitionOptions.<Clone>$() -> Nickelony.IDEKit.AvaloniaEdit.Highlighting.RegexHighlightingDefinitionOptions!
-Nickelony.IDEKit.AvaloniaEdit.Highlighting.RegexHighlightingDefinitionOptions.CacheVersion.get -> System.Func<int>?
-Nickelony.IDEKit.AvaloniaEdit.Highlighting.RegexHighlightingDefinitionOptions.CacheVersion.init -> void
-Nickelony.IDEKit.AvaloniaEdit.Highlighting.RegexHighlightingDefinitionOptions.Deconstruct(out System.Func<int>? CacheVersion, out Avalonia.Media.Color? FallbackColor) -> void
-Nickelony.IDEKit.AvaloniaEdit.Highlighting.RegexHighlightingDefinitionOptions.Equals(Nickelony.IDEKit.AvaloniaEdit.Highlighting.RegexHighlightingDefinitionOptions? other) -> bool
-Nickelony.IDEKit.AvaloniaEdit.Highlighting.RegexHighlightingDefinitionOptions.FallbackColor.get -> Avalonia.Media.Color?
-Nickelony.IDEKit.AvaloniaEdit.Highlighting.RegexHighlightingDefinitionOptions.FallbackColor.init -> void
-Nickelony.IDEKit.AvaloniaEdit.Highlighting.RegexHighlightingDefinitionOptions.RegexHighlightingDefinitionOptions(System.Func<int>? CacheVersion = null, Avalonia.Media.Color? FallbackColor = null) -> void
-Nickelony.IDEKit.AvaloniaEdit.Highlighting.RegexHighlightingStyleExtensions
 Nickelony.IDEKit.AvaloniaEdit.Indentation.PolicyIndentationStrategy
 Nickelony.IDEKit.AvaloniaEdit.Indentation.PolicyIndentationStrategy.IndentLine(AvaloniaEdit.Document.TextDocument! document, AvaloniaEdit.Document.DocumentLine! line) -> void
 Nickelony.IDEKit.AvaloniaEdit.Indentation.PolicyIndentationStrategy.IndentLines(AvaloniaEdit.Document.TextDocument! document, int beginLine, int endLine) -> void
 Nickelony.IDEKit.AvaloniaEdit.Indentation.PolicyIndentationStrategy.PolicyIndentationStrategy(AvaloniaEdit.TextEditorOptions! options, Nickelony.IDEKit.Core.Indentation.IIndentationPolicy! policy, System.Func<AvaloniaEdit.Document.TextDocument!, AvaloniaEdit.Document.DocumentLine!, bool>? shouldUseSmartIndent = null) -> void
-Nickelony.IDEKit.AvaloniaEdit.Navigation.TextAreaNavigationOperations
-Nickelony.IDEKit.AvaloniaEdit.Navigation.TextEditorNavigationOperations
-Nickelony.IDEKit.AvaloniaEdit.Rendering.ITextRunStyle
-Nickelony.IDEKit.AvaloniaEdit.Rendering.ITextRunStyle.Foreground.get -> Avalonia.Media.IBrush?
-Nickelony.IDEKit.AvaloniaEdit.Rendering.ITextRunStyle.HasFormatting.get -> bool
-Nickelony.IDEKit.AvaloniaEdit.Rendering.ITextRunStyle.IsBold.get -> bool
-Nickelony.IDEKit.AvaloniaEdit.Rendering.ITextRunStyle.IsItalic.get -> bool
-Nickelony.IDEKit.AvaloniaEdit.Rendering.ITextRunStyle.TextDecorations.get -> Avalonia.Media.TextDecorationCollection?
-Nickelony.IDEKit.AvaloniaEdit.Rendering.LineStatusIconMarginBase
-Nickelony.IDEKit.AvaloniaEdit.Rendering.LineStatusIconMarginBase.IconBrush.get -> Avalonia.Media.IBrush!
-Nickelony.IDEKit.AvaloniaEdit.Rendering.LineStatusIconMarginBase.IconBrush.set -> void
-Nickelony.IDEKit.AvaloniaEdit.Rendering.LineStatusIconMarginBase.IconGeometry.get -> Avalonia.Media.Geometry!
-Nickelony.IDEKit.AvaloniaEdit.Rendering.LineStatusIconMarginBase.IconGeometry.set -> void
-Nickelony.IDEKit.AvaloniaEdit.Rendering.LineStatusIconMarginBase.LineStatusIconMarginBase() -> void
-Nickelony.IDEKit.AvaloniaEdit.Rendering.LineStatusIconMarginBase.TryGetVisualLineAt(Avalonia.Point position, out AvaloniaEdit.Rendering.VisualLine? visualLine) -> bool
-Nickelony.IDEKit.AvaloniaEdit.Rendering.LineStatusMarginBase
-Nickelony.IDEKit.AvaloniaEdit.Rendering.LineStatusMarginBase.FollowSourceNotifications(Nickelony.IDEKit.Core.LineStatus.ILineStatusSource! source) -> void
-Nickelony.IDEKit.AvaloniaEdit.Rendering.LineStatusMarginBase.GetEffectiveMarginWidth() -> double
-Nickelony.IDEKit.AvaloniaEdit.Rendering.LineStatusMarginBase.GetFontScale() -> double
-Nickelony.IDEKit.AvaloniaEdit.Rendering.LineStatusMarginBase.LineStatusMarginBase() -> void
-Nickelony.IDEKit.AvaloniaEdit.Rendering.LineStatusMarginBase.MarginWidth.get -> double
-Nickelony.IDEKit.AvaloniaEdit.Rendering.LineStatusMarginBase.MarginWidth.set -> void
-Nickelony.IDEKit.AvaloniaEdit.Rendering.LineStatusMarginBase.QueueVisualInvalidation() -> void
-Nickelony.IDEKit.AvaloniaEdit.Rendering.LineStatusMarginBase.SetNotifyingSource(Nickelony.IDEKit.Core.Notifications.IChangeNotificationSource! source) -> void
+Nickelony.IDEKit.AvaloniaEdit.Indentation.TextEditorIndentationExtensions
+Nickelony.IDEKit.AvaloniaEdit.LineStatus.ChangeMarkerMargin
+Nickelony.IDEKit.AvaloniaEdit.LineStatus.ChangeMarkerMargin.ChangeMarkerMargin(Nickelony.IDEKit.Core.LineStatus.ILineStatusSource! markerSource) -> void
+Nickelony.IDEKit.AvaloniaEdit.LineStatus.ChangeMarkerMargin.MarkerBrush.get -> Avalonia.Media.IBrush!
+Nickelony.IDEKit.AvaloniaEdit.LineStatus.ChangeMarkerMargin.MarkerBrush.set -> void
+Nickelony.IDEKit.AvaloniaEdit.LineStatus.LineStatusIconMarginBase
+Nickelony.IDEKit.AvaloniaEdit.LineStatus.LineStatusIconMarginBase.IconBrush.get -> Avalonia.Media.IBrush!
+Nickelony.IDEKit.AvaloniaEdit.LineStatus.LineStatusIconMarginBase.IconBrush.set -> void
+Nickelony.IDEKit.AvaloniaEdit.LineStatus.LineStatusIconMarginBase.IconGeometry.get -> Avalonia.Media.Geometry!
+Nickelony.IDEKit.AvaloniaEdit.LineStatus.LineStatusIconMarginBase.IconGeometry.set -> void
+Nickelony.IDEKit.AvaloniaEdit.LineStatus.LineStatusIconMarginBase.LineStatusIconMarginBase() -> void
+Nickelony.IDEKit.AvaloniaEdit.LineStatus.LineStatusIconMarginBase.TryGetVisualLineAt(Avalonia.Point position, out AvaloniaEdit.Rendering.VisualLine? visualLine) -> bool
+Nickelony.IDEKit.AvaloniaEdit.LineStatus.LineStatusIconMarginBase.TryHandleClickAt(Avalonia.Point position) -> bool
+Nickelony.IDEKit.AvaloniaEdit.LineStatus.LineStatusMarginBase
+Nickelony.IDEKit.AvaloniaEdit.LineStatus.LineStatusMarginBase.FollowSourceNotifications(Nickelony.IDEKit.Core.LineStatus.ILineStatusSource! source) -> void
+Nickelony.IDEKit.AvaloniaEdit.LineStatus.LineStatusMarginBase.GetEffectiveMarginWidth() -> double
+Nickelony.IDEKit.AvaloniaEdit.LineStatus.LineStatusMarginBase.GetFontScale() -> double
+Nickelony.IDEKit.AvaloniaEdit.LineStatus.LineStatusMarginBase.LineStatusMarginBase() -> void
+Nickelony.IDEKit.AvaloniaEdit.LineStatus.LineStatusMarginBase.MarginWidth.get -> double
+Nickelony.IDEKit.AvaloniaEdit.LineStatus.LineStatusMarginBase.MarginWidth.set -> void
+Nickelony.IDEKit.AvaloniaEdit.LineStatus.LineStatusMarginBase.QueueVisualInvalidation() -> void
+Nickelony.IDEKit.AvaloniaEdit.LineStatus.LineStatusMarginBase.SetNotifyingSource(Nickelony.IDEKit.Core.Notifications.IChangeNotificationSource! source) -> void
+Nickelony.IDEKit.AvaloniaEdit.LineStatus.UnsavedChangesTracker
+Nickelony.IDEKit.AvaloniaEdit.LineStatus.UnsavedChangesTracker.Changed -> System.EventHandler?
+Nickelony.IDEKit.AvaloniaEdit.LineStatus.UnsavedChangesTracker.Dispose() -> void
+Nickelony.IDEKit.AvaloniaEdit.LineStatus.UnsavedChangesTracker.GetMarkedLineNumbers() -> System.Collections.Generic.IReadOnlyList<int>!
+Nickelony.IDEKit.AvaloniaEdit.LineStatus.UnsavedChangesTracker.SetBaseline(string! content) -> void
+Nickelony.IDEKit.AvaloniaEdit.LineStatus.UnsavedChangesTracker.UnsavedChangesTracker(System.Func<AvaloniaEdit.Document.TextDocument?>! documentProvider) -> void
+Nickelony.IDEKit.AvaloniaEdit.Media.ArgbColorExtensions
+Nickelony.IDEKit.AvaloniaEdit.Navigation.TextAreaExtensions
+Nickelony.IDEKit.AvaloniaEdit.Navigation.TextEditorNavigationExtensions
+Nickelony.IDEKit.AvaloniaEdit.Navigation.TextEditorNavigationTarget
+Nickelony.IDEKit.AvaloniaEdit.Navigation.TextEditorNavigationTarget.CaretColumn.get -> int
+Nickelony.IDEKit.AvaloniaEdit.Navigation.TextEditorNavigationTarget.CaretLineNumber.get -> int
+Nickelony.IDEKit.AvaloniaEdit.Navigation.TextEditorNavigationTarget.GetLineLength(int lineNumber) -> int
+Nickelony.IDEKit.AvaloniaEdit.Navigation.TextEditorNavigationTarget.LineCount.get -> int
+Nickelony.IDEKit.AvaloniaEdit.Navigation.TextEditorNavigationTarget.MoveCaret(int lineNumber, int column) -> void
+Nickelony.IDEKit.AvaloniaEdit.Navigation.TextEditorNavigationTarget.RestoreView() -> void
+Nickelony.IDEKit.AvaloniaEdit.Navigation.TextEditorNavigationTarget.SaveView() -> void
+Nickelony.IDEKit.AvaloniaEdit.Navigation.TextEditorNavigationTarget.SelectRange(Nickelony.IDEKit.Core.Text.TextPositionRange range) -> void
+Nickelony.IDEKit.AvaloniaEdit.Navigation.TextEditorNavigationTarget.TextEditorNavigationTarget(AvaloniaEdit.TextEditor! editor) -> void
 Nickelony.IDEKit.AvaloniaEdit.Rendering.TextRunStyle
 Nickelony.IDEKit.AvaloniaEdit.Rendering.TextRunStyle.CreateTypeface(Avalonia.Media.Typeface baseTypeface) -> Avalonia.Media.Typeface
 Nickelony.IDEKit.AvaloniaEdit.Rendering.TextRunStyle.Deconstruct(out Avalonia.Media.IBrush? Foreground, out bool IsBold, out bool IsItalic, out Avalonia.Media.TextDecorationCollection? TextDecorations) -> void
@@ -150,65 +132,91 @@ Nickelony.IDEKit.AvaloniaEdit.Rendering.TextRunStyle.TextDecorations.init -> voi
 Nickelony.IDEKit.AvaloniaEdit.Rendering.TextRunStyle.TextRunStyle() -> void
 Nickelony.IDEKit.AvaloniaEdit.Rendering.TextRunStyle.TextRunStyle(Avalonia.Media.IBrush? Foreground, bool IsBold, bool IsItalic, Avalonia.Media.TextDecorationCollection? TextDecorations) -> void
 Nickelony.IDEKit.AvaloniaEdit.Rendering.TextRunStyleApplier
+Nickelony.IDEKit.AvaloniaEdit.Text.DocumentLineStateCache<TState>
+Nickelony.IDEKit.AvaloniaEdit.Text.DocumentLineStateCache<TState>.Dispose() -> void
+Nickelony.IDEKit.AvaloniaEdit.Text.DocumentLineStateCache<TState>.DocumentLineStateCache(AvaloniaEdit.Document.TextDocument! document, System.Func<string!, TState, TState>! transition) -> void
+Nickelony.IDEKit.AvaloniaEdit.Text.DocumentLineStateCache<TState>.GetLineStartState(int lineNumber) -> TState
+Nickelony.IDEKit.AvaloniaEdit.Text.TextDocumentExtensions
+Nickelony.IDEKit.AvaloniaEdit.Text.TextDocumentSnapshot
+Nickelony.IDEKit.AvaloniaEdit.Text.TextDocumentSnapshot.DocumentId.get -> string?
+Nickelony.IDEKit.AvaloniaEdit.Text.TextDocumentSnapshot.GetCharAt(int offset) -> char
+Nickelony.IDEKit.AvaloniaEdit.Text.TextDocumentSnapshot.GetLineByNumber(int lineNumber) -> Nickelony.IDEKit.Core.Text.ITextLine!
+Nickelony.IDEKit.AvaloniaEdit.Text.TextDocumentSnapshot.GetLineByOffset(int offset) -> Nickelony.IDEKit.Core.Text.ITextLine!
+Nickelony.IDEKit.AvaloniaEdit.Text.TextDocumentSnapshot.GetText(int offset, int length) -> string!
+Nickelony.IDEKit.AvaloniaEdit.Text.TextDocumentSnapshot.LineCount.get -> int
+Nickelony.IDEKit.AvaloniaEdit.Text.TextDocumentSnapshot.Lines.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Core.Text.ITextLine!>!
+Nickelony.IDEKit.AvaloniaEdit.Text.TextDocumentSnapshot.TextDocumentSnapshot(AvaloniaEdit.Document.TextDocument! document) -> void
+Nickelony.IDEKit.AvaloniaEdit.Text.TextDocumentSnapshot.TextLength.get -> int
+Nickelony.IDEKit.AvaloniaEdit.Threading.UiDispatcher
+Nickelony.IDEKit.AvaloniaEdit.Threading.UiDispatcher.CheckAccess() -> bool
+Nickelony.IDEKit.AvaloniaEdit.Threading.UiDispatcher.Invoke(System.Action! callback) -> void
+Nickelony.IDEKit.AvaloniaEdit.Threading.UiDispatcher.Invoke<TResult>(System.Func<TResult>! callback) -> TResult
+Nickelony.IDEKit.AvaloniaEdit.Threading.UiDispatcher.InvokeAsync(System.Action! callback) -> System.Threading.Tasks.Task!
+Nickelony.IDEKit.AvaloniaEdit.Threading.UiDispatcher.Post(System.Action! callback, Nickelony.IDEKit.Core.Threading.UiDispatcherPriority priority = Nickelony.IDEKit.Core.Threading.UiDispatcherPriority.Normal) -> void
+Nickelony.IDEKit.AvaloniaEdit.Threading.UiDispatcher.Schedule(System.TimeSpan delay, System.Action! callback) -> System.IDisposable!
+Nickelony.IDEKit.AvaloniaEdit.Threading.UiDispatcher.UiDispatcher(Avalonia.Threading.Dispatcher! dispatcher) -> void
+Nickelony.IDEKit.AvaloniaEdit.Threading.UiDispatcher.VerifyAccess() -> void
+abstract Nickelony.IDEKit.AvaloniaEdit.Highlighting.RegexHighlightingDefinition.BuildRules() -> System.Collections.Generic.IEnumerable<Nickelony.IDEKit.Core.Highlighting.RegexHighlightingRule!>!
+abstract Nickelony.IDEKit.AvaloniaEdit.LineStatus.LineStatusMarginBase.DrawMarker(Avalonia.Media.DrawingContext! drawingContext, AvaloniaEdit.Rendering.VisualLine! visualLine, double visualTop) -> void
+abstract Nickelony.IDEKit.AvaloniaEdit.LineStatus.LineStatusMarginBase.GetMarkedLineNumbers() -> System.Collections.Generic.IReadOnlyList<int>!
+const Nickelony.IDEKit.AvaloniaEdit.LineStatus.LineStatusMarginBase.DesignFontSize = 12 -> double
 override Nickelony.IDEKit.AvaloniaEdit.Bookmarks.BookmarkMargin.GetMarkedLineNumbers() -> System.Collections.Generic.IReadOnlyList<int>!
 override Nickelony.IDEKit.AvaloniaEdit.Bookmarks.BookmarkMargin.OnIconClicked(AvaloniaEdit.Rendering.VisualLine! visualLine, Avalonia.Point position) -> bool
-override Nickelony.IDEKit.AvaloniaEdit.Bookmarks.BookmarkMargin.ResolveClickPosition(Avalonia.Input.PointerPressedEventArgs! e) -> Avalonia.Point
-override Nickelony.IDEKit.AvaloniaEdit.ChangeMarkers.ChangeMarkerMargin.DrawMarker(Avalonia.Media.DrawingContext! drawingContext, AvaloniaEdit.Rendering.VisualLine! visualLine, double visualTop) -> void
-override Nickelony.IDEKit.AvaloniaEdit.ChangeMarkers.ChangeMarkerMargin.GetMarkedLineNumbers() -> System.Collections.Generic.IReadOnlyList<int>!
-override Nickelony.IDEKit.AvaloniaEdit.Highlighting.RegexHighlightingDefinitionOptions.Equals(object? obj) -> bool
-override Nickelony.IDEKit.AvaloniaEdit.Highlighting.RegexHighlightingDefinitionOptions.GetHashCode() -> int
-override Nickelony.IDEKit.AvaloniaEdit.Highlighting.RegexHighlightingDefinitionOptions.ToString() -> string!
-override Nickelony.IDEKit.AvaloniaEdit.Rendering.LineStatusIconMarginBase.DrawMarker(Avalonia.Media.DrawingContext! drawingContext, AvaloniaEdit.Rendering.VisualLine! visualLine, double visualTop) -> void
-override Nickelony.IDEKit.AvaloniaEdit.Rendering.LineStatusIconMarginBase.OnPointerPressed(Avalonia.Input.PointerPressedEventArgs! e) -> void
-override Nickelony.IDEKit.AvaloniaEdit.Rendering.LineStatusIconMarginBase.OnPropertyChanged(Avalonia.AvaloniaPropertyChangedEventArgs! change) -> void
-override Nickelony.IDEKit.AvaloniaEdit.Rendering.LineStatusMarginBase.MeasureOverride(Avalonia.Size availableSize) -> Avalonia.Size
-override Nickelony.IDEKit.AvaloniaEdit.Rendering.LineStatusMarginBase.OnTextViewChanged(AvaloniaEdit.Rendering.TextView? oldTextView, AvaloniaEdit.Rendering.TextView? newTextView) -> void
-override Nickelony.IDEKit.AvaloniaEdit.Rendering.LineStatusMarginBase.Render(Avalonia.Media.DrawingContext! context) -> void
+override Nickelony.IDEKit.AvaloniaEdit.LineStatus.LineStatusIconMarginBase.DrawMarker(Avalonia.Media.DrawingContext! drawingContext, AvaloniaEdit.Rendering.VisualLine! visualLine, double visualTop) -> void
+override Nickelony.IDEKit.AvaloniaEdit.LineStatus.LineStatusIconMarginBase.OnPointerPressed(Avalonia.Input.PointerPressedEventArgs! e) -> void
+override Nickelony.IDEKit.AvaloniaEdit.LineStatus.LineStatusIconMarginBase.OnPropertyChanged(Avalonia.AvaloniaPropertyChangedEventArgs! change) -> void
+override Nickelony.IDEKit.AvaloniaEdit.LineStatus.LineStatusIconMarginBase.Render(Avalonia.Media.DrawingContext! context) -> void
+override Nickelony.IDEKit.AvaloniaEdit.LineStatus.LineStatusMarginBase.MeasureOverride(Avalonia.Size availableSize) -> Avalonia.Size
+override Nickelony.IDEKit.AvaloniaEdit.LineStatus.LineStatusMarginBase.OnTextViewChanged(AvaloniaEdit.Rendering.TextView? oldTextView, AvaloniaEdit.Rendering.TextView? newTextView) -> void
+override Nickelony.IDEKit.AvaloniaEdit.LineStatus.LineStatusMarginBase.Render(Avalonia.Media.DrawingContext! context) -> void
 override Nickelony.IDEKit.AvaloniaEdit.Rendering.TextRunStyle.GetHashCode() -> int
 static Nickelony.IDEKit.AvaloniaEdit.Bookmarks.BookmarkMargin.SampleIconBrush.get -> Avalonia.Media.IBrush!
 static Nickelony.IDEKit.AvaloniaEdit.Bookmarks.BookmarkMargin.SampleIconGeometry.get -> Avalonia.Media.Geometry!
-static Nickelony.IDEKit.AvaloniaEdit.Bookmarks.BookmarkStoreExtensions.RestoreBookmarks(this Nickelony.IDEKit.AvaloniaEdit.Bookmarks.BookmarkCoordinator! coordinator, Nickelony.IDEKit.Core.Bookmarks.IBookmarkStore! store, string! filePath) -> bool
-static Nickelony.IDEKit.AvaloniaEdit.Bookmarks.BookmarkStoreExtensions.SaveBookmarks(this Nickelony.IDEKit.AvaloniaEdit.Bookmarks.BookmarkCoordinator! coordinator, Nickelony.IDEKit.Core.Bookmarks.IBookmarkStore! store, string! filePath) -> bool
-static Nickelony.IDEKit.AvaloniaEdit.ChangeMarkers.ChangeMarkerMargin.SampleMarkerBrush.get -> Avalonia.Media.IBrush!
 static Nickelony.IDEKit.AvaloniaEdit.Diagnostics.DiagnosticsRenderer.SampleErrorPen.get -> Avalonia.Media.IPen!
 static Nickelony.IDEKit.AvaloniaEdit.Diagnostics.DiagnosticsRenderer.SampleHintPen.get -> Avalonia.Media.IPen!
 static Nickelony.IDEKit.AvaloniaEdit.Diagnostics.DiagnosticsRenderer.SampleInformationPen.get -> Avalonia.Media.IPen!
 static Nickelony.IDEKit.AvaloniaEdit.Diagnostics.DiagnosticsRenderer.SampleWarningPen.get -> Avalonia.Media.IPen!
-static Nickelony.IDEKit.AvaloniaEdit.Documents.TextDocumentExtensions.ClampOffset(this AvaloniaEdit.Document.TextDocument! document, int offset) -> int
-static Nickelony.IDEKit.AvaloniaEdit.Documents.TextDocumentExtensions.GetLiveLine(this AvaloniaEdit.Document.TextDocument! document, AvaloniaEdit.Document.DocumentLine! line) -> AvaloniaEdit.Document.DocumentLine!
-static Nickelony.IDEKit.AvaloniaEdit.Editing.TextEditorEditOperations.ApplyEdit(this AvaloniaEdit.TextEditor! textEditor, Nickelony.IDEKit.Core.Editing.TextEditRequest request, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> void
-static Nickelony.IDEKit.AvaloniaEdit.Editing.TextEditorEditOperations.InsertText(this AvaloniaEdit.TextEditor! textEditor, int insertOffset, string! newText, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> void
-static Nickelony.IDEKit.AvaloniaEdit.Editing.TextEditorLineOperations.ReplaceContent(this AvaloniaEdit.TextEditor! textEditor, string! newContent, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> void
-static Nickelony.IDEKit.AvaloniaEdit.Editing.TextEditorLineOperations.ReplaceLine(this AvaloniaEdit.TextEditor! textEditor, AvaloniaEdit.Document.DocumentLine! line, string! replacement, bool selectReplacement = false, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> void
-static Nickelony.IDEKit.AvaloniaEdit.Editing.TextEditorLineOperations.SelectLine(this AvaloniaEdit.TextEditor! textEditor, AvaloniaEdit.Document.DocumentLine! line) -> void
-static Nickelony.IDEKit.AvaloniaEdit.Editing.TextEditorLineOperations.TryReplaceFirstMatchingLine(this AvaloniaEdit.TextEditor! textEditor, System.Func<string!, string?>! replacementSelector, bool scrollToLine = true, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> bool
-static Nickelony.IDEKit.AvaloniaEdit.Highlighting.RegexHighlightingDefinition.Create(string! name, System.Func<System.Collections.Generic.IEnumerable<Nickelony.IDEKit.Core.Highlighting.RegexHighlightingRule!>!>! rulesProvider, Nickelony.IDEKit.AvaloniaEdit.Highlighting.RegexHighlightingDefinitionOptions? options = null) -> Nickelony.IDEKit.AvaloniaEdit.Highlighting.RegexHighlightingDefinition!
-static Nickelony.IDEKit.AvaloniaEdit.Highlighting.RegexHighlightingDefinition.CreateWithSpans(string! name, System.Func<System.Collections.Generic.IEnumerable<Nickelony.IDEKit.Core.Highlighting.RegexHighlightingRule!>!>! rulesProvider, System.Func<System.Collections.Generic.IEnumerable<Nickelony.IDEKit.Core.Highlighting.RegexHighlightingSpan!>!>! spansProvider, Nickelony.IDEKit.AvaloniaEdit.Highlighting.RegexHighlightingDefinitionOptions? options = null) -> Nickelony.IDEKit.AvaloniaEdit.Highlighting.RegexHighlightingDefinition!
-static Nickelony.IDEKit.AvaloniaEdit.Highlighting.RegexHighlightingDefinitionOptions.Default.get -> Nickelony.IDEKit.AvaloniaEdit.Highlighting.RegexHighlightingDefinitionOptions!
-static Nickelony.IDEKit.AvaloniaEdit.Highlighting.RegexHighlightingDefinitionOptions.operator !=(Nickelony.IDEKit.AvaloniaEdit.Highlighting.RegexHighlightingDefinitionOptions? left, Nickelony.IDEKit.AvaloniaEdit.Highlighting.RegexHighlightingDefinitionOptions? right) -> bool
-static Nickelony.IDEKit.AvaloniaEdit.Highlighting.RegexHighlightingDefinitionOptions.operator ==(Nickelony.IDEKit.AvaloniaEdit.Highlighting.RegexHighlightingDefinitionOptions? left, Nickelony.IDEKit.AvaloniaEdit.Highlighting.RegexHighlightingDefinitionOptions? right) -> bool
-static Nickelony.IDEKit.AvaloniaEdit.Highlighting.RegexHighlightingStyleExtensions.ToHighlightingColor(this Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle! style, Avalonia.Media.Color? fallbackColor) -> AvaloniaEdit.Highlighting.HighlightingColor!
-static Nickelony.IDEKit.AvaloniaEdit.Navigation.TextAreaNavigationOperations.ApplyLocation(this AvaloniaEdit.Editing.TextArea! textArea, Nickelony.IDEKit.Core.Navigation.NavigationLocation location, bool focus = true) -> void
-static Nickelony.IDEKit.AvaloniaEdit.Navigation.TextAreaNavigationOperations.CreateCaretLocation(this AvaloniaEdit.Editing.TextArea! textArea, string? filePath, AvaloniaEdit.Document.TextLocation position) -> Nickelony.IDEKit.Core.Navigation.NavigationLocation
-static Nickelony.IDEKit.AvaloniaEdit.Navigation.TextAreaNavigationOperations.CreateRangeLocation(this AvaloniaEdit.Editing.TextArea! textArea, string? filePath, AvaloniaEdit.Document.TextLocation start, AvaloniaEdit.Document.TextLocation end) -> Nickelony.IDEKit.Core.Navigation.NavigationLocation
-static Nickelony.IDEKit.AvaloniaEdit.Navigation.TextAreaNavigationOperations.GetWordFromOffset(this AvaloniaEdit.Editing.TextArea! textArea, int offset, Nickelony.IDEKit.Core.Identifiers.IdentifierCharacterPolicy? policy = null) -> string?
-static Nickelony.IDEKit.AvaloniaEdit.Navigation.TextEditorNavigationOperations.TryGetOffsetFromPoint(this AvaloniaEdit.TextEditor! textEditor, Avalonia.Point point, out int offset) -> bool
-static Nickelony.IDEKit.AvaloniaEdit.Navigation.TextEditorNavigationOperations.TryMoveCaretToPoint(this AvaloniaEdit.TextEditor! textEditor, Avalonia.Point point) -> bool
-static Nickelony.IDEKit.AvaloniaEdit.Rendering.LineStatusMarginBase.RejectNullValue(object? value) -> bool
+static Nickelony.IDEKit.AvaloniaEdit.Editing.TextEditorEditingExtensions.ApplyEdit(this AvaloniaEdit.TextEditor! textEditor, Nickelony.IDEKit.Core.Editing.TextEditRequest request, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> void
+static Nickelony.IDEKit.AvaloniaEdit.Editing.TextEditorEditingExtensions.InsertText(this AvaloniaEdit.TextEditor! textEditor, int insertOffset, string! newText, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> void
+static Nickelony.IDEKit.AvaloniaEdit.Editing.TextEditorEditingExtensions.ReplaceContent(this AvaloniaEdit.TextEditor! textEditor, string! newContent, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> void
+static Nickelony.IDEKit.AvaloniaEdit.Editing.TextEditorEditingExtensions.ReplaceLine(this AvaloniaEdit.TextEditor! textEditor, AvaloniaEdit.Document.DocumentLine! line, string! replacement, Nickelony.IDEKit.Core.Editing.LineReplacementSelectionMode selection = Nickelony.IDEKit.Core.Editing.LineReplacementSelectionMode.Collapse, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> void
+static Nickelony.IDEKit.AvaloniaEdit.Editing.TextEditorEditingExtensions.SelectLine(this AvaloniaEdit.TextEditor! textEditor, AvaloniaEdit.Document.DocumentLine! line) -> void
+static Nickelony.IDEKit.AvaloniaEdit.Editing.TextEditorEditingExtensions.TryReplaceFirstMatchingLine(this AvaloniaEdit.TextEditor! textEditor, System.Func<string!, string?>! replacementSelector, Nickelony.IDEKit.Core.Editing.LineScrollingMode scrollToLine = Nickelony.IDEKit.Core.Editing.LineScrollingMode.ScrollToLine, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> bool
+static Nickelony.IDEKit.AvaloniaEdit.Editing.TextEditorLineTerminatorExtensions.ConvertLineTerminators(this AvaloniaEdit.TextEditor! textEditor, Nickelony.IDEKit.Core.Text.LineTerminatorStyle style, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> bool
+static Nickelony.IDEKit.AvaloniaEdit.Highlighting.RegexHighlightingDefinition.Create(string! name, System.Func<System.Collections.Generic.IEnumerable<Nickelony.IDEKit.Core.Highlighting.RegexHighlightingRule!>!>! rulesProvider, System.Func<System.Collections.Generic.IEnumerable<Nickelony.IDEKit.Core.Highlighting.RegexHighlightingSpan!>!>? spansProvider = null, Nickelony.IDEKit.Core.Highlighting.RegexHighlightingDefinitionOptions? options = null) -> Nickelony.IDEKit.AvaloniaEdit.Highlighting.RegexHighlightingDefinition!
+static Nickelony.IDEKit.AvaloniaEdit.Indentation.TextEditorIndentationExtensions.ConvertIndentationToSpaces(this AvaloniaEdit.TextEditor! textEditor, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> bool
+static Nickelony.IDEKit.AvaloniaEdit.Indentation.TextEditorIndentationExtensions.ConvertIndentationToTabs(this AvaloniaEdit.TextEditor! textEditor, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> bool
+static Nickelony.IDEKit.AvaloniaEdit.Indentation.TextEditorIndentationExtensions.DetectIndentation(this AvaloniaEdit.TextEditor! textEditor, bool defaultInsertSpaces, int defaultSize) -> Nickelony.IDEKit.Core.Indentation.IndentationDetection
+static Nickelony.IDEKit.AvaloniaEdit.Indentation.TextEditorIndentationExtensions.ResizeIndentation(this AvaloniaEdit.TextEditor! textEditor, int currentSize, int newSize, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> bool
+static Nickelony.IDEKit.AvaloniaEdit.LineStatus.ChangeMarkerMargin.SampleMarkerBrush.get -> Avalonia.Media.IBrush!
+static Nickelony.IDEKit.AvaloniaEdit.LineStatus.LineStatusMarginBase.RejectNullValue(object? value) -> bool
+static Nickelony.IDEKit.AvaloniaEdit.Media.ArgbColorExtensions.ToBrush(this Nickelony.IDEKit.Core.Media.ArgbColor color) -> Avalonia.Media.Immutable.ImmutableSolidColorBrush!
+static Nickelony.IDEKit.AvaloniaEdit.Media.ArgbColorExtensions.ToColor(this Nickelony.IDEKit.Core.Media.ArgbColor color) -> Avalonia.Media.Color
+static Nickelony.IDEKit.AvaloniaEdit.Navigation.TextAreaExtensions.ApplyLocation(this AvaloniaEdit.Editing.TextArea! textArea, Nickelony.IDEKit.Core.Navigation.NavigationLocation location, Nickelony.IDEKit.Core.Navigation.EditorFocusMode focus = Nickelony.IDEKit.Core.Navigation.EditorFocusMode.Focus) -> void
+static Nickelony.IDEKit.AvaloniaEdit.Navigation.TextAreaExtensions.CreateCaretLocation(this AvaloniaEdit.Editing.TextArea! textArea, string? documentId, AvaloniaEdit.Document.TextLocation position) -> Nickelony.IDEKit.Core.Navigation.NavigationLocation
+static Nickelony.IDEKit.AvaloniaEdit.Navigation.TextAreaExtensions.CreateRangeLocation(this AvaloniaEdit.Editing.TextArea! textArea, string? documentId, AvaloniaEdit.Document.TextLocation start, AvaloniaEdit.Document.TextLocation end) -> Nickelony.IDEKit.Core.Navigation.NavigationLocation
+static Nickelony.IDEKit.AvaloniaEdit.Navigation.TextAreaExtensions.GetWordFromOffset(this AvaloniaEdit.Editing.TextArea! textArea, int offset, Nickelony.IDEKit.Core.Identifiers.IdentifierCharacterPolicy? policy = null) -> string?
+static Nickelony.IDEKit.AvaloniaEdit.Navigation.TextAreaExtensions.TryGetOffsetFromPoint(this AvaloniaEdit.Editing.TextArea! textArea, Avalonia.Point point, out int offset) -> bool
+static Nickelony.IDEKit.AvaloniaEdit.Navigation.TextAreaExtensions.TryGetTextOffsetFromPoint(this AvaloniaEdit.Editing.TextArea! textArea, Avalonia.Point point, out int offset) -> bool
+static Nickelony.IDEKit.AvaloniaEdit.Navigation.TextEditorNavigationExtensions.TryGetOffsetFromPoint(this AvaloniaEdit.TextEditor! textEditor, Avalonia.Point point, out int offset) -> bool
+static Nickelony.IDEKit.AvaloniaEdit.Navigation.TextEditorNavigationExtensions.TryMoveCaretToMousePosition(this AvaloniaEdit.TextEditor! textEditor, Avalonia.Input.PointerEventArgs! e) -> bool
+static Nickelony.IDEKit.AvaloniaEdit.Navigation.TextEditorNavigationExtensions.TryMoveCaretToPoint(this AvaloniaEdit.TextEditor! textEditor, Avalonia.Point point) -> bool
 static Nickelony.IDEKit.AvaloniaEdit.Rendering.TextRunStyle.Empty.get -> Nickelony.IDEKit.AvaloniaEdit.Rendering.TextRunStyle
 static Nickelony.IDEKit.AvaloniaEdit.Rendering.TextRunStyle.operator !=(Nickelony.IDEKit.AvaloniaEdit.Rendering.TextRunStyle left, Nickelony.IDEKit.AvaloniaEdit.Rendering.TextRunStyle right) -> bool
 static Nickelony.IDEKit.AvaloniaEdit.Rendering.TextRunStyle.operator ==(Nickelony.IDEKit.AvaloniaEdit.Rendering.TextRunStyle left, Nickelony.IDEKit.AvaloniaEdit.Rendering.TextRunStyle right) -> bool
-static Nickelony.IDEKit.AvaloniaEdit.Rendering.TextRunStyleApplier.Apply(AvaloniaEdit.Rendering.VisualLineElement! element, Nickelony.IDEKit.AvaloniaEdit.Rendering.ITextRunStyle! style) -> void
-static Nickelony.IDEKit.AvaloniaEdit.Rendering.TextRunStyleApplier.Apply(AvaloniaEdit.Rendering.VisualLineElement! element, Nickelony.IDEKit.AvaloniaEdit.Rendering.ITextRunStyle! style, Avalonia.Media.Typeface typeface) -> void
-static Nickelony.IDEKit.AvaloniaEdit.Rendering.TextRunStyleApplier.Apply<TTextRunStyle>(AvaloniaEdit.Rendering.VisualLineElement! element, TTextRunStyle style) -> void
-static Nickelony.IDEKit.AvaloniaEdit.Rendering.TextRunStyleApplier.Apply<TTextRunStyle>(AvaloniaEdit.Rendering.VisualLineElement! element, TTextRunStyle style, Avalonia.Media.Typeface typeface) -> void
-static Nickelony.IDEKit.AvaloniaEdit.Rendering.TextRunStyleApplier.CreateTypeface(Avalonia.Media.Typeface baseTypeface, Nickelony.IDEKit.AvaloniaEdit.Rendering.ITextRunStyle! style) -> Avalonia.Media.Typeface
-static Nickelony.IDEKit.AvaloniaEdit.Rendering.TextRunStyleApplier.CreateTypeface<TTextRunStyle>(Avalonia.Media.Typeface baseTypeface, TTextRunStyle style) -> Avalonia.Media.Typeface
-static readonly Nickelony.IDEKit.AvaloniaEdit.ChangeMarkers.ChangeMarkerMargin.MarkerBrushProperty -> Avalonia.StyledProperty<Avalonia.Media.IBrush!>!
-static readonly Nickelony.IDEKit.AvaloniaEdit.Rendering.LineStatusIconMarginBase.IconBrushProperty -> Avalonia.StyledProperty<Avalonia.Media.IBrush!>!
-static readonly Nickelony.IDEKit.AvaloniaEdit.Rendering.LineStatusIconMarginBase.IconGeometryProperty -> Avalonia.StyledProperty<Avalonia.Media.Geometry!>!
-static readonly Nickelony.IDEKit.AvaloniaEdit.Rendering.LineStatusMarginBase.MarginWidthProperty -> Avalonia.StyledProperty<double>!
-virtual Nickelony.IDEKit.AvaloniaEdit.Bookmarks.BookmarkMargin.OnBookmarkToggleRequested(int lineOffset) -> bool
+static Nickelony.IDEKit.AvaloniaEdit.Rendering.TextRunStyleApplier.Apply(AvaloniaEdit.Rendering.VisualLineElement! element, Nickelony.IDEKit.AvaloniaEdit.Rendering.TextRunStyle style) -> void
+static Nickelony.IDEKit.AvaloniaEdit.Rendering.TextRunStyleApplier.Apply(AvaloniaEdit.Rendering.VisualLineElement! element, Nickelony.IDEKit.AvaloniaEdit.Rendering.TextRunStyle style, Avalonia.Media.Typeface typeface) -> void
+static Nickelony.IDEKit.AvaloniaEdit.Rendering.TextRunStyleApplier.CreateTypeface(Avalonia.Media.Typeface baseTypeface, Nickelony.IDEKit.AvaloniaEdit.Rendering.TextRunStyle style) -> Avalonia.Media.Typeface
+static Nickelony.IDEKit.AvaloniaEdit.Text.TextDocumentExtensions.ClampOffset(this AvaloniaEdit.Document.TextDocument! document, int offset) -> int
+static Nickelony.IDEKit.AvaloniaEdit.Text.TextDocumentExtensions.GetLiveLine(this AvaloniaEdit.Document.TextDocument! document, AvaloniaEdit.Document.DocumentLine! line) -> AvaloniaEdit.Document.DocumentLine!
+static Nickelony.IDEKit.AvaloniaEdit.Threading.UiDispatcher.From(Avalonia.Threading.Dispatcher! dispatcher) -> Nickelony.IDEKit.AvaloniaEdit.Threading.UiDispatcher!
+static Nickelony.IDEKit.AvaloniaEdit.Threading.UiDispatcher.FromCurrent() -> Nickelony.IDEKit.AvaloniaEdit.Threading.UiDispatcher!
+static readonly Nickelony.IDEKit.AvaloniaEdit.LineStatus.ChangeMarkerMargin.MarkerBrushProperty -> Avalonia.StyledProperty<Avalonia.Media.IBrush!>!
+static readonly Nickelony.IDEKit.AvaloniaEdit.LineStatus.LineStatusIconMarginBase.IconBrushProperty -> Avalonia.StyledProperty<Avalonia.Media.IBrush!>!
+static readonly Nickelony.IDEKit.AvaloniaEdit.LineStatus.LineStatusIconMarginBase.IconGeometryProperty -> Avalonia.StyledProperty<Avalonia.Media.Geometry!>!
+static readonly Nickelony.IDEKit.AvaloniaEdit.LineStatus.LineStatusMarginBase.MarginWidthProperty -> Avalonia.StyledProperty<double>!
+virtual Nickelony.IDEKit.AvaloniaEdit.Bookmarks.BookmarkMargin.OnBookmarkToggleRequested(int documentOffset) -> bool
 virtual Nickelony.IDEKit.AvaloniaEdit.Highlighting.RegexHighlightingDefinition.BuildSpans() -> System.Collections.Generic.IEnumerable<Nickelony.IDEKit.Core.Highlighting.RegexHighlightingSpan!>!
-virtual Nickelony.IDEKit.AvaloniaEdit.Rendering.LineStatusIconMarginBase.OnIconClicked(AvaloniaEdit.Rendering.VisualLine! visualLine, Avalonia.Point position) -> bool
-virtual Nickelony.IDEKit.AvaloniaEdit.Rendering.LineStatusIconMarginBase.ResolveClickPosition(Avalonia.Input.PointerPressedEventArgs! e) -> Avalonia.Point
+virtual Nickelony.IDEKit.AvaloniaEdit.LineStatus.LineStatusIconMarginBase.OnIconClicked(AvaloniaEdit.Rendering.VisualLine! visualLine, Avalonia.Point position) -> bool
+~override Nickelony.IDEKit.AvaloniaEdit.Rendering.TextRunStyle.Equals(object obj) -> bool
+~override Nickelony.IDEKit.AvaloniaEdit.Rendering.TextRunStyle.ToString() -> string

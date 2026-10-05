@@ -1,86 +1,222 @@
 #nullable enable
-override Nickelony.IDEKit.AvalonEdit.Rendering.LineStatusIconMarginBase.OnPropertyChanged(System.Windows.DependencyPropertyChangedEventArgs e) -> void
-*REMOVED*static Nickelony.IDEKit.AvalonEdit.Editing.TextEditorEditOperations.InsertText(this ICSharpCode.AvalonEdit.TextEditor! textEditor, int insertOffset, string! newText, int? caretOffsetAfterEdit = null, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> void
-*REMOVED*static Nickelony.IDEKit.AvalonEdit.Editing.TextEditorEditOperations.ReplaceText(this ICSharpCode.AvalonEdit.TextEditor! textEditor, int startOffset, int length, string! newText, int? caretOffsetAfterEdit = null, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> void
-static Nickelony.IDEKit.AvalonEdit.Editing.TextEditorEditOperations.ApplyEdit(this ICSharpCode.AvalonEdit.TextEditor! textEditor, Nickelony.IDEKit.Core.Editing.TextEditRequest request, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> void
-static Nickelony.IDEKit.AvalonEdit.Editing.TextEditorEditOperations.InsertText(this ICSharpCode.AvalonEdit.TextEditor! textEditor, int insertOffset, string! newText, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> void
-*REMOVED*Nickelony.IDEKit.AvalonEdit.Editing.AvalonEditTextEditTarget
-*REMOVED*Nickelony.IDEKit.AvalonEdit.Editing.AvalonEditTextEditTarget.Apply(Nickelony.IDEKit.Core.Editing.PreparedTextEdits! edits) -> void
-*REMOVED*Nickelony.IDEKit.AvalonEdit.Editing.AvalonEditTextEditTarget.AvalonEditTextEditTarget(ICSharpCode.AvalonEdit.TextEditor! editor) -> void
-*REMOVED*Nickelony.IDEKit.AvalonEdit.Editing.AvalonEditTextEditTarget.Text.get -> string!
-*REMOVED*Nickelony.IDEKit.AvalonEdit.Editing.AvalonEditTextEditTarget.TryApply(Nickelony.IDEKit.Core.Editing.PreparedTextEdits! edits, long expectedVersion) -> bool
-*REMOVED*Nickelony.IDEKit.AvalonEdit.Editing.AvalonEditTextEditTarget.Version.get -> long
+Nickelony.IDEKit.AvalonEdit.AutoClosing.AutoClosingService
+Nickelony.IDEKit.AvalonEdit.AutoClosing.AutoClosingService.ApplyTextEntering(ICSharpCode.AvalonEdit.TextEditor! editor, System.Windows.Input.TextCompositionEventArgs! e, Nickelony.IDEKit.Core.AutoClosing.AutoClosingOptions! options, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> Nickelony.IDEKit.Core.AutoClosing.AutoClosingResult
+Nickelony.IDEKit.AvalonEdit.AutoClosing.AutoClosingService.AutoClosingService() -> void
+Nickelony.IDEKit.AvalonEdit.AutoClosing.AutoClosingService.TryDeletePair(ICSharpCode.AvalonEdit.TextEditor! editor, System.Windows.Input.KeyEventArgs! e, Nickelony.IDEKit.Core.AutoClosing.AutoClosingOptions! options, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> bool
+Nickelony.IDEKit.AvalonEdit.AutoClosing.AutoClosingService.TryPlanAction(Nickelony.IDEKit.Core.Text.ITextSnapshot! snapshot, int caretOffset, string! inputText, Nickelony.IDEKit.Core.AutoClosing.AutoClosingOptions! options, out Nickelony.IDEKit.Core.AutoClosing.AutoClosingAction action) -> bool
+Nickelony.IDEKit.AvalonEdit.AutoClosing.IAutoClosingService
+Nickelony.IDEKit.AvalonEdit.AutoClosing.IAutoClosingService.ApplyTextEntering(ICSharpCode.AvalonEdit.TextEditor! editor, System.Windows.Input.TextCompositionEventArgs! e, Nickelony.IDEKit.Core.AutoClosing.AutoClosingOptions! options, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> Nickelony.IDEKit.Core.AutoClosing.AutoClosingResult
+Nickelony.IDEKit.AvalonEdit.AutoClosing.IAutoClosingService.TryDeletePair(ICSharpCode.AvalonEdit.TextEditor! editor, System.Windows.Input.KeyEventArgs! e, Nickelony.IDEKit.Core.AutoClosing.AutoClosingOptions! options, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> bool
+Nickelony.IDEKit.AvalonEdit.AutoClosing.IAutoClosingService.TryPlanAction(Nickelony.IDEKit.Core.Text.ITextSnapshot! snapshot, int caretOffset, string! inputText, Nickelony.IDEKit.Core.AutoClosing.AutoClosingOptions! options, out Nickelony.IDEKit.Core.AutoClosing.AutoClosingAction action) -> bool
+Nickelony.IDEKit.AvalonEdit.Bookmarks.BookmarkMargin
+Nickelony.IDEKit.AvalonEdit.Bookmarks.BookmarkMargin.BookmarkMargin(Nickelony.IDEKit.Core.Bookmarks.IBookmarkSource! bookmarkSource) -> void
+Nickelony.IDEKit.AvalonEdit.Bookmarks.BookmarkTracker
+Nickelony.IDEKit.AvalonEdit.Bookmarks.BookmarkTracker.BookmarkTracker(System.Func<ICSharpCode.AvalonEdit.Document.TextDocument?>! documentProvider) -> void
+Nickelony.IDEKit.AvalonEdit.Bookmarks.BookmarkTracker.Changed -> System.EventHandler?
+Nickelony.IDEKit.AvalonEdit.Bookmarks.BookmarkTracker.ClearBookmarks() -> void
+Nickelony.IDEKit.AvalonEdit.Bookmarks.BookmarkTracker.GetMarkedLineNumbers() -> System.Collections.Generic.IReadOnlyList<int>!
+Nickelony.IDEKit.AvalonEdit.Bookmarks.BookmarkTracker.GetNextBookmarkLine(int offset) -> ICSharpCode.AvalonEdit.Document.DocumentLine?
+Nickelony.IDEKit.AvalonEdit.Bookmarks.BookmarkTracker.GetPreviousBookmarkLine(int offset) -> ICSharpCode.AvalonEdit.Document.DocumentLine?
+Nickelony.IDEKit.AvalonEdit.Bookmarks.BookmarkTracker.IsBoundToCurrentDocument.get -> bool
+Nickelony.IDEKit.AvalonEdit.Bookmarks.BookmarkTracker.RestoreBookmarks(System.Collections.Generic.IEnumerable<int>! lineNumbers) -> void
+Nickelony.IDEKit.AvalonEdit.Bookmarks.BookmarkTracker.RestoreFrom(Nickelony.IDEKit.Core.Bookmarks.IBookmarkStore! store, string! documentId) -> bool
+Nickelony.IDEKit.AvalonEdit.Bookmarks.BookmarkTracker.SaveTo(Nickelony.IDEKit.Core.Bookmarks.IBookmarkStore! store, string! documentId) -> bool
+Nickelony.IDEKit.AvalonEdit.Bookmarks.BookmarkTracker.ToggleBookmark(int documentOffset) -> void
+Nickelony.IDEKit.AvalonEdit.Comments.ILineCommentService
+Nickelony.IDEKit.AvalonEdit.Comments.ILineCommentService.ApplyEdit(ICSharpCode.AvalonEdit.TextEditor! editor, Nickelony.IDEKit.Core.Scanning.CommentSyntax commentSyntax, Nickelony.IDEKit.Core.Comments.LineCommentActionKind action, Nickelony.IDEKit.Core.Comments.LineCommentSpacingStyle spacing = Nickelony.IDEKit.Core.Comments.LineCommentSpacingStyle.SpaceAfterDelimiter, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> void
+Nickelony.IDEKit.AvalonEdit.Comments.ILineCommentService.TryCreateEdit(ICSharpCode.AvalonEdit.Document.TextDocument! document, Nickelony.IDEKit.Core.Text.TextRange selection, Nickelony.IDEKit.Core.Scanning.CommentSyntax commentSyntax, Nickelony.IDEKit.Core.Comments.LineCommentActionKind action, Nickelony.IDEKit.Core.Comments.LineCommentSpacingStyle spacing, out Nickelony.IDEKit.Core.Comments.LineCommentEdit edit) -> bool
+Nickelony.IDEKit.AvalonEdit.Comments.LineCommentService
+Nickelony.IDEKit.AvalonEdit.Comments.LineCommentService.ApplyEdit(ICSharpCode.AvalonEdit.TextEditor! editor, Nickelony.IDEKit.Core.Scanning.CommentSyntax commentSyntax, Nickelony.IDEKit.Core.Comments.LineCommentActionKind action, Nickelony.IDEKit.Core.Comments.LineCommentSpacingStyle spacing = Nickelony.IDEKit.Core.Comments.LineCommentSpacingStyle.SpaceAfterDelimiter, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> void
+Nickelony.IDEKit.AvalonEdit.Comments.LineCommentService.LineCommentService() -> void
+Nickelony.IDEKit.AvalonEdit.Comments.LineCommentService.TryCreateEdit(ICSharpCode.AvalonEdit.Document.TextDocument! document, Nickelony.IDEKit.Core.Text.TextRange selection, Nickelony.IDEKit.Core.Scanning.CommentSyntax commentSyntax, Nickelony.IDEKit.Core.Comments.LineCommentActionKind action, Nickelony.IDEKit.Core.Comments.LineCommentSpacingStyle spacing, out Nickelony.IDEKit.Core.Comments.LineCommentEdit edit) -> bool
+Nickelony.IDEKit.AvalonEdit.Diagnostics.DiagnosticsRenderer
+Nickelony.IDEKit.AvalonEdit.Diagnostics.DiagnosticsRenderer.ApplySegments(System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Core.Diagnostics.DiagnosticSegment>! segments) -> void
+Nickelony.IDEKit.AvalonEdit.Diagnostics.DiagnosticsRenderer.ClearSegments() -> void
+Nickelony.IDEKit.AvalonEdit.Diagnostics.DiagnosticsRenderer.DiagnosticsRenderer(ICSharpCode.AvalonEdit.Rendering.TextView! textView) -> void
+Nickelony.IDEKit.AvalonEdit.Diagnostics.DiagnosticsRenderer.Draw(ICSharpCode.AvalonEdit.Rendering.TextView! textView, System.Windows.Media.DrawingContext! drawingContext) -> void
+Nickelony.IDEKit.AvalonEdit.Diagnostics.DiagnosticsRenderer.ErrorPen.get -> System.Windows.Media.Pen!
+Nickelony.IDEKit.AvalonEdit.Diagnostics.DiagnosticsRenderer.ErrorPen.set -> void
+Nickelony.IDEKit.AvalonEdit.Diagnostics.DiagnosticsRenderer.HintPen.get -> System.Windows.Media.Pen!
+Nickelony.IDEKit.AvalonEdit.Diagnostics.DiagnosticsRenderer.HintPen.set -> void
+Nickelony.IDEKit.AvalonEdit.Diagnostics.DiagnosticsRenderer.InformationPen.get -> System.Windows.Media.Pen!
+Nickelony.IDEKit.AvalonEdit.Diagnostics.DiagnosticsRenderer.InformationPen.set -> void
+Nickelony.IDEKit.AvalonEdit.Diagnostics.DiagnosticsRenderer.Layer.get -> ICSharpCode.AvalonEdit.Rendering.KnownLayer
+Nickelony.IDEKit.AvalonEdit.Diagnostics.DiagnosticsRenderer.Layer.set -> void
+Nickelony.IDEKit.AvalonEdit.Diagnostics.DiagnosticsRenderer.TryFindSegmentAt(int offset, out int index) -> bool
+Nickelony.IDEKit.AvalonEdit.Diagnostics.DiagnosticsRenderer.TryGetSegmentRange(int index, out Nickelony.IDEKit.Core.Text.TextRange range) -> bool
+Nickelony.IDEKit.AvalonEdit.Diagnostics.DiagnosticsRenderer.WarningPen.get -> System.Windows.Media.Pen!
+Nickelony.IDEKit.AvalonEdit.Diagnostics.DiagnosticsRenderer.WarningPen.set -> void
 Nickelony.IDEKit.AvalonEdit.Editing.TextEditorEditTarget
 Nickelony.IDEKit.AvalonEdit.Editing.TextEditorEditTarget.Apply(Nickelony.IDEKit.Core.Editing.PreparedTextEdits! edits) -> void
+Nickelony.IDEKit.AvalonEdit.Editing.TextEditorEditTarget.CaptureVersion() -> long
 Nickelony.IDEKit.AvalonEdit.Editing.TextEditorEditTarget.Text.get -> string!
 Nickelony.IDEKit.AvalonEdit.Editing.TextEditorEditTarget.TextEditorEditTarget(ICSharpCode.AvalonEdit.TextEditor! editor) -> void
 Nickelony.IDEKit.AvalonEdit.Editing.TextEditorEditTarget.TryApply(Nickelony.IDEKit.Core.Editing.PreparedTextEdits! edits, long expectedVersion) -> bool
 Nickelony.IDEKit.AvalonEdit.Editing.TextEditorEditTarget.Version.get -> long
-*REMOVED*Nickelony.IDEKit.AvalonEdit.Editing.TextAutoClosingResult
-*REMOVED*Nickelony.IDEKit.AvalonEdit.Editing.TextAutoClosingResult.Action.get -> Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingAction
-*REMOVED*Nickelony.IDEKit.AvalonEdit.Editing.TextAutoClosingResult.Action.init -> void
-*REMOVED*Nickelony.IDEKit.AvalonEdit.Editing.TextAutoClosingResult.Deconstruct(out Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingAction Action, out bool DidWrapSelection) -> void
-*REMOVED*Nickelony.IDEKit.AvalonEdit.Editing.TextAutoClosingResult.DidWrapSelection.get -> bool
-*REMOVED*Nickelony.IDEKit.AvalonEdit.Editing.TextAutoClosingResult.DidWrapSelection.init -> void
-*REMOVED*Nickelony.IDEKit.AvalonEdit.Editing.TextAutoClosingResult.Equals(Nickelony.IDEKit.AvalonEdit.Editing.TextAutoClosingResult other) -> bool
-*REMOVED*Nickelony.IDEKit.AvalonEdit.Editing.TextAutoClosingResult.TextAutoClosingResult() -> void
-*REMOVED*Nickelony.IDEKit.AvalonEdit.Editing.TextAutoClosingResult.TextAutoClosingResult(Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingAction Action, bool DidWrapSelection) -> void
-*REMOVED*override Nickelony.IDEKit.AvalonEdit.Editing.TextAutoClosingResult.GetHashCode() -> int
-*REMOVED*static Nickelony.IDEKit.AvalonEdit.Editing.TextAutoClosingResult.None.get -> Nickelony.IDEKit.AvalonEdit.Editing.TextAutoClosingResult
-*REMOVED*static Nickelony.IDEKit.AvalonEdit.Editing.TextAutoClosingResult.operator !=(Nickelony.IDEKit.AvalonEdit.Editing.TextAutoClosingResult left, Nickelony.IDEKit.AvalonEdit.Editing.TextAutoClosingResult right) -> bool
-*REMOVED*static Nickelony.IDEKit.AvalonEdit.Editing.TextAutoClosingResult.operator ==(Nickelony.IDEKit.AvalonEdit.Editing.TextAutoClosingResult left, Nickelony.IDEKit.AvalonEdit.Editing.TextAutoClosingResult right) -> bool
-*REMOVED*~override Nickelony.IDEKit.AvalonEdit.Editing.TextAutoClosingResult.Equals(object obj) -> bool
-*REMOVED*~override Nickelony.IDEKit.AvalonEdit.Editing.TextAutoClosingResult.ToString() -> string
-*REMOVED*Nickelony.IDEKit.AvalonEdit.Editing.ITextAutoClosingService.HandleTextEntering(ICSharpCode.AvalonEdit.TextEditor! editor, System.Windows.Input.TextCompositionEventArgs! e, Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingOptions! options, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> Nickelony.IDEKit.AvalonEdit.Editing.TextAutoClosingResult
-Nickelony.IDEKit.AvalonEdit.Editing.ITextAutoClosingService.HandleTextEntering(ICSharpCode.AvalonEdit.TextEditor! editor, System.Windows.Input.TextCompositionEventArgs! e, Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingOptions! options, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingResult
-*REMOVED*Nickelony.IDEKit.AvalonEdit.Editing.TextAutoClosingService.HandleTextEntering(ICSharpCode.AvalonEdit.TextEditor! editor, System.Windows.Input.TextCompositionEventArgs! e, Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingOptions! options, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> Nickelony.IDEKit.AvalonEdit.Editing.TextAutoClosingResult
-Nickelony.IDEKit.AvalonEdit.Editing.TextAutoClosingService.HandleTextEntering(ICSharpCode.AvalonEdit.TextEditor! editor, System.Windows.Input.TextCompositionEventArgs! e, Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingOptions! options, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingResult
-*REMOVED*Nickelony.IDEKit.AvalonEdit.Editing.ITextAutoClosingService.TryResolveAction(ICSharpCode.AvalonEdit.Document.TextDocument! document, int caretOffset, string! inputText, Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingOptions! options, out Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingAction action) -> bool
-*REMOVED*Nickelony.IDEKit.AvalonEdit.Editing.TextAutoClosingService.TryResolveAction(ICSharpCode.AvalonEdit.Document.TextDocument! document, int caretOffset, string! inputText, Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingOptions! options, out Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingAction action) -> bool
-Nickelony.IDEKit.AvalonEdit.Editing.ITextAutoClosingService.TryResolveAction(Nickelony.IDEKit.Core.Text.ITextSnapshot! snapshot, int caretOffset, string! inputText, Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingOptions! options, out Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingAction action) -> bool
-Nickelony.IDEKit.AvalonEdit.Editing.TextAutoClosingService.TryResolveAction(Nickelony.IDEKit.Core.Text.ITextSnapshot! snapshot, int caretOffset, string! inputText, Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingOptions! options, out Nickelony.IDEKit.Core.AutoClosing.TextAutoClosingAction action) -> bool
-*REMOVED*Nickelony.IDEKit.AvalonEdit.Editing.TextEditorFirstMatchingLineOperations
-*REMOVED*static Nickelony.IDEKit.AvalonEdit.Editing.TextEditorFirstMatchingLineOperations.TryReplaceFirstMatchingLine(this ICSharpCode.AvalonEdit.TextEditor! textEditor, System.Func<string!, string?>! replacementSelector, bool scrollToLine = true, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> bool
-static Nickelony.IDEKit.AvalonEdit.Editing.TextEditorLineOperations.TryReplaceFirstMatchingLine(this ICSharpCode.AvalonEdit.TextEditor! textEditor, System.Func<string!, string?>! replacementSelector, bool scrollToLine = true, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> bool
-*REMOVED*Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingRule
-*REMOVED*Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingRule.Pattern.get -> System.Text.RegularExpressions.Regex!
-*REMOVED*Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingRule.RegexHighlightingRule(System.Text.RegularExpressions.Regex! pattern, Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingStyle! style) -> void
-*REMOVED*Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingRule.Style.get -> Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingStyle!
-*REMOVED*Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingSpan
-*REMOVED*Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingSpan.Begin.get -> System.Text.RegularExpressions.Regex!
-*REMOVED*Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingSpan.BeginStyle.get -> Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingStyle?
-*REMOVED*Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingSpan.BeginStyle.init -> void
-*REMOVED*Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingSpan.End.get -> System.Text.RegularExpressions.Regex?
-*REMOVED*Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingSpan.EndStyle.get -> Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingStyle?
-*REMOVED*Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingSpan.EndStyle.init -> void
-*REMOVED*Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingSpan.RegexHighlightingSpan(System.Text.RegularExpressions.Regex! begin, System.Text.RegularExpressions.Regex? end, Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingStyle! spanStyle) -> void
-*REMOVED*Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingSpan.Rules.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingRule!>?
-*REMOVED*Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingSpan.Rules.init -> void
-*REMOVED*Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingSpan.SpanStyle.get -> Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingStyle!
-*REMOVED*Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingStyle
-*REMOVED*Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingStyle.<Clone>$() -> Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingStyle!
-*REMOVED*Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingStyle.ColorValue.get -> string?
-*REMOVED*Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingStyle.ColorValue.init -> void
-*REMOVED*Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingStyle.Deconstruct(out string? ColorValue, out bool IsBold, out bool IsItalic) -> void
-*REMOVED*Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingStyle.Equals(Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingStyle? other) -> bool
-*REMOVED*Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingStyle.IsBold.get -> bool
-*REMOVED*Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingStyle.IsBold.init -> void
-*REMOVED*Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingStyle.IsItalic.get -> bool
-*REMOVED*Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingStyle.IsItalic.init -> void
-*REMOVED*Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingStyle.RegexHighlightingStyle(string? ColorValue = null, bool IsBold = false, bool IsItalic = false) -> void
-*REMOVED*Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingStyle.ToHighlightingColor(System.Windows.Media.Color? fallbackColor) -> ICSharpCode.AvalonEdit.Highlighting.HighlightingColor!
-*REMOVED*override Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingStyle.Equals(object? obj) -> bool
-*REMOVED*override Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingStyle.GetHashCode() -> int
-*REMOVED*override Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingStyle.ToString() -> string!
-*REMOVED*static Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingStyle.operator !=(Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingStyle? left, Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingStyle? right) -> bool
-*REMOVED*static Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingStyle.operator ==(Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingStyle? left, Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingStyle? right) -> bool
-*REMOVED*abstract Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingDefinition.BuildRules() -> System.Collections.Generic.IEnumerable<Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingRule!>!
-*REMOVED*virtual Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingDefinition.BuildSpans() -> System.Collections.Generic.IEnumerable<Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingSpan!>!
-*REMOVED*static Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingDefinition.Create(string! name, System.Func<System.Collections.Generic.IEnumerable<Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingRule!>!>! rulesProvider, Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingDefinitionOptions? options = null) -> Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingDefinition!
-*REMOVED*static Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingDefinition.CreateWithSpans(string! name, System.Func<System.Collections.Generic.IEnumerable<Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingRule!>!>! rulesProvider, System.Func<System.Collections.Generic.IEnumerable<Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingSpan!>!>! spansProvider, Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingDefinitionOptions? options = null) -> Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingDefinition!
+Nickelony.IDEKit.AvalonEdit.Editing.TextEditorEditingExtensions
+Nickelony.IDEKit.AvalonEdit.Editing.TextEditorLineTerminatorExtensions
+Nickelony.IDEKit.AvalonEdit.Formatting.DocumentFormatterService
+Nickelony.IDEKit.AvalonEdit.Formatting.DocumentFormatterService.ApplyEdits(ICSharpCode.AvalonEdit.TextEditor! editor, Nickelony.IDEKit.Core.Editing.PreparedTextEdits! edits, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> void
+Nickelony.IDEKit.AvalonEdit.Formatting.DocumentFormatterService.DocumentFormatterService() -> void
+Nickelony.IDEKit.AvalonEdit.Formatting.DocumentFormatterService.FormatDocument(ICSharpCode.AvalonEdit.TextEditor! editor, Nickelony.IDEKit.Core.Formatting.IDocumentFormatter! formatter, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> void
+Nickelony.IDEKit.AvalonEdit.Formatting.IDocumentFormatterService
+Nickelony.IDEKit.AvalonEdit.Formatting.IDocumentFormatterService.ApplyEdits(ICSharpCode.AvalonEdit.TextEditor! editor, Nickelony.IDEKit.Core.Editing.PreparedTextEdits! edits, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> void
+Nickelony.IDEKit.AvalonEdit.Formatting.IDocumentFormatterService.FormatDocument(ICSharpCode.AvalonEdit.TextEditor! editor, Nickelony.IDEKit.Core.Formatting.IDocumentFormatter! formatter, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> void
+Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingDefinition
+Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingDefinition.GetNamedColor(string! name) -> ICSharpCode.AvalonEdit.Highlighting.HighlightingColor?
+Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingDefinition.GetNamedRuleSet(string! name) -> ICSharpCode.AvalonEdit.Highlighting.HighlightingRuleSet?
+Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingDefinition.MainRuleSet.get -> ICSharpCode.AvalonEdit.Highlighting.HighlightingRuleSet!
+Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingDefinition.Name.get -> string!
+Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingDefinition.NamedHighlightingColors.get -> System.Collections.Generic.IEnumerable<ICSharpCode.AvalonEdit.Highlighting.HighlightingColor!>!
+Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingDefinition.Properties.get -> System.Collections.Generic.IDictionary<string!, string!>!
+Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingDefinition.RegexHighlightingDefinition(string! name, Nickelony.IDEKit.Core.Highlighting.RegexHighlightingDefinitionOptions? options = null) -> void
+Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingDefinition.RuleSetChanged -> System.EventHandler?
+Nickelony.IDEKit.AvalonEdit.Indentation.PolicyIndentationStrategy
+Nickelony.IDEKit.AvalonEdit.Indentation.PolicyIndentationStrategy.IndentLine(ICSharpCode.AvalonEdit.Document.TextDocument! document, ICSharpCode.AvalonEdit.Document.DocumentLine! line) -> void
+Nickelony.IDEKit.AvalonEdit.Indentation.PolicyIndentationStrategy.IndentLines(ICSharpCode.AvalonEdit.Document.TextDocument! document, int beginLine, int endLine) -> void
+Nickelony.IDEKit.AvalonEdit.Indentation.PolicyIndentationStrategy.PolicyIndentationStrategy(ICSharpCode.AvalonEdit.TextEditorOptions! options, Nickelony.IDEKit.Core.Indentation.IIndentationPolicy! policy, System.Func<ICSharpCode.AvalonEdit.Document.TextDocument!, ICSharpCode.AvalonEdit.Document.DocumentLine!, bool>? shouldUseSmartIndent = null) -> void
+Nickelony.IDEKit.AvalonEdit.Indentation.TextEditorIndentationExtensions
+Nickelony.IDEKit.AvalonEdit.LineStatus.ChangeMarkerMargin
+Nickelony.IDEKit.AvalonEdit.LineStatus.ChangeMarkerMargin.ChangeMarkerMargin(Nickelony.IDEKit.Core.LineStatus.ILineStatusSource! markerSource) -> void
+Nickelony.IDEKit.AvalonEdit.LineStatus.ChangeMarkerMargin.MarkerBrush.get -> System.Windows.Media.Brush!
+Nickelony.IDEKit.AvalonEdit.LineStatus.ChangeMarkerMargin.MarkerBrush.set -> void
+Nickelony.IDEKit.AvalonEdit.LineStatus.LineStatusIconMarginBase
+Nickelony.IDEKit.AvalonEdit.LineStatus.LineStatusIconMarginBase.IconBrush.get -> System.Windows.Media.Brush!
+Nickelony.IDEKit.AvalonEdit.LineStatus.LineStatusIconMarginBase.IconBrush.set -> void
+Nickelony.IDEKit.AvalonEdit.LineStatus.LineStatusIconMarginBase.IconGeometry.get -> System.Windows.Media.Geometry!
+Nickelony.IDEKit.AvalonEdit.LineStatus.LineStatusIconMarginBase.IconGeometry.set -> void
+Nickelony.IDEKit.AvalonEdit.LineStatus.LineStatusIconMarginBase.LineStatusIconMarginBase() -> void
+Nickelony.IDEKit.AvalonEdit.LineStatus.LineStatusIconMarginBase.TryGetVisualLineAt(System.Windows.Point position, out ICSharpCode.AvalonEdit.Rendering.VisualLine? visualLine) -> bool
+Nickelony.IDEKit.AvalonEdit.LineStatus.LineStatusIconMarginBase.TryHandleClickAt(System.Windows.Point position) -> bool
+Nickelony.IDEKit.AvalonEdit.LineStatus.LineStatusMarginBase
+Nickelony.IDEKit.AvalonEdit.LineStatus.LineStatusMarginBase.FollowSourceNotifications(Nickelony.IDEKit.Core.LineStatus.ILineStatusSource! source) -> void
+Nickelony.IDEKit.AvalonEdit.LineStatus.LineStatusMarginBase.GetEffectiveMarginWidth() -> double
+Nickelony.IDEKit.AvalonEdit.LineStatus.LineStatusMarginBase.GetFontScale() -> double
+Nickelony.IDEKit.AvalonEdit.LineStatus.LineStatusMarginBase.LineStatusMarginBase() -> void
+Nickelony.IDEKit.AvalonEdit.LineStatus.LineStatusMarginBase.MarginWidth.get -> double
+Nickelony.IDEKit.AvalonEdit.LineStatus.LineStatusMarginBase.MarginWidth.set -> void
+Nickelony.IDEKit.AvalonEdit.LineStatus.LineStatusMarginBase.QueueVisualInvalidation() -> void
+Nickelony.IDEKit.AvalonEdit.LineStatus.LineStatusMarginBase.SetNotifyingSource(Nickelony.IDEKit.Core.Notifications.IChangeNotificationSource! source) -> void
+Nickelony.IDEKit.AvalonEdit.LineStatus.UnsavedChangesTracker
+Nickelony.IDEKit.AvalonEdit.LineStatus.UnsavedChangesTracker.Changed -> System.EventHandler?
+Nickelony.IDEKit.AvalonEdit.LineStatus.UnsavedChangesTracker.Dispose() -> void
+Nickelony.IDEKit.AvalonEdit.LineStatus.UnsavedChangesTracker.GetMarkedLineNumbers() -> System.Collections.Generic.IReadOnlyList<int>!
+Nickelony.IDEKit.AvalonEdit.LineStatus.UnsavedChangesTracker.SetBaseline(string! content) -> void
+Nickelony.IDEKit.AvalonEdit.LineStatus.UnsavedChangesTracker.UnsavedChangesTracker(System.Func<ICSharpCode.AvalonEdit.Document.TextDocument?>! documentProvider) -> void
+Nickelony.IDEKit.AvalonEdit.Media.ArgbColorExtensions
+Nickelony.IDEKit.AvalonEdit.Navigation.TextAreaExtensions
+Nickelony.IDEKit.AvalonEdit.Navigation.TextEditorNavigationExtensions
+Nickelony.IDEKit.AvalonEdit.Navigation.TextEditorNavigationTarget
+Nickelony.IDEKit.AvalonEdit.Navigation.TextEditorNavigationTarget.CaretColumn.get -> int
+Nickelony.IDEKit.AvalonEdit.Navigation.TextEditorNavigationTarget.CaretLineNumber.get -> int
+Nickelony.IDEKit.AvalonEdit.Navigation.TextEditorNavigationTarget.GetLineLength(int lineNumber) -> int
+Nickelony.IDEKit.AvalonEdit.Navigation.TextEditorNavigationTarget.LineCount.get -> int
+Nickelony.IDEKit.AvalonEdit.Navigation.TextEditorNavigationTarget.MoveCaret(int lineNumber, int column) -> void
+Nickelony.IDEKit.AvalonEdit.Navigation.TextEditorNavigationTarget.RestoreView() -> void
+Nickelony.IDEKit.AvalonEdit.Navigation.TextEditorNavigationTarget.SaveView() -> void
+Nickelony.IDEKit.AvalonEdit.Navigation.TextEditorNavigationTarget.SelectRange(Nickelony.IDEKit.Core.Text.TextPositionRange range) -> void
+Nickelony.IDEKit.AvalonEdit.Navigation.TextEditorNavigationTarget.TextEditorNavigationTarget(ICSharpCode.AvalonEdit.TextEditor! editor) -> void
+Nickelony.IDEKit.AvalonEdit.Rendering.TextRunStyle
+Nickelony.IDEKit.AvalonEdit.Rendering.TextRunStyle.CreateTypeface(System.Windows.Media.Typeface! baseTypeface) -> System.Windows.Media.Typeface!
+Nickelony.IDEKit.AvalonEdit.Rendering.TextRunStyle.Deconstruct(out System.Windows.Media.Brush? Foreground, out bool IsBold, out bool IsItalic, out System.Windows.TextDecorationCollection? TextDecorations) -> void
+Nickelony.IDEKit.AvalonEdit.Rendering.TextRunStyle.Equals(Nickelony.IDEKit.AvalonEdit.Rendering.TextRunStyle other) -> bool
+Nickelony.IDEKit.AvalonEdit.Rendering.TextRunStyle.Foreground.get -> System.Windows.Media.Brush?
+Nickelony.IDEKit.AvalonEdit.Rendering.TextRunStyle.Foreground.init -> void
+Nickelony.IDEKit.AvalonEdit.Rendering.TextRunStyle.HasFormatting.get -> bool
+Nickelony.IDEKit.AvalonEdit.Rendering.TextRunStyle.IsBold.get -> bool
+Nickelony.IDEKit.AvalonEdit.Rendering.TextRunStyle.IsBold.init -> void
+Nickelony.IDEKit.AvalonEdit.Rendering.TextRunStyle.IsItalic.get -> bool
+Nickelony.IDEKit.AvalonEdit.Rendering.TextRunStyle.IsItalic.init -> void
+Nickelony.IDEKit.AvalonEdit.Rendering.TextRunStyle.TextDecorations.get -> System.Windows.TextDecorationCollection?
+Nickelony.IDEKit.AvalonEdit.Rendering.TextRunStyle.TextDecorations.init -> void
+Nickelony.IDEKit.AvalonEdit.Rendering.TextRunStyle.TextRunStyle() -> void
+Nickelony.IDEKit.AvalonEdit.Rendering.TextRunStyle.TextRunStyle(System.Windows.Media.Brush? Foreground, bool IsBold, bool IsItalic, System.Windows.TextDecorationCollection? TextDecorations) -> void
+Nickelony.IDEKit.AvalonEdit.Rendering.TextRunStyleApplier
+Nickelony.IDEKit.AvalonEdit.Text.DocumentLineStateCache<TState>
+Nickelony.IDEKit.AvalonEdit.Text.DocumentLineStateCache<TState>.Dispose() -> void
+Nickelony.IDEKit.AvalonEdit.Text.DocumentLineStateCache<TState>.DocumentLineStateCache(ICSharpCode.AvalonEdit.Document.TextDocument! document, System.Func<string!, TState, TState>! transition) -> void
+Nickelony.IDEKit.AvalonEdit.Text.DocumentLineStateCache<TState>.GetLineStartState(int lineNumber) -> TState
+Nickelony.IDEKit.AvalonEdit.Text.TextDocumentExtensions
+Nickelony.IDEKit.AvalonEdit.Text.TextDocumentSnapshot
+Nickelony.IDEKit.AvalonEdit.Text.TextDocumentSnapshot.DocumentId.get -> string?
+Nickelony.IDEKit.AvalonEdit.Text.TextDocumentSnapshot.GetCharAt(int offset) -> char
+Nickelony.IDEKit.AvalonEdit.Text.TextDocumentSnapshot.GetLineByNumber(int lineNumber) -> Nickelony.IDEKit.Core.Text.ITextLine!
+Nickelony.IDEKit.AvalonEdit.Text.TextDocumentSnapshot.GetLineByOffset(int offset) -> Nickelony.IDEKit.Core.Text.ITextLine!
+Nickelony.IDEKit.AvalonEdit.Text.TextDocumentSnapshot.GetText(int offset, int length) -> string!
+Nickelony.IDEKit.AvalonEdit.Text.TextDocumentSnapshot.LineCount.get -> int
+Nickelony.IDEKit.AvalonEdit.Text.TextDocumentSnapshot.Lines.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Core.Text.ITextLine!>!
+Nickelony.IDEKit.AvalonEdit.Text.TextDocumentSnapshot.TextDocumentSnapshot(ICSharpCode.AvalonEdit.Document.TextDocument! document) -> void
+Nickelony.IDEKit.AvalonEdit.Text.TextDocumentSnapshot.TextLength.get -> int
+Nickelony.IDEKit.AvalonEdit.Threading.UiDispatcher
+Nickelony.IDEKit.AvalonEdit.Threading.UiDispatcher.CheckAccess() -> bool
+Nickelony.IDEKit.AvalonEdit.Threading.UiDispatcher.Invoke(System.Action! callback) -> void
+Nickelony.IDEKit.AvalonEdit.Threading.UiDispatcher.Invoke<TResult>(System.Func<TResult>! callback) -> TResult
+Nickelony.IDEKit.AvalonEdit.Threading.UiDispatcher.InvokeAsync(System.Action! callback) -> System.Threading.Tasks.Task!
+Nickelony.IDEKit.AvalonEdit.Threading.UiDispatcher.Post(System.Action! callback, Nickelony.IDEKit.Core.Threading.UiDispatcherPriority priority = Nickelony.IDEKit.Core.Threading.UiDispatcherPriority.Normal) -> void
+Nickelony.IDEKit.AvalonEdit.Threading.UiDispatcher.Schedule(System.TimeSpan delay, System.Action! callback) -> System.IDisposable!
+Nickelony.IDEKit.AvalonEdit.Threading.UiDispatcher.UiDispatcher(System.Windows.Threading.Dispatcher! dispatcher) -> void
+Nickelony.IDEKit.AvalonEdit.Threading.UiDispatcher.VerifyAccess() -> void
 abstract Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingDefinition.BuildRules() -> System.Collections.Generic.IEnumerable<Nickelony.IDEKit.Core.Highlighting.RegexHighlightingRule!>!
+abstract Nickelony.IDEKit.AvalonEdit.LineStatus.LineStatusMarginBase.DrawMarker(System.Windows.Media.DrawingContext! drawingContext, ICSharpCode.AvalonEdit.Rendering.VisualLine! visualLine, double visualTop) -> void
+abstract Nickelony.IDEKit.AvalonEdit.LineStatus.LineStatusMarginBase.GetMarkedLineNumbers() -> System.Collections.Generic.IReadOnlyList<int>!
+const Nickelony.IDEKit.AvalonEdit.LineStatus.LineStatusMarginBase.DesignFontSize = 12 -> double
+override Nickelony.IDEKit.AvalonEdit.Bookmarks.BookmarkMargin.GetMarkedLineNumbers() -> System.Collections.Generic.IReadOnlyList<int>!
+override Nickelony.IDEKit.AvalonEdit.Bookmarks.BookmarkMargin.OnIconClicked(ICSharpCode.AvalonEdit.Rendering.VisualLine! visualLine, System.Windows.Point position) -> bool
+override Nickelony.IDEKit.AvalonEdit.LineStatus.LineStatusIconMarginBase.DrawMarker(System.Windows.Media.DrawingContext! drawingContext, ICSharpCode.AvalonEdit.Rendering.VisualLine! visualLine, double visualTop) -> void
+override Nickelony.IDEKit.AvalonEdit.LineStatus.LineStatusIconMarginBase.HitTestCore(System.Windows.Media.PointHitTestParameters! hitTestParameters) -> System.Windows.Media.HitTestResult!
+override Nickelony.IDEKit.AvalonEdit.LineStatus.LineStatusIconMarginBase.OnMouseLeftButtonDown(System.Windows.Input.MouseButtonEventArgs! e) -> void
+override Nickelony.IDEKit.AvalonEdit.LineStatus.LineStatusIconMarginBase.OnPropertyChanged(System.Windows.DependencyPropertyChangedEventArgs e) -> void
+override Nickelony.IDEKit.AvalonEdit.LineStatus.LineStatusMarginBase.MeasureOverride(System.Windows.Size availableSize) -> System.Windows.Size
+override Nickelony.IDEKit.AvalonEdit.LineStatus.LineStatusMarginBase.OnRender(System.Windows.Media.DrawingContext! drawingContext) -> void
+override Nickelony.IDEKit.AvalonEdit.LineStatus.LineStatusMarginBase.OnTextViewChanged(ICSharpCode.AvalonEdit.Rendering.TextView! oldTextView, ICSharpCode.AvalonEdit.Rendering.TextView! newTextView) -> void
+override Nickelony.IDEKit.AvalonEdit.Rendering.TextRunStyle.GetHashCode() -> int
+static Nickelony.IDEKit.AvalonEdit.Bookmarks.BookmarkMargin.SampleIconBrush.get -> System.Windows.Media.Brush!
+static Nickelony.IDEKit.AvalonEdit.Bookmarks.BookmarkMargin.SampleIconGeometry.get -> System.Windows.Media.Geometry!
+static Nickelony.IDEKit.AvalonEdit.Diagnostics.DiagnosticsRenderer.SampleErrorPen.get -> System.Windows.Media.Pen!
+static Nickelony.IDEKit.AvalonEdit.Diagnostics.DiagnosticsRenderer.SampleHintPen.get -> System.Windows.Media.Pen!
+static Nickelony.IDEKit.AvalonEdit.Diagnostics.DiagnosticsRenderer.SampleInformationPen.get -> System.Windows.Media.Pen!
+static Nickelony.IDEKit.AvalonEdit.Diagnostics.DiagnosticsRenderer.SampleWarningPen.get -> System.Windows.Media.Pen!
+static Nickelony.IDEKit.AvalonEdit.Editing.TextEditorEditingExtensions.ApplyEdit(this ICSharpCode.AvalonEdit.TextEditor! textEditor, Nickelony.IDEKit.Core.Editing.TextEditRequest request, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> void
+static Nickelony.IDEKit.AvalonEdit.Editing.TextEditorEditingExtensions.InsertText(this ICSharpCode.AvalonEdit.TextEditor! textEditor, int insertOffset, string! newText, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> void
+static Nickelony.IDEKit.AvalonEdit.Editing.TextEditorEditingExtensions.ReplaceContent(this ICSharpCode.AvalonEdit.TextEditor! textEditor, string! newContent, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> void
+static Nickelony.IDEKit.AvalonEdit.Editing.TextEditorEditingExtensions.ReplaceLine(this ICSharpCode.AvalonEdit.TextEditor! textEditor, ICSharpCode.AvalonEdit.Document.DocumentLine! line, string! replacement, Nickelony.IDEKit.Core.Editing.LineReplacementSelectionMode selection = Nickelony.IDEKit.Core.Editing.LineReplacementSelectionMode.Collapse, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> void
+static Nickelony.IDEKit.AvalonEdit.Editing.TextEditorEditingExtensions.SelectLine(this ICSharpCode.AvalonEdit.TextEditor! textEditor, ICSharpCode.AvalonEdit.Document.DocumentLine! line) -> void
+static Nickelony.IDEKit.AvalonEdit.Editing.TextEditorEditingExtensions.TryReplaceFirstMatchingLine(this ICSharpCode.AvalonEdit.TextEditor! textEditor, System.Func<string!, string?>! replacementSelector, Nickelony.IDEKit.Core.Editing.LineScrollingMode scrollToLine = Nickelony.IDEKit.Core.Editing.LineScrollingMode.ScrollToLine, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> bool
+static Nickelony.IDEKit.AvalonEdit.Editing.TextEditorLineTerminatorExtensions.ConvertLineTerminators(this ICSharpCode.AvalonEdit.TextEditor! textEditor, Nickelony.IDEKit.Core.Text.LineTerminatorStyle style, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> bool
+static Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingDefinition.Create(string! name, System.Func<System.Collections.Generic.IEnumerable<Nickelony.IDEKit.Core.Highlighting.RegexHighlightingRule!>!>! rulesProvider, System.Func<System.Collections.Generic.IEnumerable<Nickelony.IDEKit.Core.Highlighting.RegexHighlightingSpan!>!>? spansProvider = null, Nickelony.IDEKit.Core.Highlighting.RegexHighlightingDefinitionOptions? options = null) -> Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingDefinition!
+static Nickelony.IDEKit.AvalonEdit.Indentation.TextEditorIndentationExtensions.ConvertIndentationToSpaces(this ICSharpCode.AvalonEdit.TextEditor! textEditor, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> bool
+static Nickelony.IDEKit.AvalonEdit.Indentation.TextEditorIndentationExtensions.ConvertIndentationToTabs(this ICSharpCode.AvalonEdit.TextEditor! textEditor, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> bool
+static Nickelony.IDEKit.AvalonEdit.Indentation.TextEditorIndentationExtensions.DetectIndentation(this ICSharpCode.AvalonEdit.TextEditor! textEditor, bool defaultInsertSpaces, int defaultSize) -> Nickelony.IDEKit.Core.Indentation.IndentationDetection
+static Nickelony.IDEKit.AvalonEdit.Indentation.TextEditorIndentationExtensions.ResizeIndentation(this ICSharpCode.AvalonEdit.TextEditor! textEditor, int currentSize, int newSize, Nickelony.IDEKit.Core.Editing.ITextEditTarget? editTarget = null) -> bool
+static Nickelony.IDEKit.AvalonEdit.LineStatus.ChangeMarkerMargin.SampleMarkerBrush.get -> System.Windows.Media.Brush!
+static Nickelony.IDEKit.AvalonEdit.LineStatus.LineStatusMarginBase.RejectNullValue(object? value) -> bool
+static Nickelony.IDEKit.AvalonEdit.Media.ArgbColorExtensions.ToBrush(this Nickelony.IDEKit.Core.Media.ArgbColor color) -> System.Windows.Media.SolidColorBrush!
+static Nickelony.IDEKit.AvalonEdit.Media.ArgbColorExtensions.ToColor(this Nickelony.IDEKit.Core.Media.ArgbColor color) -> System.Windows.Media.Color
+static Nickelony.IDEKit.AvalonEdit.Navigation.TextAreaExtensions.ApplyLocation(this ICSharpCode.AvalonEdit.Editing.TextArea! textArea, Nickelony.IDEKit.Core.Navigation.NavigationLocation location, Nickelony.IDEKit.Core.Navigation.EditorFocusMode focus = Nickelony.IDEKit.Core.Navigation.EditorFocusMode.Focus) -> void
+static Nickelony.IDEKit.AvalonEdit.Navigation.TextAreaExtensions.CreateCaretLocation(this ICSharpCode.AvalonEdit.Editing.TextArea! textArea, string? documentId, ICSharpCode.AvalonEdit.Document.TextLocation position) -> Nickelony.IDEKit.Core.Navigation.NavigationLocation
+static Nickelony.IDEKit.AvalonEdit.Navigation.TextAreaExtensions.CreateRangeLocation(this ICSharpCode.AvalonEdit.Editing.TextArea! textArea, string? documentId, ICSharpCode.AvalonEdit.Document.TextLocation start, ICSharpCode.AvalonEdit.Document.TextLocation end) -> Nickelony.IDEKit.Core.Navigation.NavigationLocation
+static Nickelony.IDEKit.AvalonEdit.Navigation.TextAreaExtensions.GetWordFromOffset(this ICSharpCode.AvalonEdit.Editing.TextArea! textArea, int offset, Nickelony.IDEKit.Core.Identifiers.IdentifierCharacterPolicy? policy = null) -> string?
+static Nickelony.IDEKit.AvalonEdit.Navigation.TextAreaExtensions.TryGetOffsetFromPoint(this ICSharpCode.AvalonEdit.Editing.TextArea! textArea, System.Windows.Point point, out int offset) -> bool
+static Nickelony.IDEKit.AvalonEdit.Navigation.TextAreaExtensions.TryGetTextOffsetFromPoint(this ICSharpCode.AvalonEdit.Editing.TextArea! textArea, System.Windows.Point point, out int offset) -> bool
+static Nickelony.IDEKit.AvalonEdit.Navigation.TextEditorNavigationExtensions.TryGetOffsetFromPoint(this ICSharpCode.AvalonEdit.TextEditor! textEditor, System.Windows.Point point, out int offset) -> bool
+static Nickelony.IDEKit.AvalonEdit.Navigation.TextEditorNavigationExtensions.TryMoveCaretToMousePosition(this ICSharpCode.AvalonEdit.TextEditor! textEditor) -> bool
+static Nickelony.IDEKit.AvalonEdit.Navigation.TextEditorNavigationExtensions.TryMoveCaretToPoint(this ICSharpCode.AvalonEdit.TextEditor! textEditor, System.Windows.Point point) -> bool
+static Nickelony.IDEKit.AvalonEdit.Rendering.TextRunStyle.Empty.get -> Nickelony.IDEKit.AvalonEdit.Rendering.TextRunStyle
+static Nickelony.IDEKit.AvalonEdit.Rendering.TextRunStyle.operator !=(Nickelony.IDEKit.AvalonEdit.Rendering.TextRunStyle left, Nickelony.IDEKit.AvalonEdit.Rendering.TextRunStyle right) -> bool
+static Nickelony.IDEKit.AvalonEdit.Rendering.TextRunStyle.operator ==(Nickelony.IDEKit.AvalonEdit.Rendering.TextRunStyle left, Nickelony.IDEKit.AvalonEdit.Rendering.TextRunStyle right) -> bool
+static Nickelony.IDEKit.AvalonEdit.Rendering.TextRunStyleApplier.Apply(ICSharpCode.AvalonEdit.Rendering.VisualLineElement! element, Nickelony.IDEKit.AvalonEdit.Rendering.TextRunStyle style) -> void
+static Nickelony.IDEKit.AvalonEdit.Rendering.TextRunStyleApplier.Apply(ICSharpCode.AvalonEdit.Rendering.VisualLineElement! element, Nickelony.IDEKit.AvalonEdit.Rendering.TextRunStyle style, System.Windows.Media.Typeface! typeface) -> void
+static Nickelony.IDEKit.AvalonEdit.Rendering.TextRunStyleApplier.CreateTypeface(System.Windows.Media.Typeface! baseTypeface, Nickelony.IDEKit.AvalonEdit.Rendering.TextRunStyle style) -> System.Windows.Media.Typeface!
+static Nickelony.IDEKit.AvalonEdit.Text.TextDocumentExtensions.ClampOffset(this ICSharpCode.AvalonEdit.Document.TextDocument! document, int offset) -> int
+static Nickelony.IDEKit.AvalonEdit.Text.TextDocumentExtensions.GetLiveLine(this ICSharpCode.AvalonEdit.Document.TextDocument! document, ICSharpCode.AvalonEdit.Document.DocumentLine! line) -> ICSharpCode.AvalonEdit.Document.DocumentLine!
+static Nickelony.IDEKit.AvalonEdit.Threading.UiDispatcher.From(System.Windows.Threading.Dispatcher! dispatcher) -> Nickelony.IDEKit.AvalonEdit.Threading.UiDispatcher!
+static Nickelony.IDEKit.AvalonEdit.Threading.UiDispatcher.FromCurrent() -> Nickelony.IDEKit.AvalonEdit.Threading.UiDispatcher!
+static readonly Nickelony.IDEKit.AvalonEdit.LineStatus.ChangeMarkerMargin.MarkerBrushProperty -> System.Windows.DependencyProperty!
+static readonly Nickelony.IDEKit.AvalonEdit.LineStatus.LineStatusIconMarginBase.IconBrushProperty -> System.Windows.DependencyProperty!
+static readonly Nickelony.IDEKit.AvalonEdit.LineStatus.LineStatusIconMarginBase.IconGeometryProperty -> System.Windows.DependencyProperty!
+static readonly Nickelony.IDEKit.AvalonEdit.LineStatus.LineStatusMarginBase.MarginWidthProperty -> System.Windows.DependencyProperty!
+virtual Nickelony.IDEKit.AvalonEdit.Bookmarks.BookmarkMargin.OnBookmarkToggleRequested(int documentOffset) -> bool
 virtual Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingDefinition.BuildSpans() -> System.Collections.Generic.IEnumerable<Nickelony.IDEKit.Core.Highlighting.RegexHighlightingSpan!>!
-static Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingDefinition.Create(string! name, System.Func<System.Collections.Generic.IEnumerable<Nickelony.IDEKit.Core.Highlighting.RegexHighlightingRule!>!>! rulesProvider, Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingDefinitionOptions? options = null) -> Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingDefinition!
-static Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingDefinition.CreateWithSpans(string! name, System.Func<System.Collections.Generic.IEnumerable<Nickelony.IDEKit.Core.Highlighting.RegexHighlightingRule!>!>! rulesProvider, System.Func<System.Collections.Generic.IEnumerable<Nickelony.IDEKit.Core.Highlighting.RegexHighlightingSpan!>!>! spansProvider, Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingDefinitionOptions? options = null) -> Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingDefinition!
-Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingStyleExtensions
-static Nickelony.IDEKit.AvalonEdit.Highlighting.RegexHighlightingStyleExtensions.ToHighlightingColor(this Nickelony.IDEKit.Core.Highlighting.RegexHighlightingStyle! style, System.Windows.Media.Color? fallbackColor) -> ICSharpCode.AvalonEdit.Highlighting.HighlightingColor!
+virtual Nickelony.IDEKit.AvalonEdit.LineStatus.LineStatusIconMarginBase.OnIconClicked(ICSharpCode.AvalonEdit.Rendering.VisualLine! visualLine, System.Windows.Point position) -> bool
+~override Nickelony.IDEKit.AvalonEdit.Rendering.TextRunStyle.Equals(object obj) -> bool
+~override Nickelony.IDEKit.AvalonEdit.Rendering.TextRunStyle.ToString() -> string

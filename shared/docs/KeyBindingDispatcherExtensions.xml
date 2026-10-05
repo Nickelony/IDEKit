@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+	<members>
+		<member name="KeyBindingDispatcherExtensions.HandleKeyDown.Remarks.Handled">
+			<para>
+			  The method does not mark the event handled, whether it dispatches or not. The caller sets the event's <c>Handled</c> property
+			  for both <see cref="KeyStrokeDispatchOutcome.Executed" /> and <see cref="KeyStrokeDispatchOutcome.Pending" />, so a host that runs
+			  several handlers keeps control of the consumption order while a buffered chord still consumes the stroke.
+			</para>
+		</member>
+	</members>
+</doc>

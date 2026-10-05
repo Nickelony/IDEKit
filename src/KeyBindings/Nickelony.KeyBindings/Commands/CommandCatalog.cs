@@ -1,45 +1,38 @@
+using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Nickelony.KeyBindings;
 
-/// <summary>
-/// Catalog of commands that can participate in key bindings.
-/// Each entry supplies a command identity, stable identifier, default bindings,
-/// remapping policy, and context token.
-/// </summary>
+/// <summary>Catalog of the commands that can participate in key bindings.</summary>
 /// <typeparam name="TCommandId">The command identity type.</typeparam>
 /// <remarks>
-/// A <see cref="CommandDescriptor{TCommandId}.Context"/> token names a mutually exclusive host state.
-/// Two default bindings conflict when their contexts can be active at the same time: the same token,
-/// or either <see langword="null"/> (always active). The same chord in two different contexts is
-/// therefore legal, while a chord claimed by two commands within one context - or by a token-scoped
-/// and an always-active command - is rejected. The same co-active and prefix rules, shared with the
-/// service, are what this constructor enforces.
+/// Two default bindings conflict only when their <see cref="CommandDescriptor{TCommandId}.Context"/> tokens can be co-active (the same token,
+/// or either <see langword="null"/>). The same chord in two contexts is legal, but a chord claimed twice within one context - or by a context-scoped
+/// and an always-active command - is rejected.
 /// </remarks>
 public sealed class CommandCatalog<TCommandId>
 	where TCommandId : notnull
 {
 	private readonly Dictionary<TCommandId, CommandDescriptor<TCommandId>> _descriptorsByCommand;
+	private readonly ReadOnlyCollection<CommandDescriptor<TCommandId>> _descriptors;
 
-	/// <summary>
-	/// Initializes a new instance of the <see cref="CommandCatalog{TCommandId}"/> class.
-	/// </summary>
 	/// <param name="descriptors">The descriptors to include in the catalog.</param>
 	/// <exception cref="ArgumentNullException"><paramref name="descriptors"/> is <see langword="null"/>.</exception>
 	/// <exception cref="ArgumentException">
-	/// The list contains a <see langword="null"/> entry, a descriptor uses the <see langword="default"/>
-	/// command value, a command or serialized identifier is duplicated, a context token is empty or
-	/// whitespace-only, two descriptors claim the same default chord in co-active contexts, or one
-	/// default chord is a strict prefix of another chord in a co-active context.
+	/// The list contains a <see langword="null"/> entry, a descriptor uses the <see langword="default"/> command value, a command or serialized
+	/// identifier is duplicated, a context token, title or category is empty or whitespace-only, two descriptors claim the same default chord
+	/// in co-active contexts, or one default chord is a strict prefix of another chord in a co-active context.
 	/// </exception>
 	public CommandCatalog(IReadOnlyList<CommandDescriptor<TCommandId>> descriptors)
 	{
 		ArgumentNullException.ThrowIfNull(descriptors);
 
 		_descriptorsByCommand = new Dictionary<TCommandId, CommandDescriptor<TCommandId>>(descriptors.Count);
+
+		var catalogedDescriptors = new List<CommandDescriptor<TCommandId>>(descriptors.Count);
 		var serializedIds = new HashSet<string>(StringComparer.Ordinal);
 		var defaultClaims = new Dictionary<ContextChord, TCommandId>();
-		var scopedChords = new HashSet<KeyChord>();
+		var contextScopedChords = new HashSet<KeyChord>();
 
 		foreach (CommandDescriptor<TCommandId> descriptor in descriptors)
 		{
@@ -61,31 +54,56 @@ public sealed class CommandCatalog<TCommandId>
 			{
 				throw new ArgumentException(
 					$"The context of command '{descriptor.SerializedId}' must be null or a non-empty, non-whitespace token.",
-					nameof(descriptors));
+					nameof(descriptors)
+				);
 			}
 
-			string? context = descriptor.Context ?? ContextChord.Always;
+			if (descriptor.Title is not null && string.IsNullOrWhiteSpace(descriptor.Title))
+			{
+				throw new ArgumentException(
+					$"The title of command '{descriptor.SerializedId}' must be null or a non-empty, non-whitespace string.",
+					nameof(descriptors)
+				);
+			}
+
+			if (descriptor.Category is not null && string.IsNullOrWhiteSpace(descriptor.Category))
+			{
+				throw new ArgumentException(
+					$"The category of command '{descriptor.SerializedId}' must be null or a non-empty, non-whitespace string.",
+					nameof(descriptors)
+				);
+			}
+
+			string? context = descriptor.Context;
 
 			foreach (KeyChord binding in descriptor.DefaultBindings)
 			{
 				// A chord two commands claim in co-active contexts can never resolve to one of them, so
 				// the declaration is rejected. Different tokens never overlap, which is what makes the
 				// same chord in two host modes legal.
-				if (BindingClaimRules.TryGetCoActiveClaim(defaultClaims, new ContextChord(context, binding), out ContextChord conflictingClaim, out _))
+				if (
+					BindingClaimRules.TryGetCoActiveClaim(
+						claims: defaultClaims,
+						candidate: new ContextChord(context, binding),
+						out ContextChord conflictingClaim,
+						conflictingOwner: out _
+					)
+				)
 				{
-					throw new ArgumentException(
-						DescribeDuplicateDefaultBinding(context, conflictingClaim.Context, binding),
-						nameof(descriptors));
+					throw new ArgumentException(DescribeDuplicateDefaultBinding(context, conflictingClaim.Context, binding), nameof(descriptors));
 				}
 
 				defaultClaims[new ContextChord(context, binding)] = descriptor.Command;
 
 				if (context is not null)
-					scopedChords.Add(binding);
+					contextScopedChords.Add(binding);
 			}
 
 			_descriptorsByCommand[descriptor.Command] = descriptor;
+			catalogedDescriptors.Add(descriptor);
 		}
+
+		_descriptors = catalogedDescriptors.AsReadOnly();
 
 		// A chord that is a strict prefix of a co-active chord can never dispatch: the shorter chord
 		// always resolves first and the longer one becomes unreachable, so the declaration is rejected
@@ -93,31 +111,18 @@ public sealed class CommandCatalog<TCommandId>
 		// legal, because those chords are never active at the same time.
 		foreach (ContextChord claim in defaultClaims.Keys)
 		{
-			ReadOnlySpan<KeyCombo> strokes = claim.Chord.Strokes;
-
-			for (int length = 1; length < strokes.Length; length++)
+			foreach (KeyChord prefix in BindingClaimRules.GetStrictPrefixes(claim.Chord))
 			{
-				var prefix = new KeyChord(strokes[..length].ToArray());
-
-				if (BindingClaimRules.IsPrefixConflict(defaultClaims, scopedChords, claim, prefix))
-				{
-					throw new ArgumentException(
-						DescribePrefixConflict(claim.Context, prefix, claim.Chord),
-						nameof(descriptors));
-				}
+				if (BindingClaimRules.IsPrefixConflict(claims: defaultClaims, contextScopedChords, claim, prefix))
+					throw new ArgumentException(DescribePrefixConflict(claim.Context, prefix, claim.Chord), nameof(descriptors));
 			}
 		}
 	}
 
-	/// <summary>
-	/// Gets all descriptors in the catalog.
-	/// </summary>
-	/// <remarks>Enumeration order is not specified.</remarks>
-	public IReadOnlyCollection<CommandDescriptor<TCommandId>> Descriptors => _descriptorsByCommand.Values;
+	/// <summary>The descriptors in the catalog, in the order the constructor received them.</summary>
+	public IReadOnlyList<CommandDescriptor<TCommandId>> Descriptors => _descriptors;
 
-	/// <summary>
-	/// Tries to get the descriptor for a command identity.
-	/// </summary>
+	/// <summary>Tries to get the descriptor for a command identity.</summary>
 	/// <param name="command">The command identity to resolve.</param>
 	/// <param name="descriptor">The matching descriptor when the method returns <see langword="true"/>; otherwise, <see langword="null"/>.</param>
 	/// <returns><see langword="true"/> when the command is cataloged; otherwise, <see langword="false"/>.</returns>

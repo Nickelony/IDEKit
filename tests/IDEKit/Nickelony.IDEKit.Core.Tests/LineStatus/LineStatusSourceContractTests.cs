@@ -1,9 +1,8 @@
 namespace Nickelony.IDEKit.Core.Tests;
 
 /// <summary>
-/// Pins the <see cref="ILineStatusSource"/> contract with a reference implementation: one-based,
-/// ascending, de-duplicated line numbers; an empty list instead of <see langword="null"/> when
-/// nothing is marked; and a result that is cached across the consumer's read passes.
+/// Pins the <see cref="ILineStatusSource"/> contract with a reference implementation: one-based, ascending, de-duplicated line numbers; an empty list
+/// instead of <see langword="null"/> when nothing is marked; and a result that is cached across the consumer's read passes.
 /// </summary>
 [TestClass]
 public sealed class LineStatusSourceContractTests
@@ -15,7 +14,7 @@ public sealed class LineStatusSourceContractTests
 
 		IReadOnlyList<int> marked = source.GetMarkedLineNumbers();
 
-		CollectionAssert.AreEqual(new[] { 1, 3, 5 }, marked.ToArray());
+		Assert.AreSequenceEqual([1, 3, 5], [.. marked]);
 		Assert.IsTrue(marked.All(line => line >= 1), "Marked lines are one-based.");
 	}
 
@@ -29,7 +28,7 @@ public sealed class LineStatusSourceContractTests
 		IReadOnlyList<int> marked = source.GetMarkedLineNumbers();
 
 		Assert.IsNotNull(marked);
-		Assert.AreEqual(0, marked.Count);
+		Assert.IsEmpty(marked);
 	}
 
 	[TestMethod]
@@ -37,8 +36,8 @@ public sealed class LineStatusSourceContractTests
 	{
 		var source = new ReferenceLineStatusSource(2, 4);
 
-		CollectionAssert.AreEqual(new[] { 2, 4 }, source.GetMarkedLineNumbers().ToArray());
-		CollectionAssert.AreEqual(new[] { 2, 4 }, source.GetMarkedLineNumbers().ToArray());
+		Assert.AreSequenceEqual([2, 4], [.. source.GetMarkedLineNumbers()]);
+		Assert.AreSequenceEqual([2, 4], [.. source.GetMarkedLineNumbers()]);
 
 		// The consumer queries the source on every read pass, so the contract requires the source to
 		// cache its result and recompute it only when its inputs actually change.
@@ -61,7 +60,6 @@ public sealed class LineStatusSourceContractTests
 		private IReadOnlyList<int> Compute()
 		{
 			Computations++;
-
 			return Array.AsReadOnly(_input.Where(line => line >= 1).Distinct().Order().ToArray());
 		}
 	}

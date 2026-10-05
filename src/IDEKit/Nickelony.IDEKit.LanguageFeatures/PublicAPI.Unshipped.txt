@@ -1,0 +1,628 @@
+#nullable enable
+Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeAction
+Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeAction.<Clone>$() -> Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeAction!
+Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeAction.CodeAction(string! title, Nickelony.IDEKit.LanguageFeatures.Editing.WorkspaceEdit? edit = null, string? kind = null, bool isPreferred = false, object? data = null, Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeActionCommand? command = null) -> void
+Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeAction.Command.get -> Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeActionCommand?
+Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeAction.Data.get -> object?
+Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeAction.Edit.get -> Nickelony.IDEKit.LanguageFeatures.Editing.WorkspaceEdit?
+Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeAction.Equals(Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeAction? other) -> bool
+Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeAction.IsPreferred.get -> bool
+Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeAction.Kind.get -> string?
+Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeAction.Title.get -> string!
+Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeActionCommand
+Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeActionCommand.<Clone>$() -> Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeActionCommand!
+Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeActionCommand.Arguments.get -> System.Collections.Generic.IReadOnlyList<object?>!
+Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeActionCommand.CodeActionCommand(string! title, string! name, System.Collections.Generic.IReadOnlyList<object?>? arguments = null) -> void
+Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeActionCommand.Equals(Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeActionCommand? other) -> bool
+Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeActionCommand.Name.get -> string!
+Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeActionCommand.Title.get -> string!
+Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeActionRequest
+Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeActionRequest.<Clone>$() -> Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeActionRequest!
+Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeActionRequest.CodeActionRequest(string! documentId, string! documentText, Nickelony.IDEKit.Core.Text.TextRange range) -> void
+Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeActionRequest.Diagnostics.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.LanguageFeatures.Diagnostics.Diagnostic!>?
+Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeActionRequest.Diagnostics.init -> void
+Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeActionRequest.DocumentId.get -> string!
+Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeActionRequest.DocumentText.get -> string!
+Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeActionRequest.Equals(Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeActionRequest? other) -> bool
+Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeActionRequest.Only.get -> System.Collections.Generic.IReadOnlyList<string!>?
+Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeActionRequest.Only.init -> void
+Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeActionRequest.Range.get -> Nickelony.IDEKit.Core.Text.TextRange
+Nickelony.IDEKit.LanguageFeatures.CodeActions.ICodeActionCommandRunner
+Nickelony.IDEKit.LanguageFeatures.CodeActions.ICodeActionCommandRunner.TryRunAsync(Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeActionCommand! command, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<bool>!
+Nickelony.IDEKit.LanguageFeatures.CodeActions.ICodeActionProvider
+Nickelony.IDEKit.LanguageFeatures.CodeActions.ICodeActionProvider.GetCodeActionsAsync(Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeActionRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeAction!>!>!
+Nickelony.IDEKit.LanguageFeatures.CodeActions.ICodeActionResolver
+Nickelony.IDEKit.LanguageFeatures.CodeActions.ICodeActionResolver.ResolveAsync(Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeAction! action, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeAction!>!
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionContext
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionContext.Equals(Nickelony.IDEKit.LanguageFeatures.Completion.CompletionContext? other) -> bool
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionContext.Identifier.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionContext.TriggerCharacter.get -> char?
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionInsertTextFormat
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionInsertTextFormat.PlainText = 1 -> Nickelony.IDEKit.LanguageFeatures.Completion.CompletionInsertTextFormat
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionInsertTextFormat.Snippet = 2 -> Nickelony.IDEKit.LanguageFeatures.Completion.CompletionInsertTextFormat
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem.AdditionalTextEdits.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.LanguageFeatures.Completion.CompletionTextEdit>!
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem.AdditionalTextEdits.init -> void
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem.CanResolve.get -> bool
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem.CommitCharacters.get -> System.Collections.Generic.IReadOnlyList<string!>!
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem.CommitCharacters.init -> void
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem.CompletionItem(string! label) -> void
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem.Detail.get -> string?
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem.Detail.init -> void
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem.Documentation.get -> Nickelony.IDEKit.LanguageFeatures.Markup.MarkupContent?
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem.Documentation.init -> void
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem.FilterText.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem.FilterText.init -> void
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem.InsertText.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem.InsertText.init -> void
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem.InsertTextFormat.get -> Nickelony.IDEKit.LanguageFeatures.Completion.CompletionInsertTextFormat
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem.InsertTextFormat.init -> void
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem.IsPreselected.get -> bool
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem.IsPreselected.init -> void
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem.Kind.get -> Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind!
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem.Kind.init -> void
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem.Label.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem.Priority.get -> double
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem.Priority.init -> void
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem.RequestDocumentVersion.get -> int?
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem.RequestDocumentVersion.init -> void
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem.RequestGeneration.get -> int?
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem.RequestGeneration.init -> void
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem.ResolveAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem!>!
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem.ResolveCallback.get -> System.Func<System.Threading.CancellationToken, System.Threading.Tasks.Task<Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem!>!>?
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem.ResolveCallback.init -> void
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem.SortText.get -> string?
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem.SortText.init -> void
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem.Tags.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemTag>!
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem.Tags.init -> void
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem.TextEdit.get -> Nickelony.IDEKit.LanguageFeatures.Completion.CompletionTextEdit?
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem.TextEdit.init -> void
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem.WithRequestContext(int requestDocumentVersion, int requestGeneration) -> Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem!
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem.WithResolveCallback(System.Func<System.Threading.CancellationToken, System.Threading.Tasks.Task<Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem!>!>! resolveAsync) -> Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem!
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem.WithResolvedContent(Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem! resolvedItem) -> Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem!
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem.WithoutTextEdit() -> Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem!
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind.Equals(Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind? other) -> bool
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind.Identifier.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemTag
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemTag.Deprecated = 1 -> Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemTag
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionRequest
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionRequest.<Clone>$() -> Nickelony.IDEKit.LanguageFeatures.Completion.CompletionRequest!
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionRequest.CaretOffset.get -> int
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionRequest.CompletionRequest(string! documentId, string! documentText, int caretOffset, Nickelony.IDEKit.LanguageFeatures.Completion.CompletionContext? context = null) -> void
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionRequest.Context.get -> Nickelony.IDEKit.LanguageFeatures.Completion.CompletionContext!
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionRequest.DocumentId.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionRequest.DocumentText.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionRequest.Equals(Nickelony.IDEKit.LanguageFeatures.Completion.CompletionRequest? other) -> bool
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionTextEdit
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionTextEdit.CompletionTextEdit() -> void
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionTextEdit.CompletionTextEdit(Nickelony.IDEKit.Core.Text.TextRange insertRange, Nickelony.IDEKit.Core.Text.TextRange? replaceRange = null, string? newText = null) -> void
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionTextEdit.Deconstruct(out Nickelony.IDEKit.Core.Text.TextRange insertRange, out Nickelony.IDEKit.Core.Text.TextRange? replaceRange, out string? newText) -> void
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionTextEdit.Equals(Nickelony.IDEKit.LanguageFeatures.Completion.CompletionTextEdit other) -> bool
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionTextEdit.InsertRange.get -> Nickelony.IDEKit.Core.Text.TextRange
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionTextEdit.NewText.get -> string?
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionTextEdit.NewText.init -> void
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionTextEdit.ReplaceRange.get -> Nickelony.IDEKit.Core.Text.TextRange?
+Nickelony.IDEKit.LanguageFeatures.Completion.CompletionTextEdit.ReplacementRange.get -> Nickelony.IDEKit.Core.Text.TextRange
+Nickelony.IDEKit.LanguageFeatures.Completion.ICompletionProvider
+Nickelony.IDEKit.LanguageFeatures.Completion.ICompletionProvider.GetCompletionItemsAsync(Nickelony.IDEKit.LanguageFeatures.Completion.CompletionRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItem!>!>!
+Nickelony.IDEKit.LanguageFeatures.Completion.ICompletionTriggerCharacters
+Nickelony.IDEKit.LanguageFeatures.Completion.ICompletionTriggerCharacters.TriggerCharacters.get -> System.Collections.Generic.IReadOnlyList<string!>!
+Nickelony.IDEKit.LanguageFeatures.Diagnostics.Diagnostic
+Nickelony.IDEKit.LanguageFeatures.Diagnostics.Diagnostic.Code.get -> string?
+Nickelony.IDEKit.LanguageFeatures.Diagnostics.Diagnostic.Code.init -> void
+Nickelony.IDEKit.LanguageFeatures.Diagnostics.Diagnostic.ContainsOffset(int offset) -> bool
+Nickelony.IDEKit.LanguageFeatures.Diagnostics.Diagnostic.Diagnostic(Nickelony.IDEKit.Core.Diagnostics.DiagnosticSeverity severity, string! message, Nickelony.IDEKit.Core.Text.TextRange range) -> void
+Nickelony.IDEKit.LanguageFeatures.Diagnostics.Diagnostic.Equals(Nickelony.IDEKit.LanguageFeatures.Diagnostics.Diagnostic? other) -> bool
+Nickelony.IDEKit.LanguageFeatures.Diagnostics.Diagnostic.Message.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Diagnostics.Diagnostic.Range.get -> Nickelony.IDEKit.Core.Text.TextRange
+Nickelony.IDEKit.LanguageFeatures.Diagnostics.Diagnostic.Severity.get -> Nickelony.IDEKit.Core.Diagnostics.DiagnosticSeverity
+Nickelony.IDEKit.LanguageFeatures.Diagnostics.Diagnostic.Source.get -> string?
+Nickelony.IDEKit.LanguageFeatures.Diagnostics.Diagnostic.Source.init -> void
+Nickelony.IDEKit.LanguageFeatures.Diagnostics.DiagnosticRangeConversion
+Nickelony.IDEKit.LanguageFeatures.Diagnostics.DiagnosticSegmentConversion
+Nickelony.IDEKit.LanguageFeatures.Diagnostics.DiagnosticsRequest
+Nickelony.IDEKit.LanguageFeatures.Diagnostics.DiagnosticsRequest.<Clone>$() -> Nickelony.IDEKit.LanguageFeatures.Diagnostics.DiagnosticsRequest!
+Nickelony.IDEKit.LanguageFeatures.Diagnostics.DiagnosticsRequest.DiagnosticsRequest(string! documentId, string! documentText) -> void
+Nickelony.IDEKit.LanguageFeatures.Diagnostics.DiagnosticsRequest.DocumentId.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Diagnostics.DiagnosticsRequest.DocumentText.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Diagnostics.DiagnosticsRequest.Equals(Nickelony.IDEKit.LanguageFeatures.Diagnostics.DiagnosticsRequest? other) -> bool
+Nickelony.IDEKit.LanguageFeatures.Diagnostics.DiagnosticsUpdatedEventArgs
+Nickelony.IDEKit.LanguageFeatures.Diagnostics.DiagnosticsUpdatedEventArgs.Diagnostics.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.LanguageFeatures.Diagnostics.Diagnostic!>!
+Nickelony.IDEKit.LanguageFeatures.Diagnostics.DiagnosticsUpdatedEventArgs.DiagnosticsUpdatedEventArgs(string! documentId, System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.LanguageFeatures.Diagnostics.Diagnostic!>! diagnostics) -> void
+Nickelony.IDEKit.LanguageFeatures.Diagnostics.DiagnosticsUpdatedEventArgs.DocumentId.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Diagnostics.IDiagnosticsProvider
+Nickelony.IDEKit.LanguageFeatures.Diagnostics.IDiagnosticsProvider.GetDiagnosticsAsync(Nickelony.IDEKit.LanguageFeatures.Diagnostics.DiagnosticsRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.LanguageFeatures.Diagnostics.Diagnostic!>!>!
+Nickelony.IDEKit.LanguageFeatures.Diagnostics.IDiagnosticsSource
+Nickelony.IDEKit.LanguageFeatures.Diagnostics.IDiagnosticsSource.DiagnosticsUpdated -> System.EventHandler<Nickelony.IDEKit.LanguageFeatures.Diagnostics.DiagnosticsUpdatedEventArgs!>?
+Nickelony.IDEKit.LanguageFeatures.Diagnostics.IDiagnosticsSource.GetDiagnostics(string! documentId) -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.LanguageFeatures.Diagnostics.Diagnostic!>!
+Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbol
+Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbol.Children.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbol!>!
+Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbol.Children.init -> void
+Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbol.Data.get -> object?
+Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbol.Data.init -> void
+Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbol.Detail.get -> string?
+Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbol.Detail.init -> void
+Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbol.DocumentSymbol(string! name, Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind kind, Nickelony.IDEKit.Core.Text.TextRange? range = null, Nickelony.IDEKit.Core.Text.TextRange? selectionRange = null) -> void
+Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbol.Kind.get -> Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind
+Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbol.Name.get -> string!
+Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbol.Range.get -> Nickelony.IDEKit.Core.Text.TextRange?
+Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbol.SelectionRange.get -> Nickelony.IDEKit.Core.Text.TextRange?
+Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolFilter
+Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind
+Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind.Array = 18 -> Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind
+Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind.Boolean = 17 -> Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind
+Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind.Class = 5 -> Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind
+Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind.Constant = 14 -> Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind
+Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind.Constructor = 9 -> Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind
+Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind.Enum = 10 -> Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind
+Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind.EnumMember = 22 -> Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind
+Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind.Event = 24 -> Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind
+Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind.Field = 8 -> Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind
+Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind.File = 1 -> Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind
+Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind.Function = 12 -> Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind
+Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind.Interface = 11 -> Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind
+Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind.Key = 20 -> Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind
+Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind.Method = 6 -> Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind
+Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind.Module = 2 -> Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind
+Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind.Namespace = 3 -> Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind
+Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind.Null = 21 -> Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind
+Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind.Number = 16 -> Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind
+Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind.Object = 19 -> Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind
+Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind.Operator = 25 -> Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind
+Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind.Package = 4 -> Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind
+Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind.Property = 7 -> Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind
+Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind.String = 15 -> Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind
+Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind.Struct = 23 -> Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind
+Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind.TypeParameter = 26 -> Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind
+Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind.Variable = 13 -> Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind
+Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolRequest
+Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolRequest.<Clone>$() -> Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolRequest!
+Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolRequest.DocumentId.get -> string!
+Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolRequest.DocumentSymbolRequest(string! documentId, string! documentText, string! filterText) -> void
+Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolRequest.DocumentText.get -> string!
+Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolRequest.Equals(Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolRequest? other) -> bool
+Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolRequest.FilterText.get -> string!
+Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.IDocumentSymbolProvider
+Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.IDocumentSymbolProvider.GetDocumentSymbolsAsync(Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbol!>!>!
+Nickelony.IDEKit.LanguageFeatures.Editing.TextDocumentEdit
+Nickelony.IDEKit.LanguageFeatures.Editing.TextDocumentEdit.<Clone>$() -> Nickelony.IDEKit.LanguageFeatures.Editing.TextDocumentEdit!
+Nickelony.IDEKit.LanguageFeatures.Editing.TextDocumentEdit.DocumentId.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Editing.TextDocumentEdit.Equals(Nickelony.IDEKit.LanguageFeatures.Editing.TextDocumentEdit? other) -> bool
+Nickelony.IDEKit.LanguageFeatures.Editing.TextDocumentEdit.TextDocumentEdit(string! documentId, System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.LanguageFeatures.Editing.TextEdit!>! textEdits) -> void
+Nickelony.IDEKit.LanguageFeatures.Editing.TextDocumentEdit.TextEdits.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.LanguageFeatures.Editing.TextEdit!>!
+Nickelony.IDEKit.LanguageFeatures.Editing.TextEdit
+Nickelony.IDEKit.LanguageFeatures.Editing.TextEdit.<Clone>$() -> Nickelony.IDEKit.LanguageFeatures.Editing.TextEdit!
+Nickelony.IDEKit.LanguageFeatures.Editing.TextEdit.Equals(Nickelony.IDEKit.LanguageFeatures.Editing.TextEdit? other) -> bool
+Nickelony.IDEKit.LanguageFeatures.Editing.TextEdit.NewText.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Editing.TextEdit.Range.get -> Nickelony.IDEKit.Core.Text.TextPositionRange
+Nickelony.IDEKit.LanguageFeatures.Editing.TextEdit.TextEdit(Nickelony.IDEKit.Core.Text.TextPositionRange range, string! newText) -> void
+Nickelony.IDEKit.LanguageFeatures.Editing.TextEditConversion
+Nickelony.IDEKit.LanguageFeatures.Editing.TextEditConversionOutcome
+Nickelony.IDEKit.LanguageFeatures.Editing.TextEditConversionOutcome.Conflict = 2 -> Nickelony.IDEKit.LanguageFeatures.Editing.TextEditConversionOutcome
+Nickelony.IDEKit.LanguageFeatures.Editing.TextEditConversionOutcome.Converted = 0 -> Nickelony.IDEKit.LanguageFeatures.Editing.TextEditConversionOutcome
+Nickelony.IDEKit.LanguageFeatures.Editing.TextEditConversionOutcome.InvalidRange = 1 -> Nickelony.IDEKit.LanguageFeatures.Editing.TextEditConversionOutcome
+Nickelony.IDEKit.LanguageFeatures.Editing.WorkspaceEdit
+Nickelony.IDEKit.LanguageFeatures.Editing.WorkspaceEdit.<Clone>$() -> Nickelony.IDEKit.LanguageFeatures.Editing.WorkspaceEdit!
+Nickelony.IDEKit.LanguageFeatures.Editing.WorkspaceEdit.DocumentEdits.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.LanguageFeatures.Editing.TextDocumentEdit!>!
+Nickelony.IDEKit.LanguageFeatures.Editing.WorkspaceEdit.Equals(Nickelony.IDEKit.LanguageFeatures.Editing.WorkspaceEdit? other) -> bool
+Nickelony.IDEKit.LanguageFeatures.Editing.WorkspaceEdit.HasChanges.get -> bool
+Nickelony.IDEKit.LanguageFeatures.Editing.WorkspaceEdit.WorkspaceEdit(System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.LanguageFeatures.Editing.TextDocumentEdit!>! documentEdits) -> void
+Nickelony.IDEKit.LanguageFeatures.Formatting.FormattingOptions
+Nickelony.IDEKit.LanguageFeatures.Formatting.FormattingOptions.<Clone>$() -> Nickelony.IDEKit.LanguageFeatures.Formatting.FormattingOptions!
+Nickelony.IDEKit.LanguageFeatures.Formatting.FormattingOptions.Equals(Nickelony.IDEKit.LanguageFeatures.Formatting.FormattingOptions? other) -> bool
+Nickelony.IDEKit.LanguageFeatures.Formatting.FormattingOptions.FormattingOptions(int tabSize, bool insertSpaces) -> void
+Nickelony.IDEKit.LanguageFeatures.Formatting.FormattingOptions.InsertSpaces.get -> bool
+Nickelony.IDEKit.LanguageFeatures.Formatting.FormattingOptions.TabSize.get -> int
+Nickelony.IDEKit.LanguageFeatures.Formatting.FormattingOutcome
+Nickelony.IDEKit.LanguageFeatures.Formatting.FormattingOutcome.Applied = 0 -> Nickelony.IDEKit.LanguageFeatures.Formatting.FormattingOutcome
+Nickelony.IDEKit.LanguageFeatures.Formatting.FormattingOutcome.NothingToApply = 1 -> Nickelony.IDEKit.LanguageFeatures.Formatting.FormattingOutcome
+Nickelony.IDEKit.LanguageFeatures.Formatting.FormattingOutcome.Rejected = 3 -> Nickelony.IDEKit.LanguageFeatures.Formatting.FormattingOutcome
+Nickelony.IDEKit.LanguageFeatures.Formatting.FormattingOutcome.Stale = 2 -> Nickelony.IDEKit.LanguageFeatures.Formatting.FormattingOutcome
+Nickelony.IDEKit.LanguageFeatures.Formatting.FormattingRequest
+Nickelony.IDEKit.LanguageFeatures.Formatting.FormattingRequest.<Clone>$() -> Nickelony.IDEKit.LanguageFeatures.Formatting.FormattingRequest!
+Nickelony.IDEKit.LanguageFeatures.Formatting.FormattingRequest.DocumentId.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Formatting.FormattingRequest.DocumentText.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Formatting.FormattingRequest.Equals(Nickelony.IDEKit.LanguageFeatures.Formatting.FormattingRequest? other) -> bool
+Nickelony.IDEKit.LanguageFeatures.Formatting.FormattingRequest.FormattingRequest(string! documentId, string! documentText, Nickelony.IDEKit.LanguageFeatures.Formatting.FormattingOptions! options) -> void
+Nickelony.IDEKit.LanguageFeatures.Formatting.FormattingRequest.Options.get -> Nickelony.IDEKit.LanguageFeatures.Formatting.FormattingOptions!
+Nickelony.IDEKit.LanguageFeatures.Formatting.IFormattingProvider
+Nickelony.IDEKit.LanguageFeatures.Formatting.IFormattingProvider.GetFormattingEditsAsync(Nickelony.IDEKit.LanguageFeatures.Formatting.FormattingRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.LanguageFeatures.Editing.WorkspaceEdit?>!
+Nickelony.IDEKit.LanguageFeatures.Hover.HoverInformation
+Nickelony.IDEKit.LanguageFeatures.Hover.HoverInformation.<Clone>$() -> Nickelony.IDEKit.LanguageFeatures.Hover.HoverInformation!
+Nickelony.IDEKit.LanguageFeatures.Hover.HoverInformation.Content.get -> Nickelony.IDEKit.LanguageFeatures.Markup.MarkupContent!
+Nickelony.IDEKit.LanguageFeatures.Hover.HoverInformation.DefinitionDiscriminator.get -> Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionDiscriminator?
+Nickelony.IDEKit.LanguageFeatures.Hover.HoverInformation.DefinitionDiscriminator.init -> void
+Nickelony.IDEKit.LanguageFeatures.Hover.HoverInformation.Equals(Nickelony.IDEKit.LanguageFeatures.Hover.HoverInformation? other) -> bool
+Nickelony.IDEKit.LanguageFeatures.Hover.HoverInformation.HoverInformation(Nickelony.IDEKit.LanguageFeatures.Markup.MarkupContent! content) -> void
+Nickelony.IDEKit.LanguageFeatures.Hover.HoverInformation.Range.get -> Nickelony.IDEKit.Core.Text.TextRange?
+Nickelony.IDEKit.LanguageFeatures.Hover.HoverInformation.Range.init -> void
+Nickelony.IDEKit.LanguageFeatures.Hover.HoverInformation.SymbolName.get -> string?
+Nickelony.IDEKit.LanguageFeatures.Hover.HoverInformation.SymbolName.init -> void
+Nickelony.IDEKit.LanguageFeatures.Hover.HoverRequest
+Nickelony.IDEKit.LanguageFeatures.Hover.HoverRequest.<Clone>$() -> Nickelony.IDEKit.LanguageFeatures.Hover.HoverRequest!
+Nickelony.IDEKit.LanguageFeatures.Hover.HoverRequest.DocumentId.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Hover.HoverRequest.DocumentText.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Hover.HoverRequest.Equals(Nickelony.IDEKit.LanguageFeatures.Hover.HoverRequest? other) -> bool
+Nickelony.IDEKit.LanguageFeatures.Hover.HoverRequest.HoverRequest(string! documentId, string! documentText, int hoveredOffset) -> void
+Nickelony.IDEKit.LanguageFeatures.Hover.HoverRequest.HoveredOffset.get -> int
+Nickelony.IDEKit.LanguageFeatures.Hover.IHoverProvider
+Nickelony.IDEKit.LanguageFeatures.Hover.IHoverProvider.GetHoverAsync(Nickelony.IDEKit.LanguageFeatures.Hover.HoverRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.LanguageFeatures.Hover.HoverInformation?>!
+Nickelony.IDEKit.LanguageFeatures.Markup.MarkupContent
+Nickelony.IDEKit.LanguageFeatures.Markup.MarkupContent.<Clone>$() -> Nickelony.IDEKit.LanguageFeatures.Markup.MarkupContent!
+Nickelony.IDEKit.LanguageFeatures.Markup.MarkupContent.Equals(Nickelony.IDEKit.LanguageFeatures.Markup.MarkupContent? other) -> bool
+Nickelony.IDEKit.LanguageFeatures.Markup.MarkupContent.IsBlank.get -> bool
+Nickelony.IDEKit.LanguageFeatures.Markup.MarkupContent.Kind.get -> Nickelony.IDEKit.LanguageFeatures.Markup.MarkupKind
+Nickelony.IDEKit.LanguageFeatures.Markup.MarkupContent.MarkupContent(string! value, Nickelony.IDEKit.LanguageFeatures.Markup.MarkupKind kind = Nickelony.IDEKit.LanguageFeatures.Markup.MarkupKind.PlainText) -> void
+Nickelony.IDEKit.LanguageFeatures.Markup.MarkupContent.Value.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Markup.MarkupKind
+Nickelony.IDEKit.LanguageFeatures.Markup.MarkupKind.Markdown = 1 -> Nickelony.IDEKit.LanguageFeatures.Markup.MarkupKind
+Nickelony.IDEKit.LanguageFeatures.Markup.MarkupKind.PlainText = 0 -> Nickelony.IDEKit.LanguageFeatures.Markup.MarkupKind
+Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionDiscriminator
+Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionDiscriminator.DefinitionDiscriminator() -> void
+Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionDiscriminator.DefinitionDiscriminator(Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionDiscriminator! original) -> void
+Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionLocation
+Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionLocation.<Clone>$() -> Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionLocation!
+Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionLocation.DefinitionLocation(Nickelony.IDEKit.Core.Text.TextPositionRange targetRange, string? documentId = null, Nickelony.IDEKit.Core.Text.TextPositionRange? selectionRange = null) -> void
+Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionLocation.DocumentId.get -> string?
+Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionLocation.Equals(Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionLocation? other) -> bool
+Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionLocation.NavigationStart.get -> Nickelony.IDEKit.Core.Text.TextPosition
+Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionLocation.SelectionRange.get -> Nickelony.IDEKit.Core.Text.TextPositionRange?
+Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionLocation.TargetRange.get -> Nickelony.IDEKit.Core.Text.TextPositionRange
+Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionRequest
+Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionRequest.<Clone>$() -> Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionRequest!
+Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionRequest.DefinitionRequest(string! documentId, string! documentText, string! symbolName, Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionDiscriminator? discriminator = null, int? symbolOffset = null) -> void
+Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionRequest.Discriminator.get -> Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionDiscriminator?
+Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionRequest.DocumentId.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionRequest.DocumentText.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionRequest.Equals(Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionRequest? other) -> bool
+Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionRequest.SymbolName.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionRequest.SymbolOffset.get -> int?
+Nickelony.IDEKit.LanguageFeatures.Navigation.IDefinitionProvider
+Nickelony.IDEKit.LanguageFeatures.Navigation.IDefinitionProvider.GetDefinitionAsync(Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionLocation?>!
+Nickelony.IDEKit.LanguageFeatures.Navigation.IReferenceProvider
+Nickelony.IDEKit.LanguageFeatures.Navigation.IReferenceProvider.GetReferencesAsync(Nickelony.IDEKit.LanguageFeatures.Navigation.ReferenceRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.LanguageFeatures.Navigation.ReferenceLocation!>!>!
+Nickelony.IDEKit.LanguageFeatures.Navigation.ReferenceLocation
+Nickelony.IDEKit.LanguageFeatures.Navigation.ReferenceLocation.<Clone>$() -> Nickelony.IDEKit.LanguageFeatures.Navigation.ReferenceLocation!
+Nickelony.IDEKit.LanguageFeatures.Navigation.ReferenceLocation.DocumentId.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Navigation.ReferenceLocation.Equals(Nickelony.IDEKit.LanguageFeatures.Navigation.ReferenceLocation? other) -> bool
+Nickelony.IDEKit.LanguageFeatures.Navigation.ReferenceLocation.Range.get -> Nickelony.IDEKit.Core.Text.TextPositionRange
+Nickelony.IDEKit.LanguageFeatures.Navigation.ReferenceLocation.ReferenceLocation(string! documentId, Nickelony.IDEKit.Core.Text.TextPositionRange range) -> void
+Nickelony.IDEKit.LanguageFeatures.Navigation.ReferenceRequest
+Nickelony.IDEKit.LanguageFeatures.Navigation.ReferenceRequest.<Clone>$() -> Nickelony.IDEKit.LanguageFeatures.Navigation.ReferenceRequest!
+Nickelony.IDEKit.LanguageFeatures.Navigation.ReferenceRequest.DocumentId.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Navigation.ReferenceRequest.DocumentText.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Navigation.ReferenceRequest.Equals(Nickelony.IDEKit.LanguageFeatures.Navigation.ReferenceRequest? other) -> bool
+Nickelony.IDEKit.LanguageFeatures.Navigation.ReferenceRequest.IncludeDeclaration.get -> bool
+Nickelony.IDEKit.LanguageFeatures.Navigation.ReferenceRequest.ReferenceRequest(string! documentId, string! documentText, int symbolOffset, bool includeDeclaration = true) -> void
+Nickelony.IDEKit.LanguageFeatures.Navigation.ReferenceRequest.SymbolOffset.get -> int
+Nickelony.IDEKit.LanguageFeatures.Rename.IRenameProvider
+Nickelony.IDEKit.LanguageFeatures.Rename.IRenameProvider.GetRenameEditsAsync(Nickelony.IDEKit.LanguageFeatures.Rename.RenameRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.LanguageFeatures.Editing.WorkspaceEdit?>!
+Nickelony.IDEKit.LanguageFeatures.Rename.RenameRequest
+Nickelony.IDEKit.LanguageFeatures.Rename.RenameRequest.<Clone>$() -> Nickelony.IDEKit.LanguageFeatures.Rename.RenameRequest!
+Nickelony.IDEKit.LanguageFeatures.Rename.RenameRequest.DocumentId.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Rename.RenameRequest.DocumentText.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Rename.RenameRequest.Equals(Nickelony.IDEKit.LanguageFeatures.Rename.RenameRequest? other) -> bool
+Nickelony.IDEKit.LanguageFeatures.Rename.RenameRequest.NewName.get -> string!
+Nickelony.IDEKit.LanguageFeatures.Rename.RenameRequest.RenameRequest(string! documentId, string! documentText, int symbolOffset, string! newName) -> void
+Nickelony.IDEKit.LanguageFeatures.Rename.RenameRequest.SymbolOffset.get -> int
+Nickelony.IDEKit.LanguageFeatures.SemanticTokens.ISemanticTokensSource
+Nickelony.IDEKit.LanguageFeatures.SemanticTokens.ISemanticTokensSource.GetSemanticTokens(string! documentId) -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticToken!>!
+Nickelony.IDEKit.LanguageFeatures.SemanticTokens.ISemanticTokensSource.SemanticTokensUpdated -> System.EventHandler<Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticTokensUpdatedEventArgs!>?
+Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticToken
+Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticToken.Equals(Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticToken? other) -> bool
+Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticToken.HasModifier(string? modifier) -> bool
+Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticToken.Modifiers.get -> System.Collections.Generic.IReadOnlyList<string!>!
+Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticToken.Range.get -> Nickelony.IDEKit.Core.Text.TextRange
+Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticToken.SemanticToken(Nickelony.IDEKit.Core.Text.TextRange range, string! type, System.Collections.Generic.IReadOnlyList<string!>? modifiers = null) -> void
+Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticToken.Type.get -> string!
+Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticTokenModifiers
+Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticTokenTypes
+Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticTokensUpdatedEventArgs
+Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticTokensUpdatedEventArgs.DocumentId.get -> string!
+Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticTokensUpdatedEventArgs.SemanticTokens.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticToken!>!
+Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticTokensUpdatedEventArgs.SemanticTokensUpdatedEventArgs(string! documentId, System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticToken!>! semanticTokens) -> void
+Nickelony.IDEKit.LanguageFeatures.SignatureHelp.ISignatureHelpProvider
+Nickelony.IDEKit.LanguageFeatures.SignatureHelp.ISignatureHelpProvider.GetSignatureHelpAsync(Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpInformation?>!
+Nickelony.IDEKit.LanguageFeatures.SignatureHelp.ISignatureHelpTriggerCharacters
+Nickelony.IDEKit.LanguageFeatures.SignatureHelp.ISignatureHelpTriggerCharacters.RetriggerCharacters.get -> System.Collections.Generic.IReadOnlyList<string!>!
+Nickelony.IDEKit.LanguageFeatures.SignatureHelp.ISignatureHelpTriggerCharacters.TriggerCharacters.get -> System.Collections.Generic.IReadOnlyList<string!>!
+Nickelony.IDEKit.LanguageFeatures.SignatureHelp.ParameterInformation
+Nickelony.IDEKit.LanguageFeatures.SignatureHelp.ParameterInformation.Documentation.get -> Nickelony.IDEKit.LanguageFeatures.Markup.MarkupContent?
+Nickelony.IDEKit.LanguageFeatures.SignatureHelp.ParameterInformation.Label.get -> string!
+Nickelony.IDEKit.LanguageFeatures.SignatureHelp.ParameterInformation.ParameterInformation(string! label, Nickelony.IDEKit.LanguageFeatures.Markup.MarkupContent? documentation = null, Nickelony.IDEKit.Core.Text.TextRange? range = null) -> void
+Nickelony.IDEKit.LanguageFeatures.SignatureHelp.ParameterInformation.Range.get -> Nickelony.IDEKit.Core.Text.TextRange?
+Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureActiveParameterSelection
+Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureActiveParameterSelection.Equals(Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureActiveParameterSelection other) -> bool
+Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureActiveParameterSelection.Index.get -> int?
+Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureActiveParameterSelection.IsNone.get -> bool
+Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureActiveParameterSelection.IsSpecified.get -> bool
+Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureActiveParameterSelection.SignatureActiveParameterSelection() -> void
+Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpContext
+Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpContext.ActiveSignatureHelp.get -> Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpInformation?
+Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpContext.IsRetrigger.get -> bool
+Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpContext.SignatureHelpContext(Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpTriggerKind triggerKind = Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpTriggerKind.Invoked, string? triggerCharacter = null, bool isRetrigger = false, Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpInformation? activeSignatureHelp = null) -> void
+Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpContext.TriggerCharacter.get -> string?
+Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpContext.TriggerKind.get -> Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpTriggerKind
+Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpInformation
+Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpInformation.ActiveParameterIndex.get -> int?
+Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpInformation.ActiveSignature.get -> Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureInformation!
+Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpInformation.ActiveSignatureIndex.get -> int
+Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpInformation.SignatureHelpInformation(System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureInformation!>! signatures, int activeSignatureIndex = 0, Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureActiveParameterSelection activeParameter = default(Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureActiveParameterSelection)) -> void
+Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpInformation.Signatures.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureInformation!>!
+Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpInformation.WithActiveSignature(int activeSignatureIndex) -> Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpInformation!
+Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpRequest
+Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpRequest.<Clone>$() -> Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpRequest!
+Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpRequest.CaretOffset.get -> int
+Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpRequest.Context.get -> Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpContext?
+Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpRequest.DocumentId.get -> string!
+Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpRequest.DocumentText.get -> string!
+Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpRequest.Equals(Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpRequest? other) -> bool
+Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpRequest.SignatureHelpRequest(string! documentId, string! documentText, int caretOffset, Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpContext? context = null) -> void
+Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpTriggerKind
+Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpTriggerKind.ContentChange = 3 -> Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpTriggerKind
+Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpTriggerKind.Invoked = 1 -> Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpTriggerKind
+Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpTriggerKind.TriggerCharacter = 2 -> Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpTriggerKind
+Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureInformation
+Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureInformation.ActiveParameterIndex.get -> int?
+Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureInformation.Documentation.get -> Nickelony.IDEKit.LanguageFeatures.Markup.MarkupContent?
+Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureInformation.Label.get -> string!
+Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureInformation.Parameters.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.LanguageFeatures.SignatureHelp.ParameterInformation!>!
+Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureInformation.SignatureInformation(string! label, Nickelony.IDEKit.LanguageFeatures.Markup.MarkupContent? documentation = null, Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureActiveParameterSelection activeParameter = default(Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureActiveParameterSelection), System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.LanguageFeatures.SignatureHelp.ParameterInformation!>? parameters = null) -> void
+Nickelony.IDEKit.LanguageFeatures.Synchronization.IDocumentSynchronizationTarget
+Nickelony.IDEKit.LanguageFeatures.Synchronization.IDocumentSynchronizationTarget.CloseDocument(string! documentId) -> void
+Nickelony.IDEKit.LanguageFeatures.Synchronization.IDocumentSynchronizationTarget.OpenDocument(string! documentId, string! documentText) -> void
+Nickelony.IDEKit.LanguageFeatures.Synchronization.IDocumentSynchronizationTarget.RenameDocument(string! oldDocumentId, string! newDocumentId, string! documentText) -> void
+Nickelony.IDEKit.LanguageFeatures.Synchronization.IDocumentSynchronizationTarget.UpdateDocument(string! documentId, string! documentText) -> void
+Nickelony.IDEKit.LanguageFeatures.WorkspaceSymbols.IWorkspaceSymbolProvider
+Nickelony.IDEKit.LanguageFeatures.WorkspaceSymbols.IWorkspaceSymbolProvider.GetWorkspaceSymbolsAsync(Nickelony.IDEKit.LanguageFeatures.WorkspaceSymbols.WorkspaceSymbolRequest! request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.LanguageFeatures.WorkspaceSymbols.WorkspaceSymbol!>!>!
+Nickelony.IDEKit.LanguageFeatures.WorkspaceSymbols.IWorkspaceSymbolResolver
+Nickelony.IDEKit.LanguageFeatures.WorkspaceSymbols.IWorkspaceSymbolResolver.ResolveAsync(Nickelony.IDEKit.LanguageFeatures.WorkspaceSymbols.WorkspaceSymbol! symbol, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Nickelony.IDEKit.LanguageFeatures.WorkspaceSymbols.WorkspaceSymbol!>!
+Nickelony.IDEKit.LanguageFeatures.WorkspaceSymbols.WorkspaceSymbol
+Nickelony.IDEKit.LanguageFeatures.WorkspaceSymbols.WorkspaceSymbol.ContainerName.get -> string?
+Nickelony.IDEKit.LanguageFeatures.WorkspaceSymbols.WorkspaceSymbol.ContainerName.init -> void
+Nickelony.IDEKit.LanguageFeatures.WorkspaceSymbols.WorkspaceSymbol.Data.get -> object?
+Nickelony.IDEKit.LanguageFeatures.WorkspaceSymbols.WorkspaceSymbol.Data.init -> void
+Nickelony.IDEKit.LanguageFeatures.WorkspaceSymbols.WorkspaceSymbol.Kind.get -> Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind
+Nickelony.IDEKit.LanguageFeatures.WorkspaceSymbols.WorkspaceSymbol.Location.get -> Nickelony.IDEKit.LanguageFeatures.WorkspaceSymbols.WorkspaceSymbolLocation!
+Nickelony.IDEKit.LanguageFeatures.WorkspaceSymbols.WorkspaceSymbol.Name.get -> string!
+Nickelony.IDEKit.LanguageFeatures.WorkspaceSymbols.WorkspaceSymbol.WorkspaceSymbol(string! name, Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolKind kind, Nickelony.IDEKit.LanguageFeatures.WorkspaceSymbols.WorkspaceSymbolLocation! location) -> void
+Nickelony.IDEKit.LanguageFeatures.WorkspaceSymbols.WorkspaceSymbolLocation
+Nickelony.IDEKit.LanguageFeatures.WorkspaceSymbols.WorkspaceSymbolLocation.<Clone>$() -> Nickelony.IDEKit.LanguageFeatures.WorkspaceSymbols.WorkspaceSymbolLocation!
+Nickelony.IDEKit.LanguageFeatures.WorkspaceSymbols.WorkspaceSymbolLocation.DocumentId.get -> string!
+Nickelony.IDEKit.LanguageFeatures.WorkspaceSymbols.WorkspaceSymbolLocation.Equals(Nickelony.IDEKit.LanguageFeatures.WorkspaceSymbols.WorkspaceSymbolLocation? other) -> bool
+Nickelony.IDEKit.LanguageFeatures.WorkspaceSymbols.WorkspaceSymbolLocation.Range.get -> Nickelony.IDEKit.Core.Text.TextPositionRange?
+Nickelony.IDEKit.LanguageFeatures.WorkspaceSymbols.WorkspaceSymbolLocation.WorkspaceSymbolLocation(string! documentId, Nickelony.IDEKit.Core.Text.TextPositionRange? range = null) -> void
+Nickelony.IDEKit.LanguageFeatures.WorkspaceSymbols.WorkspaceSymbolRequest
+Nickelony.IDEKit.LanguageFeatures.WorkspaceSymbols.WorkspaceSymbolRequest.<Clone>$() -> Nickelony.IDEKit.LanguageFeatures.WorkspaceSymbols.WorkspaceSymbolRequest!
+Nickelony.IDEKit.LanguageFeatures.WorkspaceSymbols.WorkspaceSymbolRequest.Equals(Nickelony.IDEKit.LanguageFeatures.WorkspaceSymbols.WorkspaceSymbolRequest? other) -> bool
+Nickelony.IDEKit.LanguageFeatures.WorkspaceSymbols.WorkspaceSymbolRequest.Query.get -> string!
+Nickelony.IDEKit.LanguageFeatures.WorkspaceSymbols.WorkspaceSymbolRequest.WorkspaceSymbolRequest(string! query) -> void
+abstract Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionDiscriminator.<Clone>$() -> Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionDiscriminator!
+const Nickelony.IDEKit.LanguageFeatures.Formatting.FormattingOptions.DefaultTabSize = 4 -> int
+const Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticTokenModifiers.Abstract = "abstract" -> string!
+const Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticTokenModifiers.Async = "async" -> string!
+const Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticTokenModifiers.Declaration = "declaration" -> string!
+const Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticTokenModifiers.DefaultLibrary = "defaultLibrary" -> string!
+const Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticTokenModifiers.Definition = "definition" -> string!
+const Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticTokenModifiers.Deprecated = "deprecated" -> string!
+const Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticTokenModifiers.Documentation = "documentation" -> string!
+const Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticTokenModifiers.Modification = "modification" -> string!
+const Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticTokenModifiers.Readonly = "readonly" -> string!
+const Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticTokenModifiers.Static = "static" -> string!
+const Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticTokenTypes.Class = "class" -> string!
+const Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticTokenTypes.Comment = "comment" -> string!
+const Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticTokenTypes.Decorator = "decorator" -> string!
+const Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticTokenTypes.Enum = "enum" -> string!
+const Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticTokenTypes.EnumMember = "enumMember" -> string!
+const Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticTokenTypes.Event = "event" -> string!
+const Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticTokenTypes.Function = "function" -> string!
+const Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticTokenTypes.Interface = "interface" -> string!
+const Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticTokenTypes.Keyword = "keyword" -> string!
+const Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticTokenTypes.Label = "label" -> string!
+const Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticTokenTypes.Macro = "macro" -> string!
+const Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticTokenTypes.Method = "method" -> string!
+const Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticTokenTypes.Modifier = "modifier" -> string!
+const Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticTokenTypes.Namespace = "namespace" -> string!
+const Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticTokenTypes.Number = "number" -> string!
+const Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticTokenTypes.Operator = "operator" -> string!
+const Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticTokenTypes.Parameter = "parameter" -> string!
+const Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticTokenTypes.Property = "property" -> string!
+const Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticTokenTypes.Regexp = "regexp" -> string!
+const Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticTokenTypes.String = "string" -> string!
+const Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticTokenTypes.Struct = "struct" -> string!
+const Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticTokenTypes.Type = "type" -> string!
+const Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticTokenTypes.TypeParameter = "typeParameter" -> string!
+const Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticTokenTypes.Variable = "variable" -> string!
+override Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeAction.Equals(object? obj) -> bool
+override Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeAction.GetHashCode() -> int
+override Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeAction.ToString() -> string!
+override Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeActionCommand.Equals(object? obj) -> bool
+override Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeActionCommand.GetHashCode() -> int
+override Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeActionCommand.ToString() -> string!
+override Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeActionRequest.Equals(object? obj) -> bool
+override Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeActionRequest.GetHashCode() -> int
+override Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeActionRequest.ToString() -> string!
+override Nickelony.IDEKit.LanguageFeatures.Completion.CompletionContext.Equals(object? obj) -> bool
+override Nickelony.IDEKit.LanguageFeatures.Completion.CompletionContext.GetHashCode() -> int
+override Nickelony.IDEKit.LanguageFeatures.Completion.CompletionContext.ToString() -> string!
+override Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind.Equals(object? obj) -> bool
+override Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind.GetHashCode() -> int
+override Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind.ToString() -> string!
+override Nickelony.IDEKit.LanguageFeatures.Completion.CompletionRequest.Equals(object? obj) -> bool
+override Nickelony.IDEKit.LanguageFeatures.Completion.CompletionRequest.GetHashCode() -> int
+override Nickelony.IDEKit.LanguageFeatures.Completion.CompletionRequest.ToString() -> string!
+override Nickelony.IDEKit.LanguageFeatures.Completion.CompletionTextEdit.GetHashCode() -> int
+override Nickelony.IDEKit.LanguageFeatures.Diagnostics.Diagnostic.Equals(object? obj) -> bool
+override Nickelony.IDEKit.LanguageFeatures.Diagnostics.Diagnostic.GetHashCode() -> int
+override Nickelony.IDEKit.LanguageFeatures.Diagnostics.DiagnosticsRequest.Equals(object? obj) -> bool
+override Nickelony.IDEKit.LanguageFeatures.Diagnostics.DiagnosticsRequest.GetHashCode() -> int
+override Nickelony.IDEKit.LanguageFeatures.Diagnostics.DiagnosticsRequest.ToString() -> string!
+override Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolRequest.Equals(object? obj) -> bool
+override Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolRequest.GetHashCode() -> int
+override Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolRequest.ToString() -> string!
+override Nickelony.IDEKit.LanguageFeatures.Editing.TextDocumentEdit.Equals(object? obj) -> bool
+override Nickelony.IDEKit.LanguageFeatures.Editing.TextDocumentEdit.GetHashCode() -> int
+override Nickelony.IDEKit.LanguageFeatures.Editing.TextDocumentEdit.ToString() -> string!
+override Nickelony.IDEKit.LanguageFeatures.Editing.TextEdit.Equals(object? obj) -> bool
+override Nickelony.IDEKit.LanguageFeatures.Editing.TextEdit.GetHashCode() -> int
+override Nickelony.IDEKit.LanguageFeatures.Editing.TextEdit.ToString() -> string!
+override Nickelony.IDEKit.LanguageFeatures.Editing.WorkspaceEdit.Equals(object? obj) -> bool
+override Nickelony.IDEKit.LanguageFeatures.Editing.WorkspaceEdit.GetHashCode() -> int
+override Nickelony.IDEKit.LanguageFeatures.Editing.WorkspaceEdit.ToString() -> string!
+override Nickelony.IDEKit.LanguageFeatures.Formatting.FormattingOptions.Equals(object? obj) -> bool
+override Nickelony.IDEKit.LanguageFeatures.Formatting.FormattingOptions.GetHashCode() -> int
+override Nickelony.IDEKit.LanguageFeatures.Formatting.FormattingOptions.ToString() -> string!
+override Nickelony.IDEKit.LanguageFeatures.Formatting.FormattingRequest.Equals(object? obj) -> bool
+override Nickelony.IDEKit.LanguageFeatures.Formatting.FormattingRequest.GetHashCode() -> int
+override Nickelony.IDEKit.LanguageFeatures.Formatting.FormattingRequest.ToString() -> string!
+override Nickelony.IDEKit.LanguageFeatures.Hover.HoverInformation.Equals(object? obj) -> bool
+override Nickelony.IDEKit.LanguageFeatures.Hover.HoverInformation.GetHashCode() -> int
+override Nickelony.IDEKit.LanguageFeatures.Hover.HoverInformation.ToString() -> string!
+override Nickelony.IDEKit.LanguageFeatures.Hover.HoverRequest.Equals(object? obj) -> bool
+override Nickelony.IDEKit.LanguageFeatures.Hover.HoverRequest.GetHashCode() -> int
+override Nickelony.IDEKit.LanguageFeatures.Hover.HoverRequest.ToString() -> string!
+override Nickelony.IDEKit.LanguageFeatures.Markup.MarkupContent.Equals(object? obj) -> bool
+override Nickelony.IDEKit.LanguageFeatures.Markup.MarkupContent.GetHashCode() -> int
+override Nickelony.IDEKit.LanguageFeatures.Markup.MarkupContent.ToString() -> string!
+override Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionDiscriminator.Equals(object? obj) -> bool
+override Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionDiscriminator.GetHashCode() -> int
+override Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionDiscriminator.ToString() -> string!
+override Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionLocation.Equals(object? obj) -> bool
+override Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionLocation.GetHashCode() -> int
+override Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionLocation.ToString() -> string!
+override Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionRequest.Equals(object? obj) -> bool
+override Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionRequest.GetHashCode() -> int
+override Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionRequest.ToString() -> string!
+override Nickelony.IDEKit.LanguageFeatures.Navigation.ReferenceLocation.Equals(object? obj) -> bool
+override Nickelony.IDEKit.LanguageFeatures.Navigation.ReferenceLocation.GetHashCode() -> int
+override Nickelony.IDEKit.LanguageFeatures.Navigation.ReferenceLocation.ToString() -> string!
+override Nickelony.IDEKit.LanguageFeatures.Navigation.ReferenceRequest.Equals(object? obj) -> bool
+override Nickelony.IDEKit.LanguageFeatures.Navigation.ReferenceRequest.GetHashCode() -> int
+override Nickelony.IDEKit.LanguageFeatures.Navigation.ReferenceRequest.ToString() -> string!
+override Nickelony.IDEKit.LanguageFeatures.Rename.RenameRequest.Equals(object? obj) -> bool
+override Nickelony.IDEKit.LanguageFeatures.Rename.RenameRequest.GetHashCode() -> int
+override Nickelony.IDEKit.LanguageFeatures.Rename.RenameRequest.ToString() -> string!
+override Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticToken.Equals(object? obj) -> bool
+override Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticToken.GetHashCode() -> int
+override Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureActiveParameterSelection.GetHashCode() -> int
+override Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureActiveParameterSelection.ToString() -> string!
+override Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpRequest.Equals(object? obj) -> bool
+override Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpRequest.GetHashCode() -> int
+override Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpRequest.ToString() -> string!
+override Nickelony.IDEKit.LanguageFeatures.WorkspaceSymbols.WorkspaceSymbolLocation.Equals(object? obj) -> bool
+override Nickelony.IDEKit.LanguageFeatures.WorkspaceSymbols.WorkspaceSymbolLocation.GetHashCode() -> int
+override Nickelony.IDEKit.LanguageFeatures.WorkspaceSymbols.WorkspaceSymbolLocation.ToString() -> string!
+override Nickelony.IDEKit.LanguageFeatures.WorkspaceSymbols.WorkspaceSymbolRequest.Equals(object? obj) -> bool
+override Nickelony.IDEKit.LanguageFeatures.WorkspaceSymbols.WorkspaceSymbolRequest.GetHashCode() -> int
+override Nickelony.IDEKit.LanguageFeatures.WorkspaceSymbols.WorkspaceSymbolRequest.ToString() -> string!
+static Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeAction.operator !=(Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeAction? left, Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeAction? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeAction.operator ==(Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeAction? left, Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeAction? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeActionCommand.operator !=(Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeActionCommand? left, Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeActionCommand? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeActionCommand.operator ==(Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeActionCommand? left, Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeActionCommand? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeActionRequest.operator !=(Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeActionRequest? left, Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeActionRequest? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeActionRequest.operator ==(Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeActionRequest? left, Nickelony.IDEKit.LanguageFeatures.CodeActions.CodeActionRequest? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Completion.CompletionContext.CreateCustom(string! identifier) -> Nickelony.IDEKit.LanguageFeatures.Completion.CompletionContext!
+static Nickelony.IDEKit.LanguageFeatures.Completion.CompletionContext.ForCharacter(char triggerCharacter) -> Nickelony.IDEKit.LanguageFeatures.Completion.CompletionContext!
+static Nickelony.IDEKit.LanguageFeatures.Completion.CompletionContext.Invoked.get -> Nickelony.IDEKit.LanguageFeatures.Completion.CompletionContext!
+static Nickelony.IDEKit.LanguageFeatures.Completion.CompletionContext.operator !=(Nickelony.IDEKit.LanguageFeatures.Completion.CompletionContext? left, Nickelony.IDEKit.LanguageFeatures.Completion.CompletionContext? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Completion.CompletionContext.operator ==(Nickelony.IDEKit.LanguageFeatures.Completion.CompletionContext? left, Nickelony.IDEKit.LanguageFeatures.Completion.CompletionContext? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind.Array.get -> Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind!
+static Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind.Class.get -> Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind!
+static Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind.Color.get -> Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind!
+static Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind.Constant.get -> Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind!
+static Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind.Constructor.get -> Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind!
+static Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind.CreateCustom(string! identifier) -> Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind!
+static Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind.Directive.get -> Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind!
+static Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind.Enum.get -> Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind!
+static Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind.EnumMember.get -> Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind!
+static Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind.Event.get -> Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind!
+static Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind.Field.get -> Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind!
+static Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind.File.get -> Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind!
+static Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind.Folder.get -> Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind!
+static Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind.FromIdentifier(string! identifier) -> Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind!
+static Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind.Function.get -> Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind!
+static Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind.Generic.get -> Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind!
+static Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind.Interface.get -> Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind!
+static Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind.Keyword.get -> Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind!
+static Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind.Method.get -> Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind!
+static Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind.Module.get -> Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind!
+static Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind.Namespace.get -> Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind!
+static Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind.Operator.get -> Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind!
+static Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind.Parameter.get -> Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind!
+static Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind.Property.get -> Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind!
+static Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind.Reference.get -> Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind!
+static Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind.Section.get -> Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind!
+static Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind.Snippet.get -> Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind!
+static Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind.Struct.get -> Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind!
+static Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind.Text.get -> Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind!
+static Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind.TypeParameter.get -> Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind!
+static Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind.Unit.get -> Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind!
+static Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind.Value.get -> Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind!
+static Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind.Variable.get -> Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind!
+static Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind.operator !=(Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind? left, Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind.operator ==(Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind? left, Nickelony.IDEKit.LanguageFeatures.Completion.CompletionItemKind? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Completion.CompletionRequest.operator !=(Nickelony.IDEKit.LanguageFeatures.Completion.CompletionRequest? left, Nickelony.IDEKit.LanguageFeatures.Completion.CompletionRequest? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Completion.CompletionRequest.operator ==(Nickelony.IDEKit.LanguageFeatures.Completion.CompletionRequest? left, Nickelony.IDEKit.LanguageFeatures.Completion.CompletionRequest? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Completion.CompletionTextEdit.TryCreate(Nickelony.IDEKit.Core.Text.TextRange insertRange, Nickelony.IDEKit.Core.Text.TextRange? replaceRange, string? newText, out Nickelony.IDEKit.LanguageFeatures.Completion.CompletionTextEdit edit) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Completion.CompletionTextEdit.operator !=(Nickelony.IDEKit.LanguageFeatures.Completion.CompletionTextEdit left, Nickelony.IDEKit.LanguageFeatures.Completion.CompletionTextEdit right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Completion.CompletionTextEdit.operator ==(Nickelony.IDEKit.LanguageFeatures.Completion.CompletionTextEdit left, Nickelony.IDEKit.LanguageFeatures.Completion.CompletionTextEdit right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Diagnostics.Diagnostic.operator !=(Nickelony.IDEKit.LanguageFeatures.Diagnostics.Diagnostic? left, Nickelony.IDEKit.LanguageFeatures.Diagnostics.Diagnostic? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Diagnostics.Diagnostic.operator ==(Nickelony.IDEKit.LanguageFeatures.Diagnostics.Diagnostic? left, Nickelony.IDEKit.LanguageFeatures.Diagnostics.Diagnostic? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Diagnostics.DiagnosticRangeConversion.FromLineAndCharacter(Nickelony.IDEKit.Core.Text.TextLineMap! lineMap, int lineIndex, int character, int? length = null) -> Nickelony.IDEKit.Core.Text.TextRange
+static Nickelony.IDEKit.LanguageFeatures.Diagnostics.DiagnosticSegmentConversion.Project(System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.LanguageFeatures.Diagnostics.Diagnostic!>! diagnostics) -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.Core.Diagnostics.DiagnosticSegment>!
+static Nickelony.IDEKit.LanguageFeatures.Diagnostics.DiagnosticsRequest.operator !=(Nickelony.IDEKit.LanguageFeatures.Diagnostics.DiagnosticsRequest? left, Nickelony.IDEKit.LanguageFeatures.Diagnostics.DiagnosticsRequest? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Diagnostics.DiagnosticsRequest.operator ==(Nickelony.IDEKit.LanguageFeatures.Diagnostics.DiagnosticsRequest? left, Nickelony.IDEKit.LanguageFeatures.Diagnostics.DiagnosticsRequest? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolFilter.FilterByName(System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbol!>! symbols, string! filterText) -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbol!>!
+static Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolRequest.operator !=(Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolRequest? left, Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolRequest? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolRequest.operator ==(Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolRequest? left, Nickelony.IDEKit.LanguageFeatures.DocumentSymbols.DocumentSymbolRequest? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Editing.TextDocumentEdit.operator !=(Nickelony.IDEKit.LanguageFeatures.Editing.TextDocumentEdit? left, Nickelony.IDEKit.LanguageFeatures.Editing.TextDocumentEdit? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Editing.TextDocumentEdit.operator ==(Nickelony.IDEKit.LanguageFeatures.Editing.TextDocumentEdit? left, Nickelony.IDEKit.LanguageFeatures.Editing.TextDocumentEdit? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Editing.TextEdit.operator !=(Nickelony.IDEKit.LanguageFeatures.Editing.TextEdit? left, Nickelony.IDEKit.LanguageFeatures.Editing.TextEdit? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Editing.TextEdit.operator ==(Nickelony.IDEKit.LanguageFeatures.Editing.TextEdit? left, Nickelony.IDEKit.LanguageFeatures.Editing.TextEdit? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Editing.TextEditConversion.Convert(string! text, System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.LanguageFeatures.Editing.TextEdit!>! edits, out Nickelony.IDEKit.Core.Editing.PreparedTextEdits! prepared) -> Nickelony.IDEKit.LanguageFeatures.Editing.TextEditConversionOutcome
+static Nickelony.IDEKit.LanguageFeatures.Editing.WorkspaceEdit.operator !=(Nickelony.IDEKit.LanguageFeatures.Editing.WorkspaceEdit? left, Nickelony.IDEKit.LanguageFeatures.Editing.WorkspaceEdit? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Editing.WorkspaceEdit.operator ==(Nickelony.IDEKit.LanguageFeatures.Editing.WorkspaceEdit? left, Nickelony.IDEKit.LanguageFeatures.Editing.WorkspaceEdit? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Formatting.FormattingOptions.operator !=(Nickelony.IDEKit.LanguageFeatures.Formatting.FormattingOptions? left, Nickelony.IDEKit.LanguageFeatures.Formatting.FormattingOptions? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Formatting.FormattingOptions.operator ==(Nickelony.IDEKit.LanguageFeatures.Formatting.FormattingOptions? left, Nickelony.IDEKit.LanguageFeatures.Formatting.FormattingOptions? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Formatting.FormattingRequest.operator !=(Nickelony.IDEKit.LanguageFeatures.Formatting.FormattingRequest? left, Nickelony.IDEKit.LanguageFeatures.Formatting.FormattingRequest? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Formatting.FormattingRequest.operator ==(Nickelony.IDEKit.LanguageFeatures.Formatting.FormattingRequest? left, Nickelony.IDEKit.LanguageFeatures.Formatting.FormattingRequest? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Hover.HoverInformation.operator !=(Nickelony.IDEKit.LanguageFeatures.Hover.HoverInformation? left, Nickelony.IDEKit.LanguageFeatures.Hover.HoverInformation? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Hover.HoverInformation.operator ==(Nickelony.IDEKit.LanguageFeatures.Hover.HoverInformation? left, Nickelony.IDEKit.LanguageFeatures.Hover.HoverInformation? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Hover.HoverRequest.operator !=(Nickelony.IDEKit.LanguageFeatures.Hover.HoverRequest? left, Nickelony.IDEKit.LanguageFeatures.Hover.HoverRequest? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Hover.HoverRequest.operator ==(Nickelony.IDEKit.LanguageFeatures.Hover.HoverRequest? left, Nickelony.IDEKit.LanguageFeatures.Hover.HoverRequest? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Markup.MarkupContent.FromPlainText(string! value) -> Nickelony.IDEKit.LanguageFeatures.Markup.MarkupContent!
+static Nickelony.IDEKit.LanguageFeatures.Markup.MarkupContent.implicit operator Nickelony.IDEKit.LanguageFeatures.Markup.MarkupContent?(string? value) -> Nickelony.IDEKit.LanguageFeatures.Markup.MarkupContent?
+static Nickelony.IDEKit.LanguageFeatures.Markup.MarkupContent.operator !=(Nickelony.IDEKit.LanguageFeatures.Markup.MarkupContent? left, Nickelony.IDEKit.LanguageFeatures.Markup.MarkupContent? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Markup.MarkupContent.operator ==(Nickelony.IDEKit.LanguageFeatures.Markup.MarkupContent? left, Nickelony.IDEKit.LanguageFeatures.Markup.MarkupContent? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionDiscriminator.operator !=(Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionDiscriminator? left, Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionDiscriminator? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionDiscriminator.operator ==(Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionDiscriminator? left, Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionDiscriminator? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionLocation.operator !=(Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionLocation? left, Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionLocation? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionLocation.operator ==(Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionLocation? left, Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionLocation? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionRequest.operator !=(Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionRequest? left, Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionRequest? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionRequest.operator ==(Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionRequest? left, Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionRequest? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Navigation.ReferenceLocation.operator !=(Nickelony.IDEKit.LanguageFeatures.Navigation.ReferenceLocation? left, Nickelony.IDEKit.LanguageFeatures.Navigation.ReferenceLocation? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Navigation.ReferenceLocation.operator ==(Nickelony.IDEKit.LanguageFeatures.Navigation.ReferenceLocation? left, Nickelony.IDEKit.LanguageFeatures.Navigation.ReferenceLocation? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Navigation.ReferenceRequest.operator !=(Nickelony.IDEKit.LanguageFeatures.Navigation.ReferenceRequest? left, Nickelony.IDEKit.LanguageFeatures.Navigation.ReferenceRequest? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Navigation.ReferenceRequest.operator ==(Nickelony.IDEKit.LanguageFeatures.Navigation.ReferenceRequest? left, Nickelony.IDEKit.LanguageFeatures.Navigation.ReferenceRequest? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Rename.RenameRequest.operator !=(Nickelony.IDEKit.LanguageFeatures.Rename.RenameRequest? left, Nickelony.IDEKit.LanguageFeatures.Rename.RenameRequest? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.Rename.RenameRequest.operator ==(Nickelony.IDEKit.LanguageFeatures.Rename.RenameRequest? left, Nickelony.IDEKit.LanguageFeatures.Rename.RenameRequest? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticToken.operator !=(Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticToken? left, Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticToken? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticToken.operator ==(Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticToken? left, Nickelony.IDEKit.LanguageFeatures.SemanticTokens.SemanticToken? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureActiveParameterSelection.At(int index) -> Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureActiveParameterSelection
+static Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureActiveParameterSelection.None.get -> Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureActiveParameterSelection
+static Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureActiveParameterSelection.NotSpecified.get -> Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureActiveParameterSelection
+static Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureActiveParameterSelection.operator !=(Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureActiveParameterSelection left, Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureActiveParameterSelection right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureActiveParameterSelection.operator ==(Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureActiveParameterSelection left, Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureActiveParameterSelection right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpRequest.operator !=(Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpRequest? left, Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpRequest? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpRequest.operator ==(Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpRequest? left, Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureHelpRequest? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.WorkspaceSymbols.WorkspaceSymbolLocation.operator !=(Nickelony.IDEKit.LanguageFeatures.WorkspaceSymbols.WorkspaceSymbolLocation? left, Nickelony.IDEKit.LanguageFeatures.WorkspaceSymbols.WorkspaceSymbolLocation? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.WorkspaceSymbols.WorkspaceSymbolLocation.operator ==(Nickelony.IDEKit.LanguageFeatures.WorkspaceSymbols.WorkspaceSymbolLocation? left, Nickelony.IDEKit.LanguageFeatures.WorkspaceSymbols.WorkspaceSymbolLocation? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.WorkspaceSymbols.WorkspaceSymbolRequest.operator !=(Nickelony.IDEKit.LanguageFeatures.WorkspaceSymbols.WorkspaceSymbolRequest? left, Nickelony.IDEKit.LanguageFeatures.WorkspaceSymbols.WorkspaceSymbolRequest? right) -> bool
+static Nickelony.IDEKit.LanguageFeatures.WorkspaceSymbols.WorkspaceSymbolRequest.operator ==(Nickelony.IDEKit.LanguageFeatures.WorkspaceSymbols.WorkspaceSymbolRequest? left, Nickelony.IDEKit.LanguageFeatures.WorkspaceSymbols.WorkspaceSymbolRequest? right) -> bool
+virtual Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionDiscriminator.EqualityContract.get -> System.Type!
+virtual Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionDiscriminator.Equals(Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionDiscriminator? other) -> bool
+virtual Nickelony.IDEKit.LanguageFeatures.Navigation.DefinitionDiscriminator.PrintMembers(System.Text.StringBuilder! builder) -> bool
+~override Nickelony.IDEKit.LanguageFeatures.Completion.CompletionTextEdit.Equals(object obj) -> bool
+~override Nickelony.IDEKit.LanguageFeatures.Completion.CompletionTextEdit.ToString() -> string
+~override Nickelony.IDEKit.LanguageFeatures.SignatureHelp.SignatureActiveParameterSelection.Equals(object obj) -> bool

@@ -1,5 +1,12 @@
 global using Microsoft.Extensions.Logging;
 global using Microsoft.Extensions.Logging.Abstractions;
-global using Nickelony.LanguageServer.Abstractions;
+global using Nickelony.IDEKit.Core.Callbacks;
+global using Nickelony.IDEKit.Core.Paths;
+global using Nickelony.IDEKit.FileWatching;
+global using Nickelony.IDEKit.LanguageFeatures.CodeActions;
+global using Nickelony.IDEKit.LanguageFeatures.Editing;
+global using Nickelony.IDEKit.LanguageFeatures.Formatting;
+global using Nickelony.IDEKit.LanguageFeatures.Navigation;
+global using Nickelony.IDEKit.LanguageFeatures.SemanticTokens;
 global using Nickelony.LanguageServer.Client;
-global using Nickelony.LanguageServer.Protocol;
+global using Nickelony.LanguageServer.Provider.Abstractions;

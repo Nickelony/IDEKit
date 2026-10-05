@@ -9,29 +9,52 @@ public sealed partial class WorkspaceDocumentStoreTests
 	{
 		var fileSystem = new FakeFileSystem("content", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions)).Snapshot!;
+
+		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
 		string destinationPath = TestPath("renamed.lua");
 
-		WorkspaceDocumentRenameResult notFound = await store.RenameAsync(new WorkspaceDocumentRenameRequest(
-			new(new WorkspaceDocumentKey(Guid.NewGuid()), TestPath("absent.lua"), 0),
-			initial.OnDiskStamp,
-			destinationPath));
+		WorkspaceDocumentRenameResult notFound = await store.RenameAsync(
+			new WorkspaceDocumentRenameRequest(
+				new(new WorkspaceDocumentKey(Guid.NewGuid()), TestPath("absent.lua"), 0),
+				initial.OnDiskStamp,
+				destinationPath
+			),
+
+			TestContext.CancellationToken
+		);
+
 		Assert.AreEqual(WorkspaceDocumentRenameOutcome.DocumentNotFound, notFound.Outcome);
 
-		WorkspaceDocumentRenameResult staleInstance = await store.RenameAsync(new WorkspaceDocumentRenameRequest(
-			new(new WorkspaceDocumentKey(Guid.NewGuid()), initial.DocumentId, initial.Version),
-			initial.OnDiskStamp,
-			destinationPath));
+		WorkspaceDocumentRenameResult staleInstance = await store.RenameAsync(
+			new WorkspaceDocumentRenameRequest(
+				new(new WorkspaceDocumentKey(Guid.NewGuid()), initial.DocumentId, initial.Version),
+				initial.OnDiskStamp,
+				destinationPath
+			),
+
+			TestContext.CancellationToken
+		);
+
 		Assert.AreEqual(WorkspaceDocumentRenameOutcome.StaleDocumentInstance, staleInstance.Outcome);
 
-		WorkspaceDocumentRenameResult staleVersion = await store.RenameAsync(new WorkspaceDocumentRenameRequest(
-			new(initial.DocumentKey, initial.DocumentId, initial.Version + 1),
-			initial.OnDiskStamp,
-			destinationPath));
+		WorkspaceDocumentRenameResult staleVersion = await store.RenameAsync(
+			new WorkspaceDocumentRenameRequest(
+				new(initial.DocumentKey, initial.DocumentId, initial.Version + 1),
+				initial.OnDiskStamp,
+				destinationPath
+			),
+
+			TestContext.CancellationToken
+		);
+
 		Assert.AreEqual(WorkspaceDocumentRenameOutcome.StaleDocument, staleVersion.Outcome);
 
 		Assert.IsTrue(store.TryGetSnapshot(initial.DocumentId, out _));
-		Assert.AreEqual(WorkspaceDocumentOpenOutcome.Opened, (await store.OpenAsync(destinationPath, s_openOptions)).Outcome);
+
+		Assert.AreEqual(
+			WorkspaceDocumentOpenOutcome.Opened,
+			(await store.OpenAsync(destinationPath, s_openOptions, TestContext.CancellationToken)).Outcome
+		);
 	}
 
 	[TestMethod]
@@ -39,25 +62,44 @@ public sealed partial class WorkspaceDocumentStoreTests
 	{
 		var fileSystem = new FakeFileSystem("content", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions)).Snapshot!;
+
+		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
 		string destinationPath = TestPath("copy.lua");
 
-		WorkspaceDocumentSaveAsResult notFound = await store.SaveAsAsync(new WorkspaceDocumentSaveAsRequest(
-			new(new WorkspaceDocumentKey(Guid.NewGuid()), TestPath("absent.lua"), 0),
-			initial.OnDiskStamp,
-			destinationPath));
+		WorkspaceDocumentSaveAsResult notFound = await store.SaveAsAsync(
+			new WorkspaceDocumentSaveAsRequest(
+				new(new WorkspaceDocumentKey(Guid.NewGuid()), TestPath("absent.lua"), 0),
+				initial.OnDiskStamp,
+				destinationPath
+			),
+
+			TestContext.CancellationToken
+		);
+
 		Assert.AreEqual(WorkspaceDocumentSaveAsOutcome.DocumentNotFound, notFound.Outcome);
 
-		WorkspaceDocumentSaveAsResult staleInstance = await store.SaveAsAsync(new WorkspaceDocumentSaveAsRequest(
-			new(new WorkspaceDocumentKey(Guid.NewGuid()), initial.DocumentId, initial.Version),
-			initial.OnDiskStamp,
-			destinationPath));
+		WorkspaceDocumentSaveAsResult staleInstance = await store.SaveAsAsync(
+			new WorkspaceDocumentSaveAsRequest(
+				new(new WorkspaceDocumentKey(Guid.NewGuid()), initial.DocumentId, initial.Version),
+				initial.OnDiskStamp,
+				destinationPath
+			),
+
+			TestContext.CancellationToken
+		);
+
 		Assert.AreEqual(WorkspaceDocumentSaveAsOutcome.StaleDocumentInstance, staleInstance.Outcome);
 
-		WorkspaceDocumentSaveAsResult staleVersion = await store.SaveAsAsync(new WorkspaceDocumentSaveAsRequest(
-			new(initial.DocumentKey, initial.DocumentId, initial.Version + 1),
-			initial.OnDiskStamp,
-			destinationPath));
+		WorkspaceDocumentSaveAsResult staleVersion = await store.SaveAsAsync(
+			new WorkspaceDocumentSaveAsRequest(
+				new(initial.DocumentKey, initial.DocumentId, initial.Version + 1),
+				initial.OnDiskStamp,
+				destinationPath
+			),
+
+			TestContext.CancellationToken
+		);
+
 		Assert.AreEqual(WorkspaceDocumentSaveAsOutcome.StaleDocument, staleVersion.Outcome);
 
 		Assert.IsTrue(store.TryGetSnapshot(initial.DocumentId, out _));
@@ -69,21 +111,32 @@ public sealed partial class WorkspaceDocumentStoreTests
 	{
 		var fileSystem = new FakeFileSystem("content", s_defaultFormat);
 		await using var store = new WorkspaceDocumentStore(fileSystem);
-		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions)).Snapshot!;
 
-		WorkspaceDocumentDeleteResult notFound = await store.DeleteAsync(new WorkspaceDocumentDeleteRequest(
-			new(new WorkspaceDocumentKey(Guid.NewGuid()), TestPath("absent.lua"), 0),
-			initial.OnDiskStamp));
+		WorkspaceDocumentSnapshot initial = (await store.OpenAsync(TestPath("script.lua"), s_openOptions, TestContext.CancellationToken)).Snapshot!;
+
+		WorkspaceDocumentDeleteResult notFound = await store.DeleteAsync(
+			new WorkspaceDocumentDeleteRequest(new(new WorkspaceDocumentKey(Guid.NewGuid()), TestPath("absent.lua"), 0), initial.OnDiskStamp),
+			TestContext.CancellationToken
+		);
+
 		Assert.AreEqual(WorkspaceDocumentDeleteOutcome.DocumentNotFound, notFound.Outcome);
 
-		WorkspaceDocumentDeleteResult staleInstance = await store.DeleteAsync(new WorkspaceDocumentDeleteRequest(
-			new(new WorkspaceDocumentKey(Guid.NewGuid()), initial.DocumentId, initial.Version),
-			initial.OnDiskStamp));
+		WorkspaceDocumentDeleteResult staleInstance = await store.DeleteAsync(
+			new WorkspaceDocumentDeleteRequest(
+				new(new WorkspaceDocumentKey(Guid.NewGuid()), initial.DocumentId, initial.Version),
+				initial.OnDiskStamp
+			),
+
+			TestContext.CancellationToken
+		);
+
 		Assert.AreEqual(WorkspaceDocumentDeleteOutcome.StaleDocumentInstance, staleInstance.Outcome);
 
-		WorkspaceDocumentDeleteResult staleVersion = await store.DeleteAsync(new WorkspaceDocumentDeleteRequest(
-			new(initial.DocumentKey, initial.DocumentId, initial.Version + 1),
-			initial.OnDiskStamp));
+		WorkspaceDocumentDeleteResult staleVersion = await store.DeleteAsync(
+			new WorkspaceDocumentDeleteRequest(new(initial.DocumentKey, initial.DocumentId, initial.Version + 1), initial.OnDiskStamp),
+			TestContext.CancellationToken
+		);
+
 		Assert.AreEqual(WorkspaceDocumentDeleteOutcome.StaleDocument, staleVersion.Outcome);
 
 		Assert.IsTrue(store.TryGetSnapshot(initial.DocumentId, out _));

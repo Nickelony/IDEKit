@@ -17,7 +17,8 @@ public sealed class CompletionTextEditPayloadJsonConverterTests
 			    "end": { "line": 2, "character": 5 }
 			  }
 			}
-			""");
+			"""
+		);
 
 		Assert.IsInstanceOfType<CompletionRangeTextEditPayload>(payload);
 
@@ -44,7 +45,8 @@ public sealed class CompletionTextEditPayloadJsonConverterTests
 			    "end": { "line": 0, "character": 4 }
 			  }
 			}
-			""");
+			"""
+		);
 
 		Assert.IsInstanceOfType<CompletionInsertReplaceTextEditPayload>(payload);
 
@@ -66,7 +68,8 @@ public sealed class CompletionTextEditPayloadJsonConverterTests
 			    "end": { "line": 0, "character": 1 }
 			  }
 			}
-			""");
+			"""
+		);
 
 		Assert.IsInstanceOfType<CompletionRangeTextEditPayload>(payload);
 		Assert.IsNull(payload.NewText);
@@ -79,109 +82,122 @@ public sealed class CompletionTextEditPayloadJsonConverterTests
 	[TestMethod]
 	public void Deserialize_RangeCombinedWithInsert_Throws()
 	{
-		Assert.ThrowsExactly<JsonException>(() => JsonSerializer.Deserialize<CompletionTextEditPayload>(
-			"""
-			{
-			  "newText": "name",
-			  "range": {
-			    "start": { "line": 0, "character": 0 },
-			    "end": { "line": 0, "character": 1 }
-			  },
-			  "insert": {
-			    "start": { "line": 0, "character": 0 },
-			    "end": { "line": 0, "character": 0 }
-			  }
-			}
-			"""));
+		Assert.ThrowsExactly<JsonException>(() =>
+			JsonSerializer.Deserialize<CompletionTextEditPayload>(
+				"""
+				{
+				  "newText": "name",
+				  "range": {
+				    "start": { "line": 0, "character": 0 },
+				    "end": { "line": 0, "character": 1 }
+				  },
+				  "insert": {
+				    "start": { "line": 0, "character": 0 },
+				    "end": { "line": 0, "character": 0 }
+				  }
+				}
+				"""
+			)
+		);
 	}
 
 	[TestMethod]
 	public void Deserialize_RangeCombinedWithReplace_Throws()
 	{
-		Assert.ThrowsExactly<JsonException>(() => JsonSerializer.Deserialize<CompletionTextEditPayload>(
-			"""
-			{
-			  "newText": "name",
-			  "range": {
-			    "start": { "line": 0, "character": 0 },
-			    "end": { "line": 0, "character": 1 }
-			  },
-			  "replace": {
-			    "start": { "line": 0, "character": 0 },
-			    "end": { "line": 0, "character": 4 }
-			  }
-			}
-			"""));
+		Assert.ThrowsExactly<JsonException>(() =>
+			JsonSerializer.Deserialize<CompletionTextEditPayload>(
+				"""
+				{
+				  "newText": "name",
+				  "range": {
+				    "start": { "line": 0, "character": 0 },
+				    "end": { "line": 0, "character": 1 }
+				  },
+				  "replace": {
+				    "start": { "line": 0, "character": 0 },
+				    "end": { "line": 0, "character": 4 }
+				  }
+				}
+				"""
+			)
+		);
 	}
 
 	[TestMethod]
 	public void Deserialize_InsertWithoutReplace_Throws()
 	{
-		Assert.ThrowsExactly<JsonException>(() => JsonSerializer.Deserialize<CompletionTextEditPayload>(
-			"""
-			{
-			  "newText": "name",
-			  "insert": {
-			    "start": { "line": 0, "character": 0 },
-			    "end": { "line": 0, "character": 0 }
-			  }
-			}
-			"""));
+		Assert.ThrowsExactly<JsonException>(() =>
+			JsonSerializer.Deserialize<CompletionTextEditPayload>(
+				"""
+				{
+				  "newText": "name",
+				  "insert": {
+				    "start": { "line": 0, "character": 0 },
+				    "end": { "line": 0, "character": 0 }
+				  }
+				}
+				"""
+			)
+		);
 	}
 
 	[TestMethod]
 	public void Deserialize_ReplaceWithoutInsert_Throws()
 	{
-		Assert.ThrowsExactly<JsonException>(() => JsonSerializer.Deserialize<CompletionTextEditPayload>(
-			"""
-			{
-			  "newText": "name",
-			  "replace": {
-			    "start": { "line": 0, "character": 0 },
-			    "end": { "line": 0, "character": 4 }
-			  }
-			}
-			"""));
+		Assert.ThrowsExactly<JsonException>(() =>
+			JsonSerializer.Deserialize<CompletionTextEditPayload>(
+				"""
+				{
+				  "newText": "name",
+				  "replace": {
+				    "start": { "line": 0, "character": 0 },
+				    "end": { "line": 0, "character": 4 }
+				  }
+				}
+				"""
+			)
+		);
 	}
 
 	[TestMethod]
-	public void Deserialize_WithoutAnyShape_Throws()
-	{
-		Assert.ThrowsExactly<JsonException>(() => JsonSerializer.Deserialize<CompletionTextEditPayload>(
-			"""{ "newText": "name" }"""));
-	}
+	public void Deserialize_WithoutAnyShape_Throws() =>
+		Assert.ThrowsExactly<JsonException>(() => JsonSerializer.Deserialize<CompletionTextEditPayload>("""{ "newText": "name" }"""));
 
 	[TestMethod]
-	public void Deserialize_NonObjectShape_Throws()
-	{
+	public void Deserialize_NonObjectShape_Throws() =>
 		Assert.ThrowsExactly<JsonException>(() => JsonSerializer.Deserialize<CompletionTextEditPayload>("5"));
-	}
 
 	[TestMethod]
 	public void Deserialize_NullRange_Throws()
 	{
-		Assert.ThrowsExactly<JsonException>(() => JsonSerializer.Deserialize<CompletionTextEditPayload>(
-			"""
-			{
-			  "newText": "name",
-			  "range": null
-			}
-			"""));
+		Assert.ThrowsExactly<JsonException>(() =>
+			JsonSerializer.Deserialize<CompletionTextEditPayload>(
+				"""
+				{
+				  "newText": "name",
+				  "range": null
+				}
+				"""
+			)
+		);
 	}
 
 	[TestMethod]
 	public void Deserialize_NonStringNewText_Throws()
 	{
-		Assert.ThrowsExactly<JsonException>(() => JsonSerializer.Deserialize<CompletionTextEditPayload>(
-			"""
-			{
-			  "newText": 5,
-			  "range": {
-			    "start": { "line": 0, "character": 0 },
-			    "end": { "line": 0, "character": 1 }
-			  }
-			}
-			"""));
+		Assert.ThrowsExactly<JsonException>(() =>
+			JsonSerializer.Deserialize<CompletionTextEditPayload>(
+				"""
+				{
+				  "newText": 5,
+				  "range": {
+				    "start": { "line": 0, "character": 0 },
+				    "end": { "line": 0, "character": 1 }
+				  }
+				}
+				"""
+			)
+		);
 	}
 
 	[TestMethod]
@@ -197,7 +213,8 @@ public sealed class CompletionTextEditPayloadJsonConverterTests
 			    "end": { "line": 0, "character": 1 }
 			  }
 			}
-			""");
+			"""
+		);
 
 		Assert.IsInstanceOfType<CompletionRangeTextEditPayload>(payload);
 	}
@@ -205,30 +222,29 @@ public sealed class CompletionTextEditPayloadJsonConverterTests
 	[TestMethod]
 	public void Serialize_RangeTextEdit_WritesClassicShape()
 	{
-		string json = JsonSerializer.Serialize<CompletionTextEditPayload>(new CompletionRangeTextEditPayload
-		{
-			NewText = "name",
-			Range = new ProtocolRangePayload(new ProtocolPosition(2, 1), new ProtocolPosition(2, 5))
-		});
+		string json = JsonSerializer.Serialize<CompletionTextEditPayload>(
+			new CompletionRangeTextEditPayload { NewText = "name", Range = new RangePayload(new PositionPayload(2, 1), new PositionPayload(2, 5)) }
+		);
 
-		Assert.AreEqual(
-			"""{"newText":"name","range":{"start":{"line":2,"character":1},"end":{"line":2,"character":5}}}""",
-			json);
+		Assert.AreEqual("""{"newText":"name","range":{"start":{"line":2,"character":1},"end":{"line":2,"character":5}}}""", json);
 	}
 
 	[TestMethod]
 	public void Serialize_InsertReplaceTextEdit_WritesInsertReplaceShape()
 	{
-		string json = JsonSerializer.Serialize<CompletionTextEditPayload>(new CompletionInsertReplaceTextEditPayload
-		{
-			NewText = "name",
-			Insert = new ProtocolRangePayload(new ProtocolPosition(0, 0), new ProtocolPosition(0, 0)),
-			Replace = new ProtocolRangePayload(new ProtocolPosition(0, 0), new ProtocolPosition(0, 4))
-		});
+		string json = JsonSerializer.Serialize<CompletionTextEditPayload>(
+			new CompletionInsertReplaceTextEditPayload
+			{
+				NewText = "name",
+				Insert = new RangePayload(new PositionPayload(0, 0), new PositionPayload(0, 0)),
+				Replace = new RangePayload(new PositionPayload(0, 0), new PositionPayload(0, 4)),
+			}
+		);
 
 		Assert.AreEqual(
 			"""{"newText":"name","insert":{"start":{"line":0,"character":0},"end":{"line":0,"character":0}},"replace":{"start":{"line":0,"character":0},"end":{"line":0,"character":4}}}""",
-			json);
+			json
+		);
 	}
 
 	[TestMethod]
@@ -239,7 +255,7 @@ public sealed class CompletionTextEditPayloadJsonConverterTests
 		var rangeEdit = new CompletionRangeTextEditPayload
 		{
 			NewText = "name",
-			Range = new ProtocolRangePayload(new ProtocolPosition(0, 0), new ProtocolPosition(0, 1))
+			Range = new RangePayload(new PositionPayload(0, 0), new PositionPayload(0, 1)),
 		};
 
 		string derivedJson = JsonSerializer.Serialize(rangeEdit);
@@ -248,5 +264,67 @@ public sealed class CompletionTextEditPayloadJsonConverterTests
 
 		Assert.IsInstanceOfType<CompletionRangeTextEditPayload>(roundTripped);
 		Assert.AreEqual(rangeEdit, roundTripped);
+	}
+
+	[TestMethod]
+	public void Serialize_InsertReplaceShape_OmitsClassicRangeAndRoundTrips()
+	{
+		CompletionTextEditPayload? payload = JsonSerializer.Deserialize<CompletionTextEditPayload>(
+			"""
+			{
+			  "newText": "name",
+			  "insert": {
+			    "start": { "line": 0, "character": 0 },
+			    "end": { "line": 0, "character": 0 }
+			  },
+			  "replace": {
+			    "start": { "line": 0, "character": 0 },
+			    "end": { "line": 0, "character": 4 }
+			  }
+			}
+			"""
+		);
+
+		Assert.IsInstanceOfType<CompletionInsertReplaceTextEditPayload>(payload);
+
+		var insertReplacePayload = (CompletionInsertReplaceTextEditPayload)payload;
+
+		Assert.AreEqual("name", insertReplacePayload.NewText);
+		Assert.AreEqual(4, insertReplacePayload.Replace.End.Character);
+
+		string json = JsonSerializer.Serialize(payload);
+
+		Assert.IsFalse(json.Contains("\"range\"", StringComparison.Ordinal));
+		Assert.IsTrue(json.Contains("\"insert\"", StringComparison.Ordinal));
+		Assert.IsTrue(json.Contains("\"replace\"", StringComparison.Ordinal));
+	}
+
+	[TestMethod]
+	public void Serialize_ClassicRangeShape_OmitsInsertAndReplace()
+	{
+		CompletionTextEditPayload? payload = JsonSerializer.Deserialize<CompletionTextEditPayload>(
+			"""
+			{
+			  "newText": "name",
+			  "range": {
+			    "start": { "line": 2, "character": 1 },
+			    "end": { "line": 2, "character": 5 }
+			  }
+			}
+			"""
+		);
+
+		Assert.IsInstanceOfType<CompletionRangeTextEditPayload>(payload);
+
+		var rangePayload = (CompletionRangeTextEditPayload)payload;
+
+		Assert.AreEqual("name", rangePayload.NewText);
+		Assert.AreEqual(5, rangePayload.Range.End.Character);
+
+		string json = JsonSerializer.Serialize(payload);
+
+		Assert.IsTrue(json.Contains("\"range\"", StringComparison.Ordinal));
+		Assert.IsFalse(json.Contains("\"insert\"", StringComparison.Ordinal));
+		Assert.IsFalse(json.Contains("\"replace\"", StringComparison.Ordinal));
 	}
 }

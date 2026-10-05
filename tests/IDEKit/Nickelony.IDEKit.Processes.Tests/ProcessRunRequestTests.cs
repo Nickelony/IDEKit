@@ -2,73 +2,36 @@ using System.Text;
 
 namespace Nickelony.IDEKit.Processes.Tests;
 
-/// <summary>
-/// Verifies the validation, collection snapshots, equality, and defaults of <see cref="ProcessRunRequest"/>.
-/// </summary>
+/// <summary>Verifies the validation, collection snapshots, equality, and defaults of <see cref="ProcessRunRequest"/>.</summary>
 [TestClass]
-public class ProcessRunRequestTests
+public sealed class ProcessRunRequestTests
 {
 	[TestMethod]
-	public void Timeout_NegativeValue_IsRejected()
+	[DataRow(-5L, DisplayName = "A negative timeout")]
+	[DataRow(2_592_000_000L, DisplayName = "A timeout beyond Int32 milliseconds")]
+	public void Timeout_OutOfRange_IsRejected(long milliseconds)
 	{
-		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => new ProcessRunRequest
-		{
-			FileName = "tool.exe",
-			Timeout = TimeSpan.FromMilliseconds(-5)
-		});
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() =>
+			new ProcessRunRequest { FileName = "tool.exe", Timeout = TimeSpan.FromMilliseconds(milliseconds) }
+		);
 	}
 
 	[TestMethod]
-	public void Timeout_ExceedingInt32Milliseconds_IsRejected()
+	[DataRow(int.MaxValue, DisplayName = "The Int32 milliseconds maximum")]
+	[DataRow(-1, DisplayName = "The infinite timeout")]
+	[DataRow(0, DisplayName = "Zero")]
+	public void Timeout_AcceptedValue_IsKept(int milliseconds)
 	{
-		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => new ProcessRunRequest
-		{
-			FileName = "tool.exe",
-			Timeout = TimeSpan.FromDays(30)
-		});
-	}
+		var timeout = TimeSpan.FromMilliseconds(milliseconds);
+		var request = new ProcessRunRequest { FileName = "tool.exe", Timeout = timeout };
 
-	[TestMethod]
-	public void Timeout_Int32MillisecondsMaximum_IsAccepted()
-	{
-		var request = new ProcessRunRequest
-		{
-			FileName = "tool.exe",
-			Timeout = TimeSpan.FromMilliseconds(int.MaxValue)
-		};
-
-		Assert.AreEqual(TimeSpan.FromMilliseconds(int.MaxValue), request.Timeout);
-	}
-
-	[TestMethod]
-	public void Timeout_Infinite_IsAccepted()
-	{
-		var request = new ProcessRunRequest
-		{
-			FileName = "tool.exe",
-			Timeout = Timeout.InfiniteTimeSpan
-		};
-
-		Assert.AreEqual(Timeout.InfiniteTimeSpan, request.Timeout);
-	}
-
-	[TestMethod]
-	public void Timeout_Zero_IsAccepted()
-	{
-		var request = new ProcessRunRequest
-		{
-			FileName = "tool.exe",
-			Timeout = TimeSpan.Zero
-		};
-
-		Assert.AreEqual(TimeSpan.Zero, request.Timeout);
+		Assert.AreEqual(timeout, request.Timeout);
 	}
 
 	[TestMethod]
 	public void Timeout_Default_IsNull()
 	{
 		var request = new ProcessRunRequest { FileName = "tool.exe" };
-
 		Assert.IsNull(request.Timeout);
 	}
 
@@ -78,15 +41,14 @@ public class ProcessRunRequestTests
 		var request = new ProcessRunRequest { FileName = "tool.exe" };
 
 		Assert.AreEqual(string.Empty, request.RawArguments);
-		Assert.AreEqual(0, request.ArgumentList.Count);
-		Assert.AreEqual(0, request.EnvironmentVariables.Count);
+		Assert.IsEmpty(request.ArgumentList);
+		Assert.IsEmpty(request.EnvironmentVariables);
 	}
 
 	[TestMethod]
 	public void RawArguments_Null_IsTreatedAsEmpty()
 	{
 		var request = new ProcessRunRequest { FileName = "tool.exe", RawArguments = null! };
-
 		Assert.AreEqual(string.Empty, request.RawArguments);
 	}
 
@@ -99,7 +61,7 @@ public class ProcessRunRequestTests
 		source.Add("third");
 		source[0] = "changed";
 
-		CollectionAssert.AreEqual(new[] { "first", "second" }, request.ArgumentList.ToArray());
+		Assert.AreSequenceEqual(["first", "second"], [.. request.ArgumentList]);
 	}
 
 	[TestMethod]
@@ -111,33 +73,22 @@ public class ProcessRunRequestTests
 		source["KEY"] = "changed";
 		source["OTHER"] = "added";
 
-		Assert.AreEqual(1, request.EnvironmentVariables.Count);
+		Assert.HasCount(1, request.EnvironmentVariables);
 		Assert.AreEqual("value", request.EnvironmentVariables["KEY"]);
 	}
 
 	[TestMethod]
 	[DataRow("")]
 	[DataRow(" ")]
-	public void FileName_Blank_IsRejected(string fileName)
-	{
+	public void FileName_Blank_IsRejected(string fileName) =>
 		Assert.ThrowsExactly<ArgumentException>(() => new ProcessRunRequest { FileName = fileName });
-	}
 
 	[TestMethod]
-	public void FileName_Null_IsRejected()
-	{
-		Assert.ThrowsExactly<ArgumentNullException>(() => new ProcessRunRequest { FileName = null! });
-	}
+	public void FileName_Null_IsRejected() => Assert.ThrowsExactly<ArgumentNullException>(() => new ProcessRunRequest { FileName = null! });
 
 	[TestMethod]
-	public void ArgumentList_NullEntry_IsRejected()
-	{
-		Assert.ThrowsExactly<ArgumentException>(() => new ProcessRunRequest
-		{
-			FileName = "tool.exe",
-			ArgumentList = ["first", null!],
-		});
-	}
+	public void ArgumentList_NullEntry_IsRejected() =>
+		Assert.ThrowsExactly<ArgumentException>(() => new ProcessRunRequest { FileName = "tool.exe", ArgumentList = ["first", null!] });
 
 	[TestMethod]
 	public void CollectionProperties_Null_AreTreatedAsEmpty()
@@ -149,8 +100,8 @@ public class ProcessRunRequestTests
 			EnvironmentVariables = null!,
 		};
 
-		Assert.AreEqual(0, request.ArgumentList.Count);
-		Assert.AreEqual(0, request.EnvironmentVariables.Count);
+		Assert.IsEmpty(request.ArgumentList);
+		Assert.IsEmpty(request.EnvironmentVariables);
 	}
 
 	[TestMethod]
@@ -171,6 +122,7 @@ public class ProcessRunRequestTests
 			ArgumentList = ["-flag"],
 			EnvironmentVariables = new Dictionary<string, string> { ["KEY"] = "value" },
 		};
+
 		var second = new ProcessRunRequest
 		{
 			FileName = "tool.exe",
@@ -200,6 +152,7 @@ public class ProcessRunRequestTests
 			FileName = "tool.exe",
 			EnvironmentVariables = new Dictionary<string, string> { ["FIRST"] = "1", ["SECOND"] = "2" },
 		};
+
 		var second = new ProcessRunRequest
 		{
 			FileName = "tool.exe",
@@ -235,15 +188,18 @@ public class ProcessRunRequestTests
 	public void Equality_DifferentOutputEncodingDecoderFallback_IsRejected()
 	{
 		ProcessRunRequest first = CreateRequestWithEncodings(Encoding.UTF8, Encoding.UTF8);
+
 		ProcessRunRequest second = CreateRequestWithEncodings(
 			Encoding.GetEncoding(Encoding.UTF8.CodePage, EncoderFallback.ReplacementFallback, new DecoderReplacementFallback("[invalid]")),
-			Encoding.UTF8);
+			Encoding.UTF8
+		);
 
 		Assert.AreNotEqual(first, second);
 	}
 
 	private static ProcessRunRequest CreateRequestWithEncodings(Encoding outputEncoding, Encoding errorEncoding)
-		=> new()
+	{
+		return new()
 		{
 			FileName = "tool.exe",
 			RedirectStandardOutput = true,
@@ -251,4 +207,5 @@ public class ProcessRunRequestTests
 			StandardOutputEncoding = outputEncoding,
 			StandardErrorEncoding = errorEncoding,
 		};
+	}
 }

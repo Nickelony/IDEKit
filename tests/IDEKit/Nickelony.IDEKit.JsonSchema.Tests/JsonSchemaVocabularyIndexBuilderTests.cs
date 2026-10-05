@@ -1,82 +1,83 @@
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json.Schema;
-using System.Text;
+using System.Text.Json;
 
 namespace Nickelony.IDEKit.JsonSchema.Tests;
 
 [TestClass]
 public sealed class JsonSchemaVocabularyIndexBuilderTests
 {
-	private static readonly JsonSchemaVocabularyIndexBuilder s_builder = new();
-
 	[TestMethod]
 	public void Build_ValidSchemaWithoutProperties_ReturnsEmptyIndex()
 	{
-		JsonSchemaVocabularyIndexResult result = s_builder.Build(JSchema.Parse("{ \"type\": \"object\" }"));
+		JsonSchemaVocabularyIndexResult result = BuildFrom("{ \"type\": \"object\" }");
 
 		Assert.IsTrue(result.Succeeded);
 		Assert.IsNotNull(result.Index);
-		Assert.AreEqual(0, result.Index.Properties.Count);
-		Assert.AreEqual(0, result.Index.Constants.Count);
-		Assert.AreEqual(0, result.Diagnostics.Count);
+		Assert.IsEmpty(result.Index.Properties);
+		Assert.IsEmpty(result.Index.Constants);
+		Assert.IsEmpty(result.Warnings);
+		Assert.IsNull(result.Failure);
 	}
 
 	[TestMethod]
 	public void Build_WithDefinitionsAndReferences_IncludesReferencedAndUnreferencedContent()
 	{
-		JsonSchemaVocabularyIndexResult result = s_builder.Build(JSchema.Parse(DefsAndRefsFixture));
+		JsonSchemaVocabularyIndexResult result = BuildFrom(DefsAndRefsFixture);
 
 		Assert.IsTrue(result.Succeeded);
+		Assert.IsEmpty(result.Warnings);
 		JsonSchemaVocabularyIndex index = result.Index!;
 
 		// The unreferenced $defs entry is included even though no property references it.
-		Assert.IsTrue(index.Properties.Any(p => p.Name == "only_in_defs"));
+		Assert.Contains(p => p.Name == "only_in_defs", index.Properties);
 
-		// The path schema is reached through a $ref from the root and the legacy definition.
-		Assert.IsTrue(index.Properties.Any(p => p.Name == "file"));
-		Assert.IsTrue(index.Properties.Any(p => p.Name == "file_type"));
+		// The path schema is reached through a $ref from the root and the definitions entry.
+		Assert.Contains(p => p.Name == "file", index.Properties);
+		Assert.Contains(p => p.Name == "file_type", index.Properties);
 
-		// Legacy definitions content is included as well.
-		Assert.IsTrue(index.Properties.Any(p => p.Name == "title_name"));
-		Assert.IsTrue(index.Properties.Any(p => p.Name == "path"));
+		// Content under the definitions keyword is included as well.
+		Assert.Contains(p => p.Name == "title_name", index.Properties);
+		Assert.Contains(p => p.Name == "path", index.Properties);
 
 		// Enum values inside a $defs definition are included.
-		Assert.IsTrue(index.Constants.Contains("level"));
-		Assert.IsTrue(index.Constants.Contains("cutscene"));
+		Assert.Contains("level", index.Constants);
+		Assert.Contains("cutscene", index.Constants);
 	}
 
 	[TestMethod]
 	public void Build_WithUnreferencedDefs_IncludesDefinitionProperties()
 	{
-		JsonSchemaVocabularyIndexResult result = s_builder.Build(JSchema.Parse(DefsOnlyFixture));
+		JsonSchemaVocabularyIndexResult result = BuildFrom(DefsOnlyFixture);
 
 		Assert.IsTrue(result.Succeeded);
+
 		JsonSchemaVocabularyIndex index = result.Index!;
 
-		Assert.IsTrue(index.Properties.Any(p => p.Name == "root_prop"));
-		Assert.IsTrue(index.Properties.Any(p => p.Name == "item_name"));
+		Assert.Contains(p => p.Name == "root_prop", index.Properties);
+		Assert.Contains(p => p.Name == "item_name", index.Properties);
 	}
 
 	[TestMethod]
 	public void Build_WithDuplicatePropertiesAndConstants_DeduplicatesEntries()
 	{
-		JsonSchemaVocabularyIndexResult result = s_builder.Build(JSchema.Parse(DuplicateKeywordsFixture));
+		JsonSchemaVocabularyIndexResult result = BuildFrom(DuplicateKeywordsFixture);
 
 		Assert.IsTrue(result.Succeeded);
+
 		JsonSchemaVocabularyIndex index = result.Index!;
 
 		// Duplicate property names and enum values are each included only once.
-		Assert.AreEqual(1, index.Properties.Count(p => p.Name == "shared"));
-		Assert.AreEqual(1, index.Constants.Count(name => name == "ENGINE_1"));
+		Assert.ContainsSingle(p => p.Name == "shared", index.Properties);
+		Assert.ContainsSingle(name => name == "ENGINE_1", index.Constants);
 		Assert.AreEqual(2, index.Constants.Count(name => name.StartsWith("ENGINE_", StringComparison.Ordinal)));
 	}
 
 	[TestMethod]
 	public void Build_WithDescriptions_IncludesPropertyDescriptions()
 	{
-		JsonSchemaVocabularyIndexResult result = s_builder.Build(JSchema.Parse(DescriptionsFixture));
+		JsonSchemaVocabularyIndexResult result = BuildFrom(DescriptionsFixture);
 
 		Assert.IsTrue(result.Succeeded);
+
 		JsonSchemaVocabularyIndex index = result.Index!;
 
 		Assert.AreEqual("Human-readable level name.", index.Properties.First(p => p.Name == "name").Description);
@@ -86,149 +87,218 @@ public sealed class JsonSchemaVocabularyIndexBuilderTests
 	[TestMethod]
 	public void Build_RecursiveSchema_IndexesEachPropertyOnce()
 	{
-		JsonSchemaVocabularyIndexResult result = s_builder.Build(JSchema.Parse(RecursiveFixture));
+		JsonSchemaVocabularyIndexResult result = BuildFrom(RecursiveFixture);
 
 		Assert.IsTrue(result.Succeeded);
+		Assert.IsEmpty(result.Warnings);
+
 		JsonSchemaVocabularyIndex index = result.Index!;
 
-		Assert.AreEqual(1, index.Properties.Count(p => p.Name == "value"));
-		Assert.AreEqual(1, index.Properties.Count(p => p.Name == "children"));
+		Assert.ContainsSingle(p => p.Name == "value", index.Properties);
+		Assert.ContainsSingle(p => p.Name == "children", index.Properties);
 	}
 
 	[TestMethod]
 	public void Build_WithArrayItems_TraversesNestedSchemas()
 	{
-		JsonSchemaVocabularyIndexResult result = s_builder.Build(JSchema.Parse(ItemsFixture));
+		JsonSchemaVocabularyIndexResult result = BuildFrom(ItemsFixture);
 
 		Assert.IsTrue(result.Succeeded);
+
 		JsonSchemaVocabularyIndex index = result.Index!;
 
 		// Array items can reference definitions or contain inline nested schemas.
-		Assert.IsTrue(index.Properties.Any(p => p.Name == "levels"));
-		Assert.IsTrue(index.Properties.Any(p => p.Name == "title_name"));
-		Assert.IsTrue(index.Properties.Any(p => p.Name == "inline_name"));
+		Assert.Contains(p => p.Name == "levels", index.Properties);
+		Assert.Contains(p => p.Name == "title_name", index.Properties);
+		Assert.Contains(p => p.Name == "inline_name", index.Properties);
 	}
 
 	[TestMethod]
 	public void Build_WithCombinators_TraversesNestedSchemas()
 	{
-		JsonSchemaVocabularyIndexResult result = s_builder.Build(JSchema.Parse(CombinatorsFixture));
+		JsonSchemaVocabularyIndexResult result = BuildFrom(CombinatorsFixture);
 
 		Assert.IsTrue(result.Succeeded);
+
 		JsonSchemaVocabularyIndex index = result.Index!;
 
 		// Schemas nested in combinators are still indexed.
-		Assert.IsTrue(index.Properties.Any(p => p.Name == "one_of_prop"));
-		Assert.IsTrue(index.Properties.Any(p => p.Name == "any_of_prop"));
-		Assert.IsTrue(index.Properties.Any(p => p.Name == "all_of_prop"));
-		Assert.IsTrue(index.Constants.Contains("ONE_OF_VALUE"));
-		Assert.IsTrue(index.Constants.Contains("ANY_OF_VALUE"));
-		Assert.IsTrue(index.Constants.Contains("ALL_OF_VALUE"));
+		Assert.Contains(p => p.Name == "one_of_prop", index.Properties);
+		Assert.Contains(p => p.Name == "any_of_prop", index.Properties);
+		Assert.Contains(p => p.Name == "all_of_prop", index.Properties);
+		Assert.Contains("ONE_OF_VALUE", index.Constants);
+		Assert.Contains("ANY_OF_VALUE", index.Constants);
+		Assert.Contains("ALL_OF_VALUE", index.Constants);
 	}
 
 	[TestMethod]
 	public void Build_AcrossSchemaDrafts_IndexesDefinitionsAndDefs()
 	{
-		// Draft-04 schema using the legacy "definitions" section.
-		JsonSchemaVocabularyIndexResult draft04 = s_builder.Build(JSchema.Parse(Draft04Fixture));
+		// Draft-04 schema using its "definitions" section.
+		JsonSchemaVocabularyIndexResult draft04 = BuildFrom(Draft04Fixture);
 
 		Assert.IsTrue(draft04.Succeeded);
-		Assert.IsTrue(draft04.Index!.Properties.Any(p => p.Name == "legacy_name"));
-		Assert.IsTrue(draft04.Index.Constants.Contains("DRAFT04"));
+		Assert.Contains(p => p.Name == "legacy_name", draft04.Index!.Properties);
+		Assert.Contains("DRAFT04", draft04.Index.Constants);
 
 		// 2020-12 schema using the modern "$defs" section.
-		JsonSchemaVocabularyIndexResult draft2020 = s_builder.Build(JSchema.Parse(Draft2020Fixture));
+		JsonSchemaVocabularyIndexResult draft2020 = BuildFrom(Draft2020Fixture);
 
 		Assert.IsTrue(draft2020.Succeeded);
-		Assert.IsTrue(draft2020.Index!.Properties.Any(p => p.Name == "modern_name"));
-		Assert.IsTrue(draft2020.Index.Constants.Contains("DRAFT2020"));
+		Assert.Contains(p => p.Name == "modern_name", draft2020.Index!.Properties);
+		Assert.Contains("DRAFT2020", draft2020.Index.Constants);
 	}
 
 	[TestMethod]
-	public void Build_ExternalReference_IndexesResolvedContent()
+	[DataRow("https://example.com/common.json#/definitions/shared")]
+	[DataRow("common.json")]
+	[DataRow("#/definitions/missing")]
+	[DataRow("#named_anchor")]
+	[DataRow("#/x-library/01")]
+	[DataRow("#/x-library/-1")]
+	[DataRow("#/x-library/5")]
+	[DataRow("#/type/length")]
+	public void Build_UnresolvableReference_ReportsWarningAndKeepsTheRestOfTheIndex(string reference)
 	{
-		var resolver = new InMemorySchemaResolver(new Dictionary<Uri, string>
-		{
-			[new Uri("https://example.com/common.json")] = CommonSchema
-		});
+		JsonSchemaVocabularyIndexResult result = BuildFrom(
+			$$"""
+			{
+			  "x-library": [ { "properties": { "library_name": {} } } ],
+			  "type": "object",
+			  "properties": {
+			    "name": { "type": "string" },
+			    "shared": { "$ref": "{{reference}}" }
+			  }
+			}
+			"""
+		);
 
-		var settings = new JSchemaReaderSettings
-		{
-			BaseUri = new Uri("https://example.com/root.json"),
-			Resolver = resolver
-		};
-
-		using var reader = new StringReader(ExternalReferenceRootFixture);
-		JsonSchemaVocabularyIndexResult result = s_builder.Build(reader, settings);
-
+		// An unresolvable reference is a skipped value, not a failure.
 		Assert.IsTrue(result.Succeeded);
+		Assert.IsNull(result.Failure);
+
+		string warning = result.Warnings.Single();
+
+		Assert.Contains($"'{reference}'", warning);
+		Assert.Contains("'#/properties/shared'", warning);
+
 		JsonSchemaVocabularyIndex index = result.Index!;
 
-		// The resolver supplies the referenced schema, whose properties and enum values are indexed.
-		Assert.IsTrue(index.Properties.Any(p => p.Name == "file"));
-		Assert.IsTrue(index.Properties.Any(p => p.Name == "file_type"));
-		Assert.IsTrue(index.Constants.Contains("level"));
-		Assert.IsTrue(index.Constants.Contains("cutscene"));
+		Assert.Contains(p => p.Name == "name", index.Properties);
+		Assert.Contains(p => p.Name == "shared", index.Properties);
+		Assert.DoesNotContain(p => p.Name == "library_name", index.Properties);
 	}
 
 	[TestMethod]
-	public void Build_UnresolvableExternalReference_ReturnsFailureWithDiagnostics()
-	{
-		using var reader = new StringReader(ExternalReferenceRootFixture);
-		JsonSchemaVocabularyIndexResult result = s_builder.Build(reader);
-
-		Assert.IsFalse(result.Succeeded);
-		Assert.IsNull(result.Index);
-		Assert.IsTrue(result.Diagnostics.Count > 0);
-	}
-
-	[TestMethod]
-	public void Build_InvalidJson_ReturnsFailureWithDiagnostics()
+	public void Build_InvalidJson_ReturnsFailureWithTheCaughtException()
 	{
 		using var reader = new StringReader("this is not valid json");
-		JsonSchemaVocabularyIndexResult result = s_builder.Build(reader);
+
+		JsonSchemaVocabularyIndexResult result = JsonSchemaVocabularyIndexBuilder.Build(reader);
 
 		Assert.IsFalse(result.Succeeded);
 		Assert.IsNull(result.Index);
-		Assert.IsTrue(result.Diagnostics.Count > 0);
+		Assert.IsEmpty(result.Warnings);
+		Assert.IsNotNull(result.Failure);
+		Assert.IsNotEmpty(result.Failure.Message);
+		Assert.IsNotNull(result.Failure.Exception);
+		Assert.AreEqual(JsonSchemaVocabularyIndexFailureCodes.ParseFailed, result.Failure.Code);
 	}
 
 	[TestMethod]
-	public void Build_MalformedDefinitionEntry_ReportsDiagnostic()
+	public void Build_UnreadableText_ReturnsFailureWithTheCaughtException()
 	{
-		JsonSchemaVocabularyIndexResult result = s_builder.Build(JSchema.Parse(MalformedDefinitionFixture));
+		using var reader = new ThrowingReader();
 
-		Assert.IsTrue(result.Succeeded);
-
-		// The valid root property remains indexed while the build reports one diagnostic.
-		Assert.IsTrue(result.Index!.Properties.Any(p => p.Name == "name"));
-		Assert.AreEqual(1, result.Diagnostics.Count);
-	}
-
-	[TestMethod]
-	public void Build_SchemaToken_IndexesProperties()
-	{
-		JToken token = JToken.Parse(DefsOnlyFixture);
-		JsonSchemaVocabularyIndexResult result = s_builder.Build(token);
-
-		Assert.IsTrue(result.Succeeded);
-		Assert.IsTrue(result.Index!.Properties.Any(p => p.Name == "item_name"));
-	}
-
-	[TestMethod]
-	public void Build_NonSchemaToken_ReturnsFailureWithDiagnostics()
-	{
-		JsonSchemaVocabularyIndexResult result = s_builder.Build(new JValue("not a schema"));
+		JsonSchemaVocabularyIndexResult result = JsonSchemaVocabularyIndexBuilder.Build(reader);
 
 		Assert.IsFalse(result.Succeeded);
 		Assert.IsNull(result.Index);
-		Assert.IsTrue(result.Diagnostics.Count > 0);
+		Assert.IsNotNull(result.Failure);
+		Assert.IsInstanceOfType<InvalidOperationException>(result.Failure.Exception);
+		Assert.AreEqual(JsonSchemaVocabularyIndexFailureCodes.ReadFailed, result.Failure.Code);
+	}
+
+	[TestMethod]
+	public void Build_MalformedDefinitionEntry_ReportsWarning()
+	{
+		JsonSchemaVocabularyIndexResult result = BuildFrom(MalformedDefinitionFixture);
+
+		Assert.IsTrue(result.Succeeded);
+
+		// The valid root property remains indexed while the build reports one warning and no failure.
+		Assert.Contains(p => p.Name == "name", result.Index!.Properties);
+		Assert.HasCount(1, result.Warnings);
+		Assert.Contains("'#/$defs/broken'", result.Warnings[0]);
+		Assert.IsNull(result.Failure);
+	}
+
+	[TestMethod]
+	public void Build_SchemaElement_IndexesProperties()
+	{
+		using JsonDocument document = JsonDocument.Parse(DefsOnlyFixture);
+
+		JsonSchemaVocabularyIndexResult result = JsonSchemaVocabularyIndexBuilder.Build(document.RootElement);
+
+		Assert.IsTrue(result.Succeeded);
+		Assert.Contains(p => p.Name == "item_name", result.Index!.Properties);
+	}
+
+	[TestMethod]
+	[DataRow("true")]
+	[DataRow("false")]
+	public void Build_BooleanRootSchema_ReturnsEmptyIndex(string json)
+	{
+		using JsonDocument document = JsonDocument.Parse(json);
+
+		JsonSchemaVocabularyIndexResult result = JsonSchemaVocabularyIndexBuilder.Build(document.RootElement);
+
+		Assert.IsTrue(result.Succeeded);
+		Assert.IsEmpty(result.Index!.Properties);
+		Assert.IsEmpty(result.Index.Constants);
+		Assert.IsEmpty(result.Warnings);
+	}
+
+	[TestMethod]
+	[DataRow("\"not a schema\"")]
+	[DataRow("3")]
+	[DataRow("null")]
+	[DataRow("[ { \"type\": \"object\" } ]")]
+	public void Build_NonSchemaElement_ReturnsFailureWithAnExceptionThatDescribesIt(string json)
+	{
+		using JsonDocument document = JsonDocument.Parse(json);
+
+		JsonSchemaVocabularyIndexResult result = JsonSchemaVocabularyIndexBuilder.Build(document.RootElement);
+
+		Assert.IsFalse(result.Succeeded);
+		Assert.IsNull(result.Index);
+		Assert.IsEmpty(result.Warnings);
+		Assert.IsNotNull(result.Failure);
+		Assert.AreEqual(JsonSchemaVocabularyIndexFailureCodes.ParseFailed, result.Failure.Code);
+		Assert.IsInstanceOfType<JsonException>(result.Failure.Exception);
+		Assert.Contains(result.Failure.Exception.Message, result.Failure.Message);
+	}
+
+	[TestMethod]
+	public void Build_DefaultElement_ReturnsFailure()
+	{
+		JsonSchemaVocabularyIndexResult result = JsonSchemaVocabularyIndexBuilder.Build(default(JsonElement));
+
+		Assert.IsFalse(result.Succeeded);
+		Assert.IsNotNull(result.Failure);
+		Assert.AreEqual(JsonSchemaVocabularyIndexFailureCodes.ParseFailed, result.Failure.Code);
+	}
+
+	[TestMethod]
+	public void Build_NullReader_Throws()
+	{
+		Assert.ThrowsExactly<ArgumentNullException>(() => JsonSchemaVocabularyIndexBuilder.Build((TextReader)null!));
 	}
 
 	[TestMethod]
 	public void Build_DuplicatePropertyDifferentTypes_FirstOccurrenceWins()
 	{
-		JsonSchemaVocabularyIndexResult result = s_builder.Build(JSchema.Parse(DuplicatePropertyFixture));
+		JsonSchemaVocabularyIndexResult result = BuildFrom(DuplicatePropertyFixture);
 
 		Assert.IsTrue(result.Succeeded);
 		JsonSchemaVocabularyIndex index = result.Index!;
@@ -237,7 +307,7 @@ public sealed class JsonSchemaVocabularyIndexBuilderTests
 		// type and description are retained.
 		JsonSchemaVocabularyPropertyDescriptor descriptor = index.Properties.Single(p => p.Name == "shared");
 
-		Assert.AreEqual(1, index.Properties.Count(p => p.Name == "shared"));
+		Assert.ContainsSingle(p => p.Name == "shared", index.Properties);
 		Assert.AreEqual(JsonSchemaPropertyType.String, descriptor.Types.Single());
 		Assert.AreEqual("Root shared property.", descriptor.Description);
 	}
@@ -245,23 +315,24 @@ public sealed class JsonSchemaVocabularyIndexBuilderTests
 	[TestMethod]
 	public void Build_NestedProperties_AreIndexedWithoutPathInformation()
 	{
-		JsonSchemaVocabularyIndexResult result = s_builder.Build(JSchema.Parse(NestedPathFixture));
+		JsonSchemaVocabularyIndexResult result = BuildFrom(NestedPathFixture);
 
 		Assert.IsTrue(result.Succeeded);
+
 		JsonSchemaVocabularyIndex index = result.Index!;
 
 		// Nested properties are included in the flat vocabulary without their schema paths, and the
 		// container property is included as its own entry.
-		Assert.AreEqual(3, index.Properties.Count);
+		Assert.HasCount(3, index.Properties);
 		Assert.AreEqual("Root-level property.", index.Properties.Single(p => p.Name == "root_name").Description);
 		Assert.AreEqual("Nested property.", index.Properties.Single(p => p.Name == "nested_name").Description);
-		Assert.IsTrue(index.Properties.Any(p => p.Name == "child" && p.Types.Single() == JsonSchemaPropertyType.Object));
+		Assert.Contains(p => p.Name == "child" && p.Types.Single() == JsonSchemaPropertyType.Object, index.Properties);
 	}
 
 	[TestMethod]
 	public void Build_WithConstValues_IndexesStringConstantsOnly()
 	{
-		JsonSchemaVocabularyIndexResult result = s_builder.Build(JSchema.Parse(
+		JsonSchemaVocabularyIndexResult result = BuildFrom(
 			"""
 			{
 			  "type": "object",
@@ -270,19 +341,21 @@ public sealed class JsonSchemaVocabularyIndexBuilderTests
 			    "count": { "const": 3 }
 			  }
 			}
-			"""));
+			"""
+		);
 
 		Assert.IsTrue(result.Succeeded);
+
 		JsonSchemaVocabularyIndex index = result.Index!;
 
-		Assert.IsTrue(index.Constants.Contains("level"));
-		Assert.IsFalse(index.Constants.Contains("3"));
+		Assert.Contains("level", index.Constants);
+		Assert.DoesNotContain("3", index.Constants);
 	}
 
 	[TestMethod]
 	public void Build_MultiTypeUnion_ReportsTypesInEnumDeclarationOrder()
 	{
-		JsonSchemaVocabularyIndexResult result = s_builder.Build(JSchema.Parse(
+		JsonSchemaVocabularyIndexResult result = BuildFrom(
 			"""
 			{
 			  "type": "object",
@@ -290,21 +363,21 @@ public sealed class JsonSchemaVocabularyIndexBuilderTests
 			    "value": { "type": [ "null", "array", "object" ] }
 			  }
 			}
-			"""));
+			"""
+		);
 
 		Assert.IsTrue(result.Succeeded);
+
 		JsonSchemaVocabularyPropertyDescriptor descriptor = result.Index!.Properties.Single(p => p.Name == "value");
 
-		CollectionAssert.AreEqual(
-			new[] { JsonSchemaPropertyType.Object, JsonSchemaPropertyType.Array, JsonSchemaPropertyType.Null },
-			descriptor.Types.ToArray());
+		Assert.AreSequenceEqual([JsonSchemaPropertyType.Object, JsonSchemaPropertyType.Array, JsonSchemaPropertyType.Null], [.. descriptor.Types]);
 		Assert.IsFalse(descriptor.IsArrayOnly);
 	}
 
 	[TestMethod]
 	public void Build_SingleArrayType_ReportsIsArrayOnly()
 	{
-		JsonSchemaVocabularyIndexResult result = s_builder.Build(JSchema.Parse(
+		JsonSchemaVocabularyIndexResult result = BuildFrom(
 			"""
 			{
 			  "type": "object",
@@ -312,7 +385,8 @@ public sealed class JsonSchemaVocabularyIndexBuilderTests
 			    "levels": { "type": "array" }
 			  }
 			}
-			"""));
+			"""
+		);
 
 		Assert.IsTrue(result.Succeeded);
 		JsonSchemaVocabularyPropertyDescriptor descriptor = result.Index!.Properties.Single(p => p.Name == "levels");
@@ -320,8 +394,321 @@ public sealed class JsonSchemaVocabularyIndexBuilderTests
 		Assert.IsTrue(descriptor.IsArrayOnly);
 	}
 
-	private const string DefsAndRefsFixture =
-		"""
+	[TestMethod]
+	[DataRow("$defs")]
+	[DataRow("definitions")]
+	public void Build_DefinitionThatReferencesASibling_IndexesBothWithoutWarnings(string section)
+	{
+		// Neither entry is reached from the root, so each is indexed as a definition and the reference resolves against the whole document.
+		JsonSchemaVocabularyIndexResult result = BuildFrom(
+			$$"""
+			{
+			  "type": "object",
+			  "properties": { "root_prop": { "type": "string" } },
+			  "{{section}}": {
+			    "a": { "properties": { "x": { "$ref": "#/{{section}}/b" } } },
+			    "b": { "type": "object", "properties": { "b_prop": { "type": "string" } } }
+			  }
+			}
+			"""
+		);
+
+		Assert.IsTrue(result.Succeeded);
+		Assert.IsEmpty(result.Warnings);
+
+		JsonSchemaVocabularyIndex index = result.Index!;
+
+		Assert.Contains(p => p.Name == "root_prop", index.Properties);
+		Assert.Contains(p => p.Name == "x", index.Properties);
+		Assert.Contains(p => p.Name == "b_prop", index.Properties);
+	}
+
+	[TestMethod]
+	[DataRow("""{ "type":"object", "properties": { "r": { "$ref": "#/$defs/b" } }, "$defs": { "a": { "properties": { "x": { "$ref": "#/$defs/b" } } }, "b": { "type":"object", "properties": { "b_prop": { "type":"string" } } } } }""")]
+	[DataRow("""{ "type":"object", "properties": { "r": { "$ref": "#/$defs/a" } }, "$defs": { "a": { "properties": { "x": { "$ref": "#/$defs/b" } } }, "b": { "type":"object", "properties": { "b_prop": { "type":"string" } } } } }""")]
+	[DataRow("""{ "type":"object", "$defs": { "b": { "type":"object", "properties": { "b_prop": { "type":"string" } } }, "a": { "properties": { "x": { "$ref": "#/$defs/b" } } } } }""")]
+	[DataRow("""{ "type":"object", "$defs": { "a": { "properties": { "x": { "$ref": "#/$defs/b" } } }, "b": { "type":"object", "properties": { "b_prop": { "type":"string" } } } } }""")]
+	public void Build_SiblingReferenceInAnyDeclarationOrder_IndexesTheTargetWithoutWarnings(string json)
+	{
+		JsonSchemaVocabularyIndexResult result = BuildFrom(json);
+
+		Assert.IsTrue(result.Succeeded);
+		Assert.IsEmpty(result.Warnings);
+		Assert.ContainsSingle(p => p.Name == "x", result.Index!.Properties);
+		Assert.ContainsSingle(p => p.Name == "b_prop", result.Index.Properties);
+	}
+
+	[TestMethod]
+	public void Build_ReferenceToTheRoot_IndexesEachPropertyOnce()
+	{
+		JsonSchemaVocabularyIndexResult result = BuildFrom(
+			"""
+			{
+			  "type": "object",
+			  "properties": {
+			    "name": { "type": "string" },
+			    "parent": { "$ref": "#" }
+			  }
+			}
+			"""
+		);
+
+		Assert.IsTrue(result.Succeeded);
+		Assert.IsEmpty(result.Warnings);
+		Assert.HasCount(2, result.Index!.Properties);
+	}
+
+	[TestMethod]
+	public void Build_MutuallyRecursiveReferences_Terminate()
+	{
+		JsonSchemaVocabularyIndexResult result = BuildFrom(
+			"""
+			{
+			  "$defs": {
+			    "a": { "properties": { "a_prop": { "$ref": "#/$defs/b" } } },
+			    "b": { "properties": { "b_prop": { "$ref": "#/$defs/a" } } },
+			    "loop": { "$ref": "#/$defs/loop" }
+			  }
+			}
+			"""
+		);
+
+		Assert.IsTrue(result.Succeeded);
+		Assert.IsEmpty(result.Warnings);
+		Assert.HasCount(2, result.Index!.Properties);
+	}
+
+	[TestMethod]
+	public void Build_ReferenceWithEscapedPointer_ResolvesTheTarget()
+	{
+		// The x-library keyword is not traversed, so a name below it is indexed only when a reference resolves it.
+		JsonSchemaVocabularyIndexResult result = BuildFrom(
+			"""
+			{
+			  "x-library": {
+			    "a/b": { "properties": { "slash_name": {} } },
+			    "c~d": { "properties": { "tilde_name": {} } },
+			    "e f": { "properties": { "space_name": {} } },
+			    "~1": { "properties": { "literal_name": {} } },
+			    "50%": { "properties": { "percent_name": {} } }
+			  },
+			  "properties": {
+			    "slash": { "$ref": "#/x-library/a~1b" },
+			    "tilde": { "$ref": "#/x-library/c~0d" },
+			    "space": { "$ref": "#/x-library/e%20f" },
+			    "literal": { "$ref": "#/x-library/~01" },
+			    "percent": { "$ref": "#/x-library/50%25" }
+			  }
+			}
+			"""
+		);
+
+		Assert.IsTrue(result.Succeeded);
+		Assert.IsEmpty(result.Warnings);
+
+		string[] names = [.. result.Index!.Properties.Select(p => p.Name)];
+
+		Assert.Contains("slash_name", names);
+		Assert.Contains("tilde_name", names);
+		Assert.Contains("space_name", names);
+		Assert.Contains("literal_name", names);
+		Assert.Contains("percent_name", names);
+	}
+
+	[TestMethod]
+	public void Build_ReferenceIntoAnArray_ResolvesTheElementByIndex()
+	{
+		JsonSchemaVocabularyIndexResult result = BuildFrom(
+			"""
+			{
+			  "x-library": [ { "properties": { "first_name": {} } }, { "properties": { "second_name": {} } } ],
+			  "properties": { "pick": { "$ref": "#/x-library/1" } }
+			}
+			"""
+		);
+
+		Assert.IsTrue(result.Succeeded);
+		Assert.IsEmpty(result.Warnings);
+		Assert.Contains(p => p.Name == "second_name", result.Index!.Properties);
+		Assert.DoesNotContain(p => p.Name == "first_name", result.Index.Properties);
+	}
+
+	[TestMethod]
+	public void Build_ReferenceToAnInlineProperty_ResolvesTheTarget()
+	{
+		JsonSchemaVocabularyIndexResult result = BuildFrom(
+			"""
+			{
+			  "properties": {
+			    "copy": { "$ref": "#/properties/original" },
+			    "original": { "properties": { "inner_name": {} } }
+			  }
+			}
+			"""
+		);
+
+		Assert.IsTrue(result.Succeeded);
+		Assert.IsEmpty(result.Warnings);
+		Assert.ContainsSingle(p => p.Name == "inner_name", result.Index!.Properties);
+	}
+
+	[TestMethod]
+	public void Build_ReferenceWithSiblingKeywords_KeepsItsOwnKeywordsAndTakesTheRestFromTheTarget()
+	{
+		JsonSchemaVocabularyIndexResult result = BuildFrom(
+			"""
+			{
+			  "$defs": {
+			    "shared": { "type": "object", "description": "Target description." },
+			    "alias": { "$ref": "#/$defs/shared" },
+			    "loop": { "$ref": "#/$defs/loop" }
+			  },
+			  "properties": {
+			    "linked": { "$ref": "#/$defs/shared", "type": "string", "description": "Own description." },
+			    "described": { "$ref": "#/$defs/shared", "description": "Own description." },
+			    "bare": { "$ref": "#/$defs/shared" },
+			    "chained": { "$ref": "#/$defs/alias" },
+			    "cyclic": { "$ref": "#/$defs/loop" }
+			  }
+			}
+			"""
+		);
+
+		Assert.IsTrue(result.Succeeded);
+
+		JsonSchemaVocabularyPropertyDescriptor linked = result.Index!.Properties.Single(p => p.Name == "linked");
+		JsonSchemaVocabularyPropertyDescriptor described = result.Index.Properties.Single(p => p.Name == "described");
+		JsonSchemaVocabularyPropertyDescriptor bare = result.Index.Properties.Single(p => p.Name == "bare");
+		JsonSchemaVocabularyPropertyDescriptor chained = result.Index.Properties.Single(p => p.Name == "chained");
+		JsonSchemaVocabularyPropertyDescriptor cyclic = result.Index.Properties.Single(p => p.Name == "cyclic");
+
+		Assert.AreEqual(JsonSchemaPropertyType.String, linked.Types.Single());
+		Assert.AreEqual("Own description.", linked.Description);
+		Assert.AreEqual(JsonSchemaPropertyType.Object, described.Types.Single());
+		Assert.AreEqual("Own description.", described.Description);
+		Assert.AreEqual(JsonSchemaPropertyType.Object, bare.Types.Single());
+		Assert.AreEqual("Target description.", bare.Description);
+		Assert.AreEqual(JsonSchemaPropertyType.Object, chained.Types.Single());
+		Assert.AreEqual("Target description.", chained.Description);
+		Assert.IsEmpty(cyclic.Types);
+		Assert.IsNull(cyclic.Description);
+	}
+
+	[TestMethod]
+	public void Build_DefinitionsSectionPrecedesDefsSection_FirstOccurrenceWins()
+	{
+		JsonSchemaVocabularyIndexResult result = BuildFrom(
+			"""
+			{
+			  "$defs": { "modern": { "properties": { "shared": { "type": "integer" } } } },
+			  "definitions": { "legacy": { "properties": { "shared": { "type": "string" } } } }
+			}
+			"""
+		);
+
+		Assert.IsTrue(result.Succeeded);
+		Assert.AreEqual(JsonSchemaPropertyType.String, result.Index!.Properties.Single(p => p.Name == "shared").Types.Single());
+	}
+
+	[TestMethod]
+	public void Build_TupleItems_TraversesEveryItem()
+	{
+		JsonSchemaVocabularyIndexResult result = BuildFrom(
+			"""
+			{
+			  "properties": {
+			    "pair": { "items": [ { "properties": { "left_name": {} } }, { "properties": { "right_name": {} } } ] }
+			  }
+			}
+			"""
+		);
+
+		Assert.IsTrue(result.Succeeded);
+		Assert.Contains(p => p.Name == "left_name", result.Index!.Properties);
+		Assert.Contains(p => p.Name == "right_name", result.Index.Properties);
+	}
+
+	[TestMethod]
+	public void Build_ValidationOnlyKeywords_AreNotTraversed()
+	{
+		JsonSchemaVocabularyIndexResult result = BuildFrom(
+			"""
+			{
+			  "properties": { "kept": {} },
+			  "additionalProperties": { "properties": { "additional_name": {} } },
+			  "patternProperties": { "^x": { "properties": { "pattern_name": {} } } },
+			  "not": { "properties": { "not_name": {} } },
+			  "if": { "properties": { "if_name": {} } }
+			}
+			"""
+		);
+
+		Assert.IsTrue(result.Succeeded);
+		Assert.IsEmpty(result.Warnings);
+		Assert.AreSequenceEqual(["kept"], [.. result.Index!.Properties.Select(p => p.Name)]);
+	}
+
+	[TestMethod]
+	public void Build_BooleanPropertySchemas_IndexTheNamesWithoutTypes()
+	{
+		JsonSchemaVocabularyIndexResult result = BuildFrom("""{ "properties": { "allowed": true, "forbidden": false } }""");
+
+		Assert.IsTrue(result.Succeeded);
+		Assert.IsEmpty(result.Warnings);
+		Assert.HasCount(2, result.Index!.Properties);
+		Assert.IsEmpty(result.Index.Properties.Single(p => p.Name == "allowed").Types);
+		Assert.IsNull(result.Index.Properties.Single(p => p.Name == "forbidden").Description);
+	}
+
+	[TestMethod]
+	public void Build_ValueThatIsNotASchema_ReportsWarningAndSkipsIt()
+	{
+		JsonSchemaVocabularyIndexResult result = BuildFrom("""{ "properties": { "valid": {}, "invalid": 5 }, "allOf": [ "text" ] }""");
+
+		Assert.IsTrue(result.Succeeded);
+		Assert.HasCount(2, result.Warnings);
+		Assert.Contains("'#/properties/invalid'", result.Warnings[0]);
+		Assert.Contains("'#/allOf/0'", result.Warnings[1]);
+		Assert.AreSequenceEqual(["valid"], [.. result.Index!.Properties.Select(p => p.Name)]);
+	}
+
+	[TestMethod]
+	public void Build_UnknownTypeName_ContributesNoType()
+	{
+		JsonSchemaVocabularyIndexResult result = BuildFrom("""{ "properties": { "mixed": { "type": [ "string", "bogus", 3 ] }, "unknown": { "type": "bogus" } } }""");
+
+		Assert.IsTrue(result.Succeeded);
+		Assert.AreEqual(JsonSchemaPropertyType.String, result.Index!.Properties.Single(p => p.Name == "mixed").Types.Single());
+		Assert.IsEmpty(result.Index.Properties.Single(p => p.Name == "unknown").Types);
+	}
+
+	[TestMethod]
+	public void Build_CommentsAndTrailingCommas_AreAccepted()
+	{
+		JsonSchemaVocabularyIndexResult result = BuildFrom(
+			"""
+			{
+			  // A line comment.
+			  "properties": {
+			    /* A block comment. */
+			    "name": { "type": "string", },
+			  },
+			}
+			"""
+		);
+
+		Assert.IsTrue(result.Succeeded);
+		Assert.Contains(p => p.Name == "name", result.Index!.Properties);
+	}
+
+	private static JsonSchemaVocabularyIndexResult BuildFrom(string schemaJson)
+	{
+		using var reader = new StringReader(schemaJson);
+
+		return JsonSchemaVocabularyIndexBuilder.Build(reader);
+	}
+
+	private const string DefsAndRefsFixture = """
 		{
 		  "$defs": {
 		    "path": {
@@ -359,8 +746,7 @@ public sealed class JsonSchemaVocabularyIndexBuilderTests
 		}
 		""";
 
-	private const string DefsOnlyFixture =
-		"""
+	private const string DefsOnlyFixture = """
 		{
 		  "$defs": {
 		    "item": {
@@ -377,8 +763,7 @@ public sealed class JsonSchemaVocabularyIndexBuilderTests
 		}
 		""";
 
-	private const string DuplicateKeywordsFixture =
-		"""
+	private const string DuplicateKeywordsFixture = """
 		{
 		  "$defs": {
 		    "shared": {
@@ -398,8 +783,7 @@ public sealed class JsonSchemaVocabularyIndexBuilderTests
 		}
 		""";
 
-	private const string DescriptionsFixture =
-		"""
+	private const string DescriptionsFixture = """
 		{
 		  "$defs": {
 		    "level": {
@@ -420,8 +804,7 @@ public sealed class JsonSchemaVocabularyIndexBuilderTests
 		}
 		""";
 
-	private const string RecursiveFixture =
-		"""
+	private const string RecursiveFixture = """
 		{
 		  "$defs": {
 		    "node": {
@@ -442,8 +825,7 @@ public sealed class JsonSchemaVocabularyIndexBuilderTests
 		}
 		""";
 
-	private const string ItemsFixture =
-		"""
+	private const string ItemsFixture = """
 		{
 		  "definitions": {
 		    "level": {
@@ -472,8 +854,7 @@ public sealed class JsonSchemaVocabularyIndexBuilderTests
 		}
 		""";
 
-	private const string CombinatorsFixture =
-		"""
+	private const string CombinatorsFixture = """
 		{
 		  "type": "object",
 		  "properties": {
@@ -527,8 +908,7 @@ public sealed class JsonSchemaVocabularyIndexBuilderTests
 		}
 		""";
 
-	private const string Draft04Fixture =
-		"""
+	private const string Draft04Fixture = """
 		{
 		  "$schema": "http://json-schema.org/draft-04/schema#",
 		  "definitions": {
@@ -546,8 +926,7 @@ public sealed class JsonSchemaVocabularyIndexBuilderTests
 		}
 		""";
 
-	private const string Draft2020Fixture =
-		"""
+	private const string Draft2020Fixture = """
 		{
 		  "$schema": "https://json-schema.org/draft/2020-12/schema",
 		  "$defs": {
@@ -565,34 +944,7 @@ public sealed class JsonSchemaVocabularyIndexBuilderTests
 		}
 		""";
 
-	private const string ExternalReferenceRootFixture =
-		"""
-		{
-		  "type": "object",
-		  "properties": {
-		    "name": { "type": "string" },
-		    "shared": { "$ref": "https://example.com/common.json#/definitions/shared" }
-		  }
-		}
-		""";
-
-	private const string CommonSchema =
-		"""
-		{
-		  "definitions": {
-		    "shared": {
-		      "type": "object",
-		      "properties": {
-		        "file": { "type": "string" },
-		        "file_type": { "enum": [ "level", "cutscene" ] }
-		      }
-		    }
-		  }
-		}
-		""";
-
-	private const string MalformedDefinitionFixture =
-		"""
+	private const string MalformedDefinitionFixture = """
 		{
 		  "$defs": {
 		    "broken": "not a schema object"
@@ -604,8 +956,7 @@ public sealed class JsonSchemaVocabularyIndexBuilderTests
 		}
 		""";
 
-	private const string DuplicatePropertyFixture =
-		"""
+	private const string DuplicatePropertyFixture = """
 		{
 		  "$defs": {
 		    "shared_def": {
@@ -623,8 +974,7 @@ public sealed class JsonSchemaVocabularyIndexBuilderTests
 		}
 		""";
 
-	private const string NestedPathFixture =
-		"""
+	private const string NestedPathFixture = """
 		{
 		  "type": "object",
 		  "properties": {
@@ -639,29 +989,9 @@ public sealed class JsonSchemaVocabularyIndexBuilderTests
 		}
 		""";
 
-	/// <summary>
-	/// Supplies external schema text from an in-memory URI-to-text map.
-	/// </summary>
-	private sealed class InMemorySchemaResolver : JSchemaResolver
+	/// <summary>A reader whose read fails, to cover the failure the builder reports when the schema text cannot be read.</summary>
+	private sealed class ThrowingReader : TextReader
 	{
-		private readonly IReadOnlyDictionary<Uri, string> _schemas;
-
-		public InMemorySchemaResolver(IReadOnlyDictionary<Uri, string> schemas) => _schemas = schemas;
-
-		public override Stream GetSchemaResource(ResolveSchemaContext context, SchemaReference reference)
-		{
-			if (reference.BaseUri is not null && _schemas.TryGetValue(Normalize(reference.BaseUri), out string? content))
-				return new MemoryStream(Encoding.UTF8.GetBytes(content));
-
-			return Stream.Null;
-		}
-
-		private static Uri Normalize(Uri uri)
-		{
-			if (!string.IsNullOrEmpty(uri.Fragment))
-				return new Uri(uri.GetLeftPart(UriPartial.Path));
-
-			return uri;
-		}
+		public override string ReadToEnd() => throw new InvalidOperationException("The reader failed.");
 	}
 }

@@ -1,79 +1,53 @@
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json.Schema;
-using System.Diagnostics.CodeAnalysis;
+using System.Text.Json;
 
 namespace Nickelony.IDEKit.JsonSchema;
 
-/// <summary>
-/// Builds an immutable <see cref="JsonSchemaVocabularyIndex"/> from a JSON Schema. It accepts
-/// parsed schemas, schema tokens, and schema text, and reports outcomes through
-/// <see cref="JsonSchemaVocabularyIndexResult"/>.
-/// </summary>
-public sealed class JsonSchemaVocabularyIndexBuilder
+/// <summary>Builds an immutable <see cref="JsonSchemaVocabularyIndex"/> from a JSON Schema.</summary>
+/// <remarks>
+/// The builder accepts schema text and a parsed <see cref="JsonElement"/>, and reports outcomes through <see cref="JsonSchemaVocabularyIndexResult"/>.
+/// A property name or constant value that occurs more than once is kept at its first occurrence in traversal order, and a property descriptor retains
+/// that occurrence's types and description. A property that is a <c>$ref</c> takes the type and the description it leaves out from the schema the
+/// reference names. A <c>$ref</c> resolves when it is <c>#</c> or a JSON Pointer fragment such as <c>#/$defs/name</c> into the
+/// same document; any other reference adds a warning and is skipped.
+/// </remarks>
+public static class JsonSchemaVocabularyIndexBuilder
 {
-	/// <summary>
-	/// Builds a vocabulary index from an already-parsed schema object.
-	/// </summary>
-	/// <param name="schema">The root schema to index.</param>
-	/// <returns>The built vocabulary index and any diagnostics.</returns>
-	/// <exception cref="ArgumentNullException"><paramref name="schema"/> is <see langword="null"/>.</exception>
-	[SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "The public builder API intentionally exposes instance methods.")]
-	public JsonSchemaVocabularyIndexResult Build(JSchema schema)
+	private static readonly JsonDocumentOptions s_parseOptions = new() { AllowTrailingCommas = true, CommentHandling = JsonCommentHandling.Skip };
+
+	// The types are emitted in the declaration order of JsonSchemaPropertyType so the list order stays deterministic and matches the enum.
+	private static readonly JsonSchemaPropertyType[] s_typeDeclarationOrder = Enum.GetValues<JsonSchemaPropertyType>();
+
+	/// <summary>Builds a vocabulary index from a parsed schema.</summary>
+	/// <param name="schema">The root schema to index, which is a JSON object or a boolean.</param>
+	/// <returns>The built vocabulary index and any warnings, or a failed result when the root is neither an object nor a boolean.</returns>
+	/// <remarks>
+	/// The element must belong to a document that stays undisposed for the duration of the call. The result keeps no reference to it.
+	/// </remarks>
+	public static JsonSchemaVocabularyIndexResult Build(JsonElement schema)
 	{
-		ArgumentNullException.ThrowIfNull(schema);
-
-		var context = new BuildContext();
-
-		CollectReachable(schema, context);
-		CollectDefinitionSections(schema.ExtensionData, context);
-
-		return new JsonSchemaVocabularyIndexResult(
-			new JsonSchemaVocabularyIndex(context.Properties, context.Constants),
-			context.Diagnostics);
-	}
-
-	/// <summary>
-	/// Builds a vocabulary index from a schema token, converting the token to a schema object first.
-	/// </summary>
-	/// <param name="schemaToken">The token that represents the root schema.</param>
-	/// <returns>
-	/// The built vocabulary index and diagnostics, or a failed result when conversion or indexing
-	/// fails.
-	/// </returns>
-	/// <exception cref="ArgumentNullException"><paramref name="schemaToken"/> is <see langword="null"/>.</exception>
-	public JsonSchemaVocabularyIndexResult Build(JToken schemaToken)
-	{
-		ArgumentNullException.ThrowIfNull(schemaToken);
-
-		JSchema schema;
-
-		try
+		if (schema.ValueKind is not (JsonValueKind.Object or JsonValueKind.True or JsonValueKind.False))
 		{
-			schema = schemaToken.ToObject<JSchema>() ?? throw new JSchemaException("The token does not represent a schema object.");
-		}
-		catch (Exception exception)
-		{
-			return Failure($"The schema token could not be read as a JSON schema: {exception.Message}");
+			var exception = new JsonException($"The schema root has the JSON kind {schema.ValueKind}, but a schema is an object or a boolean.");
+
+			return Fail(JsonSchemaVocabularyIndexFailureCodes.ParseFailed, $"The value could not be read as a JSON schema: {exception.Message}", exception);
 		}
 
-		return Build(schema);
+		var context = new BuildContext(schema);
+
+		foreach (JsonElement currentSchema in SchemaTraversal.FlattenSchemas(schema, context.Warnings))
+			Collect(currentSchema, context);
+
+		return new JsonSchemaVocabularyIndexResult(new JsonSchemaVocabularyIndex(context.Properties, context.Constants), context.Warnings);
 	}
 
-	/// <summary>
-	/// Builds a vocabulary index from schema text read through a reader, optionally using custom
-	/// reader settings.
-	/// </summary>
-	/// <remarks>The method reads the entire reader and does not dispose it.</remarks>
+	/// <summary>Builds a vocabulary index from schema text read through a reader.</summary>
 	/// <param name="reader">The reader over the schema text.</param>
-	/// <param name="settings">
-	/// The schema reader settings, or <see langword="null"/> to use the defaults.
-	/// </param>
-	/// <returns>
-	/// The built vocabulary index and any diagnostics, or a failed result when the schema text
-	/// cannot be read or parsed.
-	/// </returns>
+	/// <returns>The built vocabulary index and any warnings, or a failed result when the schema text cannot be read or parsed.</returns>
 	/// <exception cref="ArgumentNullException"><paramref name="reader"/> is <see langword="null"/>.</exception>
-	public JsonSchemaVocabularyIndexResult Build(TextReader reader, JSchemaReaderSettings? settings = null)
+	/// <remarks>
+	/// The method reads the entire reader and does not dispose it. The text may contain comments and trailing commas.
+	/// </remarks>
+	public static JsonSchemaVocabularyIndexResult Build(TextReader reader)
 	{
 		ArgumentNullException.ThrowIfNull(reader);
 
@@ -85,109 +59,96 @@ public sealed class JsonSchemaVocabularyIndexBuilder
 		}
 		catch (Exception exception)
 		{
-			return Failure($"The schema text could not be read: {exception.Message}");
+			return Fail(JsonSchemaVocabularyIndexFailureCodes.ReadFailed, $"The schema text could not be read: {exception.Message}", exception);
 		}
 
-		JSchema schema;
+		JsonDocument document;
 
 		try
 		{
-			schema = settings is null
-				? JSchema.Parse(schemaJson)
-				: JSchema.Parse(schemaJson, settings);
+			document = JsonDocument.Parse(schemaJson, s_parseOptions);
 		}
-		catch (Exception exception)
+		catch (JsonException exception)
 		{
-			return Failure($"The schema could not be parsed: {exception.Message}");
+			return Fail(JsonSchemaVocabularyIndexFailureCodes.ParseFailed, $"The schema could not be parsed: {exception.Message}", exception);
 		}
 
-		return Build(schema);
+		using (document)
+		{
+			return Build(document.RootElement);
+		}
 	}
 
-	/// <summary>
-	/// Creates a failed result carrying a single diagnostic.
-	/// </summary>
-	private static JsonSchemaVocabularyIndexResult Failure(string diagnostic)
-		=> new(null, [diagnostic]);
+	/// <summary>Creates a failed result that carries the exception behind the failure.</summary>
+	private static JsonSchemaVocabularyIndexResult Fail(string code, string message, Exception exception) =>
+		new(new JsonSchemaVocabularyIndexFailure(code, message, exception));
 
-	private static void CollectReachable(JSchema schema, BuildContext context)
-	{
-		foreach (JSchema currentSchema in SchemaTraversal.FlattenSchemas(schema))
-			Collect(currentSchema, context);
-	}
-
-	private static void Collect(JSchema schema, BuildContext context)
+	private static void Collect(JsonElement schema, BuildContext context)
 	{
 		// Extract string values from const declarations at every visited schema.
-		if (schema.Const is not null && schema.Const.Type == JTokenType.String)
-			AddConstant(schema.Const.ToString(), context);
+		if (schema.TryGetProperty("const", out JsonElement constant) && constant.ValueKind == JsonValueKind.String && constant.GetString() is { } constantValue)
+			AddConstant(constantValue, context);
 
 		// Extract string values from enum declarations at every visited schema.
-		if (schema.Enum is not null)
+		if (schema.TryGetProperty("enum", out JsonElement enumeration) && enumeration.ValueKind == JsonValueKind.Array)
 		{
-			foreach (JToken enumValue in schema.Enum)
+			foreach (JsonElement enumValue in enumeration.EnumerateArray())
 			{
-				if (enumValue.Type == JTokenType.String)
-					AddConstant(enumValue.ToString(), context);
+				if (enumValue.ValueKind == JsonValueKind.String && enumValue.GetString() is { } text)
+					AddConstant(text, context);
 			}
 		}
 
-		if (schema.Properties is null)
+		if (!schema.TryGetProperty("properties", out JsonElement properties) || properties.ValueKind != JsonValueKind.Object)
 			return;
 
-		foreach (KeyValuePair<string, JSchema> property in schema.Properties)
-			AddProperty(property.Key, property.Value, context);
+		foreach (JsonProperty property in properties.EnumerateObject())
+			AddProperty(property.Name, property.Value, context);
 	}
 
-	private static void CollectDefinitionSections(IDictionary<string, JToken>? extensionData, BuildContext context)
+	private static void AddProperty(string name, JsonElement propertySchema, BuildContext context)
 	{
-		if (extensionData is null)
+		// The traversal reports a value that is not a schema, so the property is left out here.
+		if (propertySchema.ValueKind is not (JsonValueKind.Object or JsonValueKind.True or JsonValueKind.False))
 			return;
 
-		// Include both common definition section names. Walk them directly so definitions that
-		// are not referenced from the root are included as well.
-		string[] sectionNames = ["definitions", "$defs"];
-
-		foreach (string sectionName in sectionNames)
-		{
-			if (!extensionData.TryGetValue(sectionName, out JToken? section) || section is not JObject definitions)
-				continue;
-
-			foreach (KeyValuePair<string, JToken?> definition in definitions)
-			{
-				JSchema? definitionSchema;
-
-				try
-				{
-					definitionSchema = definition.Value?.ToObject<JSchema>();
-				}
-				catch (Exception exception)
-				{
-					context.Diagnostics.Add($"Definition '{definition.Key}' in '{sectionName}' could not be parsed; it was skipped: {exception.Message}");
-					continue;
-				}
-
-				if (definitionSchema is null)
-				{
-					context.Diagnostics.Add($"Definition '{definition.Key}' in '{sectionName}' is not a schema object; it was skipped.");
-					continue;
-				}
-
-				CollectReachable(definitionSchema, context);
-			}
-		}
-	}
-
-	private static void AddProperty(string name, JSchema propertySchema, BuildContext context)
-	{
 		// When a name occurs more than once, keep the first occurrence in traversal order.
 		if (!context.PropertyNames.Add(name))
 			return;
 
-		context.Properties.Add(new JsonSchemaVocabularyPropertyDescriptor(
-			name,
-			ToPropertyTypes(propertySchema.Type),
-			propertySchema.Description));
+		List<JsonSchemaPropertyType> types = ReadTypes(propertySchema);
+		string? description = ReadDescription(propertySchema);
+
+		// A keyword beside a $ref wins, and a keyword the property leaves out is read from the referenced schema.
+		var followed = new HashSet<string>(StringComparer.Ordinal);
+		JsonElement current = propertySchema;
+
+		while ((types.Count == 0 || description is null) && TryFollowReference(current, context.Root, followed, out JsonElement target))
+		{
+			if (types.Count == 0)
+				types = ReadTypes(target);
+
+			description ??= ReadDescription(target);
+			current = target;
+		}
+
+		context.Properties.Add(new JsonSchemaVocabularyPropertyDescriptor(name, types, description));
+	}
+
+	// The traversal reports a reference that does not resolve, so it ends the chain here without a warning.
+	private static bool TryFollowReference(JsonElement schema, JsonElement root, HashSet<string> followed, out JsonElement target)
+	{
+		target = default;
+
+		if (schema.ValueKind != JsonValueKind.Object
+			|| !schema.TryGetProperty("$ref", out JsonElement reference)
+			|| reference.ValueKind != JsonValueKind.String
+			|| reference.GetString() is not { } referenceText)
+		{
+			return false;
+		}
+
+		return SchemaTraversal.TryResolve(root, referenceText, out target, out string pointer) && followed.Add(pointer);
 	}
 
 	private static void AddConstant(string value, BuildContext context)
@@ -198,52 +159,77 @@ public sealed class JsonSchemaVocabularyIndexBuilder
 		context.Constants.Add(value);
 	}
 
-	private static List<JsonSchemaPropertyType> ToPropertyTypes(JSchemaType? type)
+	private static string? ReadDescription(JsonElement schema)
 	{
-		if (type is null)
+		if (schema.ValueKind == JsonValueKind.Object && schema.TryGetProperty("description", out JsonElement description) && description.ValueKind == JsonValueKind.String)
+			return description.GetString();
+
+		return null;
+	}
+
+	private static List<JsonSchemaPropertyType> ReadTypes(JsonElement schema)
+	{
+		if (schema.ValueKind != JsonValueKind.Object || !schema.TryGetProperty("type", out JsonElement type))
 			return [];
 
-		// The types are emitted in the declaration order of JsonSchemaPropertyType so the list order
-		// stays deterministic and matches the enum.
+		var declared = new HashSet<JsonSchemaPropertyType>();
+
+		if (type.ValueKind == JsonValueKind.Array)
+		{
+			foreach (JsonElement name in type.EnumerateArray())
+				AddDeclaredType(name, declared);
+		}
+		else
+		{
+			AddDeclaredType(type, declared);
+		}
+
 		var result = new List<JsonSchemaPropertyType>();
 
-		if (type.Value.HasFlag(JSchemaType.Object))
-			result.Add(JsonSchemaPropertyType.Object);
-
-		if (type.Value.HasFlag(JSchemaType.Array))
-			result.Add(JsonSchemaPropertyType.Array);
-
-		if (type.Value.HasFlag(JSchemaType.String))
-			result.Add(JsonSchemaPropertyType.String);
-
-		if (type.Value.HasFlag(JSchemaType.Integer))
-			result.Add(JsonSchemaPropertyType.Integer);
-
-		if (type.Value.HasFlag(JSchemaType.Number))
-			result.Add(JsonSchemaPropertyType.Number);
-
-		if (type.Value.HasFlag(JSchemaType.Boolean))
-			result.Add(JsonSchemaPropertyType.Boolean);
-
-		if (type.Value.HasFlag(JSchemaType.Null))
-			result.Add(JsonSchemaPropertyType.Null);
+		foreach (JsonSchemaPropertyType candidate in s_typeDeclarationOrder)
+		{
+			if (declared.Contains(candidate))
+				result.Add(candidate);
+		}
 
 		return result;
 	}
 
-	/// <summary>
-	/// Accumulates the state of one index build.
-	/// </summary>
-	private sealed class BuildContext
+	// A name that is not one of the JSON Schema type names contributes no type.
+	private static void AddDeclaredType(JsonElement name, HashSet<JsonSchemaPropertyType> declared)
 	{
-		public List<JsonSchemaVocabularyPropertyDescriptor> Properties { get; } = [];
+		if (name.ValueKind != JsonValueKind.String)
+			return;
 
-		public HashSet<string> PropertyNames { get; } = new(StringComparer.Ordinal);
+		JsonSchemaPropertyType? type = name.GetString() switch
+		{
+			"object" => JsonSchemaPropertyType.Object,
+			"array" => JsonSchemaPropertyType.Array,
+			"string" => JsonSchemaPropertyType.String,
+			"integer" => JsonSchemaPropertyType.Integer,
+			"number" => JsonSchemaPropertyType.Number,
+			"boolean" => JsonSchemaPropertyType.Boolean,
+			"null" => JsonSchemaPropertyType.Null,
+			_ => null,
+		};
 
-		public List<string> Constants { get; } = [];
+		if (type is { } declaredType)
+			declared.Add(declaredType);
+	}
 
-		public HashSet<string> ConstantNames { get; } = new(StringComparer.Ordinal);
+	/// <summary>Accumulates the state of one index build.</summary>
+	private sealed class BuildContext(JsonElement root)
+	{
+		internal JsonElement Root { get; } = root;
 
-		public List<string> Diagnostics { get; } = [];
+		internal List<JsonSchemaVocabularyPropertyDescriptor> Properties { get; } = [];
+
+		internal HashSet<string> PropertyNames { get; } = new(StringComparer.Ordinal);
+
+		internal List<string> Constants { get; } = [];
+
+		internal HashSet<string> ConstantNames { get; } = new(StringComparer.Ordinal);
+
+		internal List<string> Warnings { get; } = [];
 	}
 }

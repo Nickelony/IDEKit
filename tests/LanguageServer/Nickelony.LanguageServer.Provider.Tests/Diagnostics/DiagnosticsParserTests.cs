@@ -1,12 +1,13 @@
-using Nickelony.IDEKit.Core.Diagnostics;
 using System.Text.Json;
+using Nickelony.IDEKit.Core.Diagnostics;
+using Nickelony.IDEKit.LanguageFeatures.Diagnostics;
 
 namespace Nickelony.LanguageServer.Provider.Tests;
 
 [TestClass]
 public sealed class DiagnosticsParserTests
 {
-	// The parser carries the path through to PublishedDiagnostics without normalizing it, so a plain literal
+	// The parser carries the path through to ParsedDiagnostics without normalizing it, so a plain literal
 	// is sufficient here.
 	private const string FilePath = "test.lua";
 
@@ -16,21 +17,22 @@ public sealed class DiagnosticsParserTests
 		const string content = "local value = 1\n\nnextLine = 2";
 
 		bool parsed = DiagnosticsParser.TryParse(
-			CreateDiagnostics(line: 1, startCharacter: 0, endLine: 1, endCharacter: 0),
-			FilePath,
+			parameters: CreateDiagnostics(line: 1, startCharacter: 0, endLine: 1, endCharacter: 0),
+			normalizedFilePath: FilePath,
 			content,
 			documentVersion: 1,
 			policy: DiagnosticMappingPolicy.Default,
-			out PublishedDiagnostics? publishedDiagnostics);
+			out ParsedDiagnostics? publishedDiagnostics
+		);
 
 		Assert.IsTrue(parsed);
 		Assert.IsNotNull(publishedDiagnostics);
-		Assert.AreEqual(1, publishedDiagnostics.Diagnostics.Count);
+		Assert.HasCount(1, publishedDiagnostics.Diagnostics);
 
 		// A zero-width diagnostic keeps its exact position (line 1, character 0) instead of being
 		// anchored to visible text; widening an empty range is the rendering layer's concern.
-		Assert.AreEqual(content.IndexOf("nextLine", StringComparison.Ordinal) - 1, publishedDiagnostics.Diagnostics[0].StartOffset);
-		Assert.AreEqual(publishedDiagnostics.Diagnostics[0].StartOffset, publishedDiagnostics.Diagnostics[0].EndOffset);
+		Assert.AreEqual(content.IndexOf("nextLine", StringComparison.Ordinal) - 1, publishedDiagnostics.Diagnostics[0].Range.Offset);
+		Assert.AreEqual(publishedDiagnostics.Diagnostics[0].Range.Offset, publishedDiagnostics.Diagnostics[0].Range.EndOffset);
 	}
 
 	[TestMethod]
@@ -39,18 +41,19 @@ public sealed class DiagnosticsParserTests
 		const string content = "return value\n";
 
 		bool parsed = DiagnosticsParser.TryParse(
-			CreateDiagnostics(line: 1, startCharacter: 0, endLine: 1, endCharacter: 0),
-			FilePath,
+			parameters: CreateDiagnostics(line: 1, startCharacter: 0, endLine: 1, endCharacter: 0),
+			normalizedFilePath: FilePath,
 			content,
 			documentVersion: 1,
 			policy: DiagnosticMappingPolicy.Default,
-			out PublishedDiagnostics? publishedDiagnostics);
+			out ParsedDiagnostics? publishedDiagnostics
+		);
 
 		Assert.IsTrue(parsed);
 		Assert.IsNotNull(publishedDiagnostics);
-		Assert.AreEqual(1, publishedDiagnostics.Diagnostics.Count);
-		Assert.AreEqual(content.Length, publishedDiagnostics.Diagnostics[0].StartOffset);
-		Assert.AreEqual(publishedDiagnostics.Diagnostics[0].StartOffset, publishedDiagnostics.Diagnostics[0].EndOffset);
+		Assert.HasCount(1, publishedDiagnostics.Diagnostics);
+		Assert.AreEqual(content.Length, publishedDiagnostics.Diagnostics[0].Range.Offset);
+		Assert.AreEqual(publishedDiagnostics.Diagnostics[0].Range.Offset, publishedDiagnostics.Diagnostics[0].Range.EndOffset);
 	}
 
 	[TestMethod]
@@ -59,22 +62,23 @@ public sealed class DiagnosticsParserTests
 		const string content = "local value = compute(1)";
 
 		bool parsed = DiagnosticsParser.TryParse(
-			CreateDiagnostics(line: 0, startCharacter: 21, endLine: 0, endCharacter: 21),
-			FilePath,
+			parameters: CreateDiagnostics(line: 0, startCharacter: 21, endLine: 0, endCharacter: 21),
+			normalizedFilePath: FilePath,
 			content,
 			documentVersion: 1,
 			policy: DiagnosticMappingPolicy.Default,
-			out PublishedDiagnostics? publishedDiagnostics);
+			out ParsedDiagnostics? publishedDiagnostics
+		);
 
 		Assert.IsTrue(parsed);
 		Assert.IsNotNull(publishedDiagnostics);
-		Assert.AreEqual(1, publishedDiagnostics.Diagnostics.Count);
+		Assert.HasCount(1, publishedDiagnostics.Diagnostics);
 
 		// A position-only diagnostic such as "expected ')' here" must keep the range the server
 		// published: widening it to the enclosing word would echo a range the server never sent back to
 		// it in code-action requests.
-		Assert.AreEqual(21, publishedDiagnostics.Diagnostics[0].StartOffset);
-		Assert.AreEqual(21, publishedDiagnostics.Diagnostics[0].EndOffset);
+		Assert.AreEqual(21, publishedDiagnostics.Diagnostics[0].Range.Offset);
+		Assert.AreEqual(21, publishedDiagnostics.Diagnostics[0].Range.EndOffset);
 	}
 
 	[TestMethod]
@@ -83,37 +87,42 @@ public sealed class DiagnosticsParserTests
 		const string content = "local value = 1";
 
 		bool parsed = DiagnosticsParser.TryParse(
-			new PublishDiagnosticsParams(
+			parameters: new Lsp.PublishDiagnosticsParams(
 				Uri: null,
 				Version: 1,
+
 				Diagnostics:
 				[
-					new DiagnosticPayload(
+					new Lsp.DiagnosticPayload(
 						Range: null,
-						Severity: DiagnosticSeverity.Error,
+						Severity: Lsp.DiagnosticSeverity.Error,
 						Message: "Broken payload.",
 						Source: null,
-						Code: null),
-					new DiagnosticPayload(
-						new ProtocolRangePayload(
-							new ProtocolPosition(0, 6),
-							new ProtocolPosition(0, 11)),
-						DiagnosticSeverity.Error,
-						"Valid payload.",
-						null,
-						null)
-				]),
-			FilePath,
+						Code: null
+					),
+
+					new Lsp.DiagnosticPayload(
+						Range: new Lsp.RangePayload(new Lsp.PositionPayload(0, 6), new Lsp.PositionPayload(0, 11)),
+						Severity: Lsp.DiagnosticSeverity.Error,
+						Message: "Valid payload.",
+						Source: null,
+						Code: null
+					),
+				]
+			),
+
+			normalizedFilePath: FilePath,
 			content,
 			documentVersion: 1,
 			policy: DiagnosticMappingPolicy.Default,
-			out PublishedDiagnostics? publishedDiagnostics);
+			out ParsedDiagnostics? publishedDiagnostics
+		);
 
 		Assert.IsTrue(parsed);
 		Assert.IsNotNull(publishedDiagnostics);
-		Assert.AreEqual(1, publishedDiagnostics.Diagnostics.Count);
-		Assert.AreEqual(6, publishedDiagnostics.Diagnostics[0].StartOffset);
-		Assert.AreEqual(11, publishedDiagnostics.Diagnostics[0].EndOffset);
+		Assert.HasCount(1, publishedDiagnostics.Diagnostics);
+		Assert.AreEqual(6, publishedDiagnostics.Diagnostics[0].Range.Offset);
+		Assert.AreEqual(11, publishedDiagnostics.Diagnostics[0].Range.EndOffset);
 	}
 
 	[TestMethod]
@@ -122,39 +131,42 @@ public sealed class DiagnosticsParserTests
 		const string content = "local value = 1";
 
 		bool parsed = DiagnosticsParser.TryParse(
-			new PublishDiagnosticsParams(
+			parameters: new Lsp.PublishDiagnosticsParams(
 				Uri: null,
 				Version: 1,
+
 				Diagnostics:
 				[
-					new DiagnosticPayload(
-						new ProtocolRangePayload(
-							new ProtocolPosition(0, 0),
-							new ProtocolPosition(0, 5)),
-						DiagnosticSeverity.Information,
-						"Informational payload.",
-						null,
-						null),
-					new DiagnosticPayload(
-						new ProtocolRangePayload(
-							new ProtocolPosition(0, 6),
-							new ProtocolPosition(0, 11)),
-						DiagnosticSeverity.Hint,
-						"Hint payload.",
-						null,
-						null)
-				]),
-			FilePath,
+					new Lsp.DiagnosticPayload(
+						Range: new Lsp.RangePayload(new Lsp.PositionPayload(0, 0), new Lsp.PositionPayload(0, 5)),
+						Severity: Lsp.DiagnosticSeverity.Information,
+						Message: "Informational payload.",
+						Source: null,
+						Code: null
+					),
+
+					new Lsp.DiagnosticPayload(
+						Range: new Lsp.RangePayload(new Lsp.PositionPayload(0, 6), new Lsp.PositionPayload(0, 11)),
+						Severity: Lsp.DiagnosticSeverity.Hint,
+						Message: "Hint payload.",
+						Source: null,
+						Code: null
+					),
+				]
+			),
+
+			normalizedFilePath: FilePath,
 			content,
 			documentVersion: 1,
 			policy: DiagnosticMappingPolicy.Default,
-			out PublishedDiagnostics? publishedDiagnostics);
+			out ParsedDiagnostics? publishedDiagnostics
+		);
 
 		Assert.IsTrue(parsed);
 		Assert.IsNotNull(publishedDiagnostics);
-		Assert.AreEqual(2, publishedDiagnostics.Diagnostics.Count);
-		Assert.AreEqual(TextDiagnosticSeverity.Information, publishedDiagnostics.Diagnostics[0].Severity);
-		Assert.AreEqual(TextDiagnosticSeverity.Hint, publishedDiagnostics.Diagnostics[1].Severity);
+		Assert.HasCount(2, publishedDiagnostics.Diagnostics);
+		Assert.AreEqual(DiagnosticSeverity.Information, publishedDiagnostics.Diagnostics[0].Severity);
+		Assert.AreEqual(DiagnosticSeverity.Hint, publishedDiagnostics.Diagnostics[1].Severity);
 	}
 
 	[TestMethod]
@@ -163,29 +175,32 @@ public sealed class DiagnosticsParserTests
 		const string content = "local value = 1";
 
 		bool parsed = DiagnosticsParser.TryParse(
-			new PublishDiagnosticsParams(
+			parameters: new Lsp.PublishDiagnosticsParams(
 				Uri: null,
 				Version: 1,
+
 				Diagnostics:
 				[
-					new DiagnosticPayload(
-						new ProtocolRangePayload(
-							new ProtocolPosition(0, 0),
-							new ProtocolPosition(0, 5)),
-						DiagnosticSeverity.Warning,
-						"  unused variable  ",
-						"  LuaLS  ",
-						JsonSerializer.SerializeToElement("W211"))
-				]),
-			FilePath,
+					new Lsp.DiagnosticPayload(
+						Range: new Lsp.RangePayload(new Lsp.PositionPayload(0, 0), new Lsp.PositionPayload(0, 5)),
+						Severity: Lsp.DiagnosticSeverity.Warning,
+						Message: "  unused variable  ",
+						Source: "  LuaLS  ",
+						Code: JsonSerializer.SerializeToElement("W211")
+					),
+				]
+			),
+
+			normalizedFilePath: FilePath,
 			content,
 			documentVersion: 1,
 			policy: DiagnosticMappingPolicy.Default,
-			out PublishedDiagnostics? publishedDiagnostics);
+			out ParsedDiagnostics? publishedDiagnostics
+		);
 
 		Assert.IsTrue(parsed);
 		Assert.IsNotNull(publishedDiagnostics);
-		Assert.AreEqual(1, publishedDiagnostics.Diagnostics.Count);
+		Assert.HasCount(1, publishedDiagnostics.Diagnostics);
 		Assert.AreEqual("unused variable", publishedDiagnostics.Diagnostics[0].Message);
 		Assert.AreEqual("LuaLS", publishedDiagnostics.Diagnostics[0].Source);
 		Assert.AreEqual("W211", publishedDiagnostics.Diagnostics[0].Code);
@@ -202,25 +217,28 @@ public sealed class DiagnosticsParserTests
 		const string content = "local value = 1";
 
 		bool parsed = DiagnosticsParser.TryParse(
-			new PublishDiagnosticsParams(
+			parameters: new Lsp.PublishDiagnosticsParams(
 				Uri: null,
 				Version: 1,
+
 				Diagnostics:
 				[
-					new DiagnosticPayload(
-						new ProtocolRangePayload(
-							new ProtocolPosition(0, 0),
-							new ProtocolPosition(0, 5)),
-						DiagnosticSeverity.Warning,
-						"Unused variable.",
-						null,
-						JsonSerializer.SerializeToElement(211))
-				]),
-			FilePath,
+					new Lsp.DiagnosticPayload(
+						Range: new Lsp.RangePayload(new Lsp.PositionPayload(0, 0), new Lsp.PositionPayload(0, 5)),
+						Severity: Lsp.DiagnosticSeverity.Warning,
+						Message: "Unused variable.",
+						Source: null,
+						Code: JsonSerializer.SerializeToElement(211)
+					),
+				]
+			),
+
+			normalizedFilePath: FilePath,
 			content,
 			documentVersion: 1,
 			policy: DiagnosticMappingPolicy.Default,
-			out PublishedDiagnostics? publishedDiagnostics);
+			out ParsedDiagnostics? publishedDiagnostics
+		);
 
 		Assert.IsTrue(parsed);
 		Assert.IsNotNull(publishedDiagnostics);
@@ -239,25 +257,28 @@ public sealed class DiagnosticsParserTests
 		const string content = "local value = 1";
 
 		bool parsed = DiagnosticsParser.TryParse(
-			new PublishDiagnosticsParams(
+			parameters: new Lsp.PublishDiagnosticsParams(
 				Uri: null,
 				Version: 1,
+
 				Diagnostics:
 				[
-					new DiagnosticPayload(
-						new ProtocolRangePayload(
-							new ProtocolPosition(0, 0),
-							new ProtocolPosition(0, 5)),
-						DiagnosticSeverity.Warning,
-						"   ",
-						"  ",
-						JsonSerializer.SerializeToElement(string.Empty))
-				]),
-			FilePath,
+					new Lsp.DiagnosticPayload(
+						Range: new Lsp.RangePayload(new Lsp.PositionPayload(0, 0), new Lsp.PositionPayload(0, 5)),
+						Severity: Lsp.DiagnosticSeverity.Warning,
+						Message: "   ",
+						Source: "  ",
+						Code: JsonSerializer.SerializeToElement(string.Empty)
+					),
+				]
+			),
+
+			normalizedFilePath: FilePath,
 			content,
 			documentVersion: 1,
 			policy: DiagnosticMappingPolicy.Default,
-			out PublishedDiagnostics? publishedDiagnostics);
+			out ParsedDiagnostics? publishedDiagnostics
+		);
 
 		Assert.IsTrue(parsed);
 		Assert.IsNotNull(publishedDiagnostics);
@@ -276,25 +297,28 @@ public sealed class DiagnosticsParserTests
 		const string content = "local value = 1";
 
 		bool parsed = DiagnosticsParser.TryParse(
-			new PublishDiagnosticsParams(
+			parameters: new Lsp.PublishDiagnosticsParams(
 				Uri: null,
 				Version: 1,
+
 				Diagnostics:
 				[
-					new DiagnosticPayload(
-						new ProtocolRangePayload(
-							new ProtocolPosition(0, 0),
-							new ProtocolPosition(0, 5)),
-						DiagnosticSeverity.Warning,
-						"Unused variable.",
-						null,
-						JsonSerializer.SerializeToElement(true))
-				]),
-			FilePath,
+					new Lsp.DiagnosticPayload(
+						Range: new Lsp.RangePayload(new Lsp.PositionPayload(0, 0), new Lsp.PositionPayload(0, 5)),
+						Severity: Lsp.DiagnosticSeverity.Warning,
+						Message: "Unused variable.",
+						Source: null,
+						Code: JsonSerializer.SerializeToElement(true)
+					),
+				]
+			),
+
+			normalizedFilePath: FilePath,
 			content,
 			documentVersion: 1,
 			policy: DiagnosticMappingPolicy.Default,
-			out PublishedDiagnostics? publishedDiagnostics);
+			out ParsedDiagnostics? publishedDiagnostics
+		);
 
 		Assert.IsTrue(parsed);
 		Assert.IsNotNull(publishedDiagnostics);
@@ -311,43 +335,52 @@ public sealed class DiagnosticsParserTests
 		const string content = "local value = 1";
 
 		bool parsed = DiagnosticsParser.TryParse(
-			new PublishDiagnosticsParams(
+			parameters: new Lsp.PublishDiagnosticsParams(
 				Uri: null,
 				Version: 1,
+
 				Diagnostics:
 				[
-					new DiagnosticPayload(
-						new ProtocolRangePayload(new ProtocolPosition(0, 0), new ProtocolPosition(0, 5)),
-						(DiagnosticSeverity)9,
-						"Future severity.",
-						null,
-						null),
-					new DiagnosticPayload(
-						new ProtocolRangePayload(new ProtocolPosition(0, 6), new ProtocolPosition(0, 11)),
-						(DiagnosticSeverity)0,
-						"Zero severity.",
-						null,
-						null),
-					new DiagnosticPayload(
-						new ProtocolRangePayload(new ProtocolPosition(0, 12), new ProtocolPosition(0, 13)),
-						(DiagnosticSeverity)(-3),
-						"Negative severity.",
-						null,
-						null)
-				]),
-			FilePath,
+					new Lsp.DiagnosticPayload(
+						Range: new Lsp.RangePayload(new Lsp.PositionPayload(0, 0), new Lsp.PositionPayload(0, 5)),
+						Severity: (Lsp.DiagnosticSeverity)9,
+						Message: "Future severity.",
+						Source: null,
+						Code: null
+					),
+
+					new Lsp.DiagnosticPayload(
+						Range: new Lsp.RangePayload(new Lsp.PositionPayload(0, 6), new Lsp.PositionPayload(0, 11)),
+						Severity: (Lsp.DiagnosticSeverity)0,
+						Message: "Zero severity.",
+						Source: null,
+						Code: null
+					),
+
+					new Lsp.DiagnosticPayload(
+						Range: new Lsp.RangePayload(new Lsp.PositionPayload(0, 12), new Lsp.PositionPayload(0, 13)),
+						Severity: (Lsp.DiagnosticSeverity)(-3),
+						Message: "Negative severity.",
+						Source: null,
+						Code: null
+					),
+				]
+			),
+
+			normalizedFilePath: FilePath,
 			content,
 			documentVersion: 1,
 			policy: DiagnosticMappingPolicy.Default,
-			out PublishedDiagnostics? publishedDiagnostics);
+			out ParsedDiagnostics? publishedDiagnostics
+		);
 
 		// Values outside the LSP 1-4 range must never leak undefined enum members into ordering.
 		Assert.IsTrue(parsed);
 		Assert.IsNotNull(publishedDiagnostics);
-		Assert.AreEqual(3, publishedDiagnostics.Diagnostics.Count);
-		Assert.AreEqual(TextDiagnosticSeverity.Warning, publishedDiagnostics.Diagnostics[0].Severity);
-		Assert.AreEqual(TextDiagnosticSeverity.Warning, publishedDiagnostics.Diagnostics[1].Severity);
-		Assert.AreEqual(TextDiagnosticSeverity.Warning, publishedDiagnostics.Diagnostics[2].Severity);
+		Assert.HasCount(3, publishedDiagnostics.Diagnostics);
+		Assert.AreEqual(DiagnosticSeverity.Warning, publishedDiagnostics.Diagnostics[0].Severity);
+		Assert.AreEqual(DiagnosticSeverity.Warning, publishedDiagnostics.Diagnostics[1].Severity);
+		Assert.AreEqual(DiagnosticSeverity.Warning, publishedDiagnostics.Diagnostics[2].Severity);
 	}
 
 	[TestMethod]
@@ -356,30 +389,35 @@ public sealed class DiagnosticsParserTests
 		const string content = "local value = 1";
 
 		bool parsed = DiagnosticsParser.TryParse(
-			new PublishDiagnosticsParams(
+			parameters: new Lsp.PublishDiagnosticsParams(
 				Uri: null,
 				Version: 1,
+
 				Diagnostics:
 				[
-					new DiagnosticPayload(
-						new ProtocolRangePayload(new ProtocolPosition(0, 0), new ProtocolPosition(0, 5)),
+					new Lsp.DiagnosticPayload(
+						Range: new Lsp.RangePayload(new Lsp.PositionPayload(0, 0), new Lsp.PositionPayload(0, 5)),
 						Severity: null,
-						"Unclassified payload.",
-						null,
-						null)
-				]),
-			FilePath,
+						Message: "Unclassified payload.",
+						Source: null,
+						Code: null
+					),
+				]
+			),
+
+			normalizedFilePath: FilePath,
 			content,
 			documentVersion: 1,
 			policy: DiagnosticMappingPolicy.Default,
-			out PublishedDiagnostics? publishedDiagnostics);
+			out ParsedDiagnostics? publishedDiagnostics
+		);
 
 		// The protocol defines no severity default; the provider presents an omitted severity as an
 		// error (the highest-signal fallback).
 		Assert.IsTrue(parsed);
 		Assert.IsNotNull(publishedDiagnostics);
-		Assert.AreEqual(1, publishedDiagnostics.Diagnostics.Count);
-		Assert.AreEqual(TextDiagnosticSeverity.Error, publishedDiagnostics.Diagnostics[0].Severity);
+		Assert.HasCount(1, publishedDiagnostics.Diagnostics);
+		Assert.AreEqual(DiagnosticSeverity.Error, publishedDiagnostics.Diagnostics[0].Severity);
 	}
 
 	[TestMethod]
@@ -388,35 +426,42 @@ public sealed class DiagnosticsParserTests
 		const string content = "local value = 1";
 
 		bool parsed = DiagnosticsParser.TryParse(
-			new PublishDiagnosticsParams(
+			parameters: new Lsp.PublishDiagnosticsParams(
 				Uri: null,
 				Version: 1,
+
 				Diagnostics:
 				[
-					new DiagnosticPayload(
-						new ProtocolRangePayload(new ProtocolPosition(0, 6), new ProtocolPosition(0, 11)),
-						DiagnosticSeverity.Warning,
-						"Later warning.",
-						null,
-						null),
-					new DiagnosticPayload(
-						new ProtocolRangePayload(new ProtocolPosition(0, 0), new ProtocolPosition(0, 5)),
-						DiagnosticSeverity.Hint,
-						"Earlier hint.",
-						null,
-						null)
-				]),
-			FilePath,
+					new Lsp.DiagnosticPayload(
+						Range: new Lsp.RangePayload(new Lsp.PositionPayload(0, 6), new Lsp.PositionPayload(0, 11)),
+						Severity: Lsp.DiagnosticSeverity.Warning,
+						Message: "Later warning.",
+						Source: null,
+						Code: null
+					),
+
+					new Lsp.DiagnosticPayload(
+						Range: new Lsp.RangePayload(new Lsp.PositionPayload(0, 0), new Lsp.PositionPayload(0, 5)),
+						Severity: Lsp.DiagnosticSeverity.Hint,
+						Message: "Earlier hint.",
+						Source: null,
+						Code: null
+					),
+				]
+			),
+
+			normalizedFilePath: FilePath,
 			content,
 			documentVersion: 1,
 			policy: DiagnosticMappingPolicy.Default,
-			out PublishedDiagnostics? publishedDiagnostics);
+			out ParsedDiagnostics? publishedDiagnostics
+		);
 
 		Assert.IsTrue(parsed);
 		Assert.IsNotNull(publishedDiagnostics);
-		Assert.AreEqual(2, publishedDiagnostics.Diagnostics.Count);
-		Assert.AreEqual(0, publishedDiagnostics.Diagnostics[0].StartOffset);
-		Assert.AreEqual(6, publishedDiagnostics.Diagnostics[1].StartOffset);
+		Assert.HasCount(2, publishedDiagnostics.Diagnostics);
+		Assert.AreEqual(0, publishedDiagnostics.Diagnostics[0].Range.Offset);
+		Assert.AreEqual(6, publishedDiagnostics.Diagnostics[1].Range.Offset);
 	}
 
 	[TestMethod]
@@ -425,30 +470,35 @@ public sealed class DiagnosticsParserTests
 		const string content = "local value = 1";
 
 		bool parsed = DiagnosticsParser.TryParse(
-			new PublishDiagnosticsParams(
+			parameters: new Lsp.PublishDiagnosticsParams(
 				Uri: null,
 				Version: 1,
+
 				Diagnostics:
 				[
-					new DiagnosticPayload(
-						new ProtocolRangePayload(new ProtocolPosition(99, -4), new ProtocolPosition(120, -2)),
-						DiagnosticSeverity.Warning,
-						"Clamped warning.",
-						null,
-						null)
-				]),
-			FilePath,
+					new Lsp.DiagnosticPayload(
+						Range: new Lsp.RangePayload(new Lsp.PositionPayload(99, -4), new Lsp.PositionPayload(120, -2)),
+						Severity: Lsp.DiagnosticSeverity.Warning,
+						Message: "Clamped warning.",
+						Source: null,
+						Code: null
+					),
+				]
+			),
+
+			normalizedFilePath: FilePath,
 			content,
 			documentVersion: 1,
 			policy: DiagnosticMappingPolicy.Default,
-			out PublishedDiagnostics? publishedDiagnostics);
+			out ParsedDiagnostics? publishedDiagnostics
+		);
 
 		// The last line and a zero column are used instead of failing the payload.
 		Assert.IsTrue(parsed);
 		Assert.IsNotNull(publishedDiagnostics);
-		Assert.AreEqual(1, publishedDiagnostics.Diagnostics.Count);
-		Assert.AreEqual(0, publishedDiagnostics.Diagnostics[0].StartOffset);
-		Assert.AreEqual(0, publishedDiagnostics.Diagnostics[0].EndOffset);
+		Assert.HasCount(1, publishedDiagnostics.Diagnostics);
+		Assert.AreEqual(0, publishedDiagnostics.Diagnostics[0].Range.Offset);
+		Assert.AreEqual(0, publishedDiagnostics.Diagnostics[0].Range.EndOffset);
 	}
 
 	[TestMethod]
@@ -457,32 +507,41 @@ public sealed class DiagnosticsParserTests
 		const string content = "local value = 1";
 
 		bool parsed = DiagnosticsParser.TryParse(
-			new PublishDiagnosticsParams(
+			parameters: new Lsp.PublishDiagnosticsParams(
 				Uri: null,
 				Version: 1,
+
 				Diagnostics:
 				[
-					new DiagnosticPayload(
+					new Lsp.DiagnosticPayload(
 						// The end line lies beyond the document, so clamping collapses the range into an
 						// inverted one; the diagnostic must survive through the word anchor instead of
 						// being dropped.
-						new ProtocolRangePayload(new ProtocolPosition(0, 6), new ProtocolPosition(5, 3)),
-						DiagnosticSeverity.Warning,
-						"Word anchored warning.",
-						null,
-						null)
-				]),
-			FilePath,
+						Range: new Lsp.RangePayload(new Lsp.PositionPayload(0, 6), new Lsp.PositionPayload(5, 3)),
+						Severity: Lsp.DiagnosticSeverity.Warning,
+						Message: "Word anchored warning.",
+						Source: null,
+						Code: null
+					),
+				]
+			),
+
+			normalizedFilePath: FilePath,
 			content,
 			documentVersion: 1,
 			policy: DiagnosticMappingPolicy.Default,
-			out PublishedDiagnostics? publishedDiagnostics);
+			out ParsedDiagnostics? publishedDiagnostics
+		);
 
 		Assert.IsTrue(parsed);
 		Assert.IsNotNull(publishedDiagnostics);
-		Assert.AreEqual(1, publishedDiagnostics.Diagnostics.Count);
-		Assert.AreEqual("local value = 1".IndexOf("value", StringComparison.Ordinal), publishedDiagnostics.Diagnostics[0].StartOffset);
-		Assert.AreEqual("local value = 1".IndexOf("value", StringComparison.Ordinal) + "value".Length, publishedDiagnostics.Diagnostics[0].EndOffset);
+		Assert.HasCount(1, publishedDiagnostics.Diagnostics);
+		Assert.AreEqual("local value = 1".IndexOf("value", StringComparison.Ordinal), publishedDiagnostics.Diagnostics[0].Range.Offset);
+
+		Assert.AreEqual(
+			"local value = 1".IndexOf("value", StringComparison.Ordinal) + "value".Length,
+			publishedDiagnostics.Diagnostics[0].Range.EndOffset
+		);
 	}
 
 	[TestMethod]
@@ -494,20 +553,22 @@ public sealed class DiagnosticsParserTests
 		// end >= start and fabricate a valid-looking range, so the diagnostic must anchor to the word at
 		// its start position instead.
 		bool parsed = DiagnosticsParser.TryParse(
-			CreateDiagnostics(line: 1, startCharacter: 0, endLine: 0, endCharacter: 5),
-			FilePath,
+			parameters: CreateDiagnostics(line: 1, startCharacter: 0, endLine: 0, endCharacter: 5),
+			normalizedFilePath: FilePath,
 			content,
 			documentVersion: 1,
 			policy: DiagnosticMappingPolicy.Default,
-			out PublishedDiagnostics? publishedDiagnostics);
+			out ParsedDiagnostics? publishedDiagnostics
+		);
 
 		Assert.IsTrue(parsed);
 		Assert.IsNotNull(publishedDiagnostics);
-		Assert.AreEqual(1, publishedDiagnostics.Diagnostics.Count);
+		Assert.HasCount(1, publishedDiagnostics.Diagnostics);
 
-		var diagnostic = publishedDiagnostics.Diagnostics[0];
-		Assert.AreEqual(content.IndexOf("print", StringComparison.Ordinal), diagnostic.StartOffset);
-		Assert.AreEqual("print".Length, diagnostic.EndOffset - diagnostic.StartOffset);
+		Diagnostic diagnostic = publishedDiagnostics.Diagnostics[0];
+
+		Assert.AreEqual(content.IndexOf("print", StringComparison.Ordinal), diagnostic.Range.Offset);
+		Assert.AreEqual("print".Length, diagnostic.Range.EndOffset - diagnostic.Range.Offset);
 	}
 
 	[TestMethod]
@@ -516,36 +577,98 @@ public sealed class DiagnosticsParserTests
 		const string content = "local value = 1";
 
 		bool parsed = DiagnosticsParser.TryParse(
-			new PublishDiagnosticsParams(
+			parameters: new Lsp.PublishDiagnosticsParams(
 				Uri: null,
 				Version: 1,
+
 				Diagnostics:
 				[
-					new DiagnosticPayload(
-						new ProtocolRangePayload(new ProtocolPosition(0, 0), new ProtocolPosition(0, 5)),
-						DiagnosticSeverity.Warning,
-						"Warning first.",
-						null,
-						null),
-					new DiagnosticPayload(
-						new ProtocolRangePayload(new ProtocolPosition(0, 0), new ProtocolPosition(0, 5)),
-						DiagnosticSeverity.Error,
-						"Error second.",
-						null,
-						null)
-				]),
-			FilePath,
+					new Lsp.DiagnosticPayload(
+						Range: new Lsp.RangePayload(new Lsp.PositionPayload(0, 0), new Lsp.PositionPayload(0, 5)),
+						Severity: Lsp.DiagnosticSeverity.Warning,
+						Message: "Warning first.",
+						Source: null,
+						Code: null
+					),
+
+					new Lsp.DiagnosticPayload(
+						Range: new Lsp.RangePayload(new Lsp.PositionPayload(0, 0), new Lsp.PositionPayload(0, 5)),
+						Severity: Lsp.DiagnosticSeverity.Error,
+						Message: "Error second.",
+						Source: null,
+						Code: null
+					),
+				]
+			),
+
+			normalizedFilePath: FilePath,
 			content,
 			documentVersion: 1,
 			policy: DiagnosticMappingPolicy.Default,
-			out PublishedDiagnostics? publishedDiagnostics);
+			out ParsedDiagnostics? publishedDiagnostics
+		);
 
 		// Diagnostics with the same start offset are ordered by severity rank, error first.
 		Assert.IsTrue(parsed);
 		Assert.IsNotNull(publishedDiagnostics);
-		Assert.AreEqual(2, publishedDiagnostics.Diagnostics.Count);
+		Assert.HasCount(2, publishedDiagnostics.Diagnostics);
 		Assert.AreEqual("Error second.", publishedDiagnostics.Diagnostics[0].Message);
 		Assert.AreEqual("Warning first.", publishedDiagnostics.Diagnostics[1].Message);
+	}
+
+	[TestMethod]
+	public void TryParse_SameOffsetAndSeverity_PreservesServerOrder()
+	{
+		const string content = "local value = 1";
+
+		bool parsed = DiagnosticsParser.TryParse(
+			parameters: new Lsp.PublishDiagnosticsParams(
+				Uri: null,
+				Version: 1,
+
+				Diagnostics:
+				[
+					new Lsp.DiagnosticPayload(
+						Range: new Lsp.RangePayload(new Lsp.PositionPayload(0, 0), new Lsp.PositionPayload(0, 5)),
+						Severity: Lsp.DiagnosticSeverity.Warning,
+						Message: "Warning A.",
+						Source: null,
+						Code: null
+					),
+
+					new Lsp.DiagnosticPayload(
+						Range: new Lsp.RangePayload(new Lsp.PositionPayload(0, 0), new Lsp.PositionPayload(0, 5)),
+						Severity: Lsp.DiagnosticSeverity.Warning,
+						Message: "Warning B.",
+						Source: null,
+						Code: null
+					),
+
+					new Lsp.DiagnosticPayload(
+						Range: new Lsp.RangePayload(new Lsp.PositionPayload(0, 0), new Lsp.PositionPayload(0, 5)),
+						Severity: Lsp.DiagnosticSeverity.Warning,
+						Message: "Warning C.",
+						Source: null,
+						Code: null
+					),
+				]
+			),
+
+			normalizedFilePath: FilePath,
+			content,
+			documentVersion: 1,
+			policy: DiagnosticMappingPolicy.Default,
+			out ParsedDiagnostics? publishedDiagnostics
+		);
+
+		// Equal start offsets and equal severities leave no ordering key except the published sequence, so the
+		// parser must not let an unstable sort reorder them.
+		Assert.IsTrue(parsed);
+		Assert.IsNotNull(publishedDiagnostics);
+		Assert.HasCount(3, publishedDiagnostics.Diagnostics);
+		Assert.AreEqual("Warning A.", publishedDiagnostics.Diagnostics[0].Message);
+		Assert.AreEqual("Warning B.", publishedDiagnostics.Diagnostics[1].Message);
+		Assert.AreEqual("Warning C.", publishedDiagnostics.Diagnostics[2].Message);
 	}
 
 	[TestMethod]
@@ -553,38 +676,45 @@ public sealed class DiagnosticsParserTests
 	{
 		const string content = "print(\"hi\")";
 
-		var customPolicy = new DiagnosticMappingPolicy(
-			"Custom fallback message.",
-			character => char.IsLetterOrDigit(character) || character is '_' or '"');
+		var customPolicy = new DiagnosticMappingPolicy
+		{
+			UnknownMessage = "Custom fallback message.",
+			WordCharacters = IdentifierCharacterPolicy.Create(character => char.IsLetterOrDigit(character) || character is '_' or '"'),
+		};
 
 		// start=(0,7) lies after end=(0,0): the payload is inverted, so the diagnostic collapses to the
 		// word anchor at its start. The custom rule treats '"' as a word character, so the anchor covers
 		// the whole quoted run instead of only its inner letters.
 		bool parsed = DiagnosticsParser.TryParse(
-			new PublishDiagnosticsParams(
+			parameters: new Lsp.PublishDiagnosticsParams(
 				Uri: null,
 				Version: 1,
+
 				Diagnostics:
 				[
-					new DiagnosticPayload(
-						new ProtocolRangePayload(new ProtocolPosition(0, 7), new ProtocolPosition(0, 0)),
-						DiagnosticSeverity.Warning,
-						"   ",
-						null,
-						null)
-				]),
-			FilePath,
+					new Lsp.DiagnosticPayload(
+						Range: new Lsp.RangePayload(new Lsp.PositionPayload(0, 7), new Lsp.PositionPayload(0, 0)),
+						Severity: Lsp.DiagnosticSeverity.Warning,
+						Message: "   ",
+						Source: null,
+						Code: null
+					),
+				]
+			),
+
+			normalizedFilePath: FilePath,
 			content,
 			documentVersion: 1,
 			policy: customPolicy,
-			out PublishedDiagnostics? publishedDiagnostics);
+			out ParsedDiagnostics? publishedDiagnostics
+		);
 
 		Assert.IsTrue(parsed);
 		Assert.IsNotNull(publishedDiagnostics);
-		Assert.AreEqual(1, publishedDiagnostics.Diagnostics.Count);
+		Assert.HasCount(1, publishedDiagnostics.Diagnostics);
 		Assert.AreEqual("Custom fallback message.", publishedDiagnostics.Diagnostics[0].Message);
-		Assert.AreEqual(6, publishedDiagnostics.Diagnostics[0].StartOffset);
-		Assert.AreEqual(10, publishedDiagnostics.Diagnostics[0].EndOffset);
+		Assert.AreEqual(6, publishedDiagnostics.Diagnostics[0].Range.Offset);
+		Assert.AreEqual(10, publishedDiagnostics.Diagnostics[0].Range.EndOffset);
 	}
 
 	[TestMethod]
@@ -593,12 +723,13 @@ public sealed class DiagnosticsParserTests
 		const string content = "local value = 1";
 
 		bool parsed = DiagnosticsParser.TryParse(
-			CreateDiagnostics(line: 0, startCharacter: 6, endLine: 0, endCharacter: 11, version: 2),
-			FilePath,
+			parameters: CreateDiagnostics(line: 0, startCharacter: 6, endLine: 0, endCharacter: 11, version: 2),
+			normalizedFilePath: FilePath,
 			content,
 			documentVersion: 1,
 			policy: DiagnosticMappingPolicy.Default,
-			out PublishedDiagnostics? publishedDiagnostics);
+			out ParsedDiagnostics? publishedDiagnostics
+		);
 
 		// The parser-level fence rejects a payload that reports a different positive document
 		// version before any offsets are mapped.
@@ -607,30 +738,79 @@ public sealed class DiagnosticsParserTests
 
 		// An unversioned payload stays acceptable for the same document version.
 		bool unknownVersionParsed = DiagnosticsParser.TryParse(
-			CreateDiagnostics(line: 0, startCharacter: 6, endLine: 0, endCharacter: 11, version: 0),
-			FilePath,
+			parameters: CreateDiagnostics(line: 0, startCharacter: 6, endLine: 0, endCharacter: 11, version: 0),
+			normalizedFilePath: FilePath,
 			content,
 			documentVersion: 1,
 			policy: DiagnosticMappingPolicy.Default,
-			out PublishedDiagnostics? unknownVersionPayload);
+			publishedDiagnostics: out ParsedDiagnostics? unknownVersionPayload
+		);
 
 		Assert.IsTrue(unknownVersionParsed);
 		Assert.IsNotNull(unknownVersionPayload);
 		Assert.AreEqual(0, unknownVersionPayload.Version);
 	}
 
-	private static PublishDiagnosticsParams CreateDiagnostics(int line, int startCharacter, int endLine, int endCharacter, int version = 1) => new(
-		Uri: null,
-		Version: version,
-		Diagnostics:
-		[
-			new DiagnosticPayload(
-				new ProtocolRangePayload(
-					new ProtocolPosition(line, startCharacter),
-					new ProtocolPosition(endLine, endCharacter)),
-				DiagnosticSeverity.Error,
-				"Syntax error.",
-				null,
-				null)
-		]);
+	[TestMethod]
+	public void TryParse_SurrogatePair_CountsUtf16CodeUnits()
+	{
+		// The emoji is an astral character: two UTF-16 code units. LSP characters are code units, so the "print"
+		// run starts at unit 2 and a range that starts there must map to offset 2, not to a code-point index.
+		const string content = "\U0001F600print";
+
+		bool parsed = DiagnosticsParser.TryParse(
+			parameters: CreateDiagnostics(line: 0, startCharacter: 2, endLine: 0, endCharacter: 7),
+			normalizedFilePath: FilePath,
+			content,
+			documentVersion: 1,
+			policy: DiagnosticMappingPolicy.Default,
+			out ParsedDiagnostics? publishedDiagnostics
+		);
+
+		Assert.IsTrue(parsed);
+		Assert.IsNotNull(publishedDiagnostics);
+		Assert.HasCount(1, publishedDiagnostics.Diagnostics);
+		Assert.AreEqual(2, publishedDiagnostics.Diagnostics[0].Range.Offset);
+		Assert.AreEqual(7, publishedDiagnostics.Diagnostics[0].Range.EndOffset);
+	}
+
+	[TestMethod]
+	public void TryParse_EmptyContent_MapsEveryRangeToOffsetZero()
+	{
+		const string content = "";
+
+		bool parsed = DiagnosticsParser.TryParse(
+			parameters: CreateDiagnostics(line: 0, startCharacter: 0, endLine: 0, endCharacter: 0),
+			normalizedFilePath: FilePath,
+			content,
+			documentVersion: 1,
+			policy: DiagnosticMappingPolicy.Default,
+			out ParsedDiagnostics? publishedDiagnostics
+		);
+
+		Assert.IsTrue(parsed);
+		Assert.IsNotNull(publishedDiagnostics);
+		Assert.HasCount(1, publishedDiagnostics.Diagnostics);
+		Assert.AreEqual(0, publishedDiagnostics.Diagnostics[0].Range.Offset);
+		Assert.AreEqual(0, publishedDiagnostics.Diagnostics[0].Range.EndOffset);
+	}
+
+	private static Lsp.PublishDiagnosticsParams CreateDiagnostics(int line, int startCharacter, int endLine, int endCharacter, int version = 1)
+	{
+		return new(
+			Uri: null,
+			version,
+
+			Diagnostics:
+			[
+				new Lsp.DiagnosticPayload(
+					Range: new Lsp.RangePayload(new Lsp.PositionPayload(line, startCharacter), new Lsp.PositionPayload(endLine, endCharacter)),
+					Severity: Lsp.DiagnosticSeverity.Error,
+					Message: "Syntax error.",
+					Source: null,
+					Code: null
+				),
+			]
+		);
+	}
 }

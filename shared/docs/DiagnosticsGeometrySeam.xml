@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+	<members>
+		<member name="Freeze">
+			<summary>Freezes a completed geometry so it can be shared and drawn without further change.</summary>
+			<param name="geometry">The geometry to freeze.</param>
+		</member>
+
+		<member name="BeginFigure">
+			<summary>Starts a new open figure at the given point.</summary>
+			<param name="context">The geometry context to start the figure in.</param>
+			<param name="start">The figure's starting point.</param>
+		</member>
+
+		<member name="LineTo">
+			<summary>Appends a stroked line segment to the current figure.</summary>
+			<param name="context">The geometry context to append to.</param>
+			<param name="point">The segment's end point.</param>
+		</member>
+
+		<member name="EndFigure">
+			<summary>Ends the current open figure.</summary>
+			<param name="context">The geometry context to close the figure in.</param>
+		</member>
+	</members>
+</doc>

@@ -1,0 +1,172 @@
+#nullable enable
+Nickelony.IDEKit.FileWatching.FileChange
+Nickelony.IDEKit.FileWatching.FileChange.Deconstruct(out string! Path, out Nickelony.IDEKit.FileWatching.FileChangeKind Kind) -> void
+Nickelony.IDEKit.FileWatching.FileChange.Equals(Nickelony.IDEKit.FileWatching.FileChange other) -> bool
+Nickelony.IDEKit.FileWatching.FileChange.FileChange() -> void
+Nickelony.IDEKit.FileWatching.FileChange.FileChange(string! Path, Nickelony.IDEKit.FileWatching.FileChangeKind Kind) -> void
+Nickelony.IDEKit.FileWatching.FileChange.Kind.get -> Nickelony.IDEKit.FileWatching.FileChangeKind
+Nickelony.IDEKit.FileWatching.FileChange.Kind.init -> void
+Nickelony.IDEKit.FileWatching.FileChange.Path.get -> string!
+Nickelony.IDEKit.FileWatching.FileChange.Path.init -> void
+Nickelony.IDEKit.FileWatching.FileChangeBatch
+Nickelony.IDEKit.FileWatching.FileChangeBatch.Count.get -> int
+Nickelony.IDEKit.FileWatching.FileChangeBatch.Entries.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.FileWatching.FileChange>!
+Nickelony.IDEKit.FileWatching.FileChangeBatch.FileChangeBatch(System.Collections.Generic.IEnumerable<Nickelony.IDEKit.FileWatching.FileChange>! entries) -> void
+Nickelony.IDEKit.FileWatching.FileChangeBuffer
+Nickelony.IDEKit.FileWatching.FileChangeBuffer.AddPending(string! filePath, Nickelony.IDEKit.FileWatching.FileChangeKind kind) -> void
+Nickelony.IDEKit.FileWatching.FileChangeBuffer.AddPendingRange(System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.FileWatching.FileChange>! changes) -> void
+Nickelony.IDEKit.FileWatching.FileChangeBuffer.AddReplayed(Nickelony.IDEKit.FileWatching.FileChangeBatch! batch) -> void
+Nickelony.IDEKit.FileWatching.FileChangeBuffer.AddReplayedRange(System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.FileWatching.FileChange>! changes) -> void
+Nickelony.IDEKit.FileWatching.FileChangeBuffer.Count.get -> int
+Nickelony.IDEKit.FileWatching.FileChangeBuffer.DrainBatch() -> Nickelony.IDEKit.FileWatching.FileChangeBatch!
+Nickelony.IDEKit.FileWatching.FileChangeBuffer.FileChangeBuffer(Nickelony.IDEKit.Core.Paths.LocalPathComparisonPolicy? pathComparison = null) -> void
+Nickelony.IDEKit.FileWatching.FileChangeBuffer.IsEmpty.get -> bool
+Nickelony.IDEKit.FileWatching.FileChangeKind
+Nickelony.IDEKit.FileWatching.FileChangeKind.Changed = 2 -> Nickelony.IDEKit.FileWatching.FileChangeKind
+Nickelony.IDEKit.FileWatching.FileChangeKind.Created = 1 -> Nickelony.IDEKit.FileWatching.FileChangeKind
+Nickelony.IDEKit.FileWatching.FileChangeKind.Deleted = 3 -> Nickelony.IDEKit.FileWatching.FileChangeKind
+Nickelony.IDEKit.FileWatching.FileSnapshotDiffer
+Nickelony.IDEKit.FileWatching.FileSnapshotEntry
+Nickelony.IDEKit.FileWatching.FileSnapshotEntry.ContentFingerprint.get -> ulong
+Nickelony.IDEKit.FileWatching.FileSnapshotEntry.ContentFingerprint.init -> void
+Nickelony.IDEKit.FileWatching.FileSnapshotEntry.Deconstruct(out bool IsDirectory, out long LastWriteUtcTicks, out long Length, out ulong ContentFingerprint) -> void
+Nickelony.IDEKit.FileWatching.FileSnapshotEntry.Equals(Nickelony.IDEKit.FileWatching.FileSnapshotEntry other) -> bool
+Nickelony.IDEKit.FileWatching.FileSnapshotEntry.FileSnapshotEntry() -> void
+Nickelony.IDEKit.FileWatching.FileSnapshotEntry.FileSnapshotEntry(bool IsDirectory, long LastWriteUtcTicks, long Length, ulong ContentFingerprint) -> void
+Nickelony.IDEKit.FileWatching.FileSnapshotEntry.IsDirectory.get -> bool
+Nickelony.IDEKit.FileWatching.FileSnapshotEntry.IsDirectory.init -> void
+Nickelony.IDEKit.FileWatching.FileSnapshotEntry.LastWriteUtcTicks.get -> long
+Nickelony.IDEKit.FileWatching.FileSnapshotEntry.LastWriteUtcTicks.init -> void
+Nickelony.IDEKit.FileWatching.FileSnapshotEntry.Length.get -> long
+Nickelony.IDEKit.FileWatching.FileSnapshotEntry.Length.init -> void
+Nickelony.IDEKit.FileWatching.FileSnapshotTracker
+Nickelony.IDEKit.FileWatching.FileSnapshotTracker.ApplyChanges(System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.FileWatching.FileChange>! changes) -> void
+Nickelony.IDEKit.FileWatching.FileSnapshotTracker.BuildDeltaBatch(System.Collections.Generic.IReadOnlyDictionary<string!, Nickelony.IDEKit.FileWatching.FileSnapshotEntry>! previousSnapshot, System.Collections.Generic.IReadOnlyDictionary<string!, Nickelony.IDEKit.FileWatching.FileSnapshotEntry>! currentSnapshot) -> Nickelony.IDEKit.FileWatching.FileChangeBatch!
+Nickelony.IDEKit.FileWatching.FileSnapshotTracker.CaptureTrackedSnapshot() -> void
+Nickelony.IDEKit.FileWatching.FileSnapshotTracker.CloneTrackedSnapshot() -> System.Collections.Generic.Dictionary<string!, Nickelony.IDEKit.FileWatching.FileSnapshotEntry>!
+Nickelony.IDEKit.FileWatching.FileSnapshotTracker.FileSnapshotTracker(string! workspaceRootDirectoryPath, System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.FileWatching.FileWatchSpecification>! watchSpecifications, Nickelony.IDEKit.Core.Paths.LocalPathComparisonPolicy? pathComparison = null, Microsoft.Extensions.Logging.ILogger? logger = null) -> void
+Nickelony.IDEKit.FileWatching.FileSnapshotTracker.ReplaceTrackedSnapshotWithCurrent() -> System.Collections.Generic.Dictionary<string!, Nickelony.IDEKit.FileWatching.FileSnapshotEntry>!
+Nickelony.IDEKit.FileWatching.FileSnapshotTrackerFactory
+Nickelony.IDEKit.FileWatching.FileWatchFailure
+Nickelony.IDEKit.FileWatching.FileWatchFailure.<Clone>$() -> Nickelony.IDEKit.FileWatching.FileWatchFailure!
+Nickelony.IDEKit.FileWatching.FileWatchFailure.Code.get -> string!
+Nickelony.IDEKit.FileWatching.FileWatchFailure.Code.init -> void
+Nickelony.IDEKit.FileWatching.FileWatchFailure.Deconstruct(out string! Code, out string! WorkspaceRootDirectoryPath, out System.Exception? Exception) -> void
+Nickelony.IDEKit.FileWatching.FileWatchFailure.Equals(Nickelony.IDEKit.FileWatching.FileWatchFailure? other) -> bool
+Nickelony.IDEKit.FileWatching.FileWatchFailure.Exception.get -> System.Exception?
+Nickelony.IDEKit.FileWatching.FileWatchFailure.Exception.init -> void
+Nickelony.IDEKit.FileWatching.FileWatchFailure.FileWatchFailure(string! Code, string! WorkspaceRootDirectoryPath, System.Exception? Exception) -> void
+Nickelony.IDEKit.FileWatching.FileWatchFailure.WorkspaceRootDirectoryPath.get -> string!
+Nickelony.IDEKit.FileWatching.FileWatchFailure.WorkspaceRootDirectoryPath.init -> void
+Nickelony.IDEKit.FileWatching.FileWatchFailureCodes
+Nickelony.IDEKit.FileWatching.FileWatchSpecification
+Nickelony.IDEKit.FileWatching.FileWatchSpecification.Deconstruct(out string! Filter, out bool IncludeSubdirectories) -> void
+Nickelony.IDEKit.FileWatching.FileWatchSpecification.Equals(Nickelony.IDEKit.FileWatching.FileWatchSpecification other) -> bool
+Nickelony.IDEKit.FileWatching.FileWatchSpecification.FileWatchSpecification() -> void
+Nickelony.IDEKit.FileWatching.FileWatchSpecification.FileWatchSpecification(string! Filter, bool IncludeSubdirectories) -> void
+Nickelony.IDEKit.FileWatching.FileWatchSpecification.Filter.get -> string!
+Nickelony.IDEKit.FileWatching.FileWatchSpecification.Filter.init -> void
+Nickelony.IDEKit.FileWatching.FileWatchSpecification.IncludeSubdirectories.get -> bool
+Nickelony.IDEKit.FileWatching.FileWatchSpecification.IncludeSubdirectories.init -> void
+Nickelony.IDEKit.FileWatching.FileWatchSupervisor
+Nickelony.IDEKit.FileWatching.FileWatchSupervisor.ApplyTrackedChanges(System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.FileWatching.FileChange>! changes) -> void
+Nickelony.IDEKit.FileWatching.FileWatchSupervisor.Dispose() -> void
+Nickelony.IDEKit.FileWatching.FileWatchSupervisor.EnsureWatcherStartedAsync() -> System.Threading.Tasks.Task!
+Nickelony.IDEKit.FileWatching.FileWatchSupervisor.FileWatchSupervisor(Nickelony.IDEKit.FileWatching.FileWatchSupervisorSpecification! specification, Nickelony.IDEKit.FileWatching.FileWatchSupervisorHooks! hooks, Microsoft.Extensions.Logging.ILogger? logger = null) -> void
+Nickelony.IDEKit.FileWatching.FileWatchSupervisor.HandleWatcherFailure(Nickelony.IDEKit.FileWatching.IFileWatcher! watcher, System.Exception? exception) -> void
+Nickelony.IDEKit.FileWatching.FileWatchSupervisor.IsWatcherActive.get -> bool
+Nickelony.IDEKit.FileWatching.FileWatchSupervisor.RescanAsync() -> System.Threading.Tasks.Task!
+Nickelony.IDEKit.FileWatching.FileWatchSupervisor.WorkspaceRootDirectoryPath.get -> string!
+Nickelony.IDEKit.FileWatching.FileWatchSupervisorHooks
+Nickelony.IDEKit.FileWatching.FileWatchSupervisorHooks.DispatchAsync.get -> System.Func<Nickelony.IDEKit.FileWatching.FileWatchSupervisor!, Nickelony.IDEKit.FileWatching.FileChangeBatch!, System.Threading.CancellationToken, System.Threading.Tasks.Task!>!
+Nickelony.IDEKit.FileWatching.FileWatchSupervisorHooks.DispatchAsync.init -> void
+Nickelony.IDEKit.FileWatching.FileWatchSupervisorHooks.FileWatchSupervisorHooks() -> void
+Nickelony.IDEKit.FileWatching.FileWatchSupervisorHooks.IsDisposed.get -> System.Func<bool>!
+Nickelony.IDEKit.FileWatching.FileWatchSupervisorHooks.IsDisposed.init -> void
+Nickelony.IDEKit.FileWatching.FileWatchSupervisorHooks.IsEnabled.get -> System.Func<bool>!
+Nickelony.IDEKit.FileWatching.FileWatchSupervisorHooks.IsEnabled.init -> void
+Nickelony.IDEKit.FileWatching.FileWatchSupervisorHooks.ObserveBackgroundTask.get -> System.Action<System.Threading.Tasks.Task!, string!>!
+Nickelony.IDEKit.FileWatching.FileWatchSupervisorHooks.ObserveBackgroundTask.init -> void
+Nickelony.IDEKit.FileWatching.FileWatchSupervisorHooks.ReportFailure.get -> System.Action<Nickelony.IDEKit.FileWatching.FileWatchFailure!>!
+Nickelony.IDEKit.FileWatching.FileWatchSupervisorHooks.ReportFailure.init -> void
+Nickelony.IDEKit.FileWatching.FileWatchSupervisorSpecification
+Nickelony.IDEKit.FileWatching.FileWatchSupervisorSpecification.<Clone>$() -> Nickelony.IDEKit.FileWatching.FileWatchSupervisorSpecification!
+Nickelony.IDEKit.FileWatching.FileWatchSupervisorSpecification.Deconstruct(out string! WorkspaceRootDirectoryPath, out string! DisplayName, out System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.FileWatching.FileWatchSpecification>! WatchSpecifications, out Nickelony.IDEKit.FileWatching.FileWatcherFactory! FileWatcherFactory, out Nickelony.IDEKit.FileWatching.FileSnapshotTrackerFactory! FileSnapshotTrackerFactory) -> void
+Nickelony.IDEKit.FileWatching.FileWatchSupervisorSpecification.DisplayName.get -> string!
+Nickelony.IDEKit.FileWatching.FileWatchSupervisorSpecification.DisplayName.init -> void
+Nickelony.IDEKit.FileWatching.FileWatchSupervisorSpecification.Equals(Nickelony.IDEKit.FileWatching.FileWatchSupervisorSpecification? other) -> bool
+Nickelony.IDEKit.FileWatching.FileWatchSupervisorSpecification.FileSnapshotTrackerFactory.get -> Nickelony.IDEKit.FileWatching.FileSnapshotTrackerFactory!
+Nickelony.IDEKit.FileWatching.FileWatchSupervisorSpecification.FileSnapshotTrackerFactory.init -> void
+Nickelony.IDEKit.FileWatching.FileWatchSupervisorSpecification.FileWatchSupervisorSpecification(string! WorkspaceRootDirectoryPath, string! DisplayName, System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.FileWatching.FileWatchSpecification>! WatchSpecifications, Nickelony.IDEKit.FileWatching.FileWatcherFactory! FileWatcherFactory, Nickelony.IDEKit.FileWatching.FileSnapshotTrackerFactory! FileSnapshotTrackerFactory) -> void
+Nickelony.IDEKit.FileWatching.FileWatchSupervisorSpecification.FileWatcherFactory.get -> Nickelony.IDEKit.FileWatching.FileWatcherFactory!
+Nickelony.IDEKit.FileWatching.FileWatchSupervisorSpecification.FileWatcherFactory.init -> void
+Nickelony.IDEKit.FileWatching.FileWatchSupervisorSpecification.WatchSpecifications.get -> System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.FileWatching.FileWatchSpecification>!
+Nickelony.IDEKit.FileWatching.FileWatchSupervisorSpecification.WatchSpecifications.init -> void
+Nickelony.IDEKit.FileWatching.FileWatchSupervisorSpecification.WorkspaceRootDirectoryPath.get -> string!
+Nickelony.IDEKit.FileWatching.FileWatchSupervisorSpecification.WorkspaceRootDirectoryPath.init -> void
+Nickelony.IDEKit.FileWatching.FileWatcher
+Nickelony.IDEKit.FileWatching.FileWatcher.Dispose() -> void
+Nickelony.IDEKit.FileWatching.FileWatcher.DisposeAsync() -> System.Threading.Tasks.ValueTask
+Nickelony.IDEKit.FileWatching.FileWatcher.FileWatcher(string! workspaceRootDirectoryPath, System.Func<Nickelony.IDEKit.FileWatching.FileChangeBatch!, System.Threading.CancellationToken, System.Threading.Tasks.Task!>! dispatchAsync, System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.FileWatching.FileWatchSpecification>! watchSpecifications, System.Action<Nickelony.IDEKit.FileWatching.FileWatcher!, System.Exception?>? onWatcherFailed = null, Nickelony.IDEKit.Core.Paths.LocalPathComparisonPolicy? pathComparison = null, Microsoft.Extensions.Logging.ILogger? logger = null) -> void
+Nickelony.IDEKit.FileWatching.FileWatcher.Start() -> Nickelony.IDEKit.FileWatching.FileWatcherStartResult
+Nickelony.IDEKit.FileWatching.FileWatcherFactory
+Nickelony.IDEKit.FileWatching.FileWatcherStartOutcome
+Nickelony.IDEKit.FileWatching.FileWatcherStartOutcome.AlreadyRunning = 2 -> Nickelony.IDEKit.FileWatching.FileWatcherStartOutcome
+Nickelony.IDEKit.FileWatching.FileWatcherStartOutcome.Disposed = 3 -> Nickelony.IDEKit.FileWatching.FileWatcherStartOutcome
+Nickelony.IDEKit.FileWatching.FileWatcherStartOutcome.Started = 1 -> Nickelony.IDEKit.FileWatching.FileWatcherStartOutcome
+Nickelony.IDEKit.FileWatching.FileWatcherStartOutcome.StartupFailed = 5 -> Nickelony.IDEKit.FileWatching.FileWatcherStartOutcome
+Nickelony.IDEKit.FileWatching.FileWatcherStartOutcome.WorkspaceRootMissing = 4 -> Nickelony.IDEKit.FileWatching.FileWatcherStartOutcome
+Nickelony.IDEKit.FileWatching.FileWatcherStartResult
+Nickelony.IDEKit.FileWatching.FileWatcherStartResult.Deconstruct(out Nickelony.IDEKit.FileWatching.FileWatcherStartOutcome Outcome, out System.Exception? StartupException) -> void
+Nickelony.IDEKit.FileWatching.FileWatcherStartResult.Equals(Nickelony.IDEKit.FileWatching.FileWatcherStartResult other) -> bool
+Nickelony.IDEKit.FileWatching.FileWatcherStartResult.FileWatcherStartResult() -> void
+Nickelony.IDEKit.FileWatching.FileWatcherStartResult.FileWatcherStartResult(Nickelony.IDEKit.FileWatching.FileWatcherStartOutcome Outcome, System.Exception? StartupException) -> void
+Nickelony.IDEKit.FileWatching.FileWatcherStartResult.Outcome.get -> Nickelony.IDEKit.FileWatching.FileWatcherStartOutcome
+Nickelony.IDEKit.FileWatching.FileWatcherStartResult.Outcome.init -> void
+Nickelony.IDEKit.FileWatching.FileWatcherStartResult.StartupException.get -> System.Exception?
+Nickelony.IDEKit.FileWatching.FileWatcherStartResult.StartupException.init -> void
+Nickelony.IDEKit.FileWatching.FileWatcherStartResult.Succeeded.get -> bool
+Nickelony.IDEKit.FileWatching.IFileSnapshotTracker
+Nickelony.IDEKit.FileWatching.IFileSnapshotTracker.ApplyChanges(System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.FileWatching.FileChange>! changes) -> void
+Nickelony.IDEKit.FileWatching.IFileSnapshotTracker.BuildDeltaBatch(System.Collections.Generic.IReadOnlyDictionary<string!, Nickelony.IDEKit.FileWatching.FileSnapshotEntry>! previousSnapshot, System.Collections.Generic.IReadOnlyDictionary<string!, Nickelony.IDEKit.FileWatching.FileSnapshotEntry>! currentSnapshot) -> Nickelony.IDEKit.FileWatching.FileChangeBatch!
+Nickelony.IDEKit.FileWatching.IFileSnapshotTracker.CaptureTrackedSnapshot() -> void
+Nickelony.IDEKit.FileWatching.IFileSnapshotTracker.CloneTrackedSnapshot() -> System.Collections.Generic.Dictionary<string!, Nickelony.IDEKit.FileWatching.FileSnapshotEntry>!
+Nickelony.IDEKit.FileWatching.IFileSnapshotTracker.ReplaceTrackedSnapshotWithCurrent() -> System.Collections.Generic.Dictionary<string!, Nickelony.IDEKit.FileWatching.FileSnapshotEntry>!
+Nickelony.IDEKit.FileWatching.IFileWatcher
+Nickelony.IDEKit.FileWatching.IFileWatcher.Start() -> Nickelony.IDEKit.FileWatching.FileWatcherStartResult
+const Nickelony.IDEKit.FileWatching.FileWatchFailureCodes.RecoveryFailed = "RecoveryFailed" -> string!
+const Nickelony.IDEKit.FileWatching.FileWatchFailureCodes.StartFailed = "StartFailed" -> string!
+override Nickelony.IDEKit.FileWatching.FileChange.GetHashCode() -> int
+override Nickelony.IDEKit.FileWatching.FileSnapshotEntry.GetHashCode() -> int
+override Nickelony.IDEKit.FileWatching.FileWatchFailure.Equals(object? obj) -> bool
+override Nickelony.IDEKit.FileWatching.FileWatchFailure.GetHashCode() -> int
+override Nickelony.IDEKit.FileWatching.FileWatchFailure.ToString() -> string!
+override Nickelony.IDEKit.FileWatching.FileWatchSpecification.GetHashCode() -> int
+override Nickelony.IDEKit.FileWatching.FileWatchSupervisorSpecification.Equals(object? obj) -> bool
+override Nickelony.IDEKit.FileWatching.FileWatchSupervisorSpecification.GetHashCode() -> int
+override Nickelony.IDEKit.FileWatching.FileWatchSupervisorSpecification.ToString() -> string!
+override Nickelony.IDEKit.FileWatching.FileWatcherStartResult.GetHashCode() -> int
+static Nickelony.IDEKit.FileWatching.FileChange.operator !=(Nickelony.IDEKit.FileWatching.FileChange left, Nickelony.IDEKit.FileWatching.FileChange right) -> bool
+static Nickelony.IDEKit.FileWatching.FileChange.operator ==(Nickelony.IDEKit.FileWatching.FileChange left, Nickelony.IDEKit.FileWatching.FileChange right) -> bool
+static Nickelony.IDEKit.FileWatching.FileSnapshotDiffer.Build(System.Collections.Generic.IReadOnlyDictionary<string!, Nickelony.IDEKit.FileWatching.FileSnapshotEntry>! previousSnapshot, System.Collections.Generic.IReadOnlyDictionary<string!, Nickelony.IDEKit.FileWatching.FileSnapshotEntry>! currentSnapshot, Nickelony.IDEKit.Core.Paths.LocalPathComparisonPolicy pathComparison, System.Func<string!, bool>! isPathMissing) -> Nickelony.IDEKit.FileWatching.FileChangeBatch!
+static Nickelony.IDEKit.FileWatching.FileSnapshotEntry.operator !=(Nickelony.IDEKit.FileWatching.FileSnapshotEntry left, Nickelony.IDEKit.FileWatching.FileSnapshotEntry right) -> bool
+static Nickelony.IDEKit.FileWatching.FileSnapshotEntry.operator ==(Nickelony.IDEKit.FileWatching.FileSnapshotEntry left, Nickelony.IDEKit.FileWatching.FileSnapshotEntry right) -> bool
+static Nickelony.IDEKit.FileWatching.FileWatchFailure.operator !=(Nickelony.IDEKit.FileWatching.FileWatchFailure? left, Nickelony.IDEKit.FileWatching.FileWatchFailure? right) -> bool
+static Nickelony.IDEKit.FileWatching.FileWatchFailure.operator ==(Nickelony.IDEKit.FileWatching.FileWatchFailure? left, Nickelony.IDEKit.FileWatching.FileWatchFailure? right) -> bool
+static Nickelony.IDEKit.FileWatching.FileWatchSpecification.Validate(Nickelony.IDEKit.FileWatching.FileWatchSpecification specification, string! paramName) -> void
+static Nickelony.IDEKit.FileWatching.FileWatchSpecification.operator !=(Nickelony.IDEKit.FileWatching.FileWatchSpecification left, Nickelony.IDEKit.FileWatching.FileWatchSpecification right) -> bool
+static Nickelony.IDEKit.FileWatching.FileWatchSpecification.operator ==(Nickelony.IDEKit.FileWatching.FileWatchSpecification left, Nickelony.IDEKit.FileWatching.FileWatchSpecification right) -> bool
+static Nickelony.IDEKit.FileWatching.FileWatchSupervisorSpecification.operator !=(Nickelony.IDEKit.FileWatching.FileWatchSupervisorSpecification? left, Nickelony.IDEKit.FileWatching.FileWatchSupervisorSpecification? right) -> bool
+static Nickelony.IDEKit.FileWatching.FileWatchSupervisorSpecification.operator ==(Nickelony.IDEKit.FileWatching.FileWatchSupervisorSpecification? left, Nickelony.IDEKit.FileWatching.FileWatchSupervisorSpecification? right) -> bool
+static Nickelony.IDEKit.FileWatching.FileWatcherStartResult.operator !=(Nickelony.IDEKit.FileWatching.FileWatcherStartResult left, Nickelony.IDEKit.FileWatching.FileWatcherStartResult right) -> bool
+static Nickelony.IDEKit.FileWatching.FileWatcherStartResult.operator ==(Nickelony.IDEKit.FileWatching.FileWatcherStartResult left, Nickelony.IDEKit.FileWatching.FileWatcherStartResult right) -> bool
+virtual Nickelony.IDEKit.FileWatching.FileSnapshotTrackerFactory.Invoke(string! workspaceRootDirectoryPath, System.Collections.Generic.IReadOnlyList<Nickelony.IDEKit.FileWatching.FileWatchSpecification>! watchSpecifications) -> Nickelony.IDEKit.FileWatching.IFileSnapshotTracker!
+virtual Nickelony.IDEKit.FileWatching.FileWatcherFactory.Invoke(string! workspaceRootDirectoryPath, System.Func<Nickelony.IDEKit.FileWatching.FileChangeBatch!, System.Threading.CancellationToken, System.Threading.Tasks.Task!>! dispatchAsync, System.Action<Nickelony.IDEKit.FileWatching.IFileWatcher!, System.Exception?>! onWatcherFailed) -> Nickelony.IDEKit.FileWatching.IFileWatcher!
+~override Nickelony.IDEKit.FileWatching.FileChange.Equals(object obj) -> bool
+~override Nickelony.IDEKit.FileWatching.FileChange.ToString() -> string
+~override Nickelony.IDEKit.FileWatching.FileSnapshotEntry.Equals(object obj) -> bool
+~override Nickelony.IDEKit.FileWatching.FileSnapshotEntry.ToString() -> string
+~override Nickelony.IDEKit.FileWatching.FileWatchSpecification.Equals(object obj) -> bool
+~override Nickelony.IDEKit.FileWatching.FileWatchSpecification.ToString() -> string
+~override Nickelony.IDEKit.FileWatching.FileWatcherStartResult.Equals(object obj) -> bool
+~override Nickelony.IDEKit.FileWatching.FileWatcherStartResult.ToString() -> string

@@ -1,18 +1,16 @@
+using System.Windows;
+using System.Windows.Media;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Rendering;
 using Nickelony.IDEKit.AvalonEdit.Bookmarks;
-using Nickelony.IDEKit.AvalonEdit.Rendering;
-using System.Windows;
-using System.Windows.Input;
-using System.Windows.Media;
+using Nickelony.IDEKit.AvalonEdit.LineStatus;
 
 namespace Nickelony.IDEKit.AvalonEdit.Tests;
 
 /// <summary>
-/// The AvalonEdit binding of the shared <see cref="BookmarkMarginTestsBase"/> bookmark-margin scenarios; it
-/// supplies the WPF click, arranged-width, and marker-bounds hooks and adds the
-/// <c>FrameworkPropertyMetadata</c> registration and hit-test scenarios.
+/// The AvalonEdit binding of the shared <see cref="BookmarkMarginTestsBase"/> bookmark-margin scenarios; it supplies the WPF arranged-width
+/// and marker-bounds hooks and adds the <c>FrameworkPropertyMetadata</c> registration and hit-test scenarios.
 /// </summary>
 [STATestClass]
 [TestCategory(TestCategories.InteractiveWindow)]
@@ -68,11 +66,11 @@ public sealed class BookmarkMarginTests : BookmarkMarginTestsBase
 	public void HitTest_InsideMargin_ReturnsTheMarginAsTheHitTarget()
 	{
 		var document = new TextDocument("one\r\ntwo\r\nthree");
-		var coordinator = new BookmarkCoordinator(() => document);
-		var margin = new BookmarkMargin(coordinator);
+		var tracker = new BookmarkTracker(() => document);
+		var margin = new BookmarkMargin(tracker);
 		var editor = new TextEditor { Document = document };
 
-		using var host = new HostedMarginScope(editor, margin);
+		using var host = new HostedMarginTestHost(editor, margin);
 
 		margin.UpdateLayout();
 
@@ -80,20 +78,6 @@ public sealed class BookmarkMarginTests : BookmarkMarginTestsBase
 		IInputElement? hitElement = margin.InputHitTest(new Point(4.0, 4.0));
 
 		Assert.AreSame(margin, hitElement);
-	}
-
-	protected override bool ClickMarginRow(BookmarkMargin margin, Point position)
-	{
-		margin.TestHooks.ClickPositionResolver = _ => position;
-
-		var args = new MouseButtonEventArgs(Mouse.PrimaryDevice, 0, MouseButton.Left)
-		{
-			RoutedEvent = UIElement.MouseLeftButtonDownEvent
-		};
-
-		margin.RaiseEvent(args);
-
-		return args.Handled;
 	}
 
 	protected override double GetArrangedWidth(LineStatusMarginBase margin) => margin.ActualWidth;

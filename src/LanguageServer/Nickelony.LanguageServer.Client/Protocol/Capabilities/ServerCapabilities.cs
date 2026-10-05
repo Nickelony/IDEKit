@@ -1,91 +1,60 @@
 using System.Text.Json.Serialization;
 
-namespace Nickelony.LanguageServer.Client;
+namespace Nickelony.LanguageServer.Client.Protocol;
 
-/// <summary>
-/// Represents the subset of server capabilities consumed by this client.
-/// </summary>
+/// <summary>Represents the subset of server capabilities consumed by this client.</summary>
 internal sealed record ServerCapabilities
 {
-	/// <summary>
-	/// Gets the text-document synchronization capability.
-	/// </summary>
 	[JsonPropertyName("textDocumentSync")]
 	public TextDocumentSyncCapability? TextDocumentSync { get; init; }
 
-	/// <summary>
-	/// Gets the completion provider capability.
-	/// </summary>
 	[JsonPropertyName("completionProvider")]
 	public CompletionProviderCapability? CompletionProvider { get; init; }
 
-	/// <summary>
-	/// Gets the hover provider capability.
-	/// </summary>
 	[JsonPropertyName("hoverProvider")]
 	public SupportedCapability? HoverProvider { get; init; }
 
-	/// <summary>
-	/// Gets the definition provider capability.
-	/// </summary>
 	[JsonPropertyName("definitionProvider")]
 	public SupportedCapability? DefinitionProvider { get; init; }
 
-	/// <summary>
-	/// Gets the document-symbol provider capability.
-	/// </summary>
 	[JsonPropertyName("documentSymbolProvider")]
 	public SupportedCapability? DocumentSymbolProvider { get; init; }
 
-	/// <summary>
-	/// Gets the code-action provider capability, including whether the server supports <c>codeAction/resolve</c>.
-	/// </summary>
+	/// <summary>The workspace-symbol provider capability, including whether the server supports <c>workspaceSymbol/resolve</c>.</summary>
+	[JsonPropertyName("workspaceSymbolProvider")]
+	public WorkspaceSymbolProviderCapability? WorkspaceSymbolProvider { get; init; }
+
+	/// <summary>The code-action provider capability, including whether the server supports <c>codeAction/resolve</c>.</summary>
 	[JsonPropertyName("codeActionProvider")]
 	public CodeActionProviderCapability? CodeActionProvider { get; init; }
 
-	/// <summary>
-	/// Gets the references provider capability.
-	/// </summary>
+	/// <summary>The commands the server executes through <c>workspace/executeCommand</c>.</summary>
+	[JsonPropertyName("executeCommandProvider")]
+	public ExecuteCommandProviderCapability? ExecuteCommandProvider { get; init; }
+
 	[JsonPropertyName("referencesProvider")]
 	public SupportedCapability? ReferencesProvider { get; init; }
 
-	/// <summary>
-	/// Gets the rename provider capability.
-	/// </summary>
 	[JsonPropertyName("renameProvider")]
 	public SupportedCapability? RenameProvider { get; init; }
 
-	/// <summary>
-	/// Gets the document-formatting provider capability.
-	/// </summary>
 	[JsonPropertyName("documentFormattingProvider")]
 	public SupportedCapability? DocumentFormattingProvider { get; init; }
 
-	/// <summary>
-	/// Gets the signature-help provider capability.
-	/// </summary>
 	[JsonPropertyName("signatureHelpProvider")]
-	public SupportedCapability? SignatureHelpProvider { get; init; }
+	public SignatureHelpProviderCapability? SignatureHelpProvider { get; init; }
 
-	/// <summary>
-	/// Gets the semantic tokens provider capability.
-	/// </summary>
 	[JsonPropertyName("semanticTokensProvider")]
 	public SemanticTokensProviderCapability? SemanticTokensProvider { get; init; }
 
-	/// <summary>
-	/// Gets the pull-diagnostics provider capability.
-	/// </summary>
+	/// <summary>The pull-diagnostics provider capability.</summary>
 	/// <remarks>
-	/// The server advertises this as an object when it implements <c>textDocument/diagnostic</c>; the object's
-	/// inner fields are not modeled because the client only needs to know whether pull diagnostics is available.
+	/// Only the presence is modeled; the object's inner fields are not.
 	/// </remarks>
 	[JsonPropertyName("diagnosticProvider")]
 	public SupportedCapability? DiagnosticProvider { get; init; }
 
-	/// <summary>
-	/// Gets the position encoding the server selected for this session, when it advertised one.
-	/// </summary>
+	/// <summary>The position encoding the server selected for this session, when it advertised one.</summary>
 	[JsonPropertyName("positionEncoding")]
 	public string? PositionEncoding { get; init; }
 }

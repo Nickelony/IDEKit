@@ -3,52 +3,35 @@ using System.Buffers;
 namespace Nickelony.IDEKit.Core.Diffing;
 
 /// <summary>
-/// Computes changed lines between two line-split texts using the linear-space refinement of the
-/// Myers diff algorithm (divide and conquer around a middle snake).
+/// Computes changed lines between two line-split texts using the linear-space refinement of the Myers diff algorithm (divide and conquer
+/// around a middle snake).
 /// </summary>
 public static class LineDiffer
 {
 	/// <summary>
-	/// Gets the one-based line numbers of <paramref name="current"/> that are not part of a longest
-	/// common subsequence with <paramref name="baseline"/>; that is, the lines that were inserted or
-	/// modified relative to the baseline.
+	/// Returns the one-based line numbers of <paramref name="current"/> that are not part of a longest common
+	/// subsequence with <paramref name="baseline"/>; that is, the lines that were inserted or modified relative to the baseline.
 	/// </summary>
-	/// <remarks>
-	/// <para>
-	/// Lines are compared with <see cref="StringComparison.Ordinal"/>. The caller splits the text,
-	/// typically with <see cref="Text.TextLineSplitter.Split"/>; line terminators are invisible to
-	/// the comparison unless the caller keeps them inside the line strings, so a CRLF-to-LF-only
-	/// change reports no difference and a <c>Split('\n')</c> caller reports every line changed for
-	/// CRLF input. There is deliberately no comparer overload: ordinal comparison is the contract.
-	/// </para>
-	/// <para>
-	/// The changed set depends on which common subsequence the diff selects, so equivalent edits can
-	/// mark different lines. A deletion-only edit marks no line, because the result describes
-	/// <paramref name="current"/> and a removed baseline line has no current equivalent.
-	/// </para>
-	/// <para>
-	/// The search uses memory proportional to the compared slices instead of the edit distance, so a
-	/// large document with a handful of edits stays affordable. A work budget and a recursion-depth
-	/// cap bound pathological inputs, and a split that cannot make progress aborts the search as
-	/// well; when the search aborts, the diff reports the whole affected section as changed and sets
-	/// <see cref="LineDiffResult.IsApproximate"/> to <see langword="true"/> instead of running
-	/// without bound.
-	/// </para>
-	/// </remarks>
 	/// <param name="baseline">The earlier line-split text.</param>
 	/// <param name="current">The later line-split text.</param>
 	/// <returns>The changed line numbers and whether the result is approximate.</returns>
-	/// <exception cref="ArgumentNullException">
-	/// <paramref name="baseline"/> or <paramref name="current"/> is <see langword="null"/>.
-	/// </exception>
+	/// <exception cref="ArgumentNullException"><paramref name="baseline"/> or <paramref name="current"/> is <see langword="null"/>.</exception>
+	/// <remarks>
+	/// Lines are compared with <see cref="StringComparison.Ordinal"/> and there is no comparer overload; a line terminator takes part
+	/// in the comparison only when the caller's splitter leaves it on the line. The changed set depends on which common subsequence the diff selects,
+	/// and a deletion-only edit marks no line. The search uses memory proportional to the compared slices; a work budget, a depth cap,
+	/// or a non-progressing split yields the whole affected section marked approximate.
+	/// </remarks>
 	public static LineDiffResult GetChangedLineNumbers(IReadOnlyList<string> baseline, IReadOnlyList<string> current)
 	{
 		ArgumentNullException.ThrowIfNull(baseline);
 		ArgumentNullException.ThrowIfNull(current);
 
 		var changed = new HashSet<int>();
+
 		int baselineCount = baseline.Count;
 		int currentCount = current.Count;
+
 		bool isApproximate = false;
 
 		if (baselineCount == 0)
@@ -74,12 +57,95 @@ public static class LineDiffer
 				isApproximate = CollectChangedLines(
 					baseline,
 					current,
-					new DiffSlice(prefix, middleBaselineCount, prefix, middleCurrentCount),
-					changed);
+
+					slice: new DiffSlice(
+						BaselineStart: prefix,
+						BaselineCount: middleBaselineCount,
+						CurrentStart: prefix,
+						CurrentCount: middleCurrentCount
+					),
+
+					changed
+				);
 			}
 		}
 
 		return LineDiffResult.Create(changed, isApproximate);
+	}
+
+	/// <summary>Returns the runs of lines that differ between <paramref name="baseline"/> and <paramref name="current"/>, in line order.</summary>
+	/// <param name="baseline">The earlier line-split text.</param>
+	/// <param name="current">The later line-split text.</param>
+	/// <returns>The hunks; an empty list when the texts are equal.</returns>
+	/// <exception cref="ArgumentNullException"><paramref name="baseline"/> or <paramref name="current"/> is <see langword="null"/>.</exception>
+	/// <remarks>
+	/// The hunks follow the common subsequence that <see cref="GetChangedLineNumbers"/> selects, so a hunk is the run between two matched lines,
+	/// and two hunks never touch. A section that the bounded search gave up on is one hunk over the whole section.
+	/// </remarks>
+	public static IReadOnlyList<LineDiffHunk> GetHunks(IReadOnlyList<string> baseline, IReadOnlyList<string> current)
+	{
+		ArgumentNullException.ThrowIfNull(baseline);
+		ArgumentNullException.ThrowIfNull(current);
+
+		int prefix = CountCommonPrefix(baseline, current);
+		int suffix = CountCommonSuffix(baseline, current, prefix);
+
+		var matches = new List<(int Baseline, int Current)>();
+
+		for (int index = 0; index < prefix; index++)
+			matches.Add((index, index));
+
+		var middle = new DiffSlice(
+			BaselineStart: prefix,
+			BaselineCount: baseline.Count - prefix - suffix,
+			CurrentStart: prefix,
+			CurrentCount: current.Count - prefix - suffix
+		);
+
+		if (middle.BaselineCount > 0 && middle.CurrentCount > 0)
+			CollectMatches(baseline, current, slice: middle, matches);
+
+		for (int index = suffix; index > 0; index--)
+			matches.Add((baseline.Count - index, current.Count - index));
+
+		matches.Sort();
+
+		var hunks = new List<LineDiffHunk>();
+
+		int baselineIndex = 0;
+		int currentIndex = 0;
+
+		foreach ((int matchedBaseline, int matchedCurrent) in matches)
+		{
+			if (matchedBaseline > baselineIndex || matchedCurrent > currentIndex)
+			{
+				hunks.Add(
+					new LineDiffHunk(
+						BaselineStart: baselineIndex,
+						BaselineCount: matchedBaseline - baselineIndex,
+						CurrentStart: currentIndex,
+						CurrentCount: matchedCurrent - currentIndex
+					)
+				);
+			}
+
+			baselineIndex = matchedBaseline + 1;
+			currentIndex = matchedCurrent + 1;
+		}
+
+		if (baselineIndex < baseline.Count || currentIndex < current.Count)
+		{
+			hunks.Add(
+				new LineDiffHunk(
+					BaselineStart: baselineIndex,
+					BaselineCount: baseline.Count - baselineIndex,
+					CurrentStart: currentIndex,
+					CurrentCount: current.Count - currentIndex
+				)
+			);
+		}
+
+		return hunks;
 	}
 
 	private static int CountCommonPrefix(IReadOnlyList<string> baseline, IReadOnlyList<string> current)
@@ -99,9 +165,11 @@ public static class LineDiffer
 		int currentIndex = current.Count - 1;
 		int count = 0;
 
-		while (count < baseline.Count - prefix
+		while (
+			count < baseline.Count - prefix
 			&& count < current.Count - prefix
-			&& string.Equals(baseline[baselineIndex], current[currentIndex], StringComparison.Ordinal))
+			&& string.Equals(baseline[baselineIndex], current[currentIndex], StringComparison.Ordinal)
+		)
 		{
 			count++;
 			baselineIndex--;
@@ -112,21 +180,15 @@ public static class LineDiffer
 	}
 
 	/// <summary>
-	/// Bounds the total number of search steps, character comparisons, and trimmed lines so a
-	/// pathological comparison cannot run without bound. This budget is an implementation detail:
-	/// the approximate fallback it triggers is the contract, not the exact budget value.
+	/// Bounds the total number of search steps, line comparisons, and trimmed lines so a pathological comparison cannot run without bound.
 	/// </summary>
 	private const int MaximumWorkUnitCount = 32 * 1024 * 1024;
 
-	/// <summary>
-	/// Bounds the recursion depth of the refinement, keeping it within the default thread stack.
-	/// This cap is an implementation detail: the approximate fallback it triggers is the contract,
-	/// and it is far above the depth any realistic diff reaches.
-	/// </summary>
+	/// <summary>Bounds the recursion depth of the refinement, keeping it within the default thread stack.</summary>
 	private const int MaximumRecursionDepth = 2048;
 
 	// A pair of aligned slice ranges into the baseline and current line lists, so a subproblem
-	// carries the two ranges as one value instead of four parameters.
+	// carries the aligned ranges as one value instead of as separate parameters.
 	private readonly record struct DiffSlice(int BaselineStart, int BaselineCount, int CurrentStart, int CurrentCount);
 
 	// The mutable search state shared by the whole recursion: the rented scratch vectors, the
@@ -134,7 +196,7 @@ public static class LineDiffer
 	// charges the same budget.
 	private struct DiffSearchState
 	{
-		public DiffSearchState(int[] forward, int[] backward, int offset)
+		internal DiffSearchState(int[] forward, int[] backward, int offset)
 		{
 			Forward = forward;
 			Backward = backward;
@@ -142,39 +204,36 @@ public static class LineDiffer
 			Work = 0;
 		}
 
-		public int[] Forward { get; }
-		public int[] Backward { get; }
-		public int Offset { get; }
-		public int Work { get; set; }
+		internal int[] Forward { get; }
+		internal int[] Backward { get; }
+		internal int Offset { get; }
+		internal int Work { get; set; }
 	}
 
 	/// <summary>
-	/// Collects the changed current lines in the middle slices and reports whether the work budget
-	/// forced the approximate fallback.
+	/// Collects the changed current lines in the middle slice and reports whether the search gave up, in which case the whole slice
+	/// is marked changed.
 	/// </summary>
-	private static bool CollectChangedLines(
-		IReadOnlyList<string> baseline,
-		IReadOnlyList<string> current,
-		DiffSlice slice,
-		HashSet<int> changed)
+	private static bool CollectChangedLines(IReadOnlyList<string> baseline, IReadOnlyList<string> current, DiffSlice slice, HashSet<int> changed)
 	{
-		// The scratch vectors are sized once for the whole middle; every recursive subproblem is a
-		// sub-slice of it and reuses the same storage, so the diff keeps linear space. They are
-		// rented from the pool because a large changed span pushes each vector past the large-object
-		// heap threshold (about 10.6k lines per side) and a per-call allocation would then cost a
-		// generation-2 collection. Every diagonal is written before it is read (the search seeds
-		// `offset + 1` and each cost step only reads diagonals written by the previous step), so
-		// stale entries from a previous rent are never observed.
+		// The scratch vectors are sized once for the whole middle; every recursive subproblem is a sub-slice
+		// of it and reuses the same storage, so the diff keeps linear space. They are rented from the pool
+		// because a large changed span pushes each vector past the large-object heap threshold (about 10.6k
+		// lines per side), and a per-call allocation would then cost a generation-2 collection. Every diagonal
+		// is written before it is read (the search seeds `offset + 1`, and each cost step reads only diagonals
+		// written by the previous step), so stale entries from a previous rent are never observed.
 		int maxD = ((slice.BaselineCount + slice.CurrentCount + 1) / 2) + 1;
+
 		int[] forward = ArrayPool<int>.Shared.Rent((2 * maxD) + 1);
 		int[] backward = ArrayPool<int>.Shared.Rent((2 * maxD) + 1);
+
 		var state = new DiffSearchState(forward, backward, maxD);
 
 		bool completed;
 
 		try
 		{
-			completed = TryCollectChangedLines(baseline, current, slice, ref state, changed, depth: 0);
+			completed = TryCollectChangedLines(baseline, current, slice, ref state, changed, matches: null, depth: 0);
 		}
 		finally
 		{
@@ -190,18 +249,49 @@ public static class LineDiffer
 		return true;
 	}
 
+	// Collects the matched line pairs of the middle slice, so the hunks are the runs between them. A search that gives up keeps no match of the
+	// slice, so the whole slice becomes one hunk.
+	private static void CollectMatches(
+		IReadOnlyList<string> baseline,
+		IReadOnlyList<string> current,
+		DiffSlice slice,
+		List<(int Baseline, int Current)> matches
+	)
+	{
+		int maxD = ((slice.BaselineCount + slice.CurrentCount + 1) / 2) + 1;
+
+		int[] forward = ArrayPool<int>.Shared.Rent((2 * maxD) + 1);
+		int[] backward = ArrayPool<int>.Shared.Rent((2 * maxD) + 1);
+
+		var state = new DiffSearchState(forward, backward, maxD);
+		int matchedBefore = matches.Count;
+
+		try
+		{
+			if (!TryCollectChangedLines(baseline, current, slice, ref state, changed: null, matches, depth: 0))
+				matches.RemoveRange(matchedBefore, matches.Count - matchedBefore);
+		}
+		finally
+		{
+			ArrayPool<int>.Shared.Return(forward);
+			ArrayPool<int>.Shared.Return(backward);
+		}
+	}
+
 	/// <summary>
-	/// Recursively aligns one slice pair around its middle snake and marks the current lines that
-	/// are not part of the common subsequence. Returns <see langword="false"/> when the work budget
-	/// or the recursion-depth cap is exhausted.
+	/// Recursively aligns one slice pair around its middle snake, marks the current lines that are not part of the common subsequence and records
+	/// the matched pairs, each when its collector is supplied; returns <see langword="false"/> when the work budget or the recursion-depth
+	/// cap is exhausted, or when a split makes no progress.
 	/// </summary>
 	private static bool TryCollectChangedLines(
 		IReadOnlyList<string> baseline,
 		IReadOnlyList<string> current,
 		DiffSlice slice,
 		ref DiffSearchState state,
-		HashSet<int> changed,
-		int depth)
+		HashSet<int>? changed,
+		List<(int Baseline, int Current)>? matches,
+		int depth
+	)
 	{
 		if (state.Work > MaximumWorkUnitCount || depth > MaximumRecursionDepth)
 			return false;
@@ -217,14 +307,11 @@ public static class LineDiffer
 		int prefix = 0;
 		int prefixLimit = Math.Min(baselineCount, currentCount);
 
-		while (prefix < prefixLimit
-			&& string.Equals(
-				baseline[baselineStart + prefix],
-				current[currentStart + prefix],
-				StringComparison.Ordinal))
-		{
+		while (prefix < prefixLimit && string.Equals(baseline[baselineStart + prefix], current[currentStart + prefix], StringComparison.Ordinal))
 			prefix++;
-		}
+
+		for (int index = 0; index < prefix; index++)
+			matches?.Add((baselineStart + index, currentStart + index));
 
 		baselineStart += prefix;
 		baselineCount -= prefix;
@@ -234,14 +321,20 @@ public static class LineDiffer
 		int suffix = 0;
 		int suffixLimit = Math.Min(baselineCount, currentCount);
 
-		while (suffix < suffixLimit
+		while (
+			suffix < suffixLimit
 			&& string.Equals(
 				baseline[baselineStart + baselineCount - 1 - suffix],
 				current[currentStart + currentCount - 1 - suffix],
-				StringComparison.Ordinal))
+				StringComparison.Ordinal
+			)
+		)
 		{
 			suffix++;
 		}
+
+		for (int index = 1; index <= suffix; index++)
+			matches?.Add((baselineStart + baselineCount - index, currentStart + currentCount - index));
 
 		state.Work += prefix + suffix;
 		baselineCount -= suffix;
@@ -260,44 +353,48 @@ public static class LineDiffer
 			return true;
 
 		var trimmed = new DiffSlice(baselineStart, baselineCount, currentStart, currentCount);
-		if (!FindMiddleSnake(baseline, current, trimmed, ref state, out int splitBaseline, out int splitCurrent))
+
+		if (!FindMiddleSnake(baseline, current, slice: trimmed, ref state, out int splitBaseline, out int splitCurrent))
 			return false;
 
 		// A split that makes no progress on either side would recurse forever; treat it as a budget
 		// abort so the caller falls back to the approximate result.
-		if ((splitBaseline <= baselineStart && splitCurrent <= currentStart)
-			|| (splitBaseline >= baselineStart + baselineCount && splitCurrent >= currentStart + currentCount))
+		if (
+			(splitBaseline <= baselineStart && splitCurrent <= currentStart)
+			|| (splitBaseline >= baselineStart + baselineCount && splitCurrent >= currentStart + currentCount)
+		)
 		{
 			return false;
 		}
 
 		var left = new DiffSlice(
 			baselineStart,
-			splitBaseline - baselineStart,
+			BaselineCount: splitBaseline - baselineStart,
 			currentStart,
-			splitCurrent - currentStart);
-		if (!TryCollectChangedLines(baseline, current, left, ref state, changed, depth + 1))
+			CurrentCount: splitCurrent - currentStart
+		);
+
+		if (!TryCollectChangedLines(baseline, current, slice: left, ref state, changed, matches, depth: depth + 1))
 			return false;
 
 		var right = new DiffSlice(
-			splitBaseline,
-			baselineStart + baselineCount - splitBaseline,
-			splitCurrent,
-			currentStart + currentCount - splitCurrent);
-		return TryCollectChangedLines(baseline, current, right, ref state, changed, depth + 1);
+			BaselineStart: splitBaseline,
+			BaselineCount: baselineStart + baselineCount - splitBaseline,
+			CurrentStart: splitCurrent,
+			CurrentCount: currentStart + currentCount - splitCurrent
+		);
+
+		return TryCollectChangedLines(baseline, current, slice: right, ref state, changed, matches, depth: depth + 1);
 	}
 
 	/// <summary>
-	/// Finds the middle snake of the slice pair: the endpoints of a central diagonal run on an
-	/// optimal edit path, found by searching forward from the start and backward from the end until
-	/// the furthest-reaching paths overlap.
+	/// Finds the middle snake of the slice pair: the endpoints of a central diagonal run on an optimal edit path, found by searching forward
+	/// from the start and backward from the end until the furthest-reaching paths overlap.
 	/// </summary>
 	/// <remarks>
-	/// The vectors are indexed by diagonal <c>k = x - y</c> from <c>-offset</c> to <c>offset</c>. The
-	/// forward vector stores the furthest <c>x</c> reached by a path of the current cost on each
-	/// diagonal; the backward vector stores the furthest <c>x</c> reached from the end in reversed
-	/// coordinates. Only the diagonals of the current cost hold fresh values, so entries of the
-	/// other parity carry the previous cost, which the recurrence reads.
+	/// The vectors are indexed by diagonal <c>k = x - y</c> from <c>-offset</c> to <c>offset</c>: the forward vector stores the furthest
+	/// <c>x</c> reached by a path of the current cost, and the backward vector the furthest <c>x</c> reached from the end in reversed coordinates.
+	/// Only the current cost's diagonals hold fresh values, so the other parity carries the previous cost, which the recurrence reads.
 	/// </remarks>
 	private static bool FindMiddleSnake(
 		IReadOnlyList<string> baseline,
@@ -305,16 +402,20 @@ public static class LineDiffer
 		DiffSlice slice,
 		ref DiffSearchState state,
 		out int splitBaseline,
-		out int splitCurrent)
+		out int splitCurrent
+	)
 	{
 		int baselineStart = slice.BaselineStart;
 		int currentStart = slice.CurrentStart;
 		int n = slice.BaselineCount;
 		int m = slice.CurrentCount;
 		int delta = n - m;
+
 		bool odd = (delta & 1) != 0;
+
 		int maxD = ((n + m + 1) / 2) + 1;
 		int offset = state.Offset;
+
 		int[] forward = state.Forward;
 		int[] backward = state.Backward;
 
@@ -336,17 +437,13 @@ public static class LineDiffer
 			// Forward search from the start.
 			for (int k = -d; k <= d; k += 2)
 			{
-				int x = k == -d || (k != d && forward[offset + k - 1] < forward[offset + k + 1])
-					? forward[offset + k + 1]
-					: forward[offset + k - 1] + 1;
+				int x =
+					k == -d || (k != d && forward[offset + k - 1] < forward[offset + k + 1]) ? forward[offset + k + 1] : forward[offset + k - 1] + 1;
+
 				int y = x - k;
 				int snakeStartX = x;
 
-				while (x < n && y < m
-					&& string.Equals(
-						baseline[baselineStart + x],
-						current[currentStart + y],
-						StringComparison.Ordinal))
+				while (x < n && y < m && string.Equals(baseline[baselineStart + x], current[currentStart + y], StringComparison.Ordinal))
 				{
 					x++;
 					y++;
@@ -357,9 +454,7 @@ public static class LineDiffer
 
 				// Only an odd-length optimal path can be found from the forward side, and only when
 				// the reciprocal backward diagonal has been visited.
-				if (odd
-					&& Math.Abs(k - delta) <= d - 1
-					&& forward[offset + k] + backward[offset - (k - delta)] >= n)
+				if (odd && Math.Abs(k - delta) <= d - 1 && forward[offset + k] + backward[offset - (k - delta)] >= n)
 				{
 					splitBaseline = baselineStart + snakeStartX;
 					splitCurrent = currentStart + snakeStartX - k;
@@ -370,17 +465,17 @@ public static class LineDiffer
 			// Backward search from the end.
 			for (int k = -d; k <= d; k += 2)
 			{
-				int x = k == -d || (k != d && backward[offset + k - 1] < backward[offset + k + 1])
-					? backward[offset + k + 1]
-					: backward[offset + k - 1] + 1;
+				int x =
+					k == -d || (k != d && backward[offset + k - 1] < backward[offset + k + 1])
+						? backward[offset + k + 1]
+						: backward[offset + k - 1] + 1;
+
 				int y = x - k;
 				int snakeStartX = x;
 
-				while (x < n && y < m
-					&& string.Equals(
-						baseline[baselineStart + n - 1 - x],
-						current[currentStart + m - 1 - y],
-						StringComparison.Ordinal))
+				while (
+					x < n && y < m && string.Equals(baseline[baselineStart + n - 1 - x], current[currentStart + m - 1 - y], StringComparison.Ordinal)
+				)
 				{
 					x++;
 					y++;
@@ -389,9 +484,7 @@ public static class LineDiffer
 				state.Work += x - snakeStartX;
 				backward[offset + k] = x;
 
-				if (!odd
-					&& Math.Abs(k - delta) <= d
-					&& backward[offset + k] + forward[offset - (k - delta)] >= n)
+				if (!odd && Math.Abs(k - delta) <= d && backward[offset + k] + forward[offset - (k - delta)] >= n)
 				{
 					splitBaseline = baselineStart + n - x;
 					splitCurrent = currentStart + m - y;
@@ -405,12 +498,10 @@ public static class LineDiffer
 		return false;
 	}
 
-	/// <summary>
-	/// Marks every current line of the supplied slice as changed.
-	/// </summary>
-	private static void MarkCurrentLines(HashSet<int> changed, int currentStart, int currentCount)
+	/// <summary>Marks every current line of the supplied slice as changed.</summary>
+	private static void MarkCurrentLines(HashSet<int>? changed, int currentStart, int currentCount)
 	{
 		for (int index = 0; index < currentCount; index++)
-			changed.Add(currentStart + index + 1);
+			changed?.Add(currentStart + index + 1);
 	}
 }
